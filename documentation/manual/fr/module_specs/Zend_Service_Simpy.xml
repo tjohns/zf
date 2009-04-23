@@ -5,15 +5,15 @@
     <sect2 id="zend.service.simpy.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Service_Simpy</code> permet l'interaction avec les services Web du réseau social de partage de
+        <para><classname>Zend_Service_Simpy</classname> permet l'interaction avec les services Web du réseau social de partage de
         'marque-pages' (de 'favoris', de 'liens') Simpy.</para>
 
-        <para>Pour utiliser <code>Zend_Service_Simpy</code>, vous devez posséder un compte. Pour ceci, voyez <ulink
+        <para>Pour utiliser <classname>Zend_Service_Simpy</classname>, vous devez posséder un compte. Pour ceci, voyez <ulink
         url="http://simpy.com">le site Web de Simpy</ulink>. Pour plus d'informations sur l'API REST de Simpy, voyez
         <ulink url="http://www.simpy.com/doc/api/rest">sa documentation </ulink>.</para>
 
         <para>Les sections qui suivent vont vous indiquer les éléments sur lesquels vous pouvez agir en utilisant l'API
-        de Simpy, via <code>Zend_Service_Simpy</code>. <itemizedlist>
+        de Simpy, via <classname>Zend_Service_Simpy</classname>. <itemizedlist>
                 <listitem>
                     <para>Liens: Créer, requêter, mettre à jour, supprimer</para>
                 </listitem>

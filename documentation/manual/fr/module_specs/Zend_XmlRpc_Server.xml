@@ -5,7 +5,7 @@
     <sect2 id="zend.xmlrpc.server.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_XmlRpc_Server</code> fournit un serveur XML-RPC qui suit les spécifications <ulink
+        <para><classname>Zend_XmlRpc_Server</classname> fournit un serveur XML-RPC qui suit les spécifications <ulink
         url="http://www.xmlrpc.com/spec">dictées par www.xmlrpc.com</ulink>. Il fournit aussi la méthode
         <code>system.multicall()</code>, permettant le traitement de requêtes multiples.</para>
     </sect2>
@@ -25,26 +25,26 @@ echo $server->handle();
     <sect2 id="zend.xmlrpc.server.structure">
         <title>Structures du serveur</title>
 
-        <para><code>Zend_XmlRpc_Server</code> se décompose en un objet serveur (lui-même), un objet requête, réponse, et
+        <para><classname>Zend_XmlRpc_Server</classname> se décompose en un objet serveur (lui-même), un objet requête, réponse, et
         des objets d'erreurs.</para>
 
-        <para>Pour démarrer un serveur <code>Zend_XmlRpc_Server</code>, vous devez attacher une ou plusieurs classes ou
+        <para>Pour démarrer un serveur <classname>Zend_XmlRpc_Server</classname>, vous devez attacher une ou plusieurs classes ou
         fonctions au serveur, grâce à <code>setClass()</code> et <code>addFunction()</code>.</para>
 
-        <para>Lorsque c'est fait, vous pouvez passer un objet <code>Zend_XmlRpc_Request</code> à
-        <code>Zend_XmlRpc_Server::handle()</code>, sinon par défaut il utilisera un objet
-        <code>Zend_XmlRpc_Request_Http</code> qui récupérera la requête depuis <code>php://input</code>.</para>
+        <para>Lorsque c'est fait, vous pouvez passer un objet <classname>Zend_XmlRpc_Request</classname> à
+        <classname>Zend_XmlRpc_Server::handle()</classname>, sinon par défaut il utilisera un objet
+        <classname>Zend_XmlRpc_Request_Http</classname> qui récupérera la requête depuis <code>php://input</code>.</para>
 
-        <para><code>Zend_XmlRpc_Server::handle()</code> va alors essayer de traiter la requête. Cette méthode retournera
-        un objet <code>Zend_XmlRpc_Response</code> ou <code>Zend_XmlRpc_Server_Fault</code>. Tous deux possèdent une
+        <para><classname>Zend_XmlRpc_Server::handle()</classname> va alors essayer de traiter la requête. Cette méthode retournera
+        un objet <classname>Zend_XmlRpc_Response</classname> ou <classname>Zend_XmlRpc_Server_Fault</classname>. Tous deux possèdent une
         méthode <code>__toString()</code> qui crée une réponse XML valide XML-RPC.</para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.conventions">
         <title>Conventions</title>
 
-        <para><code>Zend_XmlRpc_Server</code> permet d'attacher des classes et/ou des fonctions au serveur XML-RPC.
-        Grâce à <code>Zend_Server_Reflection</code>, l'introspection va utiliser les blocs de commentaires pour
+        <para><classname>Zend_XmlRpc_Server</classname> permet d'attacher des classes et/ou des fonctions au serveur XML-RPC.
+        Grâce à <classname>Zend_Server_Reflection</classname>, l'introspection va utiliser les blocs de commentaires pour
         déterminer les types d'arguments et de réponse de la fonction/classe.</para>
 
         <para>Les types XML-RPC n'ont pas forcément de correspondance native vers un type PHP. Le code fera de son mieux
@@ -128,7 +128,7 @@ function myFunc($val1, $val2, $val3)
         </itemizedlist>
 
         <para>En interne la correspondance est faite avec les méthodes du même nom, de
-        <code>Zend_XmlRpc_Server</code>.</para>
+        <classname>Zend_XmlRpc_Server</classname>.</para>
 
         <para>Si vous voulez ajouter un espace de noms aux méthodes que vous servez, procédez alors comme suit :</para>
 
@@ -145,35 +145,35 @@ $server->addFunction('somefunc', 'funcs');
     <sect2 id="zend.xmlrpc.server.request">
         <title>Requêtes personnalisées</title>
 
-        <para>La plupart du temps, vous utiliserez l'objet de requête par défaut <code>Zend_XmlRpc_Request_Http</code>,
+        <para>La plupart du temps, vous utiliserez l'objet de requête par défaut <classname>Zend_XmlRpc_Request_Http</classname>,
         sans vous en occuper. En revanche si vous avez un besoin spécifique, comme par exemple journaliser la requête,
         traiter une requête CLI, GUI, ou autre environnement, vous devrez alors créer un objet étendant
-        <code>Zend_XmlRpc_Request</code>. Implémentez les méthodes <code>getMethod()</code> et <code>getParams()</code>
+        <classname>Zend_XmlRpc_Request</classname>. Implémentez les méthodes <code>getMethod()</code> et <code>getParams()</code>
         afin que le serveur puisse analyser ces informations pour traiter la requête.</para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.response">
         <title>Réponses personnalisées</title>
 
-        <para>Comme avec les objets de requête, <code>Zend_XmlRpc_Server</code> peut retourner des objets de réponse
-        personnalisés. Par défaut il s'agit d'objets <code>Zend_XmlRpc_Response_Http</code> qui envoient un en-tête HTTP
+        <para>Comme avec les objets de requête, <classname>Zend_XmlRpc_Server</classname> peut retourner des objets de réponse
+        personnalisés. Par défaut il s'agit d'objets <classname>Zend_XmlRpc_Response_Http</classname> qui envoient un en-tête HTTP
         Content-Type HTTP pour XML-RPC. Vous pourriez utiliser des objets de réponse personnalisés pour par exemple
         renvoyer les réponses vers STDOUT, ou les journaliser.</para>
 
         <para>Pour utiliser une classe de réponse personnalisée, utilisez
-        <code>Zend_XmlRpc_Server::setResponseClass()</code> avant d'appeler <code>handle()</code>.</para>
+        <classname>Zend_XmlRpc_Server::setResponseClass()</classname> avant d'appeler <code>handle()</code>.</para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.fault">
         <title>Gérer les exceptions grâce aux erreurs (Faults)</title>
 
-        <para><code>Zend_XmlRpc_Server</code> attrape les Exceptions générées par vos classes/fonctions, et génère une
+        <para><classname>Zend_XmlRpc_Server</classname> attrape les Exceptions générées par vos classes/fonctions, et génère une
         réponse XML-RPC "fault" lorsqu'une exception a été rencontrée. Par défaut, les message et code des exceptions ne
         sont pas attachés dans la réponse XML-RPC. Ceci est du au fait que de telles exceptions peuvent en dire trop, au
         regard de la sécurité de votre application.</para>
 
         <para>Des classes d'exception peuvent cependant être mises en liste blanche, et donc utilisées pour les réponses
-        d'erreur ("fault"). Utilisez simplement <code>Zend_XmlRpc_Server_Fault::attachFaultException()</code> en lui
+        d'erreur ("fault"). Utilisez simplement <classname>Zend_XmlRpc_Server_Fault::attachFaultException()</classname> en lui
         passant une classe d'exception :</para>
 
         <programlisting role="php"><![CDATA[
@@ -195,7 +195,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
         <para>Attacher beaucoup de classes au serveur XML-RPC peut consommer beaucoup de ressources, car l'introspection
         de chaque classe/fonction est mise en place.</para>
 
-        <para>Pour améliorer les performances, <code>Zend_XmlRpc_Server_Cache</code> peut être utilisé pour mettre en
+        <para>Pour améliorer les performances, <classname>Zend_XmlRpc_Server_Cache</classname> peut être utilisé pour mettre en
         cache la définition d'un serveur. Combiné à <code>__autoload()</code>, ceci améliore grandement les
         performances.</para>
 

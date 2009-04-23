@@ -5,10 +5,10 @@
     <sect2 id="zend.search.lucene.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Search_Lucene</code> est un moteur de recherche de contenus principalement textuels écrit
+        <para><classname>Zend_Search_Lucene</classname> est un moteur de recherche de contenus principalement textuels écrit
         entièrement en PHP 5. Comme il stocke ses index sur le système de fichiers et qu'il ne requiert pas de base de
         données, il peut offrir des fonctionnalités de recherche à presque n'importe quel site écrit en PHP.
-        <code>Zend_Search_Lucene</code> dispose des caractéristiques suivantes : <itemizedlist>
+        <classname>Zend_Search_Lucene</classname> dispose des caractéristiques suivantes : <itemizedlist>
                 <listitem>
                     <para>"Ranked searching" - les meilleurs résultats sont retournés en premier.</para>
                 </listitem>
@@ -21,19 +21,19 @@
                 <listitem>
                     <para>Recherche par champ spécifique (p. ex. titre, auteur, contenus)</para>
                 </listitem>
-            </itemizedlist> <code>Zend_Search_Lucene</code> est dérivé du projet Apache Lucene. Les versions actuelles
+            </itemizedlist> <classname>Zend_Search_Lucene</classname> est dérivé du projet Apache Lucene. Les versions actuelles
         de format d'index Lucene supportées (à partir de Zend Framework 1.6) sont 1.4 à 2.3. Pour plus d'informations
         sur Lucene, rendez-vous sur <ulink url="http://lucene.apache.org/java/docs/"></ulink>.</para>
 
         <note>
             <title></title>
 
-            <para>Les implémentations précédentes de <code>Zend_Search_Lucene</code> supportent les formats d'indexation
+            <para>Les implémentations précédentes de <classname>Zend_Search_Lucene</classname> supportent les formats d'indexation
             Lucene 1.4 (1.9) à 2.1.</para>
 
             <para>A partir de Zend Framework 1.5, tout index créé en utilisant une version antérieure à la 2.1 et
-            automatiquement mis à niveau au format Lucene 2.1 après la mise à jour de <code>Zend_Search_Lucene</code> et
-            ne sera pas compatible avec les implémentations de <code>Zend_Search_Lucene</code> incluses dans Zend
+            automatiquement mis à niveau au format Lucene 2.1 après la mise à jour de <classname>Zend_Search_Lucene</classname> et
+            ne sera pas compatible avec les implémentations de <classname>Zend_Search_Lucene</classname> incluses dans Zend
             Framework 1.0.x.</para>
         </note>
     </sect2>
@@ -45,8 +45,8 @@
         l'indexation. Un document est divisé en champs possédant un nom et du contenu dans lequel on pourra
         chercher.</para>
 
-        <para>Un document est représenté par la classe <code>Zend_Search_Lucene_Document</code>. Les objets de cette
-        classe contiennent des instances de <code>Zend_Search_Lucene_Field</code> qui représentent les champs du
+        <para>Un document est représenté par la classe <classname>Zend_Search_Lucene_Document</classname>. Les objets de cette
+        classe contiennent des instances de <classname>Zend_Search_Lucene_Field</classname> qui représentent les champs du
         document.</para>
 
         <para>Il est important de noter que n'importe quelle information peut être ajoutée à l'index. Des informations
@@ -57,7 +57,7 @@
         peuvent être indexées depuis n'importe quelle source accessible par votre application. Par exemple, elles
         peuvent provenir du système de fichier, d'une base de données, d'un formulaire HTML, etc.</para>
 
-        <para>La classe <code>Zend_Search_Lucene_Field</code> fournit plusieurs méthodes statiques pour créer des champs
+        <para>La classe <classname>Zend_Search_Lucene_Field</classname> fournit plusieurs méthodes statiques pour créer des champs
         avec différentes caractéristiques :</para>
 
         <programlisting role="php"><![CDATA[
@@ -86,7 +86,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   'My document content'));
 ]]></programlisting>
 
-        <para>Chacune de ces méthodes (à l'exception de <code>Zend_Search_Lucene_Field::Binary()</code>) possède un
+        <para>Chacune de ces méthodes (à l'exception de <classname>Zend_Search_Lucene_Field::Binary()</classname>) possède un
         paramètre optionnel <code>$encoding</code> servant à spécifier l'encodage de la chaîne entrée.</para>
 
         <para>L'encodage peut différer par document, voire par champ au sein d'un même document : <programlisting
@@ -117,7 +117,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
         <para>Le nom des champs est défini par vous dans la méthode <code>addField()</code>.</para>
 
         <para>Java Lucene utilise le champ "contents" comme champ de recherche par défaut.
-        <code>Zend_Search_Lucene</code> cherche par défaut dans tous les champs. Cela dit, ce comportement est
+        <classname>Zend_Search_Lucene</classname> cherche par défaut dans tous les champs. Cela dit, ce comportement est
         configurable. Consultez le chapitre <link linkend="zend.search.lucene.query-language.fields">"Champ de recherche
         par défaut"</link> pour plus de détails.</para>
     </sect2>
@@ -131,7 +131,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
                 être aussi bien cherchés dans l'index qu'affichés dans les résultats de la recherche. Ils ne sont pas
                 divisés en plusieurs mots par "tokenization". Les champs d'énumérations dans une base de donnée se
                 transposent généralement assez bien en champs de type Keyword dans
-                <code>Zend_Search_Lucene</code>.</para>
+                <classname>Zend_Search_Lucene</classname>.</para>
             </listitem>
 
             <listitem>
@@ -251,7 +251,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
     <sect2 id="zend.search.lucene.index-creation.html-documents">
         <title>Documents HTML</title>
 
-        <para><code>Zend_Search_Lucene</code> offre une fonctionnalité d'analyse HTML. Les documents peuvent être créés
+        <para><classname>Zend_Search_Lucene</classname> offre une fonctionnalité d'analyse HTML. Les documents peuvent être créés
         directement à d'un fichier ou d'une chaîne HTML : <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
@@ -260,12 +260,12 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $index->addDocument($doc);
 ]]></programlisting></para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Html</code> utilise les méthodes
+        <para>La classe <classname>Zend_Search_Lucene_Document_Html</classname> utilise les méthodes
         <code>DOMDocument::loadHTML()</code> et <code>DOMDocument::loadHTMLFile()</code> pour analyser la source HTML,
         ainsi il n'est pas nécessaire que le HTML soit bien formé ou au format XHTML. Par contre, ces méthodes prennent
         en compte l'encodage spécifié dans la balise méta "http-equiv".</para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Html</code> reconnaît le titre d'une page HTML, son corps
+        <para>La classe <classname>Zend_Search_Lucene_Document_Html</classname> reconnaît le titre d'une page HTML, son corps
         ("body"), ainsi que les métadonnées de son entête.</para>
 
         <para>Le champ "title" correspond au contenu de la balise /html/head/title. Il est stocké dans l'index,
@@ -275,7 +275,7 @@ $index->addDocument($doc);
         en compte les scripts, les commentaires ou les attributs.</para>
 
         <para>Les méthodes <code>loadHTML()</code> et <code>loadHTMLFile()</code> de la classe
-        <code>Zend_Search_Lucene_Document_Html</code> possèdent également un deuxième argument optionnel. Si sa valeur
+        <classname>Zend_Search_Lucene_Document_Html</classname> possèdent également un deuxième argument optionnel. Si sa valeur
         est true, le body sera alors stocké dans l'index et pourra être retourné dans les résultats de recherche. Par
         défaut, le body est "tokenizé", indexé, mais pas stocké.</para>
 
@@ -297,8 +297,8 @@ $index->addDocument($doc);
 ]]></programlisting></para>
 
         <para>Les liens des documents ne sont pas inclus dans le document généré, mais ils peuvent être récupérés avec
-        les méthodes <code>Zend_Search_Lucene_Document_Html::getLinks()</code> et
-        <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code> : <programlisting role="php"><![CDATA[
+        les méthodes <classname>Zend_Search_Lucene_Document_Html::getLinks()</classname> et
+        <classname>Zend_Search_Lucene_Document_Html::getHeaderLinks()</classname> : <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();
@@ -306,27 +306,27 @@ $headerLinksArray = $doc->getHeaderLinks();
 
         <para>A partir de Zend Framework 1.6, il est également possible d'exclure les balises "link" dont l'attribut
         <code>rel</code> vaut <code>'nofollow'</code>. Utilisez
-        <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code> pour activer cette option.</para>
+        <classname>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</classname> pour activer cette option.</para>
 
-        <para>La méthode <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code> retourne la valeur
+        <para>La méthode <classname>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</classname> retourne la valeur
         courante du flag "Exclude nofollow links".</para>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.docx-documents">
         <title>Documents Word 2007</title>
 
-        <para><code>Zend_Search_Lucene</code> offre une fonctionnalité d'analyse de documents Word 2007. On peut créer
+        <para><classname>Zend_Search_Lucene</classname> offre une fonctionnalité d'analyse de documents Word 2007. On peut créer
         directement un document depuis un fichier Word 2007 : <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
 $index->addDocument($doc);
 ]]></programlisting></para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Docx</code> utilise la classe <code>ZipArchive</code> et les
+        <para>La classe <classname>Zend_Search_Lucene_Document_Docx</classname> utilise la classe <code>ZipArchive</code> et les
         méthodes de <code>simplexml</code> pour analyser le document source. Si la classe <code>ZipArchive</code> (issue
-        du module php_zip) n'est pas disponible, <code>Zend_Search_Lucene_Document_Docx</code> ne sera pas non plus
+        du module php_zip) n'est pas disponible, <classname>Zend_Search_Lucene_Document_Docx</classname> ne sera pas non plus
         disponible dans le Zend Framework.</para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Docx</code> reconnaît les métadonnées et le texte des
+        <para>La classe <classname>Zend_Search_Lucene_Document_Docx</classname> reconnaît les métadonnées et le texte des
         documents. Les métadonnées sont constituées, suivant le contenu du document, du nom de fichier (filename), sujet
         (subject), créateur (creator), mots-clés (keywords), description, auteur de la dernière modification
         (lastModifiedBy), révision (revision), date de modification (modified), date de création (created).</para>
@@ -354,7 +354,7 @@ $index->addDocument($doc);
         <para>Le champ "body" contient le véritable contenu du document Word 2007. Il n'inclut que le texte normal. Les
         commentaires et révisions ne sont pas inclus.</para>
 
-        <para>La méthode <code>loadDocxFile()</code> de la classe <code>Zend_Search_Lucene_Document_Docx</code> possède
+        <para>La méthode <code>loadDocxFile()</code> de la classe <classname>Zend_Search_Lucene_Document_Docx</classname> possède
         également un second argument optionnel. S'il est défini à <code>true</code>, le champ "body" sera alors
         également stocké dans l'index et pourra être affiché dans les résultats de recherche. Par défaut, le champ
         "body" est "tokenizé" et indexé, mais pas stocké.</para>
@@ -377,18 +377,18 @@ $index->addDocument($doc);
     <sect2 id="zend.search.lucene.index-creation.pptx-documents">
         <title>Document Powerpoint 2007</title>
 
-        <para><code>Zend_Search_Lucene</code> offre une fonctionnalité d'analyse de documents Powerpoint 2007. On peut
+        <para><classname>Zend_Search_Lucene</classname> offre une fonctionnalité d'analyse de documents Powerpoint 2007. On peut
         créer directement un document depuis un fichier Powerpoint 2007 : <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
 $index->addDocument($doc);
 ]]></programlisting></para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Pptx</code> utilise la classe <code>ZipArchive</code> et les
+        <para>La classe <classname>Zend_Search_Lucene_Document_Pptx</classname> utilise la classe <code>ZipArchive</code> et les
         méthodes de <code>simplexml</code> pour analyser le document source. Si la classe <code>ZipArchive</code> (issue
-        du module php_zip) n'est pas disponible, <code>Zend_Search_Lucene_Document_Pptx</code> ne sera pas non plus
+        du module php_zip) n'est pas disponible, <classname>Zend_Search_Lucene_Document_Pptx</classname> ne sera pas non plus
         disponible dans le Zend Framework.</para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Pptx</code> reconnaît les métadonnées et le texte des
+        <para>La classe <classname>Zend_Search_Lucene_Document_Pptx</classname> reconnaît les métadonnées et le texte des
         documents. Les métadonnées sont constituées, suivant le contenu du document, du nom de fichier (filename), sujet
         (subject), créateur (creator), mots-clés (keywords), description, auteur de la dernière modification
         (lastModifiedBy), révision (revision), date de modification (modified), date de création (created).</para>
@@ -416,7 +416,7 @@ $index->addDocument($doc);
         <para>Le champ "body" contient le véritable contenu de toutes les slides, ainsi que les notes dans le document
         Powerpoint 2007.</para>
 
-        <para>La méthode <code>loadPptxFile()</code> de la classe <code>Zend_Search_Lucene_Document_Pptx</code> possède
+        <para>La méthode <code>loadPptxFile()</code> de la classe <classname>Zend_Search_Lucene_Document_Pptx</classname> possède
         également un second argument optionnel. S'il est défini à true, le champ "body" sera alors également stocké dans
         l'index et pourra être affiché dans les résultats de recherche. Par défaut, le champ "body" est "tokenizé" et
         indexé, mais pas stocké.</para>
@@ -437,18 +437,18 @@ $index->addDocument($doc);
     <sect2 id="zend.search.lucene.index-creation.xlsx-documents">
         <title>Documents Excel 2007</title>
 
-        <para><code>Zend_Search_Lucene</code> offre une fonctionnalité d'analyse de documents Excel 2007. On peut créer
+        <para><classname>Zend_Search_Lucene</classname> offre une fonctionnalité d'analyse de documents Excel 2007. On peut créer
         directement un document depuis un fichier Excel 2007 : <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
 $index->addDocument($doc);
 ]]></programlisting></para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Xlsx</code> utilise la classe <code>ZipArchive</code> et les
+        <para>La classe <classname>Zend_Search_Lucene_Document_Xlsx</classname> utilise la classe <code>ZipArchive</code> et les
         méthodes de <code>simplexml</code> pour analyser le document source. Si la classe <code>ZipArchive</code> (issue
-        du module php_zip) n'est pas disponible, <code>Zend_Search_Lucene_Document_Xlsx</code> ne sera pas non plus
+        du module php_zip) n'est pas disponible, <classname>Zend_Search_Lucene_Document_Xlsx</classname> ne sera pas non plus
         disponible dans le Zend Framework.</para>
 
-        <para>La classe <code>Zend_Search_Lucene_Document_Xlsx</code> reconnaît les métadonnées et le texte des
+        <para>La classe <classname>Zend_Search_Lucene_Document_Xlsx</classname> reconnaît les métadonnées et le texte des
         documents. Les métadonnées sont constituées, suivant le contenu du document, du nom de fichier (filename), sujet
         (subject), créateur (creator), mots-clés (keywords), description, auteur de la dernière modification
         (lastModifiedBy), révision (revision), date de modification (modified), date de création (created).</para>
@@ -476,7 +476,7 @@ $index->addDocument($doc);
         <para>Le champ "body" contient le véritable contenu de toutes les cellules de toutes les feuilles de calcul du
         document Excel 2007.</para>
 
-        <para>La méthode <code>loadXlsxFile()</code> de la classe <code>Zend_Search_Lucene_Document_Xlsx</code> possède
+        <para>La méthode <code>loadXlsxFile()</code> de la classe <classname>Zend_Search_Lucene_Document_Xlsx</classname> possède
         également un second argument optionnel. S'il est défini à true, le champ "body" sera alors également stocké dans
         l'index et pourra être affiché dans les résultats de recherche. Par défaut, le champ "body" est "tokenizé" et
         indexé, mais pas stocké.</para>

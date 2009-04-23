@@ -5,8 +5,8 @@
     <sect2 id="zend.search.lucene.charset.description">
         <title>Support UTF-8 et caractères sur un octet</title>
 
-        <para><code>Zend_Search_Lucene</code> utilise l'UTF-8 en interne. Les fichiers d'index stockent des données
-        Unicode dans le "format UTF-8 modifié" de Java. <code>Zend_Search_Lucene</code> supporte totalement ce format, à
+        <para><classname>Zend_Search_Lucene</classname> utilise l'UTF-8 en interne. Les fichiers d'index stockent des données
+        Unicode dans le "format UTF-8 modifié" de Java. <classname>Zend_Search_Lucene</classname> supporte totalement ce format, à
         une exception près. <footnote>
                 <para>Zend_Search_Lucene supporte seulement les caractères Basic Multilingual Plane (BMP) (de 0x0000 à
                 0xFFFF) et ne supporte pas les "caractères supplémentaires" (caractères dont les codes sont supérieurs à
@@ -18,7 +18,7 @@
                 les caractères supplémentaires.</para>
             </footnote></para>
 
-        <para>L'encodage des caractères d'entrée peut être spécifié grâce à l'API de <code>Zend_Search_Lucene</code>.
+        <para>L'encodage des caractères d'entrée peut être spécifié grâce à l'API de <classname>Zend_Search_Lucene</classname>.
         Les données seront converties automatiquement en UTF-8.</para>
     </sect2>
 
@@ -44,11 +44,11 @@
     <sect2 id="zend.search.lucene.charset.utf_analyzer">
         <title>Analyseurs de texte compatibles UTF-8.</title>
 
-        <para><code>Zend_Search_Lucene</code> contient aussi des analyseurs compatibles UTF-8 :
-        <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
-        <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>,
-        <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>,
-        <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>.</para>
+        <para><classname>Zend_Search_Lucene</classname> contient aussi des analyseurs compatibles UTF-8 :
+        <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</classname>,
+        <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</classname>,
+        <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</classname>,
+        <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</classname>.</para>
 
         <para>N'importe quel analyseur peut être activé avec un code comme celui-ci: <programlisting
         role="php"><![CDATA[

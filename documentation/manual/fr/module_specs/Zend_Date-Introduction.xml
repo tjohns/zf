@@ -2,7 +2,7 @@
 <sect1 id="zend.date.introduction">
     <title>Introduction</title>
 
-    <para>Le composant <code>Zend_Date</code> fournit une API simple de manipulation des dates et des temps. Ses
+    <para>Le composant <classname>Zend_Date</classname> fournit une API simple de manipulation des dates et des temps. Ses
     méthodes acceptent un grand nombre de paramètres formatés, comme des parties de dates, et complètent bien le support
     natif des dates de PHP.</para>
 
@@ -10,10 +10,10 @@
     parties, les convertir ... mène vers une certaine complexité inévitable. Les dates et les temps sont souvent notés
     de manière très différente selon la locale. Par exemple, certaines locales placent le mois en premier, d'autres
     l'année. Pour plus d'information sur la gestion de la localisation et de la normalisation, voyez le manuel de <link
-    linkend="zend.locale.date.datesandtimes"><code>Zend_Locale</code></link>.</para>
+    linkend="zend.locale.date.datesandtimes"><classname>Zend_Locale</classname></link>.</para>
 
-    <para><code>Zend_Date</code> supporte aussi les noms abrégés des mois dans beaucoup de
-    langues.<code>Zend_Locale</code> facilite la localisation et la normalisation des mois localisés et des jours de
+    <para><classname>Zend_Date</classname> supporte aussi les noms abrégés des mois dans beaucoup de
+    langues.<classname>Zend_Locale</classname> facilite la localisation et la normalisation des mois localisés et des jours de
     semaines, leur conversion vers des timestamps.</para>
 
     <sect2 id="zend.date.setdefaulttimezone">
@@ -41,21 +41,21 @@ date_default_timezone_set('Europe/Berlin');
 
         <para>Souvenez vous que les fuseaux <emphasis role="strong">UTC</emphasis> et <emphasis
         role="strong">GMT</emphasis> n'incluent pas la notion "d'heure d'hiver"(Daylight Saving Time, DST). Donc même si
-        vous dites à <code>Zend_Date</code> de prendre en compte le DST, il sera annulé pour les futures instances de
-        <code>Zend_Date</code> utilisant UTC ou GMT.</para>
+        vous dites à <classname>Zend_Date</classname> de prendre en compte le DST, il sera annulé pour les futures instances de
+        <classname>Zend_Date</classname> utilisant UTC ou GMT.</para>
     </sect2>
 
     <sect2 id="zend.date.why">
         <title>Pourquoi utiliser Zend_Date?</title>
 
-        <para><code>Zend_Date</code> a les caractéristiques suivantes, qui étendent et complètent les fonctions de date
+        <para><classname>Zend_Date</classname> a les caractéristiques suivantes, qui étendent et complètent les fonctions de date
         de PHP :</para>
 
         <itemizedlist mark="opencircle">
             <listitem>
                 <para>API simple</para>
 
-                <para><code>Zend_Date</code> propose une API simple, qui combine les meilleures fonctionnalités depuis 4
+                <para><classname>Zend_Date</classname> propose une API simple, qui combine les meilleures fonctionnalités depuis 4
                 langages de programmation. Il est par exemple possible de comparer ou ajouter 2 dates.</para>
             </listitem>
 
@@ -70,7 +70,7 @@ date_default_timezone_set('Europe/Berlin');
                 <para>Timestamps infinis</para>
 
                 <para>La documentation de PHP 5.2 indique, "L'intervalle de validité des timestamps est du 13 Dec 1901
-                20:45:54 GMT au 19 Jan 2038 03:14:07 GMT", <code>Zend_Date</code> supporte un intervalle quasi illimité
+                20:45:54 GMT au 19 Jan 2038 03:14:07 GMT", <classname>Zend_Date</classname> supporte un intervalle quasi illimité
                 grâce à l'extension BCMath. Si l'extension BCMath n'est pas disponible, alors le support des timestamp
                 sera réduit à la valeur maximale du type PHP <code>float</code> supporté par le serveur. "La taille du
                 float est dépendant de la plate-forme, un maximum de ~1.8e308 avec une précision d'environ 14 décimales
@@ -87,10 +87,10 @@ date_default_timezone_set('Europe/Berlin');
                 identifiées correctement. Ces formats sont utiles pour le travail avec des bases de données. Par exemple
                 MSSQL et <ulink url="http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html">MySQL</ulink>
                 les utilise mais diffèrent légèrement dans leur format, cependant ils sont supportés par
-                <code>Zend_Date</code> grâce à la constante de spécification de format <link
+                <classname>Zend_Date</classname> grâce à la constante de spécification de format <link
                 linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>. Si les chaînes des dates sont conformes à
                 "Y/m/d" ou "Y-m-d H:i:s", selon les formats de <code>date()</code> de PHP, utilisez le support de
-                <code>Zend_Date</code> pour le format ISO 8601.</para>
+                <classname>Zend_Date</classname> pour le format ISO 8601.</para>
             </listitem>
 
             <listitem>

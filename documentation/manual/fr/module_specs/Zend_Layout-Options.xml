@@ -2,9 +2,9 @@
 <sect1 id="zend.layout.options">
     <title>Zend_Layout options de configuration</title>
 
-    <para><code>Zend_Layout</code> possède quelques options. Vous pouvez les spécifier grâce à des accesseurs.
-    Autrement, en passant un tableau ou un objet <code>Zend_Config</code> au constructeur, ou à <code>startMvc()</code>.
-    Un tableau d'options peut aussi être passé à <code>setOptions()</code>, un objet <code>Zend_Config</code> peut être
+    <para><classname>Zend_Layout</classname> possède quelques options. Vous pouvez les spécifier grâce à des accesseurs.
+    Autrement, en passant un tableau ou un objet <classname>Zend_Config</classname> au constructeur, ou à <code>startMvc()</code>.
+    Un tableau d'options peut aussi être passé à <code>setOptions()</code>, un objet <classname>Zend_Config</classname> peut être
     passé à <code>setConfig()</code>. Les options de configuration sont les suivantes :</para>
 
     <itemizedlist>
@@ -34,23 +34,23 @@
         </listitem>
 
         <listitem>
-            <para><emphasis>view</emphasis> : l'objet de vue (<code>Zend_View</code>) utilisée par le layout pour rendre
-            son script. Utilisé avec MVC, <code>Zend_Layout</code> cherchera à récupérer la vue via l'aide <link
+            <para><emphasis>view</emphasis> : l'objet de vue (<classname>Zend_View</classname>) utilisée par le layout pour rendre
+            son script. Utilisé avec MVC, <classname>Zend_Layout</classname> cherchera à récupérer la vue via l'aide <link
             linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>, si aucun objet de vue ne lui est
             passé explicitement. Les accesseurs sont <code>setView()</code> et <code>getView()</code>.</para>
         </listitem>
 
         <listitem>
             <para><emphasis>helperClass</emphasis> : la classe représentant l'aide d'action lorsque
-            <code>Zend_Layout</code> est utilisé avec les composants MVC. Par défaut il s'agit de
-            <code>Zend_Layout_Controller_Action_Helper_Layout</code>. Les accesseurs sont <code>setHelperClass()</code>
+            <classname>Zend_Layout</classname> est utilisé avec les composants MVC. Par défaut il s'agit de
+            <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>. Les accesseurs sont <code>setHelperClass()</code>
             et <code>getHelperClass()</code>.</para>
         </listitem>
 
         <listitem>
             <para><emphasis>pluginClass</emphasis> : la classe représentant le plugin de contrôleur frontal lorsque
-            <code>Zend_Layout</code> est utilisé avec les composants MVC. Par défaut, il s'agit de
-            <code>Zend_Layout_Controller_Plugin_Layout</code>. Les accesseurs sont <code>setPluginClass()</code> et
+            <classname>Zend_Layout</classname> est utilisé avec les composants MVC. Par défaut, il s'agit de
+            <classname>Zend_Layout_Controller_Plugin_Layout</classname>. Les accesseurs sont <code>setPluginClass()</code> et
             <code>getPluginClass()</code>.</para>
         </listitem>
 
@@ -97,7 +97,7 @@ $config = new Zend_Config_Ini('/chemin/vers/layout.ini', 'layout');
             <title>Passer des options au constructeur ou à startMvc()</title>
 
             <para>Le constructeur et la méthode statique <code>startMvc()</code> acceptent soit un tableau d'options,
-            soit un objet <code>Zend_Config</code>.</para>
+            soit un objet <classname>Zend_Config</classname>.</para>
 
             <para>Voyons le cas du tableau :</para>
 
@@ -121,13 +121,13 @@ $layout = new Zend_Layout($config);
 $layout = Zend_Layout::startMvc($config);
 ]]></programlisting>
 
-            <para>C'est la manière la plus simple de configurer votre objet <code>Zend_Layout</code>.</para>
+            <para>C'est la manière la plus simple de configurer votre objet <classname>Zend_Layout</classname>.</para>
         </example>
 
         <example id="zend.layout.options.examples.setoptionsconfig">
             <title>Utilisation de setOptions() et setConfig()</title>
 
-            <para>Pour configurer <code>Zend_Layout</code> après l'avoir instanciée, utilisez les méthodes
+            <para>Pour configurer <classname>Zend_Layout</classname> après l'avoir instanciée, utilisez les méthodes
             <code>setOptions()</code> et <code>setConfig()</code> sur l'objet :</para>
 
             <programlisting role="php"><![CDATA[
@@ -146,7 +146,7 @@ $layout->setConfig($options);
         <example id="zend.layout.options.examples.accessors">
             <title>Utilisation des accesseurs</title>
 
-            <para>Enfin, vous pouvez aussi configurer votre objet de <code>Zend_Layout</code> grâce à ses accesseurs.
+            <para>Enfin, vous pouvez aussi configurer votre objet de <classname>Zend_Layout</classname> grâce à ses accesseurs.
             Ils peuvent s'utiliser chaînés (interface fluide):</para>
 
             <programlisting role="php"><![CDATA[

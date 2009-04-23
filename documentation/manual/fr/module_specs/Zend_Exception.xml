@@ -2,7 +2,7 @@
 <sect1 id="zend.exception.using">
     <title>Utiliser les exceptions</title>
 
-    <para><code>Zend_Exception</code> est la classe de base dont dérivent toutes les exceptions levées par les classes
+    <para><classname>Zend_Exception</classname> est la classe de base dont dérivent toutes les exceptions levées par les classes
     de Zend Framework .</para>
 
     <example id="zend.exception.using.example">
@@ -23,11 +23,11 @@ try {
 ]]></programlisting>
     </example>
 
-    <para><code>Zend_Exception</code> peut être comme une classe d'exception catch-all dans un bloc try/catch pour
+    <para><classname>Zend_Exception</classname> peut être comme une classe d'exception catch-all dans un bloc try/catch pour
     traquer toues les exceptions levées par les classes de Zend Framework. Ceci peut être utile quand un programme
     n'arrive pas à fonctionner en essayant d'attraper un type d'exception spécifique.</para>
 
     <para>La documentation pour chaque composant de Zend Framework et de ses classes contient les informations plus
     spécifiques sur les méthodes qui lèvent des exceptions, les circonstances de lancement de ces exceptions et quelles
-    classes d'exception dérivent de <code>Zend_Exception</code>.</para>
+    classes d'exception dérivent de <classname>Zend_Exception</classname>.</para>
 </sect1>

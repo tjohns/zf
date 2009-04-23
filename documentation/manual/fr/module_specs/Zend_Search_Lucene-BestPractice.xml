@@ -8,14 +8,14 @@
         <title>Nommage des champs</title>
 
         <para>Il n'y a pas de limitation pour les noms de champs dans
-        <code>Zend_Search_Lucene</code>.</para>
+        <classname>Zend_Search_Lucene</classname>.</para>
 
         <para>Cependant, il est préférable de ne pas utiliser les noms '<emphasis>id</emphasis>' et
         '<emphasis>score</emphasis>' afin d'éviter toute ambiguïté dans les propriétés de
         <code>QueryHit</code>.</para>
 
         <para>Les propriétés <code>id</code> et <code>score</code> de
-        <code>Zend_Search_Lucene_Search_QueryHit</code> font toujours référence à l'identifiant
+        <classname>Zend_Search_Lucene_Search_QueryHit</classname> font toujours référence à l'identifiant
         interne du document Lucene et au <link
         linkend="zend.search.lucene.searching.results-scoring">score</link> de hit. Si le document
         indexé possède les mêmes champs stockés, vous devrez utiliser la méthode
@@ -104,8 +104,8 @@ $index->optimize();
                 </listitem>
             </itemizedlist> <note>
                 <para>Toutes ces options sont des propriétés de la classe
-                <code>Zend_Search_Lucene</code>, pas des propriétés d'index. Elles n'affectent que
-                les instances de <code>Zend_Search_Lucene</code> et peuvent varier selon les
+                <classname>Zend_Search_Lucene</classname>, pas des propriétés d'index. Elles n'affectent que
+                les instances de <classname>Zend_Search_Lucene</classname> et peuvent varier selon les
                 scripts.</para>
             </note></para>
 
@@ -142,7 +142,7 @@ $index->optimize();
         <para>De petits segments détériore généralement la qualité de l'index. Un grand nombre de
         petits segments peut aussi déclencher l'erreur "Too many open files" déterminée par les
         limitations du système d'exploitation<footnote>
-                <para><code>Zend_Search_Lucene</code> maintient chaque segment ouvert pour améliorer
+                <para><classname>Zend_Search_Lucene</classname> maintient chaque segment ouvert pour améliorer
                 les performances de recherche.</para>
             </footnote>.</para>
 
@@ -179,7 +179,7 @@ $index->optimize();
                 </listitem>
             </orderedlist></para>
 
-        <para><code>Zend_Search_Lucene</code> vérifie à chaque appel de <code>addDocument()</code>
+        <para><classname>Zend_Search_Lucene</classname> vérifie à chaque appel de <code>addDocument()</code>
         si la fusion de n'importe quel segment pour déplacer le segment nouvellement créé dans le
         groupe suivant. Si c'est le cas, la fusion est effectuée.</para>
 
@@ -210,7 +210,7 @@ $index->optimize();
     <sect2 id="zend.search.lucene.best-practice.shutting-down">
         <title>Indexation à l'arrêt du programme</title>
 
-        <para>L'instance de <code>Zend_Search_Lucene</code> effectue quelques tâches à la sortie du
+        <para>L'instance de <classname>Zend_Search_Lucene</classname> effectue quelques tâches à la sortie du
         programme si des documents ont été ajoutés à l'index mais pas écrits dans un nouveau
         segment.</para>
 
@@ -260,7 +260,7 @@ $index->commit();
         <para>C'est une pratique commune de stocker un identifiant unique de document dans l'index.
         Par exemple, une url, un chemin ou un identifiant tiré d'une base de données.</para>
 
-        <para><code>Zend_Search_Lucene</code> fournit une méthode <code>termDocs()</code> pour
+        <para><classname>Zend_Search_Lucene</classname> fournit une méthode <code>termDocs()</code> pour
         récupérer des documents contenant les termes spécifiés.</para>
 
         <para>C'est plus efficace que d'utiliser la méthode <code>find()</code> :<programlisting
@@ -304,7 +304,7 @@ foreach ($docIds as $id) {
     <sect2 id="zend.search.lucene.best-practice.memory-usage">
         <title>Utilisation de la mémoire</title>
 
-        <para><code>Zend_Search_Lucene</code> est un module relativement gourmand en mémoire.</para>
+        <para><classname>Zend_Search_Lucene</classname> est un module relativement gourmand en mémoire.</para>
 
         <para>Il utilise la mémoire pour mettre en cache certaines informations et optimiser la
         recherche, ainsi que les performances de l'indexation.</para>
@@ -314,7 +314,7 @@ foreach ($docIds as $id) {
         <para>L'index du dictionnaire des termes est chargé durant la recherche. Il s'agit de chaque
         128<superscript>ème</superscript><footnote>
                 <para>Le format de fichier Lucene permet de configurer ce nombre, mais
-                <code>Zend_Search_Lucene</code> n'expose pas cette possibilité dans l'API. Cependant
+                <classname>Zend_Search_Lucene</classname> n'expose pas cette possibilité dans l'API. Cependant
                 vous pouvez toujours configurer ce nombre si l'index est géré par une autre
                 implémentation de Lucene.</para>
             </footnote> terme du dictionnaire complet.</para>
@@ -341,8 +341,8 @@ foreach ($docIds as $id) {
     <sect2 id="zend.search.lucene.best-practice.encoding">
         <title>Encodage</title>
 
-        <para><code>Zend_Search_Lucene</code> travaille avec des chaînes en UTF-8 en interne. Ainsi
-        toutes les chaînes de caractères retournée par <code>Zend_Search_Lucene</code> sont encodées
+        <para><classname>Zend_Search_Lucene</classname> travaille avec des chaînes en UTF-8 en interne. Ainsi
+        toutes les chaînes de caractères retournée par <classname>Zend_Search_Lucene</classname> sont encodées
         en UTF-8.</para>
 
         <para>Vous ne devriez pas être concernés par l'encodage si vous travaillez avec des chaîne
@@ -351,7 +351,7 @@ foreach ($docIds as $id) {
         <para>Un mauvais encodage peut causer des notices (erreur) durant la conversation
         d'encodage, voire la perte de données.</para>
 
-        <para><code>Zend_Search_Lucene</code> offre un large éventail de possibilités d'encodage
+        <para><classname>Zend_Search_Lucene</classname> offre un large éventail de possibilités d'encodage
         pour les documents indexés et les requêtes analysées.</para>
 
         <para>L'encodage peut être explicitement spécifié en passant un paramètre optionnel à la
@@ -408,7 +408,7 @@ $hits = $index->find($queryStr);
     <sect2 id="zend.search.lucene.best-practice.maintenance">
         <title>Maintenance de l'index</title>
 
-        <para>Il devrait être clair que <code>Zend_Search_Lucene</code> comme toute autre
+        <para>Il devrait être clair que <classname>Zend_Search_Lucene</classname> comme toute autre
         implémentation de Lucene ne comporte pas de "base de données".</para>
 
         <para>Les index ne devrait pas être utilisés pour du stockage de données. Ils ne fournissent
@@ -416,7 +416,7 @@ $hits = $index->find($queryStr);
         beaucoup d'autres fonctionnalités assimilées aux systèmes de gestion de bases de
         données.</para>
 
-        <para>Cependant, <code>Zend_Search_Lucene</code> tente de garder ses index dans un état
+        <para>Cependant, <classname>Zend_Search_Lucene</classname> tente de garder ses index dans un état
         constant en tout temps.</para>
 
         <para>Le backup et la restauration d'un index devrait être effectué en copiant le contenu du

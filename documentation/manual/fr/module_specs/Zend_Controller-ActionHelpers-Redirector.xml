@@ -9,7 +9,7 @@
         de votre application, nécessaires à une redirection vers une nouvelle URL. Il fournit de nombreux avantages par
         rapport à la méthode <code>_redirect()</code>, comme la capacité de préconfigurer le comportement du site dans
         l'objet <code>Redirector</code> ou d'utiliser l'interface intégrée <code>gotoSimple($action, $controller,
-        $module, $params)</code> similaire à <code>Zend_Controller_Action::_forward()</code>.</para>
+        $module, $params)</code> similaire à <classname>Zend_Controller_Action::_forward()</classname>.</para>
 
         <para><code>Redirector</code> possède une certain nombre de méthodes qui peuvent être utilisées pour affecter le
         comportement de la redirection :</para>
@@ -28,7 +28,7 @@
             <listitem>
                 <para><code>setGotoSimple()</code> peut être utilisée pour paramétrer l'URL par défaut à utiliser si
                 aucune n'est fournie à <code>gotoSimple()</code>. Elle utilise les API de
-                <code>Zend_Controller_Action::_forward()</code> : <code>setGotoSimple($action, $controller = null,
+                <classname>Zend_Controller_Action::_forward()</classname> : <code>setGotoSimple($action, $controller = null,
                 $module = null, array $params = array());</code></para>
             </listitem>
 
@@ -168,7 +168,7 @@ class AlternativeController extends Zend_Controller_Action
         <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
             <title>Utilisation de l'API _forward() de goto()</title>
 
-            <para>L'API de <code>gotoSimple()</code> imite celle de <code>Zend_Controller_Action::_forward()</code>. La
+            <para>L'API de <code>gotoSimple()</code> imite celle de <classname>Zend_Controller_Action::_forward()</classname>. La
             différence principale est qu'elle construit une URL à partir des paramètres fournis, et du format de route
             par défaut <code>:module/:controller/:action/*</code> du routeur. Il réalise alors une redirection au lieu
             d'enchaîner l'action.</para>

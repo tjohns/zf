@@ -13,7 +13,7 @@
         <note>
             <para>Les caractères alphabétiques comprennent les caractères destinés à constituer des mots dans chaque
             langue. Cependant l'alphabet anglais est aussi utilisé pour les langues suivantes : chinois, japonais et
-            coréen. La langue est spécifiée par <code>Zend_Locale</code>.</para>
+            coréen. La langue est spécifiée par <classname>Zend_Locale</classname>.</para>
         </note>
     </sect2>
 
@@ -77,8 +77,8 @@
         supplémentaires '/' dans le chemin fourni et retourne le nom de chemin absolu. Le chemin retourné ne contient
         plus de liens symboliques, ou de composantes '/./' ou '/../'.</para>
 
-        <para><code>Zend_Filter_RealPath</code> retournera <code>FALSE</code> en cas d'échec, par exemple si un fichier
-        n'existe pas. Sur les systèmes BSD <code>Zend_Filter_RealPath</code> n'échouera pas si seul le dernier composant
+        <para><classname>Zend_Filter_RealPath</classname> retournera <code>FALSE</code> en cas d'échec, par exemple si un fichier
+        n'existe pas. Sur les systèmes BSD <classname>Zend_Filter_RealPath</classname> n'échouera pas si seul le dernier composant
         n'existe pas, tandis que tous les autres systèmes retourneront <code>FALSE</code>.</para>
     </sect2>
 

@@ -8,17 +8,17 @@
         <para>Cette classe représente une seule partie d'un message MIME. Elle contient le contenu actuel de la partie
         du message ainsi que des informations sur son encodage, le type de contenu ("content-type") et le nom de fichier
         original. Elle fournie une méthode pour générer une chaîne de caractères à partir des données stockées. Les
-        objets <code>Zend_Mime_Part</code> peuvent-être ajoutés à <link
-        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> pour assembler un message multipart
+        objets <classname>Zend_Mime_Part</classname> peuvent-être ajoutés à <link
+        linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link> pour assembler un message multipart
         complet.</para>
     </sect2>
 
     <sect2 id="zend.mime.part.instantiation">
         <title>Instanciation</title>
 
-        <para><code>Zend_Mime_Part</code> est instanciée avec une chaîne de caractères qui représente le contenu de
+        <para><classname>Zend_Mime_Part</classname> est instanciée avec une chaîne de caractères qui représente le contenu de
         cette nouvelle partie. Le type doit être <code>OCTET-STREAM</code>, et l'encodage 8 bits. Après instanciation de
-        <code>Zend_Mime_Part</code>, les métas-informations peuvent être définies en accédant directement aux attributs
+        <classname>Zend_Mime_Part</classname>, les métas-informations peuvent être définies en accédant directement aux attributs
         :</para>
 
         <programlisting role="php"><![CDATA[
@@ -40,7 +40,7 @@ public $language;
 
         <para><code>getContent()</code> retourne le contenu encodé de MimePart en une chaîne de caractères en utilisant
         l'encodage spécifié dans l'attribut <code>$encoding</code>. Les valeurs valides sont
-        <code>Zend_Mime::ENCODING_*</code>, les conversions de jeux de caractères ne sont pas effectuées.</para>
+        <classname>Zend_Mime::ENCODING_*</classname>, les conversions de jeux de caractères ne sont pas effectuées.</para>
 
         <para><code>getHeaders()</code> retourne les Mime-Headers d'un MimePart générés à partir des attributs
         accessibles publiquement. Les attributs de l'objet doivent être paramétrés correctement avant que cette méthode

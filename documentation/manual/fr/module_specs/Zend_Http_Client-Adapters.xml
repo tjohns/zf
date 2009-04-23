@@ -5,24 +5,24 @@
     <sect2 id="zend.http.client.adapters.overview">
         <title>Présentation globale</title>
 
-        <para><code>Zend_Http_Client</code> accepte des objets adaptateurs. Ces objets ont la responsabilité de soutenir
+        <para><classname>Zend_Http_Client</classname> accepte des objets adaptateurs. Ces objets ont la responsabilité de soutenir
         la connexion vers un serveur, à savoir écrire des requêtes et lire des réponses L'adaptateur peut donc être
         changé, et même écrit ou réécrit pour correspondre à vos besoins, sans avoir l'obligation de toucher à toute la
         classe dite "client". Vous vous connectez et manipulez votre connexion toujours de la même manière quelque soit
         l'adaptateur situé dessous.</para>
 
-        <para>Actuellement, la classe cliente <code>Zend_Http_Client</code> est fournie avec trois adaptateurs :
+        <para>Actuellement, la classe cliente <classname>Zend_Http_Client</classname> est fournie avec trois adaptateurs :
         <itemizedlist>
                 <listitem>
-                    <para><code>Zend_Http_Client_Adapter_Socket</code> (défaut)</para>
+                    <para><classname>Zend_Http_Client_Adapter_Socket</classname> (défaut)</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Http_Client_Adapter_Proxy</code></para>
+                    <para><classname>Zend_Http_Client_Adapter_Proxy</classname></para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Http_Client_Adapter_Test</code></para>
+                    <para><classname>Zend_Http_Client_Adapter_Test</classname></para>
                 </listitem>
             </itemizedlist></para>
 
@@ -30,7 +30,7 @@
         l'index 'adapter'. Fournissez alors une chaîne représentant la classe d'adaptateur à utiliser (par exemple
         'Zend_Http_Client_Adapter_Socket'), ou un objet directement (par exemple <code> new
         Zend_Http_Client_Adapter_Test</code>). Vous pouvez de même passer un adaptateur plus tard, avec la méthode
-        <code>Zend_Http_Client-&gt;setConfig()</code>.</para>
+        <classname>Zend_Http_Client-&gt;setConfig()</classname>.</para>
     </sect2>
 
     <sect2 id="zend.http.client.adapters.socket">
@@ -41,7 +41,7 @@
         de PHP.</para>
 
         <para>L'adaptateur Socket peut être configuré avec des options, passées par
-        <code>Zend_Http_Client-&gt;setConfig()</code> ou au constructeur du client. <table
+        <classname>Zend_Http_Client-&gt;setConfig()</classname> ou au constructeur du client. <table
                 id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket configuration</title>
 
@@ -239,7 +239,7 @@ $response = $client->request();
         ajouté à vos requêtes, via votre client.</para>
 
         <para><code>proxy_auth</code> définit le type d'authentification à utiliser, si le serveur Proxy demande une
-        authentification. Actuellement, seule la méthode "basic" (<code>Zend_Http_Client::AUTH_BASIC</code>) est
+        authentification. Actuellement, seule la méthode "basic" (<classname>Zend_Http_Client::AUTH_BASIC</classname>) est
         supportée.</para>
 
         <example id="zend.http.client.adapters.proxy.example-1">
@@ -274,12 +274,12 @@ $client = new Zend_Http_Client('http://www.example.com', $config);
         une application qui est en charge de lire un flux RSS aura besoin d'une connexion, qui n'est pas tout le temps
         disponible.</para>
 
-        <para>C'est pour cette raison que l'adaptateur <code>Zend_Http_Client_Adapter_Test</code> est présent. Vous
+        <para>C'est pour cette raison que l'adaptateur <classname>Zend_Http_Client_Adapter_Test</classname> est présent. Vous
         pouvez de cette manière écrire vos applications, et lors de la phase de tests, passer votre connexion sur
         l'adaptateur Test (objet mock).</para>
 
-        <para>La classe <code>Zend_Http_Client_Adapter_Test</code> possède une méthode supplémentaire,
-        <code>setResponse()</code>. Elle prend en paramètre un objet <code>Zend_Http_Response</code> ou une chaîne. Une
+        <para>La classe <classname>Zend_Http_Client_Adapter_Test</classname> possède une méthode supplémentaire,
+        <code>setResponse()</code>. Elle prend en paramètre un objet <classname>Zend_Http_Response</classname> ou une chaîne. Une
         fois cet objet de réponse déterminé, l'adaptateur de Test retournera toujours cette réponse, sans effectuer de
         réelle requête HTTP.</para>
 
@@ -357,7 +357,7 @@ $adapter->addResponse(
         </example>
 
         <para>La méthode <code>setResponse()</code> détruit toutes les réponses dans le buffer de
-        <code>Zend_Http_Client_Adapter_Test</code> et définit la première réponse qui sera retournée. La méthode
+        <classname>Zend_Http_Client_Adapter_Test</classname> et définit la première réponse qui sera retournée. La méthode
         <code>addResponse()</code> définit les réponses suivantes.</para>
 
         <para>Les réponses seront rejouées dans leur ordre d'ajout.</para>
@@ -378,7 +378,7 @@ $adapter->addResponse(
         possibilités de cache, ou des sockets persistantes.</para>
 
         <para>Pour ceci, votre classe d'adaptateur doit implémenter l'interface
-        <code>Zend_Http_Client_Adapter_Interface</code>. L'exemple suivant montre un squelette de classe. Toutes les
+        <classname>Zend_Http_Client_Adapter_Interface</classname>. L'exemple suivant montre un squelette de classe. Toutes les
         méthodes publiques, ici, sont indispensables à la classe, elles sont issues de l'interface :</para>
 
         <example id="zend.http.client.adapters.extending.example-1">

@@ -21,8 +21,8 @@ print "Correction de la langue ceci est la ligne deux\n";
     dans votre langue maternelle. Généralement vous devez traduire non seulement l'affichage, mais également les
     messages d'erreur et les messages de log.</para>
 
-    <para>La prochaine étape est d'inclure <code>Zend_Translate</code> dans votre code existant. Naturellement il est
-    beaucoup plus facile si vous écrivez dès le début votre code en utilisant <code>Zend_Translate</code> au lieu de
+    <para>La prochaine étape est d'inclure <classname>Zend_Translate</classname> dans votre code existant. Naturellement il est
+    beaucoup plus facile si vous écrivez dès le début votre code en utilisant <classname>Zend_Translate</classname> au lieu de
     modifier votre code après.</para>
 
     <example id="zend.translate.using.example2">
@@ -46,7 +46,7 @@ print $translate->_("Correction de la langue ceci est la ligne deux") . "\n";
 ]]></programlisting>
     </example>
 
-    <para>Maintenant regardons plus attentivement ce qui a été fait et la façon d'intégrer <code>Zend_Translate</code>
+    <para>Maintenant regardons plus attentivement ce qui a été fait et la façon d'intégrer <classname>Zend_Translate</classname>
     dans votre code.</para>
 
     <para>Créer un nouvel objet de traduction et définir l'adaptateur de base : <programlisting role="php"><![CDATA[
@@ -87,13 +87,13 @@ print $translate->_(2)."\n";
     <para>Vous ne pouvez pas voir ce que votre code devrait afficher juste en lisant celui-ci.</para>
 
     <para>En outre vous obtiendrez des problèmes si certaines chaînes ne sont pas traduites. Vous devez toujours
-    imaginer comment la traduction fonctionne. Premièrement <code>Zend_Translate</code> vérifie si la langue choisie a
+    imaginer comment la traduction fonctionne. Premièrement <classname>Zend_Translate</classname> vérifie si la langue choisie a
     une traduction pour l'identificateur de message ou la chaîne fournie. Si aucune chaîne de traduction n'a été
-    trouvée, elle se reporte sur la langue suivante comme définie dans <code>Zend_Locale</code>. Ainsi le "<emphasis
+    trouvée, elle se reporte sur la langue suivante comme définie dans <classname>Zend_Locale</classname>. Ainsi le "<emphasis
     role="strong">de_AT</emphasis>" devient seulement "<emphasis role="strong">de</emphasis>". Si aucune
     traduction n'est trouvée pour le "<emphasis role="strong">de</emphasis>", alors le message original est retourné. De
     cette façon vous avez toujours un affichage, au cas où la traduction de message n'existerait pas dans votre stockage
-    des messages. <code>Zend_Translate</code> ne lève jamais d'erreur ou d'exception en traduisant les chaînes.</para>
+    des messages. <classname>Zend_Translate</classname> ne lève jamais d'erreur ou d'exception en traduisant les chaînes.</para>
 
     <sect2 id="zend.translate.using.structure">
         <title>Structures des sources de traduction</title>
@@ -102,7 +102,7 @@ print $translate->_(2)."\n";
         traduisez. Chaque adaptateur est créé de sa propre manière comme décrit ici. Mais il y a quelques dispositifs
         généraux qui sont valables pour tous les adaptateurs.</para>
 
-        <para>Vous devrez savoir où stocker vos fichiers sources de traduction. Avec <code>Zend_Translate</code> vous
+        <para>Vous devrez savoir où stocker vos fichiers sources de traduction. Avec <classname>Zend_Translate</classname> vous
         n'avez aucune restriction. Les structures suivantes sont préférables :</para>
 
         <itemizedlist>
@@ -210,7 +210,7 @@ print $translate->_(2)."\n";
         </itemizedlist>
 
         <para>Les fichiers source uniques et structurés par langue sont les plus utilisés pour
-        <code>Zend_Translate</code>.</para>
+        <classname>Zend_Translate</classname>.</para>
 
         <para>Maintenant, que nous connaissons la structure que nous voulons avoir, nous devons créer nos fichiers
         sources de traduction.</para>
@@ -237,7 +237,7 @@ $translate->addTranslation($deutsch, 'de');
 ]]></programlisting>
 
         <para>Depuis la version 1.5 il est également possible d'avoir des tableaux inclus dans un fichier externe. Vous
-        devez simplement fournir le nom de fichier, <code>Zend_Translate</code> l'inclura automatiquement et recherchera
+        devez simplement fournir le nom de fichier, <classname>Zend_Translate</classname> l'inclura automatiquement et recherchera
         le tableau. Voir l'exemple suivant pour les détails :</para>
 
         <programlisting role="php"><![CDATA[
@@ -554,8 +554,8 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
                         <entry><code>null</code></entry>
 
                         <entry>Si réglé à <code>null</code>, aucun scan de la structure de répertoire ne sera effectué.
-                        Si réglé à <code>Zend_Translate::LOCALE_DIRECTORY</code>, la localisation sera détectée dans le
-                        répertoire. Si réglé à <code>Zend_Translate::LOCALE_FILENAME</code>, la localisation sera
+                        Si réglé à <classname>Zend_Translate::LOCALE_DIRECTORY</classname>, la localisation sera détectée dans le
+                        répertoire. Si réglé à <classname>Zend_Translate::LOCALE_FILENAME</classname>, la localisation sera
                         détectée dans le nom de fichier. Voir <xref linkend="zend.translate.using.detection" /> pour de
                         plus amples détails.</entry>
                     </row>
@@ -613,7 +613,7 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
         <para>En travaillant avec différentes langues il y a quelques méthodes qui seront utiles.</para>
 
         <para>La méthode <code>getLocale()</code> peut être utilisée pour récupérer la langue actuellement réglée. Elle
-        peut retourner soit une instance de <code>Zend_Locale</code>, soit un identifiant de localisation.</para>
+        peut retourner soit une instance de <classname>Zend_Locale</classname>, soit un identifiant de localisation.</para>
 
         <para>La méthode <code>setLocale()</code> règle une nouvelle langue standard pour la traduction. Ceci évite de
         placer le paramètre facultatif de langue plus d'une fois lors de l'appel de la méthode <code>translate()</code>.
@@ -657,7 +657,7 @@ if ($translate->isAvailable("fr")) {
             <title>Gestion automatique des langues</title>
 
             <para>Notez que tant que vous ajouterez les nouvelles sources de traduction seulement via la méthode
-            <code>addTranslation()</code>, <code>Zend_Translate</code> cherchera automatiquement la langue correspondant
+            <code>addTranslation()</code>, <classname>Zend_Translate</classname> cherchera automatiquement la langue correspondant
             au mieux à votre environnement quand vous utiliserez une des localisations automatiques "<code>auto</code>"
             ou "<code>browser</code>". Donc normalement vous ne devriez pas appeler <code>setLocale()</code>. Ceci ne
             doit être utilisé qu'en conjonction avec la détection automatique des sources de traduction.</para>
@@ -710,8 +710,8 @@ $translate->setLocale('it_IT');
             <para>Si vous voulez réactiver la détection automatique, réappelez <code>setLocale()</code> et passez lui la valeur
             <emphasis role="strong">auto</emphasis>.</para>
 
-            <para>Depuis Zend Framework 1.7.0 <code>Zend_Translate</code> reconnait une locale globale pour l'application.
-            Vous pouvez ainsi simplement mettre un objet <code>Zend_Locale</code> dans le registre, comme montré ci-après.
+            <para>Depuis Zend Framework 1.7.0 <classname>Zend_Translate</classname> reconnait une locale globale pour l'application.
+            Vous pouvez ainsi simplement mettre un objet <classname>Zend_Locale</classname> dans le registre, comme montré ci-après.
             Avec cette fonctionnalité, vous pouvez oublier le passage de la locale à votre objet de traduction.</para>
 
             <programlisting role="php"><![CDATA[

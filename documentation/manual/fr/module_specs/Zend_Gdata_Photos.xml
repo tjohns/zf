@@ -28,7 +28,7 @@
         authentifiées, ou non.</para>
 
         <para>Avant tout, il faut donc se connecter. Ceci se fait en deux étapes : créer un client HTTP, et insérer un
-        <code>Zend_Gdata_Photos</code> dans celui-ci.</para>
+        <classname>Zend_Gdata_Photos</classname> dans celui-ci.</para>
 
         <sect3 id="zend.gdata.photos.connecting.authentication">
             <title>Authentification</title>
@@ -51,7 +51,7 @@
                 </listitem>
             </itemizedlist>
 
-            <para>La librairie <code>Zend_Gdata</code> permet ces 2 types d'authentification. Le reste de ce chapitre
+            <para>La librairie <classname>Zend_Gdata</classname> permet ces 2 types d'authentification. Le reste de ce chapitre
             supposera que vous soyez habitué à l'authentification avec les service Web Google GData. Si ce n'est pas le
             cas, nous vous conseillons de consulter <link linkend="zend.gdata.introduction.authentication">la section
             authentification</link> de ce manuel, ou encore <ulink url="http://code.google.com/apis/gdata/auth.html">le
@@ -61,14 +61,14 @@
         <sect3 id="zend.gdata.photos.connecting.service">
             <title>Créer une instance du service</title>
 
-            <para>Pour interagir avec les serveurs, la classe <code>Zend_Gdata_Photos</code> sera nécessaire. Elle
+            <para>Pour interagir avec les serveurs, la classe <classname>Zend_Gdata_Photos</classname> sera nécessaire. Elle
             abstrait toute la logique de communication avec le Protocol Atom Publishing vers les serveurs de
             Google.</para>
 
             <para>Une fois que vous avez choisi une méthode d'authentification, vous devez créer une instance de
-            <code>Zend_Gdata_Photos</code>. Le constructeur prend en paramètre une instance de
-            <code>Zend_Http_Client</code>. Cette classe est l'interface AuthSub ou ClientAuth authentification. Si vous
-            ne passez pas cette instance en argument, alors une instance de <code>Zend_Http_Client</code> sera crée
+            <classname>Zend_Gdata_Photos</classname>. Le constructeur prend en paramètre une instance de
+            <classname>Zend_Http_Client</classname>. Cette classe est l'interface AuthSub ou ClientAuth authentification. Si vous
+            ne passez pas cette instance en argument, alors une instance de <classname>Zend_Http_Client</classname> sera crée
             automatiquement, mais en mode non authentifié.</para>
 
             <para>Voici un exemple qui démontre comment créer une classe vers le service avec le procédé

@@ -2,7 +2,7 @@
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
 
-    <para><code>Zend_ProgressBar_Adapter_Console</code> est un adaptateur de type texte pour les terminaux. Il peut
+    <para><classname>Zend_ProgressBar_Adapter_Console</classname> est un adaptateur de type texte pour les terminaux. Il peut
     automatiquement détecter la largeur du terminal mais supporte aussi des largeurs personnalisées. Vous pouvez définir
     quels éléments seront affichés avec la barre de progression et personnaliser leur ordre. Vous pouvez aussi définir
     le style de la barre de progression elle-même.</para>
@@ -16,18 +16,18 @@
     </note>
 
     <para>Vous pouvez paramétrer les options de l'adaptateur soit via les méthodes <code>set*</code> soit en fournissant
-    un tableau ("array") ou une instance <code>Zend_Config</code> en tant que premier paramètre du constructeur. Les
+    un tableau ("array") ou une instance <classname>Zend_Config</classname> en tant que premier paramètre du constructeur. Les
     options disponibles sont :</para>
 
     <itemizedlist>
         <listitem>
             <para><code>width</code> : soit un entier ou la constante <code>AUTO</code> de
-            <code>Zend_Console_ProgressBar</code>.</para>
+            <classname>Zend_Console_ProgressBar</classname>.</para>
         </listitem>
 
         <listitem>
             <para><code>elements</code> : soit <code>NULL</code> par défaut ou un tableau avec au moins l'une des
-            constantes de <code>Zend_Console_ProgressBar</code> suivantes comme valeur :</para>
+            constantes de <classname>Zend_Console_ProgressBar</classname> suivantes comme valeur :</para>
 
             <itemizedlist>
                 <listitem>

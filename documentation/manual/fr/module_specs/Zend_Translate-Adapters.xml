@@ -2,7 +2,7 @@
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
 
-    <para><code>Zend_Translate</code> peut manipuler différents adaptateurs pour la traduction. Chaque adaptateur a ses
+    <para><classname>Zend_Translate</classname> peut manipuler différents adaptateurs pour la traduction. Chaque adaptateur a ses
     propres avantages et inconvénients. Ci-dessous vous trouverez la liste complète de tous les adaptateurs supportés
     pour la traduction des fichiers sources.</para>
 
@@ -110,7 +110,7 @@
     <sect2 id="zend.translate.adapter.decision">
         <title>Comment décider quel adaptateur de traduction utiliser ?</title>
 
-        <para>Vous devrez décider quel adaptateur vous voulez utiliser avec <code>Zend_Translate</code>. Fréquemment,
+        <para>Vous devrez décider quel adaptateur vous voulez utiliser avec <classname>Zend_Translate</classname>. Fréquemment,
         des critères externes tels qu'une condition du projet ou une exigence du client détermine ceci pour vous, mais
         si vous êtes en position de le faire vous-même, les conseils suivants peuvent simplifier votre décision.</para>
 
@@ -164,7 +164,7 @@
             de traduction qui a été présenté par GNU, et est maintenant employé dans le monde entier. Il n'est pas
             lisible pour l'homme, mais il y a plusieurs outils gratuiciels (par exemple, <ulink
             url="http://sourceforge.net/projects/poedit/">POEdit</ulink>), qui sont très utiles. L'adaptateur
-            <code>Zend_Translate_Gettext</code> n'est pas implémenté en utilisant l'extension gettext de PHP. Vous
+            <classname>Zend_Translate_Gettext</classname> n'est pas implémenté en utilisant l'extension gettext de PHP. Vous
             pouvez utiliser l'adaptateur Gettext même si vous n'avez pas installer l'extension gettext de PHP. En outre
             l'adaptateur est "thread-safe" alors que l'extension gettext de PHP ne l'est pas actuellement.</para>
 
@@ -250,17 +250,17 @@
     <sect2 id="zend.translate.adapter.selfwritten">
         <title>Intégrer ses propres adaptateurs</title>
 
-        <para><code>Zend_Translate</code> vous permet d'intégrer et d'utiliser vos propres classes d'adaptateurs. Elles
+        <para><classname>Zend_Translate</classname> vous permet d'intégrer et d'utiliser vos propres classes d'adaptateurs. Elles
         peuvent être utilisées commes les classes standards qui sont déjà incluses dans
-        <code>Zend_Translate</code>.</para>
+        <classname>Zend_Translate</classname>.</para>
 
-        <para>Toute classe d'adaptateur que vous voulez utiliser avec <code>Zend_Translate</code> doit être une
-        sous-classe de <code>Zend_Translate_Adapter</code>. <code>Zend_Translate_Adapter</code> est une classe abstraite
+        <para>Toute classe d'adaptateur que vous voulez utiliser avec <classname>Zend_Translate</classname> doit être une
+        sous-classe de <classname>Zend_Translate_Adapter</classname>. <classname>Zend_Translate_Adapter</classname> est une classe abstraite
         qui définit déjà tout ce qui est nécessaire pour la traduction. Ce qui doit être fait par vous, est la
         définition du lecteur des données traduites.</para>
 
         <para>L'usage du préfixe "Zend" devrait être limité à Zend Framework. Si vous étendez
-        <code>Zend_Translate</code> avec votre propre adaptateur, vous devriez le nommer
+        <classname>Zend_Translate</classname> avec votre propre adaptateur, vous devriez le nommer
         "MonEntreprise_Translate_Adapter_MonFormat". Le code suivant montre un exemple de la manière dont une classe
         d'adaptateur personnalisée peut être implémentée :</para>
 
@@ -281,12 +281,12 @@ try {
     <sect2 id="zend.translate.adapter.caching">
         <title>Améliorer les performances de tous les adaptateurs</title>
 
-        <para><code>Zend_Translate</code> vous permet d'utiliser en interne <code>Zend_Cache</code> pour accélérer le
+        <para><classname>Zend_Translate</classname> vous permet d'utiliser en interne <classname>Zend_Cache</classname> pour accélérer le
         chargement des sources de traduction. Cela devient très pratique si vous utilisez beaucoup de sources de
         traduction ou des formats source vastes comme des fichiers au format XML.</para>
 
         <para>Pour utiliser le cache, vous devez juste fournir un objet de cache à la méthode
-        <code>Zend_Translate::setCache()</code>. Elle prend une instance de <code>Zend_Cache</code> comme seul
+        <classname>Zend_Translate::setCache()</classname>. Elle prend une instance de <classname>Zend_Cache</classname> comme seul
         paramètre. En outre si vous utilisez n'importe quel adaptateur direct, vous pouvez employer la méthode
         <code>setCache()</code>. Par commodité, il existe des méthodes statiques <code>getCache()</code>,
         <code>hasCache()</code>, <code>clearCache()</code> et <code>removeCache()</code>.</para>
@@ -304,7 +304,7 @@ $translate = new Zend_Translate('gettext',
 
         <note>
             <para>Vous devez paramétrer le cache <emphasis role="strong">avant</emphasis> d'utiliser ou d'initialiser
-            tout adaptateur ou instance de <code>Zend_Translate</code>. Sinon votre source de traduction ne sera pas
+            tout adaptateur ou instance de <classname>Zend_Translate</classname>. Sinon votre source de traduction ne sera pas
             mise en cache tant que vous n'aurez pas ajouté une nouvelle source avec la méthode
             <code>addTranslation()</code>.</para>
         </note>

@@ -2,8 +2,8 @@
 <sect1 id="zend.mail.smtp-authentication">
     <title>Authentification SMTP</title>
 
-    <para><code>Zend_Mail</code> supporte l'utilisation de l'authentification SMTP, qui peut être activé en passant le
-    paramètre "auth" au tableau de configuration du constructeur de <code>Zend_Mail_Transport_Smtp</code>. Les méthodes
+    <para><classname>Zend_Mail</classname> supporte l'utilisation de l'authentification SMTP, qui peut être activé en passant le
+    paramètre "auth" au tableau de configuration du constructeur de <classname>Zend_Mail_Transport_Smtp</classname>. Les méthodes
     d'authentification intégrées disponibles sont PLAIN, LOGIC et CRAM-MD5 qui ont tous besoins des valeurs "username"
     et "password" dans le tableau de configuration.</para>
 
@@ -31,6 +31,6 @@ $mail->send($transport);
 
         <para>Le type d'authentification est sensible à la casse mais ne contient pas de ponctuation. Par exemple, pour
         utiliser CRAM-MD5 vous devez passer <code>'auth' =&gt; 'crammd5'</code> dans le constructeur de
-        <code>Zend_Mail_Transport_Smtp</code>.</para>
+        <classname>Zend_Mail_Transport_Smtp</classname>.</para>
     </note>
 </sect1>

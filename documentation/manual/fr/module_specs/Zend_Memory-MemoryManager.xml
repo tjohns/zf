@@ -5,11 +5,11 @@
     <sect2 id="zend.memory.memory-manager.creation">
         <title>Créer un manager de mémoire</title>
 
-        <para>Vous pouvez créer un nouveau manager de mémoire (objet <code>Zend_Memory_Manager</code>) en utilisant la
-        méthode <code>Zend_Memory::factory($backendName [, $backendOprions])</code>.</para>
+        <para>Vous pouvez créer un nouveau manager de mémoire (objet <classname>Zend_Memory_Manager</classname>) en utilisant la
+        méthode <classname>Zend_Memory::factory($backendName [, $backendOprions])</classname>.</para>
 
         <para>Le premier argument <code>$backendName</code> est le nom d'un type de backend supporté par
-        <code>Zend_Cache</code></para>
+        <classname>Zend_Cache</classname></para>
 
         <para>Le second argument <code>$backendOptions</code> est un tableau optionnel indiquant les options du
         backend.</para>
@@ -48,7 +48,7 @@ $memoryManager = Zend_Memory::factory('None');
             <title>Créer des objets mobiles</title>
 
             <para>Créer des objets mobiles (objets qui peuvent être mis en cache) en utilisant la méthode
-            <code>Zend_Memory_Manager::create([$data])</code> : <programlisting role="php"><![CDATA[
+            <classname>Zend_Memory_Manager::create([$data])</classname> : <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 ]]></programlisting></para>
 
@@ -60,7 +60,7 @@ $memObject = $memoryManager->create($data);
             <title>Créer des objets verrouillés</title>
 
             <para>Créer des objets verrouillés (objets qui ne doivent pas être mis en cache) en utilisant la méthode
-            <code>Zend_Memory_Manager::createLocked([$data])</code> : <programlisting role="php"><![CDATA[
+            <classname>Zend_Memory_Manager::createLocked([$data])</classname> : <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);
 ]]></programlisting></para>
 

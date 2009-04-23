@@ -2,40 +2,40 @@
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
-    <para><code>Zend_File_Transfer</code> permet aux développeurs de contrôler l'upload de fichiers mais aussi le
+    <para><classname>Zend_File_Transfer</classname> permet aux développeurs de contrôler l'upload de fichiers mais aussi le
     téléchargement. Il vous permet d'utiliser les validateurs incorporés pour le traitement de fichier et même la
-    possibilité de changer les fichiers avec des filtres. <code>Zend_File_Transfer</code> fonctionne avec des
+    possibilité de changer les fichiers avec des filtres. <classname>Zend_File_Transfer</classname> fonctionne avec des
     adaptateurs ce qui vous permet d'utiliser la même API pour différents protocoles de transfert HTTP, FTP, WEBDAV et
     plus encore.</para>
 
     <note>
         <title>Limitation</title>
 
-        <para>L'implémentation actuelle de <code>Zend_File_Transfer</code> est limitée aux
+        <para>L'implémentation actuelle de <classname>Zend_File_Transfer</classname> est limitée aux
         uploads de type HTTP Post. Le téléchargement de fichiers et les autres adaptateurs seront ajoutés dans les
         prochaines versions. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous
-        devriez directement utiliser une instance de <code>Zend_File_Transfer_Adapter_Http</code>. Ceci changera dans le
+        devriez directement utiliser une instance de <classname>Zend_File_Transfer_Adapter_Http</classname>. Ceci changera dans le
         futur, dès qu'il existera des adaptateurs disponibles.</para>
     </note>
 
     <note>
         <title>Formulaires</title>
 
-        <para>Quand vous utilisez <code>Zend_Form</code> vous devriez lire et suivre les exemples décrits dans le
-        chapitre <code>Zend_Form</code> et ne pas utiliser manuellement <code>Zend_File_Transfer</code>. Mais les
+        <para>Quand vous utilisez <classname>Zend_Form</classname> vous devriez lire et suivre les exemples décrits dans le
+        chapitre <classname>Zend_Form</classname> et ne pas utiliser manuellement <classname>Zend_File_Transfer</classname>. Mais les
         informations que vous pourrez lire dans le présent chapitre vous seront malgré tout utile, même si vous ne
         l'utilisez pas directement. Toutes les considérations, descriptions et solutions sont les mêmes quand vous
-        utilisez <code>Zend_File_Transfer</code> au travers de <code>Zend_Form</code>.</para>
+        utilisez <classname>Zend_File_Transfer</classname> au travers de <classname>Zend_Form</classname>.</para>
     </note>
 
-    <para>L'utilisation de <code>Zend_File_Transfer</code> est assez simple. Il consiste en deux parties. Le formulaire
-    HTTP qui réalise l'upload, et la gestion des fichiers uploadés avec <code>Zend_File_Transfer</code>. Regardez
+    <para>L'utilisation de <classname>Zend_File_Transfer</classname> est assez simple. Il consiste en deux parties. Le formulaire
+    HTTP qui réalise l'upload, et la gestion des fichiers uploadés avec <classname>Zend_File_Transfer</classname>. Regardez
     l'exemple suivant :</para>
 
     <example id="zend.file.transfer.introduction.example">
         <title>Formulaire simple d'upload de fichier</title>
 
-        <para>Cet exemple illustre un upload de fichier basique avec <code>Zend_File_Transfer</code>. La première partie
+        <para>Cet exemple illustre un upload de fichier basique avec <classname>Zend_File_Transfer</classname>. La première partie
         est le formulaire. Dans notre exemple, il n'y a qu'un seul fichier que nous souhaitons uploadé.</para>
 
         <programlisting><![CDATA[
@@ -83,20 +83,20 @@ if (!$adapter->receive()) {
     <sect2 id="zend.file.transfer.introduction.adapters">
         <title>Adaptateurs supportés par Zend_File_Transfer</title>
 
-        <para><code>Zend_File_Transfer</code> est construit pur supporter différents adaptateurs et différentes
+        <para><classname>Zend_File_Transfer</classname> est construit pur supporter différents adaptateurs et différentes
         directions. Il est conçu pour permettre l'upload, le téléchargement et même l'envoi bidirectionnel (upload avec
         un adaptateur et télécharge avec un autre adaptateur en même temps) de fichiers. Cependant avec la version 1.6
         de Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur HTTP.</para>
 
         <para>Puisqu'il n'y a qu'un seul adaptateur disponible pour le moment, la classe principale n'est pas prête à
-        l'utilisation. Si vous souhaitez utiliser <code>Zend_File_Transfer</code>, vous devez utiliser l'adaptateur
+        l'utilisation. Si vous souhaitez utiliser <classname>Zend_File_Transfer</classname>, vous devez utiliser l'adaptateur
         directement.</para>
     </sect2>
 
     <sect2 id="zend.file.transfer.introduction.options">
         <title>Options de Zend_File_Transfer</title>
 
-        <para><code>Zend_File_Transfer</code> et ses adaptateurs supportent plusieurs options. Vous pouvez paramétrer
+        <para><classname>Zend_File_Transfer</classname> et ses adaptateurs supportent plusieurs options. Vous pouvez paramétrer
         toutes les options soit en les fournissant au constructeur, ou en utilisant <code>setOptions($options)</code>.
         <code>getOptions()</code> retournera les options actuellement paramétrées. Ci-dessous, vous trouverez la liste
         des options supportées :</para>
@@ -113,7 +113,7 @@ if (!$adapter->receive()) {
     <sect2 id="zend.file.transfer.introduction.checking">
         <title>Vérification des fichiers</title>
 
-        <para><code>Zend_File_Transfer</code> possède plusieurs méthodes qui permettent de vérifier suivant différentes
+        <para><classname>Zend_File_Transfer</classname> possède plusieurs méthodes qui permettent de vérifier suivant différentes
         considérations. Ceci est particulièrement utile quand vous devez travailler avec des fichiers qui ont été
         uploadés.</para>
 
@@ -168,7 +168,7 @@ $upload->receive();
     <sect2 id="zend.file.transfer.introduction.informations">
         <title>Informations complémentaires sur les fichiers</title>
 
-        <para><code>Zend_File_Transfer</code> peut fournir de multiples informations complémentaires sur les fichiers.
+        <para><classname>Zend_File_Transfer</classname> peut fournir de multiples informations complémentaires sur les fichiers.
         Les méthodes suivantes sont disponibles :</para>
 
         <itemizedlist>
@@ -303,7 +303,7 @@ $names = $upload->getMimeType('foo');
         <title>Progress for file uploads</title>
 
         <para>
-            <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress. To use
+            <classname>Zend_File_Transfer</classname> can give you the actual state of a fileupload in progress. To use
             this feature you need either the <code>APC</code> extension which is provided with most default
             PHP installations, or the <code>uploadprogress</code> extension. Both extensions are detected
             and used automatically. To be able to get the progress you need to meet some prerequisites.
@@ -316,8 +316,8 @@ $names = $upload->getMimeType('foo');
 
         <para>
             Second, you need to have the proper hidden fields added in the form which sends the files. When you
-            use <code>Zend_Form_Element_File</code> this hidden fields are automatically added by
-            <code>Zend_Form</code>.
+            use <classname>Zend_Form_Element_File</classname> this hidden fields are automatically added by
+            <classname>Zend_Form</classname>.
         </para>
 
         <para>

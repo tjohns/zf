@@ -11,7 +11,7 @@
 
     <itemizedlist>
         <listitem>
-            <para>Va désactiver les Layouts, si elles sont activées (<code>Zend_Layout</code>).</para>
+            <para>Va désactiver les Layouts, si elles sont activées (<classname>Zend_Layout</classname>).</para>
         </listitem>
 
         <listitem>

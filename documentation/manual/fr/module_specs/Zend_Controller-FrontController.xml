@@ -5,7 +5,7 @@
     <sect2 id="zend.controller.front.overview">
         <title>Présentation générale</title>
 
-        <para><code>Zend_Controller_Front</code> implémente un <ulink
+        <para><classname>Zend_Controller_Front</classname> implémente un <ulink
         url="http://www.martinfowler.com/eaaCatalog/frontController.html">motif de contrôleur frontal</ulink> utilisé
         dans les applications <ulink
         url="http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur">Modèle-Vue-Contrôleur (MVC)</ulink>. Son but
@@ -13,12 +13,12 @@
         quelles actions découvertes ; il agrège n'importe quelles réponses et les retourne quand le processus est
         complet.</para>
 
-        <para><code>Zend_Controller_Front</code> implémente aussi le <ulink
+        <para><classname>Zend_Controller_Front</classname> implémente aussi le <ulink
         url="http://fr.wikipedia.org/wiki/Singleton_%28motif_de_conception%29">motif Singleton</ulink>, signifiant que
         seule une instance du contrôleur frontal peut être disponible à n'importe quel moment. Cela lui permet aussi
         d'agir comme un enregistrement dans lequel les autres objets du processus de distribution peuvent écrire.</para>
 
-        <para><code>Zend_Controller_Front</code> enregistre un <link linkend="zend.controller.plugins">plugin
+        <para><classname>Zend_Controller_Front</classname> enregistre un <link linkend="zend.controller.plugins">plugin
         broker</link> avec lui, permettant à des événements divers qu'il déclenche d'être observés par plugins. Dans la
         plupart des cas, cela donne au développeur l'occasion de construire le processus de distribution du site sans
         avoir besoin d'étendre le contrôleur frontal pour ajouter une fonctionnalité.</para>
@@ -169,7 +169,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
         <sect3 id="zend.controller.front.methods.primary.run">
             <title>run()</title>
 
-            <para><code>Zend_Controller_Front::run($path)</code> est une méthode "raccourci", statique, prenant
+            <para><classname>Zend_Controller_Front::run($path)</classname> est une méthode "raccourci", statique, prenant
             simplement un chemin vers un répertoire contenant des contrôleurs. Elle récupère l'instance de contrôleur
             frontal (via <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>),
             enregistre le chemin fourni par l'intermédiaire de <link
@@ -283,7 +283,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para><code>returnResponse($flag)</code> est utilisée pour informer le contrôleur frontal soit de
                 récupérer la réponse (<code>true</code>) issue de <code>dispatch()</code>, ou si la réponse peut être
                 automatiquement émise (<code>false</code>). Par défaut la réponse est automatiquement émise (en appelant
-                <code>Zend_Controller_Response_Abstract::sendResponse()</code>) ; activer <code>returnResponse()</code>
+                <classname>Zend_Controller_Response_Abstract::sendResponse()</classname>) ; activer <code>returnResponse()</code>
                 surchargera ce comportement.</para>
 
                 <para>Les raisons de la récupération de la réponse incluent le désir de vérifier l'existence
@@ -373,8 +373,8 @@ class Mon_Controleur_Frontal extends Zend_Controller_Front
 ]]></programlisting>
 
         <para>Surcharger la méthode <code>getInstance()</code> assure que des appels suivants à
-        <code>Zend_Controller_Front::getInstance()</code> retourneront une instance de votre nouvelle sous-classe au
-        lieu d'une instance de <code>Zend_Controller_Front</code> - c'est particulièrement utile pour certains des
+        <classname>Zend_Controller_Front::getInstance()</classname> retourneront une instance de votre nouvelle sous-classe au
+        lieu d'une instance de <classname>Zend_Controller_Front</classname> - c'est particulièrement utile pour certains des
         routeurs alternatifs et certaines aides de vue.</para>
 
         <para>Typiquement, vous n'aurez pas besoin de sous-classer le contrôleur frontal à moins que vous ne deviez

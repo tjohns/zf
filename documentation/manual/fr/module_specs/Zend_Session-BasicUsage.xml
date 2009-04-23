@@ -2,33 +2,33 @@
 <sect1 id="zend.session.basic_usage">
     <title>Usage basique</title>
 
-    <para>Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de
+    <para>Les instances <classname>Zend_Session_Namespace</classname> fournissent l'API primaire pour manipuler les données de
     session dans Zend Framework. Les espaces de noms sont utilisés pour isoler toutes les données de session, bien
     qu'un espace de noms par défaut existe pour ceux qui veulent juste un endroit pour stocker toutes leurs données de
-    session. <code>Zend_Session</code> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme
+    session. <classname>Zend_Session</classname> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme
     mécanisme de stockage pour les données d'état de session. Bien que <code>$_SESSION</code> est toujours disponible
     dans l'espace global de PHP, les développeurs devraient s'abstenir d'accéder directement à elle, alors que
-    <code>Zend_Session</code> et <code>Zend_Session_Namespace</code> fournissent plus efficacement et plus solidement
+    <classname>Zend_Session</classname> et <classname>Zend_Session_Namespace</classname> fournissent plus efficacement et plus solidement
     leur suite de fonctionnalités liées à session.</para>
 
-    <para>Chaque instance de <code>Zend_Session_Namespace</code> correspond à une entrée dans le tableau de la
+    <para>Chaque instance de <classname>Zend_Session_Namespace</classname> correspond à une entrée dans le tableau de la
     superglobale <code>$_SESSION</code>, où l'espace de noms est utilisée comme une clé. <programlisting
     role="php"><![CDATA[
 $monNamespace = new Zend_Session_Namespace('monNamespace');
 
 // $monNamespace corresponds to $_SESSION['monNamespace']
 ]]></programlisting> Il est possible d'utiliser
-    <code>Zend_Session</code> conjointement avec d'autre code utilisant directement <code>$_SESSION</code>. Cependant,
+    <classname>Zend_Session</classname> conjointement avec d'autre code utilisant directement <code>$_SESSION</code>. Cependant,
     pour éviter les problèmes, il est fortement recommandé que ce code utilise seulement les parties de
-    <code>$_SESSION</code> ne correspondant pas aux instances de <code>Zend_Session_Namespace</code>.</para>
+    <code>$_SESSION</code> ne correspondant pas aux instances de <classname>Zend_Session_Namespace</classname>.</para>
 
     <sect2 id="zend.session.basic_usage.basic_examples">
         <title>Tutoriel d'exemples</title>
 
-        <para>Si aucun espace de noms n'est spécifié lors de l'instanciation de <code>Zend_Session_Namespace</code>,
+        <para>Si aucun espace de noms n'est spécifié lors de l'instanciation de <classname>Zend_Session_Namespace</classname>,
         toutes les données sont stockées de manière transparente dans un espace de noms appelé "<code>Default</code>".
-        <code>Zend_Session</code> n'est pas prévu pour fonctionner directement sur le contenu des conteneurs des espaces
-        de noms. Au lieu de cela, nous utilisons <code>Zend_Session_Namespace</code>. L'exemple ci-dessous montre
+        <classname>Zend_Session</classname> n'est pas prévu pour fonctionner directement sur le contenu des conteneurs des espaces
+        de noms. Au lieu de cela, nous utilisons <classname>Zend_Session_Namespace</classname>. L'exemple ci-dessous montre
         l'utilisation de cet espace de noms par défaut, en montrant comment compter le nombre de fois qu'un utilisateur
         a vu une page sur le site Web. Pour tester cet exemple, ajouter le code suivant à votre fichier d'amorçage ZF
         :</para>
@@ -52,9 +52,9 @@ echo "Page demandée lors de cette session : ",
 ]]></programlisting>
         </example>
 
-        <para>Quand de multiples modules utilisent des instances de <code>Zend_Session_Namespace</code> ayant différents
+        <para>Quand de multiples modules utilisent des instances de <classname>Zend_Session_Namespace</classname> ayant différents
         espaces de noms, chaque module obtient une encapsulation pour ses propres données de session. Le constructeur de
-        <code>Zend_Session_Namespace</code> peut recevoir un paramètre facultatif <code>$namespace</code>, qui permet
+        <classname>Zend_Session_Namespace</classname> peut recevoir un paramètre facultatif <code>$namespace</code>, qui permet
         aux développeurs la partition des données de session dans des espaces de noms séparés. Les espaces de noms
         fournissent une manière efficace et populaire de protéger un sous-ensemble de données de session contre un
         changement accidentel dû à des collisions de noms.</para>
@@ -93,7 +93,7 @@ $_SESSION['Un_Service_Web']['user'] = "monwebusername";
     <sect2 id="zend.session.basic_usage.iteration">
         <title>Énumérer les espaces de noms de session</title>
 
-        <para><code>Zend_Session_Namespace</code> fournit une <ulink
+        <para><classname>Zend_Session_Namespace</classname> fournit une <ulink
         url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">interface IteratorAggregate</ulink>
         complète, incluant le support de l'instruction <code>foreach</code> :</para>
 
@@ -114,7 +114,7 @@ foreach ($unNamespace as $index => $valeur) {
     <sect2 id="zend.session.basic_usage.accessors">
         <title>Accesseurs pour les espaces de noms de session</title>
 
-        <para><code>Zend_Session_Namespace</code> implémente <code>__get()</code>, <code>__set()</code>,
+        <para><classname>Zend_Session_Namespace</classname> implémente <code>__get()</code>, <code>__set()</code>,
         <code>__isset()</code>, et <code>__unset()</code>. <ulink
         url="http://www.php.net/manual/fr/language.oop5.overloading.php">Les méthodes magiques</ulink> ne devraient pas
         être utilisées directement, excepté à l'intérieur d'une sous-classe. Au lieu de cela, utilisez les opérateurs

@@ -9,7 +9,7 @@
         de requête</link>. Son but est de collecter du contenu et des en-têtes, afin d'être rendue. De plus, le
         contrôleur frontal passe les exceptions qu'il a rencontré à l'objet de réponse, vous offrant une possibilité
         élégante de les gérer. Ce comportement peut être changé avec
-        <code>Zend_Controller_Front::throwExceptions(true)</code>:</para>
+        <classname>Zend_Controller_Front::throwExceptions(true)</classname>:</para>
 
         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
@@ -23,7 +23,7 @@ $response->sendResponse();
 
         <note>
             <para>Par défaut le contrôleur frontal appelle <code>sendResponse()</code> lorsque la distribution est
-            terminée. Vous pouvez changer ce comportement avec <code>Zend_Controller_Front::returnResponse(true)</code>
+            terminée. Vous pouvez changer ce comportement avec <classname>Zend_Controller_Front::returnResponse(true)</classname>
             :</para>
 
             <programlisting role="php"><![CDATA[
@@ -51,7 +51,7 @@ $this->getResponse()
         <note>
             <para>Si vous utilisez <link linkend="zend.controller.action.viewintegration">des vues dans vos
             action</link>, vous n'avez pas besoin d'ajouter le rendu de la vue dans la réponse, car
-            <code>Zend_Controller_Action::render()</code> le fait par défaut.</para>
+            <classname>Zend_Controller_Action::render()</classname> le fait par défaut.</para>
         </note>
 
         <para>Si une exception est ajoutée par le contrôleur frontal à la réponse, utilisez <code>isException()</code>
@@ -323,7 +323,7 @@ array(
         système MVC mais aussi de l'afficher au client. De plus, l'objet collecte les exceptions et permet de les gérer,
         de les retourner, ou de les garder sous silence.</para>
 
-        <para>La classe de base est <code>Zend_Controller_Response_Abstract</code>, et toute dérivation devra en hériter
+        <para>La classe de base est <classname>Zend_Controller_Response_Abstract</classname>, et toute dérivation devra en hériter
         directement ou indirectement. Les méthodes qu'elle propose ont été vues dans les sections précédentes.</para>
 
         <para>Vous pouvez dériver l'objet de réponse pour plusieurs raisons, incluant la volonté de modifier le retour

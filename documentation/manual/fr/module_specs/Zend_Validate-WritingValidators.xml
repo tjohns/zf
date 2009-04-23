@@ -2,26 +2,26 @@
 <sect1 id="zend.validate.writing_validators">
     <title>Écrire des validateurs</title>
 
-    <para><code>Zend_Validate</code> fournit un ensemble de validateurs habituellement nécessaires, mais inévitablement,
+    <para><classname>Zend_Validate</classname> fournit un ensemble de validateurs habituellement nécessaires, mais inévitablement,
     les développeurs souhaiteront écrire des validateurs sur mesure pour leurs besoins particuliers. La méthode
     d'écriture d'un validateur personnalisé est décrit dans cette section.</para>
 
-    <para><code>Zend_Validate_Interface</code> définit trois méthodes, <code>isValid()</code>,
+    <para><classname>Zend_Validate_Interface</classname> définit trois méthodes, <code>isValid()</code>,
     <code>getMessages()</code>, et <code>getErrors()</code>, qui peuvent être implémentées par des classes d'utilisateur
     afin de créer les objets de validation sur mesure. Un objet qui implémente l'interface
-    <code>Zend_Validate_Interface</code> peut être ajouté à une chaîne de validateur avec
-    <code>Zend_Validate::addValidator()</code>. De tels objets peuvent également être employés avec <link
-    linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.</para>
+    <classname>Zend_Validate_Interface</classname> peut être ajouté à une chaîne de validateur avec
+    <classname>Zend_Validate::addValidator()</classname>. De tels objets peuvent également être employés avec <link
+    linkend="zend.filter.input"><classname>Zend_Filter_Input</classname></link>.</para>
 
-    <para>Comme vous avez déjà pu déduire de la description ci-dessus de <code>Zend_Validate_Interface</code>, les
+    <para>Comme vous avez déjà pu déduire de la description ci-dessus de <classname>Zend_Validate_Interface</classname>, les
     classes de validation fournie avec Zend Framework retourne une valeur booléenne pour savoir si une valeur est
     validée ou non. Elles fournissent également des informations sur la raison pour laquelle la validation a échoué sur
     une valeur. La mise à disposition de ces raisons d'échec de validation peut être utilisée par une application dans
     différents buts, tels que fournir des statistiques pour l'analyse de la facilité d'utilisation.</para>
 
     <para>La fonctionnalité de base de message d'échec de validation est implémentée dans
-    <code>Zend_Validate_Abstract</code>. Pour inclure cette fonctionnalité en créant une classe de validation, étendez
-    simplement <code>Zend_Validate_Abstract</code>. Dans la classe étendue vous implémenteriez la logique de la méthode
+    <classname>Zend_Validate_Abstract</classname>. Pour inclure cette fonctionnalité en créant une classe de validation, étendez
+    simplement <classname>Zend_Validate_Abstract</classname>. Dans la classe étendue vous implémenteriez la logique de la méthode
     <code>isValid()</code> et définiriez les variables de message et les modèles de message qui correspondent aux types
     d'échecs de validation qui peuvent se produire. Si une valeur ne passe pas vos essais de validation, alors
     <code>isValid()</code> devrait renvoyer <code>false</code>. Si la valeur passe vos essais de validation, alors

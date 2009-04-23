@@ -2,41 +2,41 @@
 <sect1 id="zend.timesync.introduction">
     <title>Introduction</title>
 
-    <para><code>Zend_TimeSync</code> est capable de recevoir une information temporelle depuis un serveur de temps, en
+    <para><classname>Zend_TimeSync</classname> est capable de recevoir une information temporelle depuis un serveur de temps, en
     utilisant les protocoles <emphasis role="strong">NTP</emphasis> ou <emphasis role="strong">SNTP</emphasis>. Avec
-    <code>Zend_TimeSync</code>, Zend Framework peut fonctionner sans se soucier de la configuration du temps (de la
+    <classname>Zend_TimeSync</classname>, Zend Framework peut fonctionner sans se soucier de la configuration du temps (de la
     date) du serveur sur lequel il tourne.</para>
 
-    <para>Pour se rendre indépendant du temps actuel sur le serveur, <code>Zend_TimeSync</code> fonctionne en calculant
+    <para>Pour se rendre indépendant du temps actuel sur le serveur, <classname>Zend_TimeSync</classname> fonctionne en calculant
     des différences entre le temps du serveur, et le temps réel actuel, en envoyant et recevant des paquets vers un
     serveur de gestion du temps, grâce aux protocoles NTP ou SNTP.</para>
 
     <note>
         <title>En tâche de fond</title>
 
-        <para><code>Zend_TimeSync</code> ne peut pas changer le temps sur le serveur, mais il peut en revanche retourner
+        <para><classname>Zend_TimeSync</classname> ne peut pas changer le temps sur le serveur, mais il peut en revanche retourner
         un objet <link linkend="zend.date.introduction">Zend_Date</link> de différence de temps, pour travailler
         avec.</para>
     </note>
 
     <sect2 id="zend.timesync.introduction.why">
-        <title>Pourquoi <code>Zend_TimeSync</code> ?</title>
+        <title>Pourquoi <classname>Zend_TimeSync</classname> ?</title>
 
-        <para>Pourquoi donc utiliser <code>Zend_TimeSync</code> ?</para>
+        <para>Pourquoi donc utiliser <classname>Zend_TimeSync</classname> ?</para>
 
         <para>En théorie, sur un serveur, un service (démon) tourne sur le système d'exploitation, pour s'occuper de la
         synchronisation précise du temps, avec un serveur distant de temps. Cependant il est possible que votre OS ne
         supporte pas ceci, ou que vous n'ayez pas les droits, ou la possibilité de gérer un tel service de
-        synchronisation. <code>Zend_TimeSync</code> prend alors tout son sens.</para>
+        synchronisation. <classname>Zend_TimeSync</classname> prend alors tout son sens.</para>
 
-        <para>Voici quelques exemples dans lesquels <code>Zend_TimeSync</code> est tout à fait adapté et utile :</para>
+        <para>Voici quelques exemples dans lesquels <classname>Zend_TimeSync</classname> est tout à fait adapté et utile :</para>
 
         <itemizedlist mark="opencircle">
             <listitem>
                 <para><emphasis role="strong">Serveur sans service de synchronisation du temps</emphasis></para>
 
                 <para>Si votre application tourne sur un serveur qui ne possède pas de service de synchronisation du
-                temps, alors utiliser <code>Zend_TimeSync</code> vous permettra de gérer le temps dans votre
+                temps, alors utiliser <classname>Zend_TimeSync</classname> vous permettra de gérer le temps dans votre
                 application.</para>
             </listitem>
 
@@ -64,7 +64,7 @@
             </listitem>
         </itemizedlist>
 
-        <para>Dans tous ces cas là, <code>Zend_TimeSync</code> est une solution parfaite lorsque vous ne pouvez
+        <para>Dans tous ces cas là, <classname>Zend_TimeSync</classname> est une solution parfaite lorsque vous ne pouvez
         installer de service sur vos serveurs.</para>
     </sect2>
 
@@ -89,9 +89,9 @@
     <sect2 id="zend.timesync.introduction.problematic">
         <title>Problèmes courants d'utilisation</title>
 
-        <para>Faites attention avec l'utilisation de <code>Zend_TimeSync</code>. Vous devrez garder en tête certains
+        <para>Faites attention avec l'utilisation de <classname>Zend_TimeSync</classname>. Vous devrez garder en tête certains
         détails concernant la structure de la synchronisation temporelle, et du Web lui-même. Les bonnes pratiques pour
-        éviter ces problèmes sont décrites ici. Lisez les bien avant d'utiliser <code>Zend_TimeSync</code>.</para>
+        éviter ces problèmes sont décrites ici. Lisez les bien avant d'utiliser <classname>Zend_TimeSync</classname>.</para>
     </sect2>
 
     <sect2 id="zend.timesync.introduction.decision">

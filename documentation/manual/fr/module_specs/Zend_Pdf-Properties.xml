@@ -9,7 +9,7 @@
 
     <para>Historiquement ces informations sont stockées dans une structure spéciale Info. Cette structure est disponible
     en lecture/écriture sous la forme d'un tableau associatif en utilisant la propriété publique <code>properties</code>
-    des objets <code>Zend_Pdf</code> : <programlisting role="php"><![CDATA[
+    des objets <classname>Zend_Pdf</classname> : <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 
 echo $pdf->properties['Title'] . "\n";
@@ -135,7 +135,7 @@ $pdf->save($pdfPath);
     Platform</ulink>).</para>
 
     <para>Ce document XML peut être récupéré et attaché au document PDF avec les méthodes
-    <code>Zend_Pdf::getMetadata()</code> et <code>Zend_Pdf::setMetadata($metadata)</code> : <programlisting
+    <classname>Zend_Pdf::getMetadata()</classname> et <classname>Zend_Pdf::setMetadata($metadata)</classname> : <programlisting
     role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 $metadata = $pdf->getMetadata();

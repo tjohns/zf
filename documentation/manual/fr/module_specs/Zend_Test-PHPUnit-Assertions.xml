@@ -3,7 +3,7 @@
     <title>Assertions</title>
 
     <para>Les assertions sont le coeur des tests unitaires; vous les utilisez pour vérifier que le résultat est bien
-    celui que vous attendiez. A cette fin, <code>Zend_Test_PHPUnit_ControllerTestCase</code> fournit un certain nombre
+    celui que vous attendiez. A cette fin, <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> fournit un certain nombre
     d'assertions pour simplifier le test de vos applications et contrôleurs MVC.</para>
 
     <sect3 id="zend.test.phpunit.assertions.query">
@@ -126,7 +126,7 @@
         <title>Les assertions de redirections</title>
 
         <para>Souvent une action va redirigé le visiteur. Plutôt que de suivre cette redirection,
-        <code>Zend_Test_PHPUnit_ControllerTestCase</code> vous permet de tester ces redirections avec un jeu
+        <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> vous permet de tester ces redirections avec un jeu
         d'assertions :</para>
 
         <itemizedlist>

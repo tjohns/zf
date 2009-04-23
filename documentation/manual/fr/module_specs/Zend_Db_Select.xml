@@ -5,13 +5,13 @@
     <sect2 id="zend.db.select.introduction">
         <title>Introduction</title>
 
-        <para>L'objet <code>Zend_Db_Select</code> représente une instruction de requête SQL de type <code>SELECT</code>.
+        <para>L'objet <classname>Zend_Db_Select</classname> représente une instruction de requête SQL de type <code>SELECT</code>.
         La classe a des méthodes pour ajouter différentes parties à la requête. Vous pouvez indiquer quelques parties de
         la requête en utilisant des structures de données et des méthodes de PHP, et la classe forme la syntaxe correcte
         de SQL pour vous. Après avoir construit une requête, vous pouvez l'exécuter comme si vous l'aviez écrite comme
         une chaîne de caractères.</para>
 
-        <para>Les possibilités offertes par <code>Zend_Db_Select</code> inclut :</para>
+        <para>Les possibilités offertes par <classname>Zend_Db_Select</classname> inclut :</para>
 
         <itemizedlist>
             <listitem>
@@ -33,18 +33,18 @@
             </listitem>
         </itemizedlist>
 
-        <para>L'utilisation de <code>Zend_Db_Select</code> n'est pas obligatoire. Pour de très simple requêtes SELECT ,
+        <para>L'utilisation de <classname>Zend_Db_Select</classname> n'est pas obligatoire. Pour de très simple requêtes SELECT ,
         il est d'habitude plus simple de spécifier la requête SQL entière comme une chaîne et l'exécuter en utilisant
         des méthodes de l'adaptateur comme <code>query()</code> ou <code>fetchAll()</code>. L'utilisation de
-        <code>Zend_Db_Select</code> est utile si vous devez assembler une requête SELECT par procédure, ou basé sur une
+        <classname>Zend_Db_Select</classname> est utile si vous devez assembler une requête SELECT par procédure, ou basé sur une
         logique conditionnelle dans votre application.</para>
     </sect2>
 
     <sect2 id="zend.db.select.creating">
         <title>Créer un objet Select</title>
 
-        <para>Vous pouvez créer une instance d'un objet <code>Zend_Db_Select</code> en utilisant la méthode
-        <code>select()</code> de l'objet <code>Zend_Db_Adapter_Abstract</code>.</para>
+        <para>Vous pouvez créer une instance d'un objet <classname>Zend_Db_Select</classname> en utilisant la méthode
+        <code>select()</code> de l'objet <classname>Zend_Db_Adapter_Abstract</classname>.</para>
 
         <example id="zend.db.select.creating.example-db">
             <title>Exemple d'utilisation de la méthode select()</title>
@@ -55,7 +55,7 @@ $select = $db->select();
 ]]></programlisting>
         </example>
 
-        <para>Une autre manière de créer un objet <code>Zend_Db_Select</code> est avec son constructeur, en indiquant
+        <para>Une autre manière de créer un objet <classname>Zend_Db_Select</classname> est avec son constructeur, en indiquant
         l'adaptateur de base de données comme argument.</para>
 
         <example id="zend.db.select.creating.example-new">
@@ -72,7 +72,7 @@ $select = new Zend_Db_Select($db);
         <title>Construction de requêtes Select</title>
 
         <para>En construisant la requête, vous pouvez ajouter des clauses à la requête une par une. Il y a une méthode
-        séparée pour ajouter chaque clause à l'objet <code>Zend_Db_Select</code>.</para>
+        séparée pour ajouter chaque clause à l'objet <classname>Zend_Db_Select</classname>.</para>
 
         <example id="zend.db.select.building.example">
             <title>Exemple d'utilisation des méthodes d'ajout de clauses</title>
@@ -116,7 +116,7 @@ $select = $db->select()
             <title>Ajouter une clause FROM</title>
 
             <para>Indiquez la table pour la requête en utilisant la méthode <code>from()</code>. Vous pouvez indiquer le
-            nom de table comme une chaîne de caractères. <code>Zend_Db_Select</code> applique l'échappement des
+            nom de table comme une chaîne de caractères. <classname>Zend_Db_Select</classname> applique l'échappement des
             identificateurs autour du nom de table, ainsi vous pouvez employer les caractères spéciaux.</para>
 
             <example id="zend.db.select.building.from.example">
@@ -135,7 +135,7 @@ $select = $db->select()
             <para>Vous pouvez également indiquer le nom de corrélation (parfois appelé "l'alias de table") pour une
             table. Au lieu d'une chaîne de caractère simple, employez un tableau associatif faisant correspondre le nom
             de corrélation au nom de table. Dans d'autres clauses de la requête SQL, employez ce nom de corrélation. Si
-            votre requête réalise des jointures sur plus d'une table, <code>Zend_Db_Select</code> produit des noms
+            votre requête réalise des jointures sur plus d'une table, <classname>Zend_Db_Select</classname> produit des noms
             uniques de corrélation basés sur les noms de table, pour chaque table pour lesquelles vous n'indiquez pas le
             nom de corrélation.</para>
 
@@ -153,7 +153,7 @@ $select = $db->select()
             </example>
 
             <para>Certaines marques de SGBDR supportent un spécificateur de schéma principal pour une table. Vous pouvez
-            spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>", où <code>Zend_Db_Select</code>
+            spécifiez un nom de table comme "<code>nomDuSchema.nomDeTable</code>", où <classname>Zend_Db_Select</classname>
             échappera chaque partie individuellement, ou vous pouvez spécifier le nom du schéma séparément. Un nom de
             schéma spécifié dans le nom de table sera prioritaire sur un schéma fourni séparément dans les cas où les
             deux seraient fournis.</para>
@@ -195,7 +195,7 @@ $select = $db->select()
             la méthode <code>join()</code>.</para>
 
             <para>Vous pouvez indiquer le nom de colonne en tant que "<code>aliasDeTable.nomDeColonne</code>".
-            <code>Zend_Db_Select</code> échappera chaque partie individuellement. Si vous n'indiquez pas un nom d'alias
+            <classname>Zend_Db_Select</classname> échappera chaque partie individuellement. Si vous n'indiquez pas un nom d'alias
             pour une colonne, elle emploie le nom de corrélation de la table nommée dans la méthode courante
             <code>from()</code>.</para>
 
@@ -235,18 +235,18 @@ $select = $db->select()
 
             <para>Les colonnes dans les requêtes SQL sont parfois des expressions, pas simplement des noms de colonnes
             d'une table. Les expressions peuvent avoir des noms d'alias ou peuvent nécessiter d'être échappées. Si la
-            chaîne de caractère désignant votre colonne contient des parenthèses, <code>Zend_Db_Select</code> la
+            chaîne de caractère désignant votre colonne contient des parenthèses, <classname>Zend_Db_Select</classname> la
             reconnaît comme une expression.</para>
 
-            <para>Vous pouvez aussi créer un objet de type <code>Zend_Db_Expr</code> explicitement, pour éviter qu'une
-            chaîne soit traitée comme un nom de colonne. <code>Zend_Db_Expr</code> est une classe minimale qui contient
-            une unique chaîne de caractère. <code>Zend_Db_Select</code> reconnaît les objets de type
-            <code>Zend_Db_Expr</code> et les convertit en chaînes de caractères, mais n'applique aucun changement, tel
+            <para>Vous pouvez aussi créer un objet de type <classname>Zend_Db_Expr</classname> explicitement, pour éviter qu'une
+            chaîne soit traitée comme un nom de colonne. <classname>Zend_Db_Expr</classname> est une classe minimale qui contient
+            une unique chaîne de caractère. <classname>Zend_Db_Select</classname> reconnaît les objets de type
+            <classname>Zend_Db_Expr</classname> et les convertit en chaînes de caractères, mais n'applique aucun changement, tel
             qu'un échappement ou un alias.</para>
 
             <note>
-                <para>Utiliser <code>Zend_Db_Expr</code> pour les noms de colonnes n'est pas nécessaire si votre
-                expression de colonne contient des parenthèses ; <code>Zend_Db_Select</code> reconnaît les parenthèses
+                <para>Utiliser <classname>Zend_Db_Expr</classname> pour les noms de colonnes n'est pas nécessaire si votre
+                expression de colonne contient des parenthèses ; <classname>Zend_Db_Select</classname> reconnaît les parenthèses
                 et traite la chaîne comme une expression en omettant l'échappement et les alias.</para>
             </note>
 
@@ -285,7 +285,7 @@ $select = $db->select()
 ]]></programlisting>
             </example>
 
-            <para>Dans les cas ci-dessus, <code>Zend_Db_Select</code> ne change pas la chaîne pour appliquer des alias
+            <para>Dans les cas ci-dessus, <classname>Zend_Db_Select</classname> ne change pas la chaîne pour appliquer des alias
             ou échapper les identificateurs. Si ces changements sont nécessaires pour résoudre l'ambiguïté, vous devez
             faire manuellement les changements dans la chaîne de caractères.</para>
 
@@ -326,7 +326,7 @@ $select = $db->select()
             <para>Il peut y avoir des cas où vous souhaitez ajouter des colonnes à une table FROM ou JOIN existante
             après que ces méthodes aient été appelées. La méthode <code>columns()</code> vous permet d'ajouter des
             colonnes spécifiques à n'importe quel moment avant que la requête ne soit exécutée. Vous pouvez fournir les
-            colonnes en tant qu'une chaîne de caractères, une <code>Zend_Db_Expr</code> ou un tableau de ces derniers.
+            colonnes en tant qu'une chaîne de caractères, une <classname>Zend_Db_Expr</classname> ou un tableau de ces derniers.
             Le second argument de cette méthode peut être omis, impliquant que les colonnes sont ajoutées à la table
             FROM, sinon un alias déjà défini doit être utilisé.</para>
 
@@ -391,7 +391,7 @@ $select = $db->select()
 
             <para>Le troisième argument de <code>join()</code> est un tableau des noms de colonnes, comme c'est utilisé
             dans la méthode <code>from()</code>. La valeur par défaut est "<code>*</code>", la méthode supporte les
-            alias, les expressions, et les objets <code>Zend_Db_Expr</code> de la même manière que le tableau de noms de
+            alias, les expressions, et les objets <classname>Zend_Db_Expr</classname> de la même manière que le tableau de noms de
             colonnes de la méthode <code>from()</code>.</para>
 
             <para>Pour ne choisir aucune colonne à partir d'une table, utilisez un tableau vide pour la liste de
@@ -421,7 +421,7 @@ $select = $db->select()
             </example>
 
             <para>Le SQL a plusieurs types de jointures. Voyez la liste ci-dessous des méthodes supportant les
-            différents types de jointures dans <code>Zend_Db_Select</code>.</para>
+            différents types de jointures dans <classname>Zend_Db_Select</classname>.</para>
 
             <itemizedlist>
                 <listitem>
@@ -503,7 +503,7 @@ $select = $db->select()
 
             <para>En plus de ces méthodes join, vous pouvez simplifier vos requêtes en utilisant les méthodes de type
             <code>join*Using</code>. Au lieu de fournir une condition complète à votre jointure, vous fournissez
-            simplement le nom de la colonne sur laquelle réaliser la jointure et l'objet <code>Zend_Db_Select</code>
+            simplement le nom de la colonne sur laquelle réaliser la jointure et l'objet <classname>Zend_Db_Select</classname>
             complète la condition pour vous.</para>
 
             <example id="zend.db.select.building.joinusing.example">
@@ -524,7 +524,7 @@ $select = $db->select()
 ]]></programlisting>
             </example>
 
-            <para>Chacune des méthodes join applicables du composant <code>Zend_Db_Select</code> possède une méthode
+            <para>Chacune des méthodes join applicables du composant <classname>Zend_Db_Select</classname> possède une méthode
             correspondante "using".</para>
 
             <itemizedlist>
@@ -577,7 +577,7 @@ $select = $db->select()
             </note>
 
             <para>Le second argument de la méthode <code>where()</code> est optionnel. C'est une valeur à substituer
-            dans l'expression. <code>Zend_Db_Select</code> échappe cette valeur et la substitue au caractère point
+            dans l'expression. <classname>Zend_Db_Select</classname> échappe cette valeur et la substitue au caractère point
             ("<code>?</code>") d'interrogation dans l'expression.</para>
 
             <para>Cette méthode accepte un seul paramètre. Si vous avez une expression dans laquelle vous devez
@@ -603,7 +603,7 @@ $select = $db->select()
             </example>
 
             <para>Vous pouvez appeler la méthode <code>where()</code> plusieurs fois sur la même objet
-            <code>Zend_Db_Select</code>. La requête résultante combine les différents termes ensemble en utilisant
+            <classname>Zend_Db_Select</classname>. La requête résultante combine les différents termes ensemble en utilisant
             <code>AND</code> entre eux.</para>
 
             <example id="zend.db.select.building.where.example-and">
@@ -652,7 +652,7 @@ $select = $db->select()
 ]]></programlisting>
             </example>
 
-            <para><code>Zend_Db_Select</code> met automatiquement des parenthèses autour de chaque expression spécifiée
+            <para><classname>Zend_Db_Select</classname> met automatiquement des parenthèses autour de chaque expression spécifiée
             en utilisant les méthodes <code>where()</code> ou <code>orWhere()</code>. Ceci permet de s'assurer que la
             priorité de l'opérateur booléen n'entraîne pas de résultats inattendus.</para>
 
@@ -679,7 +679,7 @@ $select = $db->select()
             </example>
 
             <para>Dans l'exemple ci-dessus, le résultat serait tout à fait différent sans parenthèses, car
-            <code>AND</code> a une plus grande priorité que <code>OR</code>. <code>Zend_Db_Select</code> applique les
+            <code>AND</code> a une plus grande priorité que <code>OR</code>. <classname>Zend_Db_Select</classname> applique les
             parenthèses avec pour effet de relier de manière plus étroite chaque expression dans les appels successifs
             de <code>where()</code> qu'avec <code>AND</code> qui combine les expressions.</para>
         </sect3>
@@ -691,7 +691,7 @@ $select = $db->select()
             résultat de la requête à une ligne par valeur unique trouvé dans une(des) colonne(s) nommées) dans la clause
             <code>GROUP BY</code>.</para>
 
-            <para>Dans <code>Zend_Db_Select</code>, vous pouvez spécifier la(es) colonne(s) à utiliser pour calculer les
+            <para>Dans <classname>Zend_Db_Select</classname>, vous pouvez spécifier la(es) colonne(s) à utiliser pour calculer les
             groupes de lignes en utilisant la méthode <code>group()</code>. L'argument de cette méthode est une colonne
             ou un tableau de colonnes à utiliser dans la clause <code>GROUP BY</code>.</para>
 
@@ -717,7 +717,7 @@ $select = $db->select()
 
             <para>Comme le tableau de colonnes de la méthode <code>from()</code>, vous pouvez utiliser des noms d'alias
             dans le nom de la colonne, et la colonne est échappée comme un identificateur à moins que la chaîne ne
-            contiennent des parenthèses ou que ce soit un objet de type <code>Zend_Db_Expr</code>.</para>
+            contiennent des parenthèses ou que ce soit un objet de type <classname>Zend_Db_Expr</classname>.</para>
         </sect3>
 
         <sect3 id="zend.db.select.building.having">
@@ -729,7 +729,7 @@ $select = $db->select()
             groupes de lignes ne soient définis, alors que les conditions <code>HAVING</code> sont appliquées après que
             les groupes aient été définis.</para>
 
-            <para>Dans <code>Zend_Db_Select</code>, vous pouvez spécifier des conditions pour restreindre des groupes en
+            <para>Dans <classname>Zend_Db_Select</classname>, vous pouvez spécifier des conditions pour restreindre des groupes en
             utilisant la méthode <code>having()</code>. Son utilisation est similaire à celle de la méthode
             <code>where()</code>. Le premier argument est une chaîne contenant une expression SQL. Le second argument
             facultatif est une valeur qui est utilisé pour remplacer le caractère de substitution positionné dans
@@ -776,14 +776,14 @@ $select = $db->select()
             ascendant (du plus petit vers le plus grand). Vous pouvez aussi appliqué un tri descendant (du plus grand
             vers le plus petit) pour une colonne en spécifiant le mot-clé <code>DESC</code> après la colonne.</para>
 
-            <para>Dans <code>Zend_Db_Select</code>, vous pouvez utiliser la méthode <code>order()</code> pour spécifier
+            <para>Dans <classname>Zend_Db_Select</classname>, vous pouvez utiliser la méthode <code>order()</code> pour spécifier
             une colonne ou un tableau de colonnes par lesquelles vous voulez trier. Chaque élément du tableau est une
             chaîne nommant une colonne, facultativement suivi les mots-clés <code>ASC</code> ou <code>DESC</code> en
             séparant avec un espace.</para>
 
             <para>Comme pour les méthodes <code>from()</code> et <code>group()</code>, les noms de colonnes sont
             échappées comme des identificateurs, à moins qu'elles ne contiennent des parenthèses ou ne soient des objets
-            de type <code>Zend_Db_Expr</code>.</para>
+            de type <classname>Zend_Db_Expr</classname>.</para>
 
             <example id="zend.db.select.building.order.example">
                 <title>Exemple d'utilisation de la méthode <code>order()</code></title>
@@ -818,7 +818,7 @@ $select = $db->select()
             facilite l'extraction d'un sous-ensemble d'un résultat, par exemple quand vous affichez des résultats avec
             un défilement de pages.</para>
 
-            <para>Dans <code>Zend_Db_Select</code>, vous pouvez utiliser la méthode <code>limit()</code> pour spécifier
+            <para>Dans <classname>Zend_Db_Select</classname>, vous pouvez utiliser la méthode <code>limit()</code> pour spécifier
             le nombre de lignes ainsi que le nombre de lignes à omettre. Le premier argument de cette méthode est le
             nombre de lignes désirées. Le second argument est le nombre de lignes à omettre.</para>
 
@@ -841,7 +841,7 @@ $select = $db->select()
             <note>
                 <para>La syntaxe <code>LIMIT</code> n'est pas supporté par toutes les marques de SGBDR. Quelques SGBDR
                 nécessite une syntaxe différente pour supporter une fonctionnalité similaire. Chaque classe
-                <code>Zend_Db_Adapter_Abstract</code> inclue une méthode pour produire le code SQL approprié à ce
+                <classname>Zend_Db_Adapter_Abstract</classname> inclue une méthode pour produire le code SQL approprié à ce
                 SGBDR.</para>
             </note>
 
@@ -917,16 +917,16 @@ $select = $db->select()
         <title>Exécuter des requêtes Select</title>
 
         <para>Cette section décrit comment exécuter une requête représentée par un objet
-        <code>Zend_Db_Select</code>.</para>
+        <classname>Zend_Db_Select</classname>.</para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
             <title>Exécuter des requêtes Select à partir de l'adaptateur Db</title>
 
-            <para>Vous pouvez exécuter la requête représentée par l'objet <code>Zend_Db_Select</code> en le passant
-            comme premier argument de la méthode <code>query()</code> d'un objet <code>Zend_Db_Adapter_Abstract</code>.
-            Utilisez les objets <code>Zend_Db_Select</code> plutôt qu'une simple chaîne de requête.</para>
+            <para>Vous pouvez exécuter la requête représentée par l'objet <classname>Zend_Db_Select</classname> en le passant
+            comme premier argument de la méthode <code>query()</code> d'un objet <classname>Zend_Db_Adapter_Abstract</classname>.
+            Utilisez les objets <classname>Zend_Db_Select</classname> plutôt qu'une simple chaîne de requête.</para>
 
-            <para>La méthode <code>query()</code> retourne un objet de type <code>Zend_Db_Statement</code> ou
+            <para>La méthode <code>query()</code> retourne un objet de type <classname>Zend_Db_Statement</classname> ou
             <code>PDOStatement</code>, dépendant du type d'adaptateur.</para>
 
             <example id="zend.db.select.execute.query-adapter.example">
@@ -946,8 +946,8 @@ $result = $stmt->fetchAll();
             <title>Exécuter des requêtes Select à partir de objet Select</title>
 
             <para>Comme alternative à l'emploi de la méthode <code>query()</code>de l'objet adaptateur, vous pouvez
-            utiliser la méthode <code>query()</code> de l'objet <code>Zend_Db_Select</code>. Les deux méthodes retourne
-            un objet de type <code>Zend_Db_Statement</code> ou <code>PDOStatement</code>, dépendant du type
+            utiliser la méthode <code>query()</code> de l'objet <classname>Zend_Db_Select</classname>. Les deux méthodes retourne
+            un objet de type <classname>Zend_Db_Statement</classname> ou <code>PDOStatement</code>, dépendant du type
             d'adaptateur.</para>
 
             <example id="zend.db.select.execute.query-select.example">
@@ -967,7 +967,7 @@ $result = $stmt->fetchAll();
             <title>Convertir un objet Select en une chaîne SQL</title>
 
             <para>Si vous devez accéder à la chaîne représentant la requête SQL correspondant à un objet
-            <code>Zend_Db_Select</code>, utilisez la méthode <code>__toString()</code>.</para>
+            <classname>Zend_Db_Select</classname>, utilisez la méthode <code>__toString()</code>.</para>
 
             <example id="zend.db.select.execute.tostring.example">
                 <title>Exemple d'utilisation de la méthode <code>__toString()</code></title>
@@ -989,7 +989,7 @@ echo "$sql\n";
     <sect2 id="zend.db.select.other">
         <title>Autres méthodes</title>
 
-        <para>Cette section décrit les autres méthodes de la classe <code>Zend_Db_Select</code> qui ne sont pas
+        <para>Cette section décrit les autres méthodes de la classe <classname>Zend_Db_Select</classname> qui ne sont pas
         couvertes ci-dessus : <code>getPart()</code> et <code>reset()</code>.</para>
 
         <sect3 id="zend.db.select.other.get-part">
@@ -1026,61 +1026,61 @@ echo "$sql\n";
 
                     <tbody>
                         <row>
-                            <entry><code>Zend_Db_Select::DISTINCT</code></entry>
+                            <entry><classname>Zend_Db_Select::DISTINCT</classname></entry>
 
                             <entry><code>'distinct'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FOR_UPDATE</code></entry>
+                            <entry><classname>Zend_Db_Select::FOR_UPDATE</classname></entry>
 
                             <entry><code>'forupdate'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::COLUMNS</code></entry>
+                            <entry><classname>Zend_Db_Select::COLUMNS</classname></entry>
 
                             <entry><code>'columns'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FROM</code></entry>
+                            <entry><classname>Zend_Db_Select::FROM</classname></entry>
 
                             <entry><code>'from'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::WHERE</code></entry>
+                            <entry><classname>Zend_Db_Select::WHERE</classname></entry>
 
                             <entry><code>'where'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::GROUP</code></entry>
+                            <entry><classname>Zend_Db_Select::GROUP</classname></entry>
 
                             <entry><code>'group'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::HAVING</code></entry>
+                            <entry><classname>Zend_Db_Select::HAVING</classname></entry>
 
                             <entry><code>'having'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::ORDER</code></entry>
+                            <entry><classname>Zend_Db_Select::ORDER</classname></entry>
 
                             <entry><code>'order'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_COUNT</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_COUNT</classname></entry>
 
                             <entry><code>'limitcount'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_OFFSET</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_OFFSET</classname></entry>
 
                             <entry><code>'limitoffset'</code></entry>
                         </row>

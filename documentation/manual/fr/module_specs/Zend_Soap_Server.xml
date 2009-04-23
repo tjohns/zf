@@ -2,31 +2,31 @@
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
 
-    <para>La classe <code>Zend_Soap_Server</code> a été créée pour simplifier la création d'un service Web SOAP en
+    <para>La classe <classname>Zend_Soap_Server</classname> a été créée pour simplifier la création d'un service Web SOAP en
     PHP.</para>
 
     <para>Elle peut être utilisée en mode WSDL ou non-WSDL, et elle utilise des fonctions ou des classes pour définir le
     service Web rendu.</para>
 
-    <para>Lorsque le composant <code>Zend_Soap_Server</code> fonctionne en mode WSDL, il utilise le document WSDL pour
+    <para>Lorsque le composant <classname>Zend_Soap_Server</classname> fonctionne en mode WSDL, il utilise le document WSDL pour
     décrire le comportement des objets du serveur ainsi que les options de transport vers les clients.</para>
 
     <para>Un document WSDL peut être auto-généré en utilisant <link linkend="zend.soap.autodiscovery.introduction">le composant
     Zend_Soap_AutoDiscovery</link>, ou alors construit manuellement avec <link linkend="zend.soap.wsdl">la classe
-    <code>Zend_Soap_Wsdl</code></link> ou tout autre outil de génération de XML</para>
+    <classname>Zend_Soap_Wsdl</classname></link> ou tout autre outil de génération de XML</para>
 
     <para>Si le mode non-WSDL est utilisé, alors toutes les options du protocole doivent être configurées.</para>
 
     <sect2 id="zend.soap.server.constructor">
-        <title>Constructeur de <code>Zend_Soap_Server</code></title>
+        <title>Constructeur de <classname>Zend_Soap_Server</classname></title>
 
-        <para>Le constructeur de <code>Zend_Soap_Server</code> s'utilise différemment selon que l'on fonctionne en mode
+        <para>Le constructeur de <classname>Zend_Soap_Server</classname> s'utilise différemment selon que l'on fonctionne en mode
         WSDL ou non.</para>
 
         <sect3 id="zend.soap.server.constructor.wsdl_mode">
-            <title>Constructeur de <code>Zend_Soap_Server</code> en mode WSDL.</title>
+            <title>Constructeur de <classname>Zend_Soap_Server</classname> en mode WSDL.</title>
 
-            <para>Le constructeur de <code>Zend_Soap_Server</code> prend 2 paramètres optionnel en mode WSDL:
+            <para>Le constructeur de <classname>Zend_Soap_Server</classname> prend 2 paramètres optionnel en mode WSDL:
             <orderedlist>
                     <listitem>
                         <para><code>$wsdl</code>, l'URI permettant l'accès au fichier WSDL <footnote>
@@ -72,10 +72,10 @@
         </sect3>
 
         <sect3 id="zend.soap.server.wsdl_mode">
-            <title>Constructeur de <code>Zend_Soap_Server</code> en mode non-WSDL</title>
+            <title>Constructeur de <classname>Zend_Soap_Server</classname> en mode non-WSDL</title>
 
             <para>Le premier paramètre du constructeur <emphasis role="strong">doit</emphasis> être mis à la valeur
-            <code>null</code> si vous voulez utiliser <code>Zend_Soap_Server</code> en mode non-WSDL.</para>
+            <code>null</code> si vous voulez utiliser <classname>Zend_Soap_Server</classname> en mode non-WSDL.</para>
 
             <para>Vous devez aussi spécifier "uri" dans ce cas (voir juste après).</para>
 
@@ -119,7 +119,7 @@
 
         <para>Il existe 2 manières de déclarer l'API de votre serveur SOAP.</para>
 
-        <para>La première consiste à attacher des classes à l'objet <code>Zend_Soap_Server</code>, celles-ci devront
+        <para>La première consiste à attacher des classes à l'objet <classname>Zend_Soap_Server</classname>, celles-ci devront
         alors décrire l'API du service en totalité : <programlisting role="php"><![CDATA[
 ...
 class MyClass {
@@ -209,7 +209,7 @@ $server->handle();
         <sect3 id="zend.soap.server.request_response.request">
             <title>Requête.</title>
 
-            <para>La méthode <code>Zend_Soap_Server::handle()</code> utilise la requête depuis le flux d'entrée standard
+            <para>La méthode <classname>Zend_Soap_Server::handle()</classname> utilise la requête depuis le flux d'entrée standard
             ('php://input'). Le comportement peut être changé en passant des paramètres à la méthode
             <code>handle()</code> ou en spécifiant sa propre requête grâce à la méthode <code>setRequest()</code>
             :<programlisting role="php"><![CDATA[
@@ -259,7 +259,7 @@ $request = $server->getLastRequest();
         <sect3 id="zend.soap.server.request_response.response">
             <title>Réponse.</title>
 
-            <para><code>Zend_Soap_Server::handle()</code> émet automatiquement la réponse vers le flux standard de
+            <para><classname>Zend_Soap_Server::handle()</classname> émet automatiquement la réponse vers le flux standard de
             sortie. Ce comportement peut être changé en utilisant <code>setReturnResponse()</code> avec une valeur
             <code>true</code> ou <code>false</code> en paramètre. <footnote>
                     <para>L'état actuel du drapeau de retour de la réponse peut être vérifié via la méthode

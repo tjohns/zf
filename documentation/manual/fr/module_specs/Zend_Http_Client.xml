@@ -2,8 +2,8 @@
 <sect1 id="zend.http.client">
     <title>Introduction</title>
 
-    <para><code>Zend_Http_Client</code> fournit une interface qui permet d'utiliser le protocole HTTP (Hyper-Text
-    Transfer Protocol). <code>Zend_Http_Client</code> supporte les fonctionnalités de base d'un client HTTP, ainsi que
+    <para><classname>Zend_Http_Client</classname> fournit une interface qui permet d'utiliser le protocole HTTP (Hyper-Text
+    Transfer Protocol). <classname>Zend_Http_Client</classname> supporte les fonctionnalités de base d'un client HTTP, ainsi que
     des fonctionnalités plus avancées, comme l'authentification ou l'upload de fichiers. Toutes les requêtes retournent
     un objet Zend_Http_Response, avec lequel on pourra accéder au corps ou aux en-têtes de la réponse HTTP (voyez <xref
     linkend="zend.http.response" />).</para>
@@ -12,7 +12,7 @@
         <title>Utilisation de Zend_Http_Client</title>
 
         <para>Le constructeur de classe accepte deux paramètres : l'URI (ou un objet
-        <code><code>Zend_Uri_Http</code></code>), et un tableau de configuration. Ils peuvent aussi être définis avec
+        <code><classname>Zend_Uri_Http</classname></code>), et un tableau de configuration. Ils peuvent aussi être définis avec
         des méthodes plus tard : <code>setUri()</code> et <code>setConfig()</code>. <example
                 id="zend.http.client.introduction.example-1">
                 <title>Instanciation d'un objet Zend_Http_Client</title>
@@ -32,9 +32,9 @@ $client->setConfig(array(
             </example></para>
 
         <note>
-            <para><code>Zend_Http_Client</code> utilise <code>Zend_Uri_Http</code> pour valider les URLs. Ce qui veut
+            <para><classname>Zend_Http_Client</classname> utilise <classname>Zend_Uri_Http</classname> pour valider les URLs. Ce qui veut
             dire que certains caractères comme les pipes ("|") ou le symbole "^" ne seront pas acceptés par défaut dans
-            les URLs. Ceci peut être modifié par le réglage de l'option "allow_unwise" de <code>Zend_Uri</code> à
+            les URLs. Ceci peut être modifié par le réglage de l'option "allow_unwise" de <classname>Zend_Uri</classname> à
             <code>true</code>. Voir <xref linkend="zend.uri.validation.allowunwise" /> pour de plus amples
             informations.</para>
         </note>
@@ -247,10 +247,10 @@ $client->setParameterPost(array(
     <sect2 id="zend.http.client.accessing_last">
         <title>Accéder à la dernière requête, ou réponse</title>
 
-        <para><code>Zend_Http_Client</code> fournit un moyen d'accéder à la dernière requête qu'il a effectuée, ainsi
-        qu'à la dernière réponse qu'il a reçue. <code>Zend_Http_Client-&gt;getLastRequest()</code> ne prends pas de
+        <para><classname>Zend_Http_Client</classname> fournit un moyen d'accéder à la dernière requête qu'il a effectuée, ainsi
+        qu'à la dernière réponse qu'il a reçue. <classname>Zend_Http_Client-&gt;getLastRequest()</classname> ne prends pas de
         paramètres et retourne la dernière requête sous forme de chaîne de caractères.
-        <code>Zend_Http_Client-&gt;getLastResponse()</code> retourne elle la dernière réponse, mais sous forme d'objet
+        <classname>Zend_Http_Client-&gt;getLastResponse()</classname> retourne elle la dernière réponse, mais sous forme d'objet
         <link linkend="zend.http.response">Zend_Http_Response</link>.</para>
     </sect2>
 </sect1>

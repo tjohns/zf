@@ -6,7 +6,7 @@
         <title>Introduction</title>
 
         <para>Les aides d'action permettent aux développeurs d'injecter, en cours d'exécution et/ou à la demande, des
-        fonctionnalités dans tout contrôleur d'action qui étend <code>Zend_Controller_Action</code>. Le but des aides
+        fonctionnalités dans tout contrôleur d'action qui étend <classname>Zend_Controller_Action</classname>. Le but des aides
         d'action est de minimiser la nécessité d'étendre le contrôleur d'action abstrait en y injectant des
         fonctionnalités communes de contrôleur d'action.</para>
 
@@ -14,7 +14,7 @@
         gestionnaire ("Broker"), similaire aux gestionnaires vus pour les <link
         linkend="zend.view.helpers">Zend_View_Helper</link>, et les <link
         linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Les aides d'action (comme les aides de vue
-        <code>Zend_View_Helper</code>) peuvent être chargées et appelées à la demande, ou elles peuvent être instanciées
+        <classname>Zend_View_Helper</classname>) peuvent être chargées et appelées à la demande, ou elles peuvent être instanciées
         au début de la requête ("bootstrap") ou au moment de la création des contrôleurs d'action (<code>init()</code>).
         Pour mieux comprendre ceci, reportez vous à la section d'utilisation ci-dessous.</para>
     </sect2>
@@ -26,7 +26,7 @@
         fonctionnalité de l'aide.</para>
 
         <para>Le gestionnaire d'aide est stocké en tant que membre <code>$_helper</code> du
-        <code>Zend_Controller_Action</code> ; utilisez le gestionnaire pour récupérer ou appeler les aides. Les méthodes
+        <classname>Zend_Controller_Action</classname> ; utilisez le gestionnaire pour récupérer ou appeler les aides. Les méthodes
         pour faire ceci incluent :</para>
 
         <itemizedlist>
@@ -76,7 +76,7 @@ $this->_helper->FlashMessenger($message);
     <sect2 id="zend.controller.actionhelper.broker">
         <title>Le gestionnaire d'aide (Broker)</title>
 
-        <para><code>Zend_Controller_Action_HelperBroker</code> gère les détails de l'enregistrement des objets d'aide et
+        <para><classname>Zend_Controller_Action_HelperBroker</classname> gère les détails de l'enregistrement des objets d'aide et
         les chemins de ces aides, ainsi que la récupération des aides à la demande.</para>
 
         <para>Pour enregistrer une aide dans le gestionnaire, utilisez <code>addHelper</code> :</para>
@@ -103,7 +103,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('Mes_Action_Helpers');
 
             <listitem>
                 <para><code>addPath()</code> prend un répertoire en premier argument et un préfixe de classe en second
-                (par défaut réglé à "<code>Zend_Controller_Action_Helper</code>"). Ceci vous permet de faire
+                (par défaut réglé à "<classname>Zend_Controller_Action_Helper</classname>"). Ceci vous permet de faire
                 correspondre vos propres préfixes de classe à vos dossiers spécifiques.</para>
 
                 <programlisting role="php"><![CDATA[
@@ -190,7 +190,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     <sect2 id="zend.controller.actionhelper.writingyourown">
         <title>Écrire vos propres aides</title>
 
-        <para>Les aides d'action étendent <code>Zend_Controller_Action_Helper_Abstract</code>, une classe abstraite qui
+        <para>Les aides d'action étendent <classname>Zend_Controller_Action_Helper_Abstract</classname>, une classe abstraite qui
         fournit l'interface basique et les fonctionnalités requises par le gestionnaire d'aides. Ceci inclue les
         méthodes suivantes :</para>
 
@@ -226,7 +226,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             <listitem>
                 <para><code>getName()</code> récupère le nom de l'aide. Elle récupère la portion du nom de la classe qui
                 suit le dernier tiret bas ("_"), ou le nom de la classe entier sinon. Pour exemple, si la classe est
-                nommée <code>Zend_Controller_Action_Helper_Redirector</code>, elle retourne <code>Redirector</code> ;
+                nommée <classname>Zend_Controller_Action_Helper_Redirector</classname>, elle retourne <code>Redirector</code> ;
                 une classe nommée <code>FooMessage</code> retournera <code>FooMessage</code>.</para>
             </listitem>
         </itemizedlist>

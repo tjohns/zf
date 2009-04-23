@@ -2,16 +2,16 @@
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
-    <para><code>Zend_Db</code> et ses autres sous classes proposent une interface de connexion aux bases de données avec
-    Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter aux bases
+    <para><classname>Zend_Db</classname> et ses autres sous classes proposent une interface de connexion aux bases de données avec
+    Zend Framework. <classname>Zend_Db_Adapter</classname> est la classe de base que vous utilisez pour vous connecter aux bases
     de données (SGBDs). Il y a différentes classes d'adaptateur par SGBD.</para>
 
-    <para>Les classes <code>Adapters</code> de <code>Zend_Db</code> créent un pont entre les extensions PHP et une
+    <para>Les classes <code>Adapters</code> de <classname>Zend_Db</classname> créent un pont entre les extensions PHP et une
     interface commune. Ceci vous aide à écrire des applications déployables avec de multiples SGBDs, demandant peu
     d'efforts.</para>
 
     <para>L'interface de la classe d'adaptateur est semblable à celle de l'extension <ulink
-    url="http://www.php.net/pdo">PHP Data Objects</ulink>. <code>Zend_Db</code> propose des classes d'adaptateurs vers
+    url="http://www.php.net/pdo">PHP Data Objects</ulink>. <classname>Zend_Db</classname> propose des classes d'adaptateurs vers
     les drivers PDO pour les SGBDs suivants :</para>
 
     <itemizedlist>
@@ -43,7 +43,7 @@
         </listitem>
     </itemizedlist>
 
-    <para>De plus, <code>Zend_Db</code> fournit aussi des classes se connectant avec les extensions PHP propres aux
+    <para>De plus, <classname>Zend_Db</classname> fournit aussi des classes se connectant avec les extensions PHP propres aux
     SGBDs (hors PDO donc), pour les SGBDs suivants :</para>
 
     <itemizedlist>
@@ -66,8 +66,8 @@
     </itemizedlist>
 
     <note>
-        <para>Chaque <code>Zend_Db_Adapter</code> utilise une extension PHP. Vous devez donc les avoir activées pour
-        utiliser les classes en question. Par exemple, si vous voulez utiliser une classe <code>Zend_Db_Adapter</code>
+        <para>Chaque <classname>Zend_Db_Adapter</classname> utilise une extension PHP. Vous devez donc les avoir activées pour
+        utiliser les classes en question. Par exemple, si vous voulez utiliser une classe <classname>Zend_Db_Adapter</classname>
         basée sur PDO, vous devrez alors avoir l'extension PDO d'installée, ainsi que l'extension représentant le driver
         spécifique à votre SGBD.</para>
     </note>
@@ -75,7 +75,7 @@
     <sect2 id="zend.db.adapter.connecting">
         <title>Se connecter à un SGBD en utilisant un adaptateur</title>
 
-        <para>Cette section décrit comment créer une instance d'un adaptateur <code>Zend_Db</code> de base de
+        <para>Cette section décrit comment créer une instance d'un adaptateur <classname>Zend_Db</classname> de base de
         données.</para>
 
         <sect3 id="zend.db.adapter.connecting.constructor">
@@ -99,19 +99,19 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory">
-            <title>Utiliser la fabrique (Factory) de <code>Zend_Db</code></title>
+            <title>Utiliser la fabrique (Factory) de <classname>Zend_Db</classname></title>
 
-            <para>Alternativement, il est possible d'utiliser la méthode statique <code>Zend_Db::factory()</code>.
+            <para>Alternativement, il est possible d'utiliser la méthode statique <classname>Zend_Db::factory()</classname>.
             Celle-ci charge dynamiquement la classe d'adaptateur correspondant en utilisant <link
             linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.</para>
 
             <para>Le premier argument est une chaîne désignant l'adaptateur souhaité. Par exemple,
-            "<code>Pdo_Mysql</code>" va correspondre à la classe <code>Zend_Db_Adapter_Pdo_Mysql</code>. Le second
+            "<code>Pdo_Mysql</code>" va correspondre à la classe <classname>Zend_Db_Adapter_Pdo_Mysql</classname>. Le second
             paramètre est un tableau d'options. C'est le même que celui que vous auriez passé au constructeur de la
             classe directement.</para>
 
             <example id="zend.db.adapter.connecting.factory.example">
-                <title>Utilisation de la méthode statique de fabrique de <code>Zend_Db</code></title>
+                <title>Utilisation de la méthode statique de fabrique de <classname>Zend_Db</classname></title>
 
                 <programlisting role="php"><![CDATA[
 // Nous n'avons pas besoin de la ligne suivante car Zend_Db_Adapter_Pdo_Mysql
@@ -130,8 +130,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 ]]></programlisting>
             </example>
 
-            <para>Si vous créez votre propre classe d'adaptateur qui étend <code>Zend_Db_Adapter_Abstract</code> et que
-            celle-ci ne respecte pas la syntaxe du préfixe package "<code>Zend_Db_Adapter</code>", utilisez alors la clé
+            <para>Si vous créez votre propre classe d'adaptateur qui étend <classname>Zend_Db_Adapter_Abstract</classname> et que
+            celle-ci ne respecte pas la syntaxe du préfixe package "<classname>Zend_Db_Adapter</classname>", utilisez alors la clé
             "<code>adapterNamespace</code>" dans le tableau de configuration passé à la méthode <code>factory()</code>
             afin de charger votre adaptateur.</para>
 
@@ -153,7 +153,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
-            <title>Utiliser <classname>Zend_Config</classname> avec la fabrique <code>Zend_Db</code></title>
+            <title>Utiliser <classname>Zend_Config</classname> avec la fabrique <classname>Zend_Db</classname></title>
 
             <para>Optionnellement, vous pouvez passer un objet de type <link linkend="zend.config">Zend_Config</link> en
             tant qu'argument de la méthode <code>factory()</code>, concernant la configuration.</para>
@@ -164,9 +164,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             l'adaptateur.</para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Utilisation de la fabrique avec un objet de type <code>Zend_Config</code></title>
+                <title>Utilisation de la fabrique avec un objet de type <classname>Zend_Config</classname></title>
 
-                <para>Dans l'exemple qui va suivre, l'objet <code>Zend_Config</code> est crée à partir d'un tableau. Il
+                <para>Dans l'exemple qui va suivre, l'objet <classname>Zend_Config</classname> est crée à partir d'un tableau. Il
                 eut été possible de le créer à partir de fichiers externes, grâce à <link
                 linkend="zend.config.adapters.ini">Zend_Config_Ini</link> ou <link
                 linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.</para>
@@ -192,7 +192,7 @@ $db = Zend_Db::factory($config->database);
 
             <para>Le second paramètre de la méthode <code>factory()</code> doit être un tableau associatif décrivant les
             paramètres de l'adaptateur à utiliser. Cet argument est optionnel, si un objet de type
-            <code>Zend_Config</code> est utilisé en premier paramètre, alors il est supposé contenir les paramètres, et
+            <classname>Zend_Config</classname> est utilisé en premier paramètre, alors il est supposé contenir les paramètres, et
             le second paramètre de <code>factory()</code> est alors ignoré.</para>
         </sect3>
 
@@ -200,7 +200,7 @@ $db = Zend_Db::factory($config->database);
             <title>Paramètres de l'adaptateur (Adapter)</title>
 
             <para>La liste ci dessous explique les différents paramètres acceptés par les classes d'adaptateur
-            <code>Zend_Db</code>.</para>
+            <classname>Zend_Db</classname>.</para>
 
             <itemizedlist>
                 <listitem>
@@ -231,7 +231,7 @@ $db = Zend_Db::factory($config->database);
 
                 <listitem>
                     <para><emphasis role="strong">options</emphasis> : Ce paramètre est un tableau associatif d'options
-                    génériques à toutes les classes <code>Zend_Db_Adapter</code>.</para>
+                    génériques à toutes les classes <classname>Zend_Db_Adapter</classname>.</para>
                 </listitem>
 
                 <listitem>
@@ -242,7 +242,7 @@ $db = Zend_Db::factory($config->database);
 
                 <listitem>
                     <para><emphasis role="strong">adapterNamespace</emphasis> : fournit le commencement du nom de la
-                    classe d'adaptateur, à utiliser la place de "<code>Zend_Db_Adapter</code>". Utilisez ceci si vous
+                    classe d'adaptateur, à utiliser la place de "<classname>Zend_Db_Adapter</classname>". Utilisez ceci si vous
                     désirez que <code>factory()</code> charge une classe non Zend.</para>
                 </listitem>
             </itemizedlist>
@@ -250,11 +250,11 @@ $db = Zend_Db::factory($config->database);
             <example id="zend.db.adapter.connecting.parameters.example1">
                 <title>Passer l'option de gestion de la casse à la fabrique</title>
 
-                <para>Vous pouvez spécifier cette option avec la constante <code>Zend_Db::CASE_FOLDING</code>. Ceci
+                <para>Vous pouvez spécifier cette option avec la constante <classname>Zend_Db::CASE_FOLDING</classname>. Ceci
                 correspond à l'attribut <code>ATTR_CASE</code> dans les drivers PDO et IBM DB2, ce qui ajuste la casse
                 des clés dans les jeux de résultats. Les valeurs possibles possibles sont
-                <code>Zend_Db::CASE_NATURAL</code> (défaut), <code>Zend_Db::CASE_UPPER</code>, et
-                <code>Zend_Db::CASE_LOWER</code>.</para>
+                <classname>Zend_Db::CASE_NATURAL</classname> (défaut), <classname>Zend_Db::CASE_UPPER</classname>, et
+                <classname>Zend_Db::CASE_LOWER</classname>.</para>
 
                 <programlisting role="php"><![CDATA[
 $options = array(
@@ -276,7 +276,7 @@ $db = Zend_Db::factory('Db2', $params);
             <example id="zend.db.adapter.connecting.parameters.example2">
                 <title>Passer l'option d'auto-échappement à la fabrique</title>
 
-                <para>Vous pouvez spécifier cette option avec le paramètre <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.
+                <para>Vous pouvez spécifier cette option avec le paramètre <classname>Zend_Db::AUTO_QUOTE_IDENTIFIERS</classname>.
                 Si la valeur passée est <code>true</code> (par défaut), alors les identifiants tels que les noms de
                 tables, de colonnes, ou encore les alias SQL, sont échappés (délimités) dans la syntaxe de la requête
                 SQL générée par l'objet d'adaptateur. Ceci rend l'utilisation de mots SQL contenant des identifiant
@@ -366,13 +366,13 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
 
             <para>De plus, un adaptateur peut être sérialisé pour être stocké, par exemple, dans une variable de
             session. Ceci peut être utile non seulement pour l'adaptateur lui-même, mais aussi pour les autres objets
-            qui l'agrègent, comme un objet <code>Zend_Db_Select</code>. Par défaut, les adaptateurs sont autorisés à
+            qui l'agrègent, comme un objet <classname>Zend_Db_Select</classname>. Par défaut, les adaptateurs sont autorisés à
             être sérialisés, si vous ne le voulez pas, vous devez passer l'option
-            <code>Zend_Db::ALLOW_SERIALIZATION=false</code>, regardez l'exemple ci-dessus. Afin de respecter le principe
+            <classname>Zend_Db::ALLOW_SERIALIZATION=false</classname>, regardez l'exemple ci-dessus. Afin de respecter le principe
             de connexions paresseuses, l'adaptateur ne se reconnectera pas après la désérialisation. Vous devez appeler
             vous-même <code>getConnection()</code>. Vous pouvez permettre à l'adaptateur de se reconnecter
             automatiquement en utilisant l'option d'adaptateur
-            <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code>.</para>
+            <classname>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</classname>.</para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
                 <title>Gérer les exceptions de connexion</title>
@@ -396,7 +396,7 @@ try {
     <sect2 id="zend.db.adapter.example-database">
         <title>La base de données d'exemple</title>
 
-        <para>Dans cette documentation concernant <code>Zend_Db</code>, nous utilisons un exemple simple de tables pour
+        <para>Dans cette documentation concernant <classname>Zend_Db</classname>, nous utilisons un exemple simple de tables pour
         illustrer nos exemples. Ces tables peuvent servir à stocker des informations sur la gestion des bugs dans une
         application. La base de données contient quatre tables :</para>
 
@@ -425,7 +425,7 @@ try {
         </itemizedlist>
 
         <para>Le pseudo-code SQL suivant représente les tables de notre base de données d'exemple. Ces tables sont
-        utilisées aussi pour les tests unitaires automatisés de <code>Zend_Db</code>.</para>
+        utilisées aussi pour les tests unitaires automatisés de <classname>Zend_Db</classname>.</para>
 
         <programlisting role="sql"><![CDATA[
 CREATE TABLE accounts (
@@ -515,7 +515,7 @@ $result = $db->fetchAll($sql, 2);
 
                     <para>Les noms des clés des tableaux correspondants aux noms des colonnes SQL telles que retournées
                     par le SGBD, vous pouvez spécifier la casse pour ces noms, grâce à l'option
-                    <code>Zend_Db::CASE_FOLDING</code>. Spécifiez ceci lors de l'instanciation de votre adaptateur.
+                    <classname>Zend_Db::CASE_FOLDING</classname>. Spécifiez ceci lors de l'instanciation de votre adaptateur.
                     Voyez <xref linkend="zend.db.adapter.connecting.parameters.example1" />.</para>
                 </listitem>
 
@@ -711,7 +711,7 @@ $db->insert('bugs', $data);
             <para>Si vous avez besoin d'écrire de la syntaxe SQL, comme des mots réservés, des noms de fonctions SQL,
             vous voulez que ceux-ci ne soient pas échappés, et ne soient pas traités comme de vulgaires chaînes de
             caractères, mais plutôt comme des expressions. Pour ceci, vous devriez passer ces valeurs dans votre tableau
-            de données, en tant qu'objets de type <code>Zend_Db_Expr</code> au lieu de chaînes de caractères
+            de données, en tant qu'objets de type <classname>Zend_Db_Expr</classname> au lieu de chaînes de caractères
             banales.</para>
 
             <example id="zend.db.adapter.write.insert.example2">
@@ -979,8 +979,8 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </example>
 
             <para>De plus, chaque classe Zend_Db_Adapter possèdent des constantes représentant les différents type SQL
-            des SGBDs respectifs qu'elles représentent. Ainsi, les constantes <code>Zend_Db::INT_TYPE</code>,
-            <code>Zend_Db::BIGINT_TYPE</code>, et <code>Zend_Db::FLOAT_TYPE</code> peuvent vous permettre d'écrire un
+            des SGBDs respectifs qu'elles représentent. Ainsi, les constantes <classname>Zend_Db::INT_TYPE</classname>,
+            <classname>Zend_Db::BIGINT_TYPE</classname>, et <classname>Zend_Db::FLOAT_TYPE</classname> peuvent vous permettre d'écrire un
             code portable entre différents SGBDs.</para>
 
             <para>Zend_Db_Table fournit les types SQL à <code>quote()</code> automatiquement en fonction des colonnes
@@ -1068,9 +1068,9 @@ echo $sql
             <para>Les identifiant SQL délimités sont sensibles à la casse. Vous devriez toujours utiliser la casse telle
             qu'elle est utilisée dans votre base de données (nom des tables, des colonnes ...).</para>
 
-            <para>Dans les cas où le SQL est généré à l'intérieur des classes <code>Zend_Db</code>, alors les
+            <para>Dans les cas où le SQL est généré à l'intérieur des classes <classname>Zend_Db</classname>, alors les
             identifiant SQL seront automatiquement échappés. Vous pouvez changer ce comportement avec l'option
-            <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.Spécifiez la lors de l'instanciation de l'adaptateur. Voyez
+            <classname>Zend_Db::AUTO_QUOTE_IDENTIFIERS</classname>.Spécifiez la lors de l'instanciation de l'adaptateur. Voyez
             <xref linkend="zend.db.adapter.connecting.parameters.example2" />.</para>
         </sect3>
     </sect2>
@@ -1083,7 +1083,7 @@ echo $sql
         Toutes les requêtes aux bases de données sont considérées comme faisant partie d'une transaction, même si le
         driver de base de données fait ceci implicitement. Ceci s'appelle le mode <emphasis>auto-commit</emphasis>, dans
         lequel le driver de base de données créer une transaction pour chaque requête exécutée et la valide. Par défaut
-        toutes les classes <code>Zend_Db_Adapter</code> fonctionnent en mode auto-commit.</para>
+        toutes les classes <classname>Zend_Db_Adapter</classname> fonctionnent en mode auto-commit.</para>
 
         <para>Vous pouvez manuellement spécifier lorsque vous voulez démarrer une transaction. Vous contrôler ainsi
         combien de requêtes doivent y être exécutées, et valider ou annuler ce groupe de requêtes. Utilisez
@@ -1098,7 +1098,7 @@ echo $sql
         la transaction. L'annulation n'a aucun effet sur les changements qui ont été opérés par d'autres transactions
         parallèles.</para>
 
-        <para>Après qu'une transaction soit terminées, <code>Zend_Db_Adapter</code> retourne en mode auto-commit jusqu'à
+        <para>Après qu'une transaction soit terminées, <classname>Zend_Db_Adapter</classname> retourne en mode auto-commit jusqu'à
         un nouvel appel à <code>beginTransaction()</code>.</para>
 
         <example id="zend.db.adapter.transactions.example">
@@ -1332,7 +1332,7 @@ $db->closeConnection();
             <title>Zend_Db supporte-t-il les connexions persistantes ?</title>
 
             <para>L'utilisation de connexions persistantes n'est pas supporté, ni conseillé, par le composant
-            <code>Zend_Db</code>.</para>
+            <classname>Zend_Db</classname>.</para>
 
             <para>Utiliser des connexions persistantes peut mener à un trop grand nombre de connexions en attente
             (idle), ce qui causera plus de problème que cela n'est sensé en résoudre.</para>
@@ -1349,9 +1349,9 @@ $db->closeConnection();
         <title>Exécuter des requêtes sur le driver directement</title>
 
         <para>Il peut y avoir des cas où vous souhaitez accéder directement à la connexion 'bas niveau', sous
-        <code>Zend_Db_Adapter</code>.</para>
+        <classname>Zend_Db_Adapter</classname>.</para>
 
-        <para>Par exemple, toute requête effectuée par <code>Zend_Db</code> est préparée, et exécutée. Cependant,
+        <para>Par exemple, toute requête effectuée par <classname>Zend_Db</classname> est préparée, et exécutée. Cependant,
         certaines caractéristiques des bases de données ne sont pas compatibles avec les requêtes préparées. Par
         exemple, des requêtes du type CREATE ou ALTER ne peuvent pas être préparées sous MySQL. De même, les requêtes
         préparées ne bénéficient pas du <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html"> cache
@@ -1371,11 +1371,11 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         </example>
 
         <para>De la même manière, vous pouvez accéder à toutes les propriétés ou méthodes de l'objet "bas niveau",
-        utilisé par <code>Zend_Db</code>. Attention toutefois en utilisant ce procédé, vous risquez de rendre votre
+        utilisé par <classname>Zend_Db</classname>. Attention toutefois en utilisant ce procédé, vous risquez de rendre votre
         application dépendante du SGBD qu'elle utilise, en manipulant des méthodes propres à l'extension
         utilisée.</para>
 
-        <para>Dans de futures versions de <code>Zend_Db</code>, il sera possible d'ajouter des méthodes pour des
+        <para>Dans de futures versions de <classname>Zend_Db</classname>, il sera possible d'ajouter des méthodes pour des
         fonctionnalités communes aux extensions de bases de données de PHP. Ceci ne rompra pas la compatibilité.</para>
     </sect2>
 
@@ -1474,7 +1474,7 @@ if (!is_null($version)) {
                 </listitem>
 
                 <listitem>
-                    <para>Actuellement l'option <code>Zend_Db::CASE_FOLDING</code> n'est pas supportée par l'adaptateur
+                    <para>Actuellement l'option <classname>Zend_Db::CASE_FOLDING</classname> n'est pas supportée par l'adaptateur
                     Oracle. Pour l'utiliser, vous devez utiliser l'adaptateur basé sur PDO et OCI.</para>
                 </listitem>
 
@@ -1665,7 +1665,7 @@ if (!is_null($version)) {
                 </listitem>
 
                 <listitem>
-                    <para>Pour l'instant l'option <code>Zend_Db::CASE_FOLDING</code> n'est pas supportée par
+                    <para>Pour l'instant l'option <classname>Zend_Db::CASE_FOLDING</classname> n'est pas supportée par
                     l'adaptateur Firebird/interbase. Tout identificateur non échappé sera automatiquement retourné en
                     majuscules.</para>
                 </listitem>

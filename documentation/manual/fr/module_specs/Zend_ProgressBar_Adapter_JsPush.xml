@@ -2,19 +2,19 @@
 <sect3 id="zend.progressbar.adapter.jspush">
     <title>Zend_ProgressBar_Adapter_JsPush</title>
 
-    <para><code>Zend_ProgressBar_Adapter_JsPush</code> est un adaptateur qui vous permet de mettre à jour une barre de
+    <para><classname>Zend_ProgressBar_Adapter_JsPush</classname> est un adaptateur qui vous permet de mettre à jour une barre de
     progression dans un navigateur au travers de Javascript. Ceci veut dire qu'une seconde connexion n'est pas
     nécessaire pour recueillir le statut du processus courant, mais que le processus lui-même envoie son statut
     directement au navigateur.</para>
 
     <para>Vous pouvez paramétrer les options de l'adaptateur soit avec les méthodes <code>set*</code> soit en
-    fournissant un tableau ("array") ou une instance de <code>Zend_Config</code> contenant les options en tant que
+    fournissant un tableau ("array") ou une instance de <classname>Zend_Config</classname> contenant les options en tant que
     premier paramètre du constructeur. Les options disponibles sont :</para>
 
     <itemizedlist>
         <listitem>
             <para><code>updateMethodName</code> : la méthode Javascript qui sera appelée à chaque mise à jour. La valeur
-            par défaut est <code>Zend_ProgressBar_Update</code>.</para>
+            par défaut est <classname>Zend_ProgressBar_Update</classname>.</para>
         </listitem>
 
         <listitem>

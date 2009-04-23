@@ -48,7 +48,7 @@ $server->handle();
     <sect2 id="zend.rest.server.args">
         <title>Appelé un service Zend_Rest_Server</title>
 
-        <para>Pour appeler un service <code>Zend_Rest_Server</code>, vous devez fournir un argument de
+        <para>Pour appeler un service <classname>Zend_Rest_Server</classname>, vous devez fournir un argument de
         <code>method</code> GET/POST avec une valeur qui est la méthode que vous souhaitez appeler. Vous pouvez alors
         ajouter tout nombre d'arguments en utilisant le nom de l'argument (c.-à-d. "qui ") ou en utilisant 'arg' suivi
         de la position numérique de l'argument (c.-à-d. "arg1").</para>

@@ -2,21 +2,21 @@
 <sect1 id="zend.date.creation">
     <title>Créer des dates</title>
 
-    <para><code>Zend_Date</code> permet de créer des instances d'elle même de plusieurs manières différentes. Nous
+    <para><classname>Zend_Date</classname> permet de créer des instances d'elle même de plusieurs manières différentes. Nous
     allons voir ceci.</para>
 
     <sect2 id="zend.date.creation.actual">
         <title>Créer la date actuelle</title>
 
         <para>La manière la plus simple de créer la date actuelle est d'utiliser le constructeur <code>new
-        Zend_Date()</code> ou encore la méthode statique <code>Zend_Date::now()</code>. Toutes les deux retournent une
-        instance de <code>Zend_Date</code> avec la date actuelle. Elle est représentée par une date calendaire et un
+        Zend_Date()</code> ou encore la méthode statique <classname>Zend_Date::now()</classname>. Toutes les deux retournent une
+        instance de <classname>Zend_Date</classname> avec la date actuelle. Elle est représentée par une date calendaire et un
         temps pour le fuseau horaire actuel du serveur.</para>
 
         <example id="zend.date.creation.actual.example-1">
             <title>Créer une date par instance</title>
 
-            <para>Il n'y a pas de paramètres à passer au constructeur pour récupérer un objet <code>Zend_Date</code>.
+            <para>Il n'y a pas de paramètres à passer au constructeur pour récupérer un objet <classname>Zend_Date</classname>.
             Certains paramètres sont cependant disponibles et nous y reviendrons.</para>
 
             <programlisting role="php"><![CDATA[
@@ -41,13 +41,13 @@ $date = Zend_Date::now();
 
         <para>Les bases de données sont souvent utilisées pour stocker des informations de dates. Mais elles ont toutes
         une implémentation et une représentation qui leur est propre. MSSQL par exemple manipule les dates de manières
-        significativement différente de MySQL, par exemple. Heureusement, <code>Zend_Date</code> aide à simplifier le
+        significativement différente de MySQL, par exemple. Heureusement, <classname>Zend_Date</classname> aide à simplifier le
         processus de création d'une date depuis une base de données.</para>
 
         <para>Il est possible de demander au serveur de base de données de formater la date dans un certain format. Mais
         ceci reste en général assez lourd, et doit être pensé à chaque fois.</para>
 
-        <para>Nous avons donc des méthodes très pratiques et rapides dans <code>Zend_Date</code>, pour récupérer les
+        <para>Nous avons donc des méthodes très pratiques et rapides dans <classname>Zend_Date</classname>, pour récupérer les
         dates depuis une base de données.</para>
 
         <example id="zend.date.creation.database.example-1">
@@ -69,8 +69,8 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
 
             <para>La sortie de chaque base de données est différente même si elles se ressemblent. Cependant elles ont
             toutes des formats compatibles <code>ISO</code>. La manière la plus simple de créer une date depuis une base
-            de données est d'utiliser <code>Zend_Date::ISO_8601</code>. Les SGBDs connus pour être conformes pour
-            <code>Zend_Date::ISO_8601</code> sont MySQL, MSSQL par exemple, mais ils sont tous capables de retourner une
+            de données est d'utiliser <classname>Zend_Date::ISO_8601</classname>. Les SGBDs connus pour être conformes pour
+            <classname>Zend_Date::ISO_8601</classname> sont MySQL, MSSQL par exemple, mais ils sont tous capables de retourner une
             représentation <code>ISO8601</code> d'une donnée date. <code>ISO8601</code> possède l'avantage d'être
             lisible et compréhensible par un humain. Son inconvénient est qu'il est légèrement plus lourd à traiter
             qu'un simple timestamp UNIX. En revanche ceux-ci ne supportent pas les dates inférieures au 1er Janvier

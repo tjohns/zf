@@ -7,7 +7,7 @@
     une alternative à l'utilisation du stockage global.</para>
 
     <para>L'utilisation typique des registres dans Zend Framework est par des méthodes statiques dans la classe
-    <code>Zend_Registry</code>. Alternativement, la classe est un tableau, donc vous pouvez avoir accès aux éléments
+    <classname>Zend_Registry</classname>. Alternativement, la classe est un tableau, donc vous pouvez avoir accès aux éléments
     stockés avec une interface semblable au tableau.</para>
 
     <sect2 id="zend.registry.using.storing">
@@ -94,7 +94,7 @@ Zend_Registry::setInstance($registry);
 ]]></programlisting>
         </example>
 
-        <para>La méthode <code>setInstance()</code> lèvera une <code>Zend_Exception</code> si un registre statique a
+        <para>La méthode <code>setInstance()</code> lèvera une <classname>Zend_Exception</classname> si un registre statique a
         déjà été initialisé lors de son premier accès.</para>
     </sect2>
 
@@ -194,13 +194,13 @@ if (isset($registry->index)) {
     <sect2 id="zend.registry.using.subclassing">
         <title>Étendre le registre</title>
 
-        <para>Le registre statique est une instance de la classe <code>Zend_Registry</code>. Si vous voulez ajouter une
-        fonctionnalité au registre, vous pouvez créer une classe qui étend <code>Zend_Registry</code> et ensuite vous
+        <para>Le registre statique est une instance de la classe <classname>Zend_Registry</classname>. Si vous voulez ajouter une
+        fonctionnalité au registre, vous pouvez créer une classe qui étend <classname>Zend_Registry</classname> et ensuite vous
         pouvez spécifier cette classe comme la classe à utiliser pour le registre statique. Utilisez la méthode statique
         <code>setClassName()</code> pour spécifier la classe.</para>
 
         <note>
-            <para>La classe doit étendre <code>Zend_Registry</code>.</para>
+            <para>La classe doit étendre <classname>Zend_Registry</classname>.</para>
         </note>
 
         <example id="zend.registry.using.subclassing.example">
@@ -213,7 +213,7 @@ Zend_Registry::set('index', $value);
 ]]></programlisting>
         </example>
 
-        <para>L'enregistrement lève une <code>Zend_Exception</code> si vous essayez d'affecter un nom de classe après
+        <para>L'enregistrement lève une <classname>Zend_Exception</classname> si vous essayez d'affecter un nom de classe après
         que le registre ait eu un premier accès. Il est recommandé de spécifier le nom de classe pour votre registre
         statique dans le fichier de lancement de votre application.</para>
     </sect2>
@@ -234,7 +234,7 @@ Zend_Registry::set('index', $value);
         <para>Vous pourriez utiliser cette méthode, par exemple, si vous voulez utiliser <code>setInstance()</code> ou
         <code>setClassName()</code> après que l'objet de registre statique a été initialisé. Décharger l'instance
         statique vous permet d'utiliser ces méthodes même après instanciation de l'objet registre. Utiliser
-        <code>Zend_Registry</code> de cette manière n'est pas recommandé dans les applications.</para>
+        <classname>Zend_Registry</classname> de cette manière n'est pas recommandé dans les applications.</para>
 
         <example id="zend.registry.using.unsetting.example">
             <title>Exemple avec la méthode <code>_unsetInstance()</code></title>

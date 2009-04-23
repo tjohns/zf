@@ -81,7 +81,7 @@ $router->addRoute('archive', $route);
 
     <para>Nous voyons apparaître tout de même un problème : gérer des chiffres, comme clés pour les paramètres n'est pas
     très intuitif. C'est là qu'entre en jeu le troisième paramètre du constructeur de
-    <code>Zend_Controller_Router_Route_Regex</code>. Il accepte un tableau faisant correspondre les numéros des
+    <classname>Zend_Controller_Router_Route_Regex</classname>. Il accepte un tableau faisant correspondre les numéros des
     paramètres et leur nom respectif :</para>
 
     <programlisting role="php"><![CDATA[

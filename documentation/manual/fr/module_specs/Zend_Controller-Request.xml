@@ -5,7 +5,7 @@
     <sect2 id="zend.controller.request.introduction">
         <title>Introduction</title>
 
-        <para>L'objet requête est un objet simple de valeur qui est passé entre <code>Zend_Controller_Front</code> et le
+        <para>L'objet requête est un objet simple de valeur qui est passé entre <classname>Zend_Controller_Front</classname> et le
         routeur, le distributeur, et les classes de contrôleur. Il empaquette les noms du module demandé, du contrôleur,
         de l'action, et des paramètres facultatifs, aussi bien que le reste de l'environnement de requête, que ce soit
         le HTTP, du CLI, ou de PHP-GTK.</para>
@@ -34,7 +34,7 @@
         </itemizedlist>
 
         <para>En fonction du type de requête, il peut y avoir plus de méthodes disponibles. La requête par défaut
-        utilisée, <code>Zend_Controller_Request_Http</code>, par exemple, a des méthodes pour rechercher l'URI de la
+        utilisée, <classname>Zend_Controller_Request_Http</classname>, par exemple, a des méthodes pour rechercher l'URI de la
         requête, l'information sur le chemin, les paramètres <code>$_GET</code> et <code>$_POST</code>, etc.</para>
 
         <para>L'objet requête est passé au contrôleur frontal, ou si aucun n'est fourni, il est instancié au début du
@@ -54,7 +54,7 @@
         <sect3 id="zend.controller.request.http.dataacess">
             <title>Accéder aux données de la requête</title>
 
-            <para><code>Zend_Controller_Request_Http</code> encapsule l'accès aux valeurs appropriées telles que le nom
+            <para><classname>Zend_Controller_Request_Http</classname> encapsule l'accès aux valeurs appropriées telles que le nom
             de la clé et la valeur pour les variables contrôleur d'action et routeur , et tous les paramètres
             additionnels analysés à partir de l'URI. Il permet en plus l'accès aux valeurs contenues dans les
             superglobales en tant que membres publics, et contrôle l'URL de base et l'URI courants de la requête. Des
@@ -64,7 +64,7 @@
             <note>
                 <title>Données superglobales</title>
 
-                <para>En accédant à des données superglobales par <code>Zend_Controller_Request_Http</code> en tant que
+                <para>En accédant à des données superglobales par <classname>Zend_Controller_Request_Http</classname> en tant que
                 propriétés publiques de membre, il est nécessaire de maintenir dans l'esprit que le nom de propriété
                 (clé du tableau des superglobales) est assorti à une superglobale dans un ordre spécifique de priorité :
                 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV.</para>
@@ -125,7 +125,7 @@
                 frontal, ou si vous utilisez le drapeau PT avec les règles de ré-écriture,
                 <code>$_SERVER['REDIRECT_URL']</code> contient l'URI dont vous avez besoin, pas
                 <code>$_SERVER['REQUEST_URI']</code>. Si vous employez une telle installation et obtenez un routage
-                invalide, vous devriez employer la classe <code>Zend_Controller_Request_Apache404</code> au lieu de la
+                invalide, vous devriez employer la classe <classname>Zend_Controller_Request_Apache404</classname> au lieu de la
                 classe HTTP par défaut pour votre objet de requête :</para>
 
                 <programlisting role="php"><![CDATA[
@@ -133,7 +133,7 @@ $request = new Zend_Controller_Request_Apache404();
 $front->setRequest($request);
 ]]></programlisting>
 
-                <para>Cette classe étend la classe <code>Zend_Controller_Request_Http</code> et modifie simplement la
+                <para>Cette classe étend la classe <classname>Zend_Controller_Request_Http</classname> et modifie simplement la
                 recherche automatique de l'URI de la requête. Elle peut être employée comme un remplacement
                 "drop-in".</para>
             </note>
@@ -142,8 +142,8 @@ $front->setRequest($request);
         <sect3 id="zend.controller.request.http.baseurl">
             <title>Base de l'URL et sous-dossiers</title>
 
-            <para><code>Zend_Controller_Request_Http</code> permet à <code>Zend_Controller_Router_Rewrite</code> d'être
-            employé dans des sous-répertoires. <code>Zend_Controller_Request_Http</code> essayera de détecter
+            <para><classname>Zend_Controller_Request_Http</classname> permet à <classname>Zend_Controller_Router_Rewrite</classname> d'être
+            employé dans des sous-répertoires. <classname>Zend_Controller_Request_Http</classname> essayera de détecter
             automatiquement votre base d'URL et de la régler en conséquence.</para>
 
             <para>Par exemple, si vous maintenez votre <code>index.php</code> dans un sous-répertoire du serveur Web
@@ -164,8 +164,8 @@ $front->setRequest($request);
 
             <para>Si la base de l'URL est détectée de manière inexacte vous pouvez la surcharger avec votre propre
             chemin de base grâce à la méthode <code>setBaseUrl()</code> soit de la classe de
-            <code>Zend_Controller_Request_Http</code>, soit de la classe de <code>Zend_Controller_Front</code>. La
-            méthode la plus facile est de la régler dans <code>Zend_Controller_Front</code>, qui le transmets dans
+            <classname>Zend_Controller_Request_Http</classname>, soit de la classe de <classname>Zend_Controller_Front</classname>. La
+            méthode la plus facile est de la régler dans <classname>Zend_Controller_Front</classname>, qui le transmets dans
             l'objet de requête. Exemple d'utilisation pour régler une base d'URL personnalisée :</para>
 
             <programlisting role="php"><![CDATA[
@@ -221,7 +221,7 @@ $response   = $controller->dispatch();
         <sect3 id="zend.controller.request.http.ajax">
             <title>Détecter les requêtes AJAX</title>
 
-            <para><code>Zend_Controller_Request_Http</code> possède une méthode rudimentaire pour détecter les requêtes
+            <para><classname>Zend_Controller_Request_Http</classname> possède une méthode rudimentaire pour détecter les requêtes
             AJAX : <code>isXmlHttpRequest()</code>. Cette méthode parcourt les en-têtes de la requête HTTP à la recherche
             de <code>X-Requested-With</code> ayant la valeur "XMLHttpRequest" ; si celui-ci est trouvé, la méthode
             retourne <code>true</code>.</para>
@@ -256,7 +256,7 @@ $response   = $controller->dispatch();
         <title>Sous-classer l'objet Requête</title>
 
         <para>La classe de requête de base utilisée pour tous les objets de requête est la classe abstraite
-        <code>Zend_Controller_Request_Abstract</code>. Au minimum, elle définit les méthodes suivantes :</para>
+        <classname>Zend_Controller_Request_Abstract</classname>. Au minimum, elle définit les méthodes suivantes :</para>
 
         <programlisting role="php"><![CDATA[
 abstract class Zend_Controller_Request_Abstract

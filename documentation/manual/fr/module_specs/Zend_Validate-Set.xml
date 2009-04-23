@@ -24,7 +24,7 @@
         <note>
             <para>Les caractères alphabétiques comprennent les caractères destinés à constituer des mots dans chaque
             langue. Cependant l'alphabet anglais est aussi utilisé pour les langues suivantes : chinois, japonais et
-            coréen. La langue est spécifiée par <code>Zend_Locale</code>.</para>
+            coréen. La langue est spécifiée par <classname>Zend_Locale</classname>.</para>
         </note>
     </sect2>
 

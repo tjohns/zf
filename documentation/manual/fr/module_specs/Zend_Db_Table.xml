@@ -5,11 +5,11 @@
     <sect2 id="zend.db.table.introduction">
         <title>Introduction</title>
 
-        <para>La classe <code>Zend_Db_Table</code> est une interface orientée objet vers les tables d'une base de
+        <para>La classe <classname>Zend_Db_Table</classname> est une interface orientée objet vers les tables d'une base de
         données. Elle fournit des méthodes pour la gestion de la plupart des opérations concernant une table. Bien
         entendu, vous pouvez étendre la classe de base pour ajouter une logique personnalisée.</para>
 
-        <para>La solution que représente <code>Zend_Db_Table</code> est basée sur le motif de conception <ulink
+        <para>La solution que représente <classname>Zend_Db_Table</classname> est basée sur le motif de conception <ulink
         url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</ulink>. Cette solution
         inclut aussi une classe implémentant le motif <ulink
         url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>.</para>
@@ -19,7 +19,7 @@
         <title>Définir une classe de Table</title>
 
         <para>Pour chaque table de la base de données envers laquelle vous souhaitez un accès, définissez une classe
-        étendant <code>Zend_Db_Table_Abstract</code>.</para>
+        étendant <classname>Zend_Db_Table_Abstract</classname>.</para>
 
         <sect3 id="zend.db.table.defining.table-schema">
             <title>Définir le nom de la table, et de la base de données</title>
@@ -122,7 +122,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
         <sect3 id="zend.db.table.defining.primary-key">
             <title>Définir la clé primaire d'une table</title>
 
-            <para>Toute table doit posséder une clé primaire. <code>Zend_Db_Table</code> ne fonctionne pas avec les
+            <para>Toute table doit posséder une clé primaire. <classname>Zend_Db_Table</classname> ne fonctionne pas avec les
             tables sans clé primaire. Vous pouvez les déclarer la(les) colonne servant de clé primaire grâce à la
             propriété protégée de la classe <code>$_primary</code>. Celle-ci peut être soit une chaîne, dans le cas
             d'une clé sur une colonne, ou un tableau de chaînes pour une clé sur plusieurs colonnes (clé primaire
@@ -140,7 +140,7 @@ class Bugs extends Zend_Db_Table_Abstract
 ]]></programlisting>
             </example>
 
-            <para>Si vous ne spécifiez pas explicitement de clé primaire, alors <code>Zend_Db_Table_Abstract</code> va
+            <para>Si vous ne spécifiez pas explicitement de clé primaire, alors <classname>Zend_Db_Table_Abstract</classname> va
             essayer de la trouver lui-même en utilisant les informations renvoyées par
             <code>describeTable()</code>.</para>
 
@@ -148,14 +148,14 @@ class Bugs extends Zend_Db_Table_Abstract
                 <para>Toute classe de table doit, par un moyen ou un autre, connaître la clé primaire de la table
                 ciblée. Si la clé primaire ne peut être trouvée ( spécifiée dans la classe, ou découverte par
                 <code>describeTable()</code>), alors la table ne va pas pouvoir être utilisée avec
-                <code>Zend_Db_Table</code>.</para>
+                <classname>Zend_Db_Table</classname>.</para>
             </note>
         </sect3>
 
         <sect3 id="zend.db.table.defining.setup">
             <title>Redéfinir les méthodes de configuration de la classe de Table</title>
 
-            <para>Lorsque vous créez votre instance de classe <code>Zend_Db_Table</code>, le constructeur décompose le
+            <para>Lorsque vous créez votre instance de classe <classname>Zend_Db_Table</classname>, le constructeur décompose le
             processus via plusieurs méthodes permettant l'initialisation des métadonnées de la table. Chacune de ces
             étapes est matérialisée par une méthode de la classe, surchargeable. N'oubliez cependant pas d'appeler la
             méthode parente respective à la fin de votre traitement.</para>
@@ -260,8 +260,8 @@ $table = new Bugs(array('db' => $db));
 
             <para>La deuxième manière de donner un objet adaptateur à la classe de Table est de le déclarer comme étant
             l'objet adaptateur par défaut pour toutes les classes de Table. Vous pouvez faire ceci en utilisant la
-            méthode statique <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code>. Son argument est un objet de type
-            <code>Zend_Db_Adapter_Abstract</code>.</para>
+            méthode statique <classname>Zend_Db_Table_Abstract::setDefaultAdapter()</classname>. Son argument est un objet de type
+            <classname>Zend_Db_Adapter_Abstract</classname>.</para>
 
             <example id="zend.db.table.constructing.default-adapter.example">
                 <title>Exemple de construction d'un objet Table en utilisant l'adaptateur par défaut</title>
@@ -279,7 +279,7 @@ $table = new Bugs();
             <para>Il peut être intéressant de créer son objet adaptateur de base de données en un lieu approprié, comme
             le fichier d'amorçage ("bootstrap"), et ensuite de le spécifier comme adaptateur par défaut pour toutes les
             tables, à travers toute l'application. Attention toutefois, ce procédé fixe un et un seul adaptateur, pour
-            toutes les classes de table (héritant de <code>Zend_Db_Table_Abstract</code>).</para>
+            toutes les classes de table (héritant de <classname>Zend_Db_Table_Abstract</classname>).</para>
         </sect3>
 
         <sect3 id="zend.db.table.constructing.registry">
@@ -334,7 +334,7 @@ $table->insert($data);
         </example>
 
         <para>Par défaut les paramètres sont traités comme des valeurs littérales. Si vous souhaitez utiliser une
-        expression SQL à la place, manipulez un objet <code>Zend_Db_Expr</code> plutôt.</para>
+        expression SQL à la place, manipulez un objet <classname>Zend_Db_Expr</classname> plutôt.</para>
 
         <example id="zend.db.table.insert.example-expr">
             <title>Exemple d'insertion d'expressions dans une table</title>
@@ -351,7 +351,7 @@ $data = array(
         </example>
 
         <para>Dans les exemples ci-dessus, il est supposé que la table possède une clé primaire auto-incrémentée. C'est
-        le comportement par défaut que gère <code>Zend_Db_Table_Abstract</code>, mais il y a d'autres comportements
+        le comportement par défaut que gère <classname>Zend_Db_Table_Abstract</classname>, mais il y a d'autres comportements
         valides, qui sont détaillés ci-dessous.</para>
 
         <sect3 id="zend.db.table.insert.key-auto">
@@ -360,7 +360,7 @@ $data = array(
             <para>Une clé primaire auto-incrémentée génère une valeur entière unique si vous omettez la colonne de la
             clé primaire dans une requête SQL de type <code>INSERT</code>.</para>
 
-            <para>Dans <code>Zend_Db_Table_Abstract</code>, si vous définissez la variable protégée
+            <para>Dans <classname>Zend_Db_Table_Abstract</classname>, si vous définissez la variable protégée
             <code>$_sequence</code> à un booléen <code>true</code> (défaut), alors la classe va supposer que la table
             qu'elle représente possède une clé primaire auto-incrémentée.</para>
 
@@ -385,7 +385,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>PostgreSQL a une propriété <code>SERIAL</code> qui définit une séquence automatiquement, basée sur le
             nom de la table et d'une colonne, et utilise cette séquence pour générer des valeurs de clés pour les
             nouveaux enregistrements. IBM DB2 a une propriété <code>IDENTITY</code> qui fonctionne de la même manière.
-            Si vous utilisez ces propriétés d'automatisme, considérez votre classe de Table (<code>Zend_Db_Table</code>)
+            Si vous utilisez ces propriétés d'automatisme, considérez votre classe de Table (<classname>Zend_Db_Table</classname>)
             comme si elle avait une clé primaire auto-incrémentée. Déclarez ainsi <code>$_sequence</code> à
             <code>true</code>.</para>
         </sect3>
@@ -397,7 +397,7 @@ class Bugs extends Zend_Db_Table_Abstract
             comme clés primaires dans une ou plusieurs tables de la base de données.</para>
 
             <para>Si vous définissez <code>$_sequence</code> avec une chaîne de caractères,
-            <code>Zend_Db_Table_Abstract</code> va alors supposer que cette chaîne représente le nom de l'objet de
+            <classname>Zend_Db_Table_Abstract</classname> va alors supposer que cette chaîne représente le nom de l'objet de
             séquence. Elle sera donc utilisée pour générer une valeur lors de requêtes <code>INSERT</code> le
             nécessitant.</para>
 
@@ -430,9 +430,9 @@ class Bugs extends Zend_Db_Table_Abstract
             vous.</para>
 
             <para>Si vous utilisez <code>$_sequence</code> avec la valeur booléenne <code>false</code>, alors
-            <code>Zend_Db_Table_Abstract</code> se comportera comme si une clé naturelle est utilisée. Ainsi, lors de
+            <classname>Zend_Db_Table_Abstract</classname> se comportera comme si une clé naturelle est utilisée. Ainsi, lors de
             l'appel de la méthode <code>insert()</code>, vous devrez spécifier la valeur de la clé primaire vous même,
-            autrement une <code>Zend_Db_Table_Exception</code> sera levée.</para>
+            autrement une <classname>Zend_Db_Table_Exception</classname> sera levée.</para>
 
             <example id="zend.db.table.insert.key-natural.example">
                 <title>Exemple de déclaration d'une clé naturelle</title>
@@ -594,7 +594,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
 
             <para><warning>
                     <para>L'API pour les opérations de récupération d'enregistrements a été améliorée afin d'autoriser
-                    un objet <code>Zend_Db_Table_Select</code> à modifier la requête. Les anciens comportements de
+                    un objet <classname>Zend_Db_Table_Select</classname> à modifier la requête. Les anciens comportements de
                     <code>fetchRow()</code> et <code>fetchAll()</code> sont désormais dépréciés, mais toujours
                     fonctionnels à ce jour.</para>
 
@@ -678,7 +678,7 @@ $rows = $table->fetchAll($table->select()
 
             <para>Vous pouvez demander une requête qui retourne plusieurs enregistrements. La méthode
             <code>fetchAll()</code> de votre classe de Table permet ceci. Elle retourne un objet de type
-            <code>Zend_Db_Table_Rowset_Abstract</code>, même si aucun enregistrement ne correspond à la requête.</para>
+            <classname>Zend_Db_Table_Rowset_Abstract</classname>, même si aucun enregistrement ne correspond à la requête.</para>
 
             <example id="zend.db.table.qry.rows.set.finding.row.example">
                 <title>Exemple de récupération d'enregistrements</title>
@@ -909,7 +909,7 @@ echo "The table name is " . $info['name'] . "\n";
     <sect2 id="zend.db.table.metadata.caching">
         <title>Cacher les méta données de la table</title>
 
-        <para>Par défaut, <code>Zend_Db_Table_Abstract</code> demande à la base de données les <link
+        <para>Par défaut, <classname>Zend_Db_Table_Abstract</classname> demande à la base de données les <link
         linkend="zend.db.table.info">méta données de table</link>, à chaque instanciation d'objet de table. L'objet de
         table analyse les métadonnées de la table dans le SGDB en utilisant la méthode <code>describeTable()</code> de
         l'adaptateur. Les opérations nécessitant cette introspection incluent :</para>
@@ -946,7 +946,7 @@ echo "The table name is " . $info['name'] . "\n";
                 </listitem>
             </itemizedlist> Dans tous les cas, vous devrez passer soit <code>null</code> (et ainsi désactiver le cache
         des méta données des tables), soit une instance de <link
-        linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>. Il est possible d'utiliser à la fois
+        linkend="zend.cache.frontends.core"><classname>Zend_Cache_Core</classname></link>. Il est possible d'utiliser à la fois
         <code>setDefaultMetadataCache</code> et le constructeur afin d'avoir un objet de cache par défaut, puis un
         spécifique pour certaines classes.</para>
 
@@ -1024,10 +1024,10 @@ $bugs = new Bugs(array('metadataCache' => $cache));
 
             <para>Étant donné que les informations retournées par <classname>describeTable()</classname> le sont sous
             forme de tableau, assurez vous que le paramètre <code>automatic_serialization</code> est à <code>true</code>
-            pour l'objet de la classe <code>Zend_Cache_Core</code>.</para>
+            pour l'objet de la classe <classname>Zend_Cache_Core</classname>.</para>
         </note>
 
-        <para>Dans nos exemples, nous utilisons <code>Zend_Cache_Backend_File</code>, mais vous pouvez utiliser le
+        <para>Dans nos exemples, nous utilisons <classname>Zend_Cache_Backend_File</classname>, mais vous pouvez utiliser le
         backend que vous souhaitez, voyez <link linkend="zend.cache">Zend_Cache</link> pour plus d'informations.</para>
 
         <sect3 id="zend.db.table.metadata.caching.hardcoding">
@@ -1088,10 +1088,10 @@ $bugs->setMetadataCacheInClass(false);
             <title>Utiliser des objets Row ou Rowset personnalisés</title>
 
             <para>Par défaut, les méthodes de la classe de Table retourne des jeux d'enregistrements comme étant des
-            instances de la classe <code>Zend_Db_Table_Rowset</code>, ces "Rowsets" contiennent des enregistrements de
-            la table, représentés par des objets instances de <code>Zend_Db_Table_Row</code>. Vous pouvez spécifier vos
-            propres classes pour row/rowset, mais elles doivent étendre <code>Zend_Db_Table_Rowset_Abstract</code> ou
-            <code>Zend_Db_Table_Row_Abstract</code>, respectivement.</para>
+            instances de la classe <classname>Zend_Db_Table_Rowset</classname>, ces "Rowsets" contiennent des enregistrements de
+            la table, représentés par des objets instances de <classname>Zend_Db_Table_Row</classname>. Vous pouvez spécifier vos
+            propres classes pour row/rowset, mais elles doivent étendre <classname>Zend_Db_Table_Rowset_Abstract</classname> ou
+            <classname>Zend_Db_Table_Row_Abstract</classname>, respectivement.</para>
 
             <para>Vous pouvez spécifier vos classes row/rowset en utilisant le constructeur de la classe de Table, via
             le tableau d'options, aux clés <code>"rowClass"</code> et <code>"rowsetClass"</code>. Indiquez les noms des
@@ -1226,7 +1226,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>L'<emphasis>inflexion</emphasis> est un processus de transformations de caractères. Par défaut, si
             vous ne définissez pas de nom à votre table via la propriété protégée <code>$_name</code>,
-            <code>Zend_Db_Table_Abstract</code> va utiliser le nom de la classe comme nom de table, sans effectuer
+            <classname>Zend_Db_Table_Abstract</classname> va utiliser le nom de la classe comme nom de table, sans effectuer
             aucune transformation.</para>
 
             <para>Certaines personnes peuvent vouloir utiliser un mécanisme d'inflexion pour transformer le nom de la
@@ -1241,7 +1241,7 @@ class Bugs extends Zend_Db_Table_Abstract
             la propriété <code>$_name</code> de la classe de Table.</para>
 
             <para>Si vous voulez utiliser l'inflexion, vous devrez créer une classe (abstraite) étendant
-            <code>Zend_Db_Table_Abstract</code>, et redéfinissant sa méthode protégée <code>_setupTableName()</code>.
+            <classname>Zend_Db_Table_Abstract</classname>, et redéfinissant sa méthode protégée <code>_setupTableName()</code>.
             Toutes les classes de Table devront alors hériter de cette nouvelle classe abstraite.</para>
 
             <example id="zend.db.table.extending.inflection.example">

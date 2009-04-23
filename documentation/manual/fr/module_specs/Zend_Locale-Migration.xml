@@ -2,8 +2,8 @@
 <sect1 id="zend.locale.migration">
     <title>Migrer à partir des versions précédentes</title>
 
-    <para>L'API de <code>Zend_Locale</code> a changé au cours du temps. Si vous avez commencé à utiliser
-    <code>Zend_Locale</code> et ses sous-composants avec les versions précédentes, suivez les lignes directrices
+    <para>L'API de <classname>Zend_Locale</classname> a changé au cours du temps. Si vous avez commencé à utiliser
+    <classname>Zend_Locale</classname> et ses sous-composants avec les versions précédentes, suivez les lignes directrices
     ci-dessous pour migrer vos scripts et ainsi utiliser la nouvelle API.</para>
 
     <sect2 id="zend.locale.migration.fromonesixtooneseven">

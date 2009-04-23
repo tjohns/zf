@@ -2,7 +2,7 @@
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
-    <para><code>Zend_Controller_Plugin_ErrorHandler</code> est un plugin intégré d'office dans le modèle MVC, il sert à
+    <para><classname>Zend_Controller_Plugin_ErrorHandler</classname> est un plugin intégré d'office dans le modèle MVC, il sert à
     gérer les exceptions envoyées par l'application, en particulier celles concernant des contrôleurs ou des actions
     manquants. C'est une manière rejoignant la section <link linkend="zend.controller.exceptions">Exceptions
     MVC</link>.</para>
@@ -23,7 +23,7 @@
     destiné à intervenir sur les exceptions envoyées dans d'autres plugins. Des effets de bords peuvent apparaître,
     veillez à les gérer.</para>
 
-    <para>Par défaut, <code>Zend_Controller_Plugin_ErrorHandler</code> redirige vers
+    <para>Par défaut, <classname>Zend_Controller_Plugin_ErrorHandler</classname> redirige vers
     <code>ErrorController::errorAction()</code> dans le module par défaut. Vous pouvez passer d'autres valeurs via les
     accesseurs du plugin :</para>
 
@@ -49,7 +49,7 @@
     <para>Ce comportement fonctionne aussi avec le constructeur du plugin. Celui-ci agit comme un proxy vers
     <code>setErrorHandler()</code>.</para>
 
-    <para><code>Zend_Controller_Plugin_ErrorHandler</code> agit en <code>postDispatch()</code> et analyse <link
+    <para><classname>Zend_Controller_Plugin_ErrorHandler</classname> agit en <code>postDispatch()</code> et analyse <link
     linkend="zend.controller.response">l'objet de réponse</link> à la recherche d'éventuelles exceptions. Si il y en a,
     alors le plugin modifie la requête pour distribuer le contrôleur et l'action d'erreur.</para>
 
@@ -65,7 +65,7 @@
         d'exception ayant mené à l'erreur.</para>
 
         <para>Les exceptions capturées sont enregistrées en tant que paramètre d'action.
-        <code>Zend_Controller_Action::_getParam('error_handler')</code>:</para>
+        <classname>Zend_Controller_Action::_getParam('error_handler')</classname>:</para>
 
         <programlisting role="php"><![CDATA[
 class ErrorController extends Zend_Controller_Action
@@ -82,17 +82,17 @@ class ErrorController extends Zend_Controller_Action
 
         <itemizedlist>
             <listitem>
-                <para><code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>, indique un contrôleur
+                <para><classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</classname>, indique un contrôleur
                 non trouvé.</para>
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>, indique qu'une action est
+                <para><classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</classname>, indique qu'une action est
                 absente.</para>
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>, indique une autre
+                <para><classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</classname>, indique une autre
                 exception.</para>
             </listitem>
         </itemizedlist>

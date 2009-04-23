@@ -73,13 +73,13 @@ $autodiscover->handle();
         <note id="zend.soap.autodiscovery.introduction.noserver">
             <title>Zend_Soap_Autodiscover n'est pas un serveur SOAP</title>
 
-            <para>Il est très important de noter, que la classe <code>Zend_Soap_Autodiscover</code> n'agit pas en tant
+            <para>Il est très important de noter, que la classe <classname>Zend_Soap_Autodiscover</classname> n'agit pas en tant
             que serveur SOAP elle-même. Elle génère seulement le WSDL et le fournit à ceux qui accèdent à l'URL qu'elle
             écoute.</para>
 
             <para>Par défaut l'URI de SOAP est <code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code>,
             mais ceci peut être changé avec la méthode <code>setUri()</code> ou le paramètre de constructeur de la
-            classe <code>Zend_Soap_AutoDiscover</code>. L'URI doit correspondre à un <code>Zend_Soap_Server</code> qui
+            classe <classname>Zend_Soap_AutoDiscover</classname>. L'URI doit correspondre à un <classname>Zend_Soap_Server</classname> qui
             écoute les requêtes.</para>
 
             <para><programlisting role="php"><![CDATA[
@@ -101,7 +101,7 @@ if(isset($_GET['wsdl'])) {
         <title>Auto découverte de classe</title>
 
         <para>Si une classe est utilisée dans un serveur SOAP, alors celle-ci devrait aussi être fournie à
-        <code>Zend_Soap_AutoDiscovery</code> afin d'en générer le fichier WSDL : <programlisting role="php"><![CDATA[
+        <classname>Zend_Soap_AutoDiscovery</classname> afin d'en générer le fichier WSDL : <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
@@ -161,7 +161,7 @@ $autodiscover->handle();
         <title>Auto découverte des fonctions</title>
 
         <para>Si des fonctions doivent être utilisées (partagées) via un serveur SOAP, alors elles doivent être passées
-        à <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
+        à <classname>Zend_Soap_AutoDiscovery</classname> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->addFunction('function1');
 $autodiscover->addFunction('function2');
@@ -250,10 +250,10 @@ $autodiscover->handle();
                 <listitem>
                     <para>Classe PHP &lt;-&gt; basé sur la stratégie des types complexes (Voir : <xref
                     linkend="zend.soap.wsdl.types.add_complex" />) <footnote>
-                            <para><code>Zend_Soap_AutoDiscover</code> sera créé avec la classe
-                            <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> en tant qu'algorithme de détection
+                            <para><classname>Zend_Soap_AutoDiscover</classname> sera créé avec la classe
+                            <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname> en tant qu'algorithme de détection
                             pour les types complexes. Le premier paramètre du constructeur AutoDiscover accepte toute
-                            stratégie de types complexes implémentant <code>Zend_Soap_Wsdl_Strategy_Interface</code> ou
+                            stratégie de types complexes implémentant <classname>Zend_Soap_Wsdl_Strategy_Interface</classname> ou
                             une chaîne correspondant au nom de la classe. Pour une compatibilité ascendante, avec
                             <code>$extractComplexType</code> les variables booléennes sont analysées comme avec
                             Zend_Soap_Wsdl. Regardez le manuel <link

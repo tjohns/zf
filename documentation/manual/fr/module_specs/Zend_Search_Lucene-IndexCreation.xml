@@ -6,11 +6,11 @@
         <title>Créer un nouvel index</title>
 
         <para>La création et la mise à jour des index sont implémentées dans le composant
-        <code>Zend_Search_Lucene</code>, ainsi que dans le projet Java Lucene. Vous pouvez utiliser l'une ou l'autre de
-        ces options pour créer des index dans lesquels <code>Zend_Search_Lucene</code> pourra chercher.</para>
+        <classname>Zend_Search_Lucene</classname>, ainsi que dans le projet Java Lucene. Vous pouvez utiliser l'une ou l'autre de
+        ces options pour créer des index dans lesquels <classname>Zend_Search_Lucene</classname> pourra chercher.</para>
 
         <para>Le listing ci-dessous donne un exemple d'indexation d'un fichier en utilisant l'API d'indexation de
-        <code>Zend_Search_Lucene</code> :</para>
+        <classname>Zend_Search_Lucene</classname> :</para>
 
         <programlisting role="php"><![CDATA[
 // Création de l'index
@@ -59,7 +59,7 @@ $index->addDocument($doc);
         <para>Le format de fichier d'un index Lucene ne permet pas la mise à jour d'un document. Les documents doivent
         être supprimés puis réinsérés dans l'index afin d'être mis à jour efficacement.</para>
 
-        <para>La méthode <code>Zend_Search_Lucene::delete()</code> utilise un identifiant interne de document. Cet
+        <para>La méthode <classname>Zend_Search_Lucene::delete()</classname> utilise un identifiant interne de document. Cet
         identifiant peut être récupéré dans une requête en demandant la propriété 'id' :</para>
 
         <programlisting role="php"><![CDATA[
@@ -74,13 +74,13 @@ foreach ($hits as $hit) {
     <sect2 id="zend.search.lucene.index-creation.counting">
         <title>Récupération de la taille de l'index</title>
 
-        <para>Il existe deux méthodes pour récupérer la taille d'un index dans <code>Zend_Search_Lucene</code>.</para>
+        <para>Il existe deux méthodes pour récupérer la taille d'un index dans <classname>Zend_Search_Lucene</classname>.</para>
 
-        <para>La méthode <code>Zend_Search_Lucene::maxDoc()</code> retourne un de plus que le plus grand nombre possible
+        <para>La méthode <classname>Zend_Search_Lucene::maxDoc()</classname> retourne un de plus que le plus grand nombre possible
         de documents. Il s'agit en fait du nombre total de documents dans l'index, y compris les documents supprimés.
-        Cette méthode a une méthode synonyme : <code>Zend_Search_Lucene::count()</code>.</para>
+        Cette méthode a une méthode synonyme : <classname>Zend_Search_Lucene::count()</classname>.</para>
 
-        <para>La méthode <code>Zend_Search_Lucene::numDocs()</code> retourne le nombre total de documents non
+        <para>La méthode <classname>Zend_Search_Lucene::numDocs()</classname> retourne le nombre total de documents non
         supprimés.</para>
 
         <programlisting role="php"><![CDATA[
@@ -88,7 +88,7 @@ $indexSize = $index->count();
 $documents = $index->numDocs();
 ]]></programlisting>
 
-        <para>La méthode <code>Zend_Search_Lucene::isDeleted($id)</code> peut être utilisée pour vérifier si un document
+        <para>La méthode <classname>Zend_Search_Lucene::isDeleted($id)</classname> peut être utilisée pour vérifier si un document
         a été supprimé.</para>
 
         <programlisting role="php"><![CDATA[
@@ -125,7 +125,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         segments ('segments' file).</para>
 
         <para>L'optimisation complète de l'index peut être déclenchée en appelant la méthode
-        <code>Zend_Search_Lucene::optimize()</code>. Elle va fusionner tous les segments de l'index en un seul nouveau
+        <classname>Zend_Search_Lucene::optimize()</classname>. Elle va fusionner tous les segments de l'index en un seul nouveau
         segment :</para>
 
         <programlisting role="php"><![CDATA[
@@ -194,8 +194,8 @@ $index->optimize();
             <para>Lucene Java et Luke (Lucene Index Toolbox - <ulink
             url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>) peuvent aussi être utilisés pour
             optimiser un index. La dernière version de Luke (v0.8) est basée sur Lucene v2.3 et est compatible avec
-            l'implémentation courante du composant <code>Zend_Search_Lucene</code> (ZF 1.6). Les versions précédentes de
-            <code>Zend_Search_Lucene</code> nécessitent d'autres versions des outils de Java Lucene : <itemizedlist>
+            l'implémentation courante du composant <classname>Zend_Search_Lucene</classname> (ZF 1.6). Les versions précédentes de
+            <classname>Zend_Search_Lucene</classname> nécessitent d'autres versions des outils de Java Lucene : <itemizedlist>
                     <listitem>
                         <para>ZF 1.5 - Java Lucene 2.1 (Luke tool v0.7.1 - <ulink
                         url="http://www.getopt.org/luke/luke-0.7.1/"></ulink>)</para>
@@ -215,7 +215,7 @@ $index->optimize();
         <para>Par défaut, les fichiers d'index sont disponibles en lecture et écriture par tout le monde.</para>
 
         <para>Il est possible de surcharger ce comportement grâce à la méthode
-        <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> :</para>
+        <classname>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</classname> :</para>
 
         <programlisting role="php"><![CDATA[
 // Récupération des permissions par défaut
@@ -241,14 +241,14 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Systèmes de fichiers supportés</title>
 
-            <para><code>Zend_Search_Lucene</code> utilise <code>flock()</code> pour fournir des recherches concurrentes,
+            <para><classname>Zend_Search_Lucene</classname> utilise <code>flock()</code> pour fournir des recherches concurrentes,
             la mise à jour des index et l'optimisation.</para>
 
             <para>Selon la <ulink url="http://www.php.net/manual/en/function.flock.php">documentation</ulink> PHP,
             "<code>flock()</code> ne fonctionnera pas sur NFS et plusieurs autres systèmes de fichiers en
             réseaux".</para>
 
-            <para>N'utilisez pas de systèmes de fichiers en réseaux avec <code>Zend_Search_Lucene</code>.</para>
+            <para>N'utilisez pas de systèmes de fichiers en réseaux avec <classname>Zend_Search_Lucene</classname>.</para>
         </sect3>
     </sect2>
 </sect1>

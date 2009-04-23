@@ -2,8 +2,8 @@
 <sect1 id="zend.translate.migration">
     <title>Migrer à partir des versions précédentes</title>
 
-    <para>L'API de <code>Zend_Translate</code> a changé au cours du temps. Si vous avez commencé à utiliser
-    <code>Zend_Translate</code> et ses sous-composants avec les versions précédentes, suivez les lignes directrices
+    <para>L'API de <classname>Zend_Translate</classname> a changé au cours du temps. Si vous avez commencé à utiliser
+    <classname>Zend_Translate</classname> et ses sous-composants avec les versions précédentes, suivez les lignes directrices
     ci-dessous pour migrer vos scripts et ainsi utiliser la nouvelle API.</para>
 
     <sect2 id="zend.translate.migration.fromonesixtooneseven">
@@ -13,7 +13,7 @@
             <title>Paramétrer les langues</title>
 
             <para>Lors de l'utilisation de la détection automatique des langues, ou du réglage manuel des langues de
-            <code>Zend_Translate</code>, vous avez peut-être remarqué que de temps en temps une notice est envoyée
+            <classname>Zend_Translate</classname>, vous avez peut-être remarqué que de temps en temps une notice est envoyée
             concernant le non-ajout de traductions vides. Dans certaines versions précédentes, une exception était levée
             dans certains cas.</para>
 

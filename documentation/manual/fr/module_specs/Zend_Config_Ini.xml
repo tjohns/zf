@@ -34,7 +34,7 @@
         <para>
             Par défaut, le séparateur de clé est le caractère point (.), cependant cela peut
             être changé en changeant la clé de <code>$options</code> en construisant l'objet
-            <code>Zend_Config_Ini</code>. Par exemple&#160;:
+            <classname>Zend_Config_Ini</classname>. Par exemple&#160;:
             <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
 $options = new Zend_Config_Ini('/chemin/vers/config.ini',

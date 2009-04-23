@@ -30,7 +30,7 @@
 
     <example id="zend.config.adapters.xml.example.using">
 
-        <title>Utiliser <code>Zend_Config_Xml</code></title>
+        <title>Utiliser <classname>Zend_Config_Xml</classname></title>
 
         <para>
             Cet exemple illustre une utilisation de base de <classname>Zend_Config_Xml</classname>

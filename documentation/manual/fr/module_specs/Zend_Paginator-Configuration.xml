@@ -2,10 +2,10 @@
 <sect1 id="zend.paginator.configuration">
     <title>Configuration</title>
 
-    <para><code>Zend_Paginator</code> possède de nombreuses méthodes de configuration qui peuvent être appelées :</para>
+    <para><classname>Zend_Paginator</classname> possède de nombreuses méthodes de configuration qui peuvent être appelées :</para>
 
     <table id="zend.paginator.configuration.table">
-        <title>Méthodes de configuration de <code>Zend_Paginator</code></title>
+        <title>Méthodes de configuration de <classname>Zend_Paginator</classname></title>
 
         <tgroup cols="2">
             <thead>

@@ -6,8 +6,8 @@
     encodées dans un objet JSON.</para>
 
     <para>JSON ne vous permet pas de référencer des objets, donc le soin devra être pris pour ne pas coder des objets
-    avec des références récursives. Si vous avez des problèmes de récursivité, <code>Zend_Json::encode()</code> et
-    <code>Zend_Json_Encoder::encode()</code> autorisent un deuxième paramètre facultatif afin de vérifier la récursivité
+    avec des références récursives. Si vous avez des problèmes de récursivité, <classname>Zend_Json::encode()</classname> et
+    <classname>Zend_Json_Encoder::encode()</classname> autorisent un deuxième paramètre facultatif afin de vérifier la récursivité
     ; si un objet est sérialisé deux fois, une exception sera levée.</para>
 
     <para>Bien que les objets Javascript correspondent de très près aux tableau associatifs de PHP, décoder des objets
@@ -15,7 +15,7 @@
     cette classe soit créée et définie avec les paires clé/valeur des objets JSON ; d'autres pensent que cela pourrait
     poser un risque de sécurité potentiel.</para>
 
-    <para>Par défaut, <code>Zend_Json</code> décodera des objets JSON comme en tableaux associatifs. Cependant, si vous
+    <para>Par défaut, <classname>Zend_Json</classname> décodera des objets JSON comme en tableaux associatifs. Cependant, si vous
     désirez avoir un objet en retour, vous pouvez le spécifier : <programlisting role="php"><![CDATA[
 // Décode des objets JSON en tant qu'objets PHP
 $phpNatif = Zend_Json::decode($valeurEncodee, Zend_Json::TYPE_OBJECT);
@@ -25,5 +25,5 @@ $phpNatif = Zend_Json::decode($valeurEncodee, Zend_Json::TYPE_OBJECT);
 
     <para>La recommandation de Zend Framework est que le développeur doit décider comment décoder les objets JSON. Si un
     objet d'un type spécifié doit être créé, il peut être créé dans le code du développeur et définit avec les valeurs
-    décodées en utilisant <code>Zend_Json</code>.</para>
+    décodées en utilisant <classname>Zend_Json</classname>.</para>
 </sect1>

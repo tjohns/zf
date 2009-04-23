@@ -2,12 +2,12 @@
 <sect1 id="zend.form.standardDecorators">
     <title>Décorateurs standards fournis avec Zend Framework</title>
 
-    <para><code>Zend_Form</code> est livré avec plusieurs décorateurs standards. Pour plus d'informations sur
+    <para><classname>Zend_Form</classname> est livré avec plusieurs décorateurs standards. Pour plus d'informations sur
     l'utilisation des décorateurs en général, voyez <link linkend="zend.form.decorators">la section sur les
     décorateurs</link>.</para>
 
     <sect2 id="zend.form.standardDecorators.callback">
-        <title><code>Zend_Form_Decorator_Callback</code></title>
+        <title><classname>Zend_Form_Decorator_Callback</classname></title>
 
         <para>Le décorateur Callback peut exécuter une fonction de rappel pour rendre du contenu. Les fonctions doivent
         être spécifiées grâce à l'option 'callback' passée à la configuration du décorateur, et peut être n'importe
@@ -34,7 +34,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.captcha">
-        <title><code>Zend_Form_Decorator_Captcha</code></title>
+        <title><classname>Zend_Form_Decorator_Captcha</classname></title>
 
         <para>Le décorateur Captcha est à utiliser avec <link linkend="zend.form.standardElements.captcha">l'élément de
         formulaire CAPTCHA </link>. Il utilise la méthode <code>render()</code> de l'adaptateur de CAPTCHA pour générer
@@ -46,10 +46,10 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.description">
-        <title><code>Zend_Form_Decorator_Description</code></title>
+        <title><classname>Zend_Form_Decorator_Description</classname></title>
 
         <para>Le décorateur Description peut être utilisé pour afficher la description affectée à un
-        <code>Zend_Form</code>, <code>Zend_Form_Element</code>, ou <code>Zend_Form_DisplayGroup</code>; il cherche cette
+        <classname>Zend_Form</classname>, <classname>Zend_Form_Element</classname>, ou <classname>Zend_Form_DisplayGroup</classname>; il cherche cette
         description en utilisant <code>getDescription()</code> sur l'objet en question.</para>
 
         <para>Par défaut, si aucune description n'est présente, rien ne sera généré. Dans le cas contraire , la
@@ -64,7 +64,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.dtDdWrapper">
-        <title><code>Zend_Form_Decorator_DtDdWrapper</code></title>
+        <title><classname>Zend_Form_Decorator_DtDdWrapper</classname></title>
 
         <para>Les décorateurs par défaut utilisent des listes de définition (<code>&lt;dl&gt;</code>) pour rendre les
         éléments de formulaire. Comme les éléments d'un formulaire peuvent apparaître dans n'importe quel ordre, les
@@ -86,7 +86,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.errors">
-        <title><code>Zend_Form_Decorator_Errors</code></title>
+        <title><classname>Zend_Form_Decorator_Errors</classname></title>
 
         <para>Les erreurs des éléments possèdent leur propre décorateur : 'Errors'. Celui-ci utilise l'aide de vue
         FormErrors, qui rend les messages d'erreur dans une liste non ordonnée (<code>&lt;ul&gt;</code>) qui reçoit la
@@ -96,7 +96,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.fieldset">
-        <title><code>Zend_Form_Decorator_Fieldset</code></title>
+        <title><classname>Zend_Form_Decorator_Fieldset</classname></title>
 
         <para>Les groupes d'affichage et les sous-formulaires rendent leur contenu dans des balises HTML fieldsets par
         défaut. Le décorateur Fieldset vérifie une option 'legend' ou la méthode <code>getLegend()</code> dans
@@ -106,25 +106,25 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.file">
-        <title><code>Zend_Form_Decorator_File</code></title>
+        <title><classname>Zend_Form_Decorator_File</classname></title>
 
         <para>Les éléments de type "File" (upload de fichiers) ont une notation spéciale lorsque vous utilisez de
         multiples éléments file ou des sous-formulaires. Le décorateur File est utilisé par
-        <code>Zend_Form_Element_File</code> et autorise plusieurs éléments avec un seul appel de méthode. Il est utilisé
+        <classname>Zend_Form_Element_File</classname> et autorise plusieurs éléments avec un seul appel de méthode. Il est utilisé
         automatiquement et gère alors le nom de chaque élément.</para>
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.form">
-        <title><code>Zend_Form_Decorator_Form</code></title>
+        <title><classname>Zend_Form_Decorator_Form</classname></title>
 
-        <para>Les objets <code>Zend_Form</code> ont en général besoin de rendre une balise HTML "form". Le décorateur
+        <para>Les objets <classname>Zend_Form</classname> ont en général besoin de rendre une balise HTML "form". Le décorateur
         Form utilise l'aide de vue du même nom dans ce but. Il encapsule le contenu qu'on lui passe dans une balise HTML
         'form' et remplace donc ce contenu par le nouveau entouré. Les action, méthode et attributs de l'objet
-        <code>Zend_Form</code> sont bien entendus utilisés dans la balise.</para>
+        <classname>Zend_Form</classname> sont bien entendus utilisés dans la balise.</para>
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.formElements">
-        <title><code>Zend_Form_Decorator_FormElements</code></title>
+        <title><classname>Zend_Form_Decorator_FormElements</classname></title>
 
         <para>Les formulaires, groupes d'affichage et sous-formulaires sont des collections d'éléments. Afin de rendre
         ces éléments, ils utilisent le décorateur FormElements, qui itère sur tous les éléments et appelle leur méthode
@@ -132,7 +132,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.formErrors">
-        <title><code>Zend_Form_Decorator_FormErrors</code></title>
+        <title><classname>Zend_Form_Decorator_FormErrors</classname></title>
 
         <para>Certains développeurs ou designers préfèrent regrouper tous les messages d'erreur en haut du formulaire.
         Le décorateur FormErrors a été conçu dans ce but.</para>
@@ -199,7 +199,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.htmlTag">
-        <title><code>Zend_Form_Decorator_HtmlTag</code></title>
+        <title><classname>Zend_Form_Decorator_HtmlTag</classname></title>
 
         <para>Le décorateur HtmlTag vous permet d'utiliser une balise HTML pour décorer votre contenu. La balise
         utilisée est passée comme option 'tag' et toute autre option sera utilisée comme attribut HTML à cette balise.
@@ -208,7 +208,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.image">
-        <title><code>Zend_Form_Decorator_Image</code></title>
+        <title><classname>Zend_Form_Decorator_Image</classname></title>
 
         <para>Le décorateur Image vous permet de créer un tag HTML d'image (<code>&lt;input type="image" ...
         /&gt;</code>), et optionnellement le rendre à l'intérieur d'une autre balise HTML.</para>
@@ -223,7 +223,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.label">
-        <title><code>Zend_Form_Decorator_Label</code></title>
+        <title><classname>Zend_Form_Decorator_Label</classname></title>
 
         <para>Les éléments de formulaire possèdent en général un label, et le décorateur du même nom permet de le
         rendre. Il utilise l'aide de vue FormLabel en récupérant le label de l'élément avec <code>getLabel()</code>. Si
@@ -266,7 +266,7 @@ class Util
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.prepareElements">
-        <title><code>Zend_Form_Decorator_PrepareElements</code></title>
+        <title><classname>Zend_Form_Decorator_PrepareElements</classname></title>
 
         <para>Les formulaires, les groupes d'affichage et les sous-formulaires sont des collections d'éléments. Lors de
         l'utilisation du décorateur <link linkend="zend.form.standardDecorators.viewScript">ViewScript</link> dans vos
@@ -283,9 +283,9 @@ $form->setDecorators(array(
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.viewHelper">
-        <title><code>Zend_Form_Decorator_ViewHelper</code></title>
+        <title><classname>Zend_Form_Decorator_ViewHelper</classname></title>
 
-        <para>Beaucoup d'éléments utilisent les aides de <code>Zend_View</code> pour leur propre rendu, et ceci est
+        <para>Beaucoup d'éléments utilisent les aides de <classname>Zend_View</classname> pour leur propre rendu, et ceci est
         effectué grâce au décorateur ViewHelper. Avec lui, vous pouvez spécifier une option 'helper' pour lui indiquer
         explicitement l'aide de vue à utiliser. Si aucune ne lui est fournie, il utilise le nom de la classe de
         l'élément (moins le chemin : la dernière partie du nom de la classe) afin de déterminer l'aide de vue à
@@ -298,7 +298,7 @@ $form->setDecorators(array(
     </sect2>
 
     <sect2 id="zend.form.standardDecorators.viewScript">
-        <title><code>Zend_Form_Decorator_ViewScript</code></title>
+        <title><classname>Zend_Form_Decorator_ViewScript</classname></title>
 
         <para>Quelques fois, vous pouvez avoir besoin d'un script de vue pour afficher vos éléments. Ceci vous permettra
         un placement très fin et détaillé, ou alors de changer la vue utilisée en fonction du module MVC dans lequel

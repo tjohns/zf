@@ -7,7 +7,7 @@
 
     <sect2 id="zend.cache.frontends.core">
 
-        <title><code>Zend_Cache_Core</code></title>
+        <title><classname>Zend_Cache_Core</classname></title>
 
         <sect3 id="zend.cache.frontends.core.introduction">
 
@@ -90,7 +90,7 @@
                             <entry><code>false</code></entry>
                             <entry>
                                 Si défini à <code>true</code>, le logging par
-                                <code>Zend_Log</code> est activé (mais le système sera plus
+                                <classname>Zend_Log</classname> est activé (mais le système sera plus
                                 lent)
                             </entry>
                         </row>
@@ -569,7 +569,7 @@ $res = $cache->foobar2('1', '2');
 
     <sect2 id="zend.cache.frontends.file">
 
-        <title><code>Zend_Cache_Frontend_File</code></title>
+        <title><classname>Zend_Cache_Frontend_File</classname></title>
 
         <sect3 id="zend.cache.frontends.file.introduction">
 
@@ -627,10 +627,10 @@ $res = $cache->foobar2('1', '2');
                         <row>
                             <entry><code>master_files_mode</code></entry>
                             <entry><code>string</code></entry>
-                            <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                            <entry><classname>Zend_Cache_Frontend_File::MODE_OR</classname></entry>
                             <entry>
-                                <code>Zend_Cache_Frontend_File::MODE_AND</code> oU
-                                <code>Zend_Cache_Frontend_File::MODE_OR</code> ; si
+                                <classname>Zend_Cache_Frontend_File::MODE_AND</classname> oU
+                                <classname>Zend_Cache_Frontend_File::MODE_OR</classname> ; si
                                 <code>MODE_AND</code>, alors tous les fichiers maîtres doivent être
                                 modifiés pour rendre invalide le cache, si <code>MODE_OR</code>,
                                 alors un seul fichier maître modifié est nécessaire pour invalider
@@ -680,7 +680,7 @@ $res = $cache->foobar2('1', '2');
             <para>
                 <classname>Zend_Cache_Frontend_Page</classname> est comme
                 <classname>Zend_Cache_Frontend_Output</classname> mais créé pour une page complète.
-                Il est impossible d'utiliser <code>Zend_Cache_Frontend_Page</code> pour mettre en
+                Il est impossible d'utiliser <classname>Zend_Cache_Frontend_Page</classname> pour mettre en
                 cache un bloc unique.
             </para>
 

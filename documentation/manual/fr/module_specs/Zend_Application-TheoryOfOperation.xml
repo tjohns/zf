@@ -15,7 +15,7 @@
     besoin de MVC dans une tâche cron, ou alors vous aurez juste besoin de l'accès à la base de
     données dans un script de service.</para>
 
-    <para><code>Zend_Application</code> a pour but de simplifier ces processus et de promouvoir la
+    <para><classname>Zend_Application</classname> a pour but de simplifier ces processus et de promouvoir la
     réutilisabilité de code en encapsulant les étages de définition du bootstrap en concepts
     orientés objet.</para>
 
@@ -23,29 +23,29 @@
 
     <itemizedlist>
         <listitem>
-            <para><code>Zend_Application</code>: charge l'environnement PHP, à savoir les
+            <para><classname>Zend_Application</classname>: charge l'environnement PHP, à savoir les
             include_paths et les autoloads, et instancie la classe de bootstrap demandée.</para>
         </listitem>
 
         <listitem>
-            <para><code>Zend_Application_Bootstrap</code>: regroupement d'interfaces pour les
-            classes de bootstrap. <code>Zend_Application_Bootstrap_Base</code> propose des
+            <para><classname>Zend_Application_Bootstrap</classname>: regroupement d'interfaces pour les
+            classes de bootstrap. <classname>Zend_Application_Bootstrap_Base</classname> propose des
             fonctionnalités de base concernant l'amorçage (le bootstrap), à savoir des algorithmes
             de vérification des dépendances et la possibilité de charger des ressources à la
             demande.</para>
         </listitem>
 
         <listitem>
-            <para><code>Zend_Application_Resource</code> est une interface pour les ressources de
+            <para><classname>Zend_Application_Resource</classname> est une interface pour les ressources de
             bootstrap qui peuvent être chargées à la demande depuis les instances de
             bootstrap.</para>
         </listitem>
     </itemizedlist>
 
     <para>Les développeurs créent une classe de bootstrap pour leur application en étendant
-    <code>Zend_Application_Bootstrap_Base</code> ou en implémentant (au minimum)
-    <code>Zend_Application_Bootstrap_IBootstrap</code>. Le point d'entrée (public/index.php)
-    chargera <code>Zend_Application</code> en l'instanciant et en lui passant :</para>
+    <classname>Zend_Application_Bootstrap_Base</classname> ou en implémentant (au minimum)
+    <classname>Zend_Application_Bootstrap_IBootstrap</classname>. Le point d'entrée (public/index.php)
+    chargera <classname>Zend_Application</classname> en l'instanciant et en lui passant :</para>
 
     <itemizedlist>
         <listitem>
@@ -94,6 +94,6 @@
         </listitem>
     </itemizedlist>
 
-    <para>Les options peuvent être un tableau, un objet <code>Zend_Config</code>, ou le chemin vers
+    <para>Les options peuvent être un tableau, un objet <classname>Zend_Config</classname>, ou le chemin vers
     un fichier de configuration.</para>
 </sect1>

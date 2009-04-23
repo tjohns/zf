@@ -2,8 +2,8 @@
 <sect1 id="zend.feed.consuming-atom">
     <title>Consommer un flux Atom</title>
 
-    <para>La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la même manière que
-    <code>Zend_Feed_Rss</code>. Tout comme <code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du flux
+    <para>La classe <classname>Zend_Feed_Atom</classname> est utilisée pratiquement de la même manière que
+    <classname>Zend_Feed_Rss</classname>. Tout comme <classname>Zend_Feed_Rss</classname>, elle offre aussi un accès aux propriétés du flux
     et elle permet d'itérer sur les entrées du flux. La différence principale réside dans la structure du protocole Atom
     lui-même. Atom est le successeur de RSS ; c'est un protocole plus général et il est conçu pour prendre en charge
     plus facilement les flux qui incluent directement leur contenu, et ce en divisant la balise RSS

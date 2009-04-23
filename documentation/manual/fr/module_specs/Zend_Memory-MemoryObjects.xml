@@ -25,7 +25,7 @@ $memObject = $memoryManager->createLocked($data);
         <para>"Verrouillé" signifie que de tels objets ne sont jamais mis en cache et déchargés de la mémoire.</para>
 
         <para>Les objets verrouillés fournissent la même interface que des objets mobiles
-        (<code>Zend_Memory_Container_Interface</code>). Donc l'objet verrouillé peut être utilisé en n'importe quel
+        (<classname>Zend_Memory_Container_Interface</classname>). Donc l'objet verrouillé peut être utilisé en n'importe quel
         endroit à la place des objets mobiles.</para>
 
         <para>Il est utile si une application ou un développeur peut décider, que quelques objets ne devraient jamais
@@ -34,7 +34,7 @@ $memObject = $memoryManager->createLocked($data);
         <para>L'accès aux objets verrouillés est plus rapide, parce que le manager de mémoire ne doit pas suivre à la
         trace des changements pour ces objets.</para>
 
-        <para>La classe d'objets verrouillés (<code>Zend_Memory_Container_Locked</code>) garantit pratiquement la même
+        <para>La classe d'objets verrouillés (<classname>Zend_Memory_Container_Locked</classname>) garantit pratiquement la même
         performance qu'en travaillant avec une variable de type chaîne de caractères. La couche supérieure est un simple
         référence pour récupérer la propriété de classe.</para>
     </sect2>

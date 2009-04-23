@@ -2,7 +2,7 @@
 <sect1 id="zend.date.basic">
     <title>Méthodes de base</title>
 
-    <para>Les sections qui suivent montrent l'utilisation de base de <code>Zend_Date</code> au travers d'exemples. Dans
+    <para>Les sections qui suivent montrent l'utilisation de base de <classname>Zend_Date</classname> au travers d'exemples. Dans
     ce manuel, une "date" représente toujours une date calendaire et un temps, même lorsque cela n'est pas mentionné
     spécifiquement. La partie (date calendaire, ou temps) non spécifiée prend la valeur par défaut "zéro". Ainsi
     additionner une date ayant une date calendaire mais pas de temps, à un temps "12 heures" n'ayant pas de date
@@ -37,13 +37,13 @@ print $date;
     <sect2 id="zend.date.basic.functions">
         <title>Zend_Date : exemples</title>
 
-        <para>Les exemples sont le meilleur moyen de prendre en main <code>Zend_Date</code>, particulièrement pour les
+        <para>Les exemples sont le meilleur moyen de prendre en main <classname>Zend_Date</classname>, particulièrement pour les
         personnes non habituées à la notion de date dans d'autres langages ou frameworks.</para>
 
         <sect3 id="zend.date.simple.functions.get">
             <title>Afficher une date</title>
 
-            <para>La date contenue dans l'objet <code>Zend_Date</code> est obtenue en tant qu'entier ou chaîne de
+            <para>La date contenue dans l'objet <classname>Zend_Date</classname> est obtenue en tant qu'entier ou chaîne de
             caractères localisée, grâce à la méthode <code>get()</code>. Il y a des options disponibles, nous les
             détaillerons ultérieurement.</para>
 
@@ -106,7 +106,7 @@ echo "Date via toString() = ", $date, "\n";
         <sect3 id="zend.date.simple.functions.compare">
             <title>Comparaison de dates</title>
 
-            <para>Toutes les méthodes basiques de <code>Zend_Date</code> peuvent opérer sur des dates complètes, ou des
+            <para>Toutes les méthodes basiques de <classname>Zend_Date</classname> peuvent opérer sur des dates complètes, ou des
             parties de dates. Par exemple, comparer la date dans l'objet à une certaines valeur de minutes, peut être
             effectué grâce à la méthode <code>compare()</code>.</para>
 

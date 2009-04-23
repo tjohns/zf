@@ -2,13 +2,13 @@
 <sect1 id="zend.currency.migration">
     <title>Migrer depuis des versions antérieures</title>
 
-    <para>L'API de <code>Zend_Currency</code> a changé pour gagner en simplicité. Si vous utilisiez une des versions
+    <para>L'API de <classname>Zend_Currency</classname> a changé pour gagner en simplicité. Si vous utilisiez une des versions
     décrites dans ce chapitre, vous devriez lire ce guide de migration.</para>
 
     <sect2 id="zend.currency.usage.migration.fromonezerotwo">
         <title>Migrer de 1.0.2 à 1.0.3 ou plus récent</title>
 
-        <para>Créer un objet <code>Zend_Currency</code> est devenu plus simple. Vous n'avez plus besoin de passer un
+        <para>Créer un objet <classname>Zend_Currency</classname> est devenu plus simple. Vous n'avez plus besoin de passer un
         script ou de le mettre à <code>null</code>, le paramètre script est optionnel et peut être spécifié par la
         méthode <code>setFormat()</code>.</para>
 

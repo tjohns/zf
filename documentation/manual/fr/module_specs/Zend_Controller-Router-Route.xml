@@ -2,7 +2,7 @@
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
-    <para><code>Zend_Controller_Router_Route</code> est la route par défaut intégrée dans le routeur de réécriture
+    <para><classname>Zend_Controller_Router_Route</classname> est la route par défaut intégrée dans le routeur de réécriture
     (RewriteRouter). Ce routeur combine les deux avantages que sont la simplicité d'utilisation et la flexibilité.
     Chaque route est définie par une correspondance d'URL, statique ou dynamique, et des valeurs par défaut peuvent être
     fournies, de même que des valeurs obligatoires.</para>
@@ -23,7 +23,7 @@ $route = new Zend_Controller_Router_Route(
 $router->addRoute('user', $route);
 ]]></programlisting>
 
-    <para>Le premier paramètre du constructeur de <code>Zend_Controller_Router_Route</code> est la définition de la
+    <para>Le premier paramètre du constructeur de <classname>Zend_Controller_Router_Route</classname> est la définition de la
     route à analyser avec l'URL. Les définitions des routes sont des parties statiques et dynamiques, séparées par des
     slashs ("/"). Les parties statiques sont juste du texte brut : <code>auteur</code>. Les dynamiques, appelées
     variables, sont repérées grâce à un caractère deux-points (:) devant la variable : <code>:username</code>.</para>
@@ -39,7 +39,7 @@ $router->addRoute('user', $route);
 
     <para>Cette route exemple devrait être utilisée lorsque le navigateur pointe vers
     <code>http://domaine.fr/auteur/martel</code>, et dans un tel cas, tous les paramètres de la requête seront injectés
-    dans l'objet <code>Zend_Controller_Request</code> et seront accessibles à travers votre
+    dans l'objet <classname>Zend_Controller_Request</classname> et seront accessibles à travers votre
     <code>ProfileController</code>. Les variables retournées par cet exemple peuvent être représentées par le tableau
     suivant :</para>
 
@@ -51,10 +51,10 @@ $values = array(
 );
 ]]></programlisting>
 
-    <para>Plus tard, <code>Zend_Controller_Dispatcher_Standard</code> va distribuer vers la méthode
+    <para>Plus tard, <classname>Zend_Controller_Dispatcher_Standard</classname> va distribuer vers la méthode
     <code>userinfoAction()</code> de <code>ProfileController</code> (dans le module par défaut) selon ces valeurs. A cet
     endroit, il sera possible d'accéder à toutes les variables de la requête grâce à
-    <code>Zend_Controller_Action::_getParam()</code> ou <code>Zend_Controller_Request::getParam()</code> :</para>
+    <classname>Zend_Controller_Action::_getParam()</classname> ou <classname>Zend_Controller_Request::getParam()</classname> :</para>
 
     <programlisting role="php"><![CDATA[
 public function userinfoAction()
@@ -82,7 +82,7 @@ $router->addRoute('default', $route);
         <title>Variables par défaut</title>
 
         <para>Chaque variable dynamique dans la définition des routes peut avoir une valeur par défaut. C'est à cela que
-        sert le second paramètre du constructeur de <code>Zend_Controller_Router_Route</code>. Il s'agit d'un tableau
+        sert le second paramètre du constructeur de <classname>Zend_Controller_Router_Route</classname>. Il s'agit d'un tableau
         avec comme clés les noms des variables, et comme valeurs, leurs valeurs par défaut :</para>
 
         <programlisting role="php"><![CDATA[
@@ -99,7 +99,7 @@ $router->addRoute('archive', $route);
 
         <para>L'exemple ci-dessus injecte ainsi un paramètre représentant une année (<code>annee</code>). Si aucune
         information de contrôleur ou d'actions n'est présente, alors ceux par défaut seront utilisés (ils sont définis
-        dans <code>Zend_Controller_Dispatcher_Abstract</code>). Pour que l'exemple soit plus intuitif, spécifions des
+        dans <classname>Zend_Controller_Dispatcher_Abstract</classname>). Pour que l'exemple soit plus intuitif, spécifions des
         contrôleur/action par défaut dans notre route :</para>
 
         <programlisting role="php"><![CDATA[
@@ -121,7 +121,7 @@ $router->addRoute('archive', $route);
     <sect4 id="zend.controller.router.routes.standard.variable-requirements">
         <title>Obligations et contraintes des variables</title>
 
-        <para>Vous pouvez ajouter un troisième paramètre au constructeur de <code>Zend_Controller_Router_Route</code>
+        <para>Vous pouvez ajouter un troisième paramètre au constructeur de <classname>Zend_Controller_Router_Route</classname>
         pour spécifier une variable obligatoire. Ceci s'effectue au moyen d'expressions régulières :</para>
 
         <programlisting role="php"><![CDATA[

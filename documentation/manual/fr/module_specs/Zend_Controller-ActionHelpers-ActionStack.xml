@@ -19,7 +19,7 @@
         <title>Ajouter une tâche en utilisant une action, un contrôleur et un module</title>
 
         <para>Souvent, il est plus simple de spécifier l'action, le contrôleur et le module (et optionnellement des
-        paramètres de requêtes), comme vous le feriez en appelant <code>Zend_Controller_Action::_forward()</code>
+        paramètres de requêtes), comme vous le feriez en appelant <classname>Zend_Controller_Action::_forward()</classname>
         :</para>
 
         <programlisting role="php"><![CDATA[

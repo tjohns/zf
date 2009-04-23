@@ -9,20 +9,20 @@
     linkend="zend.controller.actionhelpers.actionstack">ActionStack</link></para>
 
     <para>Vous pouvez récupérer ce plugin grâce à
-    <code>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</code>. Une fois l'objet retourné,
+    <classname>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</classname>. Une fois l'objet retourné,
     voici les méthodes qui y sont proposées :</para>
 
     <itemizedlist>
         <listitem>
             <para><code>getRegistry()</code> et <code>setRegistry()</code>. En interne, <code>ActionStack</code> utilise
-            <code>Zend_Registry</code> pour stocker sa pile. Vous pouvez manipuler l'instance du registre utilisée grâce
+            <classname>Zend_Registry</classname> pour stocker sa pile. Vous pouvez manipuler l'instance du registre utilisée grâce
             à ces méthodes.</para>
         </listitem>
 
         <listitem>
             <para><code>getRegistryKey()</code> et <code>setRegistryKey()</code>. Ces méthodes vous donnent accès à la
             clé utilisée dans le registre, pour stocker la pile d'actions de ActionStack. Par défaut, il s'agit de
-            <code>Zend_Controller_Plugin_ActionStack</code>.</para>
+            <classname>Zend_Controller_Plugin_ActionStack</classname>.</para>
         </listitem>
 
         <listitem>

@@ -3,7 +3,7 @@
     <title>Créer un visuel personnalisé en utilisant Zend_Form_Decorator</title>
 
     <para>Rendre visuellement un objet de formulaire est complètement optionnel -- il n'est pas obligatoire d'utiliser
-    la méthode <code>render()</code> de <code>Zend_Form</code>. Cependant, si vous l'utilisez, alors des décorateurs
+    la méthode <code>render()</code> de <classname>Zend_Form</classname>. Cependant, si vous l'utilisez, alors des décorateurs
     sont utilisés pour rendre les différents objets du formulaire.</para>
 
     <para>Un nombre arbitraire de décorateurs peut être attaché à chaque objet du formulaire (élément, groupe
@@ -27,9 +27,9 @@
     <sect2 id="zend.form.decorators.operation">
         <title>Configuration</title>
 
-        <para>Pour configurer un décorateur, passez un tableau d'options ou un objet <code>Zend_Config</code> à son
+        <para>Pour configurer un décorateur, passez un tableau d'options ou un objet <classname>Zend_Config</classname> à son
         constructeur. Aussi, un tableau peut être passé à <code>setOptions()</code>, ou un objet
-        <code>Zend_Config</code> à <code>setConfig()</code>.</para>
+        <classname>Zend_Config</classname> à <code>setConfig()</code>.</para>
 
         <para>Options de base:</para>
 
@@ -73,8 +73,8 @@
             </listitem>
         </itemizedlist>
 
-        <para>Les décorateurs sont destinés à agir avec tous les objets du formulaire, <code>Zend_Form</code>,
-        <code>Zend_Form_Element</code>, <code>Zend_Form_DisplayGroup</code>, et toute classe en dérivant. La méthode
+        <para>Les décorateurs sont destinés à agir avec tous les objets du formulaire, <classname>Zend_Form</classname>,
+        <classname>Zend_Form_Element</classname>, <classname>Zend_Form_DisplayGroup</classname>, et toute classe en dérivant. La méthode
         <code>setElement()</code> vous permet de passer l'objet au décorateur sur lequel il travaille.
         <code>getElement()</code> vous permet de récupérer cet objet depuis le décorateur.</para>
 
@@ -88,7 +88,7 @@
     <sect2 id="zend.form.decorators.standard">
         <title>Décorateurs standards</title>
 
-        <para><code>Zend_Form</code> est fourni avec quelques décorateurs de base, voyez <link
+        <para><classname>Zend_Form</classname> est fourni avec quelques décorateurs de base, voyez <link
         linkend="zend.form.standardDecorators">le chapitre sur les décorateurs standards</link> pour plus de
         détails.</para>
     </sect2>
@@ -99,7 +99,7 @@
         <para>Si vos rendus HTML sont complexes, ou si vous avez besoin de beaucoup de personnalisation, vous pouvez
         alors créer vos propres décorateurs.</para>
 
-        <para>Les décorateurs ont juste besoin d'implémenter l'interface <code>Zend_Decorator_Interface</code>. Celle-ci
+        <para>Les décorateurs ont juste besoin d'implémenter l'interface <classname>Zend_Decorator_Interface</classname>. Celle-ci
         spécifie les méthodes suivantes :</para>
 
         <programlisting role="php"><![CDATA[
@@ -120,7 +120,7 @@ interface Zend_Decorator_Interface
 ]]></programlisting>
 
         <para>Pour vous simplifier la tâche, vous pourriez considérer le fait d'étendre
-        <code>Zend_Decorator_Abstract</code>, qui implémente toutes les méthodes de l'interface sauf
+        <classname>Zend_Decorator_Abstract</classname>, qui implémente toutes les méthodes de l'interface sauf
         <code>render()</code>.</para>
 
         <para>Par exemple, imaginons que vous ne souhaitiez pas vous encombrer avec un nombre important de décorateurs,
@@ -265,7 +265,7 @@ class My_Decorator_Errors
 ]]></programlisting>
 
         <para>Dans cet exemple particulier, comme le segment final du nom de la classe, 'Errors', respecte la syntaxe de
-        <code>Zend_Form_Decorator_Errors</code>, il sera alors utilisé <emphasis>à la place du</emphasis> décorateur par
+        <classname>Zend_Form_Decorator_Errors</classname>, il sera alors utilisé <emphasis>à la place du</emphasis> décorateur par
         défaut -- ceci signifie que vous n'avez pas besoin de l'injecter dans un élément particulier. En nommant vos
         fins de classes de décorateurs comme celles des décorateurs standards, vous pouvez changer la décoration sans
         agir sur les éléments en question.</para>

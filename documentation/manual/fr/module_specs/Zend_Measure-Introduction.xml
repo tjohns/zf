@@ -2,8 +2,8 @@
 <sect1 id="zend.measure.introduction">
     <title>Introduction</title>
 
-    <para>Les classes <code>Zend_Measure_*</code> fournissent un moyen générique et facile de travailler avec les
-    mesures. En utilisant des classes de <code>Zend_Measure_*</code>, vous pouvez convertir des mesures en différentes
+    <para>Les classes <classname>Zend_Measure_*</classname> fournissent un moyen générique et facile de travailler avec les
+    mesures. En utilisant des classes de <classname>Zend_Measure_*</classname>, vous pouvez convertir des mesures en différentes
     unités du même type. Elles peuvent être ajoutées, soustraites et comparées les uns contre les autres. À partir d'une
     entrée donnée faite dans la langue maternelle de l'utilisateur, l'unité de la mesure peut être automatiquement
     extraite. Des unités de mesure supportées sont nombreuses.</para>
@@ -27,8 +27,8 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
 ]]></programlisting>
     </example>
 
-    <para><code>Zend_Measure_*</code> inclut le support de beaucoup de différentes unités de mesure. Toutes les unités
-    de mesure ont une notation unifiée : <code>Zend_Measure_&lt;TYPE&gt;::NAME_OF_UNIT</code>, où &lt;TYPE&gt;
+    <para><classname>Zend_Measure_*</classname> inclut le support de beaucoup de différentes unités de mesure. Toutes les unités
+    de mesure ont une notation unifiée : <classname>Zend_Measure_&lt;TYPE&gt;::NAME_OF_UNIT</classname>, où &lt;TYPE&gt;
     correspond à une propriété physique ou numérique bien connue. Chaque unité de mesure se compose d'un facteur de
     conversion et d'une unité de visualisation. Une liste détaillée peut être trouvée dans le chapitre des <link
     linkend="zend.measure.types"><code>types de mesures</code></link>.</para>

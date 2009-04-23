@@ -2,7 +2,7 @@
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
-    <para><code>Zend_Filter_Input</code> propose une manière générique de déclarer des filtres et des validateurs, de
+    <para><classname>Zend_Filter_Input</classname> propose une manière générique de déclarer des filtres et des validateurs, de
     les appliquer comme un ensemble, à une collection de données, et enfin de récupérer ces données validées et
     filtrées. Les valeurs sont retournées échappées par défaut, pour une meilleure sécurité relative au HTML.</para>
 
@@ -37,7 +37,7 @@
         </listitem>
     </itemizedlist>
 
-    <para>Pour utiliser <code>Zend_Filter_Input</code> :</para>
+    <para>Pour utiliser <classname>Zend_Filter_Input</classname> :</para>
 
     <orderedlist numeration="arabic">
         <listitem>
@@ -45,11 +45,11 @@
         </listitem>
 
         <listitem>
-            <para>Ajoutez des filtres et des validateurs dans <code>Zend_Filter_Input</code></para>
+            <para>Ajoutez des filtres et des validateurs dans <classname>Zend_Filter_Input</classname></para>
         </listitem>
 
         <listitem>
-            <para>Passer les données d'entrée à <code>Zend_Filter_Input</code></para>
+            <para>Passer les données d'entrée à <classname>Zend_Filter_Input</classname></para>
         </listitem>
 
         <listitem>
@@ -62,12 +62,12 @@
     <sect2 id="zend.filter.input.declaring">
         <title>Déclarer des règles de filtre et de validateur</title>
 
-        <para>Avant de créer une instance de <code>Zend_Filter_Input</code>, déclarez deux tableaux de règles pour les
+        <para>Avant de créer une instance de <classname>Zend_Filter_Input</classname>, déclarez deux tableaux de règles pour les
         filtres, et les validateurs. Ce tableau associatif met en relation le champ de la donnée dans le tableau
         originel et le nom du filtre/validateur.</para>
 
-        <para>L'exemple qui suit indique que le champ "month" est filtré par un <code>Zend_Filter_Digits</code>, et le
-        champ "account" est filtré par un <code>Zend_Filter_StringTrim</code>. Puis, une règle de validation
+        <para>L'exemple qui suit indique que le champ "month" est filtré par un <classname>Zend_Filter_Digits</classname>, et le
+        champ "account" est filtré par un <classname>Zend_Filter_StringTrim</classname>. Puis, une règle de validation
         s'appliquera au champ "account", celui-ci sera validé s'il ne contient que des caractères alphabétiques
         (lettres).</para>
 
@@ -98,8 +98,8 @@ $validators = array(
             </listitem>
 
             <listitem>
-                <para>Un objet instance d'une classe implémentant <code>Zend_Filter_Interface</code> ou
-                <code>Zend_Validate_Interface</code>. <programlisting role="php"><![CDATA[
+                <para>Un objet instance d'une classe implémentant <classname>Zend_Filter_Interface</classname> ou
+                <classname>Zend_Validate_Interface</classname>. <programlisting role="php"><![CDATA[
 $digits = new Zend_Validate_Digits();
 
 $validators = array(
@@ -147,7 +147,7 @@ $filters = array(
         <title>Créer le processeur de filtres et validateurs</title>
 
         <para>Lorsque vos tableaux de filtres et de validateurs ont été construits, passez les en argument au
-        constructeur de <code>Zend_Filter_Input</code>. Ceci va retourner un objet pré-configuré qui saura alors traiter
+        constructeur de <classname>Zend_Filter_Input</classname>. Ceci va retourner un objet pré-configuré qui saura alors traiter
         tout un tableau de données d'entrée.</para>
 
         <programlisting role="php"><![CDATA[
@@ -156,7 +156,7 @@ $input = new Zend_Filter_Input($filters, $validators);
 
         <para>Les données d'entrée peuvent être placées dans le troisième paramètre du constructeur. Ces données
         possèdent en clé leur nom, et en valeur leur valeur. Typiquement, les tableaux superglobaux <code>$_GET</code>
-        et <code>$_POST</code> possèdent la structure idéale pour passer dans <code>Zend_Filter_Input</code>.</para>
+        et <code>$_POST</code> possèdent la structure idéale pour passer dans <classname>Zend_Filter_Input</classname>.</para>
 
         <programlisting role="php"><![CDATA[
 $data = $_GET;
@@ -173,7 +173,7 @@ $input->setData($newData);
 ]]></programlisting>
 
         <para>La méthode <code>setData()</code> réaffecte une nouveau tableau de valeurs d'entrée dans l'objet
-        <code>Zend_Filter_Input</code>, en écrasant toute autre source s'y trouvant. Ceci est pratique afin de
+        <classname>Zend_Filter_Input</classname>, en écrasant toute autre source s'y trouvant. Ceci est pratique afin de
         réutiliser des règles communes de filtres / validateurs, sur différentes sources.</para>
     </sect2>
 
@@ -265,7 +265,7 @@ if ($input->hasUnknown()) {
             pour plus d'information.</para>
 
             <para>Vous pouvez spécifier le message retourné par <code>getMissing()</code> en utilisant l'option
-            "missingMessage", en tant qu'argument du constructeur de <code>Zend_Filter_Input</code> ou en utilisant
+            "missingMessage", en tant qu'argument du constructeur de <classname>Zend_Filter_Input</classname> ou en utilisant
             l'option <code>setOptions()</code>.</para>
 
             <programlisting role="php"><![CDATA[
@@ -301,7 +301,7 @@ $m = $input->getUnescaped('month'); // donnée non échappée
 ]]></programlisting>
 
             <para>Par défaut, récupérer un champ le passe automatiquement au travers de
-            <code>Zend_Filter_HtmlEntities</code>. Ce comportement est considéré comme défaut pour un affichage en HTML.
+            <classname>Zend_Filter_HtmlEntities</classname>. Ce comportement est considéré comme défaut pour un affichage en HTML.
             Le filtre <code>HtmlEntities</code> réduit de manière significative les risques de sécurité liés à un
             affichage involontaire d'une valeur.</para>
 
@@ -327,10 +327,10 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 ]]></programlisting>
 
             <para>Il est possible de passer une chaine, ou directement un objet instance de
-            <code>Zend_Filter</code>.</para>
+            <classname>Zend_Filter</classname>.</para>
 
             <para>Les filtres d'échappement comme vus juste précédemment, doivent être spécifiés de cette manière là.
-            S'ils avaient été spécifiés comme filtres dans le tableau de <code>Zend_Filter_Input</code>, ils auraient pu
+            S'ils avaient été spécifiés comme filtres dans le tableau de <classname>Zend_Filter_Input</classname>, ils auraient pu
             faire échouer les validateurs, car les filtres sont exécutés <emphasis>AVANT</emphasis> les validateurs.
             Aussi, il n'aurait plus été possible de proposer la donnée de sortie de manière échappée et non échappée.
             Ainsi, déclarer un filtre d'échappement des données devrait toujours être effectué en utilisant la méthode
@@ -338,7 +338,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
             <para>Comme il n'y a qu'une seule méthode <code>getEscaped()</code>, il ne peut y avoir qu'un seul filtre
             utilisé pour l'échappement. Il est cependant possible d'utiliser une chaine de filtre, ou encore de dériver
-            la classe <code>Zend_Filter_Input</code> en créant d'autres méthodes de récupération de données, plus
+            la classe <classname>Zend_Filter_Input</classname> en créant d'autres méthodes de récupération de données, plus
             spécifiques.</para>
         </sect3>
     </sect2>
@@ -357,7 +357,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
             vous pouvez spécifier le nom du champ avec la méta commande "fields".</para>
 
             <para>Vous pouvez spécifier cette méta commande en utilisant la constante de classe
-            <code>Zend_Filter_Input::FIELDS</code>.</para>
+            <classname>Zend_Filter_Input::FIELDS</classname>.</para>
 
             <programlisting role="php"><![CDATA[
 $filters = array(
@@ -404,7 +404,7 @@ $validators = array(
             d'entrée. Autrement, il est reporté comme étant un champ manquant.</para>
 
             <para>Vous pouvez spécifier cette méta commande avec la constante de classe
-            <code>Zend_Filter_Input::PRESENCE</code>.</para>
+            <classname>Zend_Filter_Input::PRESENCE</classname>.</para>
 
             <programlisting role="php"><![CDATA[
 $validators = array(
@@ -425,7 +425,7 @@ $validators = array(
             "default", alors il obtient la valeur de la méta commande.</para>
 
             <para>Vous pouvez spécifier cette méta commande avec la constante de classe
-            <code>Zend_Filter_Input::DEFAULT_VALUE</code>.</para>
+            <classname>Zend_Filter_Input::DEFAULT_VALUE</classname>.</para>
 
             <para>La valeur de cette méta commande ne s'applique qu'avant l'invocation des validateurs, et seulement
             pour la règle en cours.</para>
@@ -466,7 +466,7 @@ echo $input->month; // affiche 1
             avec la valeur <code>true</code>.</para>
 
             <para>Vous pouvez spécifier cette méta commande avec la constante de classe
-            <code>Zend_Filter_Input::ALLOW_EMPTY</code></para>
+            <classname>Zend_Filter_Input::ALLOW_EMPTY</classname></para>
 
             <programlisting role="php"><![CDATA[
 $validators = array(
@@ -481,9 +481,9 @@ $validators = array(
 
             <para>Dans la cas peut commun ou vous déclarez une règle de validation avec aucun validateurs, mais que la
             méta commande "allowEmpty" est mise à <code>false</code> (le champ est considéré invalide s'il est vide),
-            <code>Zend_Filter_Input</code> retourne un message d'erreur par défaut que vous pouvez récupérer avec la
+            <classname>Zend_Filter_Input</classname> retourne un message d'erreur par défaut que vous pouvez récupérer avec la
             méthode <code>getMessages()</code>. Ce message se change grâce à l'option "notEmptyMessage" spécifiée en
-            constructeur de <code>Zend_Filter_Input</code> ou via la méthode <code>setOptions()</code>.</para>
+            constructeur de <classname>Zend_Filter_Input</classname> ou via la méthode <code>setOptions()</code>.</para>
 
             <programlisting role="php"><![CDATA[
 $options = array(
@@ -511,7 +511,7 @@ $input->setOptions($options);
             de validation va se terminer dès lors qu'un des validateur termine sur un échec.</para>
 
             <para>Vous pouvez spécifier cette méta commande au moyen de la constante de classe
-            <code>Zend_Filter_Input::BREAK_CHAIN</code></para>
+            <classname>Zend_Filter_Input::BREAK_CHAIN</classname></para>
 
             <programlisting role="php"><![CDATA[
 $validators = array(
@@ -527,9 +527,9 @@ $input = new Zend_Filter_Input(null, $validators);
 
             <para>La valeur par défaut de cette méta commande est <code>false</code>.</para>
 
-            <para>La classe <code>Zend_Validate</code> est plus flexible lors du bris de la chaine d'exécution, par
-            rapport à <code>Zend_Filter_Input</code>. Avec <code>Zend_Validate</code>, vous pouvez mettre l'option pour
-            casser la chaine indépendamment pour chaque validateur. Avec <code>Zend_Filter_Input</code>, la méta
+            <para>La classe <classname>Zend_Validate</classname> est plus flexible lors du bris de la chaine d'exécution, par
+            rapport à <classname>Zend_Filter_Input</classname>. Avec <classname>Zend_Validate</classname>, vous pouvez mettre l'option pour
+            casser la chaine indépendamment pour chaque validateur. Avec <classname>Zend_Filter_Input</classname>, la méta
             commande "breakChainOnFailure" s'applique à tous les validateurs dans la règle. Pour un usage plus flexible,
             créez votre propre chaine de validation comme ceci :</para>
 
@@ -558,7 +558,7 @@ $input = new Zend_Filter_Input(null, $validators);
             règle ou si vous voulez spécifier le message pour une erreur particulière concernant un des
             validateurs.</para>
 
-            <para>Vous pouvez utiliser la constante de classe <code>Zend_Filter_Input::MESSAGES</code> pour définir
+            <para>Vous pouvez utiliser la constante de classe <classname>Zend_Filter_Input::MESSAGES</classname> pour définir
             cette méta commande.</para>
 
             <para>Voici un exemple simple qui enregistre un message d'erreur pour une validateur de chiffres.</para>
@@ -630,7 +630,7 @@ $validators = array(
 
             <para>Les valeurs par défaut des méta commandes "allowEmpty", "breakChainOnFailure", et "presence" peuvent
             être dictées pour toutes les règles en utilisant l'argument <code>$options</code> du constructeur de
-            <code>Zend_Filter_Input</code>.</para>
+            <classname>Zend_Filter_Input</classname>.</para>
 
             <programlisting role="php"><![CDATA[
 // Tous les champs acceptent des valeurs vides
@@ -655,12 +655,12 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         <title>Ajouter des espaces de noms comme noms de classes</title>
 
         <para>Par défaut, l'ajout d'un validateur ou d'un filtre sous forme de chaine, va faire en sort que
-        <code>Zend_Filter_Input</code> cherche une correspondance sous l'espace de nom <code>Zend_Filter_*</code> et
-        <code>Zend_Validate_*</code>.</para>
+        <classname>Zend_Filter_Input</classname> cherche une correspondance sous l'espace de nom <classname>Zend_Filter_*</classname> et
+        <classname>Zend_Validate_*</classname>.</para>
 
         <para>Si vous écrivez vos propres filtres (ou validateurs), la classe peut exister dans un autre espace de nom
-        que <code>Zend_Filter</code> ou <code>Zend_Validate</code>. Il est alors possible de dire à
-        <code>Zend_Filter_Input</code> de chercher dans ces espaces là. Ceci se fait via son constructeur :</para>
+        que <classname>Zend_Filter</classname> ou <classname>Zend_Validate</classname>. Il est alors possible de dire à
+        <classname>Zend_Filter_Input</classname> de chercher dans ces espaces là. Ceci se fait via son constructeur :</para>
 
         <programlisting role="php"><![CDATA[
 $options = array('filterNamespace' => 'My_Namespace_Filter', 'validatorNamespace' => 'My_Namespace_Validate');
@@ -669,7 +669,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 
         <para>Alternativement, vous pouvez utiliser les méthodes <code>addValidatorPrefixPath($prefix, $path)</code> ou
         <code>addFilterPrefixPath($prefix, $path)</code>, qui proxie directement le chargeur de plugin utilisé par
-        <code>Zend_Filter_Input</code> :</para>
+        <classname>Zend_Filter_Input</classname> :</para>
 
         <programlisting role="php"><![CDATA[
 $input->addValidatorPrefixPath('Autre_Namespace', 'Autre/Namespace');
@@ -685,22 +685,22 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 // 2. Foo_Namespace
 ]]></programlisting>
 
-        <para>Il n'est pas possible de supprimer les espaces de nommage <code>Zend_Filter</code> et
-        <code>Zend_Validate</code>. Les espaces définis par l'utilisateur sont cherchés en premiers, les espaces de nom
+        <para>Il n'est pas possible de supprimer les espaces de nommage <classname>Zend_Filter</classname> et
+        <classname>Zend_Validate</classname>. Les espaces définis par l'utilisateur sont cherchés en premiers, les espaces de nom
         Zend sont cherchés en derniers.</para>
 
         <note>
             <para>A partir de la version 1.5, la fonction <code>addNamespace($namespace)</code> est dépréciée et
             échangée avec le chargeur de plugin et les méthodes <code>addFilterPrefixPath</code> et
             <code>addValidatorPrefixPath</code> ont été ajoutées. De même la constante
-            <code>Zend_Filter_Input::INPUT_NAMESPACE</code> est aussi dépréciée. Les constantes
-            <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> et <code>Zend_Filter_Input::FILTER_NAMESPACE</code> sont
+            <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname> est aussi dépréciée. Les constantes
+            <classname>Zend_Filter_Input::VALIDATOR_NAMESPACE</classname> et <classname>Zend_Filter_Input::FILTER_NAMESPACE</classname> sont
             disponibles à partir de la version 1.7.0.</para>
         </note>
 
         <note>
-            <para>A partir de la version 1.0.4, <code>Zend_Filter_Input::NAMESPACE</code>, ayant une valeur
-            <code>namespace</code>, a été changé par <code>Zend_Filter_Input::INPUT_NAMESPACE</code>, ayant une valeur
+            <para>A partir de la version 1.0.4, <classname>Zend_Filter_Input::NAMESPACE</classname>, ayant une valeur
+            <code>namespace</code>, a été changé par <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname>, ayant une valeur
             <code>inputNamespace</code>, dans le but de se conformer à la réservation du mot clé <code>namespace</code>
             par PHP 5.3.</para>
         </note>

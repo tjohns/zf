@@ -2,7 +2,7 @@
 <sect1 id="zend.feed.custom-feed">
     <title>Classes personnalisées pour les flux et entrées</title>
 
-    <para>Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si vous souhaitez créer votre propre
+    <para>Pour finir, vous pouvez étendre les classes de <classname>Zend_Feed</classname> si vous souhaitez créer votre propre
     format ou implémenter des améliorations comme par exemple la gestion automatique des éléments situés dans un espace
     de noms personnalisé.</para>
 

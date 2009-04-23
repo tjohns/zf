@@ -2,12 +2,12 @@
 <sect1 id="zend.file.transfer.filters">
     <title>Filtres pour Zend_File_Transfer</title>
 
-    <para><code>Zend_File_Transfer</code> est fourni avec de multiples filtres qui peuvent être utilisés pour réaliser
+    <para><classname>Zend_File_Transfer</classname> est fourni avec de multiples filtres qui peuvent être utilisés pour réaliser
     différentes tâches qui doivent être réalisées souvent sur les fichier. Notez que tout filtre est appliqué après la
     validation. De plus les filtres de fichiers se comportent légèrement différemment des autres filtres. Ils
     retourneront toujours le nom de fichier et non le contenu modifié (ce qui serait une mauvaise idée en travaillant
-    avec un fichier d'1Go par exemple). Tous les filtres fournis avec <code>Zend_File_Transfer</code> peuvent être
-    trouvés dans le composant <code>Zend_Filter</code> et sont nommés <code>Zend_Filter_File_*</code>. Les filtres
+    avec un fichier d'1Go par exemple). Tous les filtres fournis avec <classname>Zend_File_Transfer</classname> peuvent être
+    trouvés dans le composant <classname>Zend_Filter</classname> et sont nommés <classname>Zend_Filter_File_*</classname>. Les filtres
     suivants sont actuellement disponibles :</para>
 
     <itemizedlist>
@@ -34,7 +34,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.filters.usage">
-        <title>Utiliser les filtres avec <code>Zend_File_Transfer</code></title>
+        <title>Utiliser les filtres avec <classname>Zend_File_Transfer</classname></title>
 
         <para>L'utilisation des filtres est assez simple. Il existe de multiples méthodes pour ajouter et manipuler les
         filtres.</para>
@@ -141,7 +141,7 @@ $upload->addFilter('Rename', 'file1', 'C:\picture\newjpg')
 
         <para>Le filtre <code>Decrypt</code> permet de décrypter un fichier crypté.</para>
 
-        <para>Ce filtre se sert de <code>Zend_Filter_Decrypt</code>. Il supporte les extensions PHP <code>Mcrypt</code>
+        <para>Ce filtre se sert de <classname>Zend_Filter_Decrypt</classname>. Il supporte les extensions PHP <code>Mcrypt</code>
         et <code>OpenSSL</code>. Reportez vous à la section associée pour voir les détails des possibilités d'options
         pour le décryptage et connaître les options supportées.</para>
 
@@ -184,7 +184,7 @@ $upload->addFilter('Decrypt',
 
         <para>Le filtre <code>Encrypt</code> permet de crypter un fichier.</para>
 
-        <para>Ce filtre se sert de <code>Zend_Filter_Encrypt</code>. Il supporte les extensions PHP <code>Mcrypt</code>
+        <para>Ce filtre se sert de <classname>Zend_Filter_Encrypt</classname>. Il supporte les extensions PHP <code>Mcrypt</code>
         et <code>OpenSSL</code>. Reportez vous à la section associée pour voir les détails des possibilités d'options
         pour le chiffrement et connaître les options supportées.</para>
 

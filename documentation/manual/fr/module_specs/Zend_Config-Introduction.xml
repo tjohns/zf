@@ -84,7 +84,7 @@ $host = $config->database->get('host', 'localhost');
     <example id="zend.config.introduction.example.file.php">
 
         <title>
-            Utilisez <code>Zend_Config</code> avec un fichier de configuration en PHP
+            Utilisez <classname>Zend_Config</classname> avec un fichier de configuration en PHP
         </title>
 
         <para>

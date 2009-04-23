@@ -7,9 +7,9 @@
 
         <para>L'aide <code>FlashMessenger</code> vous permet de fournir les messages dont l'utilisateur pourrait avoir
         besoin dans la requête suivante. Pour accomplir ceci, <code>FlashMessenger</code> utilise
-        <code>Zend_Session_Namespace</code> pour stocker les messages à retrouver dans la prochaine requête. C'est
-        généralement une bonne idée si vous planifiez d'utiliser <code>Zend_Session</code> ou
-        <code>Zend_Session_Namespace</code>, que vous initialisez avec <code>Zend_Session::start()</code> dans votre
+        <classname>Zend_Session_Namespace</classname> pour stocker les messages à retrouver dans la prochaine requête. C'est
+        généralement une bonne idée si vous planifiez d'utiliser <classname>Zend_Session</classname> ou
+        <classname>Zend_Session_Namespace</classname>, que vous initialisez avec <classname>Zend_Session::start()</classname> dans votre
         fichier d'amorçage. (Reportez vous à la documentation de <link
         linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link> pour plus de détails sur son
         utilisation.)</para>

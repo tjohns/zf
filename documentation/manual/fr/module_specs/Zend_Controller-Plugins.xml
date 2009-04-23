@@ -11,11 +11,11 @@
         instants clés à votre disposition.</para>
 
         <para>Les instants clés sont des méthodes événementielles définies dans la classe abstraite
-        <code>Zend_Controller_Plugin_Abstract</code>, dont tous les plugins doivent hériter :</para>
+        <classname>Zend_Controller_Plugin_Abstract</classname>, dont tous les plugins doivent hériter :</para>
 
         <itemizedlist>
             <listitem>
-                <para><code>routeStartup()</code> est appelée avant que <code>Zend_Controller_Front</code> n'appelle
+                <para><code>routeStartup()</code> est appelée avant que <classname>Zend_Controller_Front</classname> n'appelle
                 <link linkend="zend.controller.router">le routeur</link> pour évaluer ses routes et remplir la
                 requête.</para>
             </listitem>
@@ -26,7 +26,7 @@
             </listitem>
 
             <listitem>
-                <para><code>dispatchLoopStartup()</code> est appelée juste avant que <code>Zend_Controller_Front</code>
+                <para><code>dispatchLoopStartup()</code> est appelée juste avant que <classname>Zend_Controller_Front</classname>
                 n'entre en boucle de distribution.</para>
             </listitem>
 
@@ -34,7 +34,7 @@
                 <para><code>preDispatch()</code> est appelée avant qu'une action ne soit distribuée par <link
                 linkend="zend.controller.dispatcher">le distributeur</link>. Cette méthode permet un filtrage ou un
                 proxy. En jouant sur la requête à ce niveau là, vous êtes capable de changer le processus, et en vous
-                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(true)</code>), vous supprimez l'ordre
+                aidant de <classname>Zend_Controller_Request_Abstract::setDispatched(true)</classname>), vous supprimez l'ordre
                 de distribution de celle-ci.</para>
             </listitem>
 
@@ -42,12 +42,12 @@
                 <para><code>postDispatch()</code> est appelée après qu'une action n'ait été distribuée par <link
                 linkend="zend.controller.dispatcher">le distributeur</link>. Cette méthode permet un filtrage ou un
                 proxy. En jouant sur la requête à ce niveau là, vous êtes capable de changer le processus, et en vous
-                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), vous ordonnez une
+                aidant de <classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname>), vous ordonnez une
                 redistribution de celle-ci.</para>
             </listitem>
 
             <listitem>
-                <para><code>dispatchLoopShutdown()</code> est appelée par <code>Zend_Controller_Front</code> lorsque
+                <para><code>dispatchLoopShutdown()</code> est appelée par <classname>Zend_Controller_Front</classname> lorsque
                 celui-ci sort de la boucle de distribution.</para>
             </listitem>
         </itemizedlist>
@@ -56,7 +56,7 @@
     <sect2 id="zend.controller.plugins.writing">
         <title>Écrire des plugins</title>
 
-        <para>Tous les plugins doivent hériter de <code>Zend_Controller_Plugin_Abstract</code>:</para>
+        <para>Tous les plugins doivent hériter de <classname>Zend_Controller_Plugin_Abstract</classname>:</para>
 
         <programlisting role="php"><![CDATA[
 class MyPlugin extends Zend_Controller_Plugin_Abstract
@@ -65,10 +65,10 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 }
 ]]></programlisting>
 
-        <para>Comme aucune des méthodes de <code>Zend_Controller_Plugin_Abstract</code> n'est abstraite, vous n'êtes pas
+        <para>Comme aucune des méthodes de <classname>Zend_Controller_Plugin_Abstract</classname> n'est abstraite, vous n'êtes pas
         obligé dans vos plugins de toutes les définir. Vous agissez aux endroits que vous voulez.</para>
 
-        <para><code>Zend_Controller_Plugin_Abstract</code> vous donne aussi accès aux objets de réponse et de requête,
+        <para><classname>Zend_Controller_Plugin_Abstract</classname> vous donne aussi accès aux objets de réponse et de requête,
         dans vos plugins.<code>getRequest()</code> et <code>getResponse()</code> sont là pour ça. Cependant, l'objet de
         requête est de toute façon passé en paramètre à vos méthodes. Veillez à le récupérer dans la définition de vos
         méthodes sinon une erreur E_STRICT sera levée.</para>
@@ -77,7 +77,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
     <sect2 id="zend.controller.plugins.using">
         <title>Utilisation des plugins</title>
 
-        <para>Les plugins sont enregistrés avec <code>Zend_Controller_Front::registerPlugin()</code>, et peuvent l'être
+        <para>Les plugins sont enregistrés avec <classname>Zend_Controller_Front::registerPlugin()</classname>, et peuvent l'être
         n'importe quand. Voici un exemple :</para>
 
         <programlisting role="php"><![CDATA[

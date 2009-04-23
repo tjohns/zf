@@ -2,11 +2,11 @@
 <sect1 id="zend.layout.introduction">
     <title>Introduction</title>
 
-    <para><code>Zend_Layout</code> utilise le design pattern Two Step View, ce qui permet d'encapsuler le contenu d'une
+    <para><classname>Zend_Layout</classname> utilise le design pattern Two Step View, ce qui permet d'encapsuler le contenu d'une
     vue dans une autre, généralement appelée template. D'autres projets les appellent aussi
     <emphasis>layouts</emphasis>, ainsi Zend Framework utilise ce terme.</para>
 
-    <para>Les principales caractéristiques de <code>Zend_Layout</code> sont :</para>
+    <para>Les principales caractéristiques de <classname>Zend_Layout</classname> sont :</para>
 
     <itemizedlist>
         <listitem>

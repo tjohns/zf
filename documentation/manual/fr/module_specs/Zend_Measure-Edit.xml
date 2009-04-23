@@ -4,7 +4,7 @@
 
     <para>L'analyse et la normalisation de l'entrée, combinées avec la récupération suivant les notations régionalisées
     rend des données accessibles aux utilisateurs dans différentes régions. Beaucoup de méthodes additionnelles existent
-    dans les composants <code>Zend_Measure_*</code> pour manipuler et travailler ces données, après qu'elles aient été
+    dans les composants <classname>Zend_Measure_*</classname> pour manipuler et travailler ces données, après qu'elles aient été
     normalisées.</para>
 
     <itemizedlist>

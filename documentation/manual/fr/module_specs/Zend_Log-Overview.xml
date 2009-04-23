@@ -2,29 +2,29 @@
 <sect1 id="zend.log.overview">
     <title>Présentation</title>
 
-    <para><code>Zend_Log</code> est un composant destiné à tous les usages du log. Il supporte l'écriture multiple
+    <para><classname>Zend_Log</classname> est un composant destiné à tous les usages du log. Il supporte l'écriture multiple
     centralisée, formate les messages envoyés vers les logs, et les filtre. Ces fonctions sont divisées en objets
     suivants : <itemizedlist>
             <listitem>
-                <para>Un enregistreur (instance de <code>Zend_Log</code>) est l'objet que votre application emploie le
+                <para>Un enregistreur (instance de <classname>Zend_Log</classname>) est l'objet que votre application emploie le
                 plus. Vous pouvez avoir autant d'objets d'enregistreur que vous voulez ; ils n'agissent pas l'un sur
                 l'autre. Un objet enregistreur doit contenir au moins un rédacteur (Writer), et peut facultativement
                 contenir un ou plusieurs filtres.</para>
             </listitem>
 
             <listitem>
-                <para>Un rédacteur [ou Writer] (hérite de <code>Zend_Log_Writer_Abstract</code>) est responsable de la
+                <para>Un rédacteur [ou Writer] (hérite de <classname>Zend_Log_Writer_Abstract</classname>) est responsable de la
                 sauvegarde des données dans le stockage.</para>
             </listitem>
 
             <listitem>
-                <para>Un filtre (implémente <code>Zend_Log_Filter_Interface</code>) bloque des données de log ne devant
+                <para>Un filtre (implémente <classname>Zend_Log_Filter_Interface</classname>) bloque des données de log ne devant
                 pas être écrites. Un filtre peut être appliqué à un rédacteur en particulier, ou à tous les rédacteurs.
                 Dans l'un ou l'autre cas, les filtres peuvent être enchaînés.</para>
             </listitem>
 
             <listitem>
-                <para>Un formateur (implémente <code>Zend_Log_Formatter_Interface</code>) peut formater les données de
+                <para>Un formateur (implémente <classname>Zend_Log_Formatter_Interface</classname>) peut formater les données de
                 log avant qu'elles soient écrites par un rédacteur. Chaque rédacteur a exactement un formateur.</para>
             </listitem>
         </itemizedlist></para>
@@ -85,7 +85,7 @@ $logger = null;
     <sect2 id="zend.log.overview.builtin-priorities">
         <title>Utiliser les priorités intégrées</title>
 
-        <para>La classe de <code>Zend_Log</code> définit les priorités suivantes : <programlisting role="php"><![CDATA[
+        <para>La classe de <classname>Zend_Log</classname> définit les priorités suivantes : <programlisting role="php"><![CDATA[
 EMERG   = 0;  // Urgence : le système est inutilisable
 ALERT   = 1;  // Alerte: une mesure corrective
               // doit être prise immédiatement
@@ -102,7 +102,7 @@ DEBUG   = 7;  // Debug: messages de déboguages
         dans la <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink>. Les noms et les niveaux de priorité
         correspondants sont également compatibles avec un autre système de log de PHP, <ulink
         url="http://pear.php.net/package/log">PEAR Log</ulink>, ce qui favorise l'interopérabilité entre lui et
-        <code>Zend_Log</code>.</para>
+        <classname>Zend_Log</classname>.</para>
 
         <para>Les numéros de priorité descendent par ordre d'importance. <code>EMERG</code> (0) est la priorité la plus
         importante. <code>DEBUG</code> (7) est la priorité la moins importante des priorités intégrées. Vous pouvez

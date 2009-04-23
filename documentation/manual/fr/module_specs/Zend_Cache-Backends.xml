@@ -361,7 +361,7 @@
         <para>
             Spécifiez ce backend en utilisant un séparateur de mot - "-", ".", " " ou "_" -
             entre les mots "Zend" et "Platform" quand vous utilisez la méthode
-            <code>Zend_Cache::factory()</code>&#160;:
+            <classname>Zend_Cache::factory()</classname>&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[

@@ -5,13 +5,13 @@
     <sect2 id="zend.http.response.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Http_Response</code> fournit un accès simplifié aux réponses HTTP d'un message, ainsi qu'un
-        ensemble de méthodes statiques pour analyser ces réponses HTTP. Habituellement <code>Zend_Http_Response</code>
-        est utilisé en tant qu'objet retourné par une requête <code>Zend_Http_Client</code>.</para>
+        <para><classname>Zend_Http_Response</classname> fournit un accès simplifié aux réponses HTTP d'un message, ainsi qu'un
+        ensemble de méthodes statiques pour analyser ces réponses HTTP. Habituellement <classname>Zend_Http_Response</classname>
+        est utilisé en tant qu'objet retourné par une requête <classname>Zend_Http_Client</classname>.</para>
 
-        <para>Dans la plupart des cas, un objet <code>Zend_Http_Response</code> sera instancié en utilisant la méthode
+        <para>Dans la plupart des cas, un objet <classname>Zend_Http_Response</classname> sera instancié en utilisant la méthode
         <code>factory()</code>, qui lit une chaîne contenant une réponse HTTP, et retourne un nouvel objet
-        <code>Zend_Http_Response</code> : <example id="zend.http.response.introduction.example-1">
+        <classname>Zend_Http_Response</classname> : <example id="zend.http.response.introduction.example-1">
                 <title>Instancier un objet Zend_Http_Response en utilisant la méthode factory</title>
 
                 <programlisting role="php"><![CDATA[
@@ -64,7 +64,7 @@ $response = Zend_Http_Response::factory($str);
     <sect2 id="zend.http.response.testers">
         <title>Méthodes de tests booléennes</title>
 
-        <para>Une fois qu'un objet <code>Zend_Http_Response</code> est instancié, il fournit plusieurs méthodes qui
+        <para>Une fois qu'un objet <classname>Zend_Http_Response</classname> est instancié, il fournit plusieurs méthodes qui
         peuvent être utilisées pour tester le type de la réponse. Elles retournent toutes un booléen <code>true</code>
         ou <code>false</code> : <itemizedlist>
                 <listitem>
@@ -181,7 +181,7 @@ echo $body;
     <sect2 id="zend.http.response.static_parsers">
         <title>Analyseurs statiques de réponse HTTP</title>
 
-        <para>La classe <code>Zend_Http_Response</code> inclut également plusieurs méthodes utilisées en interne pour
+        <para>La classe <classname>Zend_Http_Response</classname> inclut également plusieurs méthodes utilisées en interne pour
         traiter et analyser des messages de réponse HTTP. Ces méthodes sont toutes exposées en tant que méthodes
         statiques, ce qui permet de les utiliser extérieurement, ainsi il n'est pas nécessaire d'instancier un objet
         réponse si vous souhaitez extraire une partie spécifique de la réponse. <itemizedlist>

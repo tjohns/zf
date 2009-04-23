@@ -140,8 +140,8 @@ $front->addModuleDirectory('/path/to/application/modules');
     <sect2 id="zend.controller.modular.router">
         <title>Routage des modules</title>
 
-        <para>La route par défaut, <code>Zend_Controller_Router_Rewrite</code> est un objet de type
-        <code>Zend_Controller_Router_Route_Module</code>. Cette route traite les schémas de routage suivants :</para>
+        <para>La route par défaut, <classname>Zend_Controller_Router_Rewrite</classname> est un objet de type
+        <classname>Zend_Controller_Router_Route_Module</classname>. Cette route traite les schémas de routage suivants :</para>
 
         <itemizedlist>
             <listitem>

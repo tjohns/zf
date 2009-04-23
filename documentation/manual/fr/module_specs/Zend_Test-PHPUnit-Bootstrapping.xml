@@ -3,7 +3,7 @@
     <title>Amorcer votre TestCase</title>
 
     <para>Comme noté dans <link linkend="zend.test.phpunit.loginexample">l'exemple de login</link>, tous les tests MVC
-    doivent étendre <code>Zend_Test_PHPUnit_ControllerTestCase</code>. Cette classe étend elle-même
+    doivent étendre <classname>Zend_Test_PHPUnit_ControllerTestCase</classname>. Cette classe étend elle-même
     <code>PHPUnit_Framework_TestCase</code>, et vous fournit donc toute la structure et les assertions que vous attendez
     de PHPUnit - ainsi que quelques échafaudages et assertions spécifiques à l'implémentation MVC de Zend
     Framework.</para>
@@ -55,7 +55,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
     <para>Notez l'appel de <code>parent::setUp()</code>; ceci est nécessaire puisque la méthode <code>setUp()</code> de
-    <code>Zend_Test_PHPUnit_Controller_TestCase</code> exécutera le reste du processus d'amorçage (incluant l'appel du
+    <classname>Zend_Test_PHPUnit_Controller_TestCase</classname> exécutera le reste du processus d'amorçage (incluant l'appel du
     callback).</para>
 
     <para>En utilisation normale, la méthode <code>setUp()</code> amorcera l'application. Ce premier processus inclue le
@@ -70,9 +70,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     <itemizedlist>
         <listitem>
             <para>Ne fournissez pas d'implémentations alternatives des objets "Request" et "Response" ; ils ne seront
-            pas utilisés. <code>Zend_Test_PHPUnit_Controller_TestCase</code> utilise des objets de requête et de réponse
-            personnalisés, respectivement <code>Zend_Controller_Request_HttpTestCase</code> et
-            <code>Zend_Controller_Response_HttpTestCase</code>. Ces objets fournissent des méthodes pour paramétrer
+            pas utilisés. <classname>Zend_Test_PHPUnit_Controller_TestCase</classname> utilise des objets de requête et de réponse
+            personnalisés, respectivement <classname>Zend_Controller_Request_HttpTestCase</classname> et
+            <classname>Zend_Controller_Response_HttpTestCase</classname>. Ces objets fournissent des méthodes pour paramétrer
             l'environnement de requête dans le but souhaité, et récupérer les objets de réponse façonnés. </para>
         </listitem>
 

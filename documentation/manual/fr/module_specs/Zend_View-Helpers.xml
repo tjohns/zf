@@ -11,7 +11,7 @@
     <para>Une aide est simplement une classe. Par exemple, nous voulons une aide nommée "foobar". Par défaut, la classe
     est préfixée avec <code>"Zend_View_Helper_"</code> (vous pouvez spécifier un préfixe personnalisé en paramétrant
     votre chemin d'aide), et le dernier segment du nom de classe est le nom de l'aide ; ce segment peut être avec des
-    CaracteresMajuscules ; le nom complet de la classe est alors : <code>Zend_View_Helper_FooBar</code>. Cette classe
+    CaracteresMajuscules ; le nom complet de la classe est alors : <classname>Zend_View_Helper_FooBar</classname>. Cette classe
     doit contenir au moins une méthode, nommée comme l'aide avec la notationCamel : <code>fooBar()</code>.</para>
 
     <note>
@@ -23,15 +23,15 @@
     </note>
 
     <para>Pour utiliser une aide dans votre script de vue, appelez la en utilisant <code>$this-&gt;nomAide()</code>.
-    Dans les coulisses, <code>Zend_View</code> va charger la classe <code>Zend_View_Helper_NomAide</code>, créer une
+    Dans les coulisses, <classname>Zend_View</classname> va charger la classe <classname>Zend_View_Helper_NomAide</classname>, créer une
     instance de cet objet, et appeler sa méthode <code>nomAide()</code>. L'instance de l'objet est persistante dans
-    l'instance de <code>Zend_View</code>, et est réutilisée pour tous les appels futurs à
+    l'instance de <classname>Zend_View</classname>, et est réutilisée pour tous les appels futurs à
     <code>$this-&gt;nomAide()</code>.</para>
 
     <sect2 id="zend.view.helpers.initial">
         <title>Aides initiales</title>
 
-        <para><code>Zend_View</code> fournit avec un jeu initial de classes d'aides, la plupart est liée à la génération
+        <para><classname>Zend_View</classname> fournit avec un jeu initial de classes d'aides, la plupart est liée à la génération
         d'éléments de formulaire. Chacune affiche et échappe l'élément automatiquement. De plus, il existe des aides
         pour créer des URLs sur la base de routes et des listes HTML, de la même manière que l'on déclarerait des
         variables. Les aides actuellement incluses sont :</para>
@@ -311,8 +311,8 @@ array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagne').
         <title>Chemin des aides</title>
 
         <para>Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins dans lesquels
-        <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code> cherche dans
-        "Zend/View/Helper/*". Vous pouvez dire à <code>Zend_View</code> de regarder dans d'autres chemins en utilisant
+        <classname>Zend_View</classname> cherchera les classes d'aides. Par défaut, <classname>Zend_View</classname> cherche dans
+        "Zend/View/Helper/*". Vous pouvez dire à <classname>Zend_View</classname> de regarder dans d'autres chemins en utilisant
         les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>. De plus, vous pouvez indiquer un
         préfixe de classe pour utiliser les aides dans le répertoire fourni, et permettre de donner des espaces de noms
         à vos classes d'aide. Par défaut, si aucun préfixe n'est fourni, "Zend_View_Helper_" est utilisé.</para>
@@ -324,7 +324,7 @@ $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides',
 ]]></programlisting>
 
         <para>En fait, vous pouvez "empiler" les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme
-        vous ajoutez des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus récemment
+        vous ajoutez des chemins dans la pile, <classname>Zend_View</classname> va regarder dans le chemin le plus récemment
         ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de redéfinir) la distribution
         initiale des aides, avec vos propres aides personnalisées.</para>
 
@@ -358,7 +358,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides',
         <itemizedlist>
             <listitem>
                 <para>Bien qu'il ne soit pas strictement nécessaire, il est recommandé soit d'implémenter
-                <code>Zend_View_Helper_Interface</code> ou d'étendre <code>Zend_View_Helper_Abstract</code> quand vous
+                <classname>Zend_View_Helper_Interface</classname> ou d'étendre <classname>Zend_View_Helper_Abstract</classname> quand vous
                 créez vos aides. Introduit en 1.6.0, ceux-ci définissent la méthode <code>setView()</code> ; cependant,
                 dans les prochaines releases, nous prévoyons d'implémenter un motif de conception Stratégie qui
                 permettra de simplifier en grande partie le schéma de nomination détaillé ci-dessous. Contruire sur ces
@@ -393,7 +393,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides',
             </listitem>
         </itemizedlist>
 
-        <para>Placez le fichier de classe d'aide quelque part dans la pile des chemins d'aide, et <code>Zend_View</code>
+        <para>Placez le fichier de classe d'aide quelque part dans la pile des chemins d'aide, et <classname>Zend_View</classname>
         le chargera, l'instanciera, le rendra persistant, et l'exécutera automatiquement pour vous.</para>
 
         <para>Voici un exemple de fichier "ActionSpeciale.php" :</para>
@@ -413,7 +413,7 @@ class Ma_View_Helper_ActionSpeciale
 
         <para>Ensuite, dans un script de vue, vous pouvez appeler l'aide <code>ActionSpeciale</code> autant de fois que
         vous le souhaitez ; elle sera instanciée une fois, et rendue persistante pendant toute la vie de l'instance de
-        <code>Zend_View</code>.</para>
+        <classname>Zend_View</classname>.</para>
 
         <programlisting role="php"><![CDATA[
 // rappelez vous, $this se réfère à l'instance de Zend_View
@@ -430,7 +430,7 @@ J'ai vu 'The Big Lebowsky' 2 fois.
 J'ai vu 'The Big Lebowsky' 3 fois.
 ]]></programlisting>
 
-        <para>Quelquefois vous devez accéder à l'objet <code>Zend_View</code> appelant - par exemple, si vous devez
+        <para>Quelquefois vous devez accéder à l'objet <classname>Zend_View</classname> appelant - par exemple, si vous devez
         utiliser l'encodage enregistré ou voulez effectuer le rendu d'un autre script de vue comme une sous partie de
         votre aide. Pour avoir accès à votre objet de vue, votre classe d'aide doit avoir une méthode
         <code>setView($view)</code>, comme ceci :</para>

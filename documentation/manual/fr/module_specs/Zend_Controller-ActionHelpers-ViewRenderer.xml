@@ -48,7 +48,7 @@
             <para>Le <code>ViewRenderer</code> est activé par défaut dans le contrôleur frontal. Pour le désactiver,
             utilisez le paramètre <code>noViewRenderer</code> (<code>$front-&gt;setParam('noViewRenderer', true)</code>)
             ou retirez l'objet du gestionnaire d'aides (helper broker)
-            (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).</para>
+            (<classname>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</classname>).</para>
 
             <para>Si vous voulez modifier un paramètre du <code>ViewRenderer</code> avant la distribution du contrôleur
             frontal, il existe deux moyens :</para>
@@ -298,8 +298,8 @@ $viewRenderer =
                     <para><code>:module</code> : casseMélangée et motsEnNotationCamel qui deviennent des mots séparés
                     par des tirets, et en minuscules. "FooBarBaz" devient "foo-bar-baz".</para>
 
-                    <para>En interne, l'inflecteur utilise les filtres <code>Zend_Filter_Word_CamelCaseToDash</code> et
-                    <code>Zend_Filter_StringToLower</code>.</para>
+                    <para>En interne, l'inflecteur utilise les filtres <classname>Zend_Filter_Word_CamelCaseToDash</classname> et
+                    <classname>Zend_Filter_StringToLower</classname>.</para>
                 </listitem>
 
                 <listitem>
@@ -307,9 +307,9 @@ $viewRenderer =
                     séparés par des tirets; les tirets bas eux, se transforment en séparateur de dossier et tout est
                     passé en minuscules. "FooBar" devient "foo-bar"; "FooBar_Admin" devient "foo-bar/admin".</para>
 
-                    <para>En interne, l'inflecteur utilise les filtres <code>Zend_Filter_Word_CamelCaseToDash</code>,
-                    <code>Zend_Filter_Word_UnderscoreToSeparator</code>, et
-                    <code>Zend_Filter_StringToLower</code>.</para>
+                    <para>En interne, l'inflecteur utilise les filtres <classname>Zend_Filter_Word_CamelCaseToDash</classname>,
+                    <classname>Zend_Filter_Word_UnderscoreToSeparator</classname>, et
+                    <classname>Zend_Filter_StringToLower</classname>.</para>
                 </listitem>
 
                 <listitem>
@@ -318,8 +318,8 @@ $viewRenderer =
                     "fooBar" devient "foo-bar"; "foo-barBaz" devient "foo-bar-baz".</para>
 
                     <para>Pour ceci, l'inflecteur interne utilise les filtres
-                    <code>Zend_Filter_Word_CamelCaseToDash</code>, <code>Zend_Filter_PregReplace</code>, et
-                    <code>Zend_Filter_StringToLower</code>.</para>
+                    <classname>Zend_Filter_Word_CamelCaseToDash</classname>, <classname>Zend_Filter_PregReplace</classname>, et
+                    <classname>Zend_Filter_StringToLower</classname>.</para>
                 </listitem>
             </itemizedlist>
         </note>
@@ -340,7 +340,7 @@ $viewRenderer =
                 </note>
 
                 <note>
-                    <para>Par défaut, <code>Zend_Controller_Action::renderScript()</code> est un proxy vers la méthode
+                    <para>Par défaut, <classname>Zend_Controller_Action::renderScript()</classname> est un proxy vers la méthode
                     <code>renderScript()</code> de <code>ViewRenderer</code>.</para>
                 </note>
             </listitem>
@@ -357,7 +357,7 @@ $viewRenderer =
                 un script de vue "foo-bar/baz-bat.phtml".</para>
 
                 <note>
-                    <para>Par défaut <code>Zend_Controller_Action::getViewScript()</code> est un proxy vers la méthode
+                    <para>Par défaut <classname>Zend_Controller_Action::getViewScript()</classname> est un proxy vers la méthode
                     <code>getViewScript()</code> de <code>ViewRenderer</code>.</para>
                 </note>
             </listitem>
@@ -376,7 +376,7 @@ $viewRenderer =
                 </note>
 
                 <note>
-                    <para>Par défaut, <code>Zend_Controller_Action::render()</code> est un proxy vers
+                    <para>Par défaut, <classname>Zend_Controller_Action::render()</classname> est un proxy vers
                     <code>render()</code> de <code>ViewRenderer</code>.</para>
                 </note>
             </listitem>

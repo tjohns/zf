@@ -23,7 +23,7 @@
     <note>
         <title>Jetons sécurisés et certificats</title>
 
-        <para><code>Zend_Gdata</code> ne supporte pas actuellement l'utilisation de jetons sécurisés, car
+        <para><classname>Zend_Gdata</classname> ne supporte pas actuellement l'utilisation de jetons sécurisés, car
         l'authentification AuthSub ne supporte pas les certificats permettant l'obtention de jetons sécurisés.</para>
     </note>
 
@@ -31,7 +31,7 @@
         <title>Création d'un client HTTP authentifié avec AuthSub</title>
 
         <para>Votre application PHP devrait fournir un lien URL vers le service d'authentification de Google. La méthode
-        statique <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code> permet ceci. Elle prend un argument représentant
+        statique <classname>Zend_Gdata_AuthSub::getAuthSubTokenUri()</classname> permet ceci. Elle prend un argument représentant
         l'URL de votre application. De cette manière, le serveur Google pourra générer une réponse menant à une
         redirection vers cette URL, une fois l'authentification passée.</para>
 
@@ -39,12 +39,12 @@
         application, un paramètre <code>GET</code> est ajouté, il s'agit du <code>jeton</code> d'authentification. Ce
         jeton servira à éviter de demander une authentification à chaque requête future.</para>
 
-        <para>Ensuite, utilisez le jeton avec un appel à la méthode <code>Zend_Gdata_AuthSub::getHttpClient()</code>.
-        Cette méthode retournera alors un objet de type <code>Zend_Http_Client</code>, qui sera peuplé des bons en-têtes
+        <para>Ensuite, utilisez le jeton avec un appel à la méthode <classname>Zend_Gdata_AuthSub::getHttpClient()</classname>.
+        Cette méthode retournera alors un objet de type <classname>Zend_Http_Client</classname>, qui sera peuplé des bons en-têtes
         permettant ainsi une utilisation future sans nécessité de ré-authentification.</para>
 
         <para>Ci-dessous un exemple d'une application PHP qui effectue une authentification afin d'utiliser le service
-        Google Calendar. Elle crée un objet client <code>Zend_Gdata</code> utilisant le client HTTP fraîchement
+        Google Calendar. Elle crée un objet client <classname>Zend_Gdata</classname> utilisant le client HTTP fraîchement
         authentifié.</para>
 
         <programlisting role="php"><![CDATA[
@@ -82,7 +82,7 @@ $cal = new Zend_Gdata_Calendar($client);
         <title>Destruction de l'authentification AuthSub</title>
 
         <para>Pour détruire la validité d'un jeton d'authentification, utilisez la méthode statique
-        <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code>. Autrement, le jeton reste valide un certain temps.</para>
+        <classname>Zend_Gdata_AuthSub::AuthSubRevokeToken()</classname>. Autrement, le jeton reste valide un certain temps.</para>
 
         <programlisting role="php"><![CDATA[
 // construction sécurisée de la valeur.
@@ -103,7 +103,7 @@ if (isset($_GET['logout'])) {
             <title>Notes de sécurité</title>
 
             <para>Le traitement effectué pour la variable <code>$php_self</code> dans l'exemple ci-dessus est une règle
-            de sécurité générale, elle n'est pas spécifique à l'utilisation de <code>Zend_Gdata</code>. Vous devriez
+            de sécurité générale, elle n'est pas spécifique à l'utilisation de <classname>Zend_Gdata</classname>. Vous devriez
             systématiquement filtrer le contenu que vous envoyez en tant qu'en-tête HTTP.</para>
 
             <para>Au sujet de la destruction du jeton, elle est recommandée lorsque l'utilisateur en a terminé avec sa

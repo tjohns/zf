@@ -2,7 +2,7 @@
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
-    <para><code>Zend_Dom_Query</code> fournit des mécanismes pour requêter dans les documents XML et (X)HTML en
+    <para><classname>Zend_Dom_Query</classname> fournit des mécanismes pour requêter dans les documents XML et (X)HTML en
     utilisant soit XPath ou les sélecteurs CSS. Il a été développé pour faciliter les tests fonctionnels des
     applications MVC, mais pourrait également être employé pour le développement rapide de "screen scrapers".</para>
 
@@ -17,12 +17,12 @@
     <sect2 id="zend.dom.query.operation">
         <title>Aspect théorique</title>
 
-        <para>Pour utiliser <code>Zend_Dom_Query</code>, vous instanciez un objet <code>Zend_Dom_Query</code>, en
+        <para>Pour utiliser <classname>Zend_Dom_Query</classname>, vous instanciez un objet <classname>Zend_Dom_Query</classname>, en
         fournissant optionnellement un document à analyser (sous la forme d'une chaîne). Une fois que vous avez un
         document, vous pouvez utiliser indifféremment les méthodes <code>query()</code> ou <code>queryXpath()</code> ;
-        chaque méthode retournera un objet <code>Zend_Dom_Query_Result</code> avec tout noeud trouvé.</para>
+        chaque méthode retournera un objet <classname>Zend_Dom_Query_Result</classname> avec tout noeud trouvé.</para>
 
-        <para>La différence principale entre <code>Zend_Dom_Query</code> et l'utilisation de DOMDocument + DOMXPath est
+        <para>La différence principale entre <classname>Zend_Dom_Query</classname> et l'utilisation de DOMDocument + DOMXPath est
         la possibilité de requêter avec les sélecteurs CSS. Vous pouvez utiliser n'importe quel élément suivant, dans
         n'importe quelle combinaison :</para>
 
@@ -107,7 +107,7 @@
 
         <para>Une fois que vous avez réalisé votre recherche, vous pouvez ensuite travailler avec l'objet de résultat
         pour déterminer les informations sur les noeuds, ainsi que pour les récupérer eux et/ou leurs contenus
-        directement afin de les examiner et les manipuler. <code>Zend_Dom_Query_Result</code> implémente
+        directement afin de les examiner et les manipuler. <classname>Zend_Dom_Query_Result</classname> implémente
         <code>Countable</code> and <code>Iterator</code>, et stocke le résultat en interne sous la forme
         DOMNodes/DOMElements. En exemple, considérons l'appel suivant sur l'HTML ci-dessus :</para>
 
@@ -121,20 +121,20 @@ foreach ($results as $result) {
 }
 ]]></programlisting>
 
-        <para><code>Zend_Dom_Query</code> permet aussi de faire directement des recherches de type XPath en utilisant la
+        <para><classname>Zend_Dom_Query</classname> permet aussi de faire directement des recherches de type XPath en utilisant la
         méthode <code>queryXpath()</code> ; vous pouvez fournir toute requête XPath valide à cette méthode, et elle
-        retournera un objet <code>Zend_Dom_Query_Result</code>.</para>
+        retournera un objet <classname>Zend_Dom_Query_Result</classname>.</para>
     </sect2>
 
     <sect2 id="zend.dom.query.methods">
         <title>Méthodes disponibles</title>
 
-        <para>La famille des classes <code>Zend_Dom_Query</code> possèdent les méthodes suivantes.</para>
+        <para>La famille des classes <classname>Zend_Dom_Query</classname> possèdent les méthodes suivantes.</para>
 
         <sect3 id="zend.dom.query.methods.zenddomquery">
             <title>Zend_Dom_Query</title>
 
-            <para>Ces méthodes sont disponibles pour <code>Zend_Dom_Query</code> :</para>
+            <para>Ces méthodes sont disponibles pour <classname>Zend_Dom_Query</classname> :</para>
 
             <itemizedlist>
                 <listitem>
@@ -153,7 +153,7 @@ foreach ($results as $result) {
 
                 <listitem>
                     <para><code>setDocument($document)</code>: spécifie une chaîne dans laquelle requêter ;
-                    <code>Zend_Dom_Query</code> tentera alors de détecter automatiquement le type de document.</para>
+                    <classname>Zend_Dom_Query</classname> tentera alors de détecter automatiquement le type de document.</para>
                 </listitem>
 
                 <listitem>
@@ -181,7 +181,7 @@ foreach ($results as $result) {
         <sect3 id="zend.dom.query.methods.zenddomqueryresult">
             <title>Zend_Dom_Query_Result</title>
 
-            <para>Comme mentionné auparavant, <code>Zend_Dom_Query_Result</code> implémente à la fois
+            <para>Comme mentionné auparavant, <classname>Zend_Dom_Query_Result</classname> implémente à la fois
             <code>Iterator</code> et <code>Countable</code>, et en tant que tel peut être utilisé dans une boucle
             <code>foreach</code> ainsi qu'avec la fonction <code>count()</code>. De plus il expose les méthodes
             suivantes :</para>
@@ -194,7 +194,7 @@ foreach ($results as $result) {
 
                 <listitem>
                     <para><code>getXpathQuery()</code>: retourne la requête XPath utilisé pour produire le résultat,
-                    <code>Zend_Dom_Query</code> convertit les recherches de type sélecteur CSS en notation XPath, donc
+                    <classname>Zend_Dom_Query</classname> convertit les recherches de type sélecteur CSS en notation XPath, donc
                     cette valeur sera toujours présente.</para>
                 </listitem>
 

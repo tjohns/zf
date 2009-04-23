@@ -5,12 +5,12 @@
     <sect2 id="zend.paginator.usage.paginating">
         <title>Paginer des collections de données</title>
 
-        <para>Afin de pouvoir paginer des éléments, <code>Zend_Paginator</code> doit posséder une manière générique
+        <para>Afin de pouvoir paginer des éléments, <classname>Zend_Paginator</classname> doit posséder une manière générique
         d'accéder aux sources de données. De ce fait, tous les accès aux données se font via des adaptateurs de sources.
         Plusieurs adaptateurs existent par défaut :</para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title>Adaptateurs pour <code>Zend_Paginator</code></title>
+            <title>Adaptateurs pour <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>
@@ -31,7 +31,7 @@
                     <row>
                         <entry><code>DbSelect</code></entry>
 
-                        <entry>Utilise une instance de <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
+                        <entry>Utilise une instance de <link linkend="zend.db.select"><classname>Zend_Db_Select</classname></link>
                         qui retourne un tableau</entry>
                     </row>
 
@@ -39,8 +39,8 @@
                         <entry><code>DbTableSelect</code></entry>
 
                         <entry>Utilise une instance <link
-                        linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>, qui retournera une
-                        instance de <code>Zend_Db_Table_Rowset_Abstract</code>. Ceci fournit aussi des informations
+                        linkend="zend.db.table.fetch-all"><classname>Zend_Db_Table_Select</classname></link>, qui retournera une
+                        instance de <classname>Zend_Db_Table_Rowset_Abstract</classname>. Ceci fournit aussi des informations
                         supplémentaires sur le jeu de résultats, tel que les noms de colonne.</entry>
                     </row>
 
@@ -54,7 +54,7 @@
                     <row>
                         <entry><code>Null</code></entry>
 
-                        <entry>N'utilise pas <code>Zend_Paginator</code> pour la pagination. En revanche, les options et
+                        <entry>N'utilise pas <classname>Zend_Paginator</classname> pour la pagination. En revanche, les options et
                         capacités de contrôle de la pagination restent disponibles.</entry>
                     </row>
                 </tbody>
@@ -72,7 +72,7 @@
             pour de plus amples informations.</para>
         </note>
 
-        <para>Pour créer une instance de <code>Zend_Paginator</code>, vous devez spécifier un adaptateur à son
+        <para>Pour créer une instance de <classname>Zend_Paginator</classname>, vous devez spécifier un adaptateur à son
         constructeur:</para>
 
         <para><programlisting role="php"><![CDATA[
@@ -99,7 +99,7 @@ $paginator->setCurrentPageNumber($page);
 ]]></programlisting></para>
 
         <para>La manière la plus simple de suivre et scruter cette valeur est via l'URL. Nous recommandons l'utilisation
-        d'un routeur compatible avec <code>Zend_Controller_Router_Interface</code>, mais ceci n'est pas
+        d'un routeur compatible avec <classname>Zend_Controller_Router_Interface</classname>, mais ceci n'est pas
         nécessaire.</para>
 
         <para>Voici une route que vous pourriez définir dans un fichier de configuration INI:</para>
@@ -123,7 +123,7 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
         <para>Il y a d'autres options disponibles, voyez <link linkend="zend.paginator.configuration">la
         configuration</link> pour plus de détails.</para>
 
-        <para>Enfin, il faut passer l'instance du paginateur à votre vue. Si vous utilisez <code>Zend_View</code> avec
+        <para>Enfin, il faut passer l'instance du paginateur à votre vue. Si vous utilisez <classname>Zend_View</classname> avec
         l'aide d'action <code>ViewRenderer</code>, ceci fonctionnera :</para>
 
         <para><programlisting role="php"><![CDATA[
@@ -135,10 +135,10 @@ $this->view->paginator = $paginator;
         <title>Rendre des pages avec les scripts de vue</title>
 
         <para>Le script de vue va être utilisé pour rendre les éléments de la page (bien sûr si
-        <code>Zend_Paginator</code> est utilisé à cet effet), et pour afficher les éléments relatifs au contrôle de la
+        <classname>Zend_Paginator</classname> est utilisé à cet effet), et pour afficher les éléments relatifs au contrôle de la
         pagination.</para>
 
-        <para>Comme <code>Zend_Paginator</code> implémente l'interface SPL <ulink
+        <para>Comme <classname>Zend_Paginator</classname> implémente l'interface SPL <ulink
         url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html"><code>IteratorAggregate</code></ulink>,
         boucler sur les éléments et les afficher est très simple.</para>
 
@@ -180,7 +180,7 @@ $this->view->paginator = $paginator;
         <para>Il existe 4 types de défilement intégrés dans Zend Framework :</para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title>Types de défilement pour <code>Zend_Paginator</code></title>
+            <title>Types de défilement pour <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>

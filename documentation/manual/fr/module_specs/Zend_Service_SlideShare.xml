@@ -2,21 +2,21 @@
 <sect1 id="zend.service.slideshare">
     <title>Introduction</title>
 
-    <para>Le composant <code>Zend_Service_SlideShare</code> est utilisé dans l'interaction avec les services Web de
+    <para>Le composant <classname>Zend_Service_SlideShare</classname> est utilisé dans l'interaction avec les services Web de
     <ulink url="http://www.slideshare.net/">slideshare.net</ulink>, plate-forme servant d'hébergement de diaporamas.
     Grâce à ce composant, vous pouvez intégrer des diaporamas de Slideshare, dans votre propre site Web, ou même
     uploader des nouveaux diaporamas sur votre compte Slideshare, depuis votre site Web.</para>
 
     <sect2 id="zend.service.slideshare.basicusage">
-        <title>Démarrage avec <code>Zend_Service_SlideShare</code></title>
+        <title>Démarrage avec <classname>Zend_Service_SlideShare</classname></title>
 
-        <para>Pour utiliser <code>Zend_Service_SlideShare</code>, vous devez créer au préalable un compte sur
+        <para>Pour utiliser <classname>Zend_Service_SlideShare</classname>, vous devez créer au préalable un compte sur
         slideshare.net (plus d'informations à ce sujet <ulink url="http://www.slideshare.net/developers/">ici</ulink>),
         afin de recevoir votre clé d'API et votre login / mot de passe, indispensables pour utiliser le service
         Web.</para>
 
-        <para>Une fois votre compte créé, vous pouvez utiliser <code>Zend_Service_SlideShare</code> en créant une
-        instance de <code>Zend_Service_SlideShare</code> en lui passant vos identifiants :</para>
+        <para>Une fois votre compte créé, vous pouvez utiliser <classname>Zend_Service_SlideShare</classname> en créant une
+        instance de <classname>Zend_Service_SlideShare</classname> en lui passant vos identifiants :</para>
 
         <programlisting role="php"><![CDATA[
 // Crée une instance du composant
@@ -30,8 +30,8 @@ $ss = new Zend_Service_SlideShare('APIKEY',
     <sect2 id="zend.service.slideshare.slideshowobj">
         <title>L'objet SlideShow</title>
 
-        <para>Chaque diaporama issu de <code>Zend_Service_SlideShare</code> est matérialisé par un objet
-        <code>Zend_Service_SlideShare_SlideShow</code> (que ce soit pour uploader ou récupérer des diaporamas). Pour
+        <para>Chaque diaporama issu de <classname>Zend_Service_SlideShare</classname> est matérialisé par un objet
+        <classname>Zend_Service_SlideShare_SlideShow</classname> (que ce soit pour uploader ou récupérer des diaporamas). Pour
         information, voici un pseudo code de cette classe :</para>
 
         <programlisting role="php"><![CDATA[
@@ -178,17 +178,17 @@ class Zend_Service_SlideShare_SlideShow {
             développeurs. D'autres méthodes internes au composant existent.</para>
         </note>
 
-        <para>Lors de l'utilisation de <code>Zend_Service_SlideShare</code>, la classe de données Slideshow sera souvent
+        <para>Lors de l'utilisation de <classname>Zend_Service_SlideShare</classname>, la classe de données Slideshow sera souvent
         utilisée pour parcourir, ajouter, ou modifier des diaporamas.</para>
     </sect2>
 
     <sect2 id="zend.service.slideshare.getslideshow">
         <title>Récupérer un diaporama simplement</title>
 
-        <para>La manière la plus simple d'utiliser <code>Zend_Service_SlideShare</code> est la récupération d'un
+        <para>La manière la plus simple d'utiliser <classname>Zend_Service_SlideShare</classname> est la récupération d'un
         diaporama depuis son ID, fournit par le service slideshare.net, ceci est effectué via la méthode
-        <code>getSlideShow()</code> de l'objet <code>Zend_Service_SlideShare</code>. Le résultat de cette méthode est un
-        objet de type <code>Zend_Service_SlideShare_SlideShow</code>.</para>
+        <code>getSlideShow()</code> de l'objet <classname>Zend_Service_SlideShare</classname>. Le résultat de cette méthode est un
+        objet de type <classname>Zend_Service_SlideShare_SlideShow</classname>.</para>
 
         <programlisting role="php"><![CDATA[
 // Création d'une instance du composant
@@ -258,9 +258,9 @@ foreach($ss_user as $slideshow) {
     </sect2>
 
     <sect2 id="zend.service.slideshare.caching">
-        <title>Politique de cache de <code>Zend_Service_SlideShare</code></title>
+        <title>Politique de cache de <classname>Zend_Service_SlideShare</classname></title>
 
-        <para>Par défaut, <code>Zend_Service_SlideShare</code> va mettre en cache toute requête concernant le service
+        <para>Par défaut, <classname>Zend_Service_SlideShare</classname> va mettre en cache toute requête concernant le service
         Web, dans le système de fichier (par défaut : <code>/tmp</code>), ceci pour une durée de 12 heures. Si vous
         voulez changer ce comportement, vous devez passer votre propre objet <xref linkend="zend.cache" /> en utilisant
         la méthode <code>setCacheObject</code> :</para>
@@ -291,7 +291,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
         <title>Changer le comportement du client HTTP</title>
 
         <para>Si pour une raison quelconque vous souhaitez changer le comportement de l'objet client HTTP utilisé pour
-        interroger le service Web, vous pouvez créer votre propre instance de <code>Zend_Http_Client</code> (voyez <xref
+        interroger le service Web, vous pouvez créer votre propre instance de <classname>Zend_Http_Client</classname> (voyez <xref
         linkend="zend.http" />). Ceci peut être utile par exemple pour spécifier un timeout ou toute autre chose
         :</para>
 

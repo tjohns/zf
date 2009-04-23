@@ -2,10 +2,10 @@
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profiler avec Firebug</title>
 
-    <para><code>Zend_Db_Profiler_Firebug</code> envoie des informations de profilage vers la <ulink
+    <para><classname>Zend_Db_Profiler_Firebug</classname> envoie des informations de profilage vers la <ulink
     url="http://www.getfirebug.com/">console Firebug</ulink>.</para>
 
-    <para>Toutes les données sont envoyées via le composant <code>Zend_Wildfire_Channel_HttpHeaders</code> qui utilise
+    <para>Toutes les données sont envoyées via le composant <classname>Zend_Wildfire_Channel_HttpHeaders</classname> qui utilise
     les en-têtes HTTP pour s'assurer que le contenu de la page n'est pas perturbé. Déboguer les requêtes AJAX qui
     requière du JSON "propre" ou un réponse XML est possible avec cette approche.</para>
 
@@ -28,7 +28,7 @@
     </itemizedlist>
 
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
-        <title>Profilage de base de données avec <code>Zend_Controller_Front</code></title>
+        <title>Profilage de base de données avec <classname>Zend_Controller_Front</classname></title>
 
         <programlisting role="php"><![CDATA[
 // Dans votre fichier d'amorçage
@@ -46,7 +46,7 @@ $db->setProfiler($profiler)
     </example>
 
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
-        <title>Profilage de base de données sans <code>Zend_Controller_Front</code></title>
+        <title>Profilage de base de données sans <classname>Zend_Controller_Front</classname></title>
 
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');

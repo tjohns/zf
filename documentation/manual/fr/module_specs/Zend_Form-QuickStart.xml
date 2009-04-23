@@ -3,19 +3,19 @@
     <title>Zend_Form démarrage rapide</title>
 
     <para>Ce guide rapide couvre les bases de la création, de la validation, et du rendu des formulaires
-    <code>Zend_Form</code>.</para>
+    <classname>Zend_Form</classname>.</para>
 
     <sect2 id="zend.form.quickstart.create">
         <title>Créer un objet de formulaire</title>
 
-        <para>Instanciez simplement un objet <code>Zend_Form</code> :</para>
+        <para>Instanciez simplement un objet <classname>Zend_Form</classname> :</para>
 
         <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
 ]]></programlisting>
 
-        <para>Pour des usages avancés, vous voudriez probablement dériver <code>Zend_Form</code>, mais pour les
-        formulaires simples, vous pouvez créez un formulaire depuis une instance de <code>Zend_Form</code>.</para>
+        <para>Pour des usages avancés, vous voudriez probablement dériver <classname>Zend_Form</classname>, mais pour les
+        formulaires simples, vous pouvez créez un formulaire depuis une instance de <classname>Zend_Form</classname>.</para>
 
         <para>Vous pouvez spécifier (c'est une bonne idée) l'action et la méthode d'envoi du formulaire grâce à
         <code>setAction()</code> et <code>setMethod()</code> :</para>
@@ -40,8 +40,8 @@ $form->setAttrib('id', 'login');
     <sect2 id="zend.form.quickstart.elements">
         <title>Ajouter des éléments au formulaire</title>
 
-        <para>Un formulaire ne sert à rien sans éléments. Le composant <code>Zend_Form</code> est fourni avec un
-        ensemble d'éléments qui rendent du code XHTML via les aides de <code>Zend_View</code>. Voici ces aides :</para>
+        <para>Un formulaire ne sert à rien sans éléments. Le composant <classname>Zend_Form</classname> est fourni avec un
+        ensemble d'éléments qui rendent du code XHTML via les aides de <classname>Zend_View</classname>. Voici ces aides :</para>
 
         <itemizedlist>
             <listitem>
@@ -90,7 +90,7 @@ $form->setAttrib('id', 'login');
         </itemizedlist>
 
         <para>Vous avez 2 manières de procéder pour ajouter les éléments au formulaire : instanciez vous même les objets
-        des éléments, ou passer le type d'élément à <code>Zend_Form</code>, qui va alors créer le bon objet pour
+        des éléments, ou passer le type d'élément à <classname>Zend_Form</classname>, qui va alors créer le bon objet pour
         vous.</para>
 
         <para>Quelques exemples :</para>
@@ -109,7 +109,7 @@ $form->addElement('text', 'username');
         depuis le formulaire, et en le configurant ensuite.</para>
 
         <para>Voyons comment passer un validateur à un élément dont nous créons l'objet. On peut passer soit l'objet
-        <code>Zend_Validate_*</code>, soit une chaîne le décrivant :</para>
+        <classname>Zend_Validate_*</classname>, soit une chaîne le décrivant :</para>
 
         <programlisting role="php"><![CDATA[
 $username = new Zend_Form_Element_Text('username');
@@ -168,7 +168,7 @@ $username->addValidators(array('alnum',
 
         <para>Aussi simple que cela puisse paraître, cela peut très vite devenir fastidieux de répéter ces opérations
         sur tous les éléments du formulaire. Reprenons le cas (b) d'au dessus : lorsque l'on crée un élément,
-        <code>Zend_Form::addElement()</code> agit comme une fabrique et on peut lui passer des options de configuration.
+        <classname>Zend_Form::addElement()</classname> agit comme une fabrique et on peut lui passer des options de configuration.
         Par exemple, des validateurs ou des filtres. Essayons ceci :</para>
 
         <programlisting role="php"><![CDATA[
@@ -184,7 +184,7 @@ $form->addElement('text', 'username', array(
 
         <note>
             <para>Si vous vous apercevez que vous créez des éléments basés sur les mêmes options, étendre
-            <code>Zend_Form_Element</code> peut devenir une bonne option. Votre nouvelle classe configurera directement
+            <classname>Zend_Form_Element</classname> peut devenir une bonne option. Votre nouvelle classe configurera directement
             vos objets.</para>
         </note>
     </sect2>
@@ -193,7 +193,7 @@ $form->addElement('text', 'username', array(
         <title>Rendre (visuellement) un formulaire</title>
 
         <para>Rendre un formulaire est très simple. La plupart des éléments nécessitent les aides de vue
-        <code>Zend_View</code> pour être rendus. Ils ont donc besoin d'un objet de vue. Pour rendre un formulaire,
+        <classname>Zend_View</classname> pour être rendus. Ils ont donc besoin d'un objet de vue. Pour rendre un formulaire,
         appelez sa méthode <code>render()</code> ou faites un <code>echo</code> devant l'objet.</para>
 
         <programlisting role="php"><![CDATA[
@@ -204,7 +204,7 @@ echo $form->render($view);
 echo $form;
 ]]></programlisting>
 
-        <para>Par défaut, <code>Zend_Form</code> et les <code>Zend_Form_Element</code> vont essayer de récupérer l'objet
+        <para>Par défaut, <classname>Zend_Form</classname> et les <classname>Zend_Form_Element</classname> vont essayer de récupérer l'objet
         de vue depuis l'aide d'action <code>ViewRenderer</code>, ce qui signifie que vous n'aurez pas besoin de
         spécifier un objet de vue manuellement si vous utilisez le système MVC de Zend Framework. Pour rendre un
         formulaire dans une vue MVC, un simple <code>echo</code> suffit :</para>
@@ -213,10 +213,10 @@ echo $form;
 <?php echo $this->form ?>
 ]]></programlisting>
 
-        <para>Techniquement, <code>Zend_Form</code> utilise des "décorateurs" pour effectuer le rendu visuel. Ces
+        <para>Techniquement, <classname>Zend_Form</classname> utilise des "décorateurs" pour effectuer le rendu visuel. Ces
         décorateurs peuvent remplacer le contenu, ou le placer avant ou après. Ils peuvent aussi introspecter l'élément
         qui leur est passé. Ainsi, vous pouvez chaîner plusieurs décorateurs pour utiliser des effets visuels. Par
-        défaut, <code>Zend_Form_Element</code> combine quatre décorateurs pour s'afficher :</para>
+        défaut, <classname>Zend_Form_Element</classname> combine quatre décorateurs pour s'afficher :</para>
 
         <programlisting role="php"><![CDATA[
 $element->addDecorators(array(
@@ -359,7 +359,7 @@ if (!$form->isValid($_POST)) {
         par une lettre, et devra faire entre 6 et 20 caractères de long, qui seront normalisés en lettres minuscules.
         Les mots de passe feront 6 caractères minimum.</para>
 
-        <para>Nous allons utiliser la puissance de <code>Zend_Form</code> pour configurer le formulaire et effectuer le
+        <para>Nous allons utiliser la puissance de <classname>Zend_Form</classname> pour configurer le formulaire et effectuer le
         rendu :</para>
 
         <programlisting role="php"><![CDATA[
@@ -431,14 +431,14 @@ class UserController extends Zend_Controller_Action
 ]]></programlisting>
 
         <para>Comme vous le voyez sur le code du contrôleur, il reste du travail à faire une fois le formulaire validé.
-        Par exemple, utiliser <code>Zend_Auth</code> pour déclencher un processus d'identification.</para>
+        Par exemple, utiliser <classname>Zend_Auth</classname> pour déclencher un processus d'identification.</para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Utiliser un objet <code>Zend_Config</code></title>
+        <title>Utiliser un objet <classname>Zend_Config</classname></title>
 
-        <para>Toutes les classes du composant <code>Zend_Form</code> sont configurables au moyen d'un objet
-        <code>Zend_Config</code> ; vous pouvez passer un objet <code>Zend_Config</code> au constructeur ou via la
+        <para>Toutes les classes du composant <classname>Zend_Form</classname> sont configurables au moyen d'un objet
+        <classname>Zend_Config</classname> ; vous pouvez passer un objet <classname>Zend_Config</classname> au constructeur ou via la
         méthode <code>setConfig()</code>. Voyons comment créer le formulaire ci-dessus, au moyen d'un fichier INI. Tout
         d'abord, nous nous baserons sur une section "developement", et nos instructions devront être imbriquées afin de
         refléter la configuration. Ensuite nous utiliserons un espace de nom "user" correspondant au contrôleur, puis un
@@ -484,7 +484,7 @@ $form   = new Zend_Form($config->user->login);
     <sect2 id="zend.form.quickstart.conclusion">
         <title>Conclusion</title>
 
-        <para>Vous êtes maintenant capable de libérer la puissance de <code>Zend_Form</code>. Continuez de lire les
+        <para>Vous êtes maintenant capable de libérer la puissance de <classname>Zend_Form</classname>. Continuez de lire les
         chapitres suivants pour utiliser ce composant en profondeur !</para>
     </sect2>
 </sect1>

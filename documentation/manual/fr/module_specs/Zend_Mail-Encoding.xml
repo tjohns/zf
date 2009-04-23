@@ -8,6 +8,6 @@
     spécifié lors de l'appel à <code>addAttachment()</code> ou assigné plus tard à la partie MIME de l'objet. Les
     encodages 7Bit et 8Bit ne se font pour l'instant que sur les données binaires.</para>
 
-    <para><code>Zend_Mail_Transport_Smtp</code> encode les lignes commençant par un ou deux points, ainsi l'émail ne
+    <para><classname>Zend_Mail_Transport_Smtp</classname> encode les lignes commençant par un ou deux points, ainsi l'émail ne
     viole pas le protocole SMTP.</para>
 </sect1>

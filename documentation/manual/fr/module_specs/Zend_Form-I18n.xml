@@ -2,13 +2,13 @@
 <sect1 id="zend.form.i18n">
     <title>Internationaliser un formulaire Zend_Form</title>
 
-    <para>De plus en plus de développeurs ont besoin de fournir des applications multilingues. <code>Zend_Form</code>
+    <para>De plus en plus de développeurs ont besoin de fournir des applications multilingues. <classname>Zend_Form</classname>
     propose des moyens simples dans ce but, et gère cette responsabilité en tandem avec <link
     linkend="zend.translate">Zend_Translate</link> et <link linkend="zend.validate">Zend_Validate</link>.</para>
 
-    <para>Par défaut, aucune internationalisation (i18n) n'est effectuée. Pour l'activer dans <code>Zend_Form</code>,
-    vous devrez instancier un objet <code>Zend_Translate</code> avec un adaptateur et l'attacher à
-    <code>Zend_Form</code> et/ou <code>Zend_Validate</code>. Voyez la <link linkend="zend.translate">documentation de
+    <para>Par défaut, aucune internationalisation (i18n) n'est effectuée. Pour l'activer dans <classname>Zend_Form</classname>,
+    vous devrez instancier un objet <classname>Zend_Translate</classname> avec un adaptateur et l'attacher à
+    <classname>Zend_Form</classname> et/ou <classname>Zend_Validate</classname>. Voyez la <link linkend="zend.translate">documentation de
     Zend_Translate</link> pour plus d'informations sur la création de son objet et de ses adaptateurs.</para>
 
     <note>
@@ -24,8 +24,8 @@
         <title>Initialiser l'i18n dans les formulaires</title>
 
         <para>Pour activer les traductions dans vos formulaires, vous avez besoin soit d'un objet
-        <code>Zend_Translate</code> complet, ou alors d'un objet <code>Zend_Translate_Adapter</code> , comme ceci est
-        détaillé dans la documentation de <code>Zend_Translate</code>. Une fois un objet d'i18n en votre possession,
+        <classname>Zend_Translate</classname> complet, ou alors d'un objet <classname>Zend_Translate_Adapter</classname> , comme ceci est
+        détaillé dans la documentation de <classname>Zend_Translate</classname>. Une fois un objet d'i18n en votre possession,
         plusieurs choix s'offrent à vous :</para>
 
         <itemizedlist>
@@ -40,13 +40,13 @@
 Zend_Registry::set('Zend_Translate', $translate);
 ]]></programlisting>
 
-                <para>Cet objet sera cherché par <code>Zend_Form</code>, <code>Zend_Validate</code>, et
-                <code>Zend_View_Helper_Translate</code>.</para>
+                <para>Cet objet sera cherché par <classname>Zend_Form</classname>, <classname>Zend_Validate</classname>, et
+                <classname>Zend_View_Helper_Translate</classname>.</para>
             </listitem>
 
             <listitem>
                 <para>Si tout ce qui vous importe est la traduction des messages d'erreurs, vous pouvez ajouter l'objet
-                de traduction à <code>Zend_Validate_Abstract</code> :</para>
+                de traduction à <classname>Zend_Validate_Abstract</classname> :</para>
 
                 <programlisting role="php"><![CDATA[
 // Indique aux classes de validation d'utiliser
@@ -56,7 +56,7 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
             </listitem>
 
             <listitem>
-                <para>Autre manière de procéder; attacher un objet de traduction à <code>Zend_Form</code> de manière
+                <para>Autre manière de procéder; attacher un objet de traduction à <classname>Zend_Form</classname> de manière
                 générale. Ceci aura pour effet, entres-autres, de gérer la traduction des messages d'erreur de la
                 validation :</para>
 
@@ -96,7 +96,7 @@ $element->setTranslator($translate);
             <listitem>
                 <para><emphasis>Messages d'erreur des validateurs :</emphasis> les messages d'erreurs des validateurs
                 peuvent être traduits. Pour cela, utilisez les identifiants des messages des validateurs (constantes de
-                vos validateurs <code>Zend_Validate</code>. Pour plus d'informations sur ces clés, voyez la
+                vos validateurs <classname>Zend_Validate</classname>. Pour plus d'informations sur ces clés, voyez la
                 documentation de <link linkend="zend.validate">Zend_Validate</link>.</para>
 
                 <para>Aussi, depuis la version 1.6.0, vous pouvez fournir des chaînes de traduction en utilisant les
@@ -125,7 +125,7 @@ $element->setTranslator($translate);
 
             <listitem>
                 <para><emphasis>Valeurs de Multi-option :</emphasis> les éléments héritant de
-                <code>Zend_Form_Element_Multi</code>(MultiCheckbox, Multiselect, et Radio) peuvent aussi traduire les
+                <classname>Zend_Form_Element_Multi</classname>(MultiCheckbox, Multiselect, et Radio) peuvent aussi traduire les
                 valeurs (et non les clés) de leurs options.</para>
             </listitem>
 

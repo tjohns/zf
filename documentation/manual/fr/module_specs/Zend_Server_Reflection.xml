@@ -5,7 +5,7 @@
     <sect2 id="zend.server.reflection.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Server_Reflection</code> fournit un mécanisme standard pour exécuter l'introspection de
+        <para><classname>Zend_Server_Reflection</classname> fournit un mécanisme standard pour exécuter l'introspection de
         fonction et de classe pour utiliser avec des classes serveur. Il est basé sur l'API de réflexion de PHP 5, et
         l'améliore pour fournir des méthodes de recherche des types et des descriptions de paramètre et de valeur de
         retour, une liste complète des prototypes de fonction et de méthode (c.-à-d., toutes les combinaisons d'appels
@@ -49,8 +49,8 @@ foreach ($prototypes as $prototype) {
 $reflection->getNamespace();
 ]]></programlisting>
 
-        <para><code>reflectFunction()</code> retourne un objet <code>Zend_Server_Reflection_Function</code>.
-        <code>reflectClass</code> retourne un objet <code>Zend_Server_Reflection_Class</code>. Veuillez vous référer à
+        <para><code>reflectFunction()</code> retourne un objet <classname>Zend_Server_Reflection_Function</classname>.
+        <code>reflectClass</code> retourne un objet <classname>Zend_Server_Reflection_Class</classname>. Veuillez vous référer à
         la documentation d'API pour voir quelles méthodes sont disponibles pour chacun.</para>
     </sect2>
 </sect1>

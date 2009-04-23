@@ -28,10 +28,10 @@
 
     <example id="zend.cache.introduction.example-1">
 
-        <title>Créer un frontend avec <code>Zend_Cache::factory()</code></title>
+        <title>Créer un frontend avec <classname>Zend_Cache::factory()</classname></title>
 
         <para>
-            <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie
+            <classname>Zend_Cache::factory()</classname> instancie les objets corrects et les lie
             ensemble. Dans le premier exemple, nous allons utiliser le frontend <code>Core</code>
             avec le backend <code>File</code>.
         </para>
@@ -104,7 +104,7 @@ print_r($result);
 
     <example id="zend.cache.introduction.example-3">
 
-        <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
+        <title>Cache de sortie avec le frontend de sortie <classname>Zend_Cache</classname></title>
 
         <para>
             Nous marquons les sections dans lesquelles nous voulons un cache de sortie en

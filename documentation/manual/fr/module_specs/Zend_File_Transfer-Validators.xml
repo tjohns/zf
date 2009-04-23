@@ -2,10 +2,10 @@
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
 
-    <para><code>Zend_File_Transfer</code> est fourni avec de multiples validateurs liés qui doivent être utiliser pour
+    <para><classname>Zend_File_Transfer</classname> est fourni avec de multiples validateurs liés qui doivent être utiliser pour
     accroître la sécurité et prévenir les attaques possibles. Notez que les validateurs ne sont bons que si vous les
-    utilisez. Tous les validateurs qui sont fournis avec <code>Zend_File_Transfer</code> peuvent être trouvés avec le
-    composant <code>Zend_Validator</code> et sont nommés <code>Zend_Validate_File_*</code>. Les validateurs suivants
+    utilisez. Tous les validateurs qui sont fournis avec <classname>Zend_File_Transfer</classname> peuvent être trouvés avec le
+    composant <classname>Zend_Validator</classname> et sont nommés <classname>Zend_Validate_File_*</classname>. Les validateurs suivants
     sont actuellement disponibles :</para>
 
     <itemizedlist>
@@ -111,7 +111,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title>Utiliser les validateurs avec <code>Zend_File_Transfer</code></title>
+        <title>Utiliser les validateurs avec <classname>Zend_File_Transfer</classname></title>
 
         <para>L'utilisation des validateurs est assez simple. Il existe de multiples méthodes pour ajouter et manipuler
         les validateurs.</para>

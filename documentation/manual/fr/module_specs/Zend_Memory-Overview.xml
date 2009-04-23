@@ -5,7 +5,7 @@
     <sect2 id="zend.memory.introduction">
         <title>Introduction</title>
 
-        <para>Le composant <code>Zend_Memory</code> est destiné à gérer des données dans un environnement où la mémoire
+        <para>Le composant <classname>Zend_Memory</classname> est destiné à gérer des données dans un environnement où la mémoire
         est limitée.</para>
 
         <para>Les objets mémoire (conteneurs de mémoire) sont produits par le manager de mémoire sur demande et mis en
@@ -22,7 +22,7 @@
         <example id="zend.memory.introduction.example-1">
             <title>Utiliser le composant Zend_Memory</title>
 
-            <para><code>Zend_Memory::factory()</code> instancie l'objet de management de la mémoire avec les options
+            <para><classname>Zend_Memory::factory()</classname> instancie l'objet de management de la mémoire avec les options
             spécifiques du backend.</para>
 
             <programlisting role="php"><![CDATA[
@@ -55,7 +55,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
     <sect2 id="zend.memory.theory-of-operation">
         <title>Aspect théorique</title>
 
-        <para><code>Zend_Memory</code> travaille avec les concepts suivants : <itemizedlist>
+        <para><classname>Zend_Memory</classname> travaille avec les concepts suivants : <itemizedlist>
                 <listitem>
                     <para>Manager de mémoire</para>
                 </listitem>
@@ -119,7 +119,7 @@ $memObject->value = substr($memObject->value, $start, $length);
             <title>Objet de mémoire mobile</title>
 
             <para>Les objets de mémoire mobiles sont mis en cache et chargés de manière transparente de/vers le cache
-            par <code>Zend_Memory</code> si c'est nécessaire.</para>
+            par <classname>Zend_Memory</classname> si c'est nécessaire.</para>
 
             <para>Le manager de mémoire ne met pas en cache des objets ayant une taille plus petite que le minimum
             spécifié dans un soucis de performances. Voir <xref

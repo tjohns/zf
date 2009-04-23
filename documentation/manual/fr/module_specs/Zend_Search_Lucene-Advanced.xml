@@ -5,21 +5,21 @@
     <sect2 id="zend.search.lucene.advanced.format_migration">
         <title>Depuis Zend Framework 1.6, gestion des transformations de format d'index.</title>
 
-        <para><code>Zend_Search_Lucene</code> fonctionne avec les index Lucene Java 1.4-1.9, 2.1 et 2.3.</para>
+        <para><classname>Zend_Search_Lucene</classname> fonctionne avec les index Lucene Java 1.4-1.9, 2.1 et 2.3.</para>
 
         <para>Le format actuel de l'index peut être obtenu par <code>$index-&gt;getFormatVersion()</code>. Ceci retourne
         une de ces valeurs : <itemizedlist>
                 <listitem>
-                    <para><code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> pour le format 1.4-1.9.</para>
+                    <para><classname>Zend_Search_Lucene::FORMAT_PRE_2_1</classname> pour le format 1.4-1.9.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Search_Lucene::FORMAT_2_1</code> pour le format 2.1 (utilisé aussi pour
+                    <para><classname>Zend_Search_Lucene::FORMAT_2_1</classname> pour le format 2.1 (utilisé aussi pour
                     2.2).</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Search_Lucene::FORMAT_2_3</code> pour le format 2.3.</para>
+                    <para><classname>Zend_Search_Lucene::FORMAT_2_3</classname> pour le format 2.3.</para>
                 </listitem>
             </itemizedlist></para>
 
@@ -28,19 +28,19 @@
         manuelle de l'index par <code>$index-&gt;optimize()</code>.</para>
 
         <para>Dans un tel cas, Zend_Search_Lucene peut convertir l'index vers une version plus haute. Ceci arrive
-        <emphasis role="strong">toujours</emphasis> pour le format <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code>,
+        <emphasis role="strong">toujours</emphasis> pour le format <classname>Zend_Search_Lucene::FORMAT_PRE_2_1</classname>,
         alors transformé en format 2.1.</para>
 
         <para>Vous pouvez gérer ces conversions et notamment le format d'arrivée avec
         <code>$index-&gt;setFormatVersion()</code>, qui prend comme paramètre
-        <code>Zend_Search_Lucene::FORMAT_2_1</code> ou <code>Zend_Search_Lucene::FORMAT_2_3</code> :<itemizedlist>
+        <classname>Zend_Search_Lucene::FORMAT_2_1</classname> ou <classname>Zend_Search_Lucene::FORMAT_2_3</classname> :<itemizedlist>
                 <listitem>
-                    <para><code>Zend_Search_Lucene::FORMAT_2_1</code> ne fait rien puisque les format pre-2.1 sont
+                    <para><classname>Zend_Search_Lucene::FORMAT_2_1</classname> ne fait rien puisque les format pre-2.1 sont
                     convertis vers ce format (2.1)</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Search_Lucene::FORMAT_2_3</code> force la conversion vers le format 2.3.</para>
+                    <para><classname>Zend_Search_Lucene::FORMAT_2_3</classname> force la conversion vers le format 2.3.</para>
                 </listitem>
             </itemizedlist></para>
 
@@ -58,7 +58,7 @@
     <sect2 id="zend.search.lucene.advanced.static">
         <title>Utiliser les propriétés statiques de l'index</title>
 
-        <para>L'objet <code>Zend_Search_Lucene</code> utilise la méthode de destructeur pour valider ses changements et
+        <para>L'objet <classname>Zend_Search_Lucene</classname> utilise la méthode de destructeur pour valider ses changements et
         faire ses optimisations et nettoyages.</para>
 
         <para>Il stocke les documents ajoutés en mémoire et les vide dans un segment sur le disque en fonction du
@@ -90,13 +90,13 @@ Searcher::initIndex();
         <para>Vous pouvez alors voir une "Fatal error: Exception thrown without a stack frame in Unknown on line 0" au
         lieu de l'exception décrivant réellement le contexte.</para>
 
-        <para><code>Zend_Search_Lucene</code> propose alors un détournement de ce problème avec la méthode
+        <para><classname>Zend_Search_Lucene</classname> propose alors un détournement de ce problème avec la méthode
         <code>commit()</code>. Elle sauvegarde les changements et libère la mémoire utilisée pour stocker les segments.
         Vous pouvez utiliser la méthode commit n'importe quand, même plusieurs fois, pendant l'exécution de votre
-        script. Vous pouvez aussi continuer à utiliser l'objet <code>Zend_Search_Lucene</code> pour rechercher, ajouter
+        script. Vous pouvez aussi continuer à utiliser l'objet <classname>Zend_Search_Lucene</classname> pour rechercher, ajouter
         ou supprimer des document, même après une opération de commit (validation). L'appel à <code>commit()</code> est
         simplement une sécurité pour éviter les problème d'exception dans le destructeur de
-        <code>Zend_Search_Lucene</code> :<programlisting role="php"><![CDATA[
+        <classname>Zend_Search_Lucene</classname> :<programlisting role="php"><![CDATA[
 class Searcher {
     private static $_index;
 

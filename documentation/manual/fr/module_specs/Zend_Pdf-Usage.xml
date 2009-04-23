@@ -2,7 +2,7 @@
 <sect1 id="zend.pdf.usage">
     <title>Exemple d'utilisation du module Zend_Pdf</title>
 
-    <para>Cette section propose un exemple d'utilisation du module <code>Zend_Pdf</code>.</para>
+    <para>Cette section propose un exemple d'utilisation du module <classname>Zend_Pdf</classname>.</para>
 
     <para>Le code source de l'exemple est disponible dans le fichier
     <filename>demos/Zend/Pdf/demo.php</filename>.</para>

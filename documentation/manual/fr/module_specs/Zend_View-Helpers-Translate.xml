@@ -7,13 +7,13 @@
     Translate</code> à l'intérieur de vos vues, vous devriez utiliser l'aide de vue <code>Translate</code>.</para>
 
     <para>Dans tous les exemples suivants nous allons utiliser l'adaptateur de traduction <code>Array</code>. Bien sûr
-    vous pouvez aussi utiliser toute instance de <code>Zend_Translate</code> ainsi que toutes sous-classes de
-    <code>Zend_Translate_Adapter</code>. Il y a plusieurs manières d'initialiser l'aide de vue <code>Translate</code>
+    vous pouvez aussi utiliser toute instance de <classname>Zend_Translate</classname> ainsi que toutes sous-classes de
+    <classname>Zend_Translate_Adapter</classname>. Il y a plusieurs manières d'initialiser l'aide de vue <code>Translate</code>
     :</para>
 
     <itemizedlist>
         <listitem>
-            <para>enregistré préalablement dans <code>Zend_Registry</code></para>
+            <para>enregistré préalablement dans <classname>Zend_Registry</classname></para>
         </listitem>
 
         <listitem>
@@ -25,7 +25,7 @@
         </listitem>
     </itemizedlist>
 
-    <para>Une instance préalablement enregistré de <code>Zend_Translate</code> est l'utilisation préférée pour cette
+    <para>Une instance préalablement enregistré de <classname>Zend_Translate</classname> est l'utilisation préférée pour cette
     aide. Vous pouvez ainsi sélectionner la locale à utiliser avant d'ajouter l'adaptateur dans le registre.</para>
 
     <note>
@@ -37,9 +37,9 @@
     <example id="zend.view.helpers.initial.translate.registered">
         <title>Instance enregistrée</title>
 
-        <para>Pour utiliser une instance enregistrée, créez une instance de <code>Zend_Translate</code> ou
-        <code>Zend_Translate_Adapter</code> et enregistrez la dans <code>Zend_Registry</code> en utilisant la clé
-        <code>Zend_Translate</code>.</para>
+        <para>Pour utiliser une instance enregistrée, créez une instance de <classname>Zend_Translate</classname> ou
+        <classname>Zend_Translate_Adapter</classname> et enregistrez la dans <classname>Zend_Registry</classname> en utilisant la clé
+        <classname>Zend_Translate</classname>.</para>
 
         <programlisting role="php"><![CDATA[
 // notre adaptateur d'exemple
@@ -58,8 +58,8 @@ echo $this->translate('simple');
     <example id="zend.view.helpers.initial.translate.afterwards">
         <title>A l'intérieur de la vue</title>
 
-        <para>Pour utiliser l'interface fluide, créez une instance de <code>Zend_Translate</code> ou
-        <code>Zend_Translate_Adapter</code>, appelez l'aide sans paramètres, et appelez la méthode
+        <para>Pour utiliser l'interface fluide, créez une instance de <classname>Zend_Translate</classname> ou
+        <classname>Zend_Translate_Adapter</classname>, appelez l'aide sans paramètres, et appelez la méthode
         <code>setTranslator()</code>.</para>
 
         <programlisting role="php"><![CDATA[
@@ -70,7 +70,7 @@ $this->translate()->setTranslator($adapter)->translate('simple');
 ]]></programlisting>
     </example>
 
-    <para>Si vous utilisez votre aide sans <code>Zend_View</code>, alors vous pouvez aussi l'utiliser
+    <para>Si vous utilisez votre aide sans <classname>Zend_View</classname>, alors vous pouvez aussi l'utiliser
     directement.</para>
 
     <example id="zend.view.helpers.initial.translate.directly">
@@ -86,7 +86,7 @@ print $translate->translate('simple');
 // ceci retourne 'einfach'
 ]]></programlisting>
 
-        <para>Vous devriez utiliser cette façon de faire si vous ne travaillez pas avec <code>Zend_View</code> et que
+        <para>Vous devriez utiliser cette façon de faire si vous ne travaillez pas avec <classname>Zend_View</classname> et que
         vous avez besoin de créer des affichages traduits.</para>
     </example>
 

@@ -5,7 +5,7 @@
     <para>Le comportement des sessions peut être modifié en utilisant les méthodes statiques de la classe Zend_Session.
     Il s'agit du comportement global des sessions dans toute l'application, incluant la configuration des <ulink
     url="http://www.php.net/session#session.configuration">options usuelles offertes par ext/session</ulink>, ceci en
-    utilisant <code>Zend_Session::setOptions()</code>. Ainsi, des problèmes de sécurité peuvent apparaître si vous
+    utilisant <classname>Zend_Session::setOptions()</classname>. Ainsi, des problèmes de sécurité peuvent apparaître si vous
     utilisez mal le support de stockage des sessions <code>save_path</code> ou encore si vous négligez le cookie utilisé
     par ext/session.</para>
 
@@ -14,13 +14,13 @@
 
         <para>Lors de la création du premier namespace de session, Zend_Session va automatiquement démarrer la session
         PHP, sauf si celle-ci a été démarrée avec <link
-        linkend="zend.session.advanced_usage.starting_a_session"><code>Zend_Session::start()</code></link> auparavant.
+        linkend="zend.session.advanced_usage.starting_a_session"><classname>Zend_Session::start()</classname></link> auparavant.
         La session PHP résultante utilisera les options de configuration par défaut de Zend_Session, sauf si ceux-ci ont
-        été modifiés à l'aide de <code>Zend_Session::setOptions()</code>.</para>
+        été modifiés à l'aide de <classname>Zend_Session::setOptions()</classname>.</para>
 
         <para>Pour assigner une option de configuration, passez son nom (la partie qui suit "<code>session.</code>" dans
         les options de configuration de ext/session) comme clé au tableau passé à
-        <code>Zend_Session::setOptions()</code>. La valeur correspondante dans le tableau sera alors utilisée comme
+        <classname>Zend_Session::setOptions()</classname>. La valeur correspondante dans le tableau sera alors utilisée comme
         valeur de l'option. Si vous omettez une option, alors celles par défaut recommandées par Zend_Session seront
         utilisées, sinon si elles n'existent pas, les valeurs par défaut de php.ini. Les retours et les idées quant aux
         "options recommandées" sont appréciées et peuvent être envoyées à <ulink
@@ -30,7 +30,7 @@
             <title>Utiliser Zend_Config pour configurer Zend_Session</title>
 
             <para>Pour configurer le composant en utilisant un objet <link
-            linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>, ajoutez ces paramètres au fichier
+            linkend="zend.config.adapters.ini"><classname>Zend_Config_Ini</classname></link>, ajoutez ces paramètres au fichier
             INI en question:</para>
 
             <programlisting role="ini"><![CDATA[
@@ -75,7 +75,7 @@ remember_me_seconds = 864000
 ]]></programlisting>
 
             <para>Ensuite, chargez ce fichier de configuration, et passez sa représentation tableau à
-            <code>Zend_Session::setOptions()</code>:</para>
+            <classname>Zend_Session::setOptions()</classname>:</para>
 
             <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('myapp.ini', 'development');
@@ -89,7 +89,7 @@ Zend_Session::setOptions($config->toArray());
         ext/session, documentées dans le manuel officiel de PHP, cependant les options particulières méritent une
         description: <itemizedlist mark="opencircle">
                 <listitem>
-                    <para>bool <code>strict</code> : désactive le démarrage automatique de <code>Zend_Session</code>
+                    <para>bool <code>strict</code> : désactive le démarrage automatique de <classname>Zend_Session</classname>
                     lorsque <code>new Zend_Session_Namespace()</code> est utilisé.</para>
                 </listitem>
 
@@ -102,7 +102,7 @@ Zend_Session::setOptions($config->toArray());
                     <para>string <code>save_path</code> : Cette valeur est dépendante du système sur lequel PHP est
                     lancé. Un <emphasis role="strong">chemin absolu</emphasis> vers un dossier lisible et écrivable à
                     PHP devrait être utilisé (dans le cas d'utilisation d'un dossier pour le support des sessions). Si
-                    le chemin n'est pas pleinement accessible à PHP, <code>Zend_Session</code> lancera une exception à
+                    le chemin n'est pas pleinement accessible à PHP, <classname>Zend_Session</classname> lancera une exception à
                     son démarrage (lorsque <code>start()</code> est appelée.</para>
 
                     <note>
@@ -219,7 +219,7 @@ Zend_Session::setOptions($config->toArray());
         <code>regenerateId()</code> change l'identifiant de session, mais en plus il migre les données de l'ancien
         identifiant vers le nouveau, invalidant totalement l'ancien.</para>
 
-        <para>Quand régénérer cet identifiant ? En théorie, mettre <code>Zend_Session::regenerateId()</code> en
+        <para>Quand régénérer cet identifiant ? En théorie, mettre <classname>Zend_Session::regenerateId()</classname> en
         bootstrap est la manière la plus adaptée pour sécuriser une session. Cependant, ceci a un coût non négligeable,
         car il faut alors à chaque fois régénérer un identifiant, et renvoyer un nouveau cookie au client. Il est alors
         nécessaire de déterminer les situations 'à risque', et régénérer alors l'identifiant de session dans de telles
@@ -243,7 +243,7 @@ Zend_Session::setOptions($config->toArray());
             sauf si l'application possède d'autres vulnérabilités (CSRF), ou si le <code>save_path</code> est
             modifiable.</para>
 
-            <para>En elle-même, la fonction <code>Zend_Session::regenerateId()</code> utilisée à la première utilisation
+            <para>En elle-même, la fonction <classname>Zend_Session::regenerateId()</classname> utilisée à la première utilisation
             de la session, ne protège pas contre la fixation. Ceci peut paraître contradictoire, mais un attaquant peut
             très bien initialiser une session de lui-même, qui sera alors rafraîchie (régénérée), et dont il connaîtra
             alors l'identifiant. Il n'aura plus qu'à fixer cet identifiant dans un javascript pour qu'une victime
@@ -294,10 +294,10 @@ if (!isset($defaultNamespace->initialized)) {
 
         <para>Par défaut, la session se termine lorsque le client ferme son navigateur. Il peut cependant être
         nécessaire de faire en sorte que même après la fermeture, le cookie de session persiste un certain temps dans le
-        navigateur. Utilisez <code>Zend_Session::rememberMe()</code> avant tout démarrage de la session, afin de
+        navigateur. Utilisez <classname>Zend_Session::rememberMe()</classname> avant tout démarrage de la session, afin de
         spécifier à celle-ci qu'elle devra utiliser un cookie persistant du coté du client. Ce cookie persistera alors
         $seconds secondes. Si vous ne précisez pas de temps, <code>remember_me_seconds</code>, sera utilisé. Cette
-        valeur se paramètre d'ailleurs au moyen de <code>Zend_Session::setOptions()</code>.</para>
+        valeur se paramètre d'ailleurs au moyen de <classname>Zend_Session::setOptions()</classname>.</para>
     </sect2>
 
     <sect2 id="zend.session.global_session_management.forgetme">
@@ -317,17 +317,17 @@ if (!isset($defaultNamespace->initialized)) {
     <sect2 id="zend.session.global_session_management.destroy">
         <title><code>destroy(bool $remove_cookie = true, bool $readonly = true)</code></title>
 
-        <para><code>Zend_Session::destroy()</code> détruit la session et toutes les données la concernant. Cependant,
+        <para><classname>Zend_Session::destroy()</classname> détruit la session et toutes les données la concernant. Cependant,
         aucune variable dans PHP n'est affectée, donc vos namespaces de session (instances de
-        <code>Zend_Session_Namespace</code>) restent lisibles. Pour compléter la "déconnexion", laissez le premier
+        <classname>Zend_Session_Namespace</classname>) restent lisibles. Pour compléter la "déconnexion", laissez le premier
         paramètre à <code>true</code> (par défaut), demandant l'expiration du cookie de session du client.
         <code>$readonly</code> permet d'empêcher la future création de namespaces (new
-        <code>Zend_Session_Namespace</code>) ou des opérations d'écriture via <code>Zend_Session</code>.</para>
+        <classname>Zend_Session_Namespace</classname>) ou des opérations d'écriture via <classname>Zend_Session</classname>.</para>
 
         <para>Si vous voyez le message d'erreur "Cannot modify header information - headers already sent", alors tentez
         de ne pas utiliser <code>true</code> comme valeur du premier argument (ceci demande l'expiration du cookie de
         session, ou voyez <xref linkend="zend.session.global_session_management.headers_sent" />. Ainsi,
-        <code>Zend_Session::destroy(true)</code> doit être appelé avant tout envoi d'en-tête HTTP par PHP, ou alors la
+        <classname>Zend_Session::destroy(true)</classname> doit être appelé avant tout envoi d'en-tête HTTP par PHP, ou alors la
         bufferisation de sortie doit être activée (sans que celui-ci ne déborde).</para>
 
         <note>
@@ -342,7 +342,7 @@ if (!isset($defaultNamespace->initialized)) {
         <title><code>stop()</code></title>
 
         <para>Cette méthode ne fait rien d'autre que de verrouiller la session en écriture. Tout appel futur d'écriture
-        via des instances de <code>Zend_Session_Namespace</code> ou <code>Zend_Session</code> lèvera une
+        via des instances de <classname>Zend_Session_Namespace</classname> ou <classname>Zend_Session</classname> lèvera une
         exception.</para>
     </sect2>
 
@@ -351,7 +351,7 @@ if (!isset($defaultNamespace->initialized)) {
 
         <para>Ferme la session coté serveur, soit enregistre les variables de session dans le support, et détache
         <code>$_SESSION</code> de son support de stockage. Le paramètre optionnel <code>$readonly</code> empêche alors
-        toute future écriture via <code>Zend_Session</code> ou <code>Zend_Session_Namespace</code>. Ces écritures
+        toute future écriture via <classname>Zend_Session</classname> ou <classname>Zend_Session_Namespace</classname>. Ces écritures
         lèveront une exception.</para>
 
         <note>
@@ -394,7 +394,7 @@ if (!isset($defaultNamespace->initialized)) {
     <sect2 id="zend.session.global_session_management.namespaceunset">
         <title><code>namespaceUnset($namespace)</code></title>
 
-        <para>Utilisez <code>Zend_Session::namespaceUnset($namespace)</code> pour détruire un namespace entier de la
+        <para>Utilisez <classname>Zend_Session::namespaceUnset($namespace)</classname> pour détruire un namespace entier de la
         session. Comme pour les tableaux PHP, si le tableau est détruit, les objets à l'intérieur ne le sont pas s'il
         reste des références vers eux dans d'autres tableaux ou objets toujours accessibles. Ainsi
         <code>namespaceUnset()</code> ne détruit pas "en profondeur" la variable de session associée au namespace. Voyez
@@ -411,7 +411,7 @@ if (!isset($defaultNamespace->initialized)) {
     <sect2 id="zend.session.global_session_management.namespaceget">
         <title><code>namespaceGet($namespace)</code></title>
 
-        <para>Déprécié: Utilisez <code>getIterator()</code> dans <code>Zend_Session_Namespace</code>. Cette méthode
+        <para>Déprécié: Utilisez <code>getIterator()</code> dans <classname>Zend_Session_Namespace</classname>. Cette méthode
         retourne un tableau du contenu du namespace $namespace. Si vous avez une raison de conserver cette méthode,
         faites nous part de vos remarques à <ulink
         url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.</para>

@@ -29,7 +29,7 @@
 
                     <entry>Mètres par seconde carré | <code>m/s²</code></entry>
 
-                    <entry><code>Zend_Measure_Acceleration</code> couvre le facteur physique d'accélération.</entry>
+                    <entry><classname>Zend_Measure_Acceleration</classname> couvre le facteur physique d'accélération.</entry>
                 </row>
 
                 <row>
@@ -39,7 +39,7 @@
 
                     <entry>Radiant | <code>rad</code></entry>
 
-                    <entry><code>Zend_Measure_Angle</code> couvre les dimensions angulaires.</entry>
+                    <entry><classname>Zend_Measure_Angle</classname> couvre les dimensions angulaires.</entry>
                 </row>
 
                 <row>
@@ -49,7 +49,7 @@
 
                     <entry>Mètres carré | <code>m²</code></entry>
 
-                    <entry><code>Zend_Measure_Area</code> couvre les superficies.</entry>
+                    <entry><classname>Zend_Measure_Area</classname> couvre les superficies.</entry>
                 </row>
 
                 <row>
@@ -59,7 +59,7 @@
 
                     <entry>Bit | <code>b</code></entry>
 
-                    <entry><code>Zend_Measure_Binary</code> couvre les conversions binaires.</entry>
+                    <entry><classname>Zend_Measure_Binary</classname> couvre les conversions binaires.</entry>
                 </row>
 
                 <row>
@@ -69,7 +69,7 @@
 
                     <entry>Farad | <code>F</code></entry>
 
-                    <entry><code>Zend_Measure_Capacitance</code> couvre le facteur physique de capacité
+                    <entry><classname>Zend_Measure_Capacitance</classname> couvre le facteur physique de capacité
                     électrique.</entry>
                 </row>
 
@@ -80,7 +80,7 @@
 
                     <entry>Mètre au cube | <code>m³</code></entry>
 
-                    <entry><code>Zend_Measure_Cooking_Volume</code> couvre les volumes (principalement pour la cuisine
+                    <entry><classname>Zend_Measure_Cooking_Volume</classname> couvre les volumes (principalement pour la cuisine
                     ou les livres de cuisine).</entry>
                 </row>
 
@@ -91,7 +91,7 @@
 
                     <entry>Gramme | <code>g</code></entry>
 
-                    <entry><code>Zend_Measure_Cooking_Weight</code> couvre les poids (principalement pour la cuisine ou
+                    <entry><classname>Zend_Measure_Cooking_Weight</classname> couvre les poids (principalement pour la cuisine ou
                     les livres de cuisine).</entry>
                 </row>
 
@@ -102,7 +102,7 @@
 
                     <entry>Ampère | <code>A</code></entry>
 
-                    <entry><code>Zend_Measure_Current</code> couvre le facteur physique de courant électrique.</entry>
+                    <entry><classname>Zend_Measure_Current</classname> couvre le facteur physique de courant électrique.</entry>
                 </row>
 
                 <row>
@@ -112,7 +112,7 @@
 
                     <entry>Kilogramme par mètre au cube | <code>kg/m³</code></entry>
 
-                    <entry><code>Zend_Measure_Density</code> couvre le facteur physique de la masse volumique
+                    <entry><classname>Zend_Measure_Density</classname> couvre le facteur physique de la masse volumique
                     (densité).</entry>
                 </row>
 
@@ -123,7 +123,7 @@
 
                     <entry>Joule | <code>J</code></entry>
 
-                    <entry><code>Zend_Measure_Energy</code> couvre le facteur physique de l'énergie.</entry>
+                    <entry><classname>Zend_Measure_Energy</classname> couvre le facteur physique de l'énergie.</entry>
                 </row>
 
                 <row>
@@ -133,7 +133,7 @@
 
                     <entry>Newton | <code>N</code></entry>
 
-                    <entry><code>Zend_Measure_Force</code> couvre le facteur physique de la force.</entry>
+                    <entry><classname>Zend_Measure_Force</classname> couvre le facteur physique de la force.</entry>
                 </row>
 
                 <row>
@@ -143,7 +143,7 @@
 
                     <entry>Kilogramme par seconde | <code>kg/s</code></entry>
 
-                    <entry><code>Zend_Measure_Flow_Mass</code> couvre le facteur physique de débit massique. Le poids de
+                    <entry><classname>Zend_Measure_Flow_Mass</classname> couvre le facteur physique de débit massique. Le poids de
                     la masse en écoulement est utilisé comme point de référence de la classe.</entry>
                 </row>
 
@@ -154,7 +154,7 @@
 
                     <entry>Mole par seconde | <code>mol/s</code></entry>
 
-                    <entry><code>Zend_Measure_Flow_Mole</code> couvre le facteur physique de débit massique. La densité
+                    <entry><classname>Zend_Measure_Flow_Mole</classname> couvre le facteur physique de débit massique. La densité
                     de la masse en écoulement est utilisée comme point de référence de la classe.</entry>
                 </row>
 
@@ -165,7 +165,7 @@
 
                     <entry>Mètres au cube par seconde | <code>m³/s</code></entry>
 
-                    <entry><code>Zend_Measure_Flow_Volume</code> couvre le facteur physique de débit massique. Le volume
+                    <entry><classname>Zend_Measure_Flow_Volume</classname> couvre le facteur physique de débit massique. Le volume
                     de la masse en écoulement est utilisé comme point de référence de la classe.</entry>
                 </row>
 
@@ -176,7 +176,7 @@
 
                     <entry>Hertz | <code>Hz</code></entry>
 
-                    <entry><code>Zend_Measure_Frequency</code> couvre le facteur physique de fréquence.</entry>
+                    <entry><classname>Zend_Measure_Frequency</classname> couvre le facteur physique de fréquence.</entry>
                 </row>
 
                 <row>
@@ -186,7 +186,7 @@
 
                     <entry>Lux | <code>lx</code></entry>
 
-                    <entry><code>Zend_Measure_Illumination</code> couvre le facteur physique de l'éclairement
+                    <entry><classname>Zend_Measure_Illumination</classname> couvre le facteur physique de l'éclairement
                     lumineux.</entry>
                 </row>
 
@@ -197,7 +197,7 @@
 
                     <entry>Mètres | <code>m</code></entry>
 
-                    <entry><code>Zend_Measure_Length</code> couvre le facteur physique de longueur.</entry>
+                    <entry><classname>Zend_Measure_Length</classname> couvre le facteur physique de longueur.</entry>
                 </row>
 
                 <row>
@@ -207,7 +207,7 @@
 
                     <entry>Candela par mètre carré | <code>cd/m²</code></entry>
 
-                    <entry><code>Zend_Measure_Ligntness</code> couvre le facteur physique de luminosité.</entry>
+                    <entry><classname>Zend_Measure_Ligntness</classname> couvre le facteur physique de luminosité.</entry>
                 </row>
 
                 <row>
@@ -217,7 +217,7 @@
 
                     <entry>Décimal | <code>(10)</code></entry>
 
-                    <entry><code>Zend_Measure_Number</code> permet la conversion entre les formats numériques.</entry>
+                    <entry><classname>Zend_Measure_Number</classname> permet la conversion entre les formats numériques.</entry>
                 </row>
 
                 <row>
@@ -227,7 +227,7 @@
 
                     <entry>Watt | <code>W</code></entry>
 
-                    <entry><code>Zend_Measure_Power</code> couvre le facteur physique de puissance.</entry>
+                    <entry><classname>Zend_Measure_Power</classname> couvre le facteur physique de puissance.</entry>
                 </row>
 
                 <row>
@@ -237,7 +237,7 @@
 
                     <entry>Newton par mètre carré | <code>N/m²</code></entry>
 
-                    <entry><code>Zend_Measure_Pressure</code> couvre le facteur physique de pression.</entry>
+                    <entry><classname>Zend_Measure_Pressure</classname> couvre le facteur physique de pression.</entry>
                 </row>
 
                 <row>
@@ -247,7 +247,7 @@
 
                     <entry>Mètre par seconde | <code>m/s</code></entry>
 
-                    <entry><code>Zend_Measure_Speed</code> couvre le facteur physique de vitesse</entry>
+                    <entry><classname>Zend_Measure_Speed</classname> couvre le facteur physique de vitesse</entry>
                 </row>
 
                 <row>
@@ -257,7 +257,7 @@
 
                     <entry>Kelvin | <code>K</code></entry>
 
-                    <entry><code>Zend_Measure_Temperature</code> couvre le facteur physique de température</entry>
+                    <entry><classname>Zend_Measure_Temperature</classname> couvre le facteur physique de température</entry>
                 </row>
 
                 <row>
@@ -267,7 +267,7 @@
 
                     <entry>Seconde | <code>s</code></entry>
 
-                    <entry><code>Zend_Measure_Time</code> couvre le facteur physique de la durée.</entry>
+                    <entry><classname>Zend_Measure_Time</classname> couvre le facteur physique de la durée.</entry>
                 </row>
 
                 <row>
@@ -277,7 +277,7 @@
 
                     <entry>Newton mètre | <code>Nm</code></entry>
 
-                    <entry><code>Zend_Measure_Torque</code> couvre le facteur physique du couple</entry>
+                    <entry><classname>Zend_Measure_Torque</classname> couvre le facteur physique du couple</entry>
                 </row>
 
                 <row>
@@ -287,7 +287,7 @@
 
                     <entry>Kilogramme par mètre seconde | <code>kg/ms</code></entry>
 
-                    <entry><code>Zend_Measure_Viscosity_Dynamic</code> couvre le facteur physique de viscosité. La masse
+                    <entry><classname>Zend_Measure_Viscosity_Dynamic</classname> couvre le facteur physique de viscosité. La masse
                     du fluide est utilisée comme le point de référence de la classe.</entry>
                 </row>
 
@@ -298,7 +298,7 @@
 
                     <entry>Mètres carré par seconde | <code>m²/s</code></entry>
 
-                    <entry><code>Zend_Measure_Viscosity_Kinematic</code> couvre le facteur physique de viscosité. La
+                    <entry><classname>Zend_Measure_Viscosity_Kinematic</classname> couvre le facteur physique de viscosité. La
                     distance parcouru par la masse en écoulement est utilisée comme le point de référence de la
                     classe.</entry>
                 </row>
@@ -310,7 +310,7 @@
 
                     <entry>Mètre au cube | <code>m³</code></entry>
 
-                    <entry><code>Zend_Measure_Volume</code> couvre le facteur physique de volume (contenu).</entry>
+                    <entry><classname>Zend_Measure_Volume</classname> couvre le facteur physique de volume (contenu).</entry>
                 </row>
 
                 <row>
@@ -320,7 +320,7 @@
 
                     <entry>Kilogramme | <code>kg</code></entry>
 
-                    <entry><code>Zend_Measure_Weight</code> couvre le facteur physique de masse.</entry>
+                    <entry><classname>Zend_Measure_Weight</classname> couvre le facteur physique de masse.</entry>
                 </row>
             </tbody>
         </tgroup>

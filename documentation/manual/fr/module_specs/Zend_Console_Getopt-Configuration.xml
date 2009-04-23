@@ -202,7 +202,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code>
+                    <classname>Zend_Console_Getopt::CONFIG_DASHDASH</classname>
                     ("<code>dashDash</code>"), si "<code>true</code>", utilise le drapeau spécial
                     "<code>--</code>" pour signifier la fin des drapeaux. Les arguments de la ligne
                     de commande suivant le double-tiret ne sont pas interprétées comme options,
@@ -212,7 +212,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code>
+                    <classname>Zend_Console_Getopt::CONFIG_IGNORECASE</classname>
                     ("<code>ignoreCase</code>"), si "<code>true</code>", fait correspondre des
                     alias même s'ils différent en terme de casse. C'est-à-dire,"<code>-a</code>" et
                     "<code>-A</code>" seront considérés commes des synonymes. Cette option de
@@ -221,13 +221,13 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
+                    <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname>
                     ("<code>ruleMode</code>") peut avoir les valeurs
-                    <code>Zend_Console_Getopt::MODE_ZEND</code> ("zend") ou
-                    <code>Zend_Console_Getopt::MODE_GNU</code> ("<code>gnu</code>"). Il ne devrait
+                    <classname>Zend_Console_Getopt::MODE_ZEND</classname> ("zend") ou
+                    <classname>Zend_Console_Getopt::MODE_GNU</classname> ("<code>gnu</code>"). Il ne devrait
                     pas être nécessaire d'employer cette option à moins que vous n'étendiez la
                     classe avec les formes additionnelles de syntaxe. Les deux modes supportés dans
-                    la classe <code>Zend_Console_Getopt</code> de base sont sans équivoque. Si le
+                    la classe <classname>Zend_Console_Getopt</classname> de base sont sans équivoque. Si le
                     spécificateur est une chaîne de caractère, la classe passe en
                     <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>. Mais si
                     vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous pouvez

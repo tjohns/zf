@@ -5,7 +5,7 @@
     <sect2 id="zend.db.profiler.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Db_Profiler</code> peut être activé pour permettre le profilage de requête. Les profils
+        <para><classname>Zend_Db_Profiler</classname> peut être activé pour permettre le profilage de requête. Les profils
         incluent les requêtes exécutées par l'adaptateur, ainsi que leur temps d'exécution, permettant l'inspection des
         requêtes qui ont été exécutées sans avoir besoin de rajouter le code spécifique de débogage aux classes.
         L'utilisation avancée permet aussi au développeur de filtrer quelles requêtes il souhaite profiler.</para>
@@ -38,14 +38,14 @@ $db->getProfiler()->setEnabled(true);
         permettent de personnaliser le comportement du profileur.</para>
 
         <para>Un argument booléen active le profileur si c'est une valeur <code>true</code>, ou le désactive si
-        <code>false</code>. La classe de profileur est celle par défaut, par exemple <code>Zend_Db_Profiler</code>.
+        <code>false</code>. La classe de profileur est celle par défaut, par exemple <classname>Zend_Db_Profiler</classname>.
         <programlisting role="php"><![CDATA[
 $params['profiler'] = true;
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 ]]></programlisting></para>
 
         <para>Une instance d'un objet profileur fait que l'adaptateur utilise cet objet. L'objet doit être de type
-        <code>Zend_Db_Profiler</code> ou une sous-classe. L'activation du profileur est faite séparément.
+        <classname>Zend_Db_Profiler</classname> ou une sous-classe. L'activation du profileur est faite séparément.
         <programlisting role="php"><![CDATA[
 $profiler = Mon_Db_Profiler();
 $profiler->setEnabled(true);
@@ -57,7 +57,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
         "<code>enabled</code>", "<code>instance</code>", et "<code>class</code>". Les clés "<code>enabled</code>" et
         "<code>instance</code>" correspondent aux types booléen et instance décrites ci-dessus. La clé
         "<code>class</code>" est utilisée pour nommer une classe à prendre en tant que profileur personnalisé. La classe
-        doit être de type <code>Zend_Db_Profiler</code> ou une sous-classe. La classe est instanciée sans aucun argument
+        doit être de type <classname>Zend_Db_Profiler</classname> ou une sous-classe. La classe est instanciée sans aucun argument
         de constructeur. L'option "<code>class</code>" est ignorée quand l'option "<code>instance</code>" est fournie.
         <programlisting role="php"><![CDATA[
 $params['profiler'] = array(
@@ -67,7 +67,7 @@ $params['profiler'] = array(
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 ]]></programlisting></para>
 
-        <para>Enfin, l'argument peut être un objet de type <code>Zend_Config</code> contenant des propriétés, qui sont
+        <para>Enfin, l'argument peut être un objet de type <classname>Zend_Config</classname> contenant des propriétés, qui sont
         traitées comme les clés de tableaux décrites ci-dessus. Par exemple, une fichier "config.ini" peut contenir les
         données suivantes : <programlisting role="ini"><![CDATA[
 [main]
@@ -101,7 +101,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 $profileur = $db->getProfiler();
 ]]></programlisting>
 
-        <para>Ceci retourne une instance de <code>Zend_Db_Profiler</code>. Avec cette instance, le développeur peut
+        <para>Ceci retourne une instance de <classname>Zend_Db_Profiler</classname>. Avec cette instance, le développeur peut
         examiner les requêtes en utilisant un éventail de méthodes :</para>
 
         <itemizedlist>
@@ -130,7 +130,7 @@ $profileur = $db->getProfiler();
         </itemizedlist>
 
         <para>La valeur de retour de <code>getLastQueryProfile()</code> et les éléments individuels de
-        <code>getQueryProfiles()</code> sont des objets de type <code>Zend_Db_Profiler_Query</code> qui permettent
+        <code>getQueryProfiles()</code> sont des objets de type <classname>Zend_Db_Profiler_Query</classname> qui permettent
         d'inspecter les requêtes :</para>
 
         <itemizedlist>
@@ -153,7 +153,7 @@ $profileur = $db->getProfiler();
             </listitem>
         </itemizedlist>
 
-        <para>L'information que <code>Zend_Db_Profiler</code> fourni est utile pour profiler des goulots d'étranglement
+        <para>L'information que <classname>Zend_Db_Profiler</classname> fourni est utile pour profiler des goulots d'étranglement
         dans les applications, ainsi que pour déboguer les requêtes qui viennent d'être exécutées. Par exemple, pour
         voir la dernière requête qui vient de s'exécuter :</para>
 
@@ -200,7 +200,7 @@ echo "Requête la plus lente (SQL) : \n"
         <title>Utilisation avancée du profileur</title>
 
         <para>En plus de l'inspection de requête, le profileur permet aussi au développeur de filtrer quelles requêtes
-        il veut profiler. Les méthodes suivantes fonctionnent avec une instance de <code>Zend_Db_Profiler</code>
+        il veut profiler. Les méthodes suivantes fonctionnent avec une instance de <classname>Zend_Db_Profiler</classname>
         :</para>
 
         <sect3 id="zend.db.profiler.advanced.filtertime">
@@ -224,41 +224,41 @@ $profileur->setFilterElapsedSecs(null);
 
             <para><code>setFilterQueryType()</code> permet au développeur de définir quels types de requêtes doivent
             être profilées ; pour profiler des types multiples vous pouvez utiliser le OU logique. Les types de requêtes
-            sont définis sous forme de constantes de <code>Zend_Db_Profiler</code> :</para>
+            sont définis sous forme de constantes de <classname>Zend_Db_Profiler</classname> :</para>
 
             <itemizedlist>
                 <listitem>
-                    <para><code>Zend_Db_Profiler::CONNECT</code> : opérations de connexion ou de sélection de base de
+                    <para><classname>Zend_Db_Profiler::CONNECT</classname> : opérations de connexion ou de sélection de base de
                     données.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::QUERY</code> : requête générale qui ne correspond pas aux autres
+                    <para><classname>Zend_Db_Profiler::QUERY</classname> : requête générale qui ne correspond pas aux autres
                     types.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::INSERT</code> : toute requête qui ajoute des données dans la base de
+                    <para><classname>Zend_Db_Profiler::INSERT</classname> : toute requête qui ajoute des données dans la base de
                     données, généralement INSERT.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::UPDATE</code> : toute requête qui met à jour des données, généralement
+                    <para><classname>Zend_Db_Profiler::UPDATE</classname> : toute requête qui met à jour des données, généralement
                     UPDATE.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::DELETE</code> : toute requête qui efface des données, généralement
+                    <para><classname>Zend_Db_Profiler::DELETE</classname> : toute requête qui efface des données, généralement
                     DELETE.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::SELECT</code> : toute requête qui récupère des données, généralement
+                    <para><classname>Zend_Db_Profiler::SELECT</classname> : toute requête qui récupère des données, généralement
                     SELECT.</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>Zend_Db_Profiler::TRANSACTION</code> : toute requête qui concerne des opérations de
+                    <para><classname>Zend_Db_Profiler::TRANSACTION</classname> : toute requête qui concerne des opérations de
                     transaction, comme start transaction, commit, ou rollback.</para>
                 </listitem>
             </itemizedlist>
@@ -312,7 +312,7 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
     <sect2 id="zend.db.profiler.profilers">
         <title>Profileurs spécialisés</title>
 
-        <para>Un profileur spécialisé est un objet qui hérite de <code>Zend_Db_Profiler</code>. Les profileurs
+        <para>Un profileur spécialisé est un objet qui hérite de <classname>Zend_Db_Profiler</classname>. Les profileurs
         spécialisés traitent les informations de profilage de manière spécifique.</para>
 
         <xi:include href="Zend_Db_Profiler-Firebug.xml" />

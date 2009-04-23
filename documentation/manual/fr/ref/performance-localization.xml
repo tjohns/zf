@@ -64,7 +64,7 @@
         <sect3 id="performance.localization.cache.usage">
             <title>Utiliser les caches de traductions et de localisation</title>
 
-            <para>A la fois <code>Zend_Translate</code> et <code>Zend_Locale</code> implémente une fonctionnalité de
+            <para>A la fois <classname>Zend_Translate</classname> et <classname>Zend_Locale</classname> implémente une fonctionnalité de
             mise en cache qui peuvent considérablement améliorer les performances. Dans chacun des cas, le goulot
             principal est typiquement la lecture des fichiers, pas la réelle consultation ; la mise en cache élimine la
             nécessité de relire de nouveau les fichiers de traduction ou de localisation.</para>
@@ -74,11 +74,11 @@
 
             <itemizedlist>
                 <listitem>
-                    <para><link linkend="zend.translate.adapter.caching">Mise en cache pour <code>Zend_Translate</code></link></para>
+                    <para><link linkend="zend.translate.adapter.caching">Mise en cache pour <classname>Zend_Translate</classname></link></para>
                 </listitem>
 
                 <listitem>
-                    <para><link linkend="zend.locale.cache">Mise en cache pour <code>Zend_Locale</code></link></para>
+                    <para><link linkend="zend.locale.cache">Mise en cache pour <classname>Zend_Locale</classname></link></para>
                 </listitem>
             </itemizedlist>
         </sect3>

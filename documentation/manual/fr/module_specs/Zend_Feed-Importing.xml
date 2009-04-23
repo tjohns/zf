@@ -2,14 +2,14 @@
 <sect1 id="zend.feed.importing">
     <title>Importer des flux</title>
 
-    <para><code>Zend_Feed</code> permet aux développeurs d'obtenir très facilement des flux. Si vous connaissez l'URI
-    d'un flux, utilisez simplement la méthode <code>Zend_Feed::import()</code> :</para>
+    <para><classname>Zend_Feed</classname> permet aux développeurs d'obtenir très facilement des flux. Si vous connaissez l'URI
+    d'un flux, utilisez simplement la méthode <classname>Zend_Feed::import()</classname> :</para>
 
     <programlisting role="php"><![CDATA[
 $flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');
 ]]></programlisting>
 
-    <para>Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le contenu d'un flux à partir d'un
+    <para>Vous pouvez aussi utiliser <classname>Zend_Feed</classname> pour aller chercher le contenu d'un flux à partir d'un
     fichier ou d'une chaîne PHP :</para>
 
     <programlisting role="php"><![CDATA[
@@ -20,21 +20,21 @@ $fluxAPartirDeFichierTexte = Zend_Feed::importFile('flux.xml');
 $fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);
 ]]></programlisting>
 
-    <para>Dans chacun des exemples ci-dessus, une instance d'une classe étendant <code>Zend_Feed_Abstract</code> est
+    <para>Dans chacun des exemples ci-dessus, une instance d'une classe étendant <classname>Zend_Feed_Abstract</classname> est
     renvoyée en cas de succès, selon le type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes
-    d'importation décrites ci-dessus, alors un objet <code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux
-    Atom a été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les méthodes d'importation déclencheront
-    aussi une exception <code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux est illisible ou
+    d'importation décrites ci-dessus, alors un objet <classname>Zend_Feed_Rss</classname> sera renvoyé. Par contre, si un flux
+    Atom a été importé, alors un objet <classname>Zend_Feed_Atom</classname> est renvoyé. Les méthodes d'importation déclencheront
+    aussi une exception <classname>Zend_Feed_Exception</classname> en cas d'échec, par exemple si le flux est illisible ou
     malformé.</para>
 
     <sect2 id="zend.feed.importing.custom">
         <title>Flux personnalisés</title>
 
-        <para><code>Zend_Feed</code> permet aux développeurs de créer du flux personnalisé très facilement. Vous devez
+        <para><classname>Zend_Feed</classname> permet aux développeurs de créer du flux personnalisé très facilement. Vous devez
         juste créer un tableau et l'importer avec Zend_Feed. Ce tableau peut être importé avec
-        <code>Zend_Feed::importArray()</code> ou avec <code>Zend_Feed::importBuilder()</code>. Dans ce dernier cas, le
+        <classname>Zend_Feed::importArray()</classname> ou avec <classname>Zend_Feed::importBuilder()</classname>. Dans ce dernier cas, le
         tableau sera calculé instantanément par une source de données personnalisée implémentant
-        <code>Zend_Feed_Builder_Interface</code>.</para>
+        <classname>Zend_Feed_Builder_Interface</classname>.</para>
 
         <sect3 id="zend.feed.importing.custom.importarray">
             <title>Importer un tableau personnalisé</title>
@@ -180,21 +180,21 @@ array(
             <title>Importer une source de données personnalisée</title>
 
             <para>Vous pouvez créer une instance Zeed_Feed à partir de n'importe quelle source de données implémentant
-            <code>Zend_Feed_Builder_Interface</code>. Vous devez juste implémenter les méthodes <code>getHeader()</code>
-            et <code>getEntries()</code> pour pouvoir utiliser votre objet avec <code>Zend_Feed::importBuilder()</code>.
-            Par une simple référence d'implémentation vous pouvez utiliser <code>Zend_Feed_Builder</code>, qui prend un
+            <classname>Zend_Feed_Builder_Interface</classname>. Vous devez juste implémenter les méthodes <code>getHeader()</code>
+            et <code>getEntries()</code> pour pouvoir utiliser votre objet avec <classname>Zend_Feed::importBuilder()</classname>.
+            Par une simple référence d'implémentation vous pouvez utiliser <classname>Zend_Feed_Builder</classname>, qui prend un
             tableau dans son constructeur, réalise quelques validations mineures, et peut être utilisé dans la méthode
             <code>importBuilder()</code>. La méthode <code>getHeader()</code> doit retourner une instance de
-            <code>Zend_Feed_Builder_Header</code>, et <code>getEntries()</code> doit retourner un tableau d'instances
-            <code>Zend_Feed_Builder_Entry</code></para>
+            <classname>Zend_Feed_Builder_Header</classname>, et <code>getEntries()</code> doit retourner un tableau d'instances
+            <classname>Zend_Feed_Builder_Entry</classname></para>
 
             <note>
-                <para><code>Zend_Feed_Builder</code> fournit une mise en oeuvre concrète afin de montrer l'utilisation.
+                <para><classname>Zend_Feed_Builder</classname> fournit une mise en oeuvre concrète afin de montrer l'utilisation.
                 Les utilisateurs sont encouragés à faire leurs classes propres mettre en oeuvre
-                <code>Zend_Feed_Builder_Interface</code>.</para>
+                <classname>Zend_Feed_Builder_Interface</classname>.</para>
             </note>
 
-            <para>Voici un exemple d'utilisation de <code>Zend_Feed::importBuilder()</code> :</para>
+            <para>Voici un exemple d'utilisation de <classname>Zend_Feed::importBuilder()</classname> :</para>
 
             <programlisting role="php"><![CDATA[
 // importe un flux atom à partir d'un constructeur personnalisé
@@ -215,7 +215,7 @@ $rssFeedFromArray =
         <sect3 id="zend.feed.importing.custom.dump">
             <title>Décharger le contenu d'un flux</title>
 
-            <para>Pour décharger le contenu d'une instance <code>Zend_Feed_Abstract</code>, vous pouvez utiliser les
+            <para>Pour décharger le contenu d'une instance <classname>Zend_Feed_Abstract</classname>, vous pouvez utiliser les
             méthodes <code>send()</code> ou <code>saveXml().</code></para>
 
             <programlisting role="php"><![CDATA[

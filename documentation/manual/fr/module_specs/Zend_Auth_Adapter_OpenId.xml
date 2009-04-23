@@ -59,10 +59,10 @@
             A la différence des autres adaptateurs <classname>Zend_Auth</classname>, l'adaptateur
             OpenID utilise une authentification sur un serveur externe à l'application, et
             nécessitera donc deux requêtes HTTP. Ainsi
-            <code>Zend_Auth_Adapter_OpenId::authenticate()</code> devra être appelée deux fois :
+            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> devra être appelée deux fois :
             d'abord pour rediriger l'utilisateur vers le serveur OpenID (rien ne sera donc retourné
             par la méthode), qui lui-même redirigera l'utilisateur vers l'application, où un
-            deuxième appel de méthode <code>Zend_Auth_Adapter_OpenId::authenticate()</code>
+            deuxième appel de méthode <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname>
             vérifiera la signature et complétera le processus. Un objet
             <classname>Zend_Auth_Result</classname> sera alors cette fois-ci retourné.
         </para>
@@ -70,7 +70,7 @@
         <para>
             L'exemple suivant montre l'utilisation de
             <classname>Zend_Auth_Adapter_OpenId</classname>.
-            <code>Zend_Auth_Adapter_OpenId::authenticate()</code> est appelée deux fois. La
+            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> est appelée deux fois. La
             première fois juste après avoir envoyé le formulaire, lorsque
             <code>$_POST['openid_action']</code> vaut <code>"login"</code>, et la deuxième fois
             après la redirection du serveur OpenID vers l'application, lorsque

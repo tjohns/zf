@@ -5,15 +5,15 @@
     <sect2 id="zend.controller.quickstart.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Controller</code> est le coeur du système MVC de Zend Framework. MVC équivaut à <ulink
+        <para><classname>Zend_Controller</classname> est le coeur du système MVC de Zend Framework. MVC équivaut à <ulink
         url="http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur">Modèle-Vue-Contrôleur</ulink> et est un motif
         de conception ("design pattern") visant à séparer la logique d'application de la logique d'affichage.
-        <code>Zend_Controller_Front</code> implémente un modèle de <ulink
+        <classname>Zend_Controller_Front</classname> implémente un modèle de <ulink
         url="http://www.martinfowler.com/eaaCatalog/frontController.html">contrôleur frontal ("Front
         Controller")</ulink>, dans lequel toutes les demandes sont arrêtées par le contrôleur frontal et distribuées
         vers différents contrôleurs d'action ("Action Controller") basés sur l'URL demandé.</para>
 
-        <para>Le système <code>Zend_Controller</code> a été construit dans un souci d'extensibilité, soit par
+        <para>Le système <classname>Zend_Controller</classname> a été construit dans un souci d'extensibilité, soit par
         sous-classement des classes existantes, en écrivant les nouvelles classes qui implémentent les diverses
         interfaces et les classes abstraites qui forment la base de la famille de contrôleur des classes, soit par
         écriture de plugins ou d'aides d'action afin d'utiliser ou d'augmenter les fonctionnalités du système.</para>
@@ -138,7 +138,7 @@ Zend_Controller_Front::run('/chemin/vers/application/controllers');
             <code>index</code> est présumé (suivant la convention Apache qui fait correspondre un
             <code>DirectoryIndex</code> automatiquement).</para>
 
-            <para>Le distributeur du <code>Zend_Controller</code> prend alors la valeur du contrôleur et le fait
+            <para>Le distributeur du <classname>Zend_Controller</classname> prend alors la valeur du contrôleur et le fait
             correspondre à une classe. Par défaut, il s'agit du nom du contrôleur suivi du mot <code>Controller</code>.
             Ainsi, dans notre exemple ci-dessus, le contrôleur <code>roadmap</code> correspond à la classe
             <code>RoadmapController</code>.</para>
@@ -167,7 +167,7 @@ class IndexController extends Zend_Controller_Action
             <para>Par défaut, l'aide d'action <link
             linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link> est activé. Ceci signifie qu'en
             définissant simplement une méthode d'action et un script de vue correspondant, vous obtiendrez
-            automatiquement le rendu du contenu. Par défaut, <code>Zend_View</code> est utilisé en tant que couche Vue
+            automatiquement le rendu du contenu. Par défaut, <classname>Zend_View</classname> est utilisé en tant que couche Vue
             dans le MVC. Le <code>ViewRenderer</code> utilise le nom du contrôleur (par exemple, <code>index</code>) et
             le nom de l'action courante (par exemple, <code>index</code>) pour déterminer le modèle à afficher. Par
             défaut, le fichier modèle se termine par l'extension <code>.phtml</code>, cela signifie que dans l'exemple
