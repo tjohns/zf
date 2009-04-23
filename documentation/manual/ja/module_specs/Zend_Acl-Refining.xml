@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15029 -->
+<!-- EN-Revision: 15101 -->
 <sect1 id="zend.acl.refining">
 
     <title>アクセス制御の洗練</title>
@@ -14,7 +14,7 @@
         では、さまざまな規則を ACL 全体 (すべてのリソース) に対して適用しました。
         しかし実際には、アクセス制御にはさまざまな例外がつきものですし、
         もっと複雑なものになるでしょう。
-        <code>Zend_Acl</code> では、このような目的のためにも直感的で柔軟な方法で対応できます。
+        <classname>Zend_Acl</classname> では、このような目的のためにも直感的で柔軟な方法で対応できます。
         </para>
 
         <para>
@@ -40,8 +40,7 @@
         <programlisting role="php"><![CDATA[
 // 新しいグループ marketing は staff の権限を引き継ぎます
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
         次に、これらのアクセス制御は特定のリソース
@@ -63,8 +62,7 @@ $acl->add(new Zend_Acl_Resource('latest'), 'news');
 
 // お知らせ
 $acl->add(new Zend_Acl_Resource('announcement'), 'news');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
         そして、次のような特別な規則を、ACL の該当範囲に適用します。
@@ -81,8 +79,7 @@ $acl->deny('staff', 'latest', 'revise');
 
 // 全員 (administrators を含む) はお知らせを保存することができません
 $acl->deny(null, 'announcement', 'archive');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
         これで、最新の変更内容を反映した ACL への問い合わせが行えるようになります。
@@ -120,8 +117,7 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
      "allowed" : "denied";
 // denied となります
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -157,8 +153,7 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
      "allowed" : "denied";
 // denied となります
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
         上で説明したように、徐々に権限を変更していくこともできますが、
@@ -181,8 +176,7 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
      "allowed" : "denied";
 // allowed となります
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

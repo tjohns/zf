@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15099 -->
 <sect1 id="performance.database">
     <title>Zend_Dbパフォーマンス</title>
 
     <para>
-        <code>Zend_Db</code>はデータベースを抽象化するレイヤーで、SQL操作のための
+        <classname>Zend_Db</classname>はデータベースを抽象化するレイヤーで、SQL操作のための
         共通APIを提供する意図があります。
-        <code>Zend_Db_Table</code>はテーブルデータのゲートウェィで、抽象的な
+        <classname>Zend_Db_Table</classname>はテーブルデータのゲートウェィで、抽象的な
         共通のテーブルレベルでのデータベース操作を提供する意図があります。
         Due to their abstract nature and the "magic" they do under
         the hood to perform their operations, they can sometimes introduce
@@ -21,7 +21,7 @@
         <para>
             In order to keep usage as simple as possible, and also to support
             constantly changing schemas during development,
-            <code>Zend_Db_Table</code> does some magic under the hood: on
+            <classname>Zend_Db_Table</classname> does some magic under the hood: on
             first use, it fetches the table schema and stores it within object
             members. This operation is typically expensive, regardless of the
             database -- which can contribute to bottlenecks in production.
@@ -35,15 +35,15 @@
             <title>メタデータキャッシュの利用</title>
 
             <para>
-                <code>Zend_Db_Table</code>ではテーブルのメタデータをキャッシュする
-                ために<code>Zend_Cache</code>を任意で利用できます。
+                <classname>Zend_Db_Table</classname>ではテーブルのメタデータをキャッシュする
+                ために<classname>Zend_Cache</classname>を任意で利用できます。
                 This is
                 typically faster to access and less expensive than fetching the
                 metadata from the database itself.
             </para>
 
             <para>
-                <link linkend="zend.db.table.metadata.caching"><code>Zend_Db_Table</code>
+                <link linkend="zend.db.table.metadata.caching"><classname>Zend_Db_Table</classname>
                 のドキュメントにメタデータをキャッシュすることについての情報があります。</link>
             </para>
         </sect3>
@@ -52,7 +52,7 @@
             <title>テーブル定義でメタデータをハードコーディングする</title>
 
             <para>
-                As of 1.7.0, <code>Zend_Db_Table</code> also provides <link
+                As of 1.7.0, <classname>Zend_Db_Table</classname> also provides <link
                     linkend="zend.db.table.metadata.caching.hardcoding">support
                 for hardcoding metadata in the table definition</link>. This is
                 an advanced use case, and should only be used when you know the
@@ -67,7 +67,7 @@
         どのようにしたらより良く出来ますか？</title>
 
         <para>
-            <code>Zend_Db_Select</code> is relatively good at its job. However,
+            <classname>Zend_Db_Select</classname> is relatively good at its job. However,
             if you are performing complex queries requiring joins or
             sub-selects, it can often be fairly naive.
         </para>
@@ -77,8 +77,8 @@
 
             <para>
                 現実的な唯一の答えは自分でSQLを書くことです;
-                自分で用意できるなら、<code>Zend_Db</code>で必ず
-                <code>Zend_Db_Select</code>を使わずに、調整されたselect文の
+                自分で用意できるなら、<classname>Zend_Db</classname>で必ず
+                <classname>Zend_Db_Select</classname>を使わずに、調整されたselect文の
                 SQLが完璧で筋の通った道筋です。
             </para>
             <para>

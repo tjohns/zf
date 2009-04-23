@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15050 -->
+<!-- EN-Revision: 15073 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -316,7 +316,7 @@ $index->addDocument($doc);
             body の中身もインデックスに格納され、インデックスから取得できるようになります。
             body はトークン化とインデックス化だけが行われ、デフォルトでは保存されません。
         </para>
-        <para>
+<!--    <para>
             <code>loadHTML()</code> メソッドおよび <code>loadHTMLFile()</code>
             メソッドの三番目のパラメータはオプションで、元の HTML ドキュメントのエンコーディングを指定します。
             省略した場合は、meta タグの contents type charset から自動的に取得します。
@@ -325,6 +325,7 @@ $index->addDocument($doc);
             あとからエンコーディングを取得したり上書きしたりするには
             <code>getEncoding()</code>/<code>setEncoding($encoding)</code> メソッドを使用します。
         </para>
+-->
 
         <para>
             ドキュメントヘッダの meta タグの内容をもとに、追加のフィールドを作成します。

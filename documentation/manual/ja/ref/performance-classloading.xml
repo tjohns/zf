@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15099 -->
 <sect1 id="performance.classloading">
     <title>クラスの読み込み</title>
 
@@ -273,37 +273,37 @@ Zend_Loader::registerAutoload();
 
         <itemizedlist>
             <listitem><para>
-                <code>Zend_Controller_Action_HelperBroker</code>: ヘルパ
+                <classname>Zend_Controller_Action_HelperBroker</classname>: ヘルパ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Dojo</code>: ビューヘルパ、フォーム要素およびデコレータ
+                <classname>Zend_Dojo</classname>: ビューヘルパ、フォーム要素およびデコレータ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_File_Transfer</code>: アダプタ
+                <classname>Zend_File_Transfer</classname>: アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Inflector</code>: フィルタ
+                <classname>Zend_Filter_Inflector</classname>: フィルタ
                 (ViewRendererアクションヘルパおよびZend_Layoutに使用されます)
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Input</code>: フィルタおよびバリデータ
+                <classname>Zend_Filter_Input</classname>: フィルタおよびバリデータ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Form</code>: 要素、バリデータ、フィルタ、
+                <classname>Zend_Form</classname>: 要素、バリデータ、フィルタ、
                 デコレータ、キャプチャ、ファイル転送アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Paginator</code>: アダプタ
+                <classname>Zend_Paginator</classname>: アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_View</code>: ヘルパ、フィルタ
+                <classname>Zend_View</classname>: ヘルパ、フィルタ
             </para></listitem>
         </itemizedlist>
 

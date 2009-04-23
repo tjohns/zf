@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15099 -->
 <sect1 id="performance.localization">
     <title>国際化(i18n)とローカライズ(l10n)</title>
 
@@ -81,7 +81,7 @@
             <title>翻訳およびローカライズのキャッシュを使う</title>
 
             <para>
-                <code>Zend_Translate</code>と<code>Zend_Locale</code>の両方とも
+                <classname>Zend_Translate</classname>と<classname>Zend_Locale</classname>の両方とも
                 パフォーマンスに大きな影響を与えることができるキャッシュ機能が実装されています。
                 どちらの場合も、主なボトルネックは一般的にファイルの読み込みで、
                 実際のルックアップ処理ではありません;
@@ -95,14 +95,14 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <link linkend="zend.translate.adapter.caching"><code>Zend_Translate</code>
+                        <link linkend="zend.translate.adapter.caching"><classname>Zend_Translate</classname>
                             アダプタキャッシング</link>
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <link linkend="zend.locale.cache"><code>Zend_Locale</code>
+                        <link linkend="zend.locale.cache"><classname>Zend_Locale</classname>
                             キャッシング</link>
                     </para>
                 </listitem>
