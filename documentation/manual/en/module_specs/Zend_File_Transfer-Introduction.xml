@@ -5,19 +5,19 @@
     <title>Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> provides extensive support for file uploads and downloads.
+        <classname>Zend_File_Transfer</classname> provides extensive support for file uploads and downloads.
         It comes with built-in validators for files plus functionality to
-        change files with filters. Protocol adapters allow <code>Zend_File_Transfer</code> to expose the
+        change files with filters. Protocol adapters allow <classname>Zend_File_Transfer</classname> to expose the
         same API for transport protocols like HTTP, FTP, WEBDAV and more.
     </para>
 
     <note>
         <title>Limitation</title>
         <para>
-            The current implementation of <code>Zend_File_Transfer</code> is limited to HTTP Post Uploads.
+            The current implementation of <classname>Zend_File_Transfer</classname> is limited to HTTP Post Uploads.
             Other adapters supporting downloads and other protocols will be added in future releases. Unimplemented methods
             will throw an exception. For now, you should use
-            <code>Zend_File_Transfer_Adapter_Http</code> directly. As soon as
+            <classname>Zend_File_Transfer_Adapter_Http</classname> directly. As soon as
             there are multiple adapters available you can use a common interface.
         </para>
     </note>
@@ -25,15 +25,15 @@
     <note>
         <title>Forms</title>
         <para>
-            When you are using <code>Zend_Form</code> you should use the APIs provided by <code>Zend_Form</code> and not <code>Zend_File_Transfer</code> directly.
-            The file transfer support in <code>Zend_Form</code> is implemented with <code>Zend_File_Transfer</code>, so
-            the information in this chapter may be useful for advanced users of <code>Zend_Form</code>.
+            When you are using <classname>Zend_Form</classname> you should use the APIs provided by <classname>Zend_Form</classname> and not <classname>Zend_File_Transfer</classname> directly.
+            The file transfer support in <classname>Zend_Form</classname> is implemented with <classname>Zend_File_Transfer</classname>, so
+            the information in this chapter may be useful for advanced users of <classname>Zend_Form</classname>.
         </para>
     </note>
 
     <para>
-        The usage of <code>Zend_File_Transfer</code> is relatively simple. It consists of two parts. The HTTP form
-        does the upload, while the <code>Zend_File_Transfer</code> handles the uploaded files.
+        The usage of <classname>Zend_File_Transfer</classname> is relatively simple. It consists of two parts. The HTTP form
+        does the upload, while the <classname>Zend_File_Transfer</classname> handles the uploaded files.
         See the following example:
     </para>
 
@@ -73,7 +73,7 @@ if (!$adapter->receive()) {
 ]]>
         </programlisting>
         <para>
-            This code listing demonstrates the simplest usage of <code>Zend_File_Transfer</code>. A local destination is set with the <code>setDestination</code>
+            This code listing demonstrates the simplest usage of <classname>Zend_File_Transfer</classname>. A local destination is set with the <code>setDestination</code>
             method, then the <code>receive()</code> method is called. If there are any upload errors, an error will be returned.
         </para>
 
@@ -82,7 +82,7 @@ if (!$adapter->receive()) {
     <note>
         <title>Attention</title>
         <para>
-            This example is suitable only for demonstrating the basic API of <code>Zend_File_Transfer</code>. You should
+            This example is suitable only for demonstrating the basic API of <classname>Zend_File_Transfer</classname>. You should
             <emphasis role="strong">never</emphasis> use this code listing in a production environment, because
             severe security issues may be introduced. You should always use validators to increase security.
         </para>
@@ -93,8 +93,8 @@ if (!$adapter->receive()) {
         <title>Supported Adapters for Zend_File_Transfer</title>
 
         <para>
-            <code>Zend_File_Transfer</code> is designed to support a variety of adapters and transfer directions.
-            With <code>Zend_File_Transfer</code> you can upload, download and even forward (upload one adapter and
+            <classname>Zend_File_Transfer</classname> is designed to support a variety of adapters and transfer directions.
+            With <classname>Zend_File_Transfer</classname> you can upload, download and even forward (upload one adapter and
             download with another adapter at the same time) files.
         </para>
     </sect2>
@@ -104,7 +104,7 @@ if (!$adapter->receive()) {
         <title>Options for Zend_File_Transfer</title>
 
         <para>
-            <code>Zend_File_Transfer</code> and its adapters support different options. You can set all
+            <classname>Zend_File_Transfer</classname> and its adapters support different options. You can set all
             options either by passing them to the constructor or by calling <code>setOptions($options)</code>.
             <code>getOptions()</code> will return the options that are currently set. The following is a
             list of all supported options.
@@ -125,7 +125,7 @@ if (!$adapter->receive()) {
         <title>Checking Files</title>
 
         <para>
-            <code>Zend_File_Transfer</code> has several methods that check for various states of the specified file. These
+            <classname>Zend_File_Transfer</classname> has several methods that check for various states of the specified file. These
             are useful if you must process files after they have been uploaded. These methods include:
         </para>
 
@@ -191,7 +191,7 @@ $upload->receive();
         <title>Additional File Informations</title>
 
         <para>
-            <code>Zend_File_Transfer</code> can return additional information on files.
+            <classname>Zend_File_Transfer</classname> can return additional information on files.
             The following methods are available:
         </para>
 
@@ -359,7 +359,7 @@ $names = $upload->getMimeType('foo');
         <title>Progress for file uploads</title>
 
         <para>
-            <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress. To use
+            <classname>Zend_File_Transfer</classname> can give you the actual state of a fileupload in progress. To use
             this feature you need either the <code>APC</code> extension which is provided with most default
             PHP installations, or the <code>uploadprogress</code> extension. Both extensions are detected
             and used automatically. To be able to get the progress you need to meet some prerequisites.
@@ -372,8 +372,8 @@ $names = $upload->getMimeType('foo');
 
         <para>
             Second, you need to have the proper hidden fields added in the form which sends the files. When you
-            use <code>Zend_Form_Element_File</code> this hidden fields are automatically added by
-            <code>Zend_Form</code>.
+            use <classname>Zend_Form_Element_File</classname> this hidden fields are automatically added by
+            <classname>Zend_Form</classname>.
         </para>
 
         <para>
@@ -427,7 +427,7 @@ while (!$upload['done']) {
 
             <para>
                 You can also work manually with <code>getProgress()</code> without the usage of
-                <code>Zend_ProgressBar</code>.
+                <classname>Zend_ProgressBar</classname>.
             </para>
 
             <para>
@@ -495,7 +495,7 @@ while (!$upload['done']) {
                     <para>
                         <emphasis role="strong">session</emphasis>: This optional key takes the name of a session
                         namespace which will be used within Zend_ProgressBar. When this key is not given it
-                        defaults to <code>Zend_File_Transfer_Adapter_Http_ProgressBar</code>.
+                        defaults to <classname>Zend_File_Transfer_Adapter_Http_ProgressBar</classname>.
                     </para>
                 </listitem>
             </itemizedlist>

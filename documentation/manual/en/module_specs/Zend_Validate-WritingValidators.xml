@@ -11,15 +11,15 @@
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> defines three methods, <code>isValid()</code>,
+        <classname>Zend_Validate_Interface</classname> defines three methods, <code>isValid()</code>,
         <code>getMessages()</code>, and <code>getErrors()</code>, that may be implemented by user classes in order to
-        create custom validation objects. An object that implements <code>Zend_Validate_Interface</code> interface
-        may be added to a validator chain with <code>Zend_Validate::addValidator()</code>. Such objects may also be
-        used with <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.
+        create custom validation objects. An object that implements <classname>Zend_Validate_Interface</classname> interface
+        may be added to a validator chain with <classname>Zend_Validate::addValidator()</classname>. Such objects may also be
+        used with <link linkend="zend.filter.input"><classname>Zend_Filter_Input</classname></link>.
     </para>
 
     <para>
-        As you may already have inferred from the above description of <code>Zend_Validate_Interface</code>,
+        As you may already have inferred from the above description of <classname>Zend_Validate_Interface</classname>,
         validation classes provided with Zend Framework return a boolean value for whether or not a value validates
         successfully. They also provide information about <emphasis role="bold">why</emphasis> a value failed
         validation. The availability of the reasons for validation failures may be valuable to an application for
@@ -27,9 +27,9 @@
     </para>
 
     <para>
-        Basic validation failure message functionality is implemented in <code>Zend_Validate_Abstract</code>. To
+        Basic validation failure message functionality is implemented in <classname>Zend_Validate_Abstract</classname>. To
         include this functionality when creating a validation class, simply extend
-        <code>Zend_Validate_Abstract</code>. In the extending class you would implement the
+        <classname>Zend_Validate_Abstract</classname>. In the extending class you would implement the
         <code>isValid()</code> method logic and define the message variables and message templates that correspond to
         the types of validation failures that can occur. If a value fails your validation tests, then
         <code>isValid()</code> should return <code>false</code>. If the value passes your validation tests, then

@@ -33,7 +33,7 @@
     <note>
         <title>Registered applications</title>
         <para>
-            <code>Zend_Gdata</code> currently does not support use of secure tokens, because
+            <classname>Zend_Gdata</classname> currently does not support use of secure tokens, because
             the AuthSub authentication does not support passing a digital certificate
             to acquire a secure token.
         </para>
@@ -45,7 +45,7 @@
         <para>
             Your PHP application should provide a hyperlink to the
             Google URL that performs authentication. The static function
-            <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code>
+            <classname>Zend_Gdata_AuthSub::getAuthSubTokenUri()</classname>
             provides the correct URL. The arguments to this function include
             the URL to your PHP application so that Google can redirect the
             user's browser back to your application after the user's
@@ -64,8 +64,8 @@
 
         <para>
             Then use the token value in a call to
-            <code>Zend_Gdata_AuthSub::getHttpClient()</code>.
-            This function returns an instance of <code>Zend_Http_Client</code>,
+            <classname>Zend_Gdata_AuthSub::getHttpClient()</classname>.
+            This function returns an instance of <classname>Zend_Http_Client</classname>,
             with appropriate headers set so that subsequent requests your
             application submits using that Http Client are also authenticated.
         </para>
@@ -73,7 +73,7 @@
         <para>
             Below is an example of PHP code for a web application
             to acquire authentication to use the Google Calendar service
-            and create a <code>Zend_Gdata</code> client object using that authenticated
+            and create a <classname>Zend_Gdata</classname> client object using that authenticated
             Http Client.
         </para>
 
@@ -113,7 +113,7 @@ $cal = new Zend_Gdata_Calendar($client);
 
         <para>
             To terminate the authenticated status of a given token, use the
-            <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code>
+            <classname>Zend_Gdata_AuthSub::AuthSubRevokeToken()</classname>
             static function. Otherwise, the token is still valid for
             some time.
         </para>
@@ -139,7 +139,7 @@ if (isset($_GET['logout'])) {
         <para>
             The treatment of the <code>$php_self</code> variable in the
             example above is a general security guideline, it is not
-            specific to <code>Zend_Gdata</code>. You should always filter content you
+            specific to <classname>Zend_Gdata</classname>. You should always filter content you
             output to http headers.
         </para>
         <para>

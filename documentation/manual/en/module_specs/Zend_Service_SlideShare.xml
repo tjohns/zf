@@ -5,7 +5,7 @@
     <title>Introduction</title>
 
     <para>
-        The <code>Zend_Service_SlideShare</code> component is used to interact with the
+        The <classname>Zend_Service_SlideShare</classname> component is used to interact with the
         <ulink url="http://www.slideshare.net/">slideshare.net</ulink> web services for hosting
         slide shows online. With this component, you can embed slide shows which are hosted on this
         web site within a web site and even upload new slide shows to your account.
@@ -13,20 +13,20 @@
 
     <sect2 id="zend.service.slideshare.basicusage">
 
-        <title>Getting Started with <code>Zend_Service_SlideShare</code></title>
+        <title>Getting Started with <classname>Zend_Service_SlideShare</classname></title>
 
         <para>
-            In order to use the <code>Zend_Service_SlideShare</code> component you must first create an account
+            In order to use the <classname>Zend_Service_SlideShare</classname> component you must first create an account
             on the slideshare.net servers (more information can be found
             <ulink url="http://www.slideshare.net/developers/">here</ulink>) in order to receive an
             API key, username, password and shared secret value -- all of which are needed in order
-            to use the <code>Zend_Service_SlideShare</code> component.
+            to use the <classname>Zend_Service_SlideShare</classname> component.
         </para>
 
         <para>
             Once you have setup an account, you can begin using the
-            <code>Zend_Service_SlideShare</code> component by creating a new instance of the
-            <code>Zend_Service_SlideShare</code> object and providing these values as shown below:
+            <classname>Zend_Service_SlideShare</classname> component by creating a new instance of the
+            <classname>Zend_Service_SlideShare</classname> object and providing these values as shown below:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -45,8 +45,8 @@ $ss = new Zend_Service_SlideShare('APIKEY',
         <title>The SlideShow object</title>
 
         <para>
-            All slide shows in the <code>Zend_Service_SlideShare</code> component are represented
-            using the <code>Zend_Service_SlideShare_SlideShow</code> object (both when retrieving
+            All slide shows in the <classname>Zend_Service_SlideShare</classname> component are represented
+            using the <classname>Zend_Service_SlideShare_SlideShow</classname> object (both when retrieving
             and uploading new    slide shows). For your reference a pseudo-code version of this class
             is provided below.
         </para>
@@ -201,7 +201,7 @@ class Zend_Service_SlideShare_SlideShow {
         </note>
 
         <para>
-            When using the <code>Zend_Service_SlideShare</code> component, this data class will be
+            When using the <classname>Zend_Service_SlideShare</classname> component, this data class will be
             used frequently to browse or add new slide shows to or from the web service.
         </para>
 
@@ -212,11 +212,11 @@ class Zend_Service_SlideShare_SlideShow {
         <title>Retrieving a single slide show</title>
 
         <para>
-            The simplest usage of the <code>Zend_Service_SlideShare</code> component is the
+            The simplest usage of the <classname>Zend_Service_SlideShare</classname> component is the
             retrieval of a single slide show by slide show ID provided by the slideshare.net
             application and is done by calling the <code>getSlideShow()</code> method of a
-            <code>Zend_Service_SlideShare</code> object and using the resulting
-            <code>Zend_Service_SlideShare_SlideShow</code> object as shown.
+            <classname>Zend_Service_SlideShare</classname> object and using the resulting
+            <classname>Zend_Service_SlideShare_SlideShow</classname> object as shown.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -313,10 +313,10 @@ foreach($ss_user as $slideshow) {
 
     <sect2 id="zend.service.slideshare.caching">
 
-        <title><code>Zend_Service_SlideShare</code> Caching policies</title>
+        <title><classname>Zend_Service_SlideShare</classname> Caching policies</title>
 
         <para>
-            By default, <code>Zend_Service_SlideShare</code> will cache any request against the web
+            By default, <classname>Zend_Service_SlideShare</classname> will cache any request against the web
             service automatically to the filesystem (default path <code>/tmp</code>) for 12 hours.
             If you desire to change this behavior, you must provide your own
             <xref linkend="zend.cache" /> object using the <code>setCacheObject</code> method as
@@ -354,7 +354,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
         <para>
             If for whatever reason you would like to change the behavior of the HTTP client when
             making the web service request, you can do so by creating your own instance of the
-            <code>Zend_Http_Client</code> object (see <xref linkend="zend.http" />). This is useful
+            <classname>Zend_Http_Client</classname> object (see <xref linkend="zend.http" />). This is useful
             for instance when it is desirable to set the timeout for the connection to something
             other then default as shown:
         </para>

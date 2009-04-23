@@ -3,19 +3,19 @@
 <sect1 id="zend.text.figlet">
     <title>Zend_Text_Figlet</title>
     <para>
-        <code>Zend_Text_Figlet</code> is a component which enables developers to
+        <classname>Zend_Text_Figlet</classname> is a component which enables developers to
         create a so called FIGlet text. A FIGlet text is a string, which is
         represented as ASCII art. FIGlets use a special font format, called
         FLT (FigLet Font). By default, one standard font is shipped with
-        <code>Zend_Text_Figlet</code>, but you can download additional fonts at
+        <classname>Zend_Text_Figlet</classname>, but you can download additional fonts at
         <ulink url="http://www.figlet.org/fontdb.cgi">http://www.figlet.org</ulink>.
     </para>
     <note>
         <title>Compressed fonts</title>
         <para>
-            <code>Zend_Text_Figlet</code> supports gzipped fonts. This means that
+            <classname>Zend_Text_Figlet</classname> supports gzipped fonts. This means that
             you can take an <code>.flf</code> file and gzip it. To allow
-            <code>Zend_Text_Figlet</code> to recognize this, the gzipped font
+            <classname>Zend_Text_Figlet</classname> to recognize this, the gzipped font
             must have the extension <code>.gz</code>. Further, to be able to use
             gzipped fonts, you have to have enabled the GZIP extension of PHP.
         </para>
@@ -23,15 +23,15 @@
     <note>
         <title>Encoding</title>
         <para>
-            <code>Zend_Text_Figlet</code> expects your strings to be UTF-8 encoded
+            <classname>Zend_Text_Figlet</classname> expects your strings to be UTF-8 encoded
             by default. If this is not the case, you can supply the character
             encoding as second parameter to the <code>render()</code> method.
         </para>
     </note>
     <para>
         You can define multiple options for a FIGlet. When instantiating
-        <code>Zend_Text_Figlet</code>, you can supply an array or an instance of
-        <code>Zend_Config</code>.
+        <classname>Zend_Text_Figlet</classname>, you can supply an array or an instance of
+        <classname>Zend_Config</classname>.
 
         <itemizedlist>
             <listitem>
@@ -61,7 +61,7 @@
             <listitem>
                 <para>
                     <code>justification</code> - May be one of the values of
-                    <code>Zend_Text_Figlet::JUSTIFICATION_*</code>. There is
+                    <classname>Zend_Text_Figlet::JUSTIFICATION_*</classname>. There is
                     <code>JUSTIFICATION_LEFT</code>, <code>JUSTIFICATION_CENTER</code>
                     and <code>JUSTIFICATION_RIGHT</code> The default justification
                     is defined by the <code>rightToLeft</code> value.
@@ -71,8 +71,8 @@
                 <para>
                     <code>rightToLeft</code> - Defines in which direction the
                     text is written. May be either
-                    <code>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</code> or
-                    <code>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</code>. By
+                    <classname>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</classname> or
+                    <classname>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</classname>. By
                     default the setting of the font file is used. When justification
                     is not defined, a text written from right-to-left is
                     automatically right-aligned.
@@ -82,7 +82,7 @@
                 <para>
                     <code>smushMode</code> - An integer bitfield which defines,
                     how the single characters are smushed together. Can be the
-                    sum of multiple values from <code>Zend_Text_Figlet::SM_*</code>.
+                    sum of multiple values from <classname>Zend_Text_Figlet::SM_*</classname>.
                     There are the following smush modes: SM_EQUAL, SM_LOWLINE,
                     SM_HIERARCHY, SM_PAIR, SM_BIGX, SM_HARDBLANK, SM_KERN and
                     SM_SMUSH. A value of 0 doesn't disable the entire smushing,
@@ -99,7 +99,7 @@
     <example id="zend.text.figlet.example.using">
         <title>Using Zend_Text_Figlet</title>
         <para>
-            This example illustrates the basic use of <code>Zend_Text_Figlet</code>
+            This example illustrates the basic use of <classname>Zend_Text_Figlet</classname>
             to create a simple FIGlet text:
         </para>
         <programlisting role="php"><![CDATA[

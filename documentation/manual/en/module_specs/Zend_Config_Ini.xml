@@ -3,7 +3,7 @@
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
-        <code>Zend_Config_Ini</code> enables developers to store configuration data in a familiar INI format and read
+        <classname>Zend_Config_Ini</classname> enables developers to store configuration data in a familiar INI format and read
         them in the application by using nested object property syntax. The INI format is specialized to provide both
         the ability to have a hierarchy of configuration data keys and inheritance between configuration data sections.
         Configuration data hierarchies are supported by separating the keys with the dot or period character
@@ -13,10 +13,10 @@
     <note>
         <title>Parsing the INI File</title>
         <para>
-            <code>Zend_Config_Ini</code> utilizes the
+            <classname>Zend_Config_Ini</classname> utilizes the
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
             PHP function. Please review this documentation to be aware of its specific behaviors,
-            which propagate to <code>Zend_Config_Ini</code>, such as how the special values of
+            which propagate to <classname>Zend_Config_Ini</classname>, such as how the special values of
             <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>,
             and <code>null</code> are handled.
         </para>
@@ -26,7 +26,7 @@
         <para>
             By default, the key separator character is the period character (<code>.</code>). This can be changed,
             however, by changing the <code>$options</code> key <code>'nestSeparator'</code> when constructing the
-            <code>Zend_Config_Ini</code> object. For example:
+            <classname>Zend_Config_Ini</classname> object. For example:
             <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini',
@@ -37,9 +37,9 @@ $config = new Zend_Config_Ini('/path/to/config.ini',
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
-        <title>Using <code>Zend_Config_Ini</code></title>
+        <title>Using <classname>Zend_Config_Ini</classname></title>
         <para>
-            This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration data from an
+            This example illustrates a basic use of <classname>Zend_Config_Ini</classname> for loading configuration data from an
             INI file. In this example there are configuration data for both a production system and for a staging
             system. Because the staging system configuration data are very similar to those for production, the staging
             section inherits from the production section. In this case, the decision is arbitrary and could have been

@@ -4,7 +4,7 @@
     <title>Zend_Service_StrikeIron: Advanced Uses</title>
 
     <para>
-      This section describes the more advanced uses of <code>Zend_Service_StrikeIron</code>.
+      This section describes the more advanced uses of <classname>Zend_Service_StrikeIron</classname>.
     </para>
 
     <sect2 id="zend.service.strikeiron.advanced-uses.services-by-wsdl">
@@ -68,7 +68,7 @@ echo $result->listingName;
       </para>
 
       <para>
-        Every StrikeIron client (subclass of <code>Zend_Service_StrikeIron_Base</code>)
+        Every StrikeIron client (subclass of <classname>Zend_Service_StrikeIron_Base</classname>)
         contains a <code>getSoapClient()</code> method to return the underlying instance of
         <code>SOAPClient</code> used to communicate with StrikeIron.
       </para>
@@ -77,7 +77,7 @@ echo $result->listingName;
         PHP's
         <ulink url="http://www.php.net/manual/en/function.soap-soapclient-construct.php">SOAPClient</ulink>
         has a <code>trace</code> option that causes it to remember the XML exchanged during the last transaction.
-        <code>Zend_Service_StrikeIron</code> does not enable the <code>trace</code> option by default but this
+        <classname>Zend_Service_StrikeIron</classname> does not enable the <code>trace</code> option by default but this
         can easily by changed by specifying the options that will be passed to the <code>SOAPClient</code> constructor.
       </para>
 

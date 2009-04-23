@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_Reflection</code> is a drop-in extension to PHP's own <ulink
+        <classname>Zend_Reflection</classname> is a drop-in extension to PHP's own <ulink
             url="http://php.net/reflection">Reflection API</ulink>, providing
         several additional features:
     </para>
@@ -42,7 +42,7 @@
     </itemizedlist>
 
     <para>
-        In general, <code>Zend_Reflection</code> works just like the standard
+        In general, <classname>Zend_Reflection</classname> works just like the standard
         Reflection API, but provides a few additional methods for retrieving
         artifacts not defined in the Reflection API.
     </para>

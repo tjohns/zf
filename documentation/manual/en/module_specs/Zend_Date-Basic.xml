@@ -5,7 +5,7 @@
     <title>Basic Methods</title>
 
     <para>
-        The following sections show basic usage of <code>Zend_Date</code> primarily by example. For this manual, "dates"
+        The following sections show basic usage of <classname>Zend_Date</classname> primarily by example. For this manual, "dates"
         always imply a calendar date with a time, even when not explicitly mentioned, and vice-versa. The part not
         specified defaults to an internal representation of "zero". Thus, adding a date having no calendar date and a
         time value of 12 hours to another date consisting only of a calendar date would result in a date having that
@@ -51,7 +51,7 @@ print $date;
         <title>Zend_Date by Example</title>
 
         <para>
-            Reviewing basic methods of <code>Zend_Date</code> is a good place to start for those unfamiliar with date
+            Reviewing basic methods of <classname>Zend_Date</classname> is a good place to start for those unfamiliar with date
             objects in other languages or frameworks. A small example will be provided for each method below.
         </para>
 
@@ -60,7 +60,7 @@ print $date;
             <title>Output a Date</title>
 
             <para>
-                The date in a <code>Zend_Date</code> object may be obtained as a localized integer or string using the
+                The date in a <classname>Zend_Date</classname> object may be obtained as a localized integer or string using the
                 <code>get()</code> method. There are many available options, which will be explained in later sections.
             </para>
 
@@ -134,7 +134,7 @@ echo "Date via toString() = ", $date, "\n";
             <title>Comparison of Dates</title>
 
             <para>
-                All basic <code>Zend_Date</code> methods can operate on entire dates contained in the objects, or can
+                All basic <classname>Zend_Date</classname> methods can operate on entire dates contained in the objects, or can
                 operate on date parts, such as comparing the minutes value in a date to an absolute value. For example,
                 the current minutes in the current time may be compared with a specific number of minutes using
                 <code>compare()</code>, as in the example below.

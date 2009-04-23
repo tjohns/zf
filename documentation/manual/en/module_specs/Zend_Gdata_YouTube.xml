@@ -33,7 +33,7 @@
             and debugging purposes. Please visit <ulink url="http://code.google.com/apis/youtube/dashboard/">http://code.google.com/apis/youtube/dashboard/</ulink> to obtain a developer key and client ID. The example below demonstrates how to pass the developer key and client ID to the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink> service object.
         </para>
         <example id="zend.gdata.youtube.developer_key.example">
-          <title>Passing a Developer Key and ClientID to <code>Zend_Gdata_YouTube</code></title>
+          <title>Passing a Developer Key and ClientID to <classname>Zend_Gdata_YouTube</classname></title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
@@ -97,7 +97,7 @@ foreach ($videoFeed as $videoEntry) {
                 refer to the <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">
                 Reference Guide</ulink>. The available helper functions in
               <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoQuery.html">
-                <code>Zend_Gdata_YouTube_VideoQuery</code></ulink> for each of these parameters are
+                <classname>Zend_Gdata_YouTube_VideoQuery</classname></ulink> for each of these parameters are
                 described in more detail in the <ulink url="http://code.google.com/apis/youtube/developers_guide_php.html#SearchingVideos">PHP Developer's Guide</ulink>.
             </para>
         </sect3>
@@ -158,7 +158,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
                 For example, to retrieve the top rated videos for today:
             </para>
 <example id="zend.gdata.youtube.videos.standard.example-2">
-          <title>Using a <code>Zend_Gdata_YouTube_VideoQuery</code> to Retrieve Videos</title>
+          <title>Using a <classname>Zend_Gdata_YouTube_VideoQuery</classname> to Retrieve Videos</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -267,7 +267,7 @@ foreach ($commentFeed as $commentEntry) {
             a copy of the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> object:
         </para>
            <example id="zend.gdata.youtube.videos.comments.example-2">
-          <title>Retrieving a Feed of Video Comments from a <code>Zend_Gdata_YouTube_VideoEntry</code></title>
+          <title>Retrieving a Feed of Video Comments from a <classname>Zend_Gdata_YouTube_VideoEntry</classname></title>
 
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();

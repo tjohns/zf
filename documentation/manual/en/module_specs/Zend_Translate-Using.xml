@@ -54,11 +54,11 @@ print $translate->_("Here is line two") . "\n";
 
     <para>
         Now let's take a deeper look into what has been done and how to
-        integrate <code>Zend_Translate</code> into your own code.
+        integrate <classname>Zend_Translate</classname> into your own code.
     </para>
 
     <para>
-        Create a new <code>Zend_Translate</code> object and define the base adapter:
+        Create a new <classname>Zend_Translate</classname> object and define the base adapter:
 
         <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate
@@ -133,10 +133,10 @@ print $translate->_(2) . "\n";
     <para>
         Also you will have problems if some strings are not translated.
         You must always keep in mind how translation works.
-        First <code>Zend_Translate</code> checks whether the specified language has a translation
+        First <classname>Zend_Translate</classname> checks whether the specified language has a translation
         for the given message ID or string.
         If no translation string has been found it refers to the next lower
-        level language as defined within <code>Zend_Locale</code>.
+        level language as defined within <classname>Zend_Locale</classname>.
         So "<emphasis role="strong">de_AT</emphasis>" becomes
         "<emphasis role="strong">de</emphasis>" only.
         If there is no translation found for
@@ -144,7 +144,7 @@ print $translate->_(2) . "\n";
         then the original message is returned.
         This way you always have an output, even in case the message translation
         does not exist in your message storage.
-        <code>Zend_Translate</code> never throws an error or exception when translating
+        <classname>Zend_Translate</classname> never throws an error or exception when translating
         strings.
     </para>
 
@@ -161,7 +161,7 @@ print $translate->_(2) . "\n";
 
         <para>
             You have to decide where to store your translation source files.
-            Using <code>Zend_Translate</code> you are not restricted in any way.
+            Using <classname>Zend_Translate</classname> you are not restricted in any way.
             The following structures are preferable:
         </para>
 
@@ -297,7 +297,7 @@ print $translate->_(2) . "\n";
 
         <para>
             Single structured and language structured source files are most
-            usable for <code>Zend_Translate</code>.
+            usable for <classname>Zend_Translate</classname>.
         </para>
 
         <para>
@@ -337,7 +337,7 @@ $translate->addTranslation($deutsch, 'de');
 
         <para>
             Since release 1.5 it is also supported to have arrays included within an external file.
-            You just have to provide the filename and <code>Zend_Translate</code> will automatically
+            You just have to provide the filename and <classname>Zend_Translate</classname> will automatically
             include it and look for the array. See the following example for details:
         </para>
 
@@ -692,7 +692,7 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
                         <entry>log</entry>
                         <entry>all</entry>
                         <entry>
-                            An instance of <code>Zend_Log</code> where untranslated messages and notices will be
+                            An instance of <classname>Zend_Log</classname> where untranslated messages and notices will be
                             written to
                         </entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
@@ -719,8 +719,8 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
                         <entry>all</entry>
                         <entry>
                             If set to null, no scanning of the directory structure will be done.
-                            If set to <code>Zend_Translate::LOCALE_DIRECTORY</code> the locale will be detected within the
-                            directory. If set to <code>Zend_Translate::LOCALE_FILENAME</code> the locale will be detected
+                            If set to <classname>Zend_Translate::LOCALE_DIRECTORY</classname> the locale will be detected within the
+                            directory. If set to <classname>Zend_Translate::LOCALE_FILENAME</classname> the locale will be detected
                             within the filename. See <xref linkend="zend.translate.using.detection" />
                             for details
                         </entry>
@@ -774,7 +774,7 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
 
         <para>
             The <code>getLocale()</code> method can be used to get the currently set language. It can either hold
-            an instance of <code>Zend_Locale</code> or the identifier of a locale.
+            an instance of <classname>Zend_Locale</classname> or the identifier of a locale.
         </para>
 
         <para>
@@ -826,7 +826,7 @@ if ($translate->isAvailable("fr")) {
 
             <para>
                 Note that as long as you only add new translation sources with the <code>addTranslation()</code>
-                method <code>Zend_Translate</code> will automatically set the best fitting language for your
+                method <classname>Zend_Translate</classname> will automatically set the best fitting language for your
                 environment when you use one of the automatic locales which are '<code>auto</code>' or '<code>browser</code>'. So
                 normally you will not need to call <code>setLocale()</code>. This should only be used in
                 conjunction with automatic source detection.
@@ -889,12 +889,12 @@ $translate->setLocale('it_IT');
             <para>
                 If you want to use it again, you can set the language
                 <emphasis role="strong">auto</emphasis> with <code>setLocale()</code> which will reactivate
-                the automatic detection for <code>Zend_Translate</code>.
+                the automatic detection for <classname>Zend_Translate</classname>.
             </para>
 
             <para>
-                Since Zend Framework 1.7.0 <code>Zend_Translate</code> also recognises an application
-                wide locale. You can simply set a <code>Zend_Locale</code> instance to the registry like shown
+                Since Zend Framework 1.7.0 <classname>Zend_Translate</classname> also recognises an application
+                wide locale. You can simply set a <classname>Zend_Locale</classname> instance to the registry like shown
                 below. With this notation you can forget about setting the locale manually with each instance
                 when you want to use the same locale multiple times.
             </para>
@@ -928,8 +928,8 @@ $translate->getLocale();
         <title>Automatic source detection</title>
 
         <para>
-            <code>Zend_Translate</code> can detect translation sources automatically. So you don't have
-            to declare each source file manually. You can let <code>Zend_Translate</code> do this job and
+            <classname>Zend_Translate</classname> can detect translation sources automatically. So you don't have
+            to declare each source file manually. You can let <classname>Zend_Translate</classname> do this job and
             scan the complete directory structure for source files.
         </para>
 
@@ -960,8 +960,8 @@ $translate = new Zend_Translate('tmx', '/language');
         </example>
 
         <para>
-            So <code>Zend_Translate</code> does not only search the given directory, but also all subdirectories for
-            translation source files. This makes the usage quite simple. But <code>Zend_Translate</code> will ignore all
+            So <classname>Zend_Translate</classname> does not only search the given directory, but also all subdirectories for
+            translation source files. This makes the usage quite simple. But <classname>Zend_Translate</classname> will ignore all
             files which are not sources or which produce failures while reading the translation data. So you
             have to make sure that all of your translation sources are correct and readable because you will
             not get any failure if a file is bogus or can not be read.
@@ -970,7 +970,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <note>
             <para>
                 Depending on how deep your directory structure is and how much files are within this structure
-                it can take a long time for <code>Zend_Translate</code> to complete.
+                it can take a long time for <classname>Zend_Translate</classname> to complete.
             </para>
         </note>
 
@@ -992,7 +992,7 @@ $translate = new Zend_Translate('tmx', '/language');
             </para>
 
             <para>
-                <code>Zend_Translate</code> needs the '<code>scan</code>' option to know that it should search the names of all
+                <classname>Zend_Translate</classname> needs the '<code>scan</code>' option to know that it should search the names of all
                 directories for languages. See the following example for details:
             </para>
 
@@ -1110,7 +1110,7 @@ $translate = new Zend_Translate(
                 <title>Filename tokens</title>
 
                 <para>
-                    <code>Zend_Translate</code> is also capable of detecting the language if it is included within the
+                    <classname>Zend_Translate</classname> is also capable of detecting the language if it is included within the
                     filename. But if you go this way you will have to separate the language with a token.
                     There are three supported tokens which can be used: a dot '.', an underscore '_', or
                     a hyphen '-'.
@@ -1211,12 +1211,12 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <para>
             When you have a bigger site or you are creating the translation files manually, you often have
             the problem that some messages are not translated. But there is an easy solution for you when you
-            are using <code>Zend_Translate</code>.
+            are using <classname>Zend_Translate</classname>.
         </para>
 
         <para>
             You have to follow two or three simple steps. First, you have to create an instance of
-            <code>Zend_Log</code>. Then you have to attach this instance to <code>Zend_Translate</code>.
+            <classname>Zend_Log</classname>. Then you have to attach this instance to <classname>Zend_Translate</classname>.
             See the following example:
         </para>
 

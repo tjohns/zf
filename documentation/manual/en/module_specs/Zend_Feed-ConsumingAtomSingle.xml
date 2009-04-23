@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
+        If you read a single entry, you will still have a <classname>Zend_Feed_Atom</classname> object, but it will
         automatically create an "anonymous" feed to contain the entry.
     </para>
 

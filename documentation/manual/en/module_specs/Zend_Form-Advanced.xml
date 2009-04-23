@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.advanced">
-    <title>Advanced <code>Zend_Form</code> Usage</title>
+    <title>Advanced <classname>Zend_Form</classname> Usage</title>
 
     <para>
-        <code>Zend_Form</code> has a wealth of functionality, much of it aimed
+        <classname>Zend_Form</classname> has a wealth of functionality, much of it aimed
         at experienced developers. This chapter aims to document some of this
         functionality with examples and use cases.
     </para>
@@ -151,7 +151,7 @@
         </para>
 
         <para>
-            <code>Zend_Form</code> attempts to automate this process with its
+            <classname>Zend_Form</classname> attempts to automate this process with its
             <link linkend="zend.form.forms.subforms">sub forms</link>. By
             default, sub forms render using the array notation as shown in the
             previous HTML form listing, complete with ids. The array name is
@@ -159,7 +159,7 @@
             contained in the sub form. Sub forms may be nested arbitrarily deep,
             and this will create nested arrays to reflect the structure.
             Additionally, the various validation routines in
-            <code>Zend_Form</code> honor the array structure, ensuring that your
+            <classname>Zend_Form</classname> honor the array structure, ensuring that your
             form validates correctly, no matter how arbitrarily deep you nest
             your sub forms. You need do nothing to benefit from this; this
             behaviour is enabled by default.
@@ -174,7 +174,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Form::setIsArray($flag)</code>: By setting the
+                    <classname>Zend_Form::setIsArray($flag)</classname>: By setting the
                     flag true, you can indicate that an entire form should be
                     treated as an array. By default, the form's name will be
                     used as the name of the array, unless
@@ -192,7 +192,7 @@
             </listitem>
 
             <listitem><para>
-                    <code>Zend_Form::setElementsBelongTo($array)</code>:
+                    <classname>Zend_Form::setElementsBelongTo($array)</classname>:
                     Using this method, you can specify the name of an array to
                     which all elements of the form belong. You can determine the
                     name using the <code>getElementsBelongTo()</code> accessor.
@@ -202,7 +202,7 @@
         <para>
             Additionally, on the element level, you can specify individual
             elements may belong to particular arrays using
-            <code>Zend_Form_Element::setBelongsTo()</code> method.
+            <classname>Zend_Form_Element::setBelongsTo()</classname> method.
             To discover what this value is -- whether set explicitly or
             implicitly via the form -- you may use the
             <code>getBelongsTo()</code> accessor.
@@ -214,7 +214,7 @@
 
         <para>
             Currently, Multi-Page forms are not officially supported in
-            <code>Zend_Form</code>; however, most support for implementing them
+            <classname>Zend_Form</classname>; however, most support for implementing them
             is available and can be utilized with a little extra tooling.
         </para>
 
@@ -439,7 +439,7 @@ class My_Form_Registration extends Zend_Form
                 when to quit. Second, we need some logic to determine what form
                 segments have already been submitted, and what sub form to
                 display based on that information. We'll use
-                <code>Zend_Session_Namespace</code> to persist data, which will
+                <classname>Zend_Session_Namespace</classname> to persist data, which will
                 also help us answer the question of which form to submit.
             </para>
 

@@ -7,20 +7,20 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Service_Twitter</code> provides a client for the <ulink
+            <classname>Zend_Service_Twitter</classname> provides a client for the <ulink
                 url="http://apiwiki.twitter.com/REST+API+Documentation">Twitter REST API</ulink>.
-            <code>Zend_Service_Twitter</code> will allow you to query the public timeline and if you provide a username
+            <classname>Zend_Service_Twitter</classname> will allow you to query the public timeline and if you provide a username
             and password for Twitter it will allow you to get and update your status, reply to friends,
             direct message friends, mark tweets as favorite and much more.
         </para>
 
         <para>
-            <code>Zend_Service_Twitter</code> is implementing a REST service and  all methods return an instance of
-            <code>Zend_Rest_Client_Result</code>.
+            <classname>Zend_Service_Twitter</classname> is implementing a REST service and  all methods return an instance of
+            <classname>Zend_Rest_Client_Result</classname>.
         </para>
 
         <para>
-            <code>Zend_Service_Twitter</code> is broken up into subsections so you can easily identify which type of call
+            <classname>Zend_Service_Twitter</classname> is broken up into subsections so you can easily identify which type of call
             is being requested.
         </para>
 
@@ -71,7 +71,7 @@
         <title>Authentication</title>
 
         <para>
-            With the exception of fetching the public timeline <code>Zend_Service_Twitter</code> requires
+            With the exception of fetching the public timeline <classname>Zend_Service_Twitter</classname> requires
             authentication to work. Twitter currently uses <ulink
              url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">HTTP Basic Authentication</ulink>.
             You can pass in your username or registered email along with your password for twitter to login.

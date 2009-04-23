@@ -11,24 +11,24 @@
         <title>Zend_Captcha_Word</title>
 
         <para>
-            <code>Zend_Captcha_Word</code> is an abstract adapter that serves as the base class
+            <classname>Zend_Captcha_Word</classname> is an abstract adapter that serves as the base class
             for most other CAPTCHA adapters. It provides mutators for
             specifying word length, session TTL, the session namespace object
             to use, and the session namespace class to use for persistence if
-            you do not wish to use <code>Zend_Session_Namespace</code>. <code>Zend_Captcha_Word</code>
+            you do not wish to use <classname>Zend_Session_Namespace</classname>. <classname>Zend_Captcha_Word</classname>
             encapsulates validation logic.
         </para>
 
         <para>
             By default, the word length is 8 characters, the session timeout is
-            5 minutes, and <code>Zend_Session_Namespace</code> is used for persistence
+            5 minutes, and <classname>Zend_Session_Namespace</classname> is used for persistence
             (using the namespace "Zend_Form_Captcha_&lt;captcha ID&gt;").
         </para>
 
         <para>
             In addition to the methods required by the
-            <code>Zend_Captcha_Adapter</code> interface,
-            <code>Zend_Captcha_Word</code> exposes the following methods:
+            <classname>Zend_Captcha_Adapter</classname> interface,
+            <classname>Zend_Captcha_Word</classname> exposes the following methods:
         </para>
 
         <itemizedlist>
@@ -48,7 +48,7 @@
             <listitem><para>
                 <code>setSessionClass($class)</code> and
                 <code>getSessionClass()</code> allow you to specify an
-                alternate <code>Zend_Session_Namespace</code> implementation to
+                alternate <classname>Zend_Session_Namespace</classname> implementation to
                 use to persist the CAPTCHA token and to retrieve the
                 current value.
             </para></listitem>
@@ -75,7 +75,7 @@
         <para>
             All word CAPTCHAs allow you to pass an array of options to the
             constructor, or, alternately, pass them to
-            <code>setOptions()</code>. You can also pass a <code>Zend_Config</code>
+            <code>setOptions()</code>. You can also pass a <classname>Zend_Config</classname>
             object to <code>setConfig()</code>. By default, the
             <code>wordLen</code>, <code>timeout</code>, and
             <code>sessionClass</code> keys may all be used. Each concrete
@@ -85,28 +85,28 @@
 
         <note>
         <para>
-            <code>Zend_Captcha_Word</code> is an abstract class and may not be instantiated directly.
+            <classname>Zend_Captcha_Word</classname> is an abstract class and may not be instantiated directly.
         </para>
         </note>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
-        <title><code>Zend_Captcha_Dumb</code></title>
+        <title><classname>Zend_Captcha_Dumb</classname></title>
 
         <para>
-            The <code>Zend_Captch_Dumb</code> adapter is mostly self-descriptive. It provides a random
+            The <classname>Zend_Captch_Dumb</classname> adapter is mostly self-descriptive. It provides a random
             string that must be typed in reverse to validate. As such, it's
             not a good CAPTCHA solution and should only be used for
-            testing. It extends <code>Zend_Captcha_Word</code>.
+            testing. It extends <classname>Zend_Captcha_Word</classname>.
         </para>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.figlet">
-        <title><code>Zend_Captcha_Figlet</code></title>
+        <title><classname>Zend_Captcha_Figlet</classname></title>
 
         <para>
-            The <code>Zend_Captcha_Figlet</code> adapter utilizes <link
-                linkend="zend.text.figlet"><code>Zend_Text_Figlet</code></link> to present a
+            The <classname>Zend_Captcha_Figlet</classname> adapter utilizes <link
+                linkend="zend.text.figlet"><classname>Zend_Text_Figlet</classname></link> to present a
                 figlet to the user.
         </para>
 
@@ -131,8 +131,8 @@
         </para>
 
         <para>
-            <code>Zend_Captcha_Image</code> extends
-            <code>Zend_Captcha_Word</code>, and additionally exposes the
+            <classname>Zend_Captcha_Image</classname> extends
+            <classname>Zend_Captcha_Word</classname>, and additionally exposes the
             following methods:
         </para>
 
@@ -211,7 +211,7 @@
         <title>Zend_Captcha_ReCaptcha</title>
 
         <para>
-            The <code>Zend_Captcha_ReCaptcha</code> adapter uses <link
+            The <classname>Zend_Captcha_ReCaptcha</classname> adapter uses <link
                 linkend="zend.service.recaptcha">Zend_Service_ReCaptcha</link>
             to generate and validate CAPTCHAs. It exposes the following
             methods:

@@ -3,7 +3,7 @@
 <sect1 id="zend.openid.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_OpenId</code> is a Zend Framework component that provides a
+        <classname>Zend_OpenId</classname> is a Zend Framework component that provides a
         simple API for building OpenID-enabled sites and identity providers.
     </para>
 
@@ -32,7 +32,7 @@
     <sect2 id="zend.openid.introduction.how">
         <title>How Does it Work?</title>
         <para>
-            The purpose of the <code>Zend_OpenId</code> component is to
+            The purpose of the <classname>Zend_OpenId</classname> component is to
             implement the OpenID authentication protocol as described in the following
             sequence diagram:
         </para>
@@ -110,9 +110,9 @@
     <sect2 id="zend.openid.introduction.structure">
         <title>Zend_OpenId Structure</title>
         <para>
-            <code>Zend_OpenId</code> consists of two sub-packages. The first one
-            is <code>Zend_OpenId_Consumer</code> for developing OpenID-enabled sites,
-            and the second is <code>Zend_OpenId_Provider</code> for developing OpenID
+            <classname>Zend_OpenId</classname> consists of two sub-packages. The first one
+            is <classname>Zend_OpenId_Consumer</classname> for developing OpenID-enabled sites,
+            and the second is <classname>Zend_OpenId_Provider</classname> for developing OpenID
             servers. They are completely independent of each other and may be used
             separately.
         </para>
@@ -120,15 +120,15 @@
         <para>
             The only common code used by these sub-packages are the OpenID Simple
             Registration Extension implemented by
-            <code>Zend_OpenId_Extension_Sreg</code> class and a set of utility
-            functions implemented by the <code>Zend_OpenId</code> class.
+            <classname>Zend_OpenId_Extension_Sreg</classname> class and a set of utility
+            functions implemented by the <classname>Zend_OpenId</classname> class.
         </para>
 
         <note>
             <para>
-                <code>Zend_OpenId</code> takes advantage of the <ulink url="http://php.net/gmp">GMP extension</ulink>,
+                <classname>Zend_OpenId</classname> takes advantage of the <ulink url="http://php.net/gmp">GMP extension</ulink>,
                 where available. Consider enabling the GMP extension for enhanced performance when using
-                <code>Zend_OpenId</code>.
+                <classname>Zend_OpenId</classname>.
             </para>
         </note>
     </sect2>
@@ -136,7 +136,7 @@
     <sect2 id="zend.openid.introduction.standards">
         <title>Supported OpenID Standards</title>
         <para>
-            The <code>Zend_OpenId</code> component supports the following
+            The <classname>Zend_OpenId</classname> component supports the following
             standards:
         </para>
 

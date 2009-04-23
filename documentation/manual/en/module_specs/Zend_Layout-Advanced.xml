@@ -4,7 +4,7 @@
     <title>Zend_Layout Advanced Usage</title>
 
     <para>
-        <code>Zend_Layout</code> has a number of use cases for the advanced
+        <classname>Zend_Layout</classname> has a number of use cases for the advanced
         developer who wishes to adapt it for different view implementations,
         file system layouts, and more.
     </para>
@@ -16,27 +16,27 @@
     <itemizedlist>
         <listitem><para>
                 <emphasis>Custom view objects.</emphasis>
-                <code>Zend_Layout</code> allows you to utilize any class that
-                implements <code>Zend_View_Interface</code>.
+                <classname>Zend_Layout</classname> allows you to utilize any class that
+                implements <classname>Zend_View_Interface</classname>.
         </para></listitem>
 
         <listitem><para>
                 <emphasis>Custom front controller plugins.</emphasis>
-                <code>Zend_Layout</code> ships with a standard front controller
+                <classname>Zend_Layout</classname> ships with a standard front controller
                 plugin that automates rendering of layouts prior to returning
                 the response. You can substitute your own plugin.
         </para></listitem>
 
         <listitem><para>
                 <emphasis>Custom action helpers.</emphasis>
-                <code>Zend_Layout</code> ships with a standard action helper
+                <classname>Zend_Layout</classname> ships with a standard action helper
                 that should be suitable for most needs as it is a dumb proxy
                 to the layout object itself.
         </para></listitem>
 
         <listitem><para>
                 <emphasis>Custom layout script path resolution</emphasis>.
-                <code>Zend_Layout</code> allows you to use your own <link
+                <classname>Zend_Layout</classname> allows you to use your own <link
                     linkend="zend.filter.inflector">inflector</link> for layout
                 script path resolution, or simply to modify the attached
                 inflector to specify your own inflection rules.
@@ -47,9 +47,9 @@
         <title>Custom View Objects</title>
 
         <para>
-            <code>Zend_Layout</code> allows you to use any class implementing
-            <code>Zend_View_Interface</code> or extending
-            <code>Zend_View_Abstract</code> for rendering your layout script.
+            <classname>Zend_Layout</classname> allows you to use any class implementing
+            <classname>Zend_View_Interface</classname> or extending
+            <classname>Zend_View_Abstract</classname> for rendering your layout script.
             Simply pass in your custom view object as a parameter to the
             constructor/<code>startMvc()</code>, or set it using the
             <code>setView()</code> accessor:
@@ -65,21 +65,21 @@ $layout->setView($view);
             <title>Not all Zend_View implementations are equal</title>
 
             <para>
-                While <code>Zend_Layout</code> allows you to use any class
-                implementing <code>Zend_View_Interface</code>, you may run into
+                While <classname>Zend_Layout</classname> allows you to use any class
+                implementing <classname>Zend_View_Interface</classname>, you may run into
                 issues if they can not utilize the various
-                <code>Zend_View</code> helpers, particularly the layout and
+                <classname>Zend_View</classname> helpers, particularly the layout and
                 <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>
-                helpers. This is because <code>Zend_Layout</code> makes
+                helpers. This is because <classname>Zend_Layout</classname> makes
                 variables set in the object available via itself and
                 <link linkend="zend.view.helpers.initial.placeholder">placeholders</link>.
             </para>
 
             <para>
-                If you need to use a custom <code>Zend_View</code>
+                If you need to use a custom <classname>Zend_View</classname>
                 implementation that does not support these helpers, you will
                 need to find a way to get the layout variables to the view. This
-                can be done by either extending the <code>Zend_Layout</code>
+                can be done by either extending the <classname>Zend_Layout</classname>
                 object and altering the <code>render()</code> method to pass
                 variables to the view, or creating your own plugin class that
                 passes them prior to rendering the layout.
@@ -104,7 +104,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>Custom Front Controller Plugins</title>
 
         <para>
-            When used with the MVC components, <code>Zend_Layout</code>
+            When used with the MVC components, <classname>Zend_Layout</classname>
             registers a front controller plugin that renders the layout as the
             last action prior to exiting the dispatch loop. In most cases, the
             default plugin will be suitable, but should you desire to write
@@ -115,14 +115,14 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             Any plugin class you write for this purpose will need to extend
-            <code>Zend_Controller_Plugin_Abstract</code>, and should accept a
+            <classname>Zend_Controller_Plugin_Abstract</classname>, and should accept a
             layout object instance as an argument to the constructor. Otherwise,
             the details of your implementation are up to you.
         </para>
 
         <para>
             The default plugin class used is
-            <code>Zend_Layout_Controller_Plugin_Layout</code>.
+            <classname>Zend_Layout_Controller_Plugin_Layout</classname>.
         </para>
     </sect2>
 
@@ -130,10 +130,10 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>Custom Action Helpers</title>
 
         <para>
-            When used with the MVC components, <code>Zend_Layout</code>
+            When used with the MVC components, <classname>Zend_Layout</classname>
             registers an action controller helper with the helper broker. The
             default helper,
-            <code>Zend_Layout_Controller_Action_Helper_Layout</code>, acts as a
+            <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>, acts as a
             dumb proxy to the layout object instance itself, and should be
             suitable for most use cases.
         </para>
@@ -141,7 +141,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <para>
             Should you feel the need to write custom functionality, simply write
             an action helper class extending
-            <code>Zend_Controller_Action_Helper_Abstract</code> and pass the
+            <classname>Zend_Controller_Action_Helper_Abstract</classname> and pass the
             class name as the <code>helperClass</code> option to the
             <code>startMvc()</code> method.  Details of the implementation are
             up to you.
@@ -152,7 +152,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>Custom Layout Script Path Resolution: Using the Inflector</title>
 
         <para>
-            <code>Zend_Layout</code> uses <code>Zend_Filter_Inflector</code> to
+            <classname>Zend_Layout</classname> uses <classname>Zend_Filter_Inflector</classname> to
             establish a filter chain for translating a layout name to a layout
             script path. By default, it uses the rules 'Word_CamelCaseToDash'
             followed by 'StringToLower', and the suffix 'phtml' to transform the
@@ -171,18 +171,18 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             You have three options for modifying inflection: modify the
-            inflection target and/or view suffix via <code>Zend_Layout</code>
+            inflection target and/or view suffix via <classname>Zend_Layout</classname>
             accessors, modify the inflector rules and target of the inflector
-            associated with the <code>Zend_Layout</code> instance, or create
+            associated with the <classname>Zend_Layout</classname> instance, or create
             your own inflector instance and pass it to
-            <code>Zend_Layout::setInflector()</code>.
+            <classname>Zend_Layout::setInflector()</classname>.
         </para>
 
         <example id="zend.layout.advanced.inflector.accessors">
             <title>Using Zend_Layout accessors to modify the inflector</title>
 
             <para>
-                The default <code>Zend_Layout</code> inflector uses static
+                The default <classname>Zend_Layout</classname> inflector uses static
                 references for the target and view script suffix, and
                 has accessors for setting these values.
             </para>
@@ -202,7 +202,7 @@ $layout->setViewSuffix('php');
 
             <para>
                 Inflectors have a target and one or more rules. The default
-                target used with <code>Zend_Layout</code> is ':script.:suffix';
+                target used with <classname>Zend_Layout</classname> is ':script.:suffix';
                 ':script' is passed the registered layout name, while ':suffix'
                 is a static rule of the inflector.
             </para>
@@ -230,7 +230,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
                 In most cases, modifying the existing inflector will be enough.
                 However, you may have an inflector you wish to use in several
                 places, with different objects of different types.
-                <code>Zend_Layout</code> supports this.
+                <classname>Zend_Layout</classname> supports this.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -249,7 +249,7 @@ $layout->setInflector($inflector);
 
             <para>
                 Inflection can be disabled and enabled using accessors on the
-                <code>Zend_Layout</code> object. This can be useful if you want
+                <classname>Zend_Layout</classname> object. This can be useful if you want
                 to specify an absolute path for a layout view script, or know
                 that the mechanism you will be using for specifying the layout
                 script does not need inflection. Simply use the

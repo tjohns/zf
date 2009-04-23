@@ -4,15 +4,15 @@
     <title>Zend_Cache Frontends</title>
 
     <sect2 id="zend.cache.frontends.core">
-        <title><code>Zend_Cache_Core</code></title>
+        <title><classname>Zend_Cache_Core</classname></title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Core</code> is a special frontend because it is the core
+                <classname>Zend_Cache_Core</classname> is a special frontend because it is the core
                 of the module. It is a generic cache frontend and is extended by other classes.
             </para>
             <note><para>
-                All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
+                All frontends inherit from <classname>Zend_Cache_Core</classname> so that its methods and options
                 (described below) would also be available in other frontends, therefore they won't be
                 documented there.
             </para></note>
@@ -69,7 +69,7 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                if set to true, logging through <code>Zend_Log</code> is activated
+                                if set to true, logging through <classname>Zend_Log</classname> is activated
                                 (but the system is slower)
                               </entry>
                           </row>
@@ -232,11 +232,11 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title><code>Zend_Cache_Frontend_Output</code></title>
+        <title><classname>Zend_Cache_Frontend_Output</classname></title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
+                <classname>Zend_Cache_Frontend_Output</classname> is an output-capturing frontend. It utilizes
                 output buffering in PHP to capture everything between its <code>start()</code> and
                 <code>end()</code> methods.
             </para>
@@ -245,7 +245,7 @@ if (!($cache->test($id))) {
             <title>Available Options</title>
             <para>
                 This frontend doesn't have any specific options other than those of
-                <code>Zend_Cache_Core</code>.
+                <classname>Zend_Cache_Core</classname>.
             </para>
         </sect3>
 
@@ -277,11 +277,11 @@ echo 'This is never cached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title><code>Zend_Cache_Frontend_Function</code></title>
+        <title><classname>Zend_Cache_Frontend_Function</classname></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
+                <classname>Zend_Cache_Frontend_Function</classname> caches the results of function calls. It has
                 a single main method named <code>call()</code> which takes a function name and parameters
                 for the call in an array.
             </para>
@@ -345,7 +345,7 @@ $cache->call('veryExpensiveFunc', $params);
 ]]>
             </programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
+                <classname>Zend_Cache_Frontend_Function</classname> is smart enough to cache both the
                 return value of the function and its internal output.
             </para>
             <note><para>
@@ -358,11 +358,11 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title><code>Zend_Cache_Frontend_Class</code></title>
+        <title><classname>Zend_Cache_Frontend_Class</classname></title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Frontend_Class</code> is different from <code>Zend_Cache_Frontend_Function</code>
+                <classname>Zend_Cache_Frontend_Class</classname> is different from <classname>Zend_Cache_Frontend_Function</classname>
                 because it allows caching of object and static method calls.
             </para>
         </sect3>
@@ -474,19 +474,19 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title><code>Zend_Cache_Frontend_File</code></title>
+        <title><classname>Zend_Cache_Frontend_File</classname></title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> is a frontend driven by the
+                <classname>Zend_Cache_Frontend_File</classname> is a frontend driven by the
                 modification time of a "master file". It's really interesting for examples
                 in configuration or templates issues. It's also possible to use multiple
                 master files.
             </para>
             <para>
                 For instance, you have an XML configuration file which is parsed by a function
-                which returns a "config object" (like with <code>Zend_Config</code>). With
-                <code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
+                which returns a "config object" (like with <classname>Zend_Config</classname>). With
+                <classname>Zend_Cache_Frontend_File</classname>, you can store the "config object" into
                 cache (to avoid the parsing of the XML config file at each time) but with a
                 sort of strong dependency on the "master file". So, if the XML config file
                 is modified, the cache is immediately invalidated.
@@ -525,9 +525,9 @@ $result = $cache->foobar2('1', '2');
                          <row>
                               <entry><code>master_files_mode</code></entry>
                               <entry><code>string</code></entry>
-                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry><classname>Zend_Cache_Frontend_File::MODE_OR</classname></entry>
                               <entry>
-                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> or <code>Zend_Cache_Frontend_File::MODE_OR</code> ;
+                                  <classname>Zend_Cache_Frontend_File::MODE_AND</classname> or <classname>Zend_Cache_Frontend_File::MODE_OR</classname> ;
                                   if <code>MODE_AND</code>, then all master files have to be touched to get a cache invalidation
                                   if <code>MODE_OR</code>, then a single touched master file is enough to get a cache invalidation
                               </entry>
@@ -547,7 +547,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.examples">
             <title>Examples</title>
             <para>
-                Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
+                Use of this frontend is the same than of <classname>Zend_Cache_Core</classname>. There
                 is no need of a specific example - the only thing to do is to
                 define the <code>master_file</code> when using the factory.
             </para>
@@ -555,12 +555,12 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title><code>Zend_Cache_Frontend_Page</code></title>
+        <title><classname>Zend_Cache_Frontend_Page</classname></title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>Introduction</title>
             <para>
-                <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
-                but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
+                <classname>Zend_Cache_Frontend_Page</classname> is like <classname>Zend_Cache_Frontend_Output</classname>
+                but designed for a complete page. It's impossible to use <classname>Zend_Cache_Frontend_Page</classname>
                 for caching only a single block.
             </para>
             <para>
@@ -737,7 +737,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.examples">
             <title>Examples</title>
             <para>
-                Use of <code>Zend_Cache_Frontend_Page</code> is really trivial:
+                Use of <classname>Zend_Cache_Frontend_Page</classname> is really trivial:
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // require, configuration and factory
@@ -751,7 +751,7 @@ $cache->start();
             </programlisting>
             <para>
                 a more complex example which shows a way to get a centralized cache management in a bootstrap file
-                (for using with <code>Zend_Controller</code> for example)
+                (for using with <classname>Zend_Controller</classname> for example)
             </para>
             <programlisting role="php"><![CDATA[
 /*

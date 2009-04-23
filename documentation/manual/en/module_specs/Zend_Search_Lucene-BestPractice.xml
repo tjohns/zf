@@ -7,7 +7,7 @@
         <title>Field names</title>
 
         <para>
-            There are no limitations for field names in <code>Zend_Search_Lucene</code>.
+            There are no limitations for field names in <classname>Zend_Search_Lucene</classname>.
         </para>
 
         <para>
@@ -16,7 +16,7 @@
         </para>
 
         <para>
-            The <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> and <code>score</code> properties always refer
+            The <classname>Zend_Search_Lucene_Search_QueryHit</classname> <code>id</code> and <code>score</code> properties always refer
             to internal Lucene document id and hit <link linkend="zend.search.lucene.searching.results-scoring">score</link>.
             If the indexed document has the same stored fields, you have to use the <code>getDocument()</code> method to access them:
 
@@ -116,8 +116,8 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    All these options are <code>Zend_Search_Lucene</code> object properties- not index properties. They affect only current
-                    <code>Zend_Search_Lucene</code> object behavior and may vary for different scripts.
+                    All these options are <classname>Zend_Search_Lucene</classname> object properties- not index properties. They affect only current
+                    <classname>Zend_Search_Lucene</classname> object behavior and may vary for different scripts.
                 </para>
             </note>
         </para>
@@ -152,7 +152,7 @@ $index->optimize();
 
         <para>
             Small segments generally decrease index quality. Many small segments may also trigger
-            the "Too many open files" error determined by OS limitations <footnote><para><code>Zend_Search_Lucene</code> keeps each segment file opened
+            the "Too many open files" error determined by OS limitations <footnote><para><classname>Zend_Search_Lucene</classname> keeps each segment file opened
             to improve search performance.</para></footnote>.
         </para>
 
@@ -180,7 +180,7 @@ $index->optimize();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
+            <classname>Zend_Search_Lucene</classname> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
             into the next group. If yes, then merging is performed.
         </para>
 
@@ -213,7 +213,7 @@ $index->optimize();
         <title>Index during Shut Down</title>
 
         <para>
-            The <code>Zend_Search_Lucene</code> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
+            The <classname>Zend_Search_Lucene</classname> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
         </para>
 
         <para>
@@ -275,7 +275,7 @@ $index->commit();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
+            <classname>Zend_Search_Lucene</classname> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
         </para>
 
         <para>
@@ -321,7 +321,7 @@ foreach ($docIds as $id) {
         <title>Memory Usage</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> is a relatively memory-intensive module.
+            <classname>Zend_Search_Lucene</classname> is a relatively memory-intensive module.
         </para>
 
         <para>
@@ -334,7 +334,7 @@ foreach ($docIds as $id) {
 
         <para>
             The terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
-            <footnote><para>The Lucene file format allows you to configure this number, but <code>Zend_Search_Lucene</code> doesn't expose this
+            <footnote><para>The Lucene file format allows you to configure this number, but <classname>Zend_Search_Lucene</classname> doesn't expose this
             in its API. Nevertheless you still have the ability to configure this value if the index is prepared with another
             Lucene implementation.</para></footnote> term of the full dictionary.
         </para>
@@ -364,7 +364,7 @@ foreach ($docIds as $id) {
         <title>Encoding</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> works with UTF-8 strings internally. So all strings returned by <code>Zend_Search_Lucene</code> are UTF-8 encoded.
+            <classname>Zend_Search_Lucene</classname> works with UTF-8 strings internally. So all strings returned by <classname>Zend_Search_Lucene</classname> are UTF-8 encoded.
         </para>
 
         <para>
@@ -376,7 +376,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> offers a wide range of encoding possibilities for indexed documents and parsed queries.
+            <classname>Zend_Search_Lucene</classname> offers a wide range of encoding possibilities for indexed documents and parsed queries.
         </para>
 
         <para>
@@ -450,7 +450,7 @@ $hits = $index->find($queryStr);
         <title>Index maintenance</title>
 
         <para>
-            It should be clear that <code>Zend_Search_Lucene</code> as well as any other Lucene implementation does not comprise a "database".
+            It should be clear that <classname>Zend_Search_Lucene</classname> as well as any other Lucene implementation does not comprise a "database".
         </para>
 
         <para>
@@ -459,7 +459,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            Nevertheless, <code>Zend_Search_Lucene</code> attempts to keep indexes in a consistent state at all times.
+            Nevertheless, <classname>Zend_Search_Lucene</classname> attempts to keep indexes in a consistent state at all times.
         </para>
 
         <para>

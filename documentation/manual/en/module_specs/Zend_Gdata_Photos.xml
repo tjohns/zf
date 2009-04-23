@@ -43,7 +43,7 @@
         <para>
             Before any transactions can occur, this connection needs to be made. Creating a connection to the
             Picasa servers involves two steps: creating an HTTP client and binding a
-            <code>Zend_Gdata_Photos</code>
+            <classname>Zend_Gdata_Photos</classname>
             service instance to that client.
         </para>
 
@@ -81,7 +81,7 @@
 
             <para>
                 The
-                <code>Zend_Gdata</code>
+                <classname>Zend_Gdata</classname>
                 library provides support for both authentication schemes.
                 The rest of this chapter will assume that you are familiar the
                 authentication schemes available and how to create an
@@ -97,18 +97,18 @@
             <title>Creating A Service Instance</title>
             <para>
                 In order to interact with the servers, this library provides the
-                <code>Zend_Gdata_Photos</code> service class. This class provides a common interface to the
+                <classname>Zend_Gdata_Photos</classname> service class. This class provides a common interface to the
                 Google Data and Atom Publishing Protocol models and assists in marshaling requests to and from
                 the servers.
             </para>
 
             <para>
                 Once deciding on an authentication scheme, the next step is to create an instance of
-                <code>Zend_Gdata_Photos</code>. The class constructor takes an instance of
-                <code>Zend_Http_Client</code> as a single argument. This provides an interface for AuthSub
+                <classname>Zend_Gdata_Photos</classname>. The class constructor takes an instance of
+                <classname>Zend_Http_Client</classname> as a single argument. This provides an interface for AuthSub
                 and ClientAuth authentication, as both of these require creation of a special authenticated
                 HTTP client. If no arguments are provided, an unauthenticated instance of
-                <code>Zend_Http_Client</code> will be automatically created.
+                <classname>Zend_Http_Client</classname> will be automatically created.
             </para>
 
             <para>The example below shows how to create a service class using ClientAuth authentication:</para>

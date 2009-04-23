@@ -57,7 +57,7 @@
         </para>
         <para>
             Before any transactions can occur, a connection needs to be made. Creating a connection to the Health servers involves two steps: creating an HTTP client
-            and binding a <code>Zend_Gdata_Health</code> service instance to that client.
+            and binding a <classname>Zend_Gdata_Health</classname> service instance to that client.
         </para>
         <sect3 id="zend.gdata.health.connect.authentication">
             <title>Authentication</title>
@@ -98,20 +98,20 @@
             <title>Create A Health Service Instance</title>
             <para>
                 In order to interact with Google Health, the client library provides the
-                <code>Zend_Gdata_Health</code>
+                <classname>Zend_Gdata_Health</classname>
                 service class. This class provides a common interface to the Google Data and Atom Publishing Protocol models and assists in marshaling
                 requests to and from the Health API.
             </para>
             <para>
                 Once you've decided on an authentication scheme, the next step is to create an instance of
-                <code>Zend_Gdata_Health</code>
+                <classname>Zend_Gdata_Health</classname>
                 . This class should be passed an instance of
-                <code>Zend_Gdata_HttpClient</code>. This provides an interface for AuthSub/OAuth and ClientLogin to create a special
+                <classname>Zend_Gdata_HttpClient</classname>. This provides an interface for AuthSub/OAuth and ClientLogin to create a special
                 authenticated HTTP client.
             </para>
             <para>
                 To test against the H9 Developer's (/h9) instead of Google Health (/health), the
-                <code>Zend_Gdata_Health</code> constructor takes an optional third argument for you to specify the H9 service name 'weaver'.
+                <classname>Zend_Gdata_Health</classname> constructor takes an optional third argument for you to specify the H9 service name 'weaver'.
             </para>
             <para>
                 The example below shows how to create a Health service class using ClientLogin authentication:
@@ -239,13 +239,13 @@ $healthService = new Zend_Gdata_Health($client,
             </para>
             <para>
                 When retrieving the profile using the Health API, specifically constructed query URLs are used to describe what (CCR) data
-                should be returned. The <code>Zend_Gdata_Health_Query</code> class helps simplify this task by automatically constructing a query
+                should be returned. The <classname>Zend_Gdata_Health_Query</classname> class helps simplify this task by automatically constructing a query
                 URL based on the parameters you set.
             </para>
             <sect4 id="zend.gdata.health.profilefeed.query.construct">
                 <title>Query The Feed</title>
                 <para>
-                    To execute a query against the profile feed, invoke a new instance of an <code>Zend_Gdata_Health_Query</code> and
+                    To execute a query against the profile feed, invoke a new instance of an <classname>Zend_Gdata_Health_Query</classname> and
                     call the service's <code>getHealthProfileFeed()</code> method:
                 </para>
                 <programlisting role="php"><![CDATA[
@@ -279,8 +279,8 @@ $profileFeed = $healthService->getHealthProfileFeed($query);
                 consolidate all of the CCR elements (that match your query) into a single Atom <code>&lt;entry&gt;</code>.
             </para>
             <para>
-                To retrieve the full CCR information from an entry, make a call to the <code>Zend_Gdata_Health_ProfileEntry</code> class's <code>getCcr()</code> method.
-                That returns a <code>Zend_Gdata_Health_Extension_CCR</code>:
+                To retrieve the full CCR information from an entry, make a call to the <classname>Zend_Gdata_Health_ProfileEntry</classname> class's <code>getCcr()</code> method.
+                That returns a <classname>Zend_Gdata_Health_Extension_CCR</classname>:
             </para>
             <programlisting role="php"><![CDATA[
 $entries = $profileFeed->getEntries();

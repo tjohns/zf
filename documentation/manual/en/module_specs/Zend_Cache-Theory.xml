@@ -3,15 +3,15 @@
 <sect1 id="zend.cache.theory">
     <title>The Theory of Caching</title>
     <para>
-        There are three key concepts in <code>Zend_Cache</code>. One is the unique identifier (a string) that is used
+        There are three key concepts in <classname>Zend_Cache</classname>. One is the unique identifier (a string) that is used
         to identify cache records. The second one is the <code>'lifetime'</code> directive as seen in the
         examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
         is conditional execution so that parts of your code can be skipped entirely, boosting performance.
-        The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
+        The main frontend function (eg. <classname>Zend_Cache_Core::get()</classname>) is always designed to return
         false for a cache miss if that makes sense for the nature of a frontend. That enables end-users to
         wrap parts of the code they would like to cache (and skip) in <code>if(){ ... }</code> statements where
-        the condition is a <code>Zend_Cache</code> method itself. On the end if these blocks you must save what you've
-        generated, however (eg. <code>Zend_Cache_Core::save()</code>).
+        the condition is a <classname>Zend_Cache</classname> method itself. On the end if these blocks you must save what you've
+        generated, however (eg. <classname>Zend_Cache_Core::save()</classname>).
     </para>
     <note><para>
         The conditional execution design of your generating code is not necessary in some frontends
@@ -24,9 +24,9 @@
         other hand, the backend automatically fetches the record from cache transparently.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>The <code>Zend_Cache</code> Factory Method</title>
+        <title>The <classname>Zend_Cache</classname> Factory Method</title>
         <para>
-            A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
+            A good way to build a usable instance of a <classname>Zend_Cache</classname> Frontend is given
             in the following example :
         </para>
         <programlisting role="php"><![CDATA[
@@ -56,7 +56,7 @@ $cache = Zend_Cache::factory($frontendName,
             to your chosen backends.
         </para>
         <note><para>
-            Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
+            Always use <classname>Zend_Cache::factory()</classname> to get frontend instances. Instantiating
             frontends and backends yourself will not work as expected.
         </para></note>
     </sect2>

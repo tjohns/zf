@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.decorators">
-    <title>Creating Custom Form Markup Using <code>Zend_Form_Decorator</code></title>
+    <title>Creating Custom Form Markup Using <classname>Zend_Form_Decorator</classname></title>
 
     <para>
         Rendering a form object is completely optional -- you do not need to use
-        <code>Zend_Form</code>'s render() methods at all. However, if you do,
+        <classname>Zend_Form</classname>'s render() methods at all. However, if you do,
         decorators are used to render the various form objects.
     </para>
 
@@ -42,8 +42,8 @@
 
         <para>
             To configure a decorator, pass an array of options or a
-            <code>Zend_Config</code> object to its constructor, an array to
-            <code>setOptions()</code>, or a <code>Zend_Config</code> object to
+            <classname>Zend_Config</classname> object to its constructor, an array to
+            <code>setOptions()</code>, or a <classname>Zend_Config</classname> object to
             <code>setConfig()</code>.
         </para>
 
@@ -102,8 +102,8 @@
 
         <para>
             Decorators are meant to interact with the various
-            <code>Zend_Form</code> class types: <code>Zend_Form</code>,
-            <code>Zend_Form_Element</code>, <code>Zend_Form_DisplayGroup</code>,
+            <classname>Zend_Form</classname> class types: <classname>Zend_Form</classname>,
+            <classname>Zend_Form_Element</classname>, <classname>Zend_Form_DisplayGroup</classname>,
             and all classes deriving from them. The method
             <code>setElement()</code> allows you to set the object the
             decorator is currently working with, and <code>getElement()</code>
@@ -125,7 +125,7 @@
         <title>Standard Decorators</title>
 
         <para>
-            <code>Zend_Form</code> ships with many standard decorators; see
+            <classname>Zend_Form</classname> ships with many standard decorators; see
             <link linkend="zend.form.standardDecorators">the chapter on Standard
             Decorators</link> for details.
         </para>
@@ -141,7 +141,7 @@
 
         <para>
             Decorators need only implement
-            <code>Zend_Decorator_Interface</code>. The interface specifies the
+            <classname>Zend_Decorator_Interface</classname>. The interface specifies the
             following:
         </para>
 
@@ -165,7 +165,7 @@ interface Zend_Decorator_Interface
 
         <para>
             To make this simpler, you can simply extend
-            <code>Zend_Decorator_Abstract</code>, which implements all methods
+            <classname>Zend_Decorator_Abstract</classname>, which implements all methods
             except <code>render()</code>.
         </para>
 
@@ -334,7 +334,7 @@ class My_Decorator_Errors
 
         <para>
             In this particular example, because the decorator's final segment,
-            'Errors', matches the same as <code>Zend_Form_Decorator_Errors</code>,
+            'Errors', matches the same as <classname>Zend_Form_Decorator_Errors</classname>,
             it will be rendered <emphasis>in place of</emphasis> that decorator
             -- meaning you would not need to change any decorators to modify the
             output. By naming your decorators after existing standard

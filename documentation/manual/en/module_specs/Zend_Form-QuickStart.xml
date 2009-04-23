@@ -5,7 +5,7 @@
 
     <para>
         This quick start guide covers the basics of creating,
-        validating, and rendering forms with <code>Zend_Form</code>.
+        validating, and rendering forms with <classname>Zend_Form</classname>.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
@@ -13,7 +13,7 @@
 
         <para>
             Creating a form object is very simple: simply instantiate
-            <code>Zend_Form</code>:
+            <classname>Zend_Form</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -23,8 +23,8 @@ $form = new Zend_Form;
 
         <para>
             For advanced use cases, you may want to create a
-            <code>Zend_Form</code> subclass, but for simple forms, you can
-            create a form programmatically using a <code>Zend_Form</code>
+            <classname>Zend_Form</classname> subclass, but for simple forms, you can
+            create a form programmatically using a <classname>Zend_Form</classname>
             object.
         </para>
 
@@ -63,9 +63,9 @@ $form->setAttrib('id', 'login');
         <title>Add elements to the form</title>
 
         <para>
-            A form is nothing without its elements. <code>Zend_Form</code>
+            A form is nothing without its elements. <classname>Zend_Form</classname>
             ships with some default elements that render XHTML via
-            <code>Zend_View</code> helpers. These are as follows:
+            <classname>Zend_View</classname> helpers. These are as follows:
         </para>
 
         <itemizedlist>
@@ -117,7 +117,7 @@ $form->setAttrib('id', 'login');
         <para>
             You have two options for adding elements to a form: you can
             instantiate concrete elements and pass in these objects, or you can
-            pass in simply the element type and have <code>Zend_Form</code>
+            pass in simply the element type and have <classname>Zend_Form</classname>
             instantiate an object of the correct type for you.
         </para>
 
@@ -139,14 +139,14 @@ $form->addElement('text', 'username');
             you will need to configure your elements with at least validators,
             and potentially filters. You can either do this (a) before you pass
             the element to the form, (b) via configuration options passed in
-            when creating an element via <code>Zend_Form</code>, or (c) by
+            when creating an element via <classname>Zend_Form</classname>, or (c) by
             pulling the element from the form object and configuring it after
             the fact.
         </para>
 
         <para>
             Let's first look at creating validators for a concrete element
-            instance. You can either pass in <code>Zend_Validate_*</code>
+            instance. You can either pass in <classname>Zend_Validate_*</classname>
             objects, or the name of a validator to utilize:
         </para>
 
@@ -230,7 +230,7 @@ $username->addValidators(array('alnum',
         <para>
             Simple as this is, repeating it this for every element in a form
             can be a bit tedious. Let's try option (b) from above. When we
-            create a new element using <code>Zend_Form::addElement()</code> as
+            create a new element using <classname>Zend_Form::addElement()</classname> as
             a factory, we can optionally pass in configuration options. These
             can include validators and filters. To do all of the
             above implicitly, try the following:
@@ -251,7 +251,7 @@ $form->addElement('text', 'username', array(
         <note><para>
             If you find you are setting up elements using the same options in
             many locations, you may want to consider creating your own
-            <code>Zend_Form_Element</code> subclass and utilizing that class
+            <classname>Zend_Form_Element</classname> subclass and utilizing that class
             instead; this will save you typing in the long-run.
         </para></note>
     </sect2>
@@ -261,7 +261,7 @@ $form->addElement('text', 'username', array(
 
         <para>
             Rendering a form is simple. Most elements use a
-            <code>Zend_View</code> helper to render themselves, and thus need a
+            <classname>Zend_View</classname> helper to render themselves, and thus need a
             view object in order to render. Other than that, you have two
             options: use the form's render() method, or simply echo it.
         </para>
@@ -276,8 +276,8 @@ echo $form;
         </programlisting>
 
         <para>
-            By default, <code>Zend_Form</code> and
-            <code>Zend_Form_Element</code> will attempt to use the view object
+            By default, <classname>Zend_Form</classname> and
+            <classname>Zend_Form_Element</classname> will attempt to use the view object
             initialized in the <code>ViewRenderer</code>, which means you won't
             need to set the view manually when using the Zend Framework MVC.
             To render a form in a view, you simply have to do the following:
@@ -289,11 +289,11 @@ echo $form;
         </programlisting>
 
         <para>
-            Under the hood, <code>Zend_Form</code> uses "decorators" to perform
+            Under the hood, <classname>Zend_Form</classname> uses "decorators" to perform
             rendering. These decorators can replace content, append content, or
             prepend content, and can fully introspect the element passed
             to them. As a result, you can combine multiple decorators to
-            achieve custom effects. By default, <code>Zend_Form_Element</code>
+            achieve custom effects. By default, <classname>Zend_Form_Element</classname>
             actually combines four decorators to achieve its output; setup
             looks something like this:
         </para>
@@ -493,7 +493,7 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <para>
-            We'll use the power of <code>Zend_Form</code>'s configuration
+            We'll use the power of <classname>Zend_Form</classname>'s configuration
             options to build the form:
         </para>
 
@@ -575,17 +575,17 @@ class UserController extends Zend_Controller_Action
         <para>
             As you'll note from the controller code, there's more work to do:
             while the submission may be valid, you may still need to do some
-            authentication using <code>Zend_Auth</code> or another authorization mechanism.
+            authentication using <classname>Zend_Auth</classname> or another authorization mechanism.
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Using a <code>Zend_Config</code> Object</title>
+        <title>Using a <classname>Zend_Config</classname> Object</title>
 
         <para>
-            All <code>Zend_Form</code> classes are configurable using
-            <code>Zend_Config</code>; you can either pass a
-            <code>Zend_Config</code> object to the constructor or pass it in
+            All <classname>Zend_Form</classname> classes are configurable using
+            <classname>Zend_Config</classname>; you can either pass a
+            <classname>Zend_Config</classname> object to the constructor or pass it in
             with <code>setConfig()</code>. Let's look at how we might create the
             above form using an INI file. First, let's follow the
             recommendations, and place our configurations into sections
@@ -643,7 +643,7 @@ $form   = new Zend_Form($config->user->login);
         <para>
             Hopefully with this little tutorial, you should now be well on your
             way to unlocking the power and flexibility of
-            <code>Zend_Form</code>. Read on for more in-depth information!
+            <classname>Zend_Form</classname>. Read on for more in-depth information!
         </para>
     </sect2>
 </sect1>

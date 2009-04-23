@@ -8,7 +8,7 @@
         of dynamic functionality by specifying a class prefix and path to class
         files that are not necessarily on the <code>include_path</code> or do
         not necessarily follow traditional naming conventions.
-        <code>Zend_Loader_PluginLoader</code> provides common functionality for
+        <classname>Zend_Loader_PluginLoader</classname> provides common functionality for
         this process.
     </para>
 
@@ -92,7 +92,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         <note>
             <para>
                 In some cases, you may use the same prefix for multiple paths.
-                <code>Zend_Loader_PluginLoader</code> actually registers an
+                <classname>Zend_Loader_PluginLoader</classname> actually registers an
                 array of paths for each given prefix; the last one registered
                 will be the first one checked. This is particularly useful if
                 you are utilizing incubator components.
@@ -119,7 +119,7 @@ $loader = new Zend_Loader_PluginLoader(array(
         </note>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> also optionally allows you to
+            <classname>Zend_Loader_PluginLoader</classname> also optionally allows you to
             share plugins across plugin-aware objects, without needing to
             utilize a singleton instance. It does so via a static registry.
             Indicate the registry name at instantiation as the second parameter
@@ -213,7 +213,7 @@ if ($loader->isLoaded('Adapter')) {
         </para>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> offers an opt-in feature for
+            <classname>Zend_Loader_PluginLoader</classname> offers an opt-in feature for
             just this situation, a class file include cache. When enabled, it
             will create a file that contains all successful includes which you
             can then call from your bootstrap. Using this strategy, you can

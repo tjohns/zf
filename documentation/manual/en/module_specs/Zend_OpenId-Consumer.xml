@@ -3,7 +3,7 @@
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer Basics</title>
     <para>
-        <code>Zend_OpenId_Consumer</code> can be used to implement OpenID
+        <classname>Zend_OpenId_Consumer</classname> can be used to implement OpenID
         authentication for web sites.
     </para>
 
@@ -37,7 +37,7 @@
         <para>
             The OpenID authentication protocol actually requires more
             steps, but many of them are encapsulated inside
-            <code>Zend_OpenId_Consumer</code> and are therefore transparent to the
+            <classname>Zend_OpenId_Consumer</classname> and are therefore transparent to the
             developer.
         </para>
 
@@ -64,7 +64,7 @@
         <para>
             This form passes the OpenID identity on submission to the following PHP
             script that performs the second step of authentication. The
-            PHP script need only call the <code>Zend_OpenId_Consumer::login()</code> method in this step.
+            PHP script need only call the <classname>Zend_OpenId_Consumer::login()</classname> method in this step.
             The first argument of this
             method is an accepted OpenID identity, and the second is the URL of a script
             that handles the third and last step of authentication.
@@ -82,7 +82,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         </example>
 
         <para>
-            The <code>Zend_OpenId_Consumer::login()</code> method performs discovery on
+            The <classname>Zend_OpenId_Consumer::login()</classname> method performs discovery on
             a given identifier, and, if successful, obtains the address of the identity
             provider and its local identifier. It then creates an association to the
             given provider so that both the site and provider share a secret
@@ -102,7 +102,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         </para>
 
         <para>
-            On success, <code>Zend_OpenId_Consumer::login()</code> does not
+            On success, <classname>Zend_OpenId_Consumer::login()</classname> does not
             return, instead performing an HTTP redirection. However, if there is an error
             it may return false. Errors may occur due to an invalid identity, unresponsive
             provider, communication error, etc.
@@ -130,7 +130,7 @@ if ($consumer->verify($_GET, $id)) {
         </example>
 
         <para>
-            This check is performed using the <code>Zend_OpenId_Consumer::verify</code>
+            This check is performed using the <classname>Zend_OpenId_Consumer::verify</classname>
             method, which takes an array of
             the HTTP request's arguments and checks that this response is properly
             signed by the OpenID provider. It may assign
@@ -217,7 +217,7 @@ if (isset($_POST['openid_action']) &&
 
         <para>
             To override the default value, developers may pass the realm URL as a
-            third argument to the <code>Zend_OpenId_Consumer::login</code> method. In
+            third argument to the <classname>Zend_OpenId_Consumer::login</classname> method. In
             the following example, a single interaction asks for trusted access to
             all php.net sites.
         </para>
@@ -246,9 +246,9 @@ if (!$consumer->login($_POST['openid_identifier'],
         <para>
             In some cases, an application need only check if a user is already
             logged in to a trusted OpenID server without any interaction with the
-            user. The <code>Zend_OpenId_Consumer::check</code> method does precisely
+            user. The <classname>Zend_OpenId_Consumer::check</classname> method does precisely
             that. It is executed with the same arguments as
-            <code>Zend_OpenId_Consumer::login</code>, but it doesn't display any
+            <classname>Zend_OpenId_Consumer::login</classname>, but it doesn't display any
             OpenID server pages to the user. From the users point of view this process is
             transparent, and it appears as though they never left the site. The third step
             succeeds if the user is already logged in and trusted by the site, otherwise
@@ -277,23 +277,23 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
         <para>
             There are three steps in the OpenID authentication procedure, and each
             step is performed by a separate HTTP request. To store information between
-            requests, <code>Zend_OpenId_Consumer</code> uses internal storage.
+            requests, <classname>Zend_OpenId_Consumer</classname> uses internal storage.
         </para>
 
         <para>
             Developers do not necessarily have to be aware of this storage because by default
-            <code>Zend_OpenId_Consumer</code> uses file-based storage under the temporary directory-
+            <classname>Zend_OpenId_Consumer</classname> uses file-based storage under the temporary directory-
             similar to PHP sessions. However, this storage may be not suitable in all
             cases. Some developers may want to store information in a database, while others may
             need to use common storage suitable for server farms. Fortunately,
             developers may easily replace the default storage with their own. To specify a custom storage mechanism,
-            one need only extend the <code>Zend_OpenId_Consumer_Storage</code> class and pass this subclass
-            to the <code>Zend_OpenId_Consumer</code> constructor in the first argument.
+            one need only extend the <classname>Zend_OpenId_Consumer_Storage</classname> class and pass this subclass
+            to the <classname>Zend_OpenId_Consumer</classname> constructor in the first argument.
         </para>
 
         <para>
             The following example demonstrates a simple storage mechanism that uses
-            <code>Zend_Db</code> as its backend and exposes three groups of functions.
+            <classname>Zend_Db</classname> as its backend and exposes three groups of functions.
             The first group contains functions for working with associations, while the second group caches
             discovery information, and the third group can be used to check whether a response is unique. This
             class can easily be used with existing or new databases; if the required tables don't exist, it will create them.
@@ -575,7 +575,7 @@ $consumer = new Zend_OpenId_Consumer($storage);
             An OpenID-enabled web site may ask for any combination of these
             fields. It may also strictly require some information and allow users
             to provide or hide additional information. The following example instantiates
-            the <code>Zend_OpenId_Extension_Sreg</code> class, requiring
+            the <classname>Zend_OpenId_Extension_Sreg</classname> class, requiring
             a <emphasis>nickname</emphasis> and optionally requests
             an <emphasis>email</emphasis> and a <emphasis>fullname</emphasis>.
         </para>
@@ -599,20 +599,20 @@ if (!$consumer->login($_POST['openid_identifier'],
         </example>
 
         <para>
-            As you can see, the <code>Zend_OpenId_Extension_Sreg</code>
+            As you can see, the <classname>Zend_OpenId_Extension_Sreg</classname>
             constructor accepts an array of OpenID fields. This array has the names of
             fields as indexes to a flag indicating whether the field is required;
             <emphasis>true</emphasis> means the field is required and
             <emphasis>false</emphasis> means the field is optional. The
-            <code>Zend_OpenId_Consumer::login</code> method accepts an extension or an array of
+            <classname>Zend_OpenId_Consumer::login</classname> method accepts an extension or an array of
             extensions as its fourth argument.
         </para>
 
         <para>
             On the third step of authentication, the
-            <code>Zend_OpenId_Extension_Sreg</code> object should be passed to
-            <code>Zend_OpenId_Consumer::verify</code>. Then on successful authentication
-            the <code>Zend_OpenId_Extension_Sreg::getProperties</code> method will return an
+            <classname>Zend_OpenId_Extension_Sreg</classname> object should be passed to
+            <classname>Zend_OpenId_Consumer::verify</classname>. Then on successful authentication
+            the <classname>Zend_OpenId_Extension_Sreg::getProperties</classname> method will return an
             associative array of requested fields.
         </para>
 
@@ -644,26 +644,26 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         </example>
 
         <para>
-            If the <code>Zend_OpenId_Extension_Sreg</code> object was created without any
+            If the <classname>Zend_OpenId_Extension_Sreg</classname> object was created without any
             arguments, the user code should check for the existence of the required
             data itself. However, if the object is created with the same list of
             required fields as on the second step, it will automatically check for the
-            existence of required data. In this case, <code>Zend_OpenId_Consumer::verify</code>
+            existence of required data. In this case, <classname>Zend_OpenId_Consumer::verify</classname>
             will return <emphasis>false</emphasis> if any of the required fields are
             missing.
         </para>
 
         <para>
-            <code>Zend_OpenId_Extension_Sreg</code> uses version
+            <classname>Zend_OpenId_Extension_Sreg</classname> uses version
             1.0 by default, because the specification for version 1.1 is not yet finalized.
             However, some libraries don't fully support version 1.0. For example,
             www.myopenid.com requires an SREG namespace in requests which is only
             available in 1.1. To work with such a server, you must explicitly set the version to
-            1.1 in the <code>Zend_OpenId_Extension_Sreg</code> constructor.
+            1.1 in the <classname>Zend_OpenId_Extension_Sreg</classname> constructor.
         </para>
 
         <para>
-            The second argument of the <code>Zend_OpenId_Extension_Sreg</code>
+            The second argument of the <classname>Zend_OpenId_Extension_Sreg</classname>
             constructor is a policy URL, that should be provided to the user by
             the identity provider.
         </para>
@@ -673,10 +673,10 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         <title>Integration with Zend_Auth</title>
         <para>
             Zend Framework provides a special class to support user
-            authentication: <code>Zend_Auth</code>. This class can be used together
-            with <code>Zend_OpenId_Consumer</code>. The following example shows how
+            authentication: <classname>Zend_Auth</classname>. This class can be used together
+            with <classname>Zend_OpenId_Consumer</classname>. The following example shows how
             <code>OpenIdAdapter</code> implements
-            the <code>Zend_Auth_Adapter_Interface</code> with the
+            the <classname>Zend_Auth_Adapter_Interface</classname> with the
             <code>authenticate</code> method. This performs an authentication query and
             verification.
         </para>
@@ -758,9 +758,9 @@ if ((isset($_POST['openid_action']) &&
         </example>
 
         <para>
-            With <code>Zend_Auth</code> the end-user's identity is saved in the
-            session's data. It may be checked with <code>Zend_Auth::hasIdentity</code>
-            and <code>Zend_Auth::getIdentity</code>.
+            With <classname>Zend_Auth</classname> the end-user's identity is saved in the
+            session's data. It may be checked with <classname>Zend_Auth::hasIdentity</classname>
+            and <classname>Zend_Auth::getIdentity</classname>.
         </para>
     </sect2>
 
@@ -769,21 +769,21 @@ if ((isset($_POST['openid_action']) &&
         <para>
             Finally a couple of words about integration into
             Model-View-Controller applications: such Zend Framework applications are
-            implemented using the <code>Zend_Controller</code> class and they use
-            objects of the <code>Zend_Controller_Response_Http</code> class to prepare
+            implemented using the <classname>Zend_Controller</classname> class and they use
+            objects of the <classname>Zend_Controller_Response_Http</classname> class to prepare
             HTTP responses and send them back to the user's web browser.
         </para>
 
         <para>
-            <code>Zend_OpenId_Consumer</code> doesn't provide any GUI
+            <classname>Zend_OpenId_Consumer</classname> doesn't provide any GUI
             capabilities but it performs HTTP redirections on success of
-            <code>Zend_OpenId_Consumer::login</code> and
-            <code>Zend_OpenId_Consumer::check</code>. These redirections may work
+            <classname>Zend_OpenId_Consumer::login</classname> and
+            <classname>Zend_OpenId_Consumer::check</classname>. These redirections may work
             incorrectly or not at all if some data was already sent to the
             web browser. To properly perform HTTP redirection in MVC code the real
-            <code>Zend_Controller_Response_Http</code> should be sent to
-            <code>Zend_OpenId_Consumer::login</code> or
-            <code>Zend_OpenId_Consumer::check</code> as the last argument.
+            <classname>Zend_Controller_Response_Http</classname> should be sent to
+            <classname>Zend_OpenId_Consumer::login</classname> or
+            <classname>Zend_OpenId_Consumer::check</classname> as the last argument.
         </para>
     </sect2>
 </sect1>

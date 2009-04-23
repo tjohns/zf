@@ -5,7 +5,7 @@
     <sect2 id="zend.service.flickr.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Flickr</code> is a simple API for using the Flickr REST Web Service. In order to use
+            <classname>Zend_Service_Flickr</classname> is a simple API for using the Flickr REST Web Service. In order to use
             the Flickr web services, you must have an API key. To obtain a key and for more information about the
             Flickr REST Web Service, please visit the
             <ulink url="http://www.flickr.com/services/api/">Flickr API Documentation</ulink>.
@@ -37,14 +37,14 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.finding-users">
         <title>Finding Flickr Users' Photos and Information</title>
         <para>
-            <code>Zend_Service_Flickr</code> provides several ways to get information about Flickr users:
+            <classname>Zend_Service_Flickr</classname> provides several ways to get information about Flickr users:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
                     <code>userSearch()</code>: Accepts a string query of space-delimited tags and an optional second
                     parameter as an array of search options, and returns a set of photos as a
-                    <code>Zend_Service_Flickr_ResultSet</code> object.
+                    <classname>Zend_Service_Flickr_ResultSet</classname> object.
                 </para>
             </listitem>
             <listitem>
@@ -80,7 +80,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.grouppoolgetphotos">
         <title>Finding photos From a Group Pool</title>
         <para>
-            <code>Zend_Service_Flickr</code> allows to retrieve a group's pool photos based
+            <classname>Zend_Service_Flickr</classname> allows to retrieve a group's pool photos based
             on the group ID. Use the <code>groupPoolGetPhotos()</code> method:
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
@@ -106,7 +106,7 @@ $flickr = new Zend_Service_Flickr('MY_API_KEY');
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Retrieving Flickr Image Details</title>
         <para>
-            <code>Zend_Service_Flickr</code> makes it quick and easy to get an image's details based on a given image
+            <classname>Zend_Service_Flickr</classname> makes it quick and easy to get an image's details based on a given image
             ID. Just use the <code>getImageDetails()</code> method, as in the following example:
         </para>
         <example id="zend.service.flickr.getimagedetails.example-1">
@@ -130,9 +130,9 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
         <para>
             The following classes are all returned by <code>tagSearch()</code> and <code>userSearch()</code>:
             <itemizedlist>
-                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><classname>Zend_Service_Flickr_ResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.result"><classname>Zend_Service_Flickr_Result</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.image"><classname>Zend_Service_Flickr_Image</classname></link></para></listitem>
             </itemizedlist>
         </para>
         <sect3 id="zend.service.flickr.classes.resultset">

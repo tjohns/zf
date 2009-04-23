@@ -6,7 +6,7 @@
 
     <para>
         Parsing and normalization of input, combined with output to localized notations makes data accessible to users
-        in different locales. Many additional methods exist in <code>Zend_Measure_*</code> components to manipulate and
+        in different locales. Many additional methods exist in <classname>Zend_Measure_*</classname> components to manipulate and
         work with this data, after it has been normalized.
     </para>
 

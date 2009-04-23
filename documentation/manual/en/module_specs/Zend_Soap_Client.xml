@@ -4,7 +4,7 @@
     <title>Zend_Soap_Client</title>
 
     <para>
-        The <code>Zend_Soap_Client</code> class simplifies SOAP client development for PHP programmers.
+        The <classname>Zend_Soap_Client</classname> class simplifies SOAP client development for PHP programmers.
     </para>
 
     <para>
@@ -23,9 +23,9 @@
     </para>
 
     <sect2 id="zend.soap.client.constructor">
-        <title><code>Zend_Soap_Client</code> Constructor</title>
+        <title><classname>Zend_Soap_Client</classname> Constructor</title>
         <para>
-            The <code>Zend_Soap_Client</code> constructor takes two parameters:
+            The <classname>Zend_Soap_Client</classname> constructor takes two parameters:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -148,10 +148,10 @@ $client = new Zend_Soap_Client("some.wsdl",
         <title>Performing SOAP Requests</title>
 
         <para>
-            After we've created a <code>Zend_Soap_Client</code> object we are ready to perform SOAP requests.
+            After we've created a <classname>Zend_Soap_Client</classname> object we are ready to perform SOAP requests.
         </para>
         <para>
-            Each web service method is mapped to the virtual <code>Zend_Soap_Client</code> object method which takes
+            Each web service method is mapped to the virtual <classname>Zend_Soap_Client</classname> object method which takes
             parameters with common PHP types.
         </para>
 

@@ -5,10 +5,10 @@
     <sect2 id="zend.auth.adapter.dbtable.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> provides the ability to
+            <classname>Zend_Auth_Adapter_DbTable</classname> provides the ability to
             authenticate against credentials stored in a database table. Because
-            <code>Zend_Auth_Adapter_DbTable</code> requires an instance of
-            <code>Zend_Db_Adapter_Abstract</code> to be passed to its
+            <classname>Zend_Auth_Adapter_DbTable</classname> requires an instance of
+            <classname>Zend_Db_Adapter_Abstract</classname> to be passed to its
             constructor, each instance is bound to a particular database
             connection. Other configuration options may be set through the
             constructor and through instance methods, one for each option.
@@ -62,8 +62,8 @@
             <title>Basic Usage</title>
             <para>
                 As explained in the introduction, the
-                <code>Zend_Auth_Adapter_DbTable</code> constructor requires an
-                instance of <code>Zend_Db_Adapter_Abstract</code> that serves as
+                <classname>Zend_Auth_Adapter_DbTable</classname> constructor requires an
+                instance of <classname>Zend_Db_Adapter_Abstract</classname> that serves as
                  the database connection to which the authentication adapter
                 instance is bound. First, the database connection should be
                 created.
@@ -98,7 +98,7 @@ $dbAdapter->query($sqlInsert);]]>
             </programlisting>
             <para>
                 With the database connection and table data available, an
-                instance of <code>Zend_Auth_Adapter_DbTable</code> may be
+                instance of <classname>Zend_Auth_Adapter_DbTable</classname> may be
                 created. Configuration option values may be passed to the
                 constructor or deferred as parameters to setter methods after
                 instantiation:
@@ -141,7 +141,7 @@ $result = $authAdapter->authenticate();]]>
             <para>
                 In addition to the availability of the
                 <code>getIdentity()</code> method upon the authentication result
-                object, <code>Zend_Auth_Adapter_DbTable</code> also supports
+                object, <classname>Zend_Auth_Adapter_DbTable</classname> also supports
                 retrieving the table row upon authentication success:
             </para>
             <programlisting role="php"><![CDATA[
@@ -172,10 +172,10 @@ Array
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
         <title>Advanced Usage: Persisting a DbTable Result Object</title>
         <para>
-            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the
+            By default, <classname>Zend_Auth_Adapter_DbTable</classname> returns the
             identity supplied back to the auth object upon successful
             authentication. Another use case scenario, where developers want to
-            store to the persistent storage mechanism of <code>Zend_Auth</code>
+            store to the persistent storage mechanism of <classname>Zend_Auth</classname>
             an identity object containing other useful information, is solved by
              using the <code>getResultRowObject()</code> method to return a
             <code>stdClass</code> object. The following code snippet illustrates
@@ -213,8 +213,8 @@ if ($result->isValid()) {
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
         <para>
-            While the primary purpose of <code>Zend_Auth</code> (and consequently
-            <code>Zend_Auth_Adapter_DbTable</code>) is primarily
+            While the primary purpose of <classname>Zend_Auth</classname> (and consequently
+            <classname>Zend_Auth_Adapter_DbTable</classname>) is primarily
             <emphasis role="strong">authentication</emphasis> and not
             <emphasis role="strong">authorization</emphasis>, there are a few
             instances and problems that toe the line between which domain they fit
@@ -224,7 +224,7 @@ if ($result->isValid()) {
         </para>
         <para>
             With that disclaimer out of the way,
-            <code>Zend_Auth_Adapter_DbTable</code> has some built in mechanisms that can be
+            <classname>Zend_Auth_Adapter_DbTable</classname> has some built in mechanisms that can be
             leveraged for additional checks at authentication time to solve
             some common user problems.
         </para>

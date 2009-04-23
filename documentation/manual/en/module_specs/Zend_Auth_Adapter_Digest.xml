@@ -52,7 +52,7 @@ someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>Specifics</title>
 
         <para>
-            The digest authentication adapter, <code>Zend_Auth_Adapter_Digest</code>, requires several input parameters:
+            The digest authentication adapter, <classname>Zend_Auth_Adapter_Digest</classname>, requires several input parameters:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -85,7 +85,7 @@ someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>Identity</title>
 
         <para>
-            The digest authentication adapter returns a <code>Zend_Auth_Result</code> object, which has been
+            The digest authentication adapter returns a <classname>Zend_Auth_Result</classname> object, which has been
             populated with the identity as an array having keys of <code>realm</code> and
             <code>username</code>. The respective array values associated with these keys correspond to the
             values set before <code>authenticate()</code> is called.

@@ -29,7 +29,7 @@
         <para>
             Often, it's simplest to simply specify the action, controller, and
             module (and optional request parameters), much as you would when
-            calling <code>Zend_Controller_Action::_forward()</code>:
+            calling <classname>Zend_Controller_Action::_forward()</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[

@@ -6,9 +6,9 @@
     <sect2 id="zend.mime.mime.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-            linkend="zend.mail"><code>Zend_Mail</code></link> and <link
-            linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> and may be used by applications requiring
+            <classname>Zend_Mime</classname> is a support class for handling multipart MIME messages. It is used by <link
+            linkend="zend.mail"><classname>Zend_Mail</classname></link> and <link
+            linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link> and may be used by applications requiring
             MIME support.
         </para>
     </sect2>
@@ -16,72 +16,72 @@
     <sect2 id="zend.mime.mime.static">
     <title>Static Methods and Constants</title>
     <para>
-        <code>Zend_Mime</code> provides a simple set of static helper methods to work with MIME:
+        <classname>Zend_Mime</classname> provides a simple set of static helper methods to work with MIME:
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Mime::isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
+                    <classname>Zend_Mime::isPrintable()</classname>: Returns TRUE if the given string contains no unprintable characters,
                 FALSE otherwise.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::encodeBase64()</code>: Encodes a string into base64 encoding.
+                    <classname>Zend_Mime::encodeBase64()</classname>: Encodes a string into base64 encoding.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+                    <classname>Zend_Mime::encodeQuotedPrintable()</classname>: Encodes a string with the quoted-printable mechanism.
                 </para>
             </listitem>
         </itemizedlist>
     </para>
     <para>
-        <code>Zend_Mime</code> defines a set of constants commonly used with MIME Messages:
+        <classname>Zend_Mime</classname> defines a set of constants commonly used with MIME Messages:
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+                    <classname>Zend_Mime::TYPE_OCTETSTREAM</classname>: 'application/octet-stream'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+                    <classname>Zend_Mime::TYPE_TEXT</classname>: 'text/plain'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+                    <classname>Zend_Mime::TYPE_HTML</classname>: 'text/html'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+                    <classname>Zend_Mime::ENCODING_7BIT</classname>: '7bit'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+                    <classname>Zend_Mime::ENCODING_8BIT</classname>: '8bit'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+                    <classname>Zend_Mime::ENCODING_QUOTEDPRINTABLE</classname>: 'quoted-printable'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+                    <classname>Zend_Mime::ENCODING_BASE64</classname>: 'base64'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+                    <classname>Zend_Mime::DISPOSITION_ATTACHMENT</classname>: 'attachment'
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                    <classname>Zend_Mime::DISPOSITION_INLINE</classname>: 'inline'
                 </para>
             </listitem>
         </itemizedlist>
@@ -91,14 +91,14 @@
     <sect2 id="zend.mime.mime.instantiation">
     <title>Instantiating Zend_Mime</title>
     <para>
-        When Instantiating a <code>Zend_Mime</code> Object, a MIME boundary is stored that
+        When Instantiating a <classname>Zend_Mime</classname> Object, a MIME boundary is stored that
         is used for all subsequent non-static method calls on that object.
         If the constructor is called with a string parameter, this value
         is used as a MIME boundary. If not, a random MIME boundary is generated
         during construction time.
     </para>
     <para>
-        A <code>Zend_Mime</code> object has the following Methods:
+        A <classname>Zend_Mime</classname> object has the following Methods:
         <itemizedlist>
             <listitem>
                 <para>

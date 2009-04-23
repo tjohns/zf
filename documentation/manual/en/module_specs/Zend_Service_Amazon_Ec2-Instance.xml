@@ -70,7 +70,7 @@
                         <entry><para>
                             m1.small
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::SMALL</code></entry>
+                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::SMALL</classname></entry>
                     </row>
                     <row>
                         <entry><code>Large</code></entry>
@@ -94,7 +94,7 @@
                         <entry><para>
                             m1.large
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::LARGE</code></entry>
+                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::LARGE</classname></entry>
                     </row>
                     <row>
                         <entry><code>Extra Large</code></entry>
@@ -118,7 +118,7 @@
                         <entry><para>
                             m1.xlarge
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::XLARGE</code></entry>
+                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::XLARGE</classname></entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Medium</code></entry>
@@ -142,7 +142,7 @@
                         <entry><para>
                             c1.medium
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</code></entry>
+                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</classname></entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Extra Large</code></entry>
@@ -166,7 +166,7 @@
                         <entry><para>
                             c1.xlarge
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</code></entry>
+                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</classname></entry>
                     </row>
                 </tbody>
             </tgroup>

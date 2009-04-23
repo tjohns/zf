@@ -5,8 +5,8 @@
     <title>Migrating from Previous Versions</title>
 
     <para>
-        The API of <code>Zend_Currency</code> has changed in the past to enhance
-        usability. If you started using <code>Zend_Currency</code> with a
+        The API of <classname>Zend_Currency</classname> has changed in the past to enhance
+        usability. If you started using <classname>Zend_Currency</classname> with a
         version which is mentioned in this chapter follow the guidelines below
         to migrate your scripts to the new API.
     </para>
@@ -16,7 +16,7 @@
         <title>Migrating from 1.0.2 to 1.0.3 or Newer</title>
 
         <para>
-            Creating an object of <code>Zend_Currency</code> has become simpler.
+            Creating an object of <classname>Zend_Currency</classname> has become simpler.
             You no longer have to give a script or set it to null. The optional
             script parameter is now an option which can be set through the
             <code>setFormat()</code> method.

@@ -5,8 +5,8 @@
     <title>Importing Feeds</title>
 
     <para>
-        <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a feed, simply
-        use the <code>Zend_Feed::import()</code> method:
+        <classname>Zend_Feed</classname> enables developers to retrieve feeds very easily. If you know the URI of a feed, simply
+        use the <classname>Zend_Feed::import()</classname> method:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -15,7 +15,7 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
     </programlisting>
 
     <para>
-        You can also use <code>Zend_Feed</code> to fetch the contents of a feed from a file or the contents of a PHP
+        You can also use <classname>Zend_Feed</classname> to fetch the contents of a feed from a file or the contents of a PHP
         string variable:
     </para>
 
@@ -29,11 +29,11 @@ $feedFromPHP = Zend_Feed::importString($feedString);
     </programlisting>
 
     <para>
-        In each of the examples above, an object of a class that extends <code>Zend_Feed_Abstract</code> is returned
+        In each of the examples above, an object of a class that extends <classname>Zend_Feed_Abstract</classname> is returned
         upon success, depending on the type of the feed. If an RSS feed were retrieved via one of the import methods
-        above, then a <code>Zend_Feed_Rss</code> object would be returned. On the other hand, if an Atom feed were
-        imported, then a <code>Zend_Feed_Atom</code> object is returned. The import methods will also throw a
-        <code>Zend_Feed_Exception</code> object upon failure, such as an unreadable or malformed feed.
+        above, then a <classname>Zend_Feed_Rss</classname> object would be returned. On the other hand, if an Atom feed were
+        imported, then a <classname>Zend_Feed_Atom</classname> object is returned. The import methods will also throw a
+        <classname>Zend_Feed_Exception</classname> object upon failure, such as an unreadable or malformed feed.
     </para>
 
     <sect2 id="zend.feed.importing.custom">
@@ -41,10 +41,10 @@ $feedFromPHP = Zend_Feed::importString($feedString);
         <title>Custom feeds</title>
 
         <para>
-            <code>Zend_Feed</code> enables developers to create custom feeds very easily. You just have to create an
-            array and to import it with <code>Zend_Feed</code>. This array can be imported with <code>Zend_Feed::importArray()</code>
-            or with <code>Zend_Feed::importBuilder()</code>. In this last case the array will be computed on the fly by
-            a custom data source implementing <code>Zend_Feed_Builder_Interface</code>.
+            <classname>Zend_Feed</classname> enables developers to create custom feeds very easily. You just have to create an
+            array and to import it with <classname>Zend_Feed</classname>. This array can be imported with <classname>Zend_Feed::importArray()</classname>
+            or with <classname>Zend_Feed::importBuilder()</classname>. In this last case the array will be computed on the fly by
+            a custom data source implementing <classname>Zend_Feed_Builder_Interface</classname>.
         </para>
 
         <sect3 id="zend.feed.importing.custom.importarray">
@@ -289,24 +289,24 @@ array(
 
             <para>
                 You can create a Zeed_Feed instance from any data source implementing
-                <code>Zend_Feed_Builder_Interface</code>. You just have to implement the <code>getHeader()</code> and
+                <classname>Zend_Feed_Builder_Interface</classname>. You just have to implement the <code>getHeader()</code> and
                 <code>getEntries()</code> methods to be able to use your object with
-                <code>Zend_Feed::importBuilder()</code>. As a simple reference implementation, you can use
-                <code>Zend_Feed_Builder</code>, which takes an array in its constructor, performs some minor validation,
+                <classname>Zend_Feed::importBuilder()</classname>. As a simple reference implementation, you can use
+                <classname>Zend_Feed_Builder</classname>, which takes an array in its constructor, performs some minor validation,
                 and then can be used in the <code>importBuilder()</code> method. The <code>getHeader()</code> method
-                must return an instance of <code>Zend_Feed_Builder_Header</code>, and <code>getEntries()</code> must
-                return an array of <code>Zend_Feed_Builder_Entry</code> instances.
+                must return an instance of <classname>Zend_Feed_Builder_Header</classname>, and <code>getEntries()</code> must
+                return an array of <classname>Zend_Feed_Builder_Entry</classname> instances.
             </para>
 
             <note>
                 <para>
-                    <code>Zend_Feed_Builder</code> serves as a concrete implementation to demonstrate the usage. Users
-                    are encouraged to make their own classes to implement <code>Zend_Feed_Builder_Interface</code>.
+                    <classname>Zend_Feed_Builder</classname> serves as a concrete implementation to demonstrate the usage. Users
+                    are encouraged to make their own classes to implement <classname>Zend_Feed_Builder_Interface</classname>.
                 </para>
             </note>
 
             <para>
-                Here is an example of <code>Zend_Feed::importBuilder()</code> usage:
+                Here is an example of <classname>Zend_Feed::importBuilder()</classname> usage:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -332,7 +332,7 @@ $rssFeedFromArray =
             <title>Dumping the contents of a feed</title>
 
             <para>
-                To dump the contents of a <code>Zend_Feed_Abstract</code> instance, you may use <code>send()</code> or
+                To dump the contents of a <classname>Zend_Feed_Abstract</classname> instance, you may use <code>send()</code> or
                 <code>saveXml()</code> methods.
             </para>
 

@@ -21,22 +21,22 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Socket</code> (default)
+                        <classname>Zend_Http_Client_Adapter_Socket</classname> (default)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Proxy</code>
+                        <classname>Zend_Http_Client_Adapter_Proxy</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Test</code>
+                        <classname>Zend_Http_Client_Adapter_Test</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Curl</code>
+                        <classname>Zend_Http_Client_Adapter_Curl</classname>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -63,7 +63,7 @@
         </para>
         <para>
             The Socket adapter allows several extra configuration options that
-            can be set using <code>Zend_Http_Client->setConfig()</code> or
+            can be set using <classname>Zend_Http_Client->setConfig()</classname> or
             passed to the client constructor.
             <table id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket configuration parameters</title>

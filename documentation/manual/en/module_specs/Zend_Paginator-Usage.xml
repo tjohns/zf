@@ -7,14 +7,14 @@
         <title>Paginating data collections</title>
 
         <para>
-            In order to paginate items into pages, <code>Zend_Paginator</code>
+            In order to paginate items into pages, <classname>Zend_Paginator</classname>
             must have a generic way of accessing that data. For that reason,
             all data access takes place through data source adapters. Several
             adapters ship with Zend Framework by default:
         </para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title>Adapters for <code>Zend_Paginator</code></title>
+            <title>Adapters for <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>
@@ -31,16 +31,16 @@
                     <row>
                         <entry>DbSelect</entry>
                         <entry>
-                            Use a <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
+                            Use a <link linkend="zend.db.select"><classname>Zend_Db_Select</classname></link>
                             instance, which will return an array
                         </entry>
                     </row>
                     <row>
                         <entry>DbTableSelect</entry>
                         <entry>
-                            Use a <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>
+                            Use a <link linkend="zend.db.table.fetch-all"><classname>Zend_Db_Table_Select</classname></link>
                             instance, which will return an instance of
-                            <code>Zend_Db_Table_Rowset_Abstract</code>.
+                            <classname>Zend_Db_Table_Rowset_Abstract</classname>.
                             This provides additional information about the
                             result set, such as column names.
                         </entry>
@@ -55,7 +55,7 @@
                     <row>
                         <entry>Null</entry>
                         <entry>
-                            Do not use <code>Zend_Paginator</code> to manage
+                            Do not use <classname>Zend_Paginator</classname> to manage
                             data pagination. You can still take advantage of
                             the pagination control feature.
                         </entry>
@@ -81,7 +81,7 @@
         </note>
 
         <para>
-            To create an instance of <code>Zend_Paginator</code>, you must
+            To create an instance of <classname>Zend_Paginator</classname>, you must
             supply an adapter to the constructor:
         </para>
 
@@ -129,7 +129,7 @@ $paginator->setCurrentPageNumber($page);
         <para>
             The simplest way to keep track of this value is through a URL.
             Although we recommend using a
-            <code>Zend_Controller_Router_Interface</code>-compatible
+            <classname>Zend_Controller_Router_Interface</classname>-compatible
             router to handle this, it is not a requirement.
         </para>
 
@@ -170,7 +170,7 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
 
         <para>
             Finally, you'll need to assign the paginator instance to your view.
-            If you're using <code>Zend_View</code> with the ViewRenderer action
+            If you're using <classname>Zend_View</classname> with the ViewRenderer action
             helper, the following will work:
         </para>
 
@@ -187,12 +187,12 @@ $this->view->paginator = $paginator;
 
         <para>
             The view script is used to render the page items (if you're using
-            <code>Zend_Paginator</code> to do so) and display the pagination
+            <classname>Zend_Paginator</classname> to do so) and display the pagination
             control.
         </para>
 
         <para>
-            Because <code>Zend_Paginator</code> implements the SPL interface
+            Because <classname>Zend_Paginator</classname> implements the SPL interface
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html"><code>IteratorAggregate</code></ulink>,
             looping over your items and displaying them is simple.
         </para>
@@ -254,7 +254,7 @@ $this->view->paginator = $paginator;
         </para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title>Scrolling styles for <code>Zend_Paginator</code></title>
+            <title>Scrolling styles for <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>
@@ -340,7 +340,7 @@ $paginator->setView($view);
 
         <note>
             <para>
-                Of course, it's possible to use <code>Zend_Paginator</code>
+                Of course, it's possible to use <classname>Zend_Paginator</classname>
                 with other template engines. For example, with Smarty you
                 might do the following:
             </para>

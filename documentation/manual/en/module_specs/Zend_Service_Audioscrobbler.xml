@@ -9,11 +9,11 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> is a simple API for using the Audioscrobbler REST Web Service. The
+            <classname>Zend_Service_Audioscrobbler</classname> is a simple API for using the Audioscrobbler REST Web Service. The
             Audioscrobbler Web Service provides access to its database of Users, Artists, Albums, Tracks, Tags, Groups,
-            and Forums. The methods of the <code>Zend_Service_Audioscrobbler</code> class begin with one of these terms.
+            and Forums. The methods of the <classname>Zend_Service_Audioscrobbler</classname> class begin with one of these terms.
             The syntax and namespaces of the Audioscrobbler Web Service are mirrored in
-            <code>Zend_Service_Audioscrobbler</code>. For more information about the Audioscrobbler REST Web Service,
+            <classname>Zend_Service_Audioscrobbler</classname>. For more information about the Audioscrobbler REST Web Service,
             please visit the <ulink url="http://www.audioscrobbler.net/data/webservices/">Audioscrobbler Web Service
             site</ulink>.
         </para>
@@ -26,7 +26,7 @@
 
         <para>
             In order to retrieve information for a specific user, the <code>setUser()</code> method is first used to
-            select the user for which data are to be retrieved. <code>Zend_Service_Audioscrobbler</code> provides
+            select the user for which data are to be retrieved. <classname>Zend_Service_Audioscrobbler</classname> provides
             several methods for retrieving data specific to a single user:
             <itemizedlist>
                 <listitem>
@@ -227,7 +227,7 @@ foreach ($previousWeeklyArtists as $artist) {
         <title>Artists</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> provides several methods for retrieving data about a specific
+            <classname>Zend_Service_Audioscrobbler</classname> provides several methods for retrieving data about a specific
             artist, specified via the <code>setArtist()</code> method:
             <itemizedlist>
                 <listitem>
@@ -289,7 +289,7 @@ foreach ($relatedArtists as $artist) {
         <title>Tracks</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> provides two methods for retrieving data specific to a single
+            <classname>Zend_Service_Audioscrobbler</classname> provides two methods for retrieving data specific to a single
             track, specified via the <code>setTrack()</code> method:
             <itemizedlist>
                 <listitem>
@@ -314,7 +314,7 @@ foreach ($relatedArtists as $artist) {
         <title>Tags</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> provides several methods for retrieving data specific to a single
+            <classname>Zend_Service_Audioscrobbler</classname> provides several methods for retrieving data specific to a single
             tag, specified via the <code>setTag()</code> method:
             <itemizedlist>
                 <listitem>
@@ -351,7 +351,7 @@ foreach ($relatedArtists as $artist) {
         <title>Groups</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> provides several methods for retrieving data specific to a single
+            <classname>Zend_Service_Audioscrobbler</classname> provides several methods for retrieving data specific to a single
             group, specified via the <code>setGroup()</code> method:
             <itemizedlist>
                 <listitem>
@@ -415,7 +415,7 @@ foreach ($relatedArtists as $artist) {
         <title>Forums</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> provides a method for retrieving data specific to a single forum,
+            <classname>Zend_Service_Audioscrobbler</classname> provides a method for retrieving data specific to a single forum,
             specified via the <code>setForum()</code> method:
             <itemizedlist>
                 <listitem>

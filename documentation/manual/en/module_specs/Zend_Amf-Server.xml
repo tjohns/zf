@@ -4,7 +4,7 @@
     <title>Zend_Amf_Server</title>
 
     <para>
-        <code>Zend_Amf_Server</code> provides an RPC-style server for handling
+        <classname>Zend_Amf_Server</classname> provides an RPC-style server for handling
         requests made from the Adobe Flash Player using the AMF protocol. Like
         all Zend Framework server classes, it follows the SoapServer API,
         providing an easy to remember interface for creating servers.
@@ -134,9 +134,9 @@ class World
         <title>Connecting to the Server from Flex</title>
 
         <para>
-            Connecting to your <code>Zend_Amf_Server</code> from your Flex
+            Connecting to your <classname>Zend_Amf_Server</classname> from your Flex
             project is quite simple; you simply need to point your endpoint URI
-            to your <code>Zend_Amf_Server</code> script.
+            to your <classname>Zend_Amf_Server</classname> script.
         </para>
 
         <para>
@@ -172,8 +172,8 @@ class World
         </para>
         <para>
             Flex has created the new services-config.xml and has it open. Use the following example
-            text for your services-config.xml file. Make sure that you update your endpoint to match
-            that of your testing server. Make sure you save the file.
+            text for your services-config.xml file. Make sure that you update your endpoint to
+            match that of your testing server. Make sure you save the file.
         </para>
 
         <programlisting role="xml"><![CDATA[
@@ -206,7 +206,7 @@ class World
         <para>
             There are two key points in the example. First, but last in the
             listing, we create an AMF channel, and specify the endpoint as the
-            URL to our <code>Zend_Amf_Server</code>:
+            URL to our <classname>Zend_Amf_Server</classname>:
         </para>
 
         <programlisting role="xml"><![CDATA[
@@ -353,7 +353,7 @@ echo $response;
         </para>
 
         <para>
-            <code>Zend_Amf</code> provides three methods for mapping
+            <classname>Zend_Amf</classname> provides three methods for mapping
             ActionScript and PHP objects.
         </para>
 
@@ -461,26 +461,27 @@ private function getContactHandler(event:ResultEvent):void {
         <title>Connecting to the Server from Flash</title>
 
         <para>
-            Connecting to your <code>Zend_Amf_Server</code> from your Flash
-            project is slightly different than from Flex. However once the connection Flash functions
-            with <code>Zend_Amf_Server</code> the same way is flex. The following example can
-            also be used from a Flex AS3 file. We will reuse the same <code>Zend_Amf_Server</code>
-            configuration along with the World class for our connection.
+            Connecting to your <classname>Zend_Amf_Server</classname> from your Flash project is
+            slightly different than from Flex. However once the connection Flash functions with
+            <classname>Zend_Amf_Server</classname> the same way is flex. The following example can
+            also be used from a Flex AS3 file. We will reuse the same
+            <classname>Zend_Amf_Server</classname> configuration along with the World class for our
+            connection.
         </para>
         <para>
-            Open Flash CS and create and new Flash File (ActionScript 3). Name the document ZendExample.fla
-            and save the document into a folder that you will use for this example. Create a new AS3 file
-            in the same directory and call the file Main.as. Have both files open in your editor. We are
-            now going to connect the two files via the document class. Select ZendExample and click on
-            the stage. From the stage properties panel change the Document class to Main. This links the
-            Main.as ActionScript file with the user interface in ZendExample.fla. When you run the Flash
-            file ZendExample the Main.as class will now be run. Next we will add ActionScript to make the
-            AMF call.
+            Open Flash CS and create and new Flash File (ActionScript 3). Name the document
+            ZendExample.fla and save the document into a folder that you will use for this example.
+            Create a new AS3 file in the same directory and call the file Main.as. Have both files
+            open in your editor. We are now going to connect the two files via the document class.
+            Select ZendExample and click on the stage. From the stage properties panel change the
+            Document class to Main. This links the Main.as ActionScript file with the user
+            interface in ZendExample.fla. When you run the Flash file ZendExample the Main.as class
+            will now be run. Next we will add ActionScript to make the AMF call.
         </para>
         <para>
-            We now are going to make a Main class so that we can send the data to the server and display
-            the result. Copy the following code into your Main.as file and then we will walk through the
-            code to describe what each element's role is.
+            We now are going to make a Main class so that we can send the data to the server and
+            display the result. Copy the following code into your Main.as file and then we will
+            walk through the code to describe what each element's role is.
         </para>
         <programlisting role="as"><![CDATA[
 package {
@@ -529,7 +530,7 @@ import flash.net.Responder;
 ]]></programlisting>
         <para>
             In the class we need three variables to represent the NetConnection, Responder, and
-            the gateway URL to our <code>Zend_Amf_Server</code> installation.
+            the gateway URL to our <classname>Zend_Amf_Server</classname> installation.
         </para>
         <programlisting role="as"><![CDATA[
 private var gateway:String = "http://example.com/server.php";
@@ -538,9 +539,9 @@ private var responder:Responder;
 ]]></programlisting>
         <para>
             In the Main constructor we create a responder and a new connection to the
-            <code>Zend_Amf_Server</code> endpoint. The responder defines two different methods for
-            handling the response from the server. For simplicity I have called these onResult and
-            onFault.
+            <classname>Zend_Amf_Server</classname> endpoint. The responder defines two different
+            methods for handling the response from the server. For simplicity I have called these
+            onResult and onFault.
         </para>
         <programlisting role="as"><![CDATA[
 responder = new Responder(onResult, onFault);
@@ -550,7 +551,7 @@ connection.connect(gateway);
         <para>
             In the onComplete function which is run as soon as the construct has completed we send
             the data to the server. We need to add one more line that makes a call to the
-            <code>Zend_Amf_Server</code> World->hello function.
+            <classname>Zend_Amf_Server</classname> World->hello function.
         </para>
         <programlisting role="as"><![CDATA[
 connection.call("World.hello", responder, params);

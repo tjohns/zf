@@ -13,7 +13,7 @@
             <code>_redirect()</code> method, such as being able to preconfigure
             sitewide behavior into the redirector object or using the built in
             <code>gotoSimple($action, $controller, $module, $params)</code> interface
-            similar to that of <code>Zend_Controller_Action::_forward()</code>.
+            similar to that of <classname>Zend_Controller_Action::_forward()</classname>.
         </para>
 
         <para>
@@ -41,7 +41,7 @@
                 <para>
                     <code>setGotoSimple()</code> can be used to set a default URL to
                     use if none is passed to <code>gotoSimple()</code>. Uses the API
-                    of <code>Zend_Controller_Action::_forward()</code>:
+                    of <classname>Zend_Controller_Action::_forward()</classname>:
                     setGotoSimple($action, $controller = null, $module = null, array
                     $params = array());
                 </para>
@@ -217,7 +217,7 @@ class AlternativeController extends Zend_Controller_Action
 
             <para>
                 <code>gotoSimple()</code>'s API mimics that of
-                <code>Zend_Controller_Action::_forward()</code>. The primary
+                <classname>Zend_Controller_Action::_forward()</classname>. The primary
                 difference is that it builds a URL from the parameters passed,
                 and using the default <code>:module/:controller/:action/*</code>
                 format of the default router. It then redirects instead of

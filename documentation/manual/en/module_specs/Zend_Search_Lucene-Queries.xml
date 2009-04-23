@@ -24,16 +24,16 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Exception</code> is thrown if something goes wrong in the query parser itself.
+                    <classname>Zend_Search_Lucene_Exception</classname> is thrown if something goes wrong in the query parser itself.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown when there is an error in the query syntax.
+                    <classname>Zend_Search_Lucene_Search_QueryParserException</classname> is thrown when there is an error in the query syntax.
                 </para>
             </listitem>
         </itemizedlist>
-        It's a good idea to catch <code>Zend_Search_Lucene_Search_QueryParserException</code>s and handle them appropriately:
+        It's a good idea to catch <classname>Zend_Search_Lucene_Search_QueryParserException</classname>s and handle them appropriately:
         <programlisting role="php"><![CDATA[
 try {
     $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
@@ -45,17 +45,17 @@ try {
         </para>
 
         <para>
-            The same technique should be used for the find() method of a <code>Zend_Search_Lucene</code> object.
+            The same technique should be used for the find() method of a <classname>Zend_Search_Lucene</classname> object.
         </para>
 
         <para>
             Starting in 1.5, query parsing exceptions are suppressed by default. If query doesn't conform query language,
             then it's tokenized using current default analyzer and all tokenized terms are used for searching.
 
-            Use <code>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</code> method
+            Use <classname>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</classname> method
             to turn exceptions on.
-            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> and
-            <code>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</code> methods are also
+            <classname>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</classname> and
+            <classname>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</classname> methods are also
             intended to manage exceptions handling behavior.
 
         </para>
@@ -89,7 +89,7 @@ $hits  = $index->find($query);
         </programlisting>
 
         <para>
-            The term field is optional. <code>Zend_Search_Lucene</code> searches through all indexed fields in each document if the field is not specified:
+            The term field is optional. <classname>Zend_Search_Lucene</classname> searches through all indexed fields in each document if the field is not specified:
             <programlisting role="php"><![CDATA[
 // Search for 'word1' in all indexed fields
 $term  = new Zend_Search_Lucene_Index_Term('word1');
@@ -409,7 +409,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            The term field is optional. <code>Zend_Search_Lucene</code> searches through all fields on each document if a field is not specified:
+            The term field is optional. <classname>Zend_Search_Lucene</classname> searches through all fields on each document if a field is not specified:
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -474,7 +474,7 @@ $hits  = $index->find($query);
 
 
         <para>
-            The term field is optional. <code>Zend_Search_Lucene</code> searches through all fields on each document if a field is not specified:
+            The term field is optional. <classname>Zend_Search_Lucene</classname> searches through all fields on each document if a field is not specified:
             <programlisting role="php"><![CDATA[
 
 $term = new Zend_Search_Lucene_Index_Term('test');
@@ -533,11 +533,11 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             A phrase query can be constructed in one step with a class constructor or step by step with
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method calls.
+            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> method calls.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Search_Query_Phrase</code> class constructor takes three optional arguments:
+            <classname>Zend_Search_Lucene_Search_Query_Phrase</classname> class constructor takes three optional arguments:
         </para>
         <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_Query_Phrase(
@@ -597,8 +597,8 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(
 
 
         <para>
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> takes two arguments, a
-            required <code>Zend_Search_Lucene_Index_Term</code> object and an optional position:
+            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> takes two arguments, a
+            required <classname>Zend_Search_Lucene_Index_Term</classname> object and an optional position:
         </para>
         <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_Query_Phrase::addTerm(
@@ -715,7 +715,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Term fields are optional. <code>Zend_Search_Lucene</code> searches through all fields if the field is not specified:
+            Term fields are optional. <classname>Zend_Search_Lucene</classname> searches through all fields if the field is not specified:
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
@@ -728,7 +728,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Either (but not both) of the boundary terms may be set to null. <code>Zend_Search_Lucene</code> searches from the beginning or
+            Either (but not both) of the boundary terms may be set to null. <classname>Zend_Search_Lucene</classname> searches from the beginning or
             up to the end of the dictionary for the specified field(s) in this case:
             <programlisting role="php"><![CDATA[
 // searches for ['20020101' TO ...]

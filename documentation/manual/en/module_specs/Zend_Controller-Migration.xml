@@ -17,7 +17,7 @@
 
             <para>
                 Users brought to our attention the fact that
-                <code>Zend_Controller_Action_Helper_ViewRenderer</code> were
+                <classname>Zend_Controller_Action_Helper_ViewRenderer</classname> were
                 using a method of the dispatcher abstract class that was not in
                 the dispatcher interface. We have now added the following method to
                 ensure that custom dispatchers will continue to work with the
@@ -29,7 +29,7 @@
                     <code>formatModuleName()</code>: should be used to take a raw
                 controller name, such as one that would be packaged inside a request
                 object, and reformat it to a proper class name that a class extending
-                <code>Zend_Controller_Action</code> would use
+                <classname>Zend_Controller_Action</classname> would use
                 </para></listitem>
             </itemizedlist>
         </sect3>
@@ -43,8 +43,8 @@
 
             <para>
                 Users brought to our attention the fact that
-                <code>Zend_Controller_Front</code> and
-                <code>Zend_Controller_Router_Route_Module</code> were each
+                <classname>Zend_Controller_Front</classname> and
+                <classname>Zend_Controller_Router_Route_Module</classname> were each
                 using methods of the dispatcher that were not in the dispatcher
                 interface. We have now added the following three methods to
                 ensure that custom dispatchers will continue to work with the
@@ -133,7 +133,7 @@
             <listitem>
                 <para>
                     Second best option: The ViewRenderer now delegates view
-                    script resolution to <code>Zend_Filter_Inflector</code>; you
+                    script resolution to <classname>Zend_Filter_Inflector</classname>; you
                     can modify the rules of the inflector to no longer separate
                     the words of an action with a dash:
                 </para>
@@ -397,19 +397,19 @@ $viewRenderer->setView($view);]]>
             <listitem>
                 <para>
                     <code>setRedirectCode()</code>; use
-                    <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>.
+                    <classname>Zend_Controller_Action_Helper_Redirector::setCode()</classname>.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>setRedirectPrependBase()</code>; use
-                    <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>.
+                    <classname>Zend_Controller_Action_Helper_Redirector::setPrependBase()</classname>.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>setRedirectExit()</code>; use
-                    <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>.
+                    <classname>Zend_Controller_Action_Helper_Redirector::setExit()</classname>.
                 </para>
             </listitem>
         </itemizedlist>
@@ -446,17 +446,17 @@ Zend_Controller_Front::run('/path/to/controllers');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router</code> was removed in favor of
+                    <classname>Zend_Controller_Router</classname> was removed in favor of
                     the rewrite router.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_RewriteRouter</code> was renamed to
-                    <code>Zend_Controller_Router_Rewrite</code>, and promoted to
+                    <classname>Zend_Controller_RewriteRouter</classname> was renamed to
+                    <classname>Zend_Controller_Router_Rewrite</classname>, and promoted to
                     the standard router shipped with the framework;
-                    <code>Zend_Controller_Front</code> will use it by default if
+                    <classname>Zend_Controller_Front</classname> will use it by default if
                     no other router is supplied.
                 </para>
             </listitem>
@@ -465,7 +465,7 @@ Zend_Controller_Front::run('/path/to/controllers');
                 <para>
                     A new route class for use with the rewrite router was
                     introduced,
-                    <code>Zend_Controller_Router_Route_Module</code>; it covers
+                    <classname>Zend_Controller_Router_Route_Module</classname>; it covers
                     the default route used by the MVC, and has support for <link
                         linkend="zend.controller.modular">controller
                         modules</link>.
@@ -474,21 +474,21 @@ Zend_Controller_Front::run('/path/to/controllers');
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_StaticRoute</code> was renamed
-                    to <code>Zend_Controller_Router_Route_Static</code>.
+                    <classname>Zend_Controller_Router_StaticRoute</classname> was renamed
+                    to <classname>Zend_Controller_Router_Route_Static</classname>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher</code> was renamed
-                    <code>Zend_Controller_Dispatcher_Standard</code>.
+                    <classname>Zend_Controller_Dispatcher</classname> was renamed
+                    <classname>Zend_Controller_Dispatcher_Standard</classname>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::_forward()</code>'s arguments
+                    <classname>Zend_Controller_Action::_forward()</classname>'s arguments
                     have changed. The signature is now:
                 </para>
 
@@ -570,7 +570,7 @@ $ctrl->dispatch();
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::dispatch()</code> by default
+                    <classname>Zend_Controller_Front::dispatch()</classname> by default
                     traps exceptions in the response object, and does not render
                     them, in order to prevent sensitive system information from
                     being rendered. You can override this in several ways:
@@ -610,27 +610,27 @@ echo $response;
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
+                <classname>Zend_Controller_Dispatcher_Interface::dispatch()</classname>
                 now accepts and returns a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Router_Interface::route()</code>
+                <classname>Zend_Controller_Router_Interface::route()</classname>
                 now accepts and returns a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Action</code> changes include:</para>
+                <para><classname>Zend_Controller_Action</classname> changes include:</para>
 
                 <itemizedlist>
                     <listitem><para>
                         The constructor now accepts exactly three arguments,
-                        <code>Zend_Controller_Request_Abstract $request</code>,
-                        <code>Zend_Controller_Response_Abstract $response</code>,
+                        <classname>Zend_Controller_Request_Abstract $request</classname>,
+                        <classname>Zend_Controller_Response_Abstract $response</classname>,
                         and <code>array $params (optional)</code>.
-                        <code>Zend_Controller_Action::__construct()</code> uses
+                        <classname>Zend_Controller_Action::__construct()</classname> uses
                         these to set the request, response, and invokeArgs
                         properties of the object, and if overriding the
                         constructor, you should do so as well. Better yet, use
@@ -644,8 +644,8 @@ echo $response;
                         also no longer used by the front controller; its sole
                         purpose is for using the class as a page controller. It
                         now takes two optional arguments, a
-                        <code>Zend_Controller_Request_Abstract $request</code>
-                        and a <code>Zend_Controller_Response_Abstract $response</code>.
+                        <classname>Zend_Controller_Request_Abstract $request</classname>
+                        and a <classname>Zend_Controller_Response_Abstract $response</classname>.
                     </para></listitem>
 
                     <listitem><para>
@@ -671,7 +671,7 @@ echo $response;
                     <listitem>
                         <para>
                             The <code>_action</code> property is no longer set.
-                            This property was a <code>Zend_Controller_Dispatcher_Token</code>,
+                            This property was a <classname>Zend_Controller_Dispatcher_Token</classname>,
                             which no longer exists in the current incarnation.
                             The sole purpose of the token was to provide
                             information about the requested controller, action,
@@ -728,15 +728,15 @@ public function __call($method, $args)
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> has
-                been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code>
-                instead (or <code>Zend_Controller_Request_Http::setBaseUrl()</code>, if using
+                <classname>Zend_Controller_RewriteRouter::setRewriteBase()</classname> has
+                been removed. Use <classname>Zend_Controller_Front::setBaseUrl()</classname>
+                instead (or <classname>Zend_Controller_Request_Http::setBaseUrl()</classname>, if using
                 that request class).
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Plugin_Interface</code> was replaced
-                by <code>Zend_Controller_Plugin_Abstract</code>. All methods now
+                <classname>Zend_Controller_Plugin_Interface</classname> was replaced
+                by <classname>Zend_Controller_Plugin_Abstract</classname>. All methods now
                 accept and return a <xref linkend="zend.controller.request" />
                 object instead of a dispatcher token.
             </para></listitem>

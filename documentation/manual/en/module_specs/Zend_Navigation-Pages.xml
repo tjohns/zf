@@ -4,7 +4,7 @@
     <title>Pages</title>
 
     <para>
-        <code>Zend_Navigation</code> ships with two page types:
+        <classname>Zend_Navigation</classname> ships with two page types:
 
         <itemizedlist>
             <listitem>

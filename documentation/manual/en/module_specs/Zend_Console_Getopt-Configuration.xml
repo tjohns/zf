@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.configuration">
-    <title>Configuring <code>Zend_Console_Getopt</code></title>
+    <title>Configuring <classname>Zend_Console_Getopt</classname></title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Adding Option Rules</title>
         <para>
             You can add more option rules in addition to those you specified
-            in the <code>Zend_Console_Getopt</code> constructor, using the
+            in the <classname>Zend_Console_Getopt</classname> constructor, using the
             <code>addRules()</code> method. The argument to
             <code>addRules()</code> is the same as the first argument to the
             class constructor. It is either a string in the format of the
@@ -33,7 +33,7 @@ $opts->addRules(
             with an alias of "<code>-v</code>" to a set of options
             defined in the call to the constructor. Notice that you can mix
             short format options and long format options in the same instance
-            of <code>Zend_Console_Getopt</code>.
+            of <classname>Zend_Console_Getopt</classname>.
         </para>
     </sect2>
 
@@ -83,7 +83,7 @@ $opts->setHelp(
         </para>
         <para>
             An alias may be declared only once. If you try to redefine
-            an alias, a <code>Zend_Console_Getopt_Exception</code> is thrown.
+            an alias, a <classname>Zend_Console_Getopt_Exception</classname> is thrown.
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title>Using setAliases()</title>
@@ -115,7 +115,7 @@ $opts->setAliases(
     <sect2 id="zend.console.getopt.configuration.addargs">
         <title>Adding Argument Lists</title>
         <para>
-            By default, <code>Zend_Console_Getopt</code> uses
+            By default, <classname>Zend_Console_Getopt</classname> uses
             <code>$_SERVER['argv']</code> for the array of command-line
             arguments to parse. You can alternatively specify the array of
             arguments as the second constructor argument. Finally, you
@@ -146,7 +146,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
     <sect2 id="zend.console.getopt.configuration.config">
         <title>Adding Configuration</title>
         <para>
-            The third parameter to the <code>Zend_Console_Getopt</code>
+            The third parameter to the <classname>Zend_Console_Getopt</classname>
             constructor is an array of configuration options that affect
             the behavior of the object instance returned. You can also
             specify configuration options using the <code>setOptions()</code>
@@ -157,10 +157,10 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Clarifying the Term "option"</title>
             <para>
                 The term "option" is used for configuration of the
-                <code>Zend_Console_Getopt</code> class to match terminology
+                <classname>Zend_Console_Getopt</classname> class to match terminology
                 used elsewhere in Zend Framework. These are not the same
                 things as the command-line options that are parsed by
-                the <code>Zend_Console_Getopt</code> class.
+                the <classname>Zend_Console_Getopt</classname> class.
             </para>
         </note>
         <para>
@@ -172,7 +172,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash"),
+                    <classname>Zend_Console_Getopt::CONFIG_DASHDASH</classname> ("dashDash"),
                     if true, enables the special flag "<code>--</code>" to
                     signify the end of flags. Command-line arguments following
                     the double-dash signifier are not interpreted as options,
@@ -182,7 +182,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"),
+                    <classname>Zend_Console_Getopt::CONFIG_IGNORECASE</classname> ("ignoreCase"),
                     if true, makes flags aliases of each other if they differ
                     only in their case. That is, "<code>-a</code>" and
                     "<code>-A</code>" will be considered to be synonymous flags.
@@ -191,12 +191,12 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") may have values <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") and <code>Zend_Console_Getopt::MODE_GNU</code>
+                    <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname>
+                    ("ruleMode") may have values <classname>Zend_Console_Getopt::MODE_ZEND</classname>
+                    ("zend") and <classname>Zend_Console_Getopt::MODE_GNU</classname>
                     ("gnu"). It should not be necessary to use this option
                     unless you extend the class with additional syntax forms.
-                    The two modes supported in the base <code>Zend_Console_Getopt</code>
+                    The two modes supported in the base <classname>Zend_Console_Getopt</classname>
                     class are unambiguous. If the specifier is a string, the
                     class assumes <code>MODE_GNU</code>, otherwise it assumes
                     <code>MODE_ZEND</code>. But if you extend the class and

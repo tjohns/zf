@@ -4,7 +4,7 @@
     <title>Fetching Options and Arguments</title>
     <para>
         After you have declared the options that the
-        <code>Zend_Console_Getopt</code> object should recognize, and supply
+        <classname>Zend_Console_Getopt</classname> object should recognize, and supply
         arguments from the command-line or an array, you can
         query the object to find out which options were specified by a user in
         a given command-line invocation of your program. The class implements
@@ -12,7 +12,7 @@
     </para>
     <para>
         The parsing of the data is deferred until the first query you make
-        against the <code>Zend_Console_Getopt</code> object to find out if an
+        against the <classname>Zend_Console_Getopt</classname> object to find out if an
         option was given, the object performs its parsing. This allows you to
         use several method calls to configure the options, arguments, help
         strings, and configuration options before parsing takes place.
@@ -22,7 +22,7 @@
         <title>Handling Getopt Exceptions</title>
         <para>
             If the user gave any invalid options on the command-line,
-            the parsing function throws a <code>Zend_Console_Getopt_Exception</code>.
+            the parsing function throws a <classname>Zend_Console_Getopt_Exception</classname>.
             You should catch this exception in your application code.
             You can use the <code>parse()</code> method to force the object
             to parse the arguments. This is useful because you can invoke
@@ -172,7 +172,7 @@ $args = $opts->getRemainingArgs(); // returns array('filename')
             </programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> supports the GNU convention that
+            <classname>Zend_Console_Getopt</classname> supports the GNU convention that
             an argument consisting of a double-dash signifies the end of
             options. Any arguments following this signifier must be treated as
             non-option arguments. This is useful if you might have a non-option

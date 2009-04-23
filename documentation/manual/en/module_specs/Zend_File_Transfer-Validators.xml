@@ -5,10 +5,10 @@
     <title>Validators for Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> is delivered with several file-related validators which can be
+        <classname>Zend_File_Transfer</classname> is delivered with several file-related validators which can be
         used to increase security and prevent possible attacks. Note that these validators are only as effective
-        as how effectively you apply them. All validators provided with <code>Zend_File_Transfer</code> can
-        be found in the <code>Zend_Validator</code> component and are named <code>Zend_Validate_File_*</code>.
+        as how effectively you apply them. All validators provided with <classname>Zend_File_Transfer</classname> can
+        be found in the <classname>Zend_Validator</classname> component and are named <classname>Zend_Validate_File_*</classname>.
         The following validators are available:
     </para>
 
@@ -135,7 +135,7 @@
             <para>
                 <code>Upload</code>: This validator is internal. It checks if an upload has
                 resulted in an error. You must not set it, as it's automatically set by
-                <code>Zend_File_Transfer</code> itself. So you do not use this validator directly. You should only
+                <classname>Zend_File_Transfer</classname> itself. So you do not use this validator directly. You should only
                 know that it exists.
             </para>
         </listitem>
@@ -150,7 +150,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title>Using Validators with <code>Zend_File_Transfer</code></title>
+        <title>Using Validators with <classname>Zend_File_Transfer</classname></title>
 
         <para>
             Putting validators to work is quite simple. There are several methods for adding and manipulating validators:

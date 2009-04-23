@@ -6,7 +6,7 @@
     <sect2 id="zend.service.technorati.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Technorati</code> provides an easy, intuitive and object-oriented interface for using
+            <classname>Zend_Service_Technorati</classname> provides an easy, intuitive and object-oriented interface for using
             the Technorati API. It provides access to all available
             <ulink url="http://technorati.com/developers/api/">Technorati API queries</ulink>
             and returns the original XML response as a friendly PHP object.
@@ -37,14 +37,14 @@
             </para>
         </note>
         <para>
-            Once you have a valid API key, you're ready to start using <code>Zend_Service_Technorati</code>.
+            Once you have a valid API key, you're ready to start using <classname>Zend_Service_Technorati</classname>.
         </para>
     </sect2>
 
     <sect2 id="zend.service.technorati.making-first-query">
         <title>Making Your First Query</title>
         <para>
-            In order to run a query, first you need a <code>Zend_Service_Technorati</code> instance with a valid API
+            In order to run a query, first you need a <classname>Zend_Service_Technorati</classname> instance with a valid API
             key. Then choose one of the available query methods, and call it providing required arguments.
         </para>
         <example id="zend.service.technorati.making-first-query.example-1">
@@ -79,12 +79,12 @@ $resultSet = $technorati->search('PHP', $options);
             </programlisting>
         </example>
         <para>
-            A <code>Zend_Service_Technorati</code> instance is not a single-use object. That is, you don't need to
-            create a new instance for each query call; simply use your current <code>Zend_Service_Technorati</code>
+            A <classname>Zend_Service_Technorati</classname> instance is not a single-use object. That is, you don't need to
+            create a new instance for each query call; simply use your current <classname>Zend_Service_Technorati</classname>
             object as long as you need it.
         </para>
         <example id="zend.service.technorati.making-first-query.example-3">
-            <title>Sending multiple queries with the same <code>Zend_Service_Technorati</code> instance</title>
+            <title>Sending multiple queries with the same <classname>Zend_Service_Technorati</classname> instance</title>
             <programlisting role="php"><![CDATA[
 // create a new Zend_Service_Technorati
 // with a valid API_KEY
@@ -106,9 +106,9 @@ $topTags = $technorati->topTags();
             You can get one of two types of result object in response to a query.
         </para>
         <para>
-            The first group is represented by <code>Zend_Service_Technorati_*ResultSet</code> objects. A result set
+            The first group is represented by <classname>Zend_Service_Technorati_*ResultSet</classname> objects. A result set
             object is basically a collection of result objects. It extends the basic
-            <code>Zend_Service_Technorati_ResultSet</code> class and implements the <code>SeekableIterator</code> PHP
+            <classname>Zend_Service_Technorati_ResultSet</classname> class and implements the <code>SeekableIterator</code> PHP
             interface. The best way to consume a result set object is to loop over it with the PHP <code>foreach</code>
             statement.
         </para>
@@ -131,7 +131,7 @@ foreach ($resultSet as $result) {
             </programlisting>
         </example>
         <para>
-            Because <code>Zend_Service_Technorati_ResultSet</code> implements the <code>SeekableIterator</code>
+            Because <classname>Zend_Service_Technorati_ResultSet</classname> implements the <code>SeekableIterator</code>
             interface, you can seek a specific result object using its position in the result collection.
         </para>
         <example id="zend.service.technorati.consuming-results.example-2">
@@ -159,9 +159,9 @@ $result = $resultSet->current();
         </note>
         <para>
             The second group is represented by special standalone result objects.
-            <code>Zend_Service_Technorati_GetInfoResult</code>, <code>Zend_Service_Technorati_BlogInfoResult</code> and
-            <code>Zend_Service_Technorati_KeyInfoResult</code> act as wrappers for additional objects, such as
-            <code>Zend_Service_Technorati_Author</code> and <code>Zend_Service_Technorati_Weblog</code>.
+            <classname>Zend_Service_Technorati_GetInfoResult</classname>, <classname>Zend_Service_Technorati_BlogInfoResult</classname> and
+            <classname>Zend_Service_Technorati_KeyInfoResult</classname> act as wrappers for additional objects, such as
+            <classname>Zend_Service_Technorati_Author</classname> and <classname>Zend_Service_Technorati_Weblog</classname>.
         </para>
         <example id="zend.service.technorati.consuming-results.example-3">
             <title>Consuming a standalone result object</title>
@@ -194,13 +194,13 @@ echo "</ol>";
     <sect2 id="zend.service.technorati.handling-errors">
         <title>Handling Errors</title>
         <para>
-            Each <code>Zend_Service_Technorati</code> query method throws a
-            <code>Zend_Service_Technorati_Exception</code> exception on failure with a meaningful error message.
+            Each <classname>Zend_Service_Technorati</classname> query method throws a
+            <classname>Zend_Service_Technorati_Exception</classname> exception on failure with a meaningful error message.
         </para>
         <para>
-            There are several reasons that may cause a <code>Zend_Service_Technorati</code> query to fail.
-            <code>Zend_Service_Technorati</code> validates all parameters for any query request. If a parameter is
-            invalid or it contains an invalid value, a new <code>Zend_Service_Technorati_Exception</code> exception is
+            There are several reasons that may cause a <classname>Zend_Service_Technorati</classname> query to fail.
+            <classname>Zend_Service_Technorati</classname> validates all parameters for any query request. If a parameter is
+            invalid or it contains an invalid value, a new <classname>Zend_Service_Technorati_Exception</classname> exception is
             thrown. Additionally, the Technorati API interface could be temporally unavailable, or it could return a
             response that is not well formed.
         </para>
@@ -225,13 +225,13 @@ try {
         <title>Checking Your API Key Daily Usage</title>
         <para>
             From time to time you probably will want to check your API key daily usage. By default Technorati limits
-            your API usage to 500 calls per day, and an exception is returned by <code>Zend_Service_Technorati</code>
+            your API usage to 500 calls per day, and an exception is returned by <classname>Zend_Service_Technorati</classname>
             if you try to use it beyond this limit. You can get information about your API key usage using the
-            <code>Zend_Service_Technorati::keyInfo()</code> method.
+            <classname>Zend_Service_Technorati::keyInfo()</classname> method.
         </para>
         <para>
-            <code>Zend_Service_Technorati::keyInfo()</code> returns a
-            <code>Zend_Service_Technorati_KeyInfoResult</code> object. For full details please see the
+            <classname>Zend_Service_Technorati::keyInfo()</classname> returns a
+            <classname>Zend_Service_Technorati_KeyInfoResult</classname> object. For full details please see the
             <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
         </para>
         <example id="zend.service.technorati.checking-api-daily-usage.example-1">
@@ -251,7 +251,7 @@ echo "Daily Usage: " . $key->getApiQueries() . "/" .
     <sect2 id="zend.service.technorati.queries">
         <title>Available Technorati Queries</title>
         <para>
-            <code>Zend_Service_Technorati</code> provides support for the following queries:
+            <classname>Zend_Service_Technorati</classname> provides support for the following queries:
             <itemizedlist>
                 <listitem><para><link linkend="zend.service.technorati.queries.cosmos"><code>Cosmos</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.technorati.queries.search"><code>Search</code></link></para></listitem>
@@ -269,8 +269,8 @@ echo "Daily Usage: " . $key->getApiQueries() . "/" .
             <para>
                 <ulink url="http://technorati.com/developers/api/cosmos.html">Cosmos</ulink> query lets you see what
                 blogs are linking to a given URL. It returns a
-                <link linkend="zend.service.technorati.classes.cosmosresultset"><code>Zend_Service_Technorati_CosmosResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::cosmos()</code> in the
+                <link linkend="zend.service.technorati.classes.cosmosresultset"><classname>Zend_Service_Technorati_CosmosResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::cosmos()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.cosmos.example-1">
@@ -297,8 +297,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/search.html">Search</ulink> query lets you see
                 what blogs contain a given search string. It returns a
-                <link linkend="zend.service.technorati.classes.searchresultset"><code>Zend_Service_Technorati_SearchResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::search()</code> in the
+                <link linkend="zend.service.technorati.classes.searchresultset"><classname>Zend_Service_Technorati_SearchResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::search()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.search.example-1">
@@ -325,8 +325,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/tag.html">Tag</ulink> query lets you see what
                 posts are associated with a given tag. It returns a
-                <link linkend="zend.service.technorati.classes.tagresultset"><code>Zend_Service_Technorati_TagResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::tag()</code> in the
+                <link linkend="zend.service.technorati.classes.tagresultset"><classname>Zend_Service_Technorati_TagResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::tag()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.tag.example-1">
@@ -353,8 +353,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/dailycounts.html">DailyCounts</ulink> query
                 provides daily counts of posts containing the queried keyword. It returns a
-                <link linkend="zend.service.technorati.classes.dailycountsresultset"><code>Zend_Service_Technorati_DailyCountsResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::dailyCounts()</code> in the
+                <link linkend="zend.service.technorati.classes.dailycountsresultset"><classname>Zend_Service_Technorati_DailyCountsResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::dailyCounts()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.dailycounts.example-1">
@@ -378,8 +378,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/toptags.html">TopTags</ulink> query provides
                 information on top tags indexed by Technorati. It returns a
-                <link linkend="zend.service.technorati.classes.tagsresultset"><code>Zend_Service_Technorati_TagsResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::topTags()</code> in the
+                <link linkend="zend.service.technorati.classes.tagsresultset"><classname>Zend_Service_Technorati_TagsResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::topTags()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.toptags.example-1">
@@ -406,8 +406,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/bloginfo.html">BlogInfo</ulink> query provides
                 information on what blog, if any, is associated with a given URL. It returns a
-                <link linkend="zend.service.technorati.classes.bloginforesult"><code>Zend_Service_Technorati_BlogInfoResult</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::blogInfo()</code> in the
+                <link linkend="zend.service.technorati.classes.bloginforesult"><classname>Zend_Service_Technorati_BlogInfoResult</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::blogInfo()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.bloginfo.example-1">
@@ -428,8 +428,8 @@ echo '<h2><a href="' . (string) $result->getWeblog()->getUrl() . '">' .
             <para>
                 The <ulink url="http://technorati.com/developers/api/blogposttags.html">BlogPostTags</ulink> query
                 provides information on the top tags used by a specific blog. It returns a
-                <link linkend="zend.service.technorati.classes.tagsresultset"><code>Zend_Service_Technorati_TagsResultSet</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::blogPostTags()</code> in the
+                <link linkend="zend.service.technorati.classes.tagsresultset"><classname>Zend_Service_Technorati_TagsResultSet</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::blogPostTags()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.blogposttags.example-1">
@@ -456,8 +456,8 @@ echo "</ol>";
             <para>
                 The <ulink url="http://technorati.com/developers/api/getinfo.html">GetInfo</ulink> query tells you
                 things that Technorati knows about a member. It returns a
-                <link linkend="zend.service.technorati.classes.getinforesult"><code>Zend_Service_Technorati_GetInfoResult</code></link>
-                object. For full details please see <code>Zend_Service_Technorati::getInfo()</code> in the
+                <link linkend="zend.service.technorati.classes.getinforesult"><classname>Zend_Service_Technorati_GetInfoResult</classname></link>
+                object. For full details please see <classname>Zend_Service_Technorati::getInfo()</classname> in the
                 <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
             <example id="zend.service.technorati.queries.getinfo.example-1">
@@ -483,8 +483,8 @@ echo "</ol>";
             <title>Technorati KeyInfo</title>
             <para>
                 The KeyInfo query provides information on daily usage of an API key. It returns a
-               <link linkend="zend.service.technorati.classes.keyinforesult"><code>Zend_Service_Technorati_KeyInfoResult</code></link>
-               object. For full details please see <code>Zend_Service_Technorati::keyInfo()</code> in the
+               <link linkend="zend.service.technorati.classes.keyinforesult"><classname>Zend_Service_Technorati_KeyInfoResult</classname></link>
+               object. For full details please see <classname>Zend_Service_Technorati::keyInfo()</classname> in the
                <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
             </para>
         </sect3>
@@ -495,58 +495,58 @@ echo "</ol>";
         <title>Zend_Service_Technorati Classes</title>
         <para>
             The following classes are returned by the various Technorati queries. Each
-            <code>Zend_Service_Technorati_*ResultSet</code> class holds a type-specific result set which can be easily
+            <classname>Zend_Service_Technorati_*ResultSet</classname> class holds a type-specific result set which can be easily
             iterated, with each result being contained in a type result object. All result set classes extend
-            <code>Zend_Service_Technorati_ResultSet</code> class and implement the <code>SeekableIterator</code>
+            <classname>Zend_Service_Technorati_ResultSet</classname> class and implement the <code>SeekableIterator</code>
             interface, allowing for easy iteration and seeking to a specific result.
             <itemizedlist>
-                <listitem><para><link linkend="zend.service.technorati.classes.resultset"><code>Zend_Service_Technorati_ResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.cosmosresultset"><code>Zend_Service_Technorati_CosmosResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.searchresultset"><code>Zend_Service_Technorati_SearchResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.tagresultset"><code>Zend_Service_Technorati_TagResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.dailycountsresultset"><code>Zend_Service_Technorati_DailyCountsResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.tagsresultset"><code>Zend_Service_Technorati_TagsResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.result"><code>Zend_Service_Technorati_Result</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.cosmosresult"><code>Zend_Service_Technorati_CosmosResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.searchresult"><code>Zend_Service_Technorati_SearchResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.tagresult"><code>Zend_Service_Technorati_TagResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.dailycountsresult"><code>Zend_Service_Technorati_DailyCountsResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.tagsresult"><code>Zend_Service_Technorati_TagsResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.getinforesult"><code>Zend_Service_Technorati_GetInfoResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.bloginforesult"><code>Zend_Service_Technorati_BlogInfoResult</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.technorati.classes.keyinforesult"><code>Zend_Service_Technorati_KeyInfoResult</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.resultset"><classname>Zend_Service_Technorati_ResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.cosmosresultset"><classname>Zend_Service_Technorati_CosmosResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.searchresultset"><classname>Zend_Service_Technorati_SearchResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.tagresultset"><classname>Zend_Service_Technorati_TagResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.dailycountsresultset"><classname>Zend_Service_Technorati_DailyCountsResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.tagsresultset"><classname>Zend_Service_Technorati_TagsResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.result"><classname>Zend_Service_Technorati_Result</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.cosmosresult"><classname>Zend_Service_Technorati_CosmosResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.searchresult"><classname>Zend_Service_Technorati_SearchResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.tagresult"><classname>Zend_Service_Technorati_TagResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.dailycountsresult"><classname>Zend_Service_Technorati_DailyCountsResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.tagsresult"><classname>Zend_Service_Technorati_TagsResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.getinforesult"><classname>Zend_Service_Technorati_GetInfoResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.bloginforesult"><classname>Zend_Service_Technorati_BlogInfoResult</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.technorati.classes.keyinforesult"><classname>Zend_Service_Technorati_KeyInfoResult</classname></link></para></listitem>
             </itemizedlist>
         </para>
         <note>
             <para>
-                <code>Zend_Service_Technorati_GetInfoResult</code>, <code>Zend_Service_Technorati_BlogInfoResult</code>
-                and <code>Zend_Service_Technorati_KeyInfoResult</code> represent exceptions to the above because they
+                <classname>Zend_Service_Technorati_GetInfoResult</classname>, <classname>Zend_Service_Technorati_BlogInfoResult</classname>
+                and <classname>Zend_Service_Technorati_KeyInfoResult</classname> represent exceptions to the above because they
                 don't belong to a result set and they don't implement any interface. They represent a single response
-                object and they act as a wrapper for additional <code>Zend_Service_Technorati</code> objects, such as
-                <code>Zend_Service_Technorati_Author</code> and <code>Zend_Service_Technorati_Weblog</code>.
+                object and they act as a wrapper for additional <classname>Zend_Service_Technorati</classname> objects, such as
+                <classname>Zend_Service_Technorati_Author</classname> and <classname>Zend_Service_Technorati_Weblog</classname>.
             </para>
         </note>
         <para>
-            The <code>Zend_Service_Technorati</code> library includes additional convenient classes representing
-            specific response objects. <code>Zend_Service_Technorati_Author</code> represents a single Technorati
-            account, also known as a blog author or blogger. <code>Zend_Service_Technorati_Weblog</code> represents a
+            The <classname>Zend_Service_Technorati</classname> library includes additional convenient classes representing
+            specific response objects. <classname>Zend_Service_Technorati_Author</classname> represents a single Technorati
+            account, also known as a blog author or blogger. <classname>Zend_Service_Technorati_Weblog</classname> represents a
             single weblog object, along with all specific weblog properties such as feed URLs or blog name. For full
-            details please see <code>Zend_Service_Technorati</code> in the
+            details please see <classname>Zend_Service_Technorati</classname> in the
             <ulink url="http://framework.zend.com/apidoc/core/">API reference guide</ulink>.
         </para>
 
         <sect3 id="zend.service.technorati.classes.resultset">
             <title>Zend_Service_Technorati_ResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_ResultSet</code> is the most essential result set. The scope of this
+                <classname>Zend_Service_Technorati_ResultSet</classname> is the most essential result set. The scope of this
                 class is to be extended by a query-specific child result set class, and it should never be used to
                 initialize a standalone object. Each of the specific result sets represents a collection of
                 query-specific
-                <link linkend="zend.service.technorati.classes.result"><code>Zend_Service_Technorati_Result</code></link>
+                <link linkend="zend.service.technorati.classes.result"><classname>Zend_Service_Technorati_Result</classname></link>
                 objects.
             </para>
             <para>
-                <code>Zend_Service_Technorati_ResultSet</code> implements the PHP <code>SeekableIterator</code>
+                <classname>Zend_Service_Technorati_ResultSet</classname> implements the PHP <code>SeekableIterator</code>
                 interface, and you can iterate all result objects via the PHP <code>foreach</code> statement.
             </para>
             <example id="zend.service.technorati.classes.resultset.example-1">
@@ -571,11 +571,11 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.cosmosresultset">
             <title>Zend_Service_Technorati_CosmosResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_CosmosResultSet</code> represents a Technorati Cosmos query result set.
+                <classname>Zend_Service_Technorati_CosmosResultSet</classname> represents a Technorati Cosmos query result set.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_CosmosResultSet</code> extends
+                    <classname>Zend_Service_Technorati_CosmosResultSet</classname> extends
                     <link linkend="zend.service.technorati.classes.resultset">Zend_Service_Technorati_ResultSet</link>.
                 </para>
             </note>
@@ -584,11 +584,11 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.searchresultset">
             <title>Zend_Service_Technorati_SearchResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_SearchResultSet</code> represents a Technorati Search query result set.
+                <classname>Zend_Service_Technorati_SearchResultSet</classname> represents a Technorati Search query result set.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_SearchResultSet</code> extends
+                    <classname>Zend_Service_Technorati_SearchResultSet</classname> extends
                     <link linkend="zend.service.technorati.classes.resultset">Zend_Service_Technorati_ResultSet</link>.
                 </para>
             </note>
@@ -597,11 +597,11 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.tagresultset">
             <title>Zend_Service_Technorati_TagResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_TagResultSet</code> represents a Technorati Tag query result set.
+                <classname>Zend_Service_Technorati_TagResultSet</classname> represents a Technorati Tag query result set.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_TagResultSet</code> extends
+                    <classname>Zend_Service_Technorati_TagResultSet</classname> extends
                     <link linkend="zend.service.technorati.classes.resultset">Zend_Service_Technorati_ResultSet</link>.
                 </para>
             </note>
@@ -610,11 +610,11 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.dailycountsresultset">
             <title>Zend_Service_Technorati_DailyCountsResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_DailyCountsResultSet</code> represents a Technorati DailyCounts query result set.
+                <classname>Zend_Service_Technorati_DailyCountsResultSet</classname> represents a Technorati DailyCounts query result set.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_DailyCountsResultSet</code> extends
+                    <classname>Zend_Service_Technorati_DailyCountsResultSet</classname> extends
                     <link linkend="zend.service.technorati.classes.resultset">Zend_Service_Technorati_ResultSet</link>.
                 </para>
             </note>
@@ -623,11 +623,11 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.tagsresultset">
             <title>Zend_Service_Technorati_TagsResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_TagsResultSet</code> represents a Technorati TopTags or BlogPostTags queries result set.
+                <classname>Zend_Service_Technorati_TagsResultSet</classname> represents a Technorati TopTags or BlogPostTags queries result set.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_TagsResultSet</code> extends
+                    <classname>Zend_Service_Technorati_TagsResultSet</classname> extends
                     <link linkend="zend.service.technorati.classes.resultset">Zend_Service_Technorati_ResultSet</link>.
                 </para>
             </note>
@@ -636,7 +636,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.result">
             <title>Zend_Service_Technorati_Result</title>
             <para>
-                <code>Zend_Service_Technorati_Result</code> is the most essential result object. The scope of this
+                <classname>Zend_Service_Technorati_Result</classname> is the most essential result object. The scope of this
                 class is to be extended by a query specific child result class, and it should never be used to
                 initialize a standalone object.
             </para>
@@ -645,14 +645,14 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.cosmosresult">
             <title>Zend_Service_Technorati_CosmosResult</title>
             <para>
-                <code>Zend_Service_Technorati_CosmosResult</code> represents a single Technorati Cosmos query result
+                <classname>Zend_Service_Technorati_CosmosResult</classname> represents a single Technorati Cosmos query result
                 object. It is never returned as a standalone object, but it always belongs to a valid
                 <link linkend="zend.service.technorati.classes.cosmosresultset">Zend_Service_Technorati_CosmosResultSet</link>
                 object.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_CosmosResult</code> extends
+                    <classname>Zend_Service_Technorati_CosmosResult</classname> extends
                     <link linkend="zend.service.technorati.classes.result">Zend_Service_Technorati_Result</link>.
                 </para>
             </note>
@@ -661,14 +661,14 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.searchresult">
             <title>Zend_Service_Technorati_SearchResult</title>
             <para>
-                <code>Zend_Service_Technorati_SearchResult</code> represents a single Technorati Search query result
+                <classname>Zend_Service_Technorati_SearchResult</classname> represents a single Technorati Search query result
                 object. It is never returned as a standalone object, but it always belongs to a valid
                 <link linkend="zend.service.technorati.classes.searchresultset">Zend_Service_Technorati_SearchResultSet</link>
                 object.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_SearchResult</code> extends
+                    <classname>Zend_Service_Technorati_SearchResult</classname> extends
                     <link linkend="zend.service.technorati.classes.result">Zend_Service_Technorati_Result</link>.
                 </para>
             </note>
@@ -677,14 +677,14 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.tagresult">
             <title>Zend_Service_Technorati_TagResult</title>
             <para>
-                <code>Zend_Service_Technorati_TagResult</code> represents a single Technorati Tag query result object.
+                <classname>Zend_Service_Technorati_TagResult</classname> represents a single Technorati Tag query result object.
                 It is never returned as a standalone object, but it always belongs to a valid
                 <link linkend="zend.service.technorati.classes.tagresultset">Zend_Service_Technorati_TagResultSet</link>
                 object.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_TagResult</code> extends
+                    <classname>Zend_Service_Technorati_TagResult</classname> extends
                     <link linkend="zend.service.technorati.classes.result">Zend_Service_Technorati_Result</link>.
                 </para>
             </note>
@@ -693,14 +693,14 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.dailycountsresult">
             <title>Zend_Service_Technorati_DailyCountsResult</title>
             <para>
-                <code>Zend_Service_Technorati_DailyCountsResult</code> represents a single Technorati DailyCounts query
+                <classname>Zend_Service_Technorati_DailyCountsResult</classname> represents a single Technorati DailyCounts query
                 result object. It is never returned as a standalone object, but it always belongs to a valid
                 <link linkend="zend.service.technorati.classes.dailycountsresultset">Zend_Service_Technorati_DailyCountsResultSet</link>
                 object.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_DailyCountsResult</code> extends
+                    <classname>Zend_Service_Technorati_DailyCountsResult</classname> extends
                     <link linkend="zend.service.technorati.classes.result">Zend_Service_Technorati_Result</link>.
                 </para>
             </note>
@@ -709,14 +709,14 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.tagsresult">
             <title>Zend_Service_Technorati_TagsResult</title>
             <para>
-                <code>Zend_Service_Technorati_TagsResult</code> represents a single Technorati TopTags or BlogPostTags
+                <classname>Zend_Service_Technorati_TagsResult</classname> represents a single Technorati TopTags or BlogPostTags
                 query result object. It is never returned as a standalone object, but it always belongs to a valid
                 <link linkend="zend.service.technorati.classes.tagsresultset">Zend_Service_Technorati_TagsResultSet </link>
                 object.
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Technorati_TagsResult</code> extends
+                    <classname>Zend_Service_Technorati_TagsResult</classname> extends
                     <link linkend="zend.service.technorati.classes.result">Zend_Service_Technorati_Result</link>.
                 </para>
             </note>
@@ -725,7 +725,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.getinforesult">
             <title>Zend_Service_Technorati_GetInfoResult</title>
             <para>
-                <code>Zend_Service_Technorati_GetInfoResult</code> represents a single Technorati GetInfo query result
+                <classname>Zend_Service_Technorati_GetInfoResult</classname> represents a single Technorati GetInfo query result
                 object.
             </para>
         </sect3>
@@ -733,7 +733,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.bloginforesult">
             <title>Zend_Service_Technorati_BlogInfoResult</title>
             <para>
-                <code>Zend_Service_Technorati_BlogInfoResult</code> represents a single Technorati BlogInfo query
+                <classname>Zend_Service_Technorati_BlogInfoResult</classname> represents a single Technorati BlogInfo query
                 result object.
             </para>
         </sect3>
@@ -741,7 +741,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.keyinforesult">
             <title>Zend_Service_Technorati_KeyInfoResult</title>
             <para>
-                <code>Zend_Service_Technorati_KeyInfoResult</code> represents a single Technorati KeyInfo query result
+                <classname>Zend_Service_Technorati_KeyInfoResult</classname> represents a single Technorati KeyInfo query result
                 object. It provides information about your
                 <link linkend="zend.service.technorati.checking-api-daily-usage">Technorati API Key daily usage</link>.
             </para>

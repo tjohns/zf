@@ -6,10 +6,10 @@
 
     <para>
         Once your controller has assigned variables and called <code>render()</code>,
-        <code>Zend_View</code> then includes the requested view script and executes
-        it "inside" the scope of the <code>Zend_View</code> instance. Therefore,
+        <classname>Zend_View</classname> then includes the requested view script and executes
+        it "inside" the scope of the <classname>Zend_View</classname> instance. Therefore,
         in your view scripts, references to $this actually point to the
-        <code>Zend_View</code> instance itself.
+        <classname>Zend_View</classname> instance itself.
     </para>
 
     <para>
@@ -23,7 +23,7 @@
 
     <para>
         By way of reminder, here is the example view script from the
-        <code>Zend_View</code> introduction.
+        <classname>Zend_View</classname> introduction.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -67,7 +67,7 @@
         </para>
 
         <para>
-            <code>Zend_View</code> comes with a method called escape() that does such
+            <classname>Zend_View</classname> comes with a method called escape() that does such
             escaping for you.
         </para>
 
@@ -84,7 +84,7 @@ echo $this->escape($this->variable);
             By default, the escape() method uses the PHP htmlspecialchars()
             function for escaping. However, depending on your environment,
             you may wish for escaping to occur in a different way. Use the
-            setEscape() method at the controller level to tell <code>Zend_View</code>
+            setEscape() method at the controller level to tell <classname>Zend_View</classname>
             what escaping callback to use.
         </para>
 
@@ -121,9 +121,9 @@ echo $view->render(...);
         <para>
             Although PHP is itself a powerful template system, many developers
             feel it is too powerful or complex for their template designers and
-            will want to use an alternate template engine. <code>Zend_View</code> provides
+            will want to use an alternate template engine. <classname>Zend_View</classname> provides
             two mechanisms for doing so, the first through view scripts, the
-            second by implementing <code>Zend_View_Interface</code>.
+            second by implementing <classname>Zend_View_Interface</classname>.
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -191,8 +191,8 @@ if ($this->books) {
             <title>Template Systems Using Zend_View_Interface</title>
 
             <para>
-                Some may find it easier to simply provide a <code>Zend_View</code>-compatible
-                template engine. <code>Zend_View_Interface</code> defines the
+                Some may find it easier to simply provide a <classname>Zend_View</classname>-compatible
+                template engine. <classname>Zend_View_Interface</classname> defines the
                 minimum interface needed for compatability:
             </para>
 
@@ -250,7 +250,7 @@ public function render($name);
 
             <para>
                 Using this interface, it becomes relatively easy to wrap a
-                third-party template engine as a <code>Zend_View</code>-compatible class. As
+                third-party template engine as a <classname>Zend_View</classname>-compatible class. As
                 an example, the following is one potential wrapper for Smarty:
             </para>
 
@@ -430,9 +430,9 @@ class Zend_View_Smarty implements Zend_View_Interface
 
             <para>
                 In this example, you would instantiate the
-                <code>Zend_View_Smarty</code> class instead of
-                <code>Zend_View</code>, and then use it in roughly the same
-                fashion as <code>Zend_View</code>:
+                <classname>Zend_View_Smarty</classname> class instead of
+                <classname>Zend_View</classname>, and then use it in roughly the same
+                fashion as <classname>Zend_View</classname>:
             </para>
 
             <programlisting role="php"><![CDATA[

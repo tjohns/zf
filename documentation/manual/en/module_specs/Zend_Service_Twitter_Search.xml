@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Service_Twitter_Search</code> provides a client for the <ulink
+            <classname>Zend_Service_Twitter_Search</classname> provides a client for the <ulink
                 url="http://apiwiki.twitter.com/Search+API+Documentation">Twitter Search API</ulink>.
             The Twitter Search service is use to search Twitter. Currently it only
             returns data in Atom or JSON format but a full REST service is in the future
@@ -132,7 +132,7 @@ $search_results = $twitter_search->search('zend', array('lang' => 'en'));
         <example id="zend.service.twitter.search.search.atom">
             <title>ATOM Search Example</title>
             <para>
-                The following code sample will return a <code>Zend_Feed_Atom</code> object.
+                The following code sample will return a <classname>Zend_Feed_Atom</classname> object.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -148,7 +148,7 @@ $search_results = $twitter_search->search('zend', array('lang' => 'en'));
 
         <para>
             While the Twitter Search API only specifies two methods,
-            <code>Zend_Service_Twitter_Search</code> has additional accessors
+            <classname>Zend_Service_Twitter_Search</classname> has additional accessors
             that may be used for modifying internal properties.
         </para>
 

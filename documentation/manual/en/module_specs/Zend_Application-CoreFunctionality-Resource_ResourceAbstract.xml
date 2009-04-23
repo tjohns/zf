@@ -4,7 +4,7 @@
     <title>Zend_Application_Resource_ResourceAbstract</title>
 
     <para>
-        <code>Zend_Application_Resource_ResourceAbstract</code> is an abstract
+        <classname>Zend_Application_Resource_ResourceAbstract</classname> is an abstract
         class implementing <link linkend="zend.application.core-functionality.resource-resource">Zend_Application_Resource_Resource</link>,
         and is a good starting point for creating your own custom plugin
         resources.
@@ -45,7 +45,7 @@
 
                 <row>
                     <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_ResourceAbstract</code></entry>
+                    <entry><classname>Zend_Application_Resource_ResourceAbstract</classname></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>required</emphasis>.
@@ -59,7 +59,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the registered bootstrap instance.
@@ -68,7 +68,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_ResourceAbstract</code></entry>
+                    <entry><classname>Zend_Application_Resource_ResourceAbstract</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.

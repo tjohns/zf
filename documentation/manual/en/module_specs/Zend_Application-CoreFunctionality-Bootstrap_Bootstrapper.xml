@@ -4,7 +4,7 @@
     <title>Zend_Application_Bootstrap_Bootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_Bootstrapper</code> is the base interface
+        <classname>Zend_Application_Bootstrap_Bootstrapper</classname> is the base interface
         all bootstrap classes must implement. The base functionality is aimed at
         configuration, identifying resources, bootstrapping (either individual
         resources or the entire application), and dispatching the application.
@@ -32,21 +32,21 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$application</code>: <emphasis>required</emphasis>.
-                            Should accept a <code>Zend_Application</code> or a
-                            <code>Zend_Application_Bootstrap_Bootstrapper</code>
+                            Should accept a <classname>Zend_Application</classname> or a
+                            <classname>Zend_Application_Bootstrap_Bootstrapper</classname>
                             object as the sole argument.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
                         Constructor. Accepts a single argument, which should be a
-                        <code>Zend_Application</code> object, or another bootstrap
+                        <classname>Zend_Application</classname> object, or another bootstrap
                         object.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -62,7 +62,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the application/bootstrap object passed via the

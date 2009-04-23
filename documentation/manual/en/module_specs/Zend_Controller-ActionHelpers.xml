@@ -8,7 +8,7 @@
         <para>
             Action Helpers allow developers to inject runtime and/or on-demand
             functionality into any Action Controllers that extend
-            <code>Zend_Controller_Action</code>. Action Helpers aim to minimize the
+            <classname>Zend_Controller_Action</classname>. Action Helpers aim to minimize the
             necessity to extend the abstract Action Controller in order to
             inject common Action Controller functionality.
         </para>
@@ -20,7 +20,7 @@
                 linkend="zend.view.helpers">Zend_View_Helper</link>, and that
             of <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
-            Action Helpers (like <code>Zend_View_Helper</code>) may be
+            Action Helpers (like <classname>Zend_View_Helper</classname>) may be
             loaded and called on demand, or they may be instantiated at
             request time (bootstrap) or action controller creation time
             (init()). To understand this more fully, please see the usage
@@ -38,7 +38,7 @@
 
         <para>
             The helper broker is stored as the <code>$_helper</code> member of
-            <code>Zend_Controller_Action</code>; use the broker to retrieve or
+            <classname>Zend_Controller_Action</classname>; use the broker to retrieve or
             call on helpers. Some methods for doing so include:
         </para>
 
@@ -102,7 +102,7 @@ $this->_helper->FlashMessenger('We did something in the last request');
         <title>The Helper Broker</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code> handles the details
+            <classname>Zend_Controller_Action_HelperBroker</classname> handles the details
             of registering helper objects and helper paths, as well as
             retrieving helpers on-demand.
         </para>
@@ -263,7 +263,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Action helpers extend
-            <code>Zend_Controller_Action_Helper_Abstract</code>, an abstract
+            <classname>Zend_Controller_Action_Helper_Abstract</classname>, an abstract
             class that provides the basic interface and functionality required
             by the helper broker. These include the following methods:
         </para>
@@ -320,7 +320,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
                     retrieves the portion of the class name following the last
                     underscore character, or the full class name otherwise. As
                     an example, if the class is named
-                    <code>Zend_Controller_Action_Helper_Redirector</code>, it
+                    <classname>Zend_Controller_Action_Helper_Redirector</classname>, it
                     will return <code>Redirector</code>; a class named
                     <code>FooMessage</code> will simply return itself.
                 </para>

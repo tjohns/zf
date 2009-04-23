@@ -4,7 +4,7 @@
     <title>Custom Feed and Entry Classes</title>
 
     <para>
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
+        Finally, you can extend the <classname>Zend_Feed</classname> classes if you'd like to provide your own format or
         niceties like automatic handling of elements that should go into a custom namespace.
     </para>
 

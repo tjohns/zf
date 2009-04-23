@@ -44,7 +44,7 @@ $memObject = $memoryManager->createLocked($data);
 
         <para>
             Locked objects provides the same interface as movable objects
-            (<code>Zend_Memory_Container_Interface</code>).
+            (<classname>Zend_Memory_Container_Interface</classname>).
             So locked object can be used in any place instead of movable objects.
         </para>
 
@@ -59,7 +59,7 @@ $memObject = $memoryManager->createLocked($data);
         </para>
 
         <para>
-            The locked objects class (<code>Zend_Memory_Container_Locked</code>)
+            The locked objects class (<classname>Zend_Memory_Container_Locked</classname>)
             guarantees virtually the same performance as working with a string
             variable. The overhead is a single dereference to get the class property.
         </para>

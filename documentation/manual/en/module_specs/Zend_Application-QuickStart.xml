@@ -5,15 +5,15 @@
 
     <para>
         There are two paths to getting started with
-        <code>Zend_Application</code>, and they depend on how you start your
+        <classname>Zend_Application</classname>, and they depend on how you start your
         project. In each case, you always start with creating a
         <code>Bootstrap</code> class, and a related configuration file.
     </para>
 
     <para>
-        If you plan on using <code>Zend_Tool</code> to create your project,
+        If you plan on using <classname>Zend_Tool</classname> to create your project,
         continue reading below. If you will be adding
-        <code>Zend_Application</code> to an existing project, you'll want to
+        <classname>Zend_Application</classname> to an existing project, you'll want to
         <link linkend="zend.application.quick-start.manual">skip ahead</link>.
     </para>
 
@@ -21,8 +21,8 @@
         <title>Using Zend_Tool</title>
 
         <para>
-            The quickest way to start using <code>Zend_Application</code> is to use
-            <code>Zend_Tool</code> to generate your project. This will also create
+            The quickest way to start using <classname>Zend_Application</classname> is to use
+            <classname>Zend_Tool</classname> to generate your project. This will also create
             your <code>Bootstrap</code> class and file.
         </para>
 
@@ -114,13 +114,13 @@ phpSettings.display_errors = 1
 
         <para>
             All settings in this configuration file are for use with
-            <code>Zend_Application</code> and your bootstrap.
+            <classname>Zend_Application</classname> and your bootstrap.
         </para>
 
         <para>
             Another file of interest is the
             <code>newproject/public/index.php</code> file, which invokes
-            <code>Zend_Application</code> and dispatches it.
+            <classname>Zend_Application</classname> and dispatches it.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -159,7 +159,7 @@ $application->bootstrap();
         <title>Adding Zend_Application to your application</title>
 
         <para>
-            The basics of <code>Zend_Application</code> are fairly simple:
+            The basics of <classname>Zend_Application</classname> are fairly simple:
         </para>
 
         <itemizedlist>
@@ -171,12 +171,12 @@ $application->bootstrap();
             <listitem><para>
                 Create an <code>application/configs/application.ini</code>
                 configuration file with the base configuration necessary for
-                <code>Zend_Application</code>.
+                <classname>Zend_Application</classname>.
             </para></listitem>
 
             <listitem><para>
                 Modify your <code>public/index.php</code> to utilize
-                <code>Zend_Application</code>.
+                <classname>Zend_Application</classname>.
             </para></listitem>
         </itemizedlist>
 
@@ -274,7 +274,7 @@ RewriteRule ^.*$ index.php [NC,L]
 
         <para>
             At this point, you're all set to start taking advantage of
-            <code>Zend_Application</code>.
+            <classname>Zend_Application</classname>.
         </para>
     </sect2>
 
@@ -296,9 +296,9 @@ RewriteRule ^.*$ index.php [NC,L]
 
         <para>
             One of the standard resources provided with
-            <code>Zend_Application</code> is the "layout" resource. This
+            <classname>Zend_Application</classname> is the "layout" resource. This
             resource expects you to define configuration values which it will
-            then use to configure your <code>Zend_Layout</code> instance.
+            then use to configure your <classname>Zend_Layout</classname> instance.
         </para>
 
         <para>
@@ -396,7 +396,7 @@ class Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
         <title>Next steps with Zend_Application</title>
 
         <para>
-            The above should get you started with <code>Zend_Application</code>
+            The above should get you started with <classname>Zend_Application</classname>
             and creating your application bootstrap. From here, you should start
             creating resource methods, or, for maximum re-usability, resource
             plugin classes. Continue reading to learn more!

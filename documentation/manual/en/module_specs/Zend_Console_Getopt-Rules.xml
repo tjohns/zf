@@ -3,7 +3,7 @@
 <sect1 id="zend.console.getopt.rules">
     <title>Declaring Getopt Rules</title>
     <para>
-        The constructor for the <code>Zend_Console_Getopt</code> class takes
+        The constructor for the <classname>Zend_Console_Getopt</classname> class takes
         from one to three arguments. The first argument
         declares which options are supported by your application.
         This class supports alternative syntax forms for declaring the options.
@@ -17,7 +17,7 @@
     <para>
         The third argument of the constructor may contain an
         configuration options to customize the behavior of
-        <code>Zend_Console_Getopt</code>.
+        <classname>Zend_Console_Getopt</classname>.
         See <link linkend="zend.console.getopt.configuration.config">Adding Configuration</link>
         for reference on the options available.
     </para>
@@ -25,7 +25,7 @@
     <sect2 id="zend.console.getopt.rules.short">
         <title>Declaring Options with the Short Syntax</title>
         <para>
-            <code>Zend_Console_Getopt</code> supports a compact syntax similar
+            <classname>Zend_Console_Getopt</classname> supports a compact syntax similar
             to that used by GNU Getopt (see
             <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>.
             This syntax supports only single-character flags. In a single
@@ -42,7 +42,7 @@ $opts = new Zend_Console_Getopt('abp:');
             </programlisting>
         </example>
         <para>
-            The example above shows using <code>Zend_Console_Getopt</code>
+            The example above shows using <classname>Zend_Console_Getopt</classname>
             to declare that options may be given as "<code>-a</code>",
             "<code>-b</code>", or "<code>-p</code>". The latter flag
             requires a parameter.

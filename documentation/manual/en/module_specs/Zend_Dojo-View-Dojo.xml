@@ -317,8 +317,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     layers (custom builds).</para></listitem>
             <listitem><para><code>setCdnBase($url)</code>: set the base URL for
                     a CDN; typically, one of the
-                    <code>Zend_Dojo::CDN_BASE_AOL</code> or
-                    <code>Zend_Dojo::CDN_BASE_GOOGLE</code>, but it only needs
+                    <classname>Zend_Dojo::CDN_BASE_AOL</classname> or
+                    <classname>Zend_Dojo::CDN_BASE_GOOGLE</classname>, but it only needs
                     to be the URL string prior to the version number.</para></listitem>
             <listitem><para><code>getCdnBase()</code>: retrieve the base CDN url
                     to utilize.</para></listitem>
@@ -328,8 +328,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     version of Dojo from the CDN will be used.</para></listitem>
             <listitem><para><code>setCdnDojoPath($path)</code>: set the relative
                     path to the dojo.js or dojo.xd.js file on a CDN; typically,
-                    one of the <code>Zend_Dojo::CDN_DOJO_PATH_AOL</code> or
-                    <code>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</code>, but it only
+                    one of the <classname>Zend_Dojo::CDN_DOJO_PATH_AOL</classname> or
+                    <classname>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</classname>, but it only
                     needs to be the path string following the version
                     number.</para></listitem>
             <listitem><para><code>getCdnDojoPath()</code>: retrieve the last

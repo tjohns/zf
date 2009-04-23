@@ -5,7 +5,7 @@
 
     <para>
         Each form dijit for which a view helper is provided has a corresponding
-        <code>Zend_Form</code> element. All of them have the following methods
+        <classname>Zend_Form</classname> element. All of them have the following methods
         available for manipulating dijit parameters:
     </para>
 

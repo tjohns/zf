@@ -4,16 +4,16 @@
     <title>Zend_Application_Resource_View</title>
 
     <para>
-        <code>Zend_Application_Resource_View</code> can be used to configure
-        a <code>Zend_View</code> instance. Configuration options are per <link
+        <classname>Zend_Application_Resource_View</classname> can be used to configure
+        a <classname>Zend_View</classname> instance. Configuration options are per <link
             linkend="zend.view.introduction.options">the Zend_View
             options</link>.
     </para>
 
     <para>
         Once done configuring the view instance, it creates an instance of
-        <code>Zend_Controller_Action_Helper_ViewRenderer</code> and registers
-        the ViewRenderer with <code>Zend_Controller_Action_HelperBroker</code>
+        <classname>Zend_Controller_Action_Helper_ViewRenderer</classname> and registers
+        the ViewRenderer with <classname>Zend_Controller_Action_HelperBroker</classname>
         -- from which you may retrieve it later.
     </para>
 

@@ -4,7 +4,7 @@
     <title>The Autoloader</title>
 
     <para>
-        <code>Zend_Loader_Autoloader</code> introduces a comprehensive
+        <classname>Zend_Loader_Autoloader</classname> introduces a comprehensive
         autoloading solution for Zend Framework. It has been designed with
         several goals in mind:
     </para>
@@ -29,7 +29,7 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Loader_Autoloader</code> implements a singleton, making it
+        <classname>Zend_Loader_Autoloader</classname> implements a singleton, making it
         unversally accessible. This provides the ability to register additional
         autoloaders from anywhere in your code as necessary.
     </para>
@@ -64,7 +64,7 @@ $autoloader->registerNamespace('My_');
 
             <para>
                 You'll note that the previous example uses "My_" and not "My".
-                This is because <code>Zend_Loader_Autoloader</code> is intended
+                This is because <classname>Zend_Loader_Autoloader</classname> is intended
                 as a general purpose autoloader, and does not make the
                 assumption that a given class prefix namespace includes an
                 underscore. If your class namespace <emphasis>does</emphasis>
@@ -76,7 +76,7 @@ $autoloader->registerNamespace('My_');
         <para>
             You can also register arbitrary autoloader callbacks, optionally
             with a specific namespace (or group of namespaces).
-            <code>Zend_Loader_Autoloader</code> will attempt to match these
+            <classname>Zend_Loader_Autoloader</classname> will attempt to match these
             first before using its internal autoloading mechanism.
         </para>
 
@@ -102,9 +102,9 @@ $autoloader->pushAutoloader(array('ezcBase', 'autoload'), 'ezc');
         </para>
 
         <para>
-            By default, <code>Zend_Loader_Autoloader</code> does no error
+            By default, <classname>Zend_Loader_Autoloader</classname> does no error
             suppression when using its internal autoloader, which utilizes
-            <code>Zend_Loader::loadClass()</code>. Most of the time, this is
+            <classname>Zend_Loader::loadClass()</classname>. Most of the time, this is
             exactly what you want. However, there may be cases where you want to
             suppress them. You can do this using
             <code>suppressNotFoundWarnings()</code>:
@@ -134,7 +134,7 @@ $autoloader->setFallbackAutoloader(true);
         <para>
             Besides being able to specify arbitrary callbacks as autoloaders,
             Zend Framework also defines an interface autoloading classes may
-            imlement, <code>Zend_Loader_Autoloader_Interface</code>:
+            imlement, <classname>Zend_Loader_Autoloader_Interface</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -146,7 +146,7 @@ interface Zend_Loader_Autoloader_Interface
 
         <para>
             When using this interface, you can simply pass a class instance to
-            <code>Zend_Loader_Autoloader</code>'s <code>pushAutoloader()</code>
+            <classname>Zend_Loader_Autoloader</classname>'s <code>pushAutoloader()</code>
             and <code>unshiftAutoloader()</code> methods:
         </para>
 
@@ -163,7 +163,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
         <para>
             Below, please find a guide to the methods available in
-            <code>Zend_Loader_Autoloader</code>.
+            <classname>Zend_Loader_Autoloader</classname>.
         </para>
 
         <table id="zend.loader.autoloader.reference.api">
@@ -180,10 +180,10 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                 <tbody>
                     <row>
                         <entry><code>getInstance()</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry>N/A</entry>
                         <entry><para>
-                            Retrieve the <code>Zend_Loader_Autoloader</code>
+                            Retrieve the <classname>Zend_Loader_Autoloader</classname>
                             singleton instance. On first retrieval, it registers
                             itself with <code>spl_autoload</code>. This method
                             is static.
@@ -195,7 +195,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                         <entry><code>void</code></entry>
                         <entry>N/A</entry>
                         <entry><para>
-                            Resets the state of the <code>Zend_Loader_Autoloader</code>
+                            Resets the state of the <classname>Zend_Loader_Autoloader</classname>
                             singleton instance to it's original state,
                             unregistering all autoloader callbacks and all
                             registered namespaces.
@@ -219,7 +219,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>setDefaultAutoloader($callback)</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$callback</code>, <emphasis>required</emphasis>.
@@ -238,13 +238,13 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                         <entry><para>
                             Retrieve the default autoloader implementation; by
                             default, this is
-                            <code>Zend_Loader::loadClass()</code>.
+                            <classname>Zend_Loader::loadClass()</classname>.
                         </para></entry>
                     </row>
 
                     <row>
                         <entry><code>setAutoloaders(array $autoloaders)</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$autoloaders</code>, <emphasis>required</emphasis>.
@@ -282,7 +282,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>registerNamespace($namespace)</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$namespace</code>, <emphasis>required</emphasis>.
@@ -298,7 +298,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>unregisterNamespace($namespace)</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$namespace</code>, <emphasis>required</emphasis>.
@@ -344,7 +344,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>setFallbackAutoloader($flag)</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$flag</code>, <emphasis>required</emphasis>.
@@ -387,7 +387,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>unshiftAutoloader($callback, $namespace = '')</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$callback</code>, <emphasis>required</emphasis>.
@@ -410,7 +410,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>pushAutoloader($callback, $namespace = '')</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$callback</code>, <emphasis>required</emphasis>.
@@ -433,7 +433,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
 
                     <row>
                         <entry><code>removeAutoloader($callback, $namespace = '')</code></entry>
-                        <entry><code>Zend_Loader_Autoloader</code></entry>
+                        <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
                                 <code>$callback</code>, <emphasis>required</emphasis>.

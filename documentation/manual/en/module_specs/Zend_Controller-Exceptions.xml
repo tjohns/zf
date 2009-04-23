@@ -18,7 +18,7 @@
             However, exception messages and backtrace information often contain
             sensitive system information, such as SQL statements, file
             locations, and more. To help protect your site, by default
-            <code>Zend_Controller_Front</code> catches all exceptions and
+            <classname>Zend_Controller_Front</classname> catches all exceptions and
             registers them with the response object; in turn, by default, the
             response object does not display exception messages.
         </para>
@@ -61,7 +61,7 @@
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Front::throwExceptions()</code></para>
+                <para><classname>Zend_Controller_Front::throwExceptions()</classname></para>
 
                 <para>
                     By passing a boolean true value to this method, you can tell
@@ -88,7 +88,7 @@ try {
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Response_Abstract::renderExceptions()</code></para>
+                <para><classname>Zend_Controller_Response_Abstract::renderExceptions()</classname></para>
 
                 <para>
                     By passing a boolean true value to this method, you tell the
@@ -101,14 +101,14 @@ try {
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::returnResponse()</code> and
-                    <code>Zend_Controller_Response_Abstract::isException()</code>.
+                    <classname>Zend_Controller_Front::returnResponse()</classname> and
+                    <classname>Zend_Controller_Response_Abstract::isException()</classname>.
                 </para>
 
                 <para>
                     By passing a boolean true to
-                    <code>Zend_Controller_Front::returnResponse()</code>,
-                    <code>Zend_Controller_Front::dispatch()</code> will not render the
+                    <classname>Zend_Controller_Front::returnResponse()</classname>,
+                    <classname>Zend_Controller_Front::dispatch()</classname> will not render the
                     response, but instead return it. Once you have the response,
                     you may then test to see if any exceptions were trapped using
                     its <code>isException()</code> method, and retrieving the exceptions via
@@ -130,7 +130,7 @@ if ($response->isException()) {
 
                 <para>
                     The primary advantage this method offers over
-                    <code>Zend_Controller_Front::throwExceptions()</code> is to
+                    <classname>Zend_Controller_Front::throwExceptions()</classname> is to
                     allow you to conditionally render the response after
                     handling the exception. This will catch any exception in the
                     controller chain, unlike the error handler plugin.
@@ -155,7 +155,7 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher::dispatch()</code> will,
+                    <classname>Zend_Controller_Dispatcher::dispatch()</classname> will,
                     by default, throw an exception if an invalid controller is
                     requested. There are two recommended ways to deal with
                     this.
@@ -192,7 +192,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                     <listitem>
                         <para>
                             The exception thrown by <code>dispatch()</code> is
-                            a <code>Zend_Controller_Dispatcher_Exception</code>
+                            a <classname>Zend_Controller_Dispatcher_Exception</classname>
                             containing the text 'Invalid controller specified'.
                             Use one of the methods outlined in <link
                                 linkend="zend.controller.exceptions.handling">the
@@ -206,8 +206,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::__call()</code> will throw a
-                    <code>Zend_Controller_Action_Exception</code> if it cannot
+                    <classname>Zend_Controller_Action::__call()</classname> will throw a
+                    <classname>Zend_Controller_Action_Exception</classname> if it cannot
                     dispatch a non-existent action to a method. Most likely,
                     you will want to use some default action in the controller
                     in cases like this. Ways to achieve this include:
@@ -216,7 +216,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Subclass <code>Zend_Controller_Action</code> and
+                            Subclass <classname>Zend_Controller_Action</classname> and
                             override the <code>__call()</code> method. As an
                             example:
                         </para>
@@ -246,7 +246,7 @@ class My_Controller_Action extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            Subclass <code>Zend_Controller_Dispatcher</code>
+                            Subclass <classname>Zend_Controller_Dispatcher</classname>
                             and override the <code>getAction()</code> method to
                             verify the action exists. As an example:
                         </para>
@@ -295,14 +295,14 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                     <listitem>
                         <para>
                             Use
-                            <code>Zend_Controller_Action::preDispatch()</code>
+                            <classname>Zend_Controller_Action::preDispatch()</classname>
                             or
-                            <code>Zend_Controller_Plugin_Abstract::preDispatch()</code>
+                            <classname>Zend_Controller_Plugin_Abstract::preDispatch()</classname>
                             to identify invalid actions.
                         </para>
 
                         <para>
-                            By subclassing <code>Zend_Controller_Action</code>
+                            By subclassing <classname>Zend_Controller_Action</classname>
                             and modifying <code>preDispatch()</code>, you can
                             modify all of your controllers to forward to
                             another action or redirect prior to actually

@@ -14,7 +14,7 @@
 
     <para>
         You can retrieve the plugin from the front controller at any time using
-        <code>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</code>.
+        <classname>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</classname>.
         Once you have the plugin object, there are a variety of mechanisms you
         can use to manipulate it.
     </para>
@@ -23,7 +23,7 @@
         <listitem><para>
                 <code>getRegistry()</code> and <code>setRegistry()</code>.
                 Internally, <code>ActionStack</code> uses a
-                <code>Zend_Registry</code> instance to store the stack. You can
+                <classname>Zend_Registry</classname> instance to store the stack. You can
                 substitute a different registry instance or retrieve it with
                 these accessors.
         </para></listitem>

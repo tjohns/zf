@@ -4,7 +4,7 @@
     <title>Zend_Controller_Router_Route</title>
 
     <para>
-        <code>Zend_Controller_Router_Route</code> is the standard framework
+        <classname>Zend_Controller_Router_Route</classname> is the standard framework
         route. It combines ease of use with flexible route definition. Each
         route consists primarily of URL mapping (of static and dynamic parts
         (variables)) and may be initialized with defaults as well as with
@@ -33,7 +33,7 @@ $router->addRoute('user', $route);
     </programlisting>
 
     <para>
-        The first parameter in the <code>Zend_Controller_Router_Route</code>
+        The first parameter in the <classname>Zend_Controller_Router_Route</classname>
         constructor is a route definition that will be matched to a URL. Route
         definitions consist of static and dynamic parts separated by the slash
         ('/') character. Static parts are just simple text:
@@ -55,7 +55,7 @@ $router->addRoute('user', $route);
     <para>
         This example route should be matched when you point your browser to
         <code>http://domain.com/author/martel</code>, in which case all its
-        variables will be injected to the <code>Zend_Controller_Request</code>
+        variables will be injected to the <classname>Zend_Controller_Request</classname>
         object and will be accessible in your <code>ProfileController</code>.
         Variables returned by this example may be represented as an array of
         the following key and value pairs:
@@ -71,12 +71,12 @@ $values = array(
     </programlisting>
 
     <para>
-        Later on, <code>Zend_Controller_Dispatcher_Standard</code> should invoke
+        Later on, <classname>Zend_Controller_Dispatcher_Standard</classname> should invoke
         the <code>userinfoAction()</code> method of your
         <code>ProfileController</code> class (in the default module) based on
         these values. There you will be able to access all variables by means of
-        the <code>Zend_Controller_Action::_getParam()</code> or
-        <code>Zend_Controller_Request::getParam()</code> methods:
+        the <classname>Zend_Controller_Action::_getParam()</classname> or
+        <classname>Zend_Controller_Request::getParam()</classname> methods:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -111,7 +111,7 @@ $router->addRoute('default', $route);
 
         <para>
             Every variable in the route can have a default and this is what the
-            second parameter of the <code>Zend_Controller_Router_Route</code>
+            second parameter of the <classname>Zend_Controller_Router_Route</classname>
             constructor is used for. This parameter is an array with keys
             representing variable names and with values as desired defaults:
         </para>
@@ -137,7 +137,7 @@ $router->addRoute('archive', $route);
             object. Since no routing information is present (no controller and
             action parameters are defined), the application will be dispatched
             to the default controller and action method (which are both defined
-            in <code>Zend_Controller_Dispatcher_Abstract</code>). To make it
+            in <classname>Zend_Controller_Dispatcher_Abstract</classname>). To make it
             more usable, you have to provide a valid controller and a valid
             action as the route's defaults:
         </para>
@@ -168,7 +168,7 @@ $router->addRoute('archive', $route);
 
         <para>
             One can add a third parameter to the
-            <code>Zend_Controller_Router_Route</code> constructor where variable
+            <classname>Zend_Controller_Router_Route</classname> constructor where variable
             requirements may be set. These are defined as parts of a regular
             expression:
         </para>
@@ -202,19 +202,19 @@ $router->addRoute('archive', $route);
         <para>
             The standard route supports translated segments. To use this
             feature, you have to define at least a translator (an instance
-            of <code>Zend_Translate</code>) via one of the following ways:
+            of <classname>Zend_Translate</classname>) via one of the following ways:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    Put it into the registry with the key <code>Zend_Translate</code>.
+                    Put it into the registry with the key <classname>Zend_Translate</classname>.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Set it via the static method
-                    <code>Zend_Controller_Router_Route::setDefaultTranslator()</code>.
+                    <classname>Zend_Controller_Router_Route::setDefaultTranslator()</classname>.
                 </para>
             </listitem>
             <listitem>
@@ -225,22 +225,22 @@ $router->addRoute('archive', $route);
         </itemizedlist>
 
         <para>
-            By default, the locale specified in the <code>Zend_Translate</code>
+            By default, the locale specified in the <classname>Zend_Translate</classname>
             instance will be used. To override it, you set it
-            (an instance of <code>Zend_Locale</code> or a locale string) in one
+            (an instance of <classname>Zend_Locale</classname> or a locale string) in one
             of the following ways:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    Put it into the registry with the key <code>Zend_Locale</code>.
+                    Put it into the registry with the key <classname>Zend_Locale</classname>.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Set it via the static method
-                    <code>Zend_Controller_Router_Route::setDefaultLocale()</code>.
+                    <classname>Zend_Controller_Router_Route::setDefaultLocale()</classname>.
                 </para>
             </listitem>
             <listitem>

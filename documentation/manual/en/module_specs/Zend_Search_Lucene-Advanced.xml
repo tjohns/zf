@@ -7,7 +7,7 @@
         <title>Starting from 1.6, handling index format transformations.</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index formats.
+            <classname>Zend_Search_Lucene</classname> component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index formats.
         </para>
 
         <para>
@@ -16,17 +16,17 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> for Java Lucene 1.4-1.9 index format.
+                        <classname>Zend_Search_Lucene::FORMAT_PRE_2_1</classname> for Java Lucene 1.4-1.9 index format.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_2_1</code> for Java Lucene 2.1 index format (also used for Lucene 2.2).
+                        <classname>Zend_Search_Lucene::FORMAT_2_1</classname> for Java Lucene 2.1 index format (also used for Lucene 2.2).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_2_3</code> for Java Lucene 2.3 index format.
+                        <classname>Zend_Search_Lucene::FORMAT_2_3</classname> for Java Lucene 2.3 index format.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -39,24 +39,24 @@
         </para>
 
         <para>
-            In a such case <code>Zend_Search_Lucene</code> may convert index to the higher format version.
-            That <emphasis role="strong">always</emphasis> happens for the indices in <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> format,
+            In a such case <classname>Zend_Search_Lucene</classname> may convert index to the higher format version.
+            That <emphasis role="strong">always</emphasis> happens for the indices in <classname>Zend_Search_Lucene::FORMAT_PRE_2_1</classname> format,
             which are automatically converted to 2.1 format.
         </para>
 
         <para>
             You may manage conversion process and assign target index format by <code>$index->setFormatVersion()</code> which takes
-            <code>Zend_Search_Lucene::FORMAT_2_1</code> or <code>Zend_Search_Lucene::FORMAT_2_3</code> constant as a parameter:
+            <classname>Zend_Search_Lucene::FORMAT_2_1</classname> or <classname>Zend_Search_Lucene::FORMAT_2_3</classname> constant as a parameter:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_2_1</code> actually does nothing since pre-2.1 indices are automatically converted
+                        <classname>Zend_Search_Lucene::FORMAT_2_1</classname> actually does nothing since pre-2.1 indices are automatically converted
                         to 2.1 format.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_2_3</code> forces conversion to the 2.3 format.
+                        <classname>Zend_Search_Lucene::FORMAT_2_3</classname> forces conversion to the 2.3 format.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -81,7 +81,7 @@
         <title>Using the index as static property</title>
 
         <para>
-            The <code>Zend_Search_Lucene</code> object uses the destructor method to commit changes and clean up resources.
+            The <classname>Zend_Search_Lucene</classname> object uses the destructor method to commit changes and clean up resources.
         </para>
 
         <para>
@@ -125,10 +125,10 @@ Searcher::initIndex();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> provides a workaround to this problem with the <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
-            You are free to use the commit operation any time- or even several times- during script execution. You can still use the <code>Zend_Search_Lucene</code> object for searching,
+            <classname>Zend_Search_Lucene</classname> provides a workaround to this problem with the <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
+            You are free to use the commit operation any time- or even several times- during script execution. You can still use the <classname>Zend_Search_Lucene</classname> object for searching,
             adding or deleting document after the commit operation. But the <code>commit()</code> call guarantees that if there are no document added or deleted after the call to <code>commit()</code>, then
-            the <code>Zend_Search_Lucene</code> destructor has nothing to do and will not throw exception:
+            the <classname>Zend_Search_Lucene</classname> destructor has nothing to do and will not throw exception:
 
             <programlisting role="php"><![CDATA[
 class Searcher {

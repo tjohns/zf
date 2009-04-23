@@ -6,7 +6,7 @@
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>File Formats</title>
         <para>
-          <code>Zend_Search_Lucene</code> index file formats are binary compatible with Java Lucene
+          <classname>Zend_Search_Lucene</classname> index file formats are binary compatible with Java Lucene
           version 1.4 and greater.
         </para>
 

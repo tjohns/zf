@@ -93,8 +93,8 @@
             path will have no symbolic link, '/./' or '/../' components.
         </para>
         <para>
-            <code>Zend_Filter_RealPath</code> will return <code>FALSE</code>
-            on failure, e.g. if the file does not exist. On BSD systems <code>Zend_Filter_RealPath</code>
+            <classname>Zend_Filter_RealPath</classname> will return <code>FALSE</code>
+            on failure, e.g. if the file does not exist. On BSD systems <classname>Zend_Filter_RealPath</classname>
             doesn't fail if only the last path component doesn't exist, while other systems will return
             <code>FALSE</code>.
         </para>

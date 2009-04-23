@@ -98,7 +98,7 @@
         <listitem>
             <para>
                 <emphasis>Form Elements</emphasis>: these are designed to be
-                consumed with <code>Zend_Form</code>, but can be used
+                consumed with <classname>Zend_Form</classname>, but can be used
                 standalone within view scripts as well. Each dijit element view
                 helper expects the following arguments:
             </para>

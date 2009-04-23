@@ -5,7 +5,7 @@
     <title>Using Exceptions</title>
 
     <para>
-        <code>Zend_Exception</code> is simply the base class for all exceptions thrown within Zend Framework.
+        <classname>Zend_Exception</classname> is simply the base class for all exceptions thrown within Zend Framework.
     </para>
 
     <example id="zend.exception.using.example">
@@ -27,7 +27,7 @@ try {
         </programlisting>
     </example>
     <para>
-        <code>Zend_Exception</code> can be used as a catch-all exception class in a
+        <classname>Zend_Exception</classname> can be used as a catch-all exception class in a
         catch block to trap all exceptions thrown by Zend Framework classes. This can
         be useful when the program can not recover by catching a specific exception type.
     </para>

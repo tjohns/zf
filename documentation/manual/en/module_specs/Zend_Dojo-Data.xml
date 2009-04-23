@@ -31,7 +31,7 @@
 </programlisting>
 
     <para>
-        <code>Zend_Dojo_Data</code> provides a simple interface for building
+        <classname>Zend_Dojo_Data</classname> provides a simple interface for building
         such structures programmatically, interacting with them, and serializing
         them to an array or JSON.
     </para>
@@ -71,7 +71,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Appending data to <code>Zend_Dojo_Data</code></title>
+            <title>Appending data to <classname>Zend_Dojo_Data</classname></title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -87,7 +87,7 @@ $data->addItems($someMoreItems);
 
             <para>
                 Every dojo.data data store requires that the identifier column
-                be provided as metadata, including <code>Zend_Dojo_Data</code>. In fact, if you attempt to add items without an
+                be provided as metadata, including <classname>Zend_Dojo_Data</classname>. In fact, if you attempt to add items without an
                 identifier, it will raise an exception.
             </para>
         </note>
@@ -135,7 +135,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Specifying a label field in <code>Zend_Dojo_Data</code></title>
+            <title>Specifying a label field in <classname>Zend_Dojo_Data</classname></title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -144,12 +144,12 @@ $data->setLabel('name');
         </example>
 
         <para>
-            Finally, you can also load a <code>Zend_Dojo_Data</code> item from a
+            Finally, you can also load a <classname>Zend_Dojo_Data</classname> item from a
             dojo.data JSON array, using the <code>fromJson()</code> method.
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>Populating <code>Zend_Dojo_Data</code> from JSON</title>
+            <title>Populating <classname>Zend_Dojo_Data</classname> from JSON</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
@@ -176,7 +176,7 @@ $data->fromJson($json);
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> allows assigning metadata properties as
+            <classname>Zend_Dojo_Data</classname> allows assigning metadata properties as
             to the object. The following illustrates usage:
         </para>
 
@@ -209,12 +209,12 @@ $data->clearMetadata();
 
         <para>
             Besides acting as a serializable data container,
-            <code>Zend_Dojo_Data</code> also provides the ability to manipulate
+            <classname>Zend_Dojo_Data</classname> also provides the ability to manipulate
             and traverse the data in a variety of ways.
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> implements the interfaces
+            <classname>Zend_Dojo_Data</classname> implements the interfaces
             <code>ArrayAccess</code>, <code>Iterator</code>, and
             <code>Countable</code>. You can therefore use the data
             collection almost as if it were an array.

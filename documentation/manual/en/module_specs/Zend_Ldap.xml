@@ -8,14 +8,14 @@
         <title>Minimal Functionality</title>
         <para>
             Currently this class is designed only to satisfy the limited functionality necessary for the
-            <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link> authentication adapter.
+            <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link> authentication adapter.
             Operations such as searching, creating, modifying or renaming entries in the directory are currently not
             supported and will be defined at a later time.
         </para>
     </note>
 
     <para>
-        <code>Zend_Ldap</code> is a class for performing LDAP operations including but not limited to binding,
+        <classname>Zend_Ldap</classname> is a class for performing LDAP operations including but not limited to binding,
         searching and modifying entries in an LDAP directory.
     </para>
 
@@ -24,14 +24,14 @@
         <title>Theory of Operation</title>
 
         <para>
-            This component currently consists of two classes, <code>Zend_Ldap</code> and
-            <code>Zend_Ldap_Exception</code>. The <code>Zend_Ldap</code> class conceptually represents a binding to a
+            This component currently consists of two classes, <classname>Zend_Ldap</classname> and
+            <classname>Zend_Ldap_Exception</classname>. The <classname>Zend_Ldap</classname> class conceptually represents a binding to a
             single LDAP server. The parameters for binding may be provided explicitly or in the form of an options
             array.
         </para>
 
         <para>
-            Using the <code>Zend_Ldap</code> class depends on the type of LDAP server and is best summarized with some
+            Using the <classname>Zend_Ldap</classname> class depends on the type of LDAP server and is best summarized with some
             simple examples.
         </para>
 
@@ -88,13 +88,13 @@ echo "$acctname\n";
             <para>
                 If <code>bind()</code> is called with a non-DN username but <code>bindRequiresDN</code> is
                 <code>true</code> and no username in DN form was supplied as an option, the bind will fail. However, if
-                a username in DN form is supplied in the options array, <code>Zend_Ldap</code> will first bind with
+                a username in DN form is supplied in the options array, <classname>Zend_Ldap</classname> will first bind with
                 that username, retrieve the account DN for the username supplied to <code>bind()</code> and then re-
                 bind with that DN.
             </para>
 
             <para>
-                This behavior is critical to <code>Zend_Auth_Adapter_Ldap</code>, which passes the username supplied by
+                This behavior is critical to <classname>Zend_Auth_Adapter_Ldap</classname>, which passes the username supplied by
                 the user directly to <code>bind()</code>.
             </para>
 
@@ -133,7 +133,7 @@ echo "$acctname\n";
             <title>Zend_Ldap Options</title>
 
             <para>
-                The <code>Zend_Ldap</code> component accepts an array of options either supplied to the constructor or
+                The <classname>Zend_Ldap</classname> component accepts an array of options either supplied to the constructor or
                 through the <code>setOptions()</code> method. The permitted options are as follows:
 
                 <table id="zend.ldap.using.theory-of-operation.options.table">
@@ -193,7 +193,7 @@ echo "$acctname\n";
                       <row>
                         <entry>bindRequiresDn</entry>
                         <entry>
-                            If <code>true</code>, this instructs <code>Zend_Ldap</code> to retrieve the DN for the
+                            If <code>true</code>, this instructs <classname>Zend_Ldap</classname> to retrieve the DN for the
                             account used to bind if the username is not already in DN form. The default value is
                             <code>false</code>.
                         </entry>
@@ -333,8 +333,8 @@ echo "$acctname\n";
             <title>Multi-domain Authentication and Failover</title>
 
             <para>
-                The <code>Zend_Ldap</code> component by itself makes no attempt to authenticate with multiple servers.
-                However, <code>Zend_Ldap</code> is specifically designed to handle this scenario gracefully. The
+                The <classname>Zend_Ldap</classname> component by itself makes no attempt to authenticate with multiple servers.
+                However, <classname>Zend_Ldap</classname> is specifically designed to handle this scenario gracefully. The
                 required technique is to simply iterate over an array of arrays of server options and attempt to bind
                 with each server. As described above <code>bind()</code> will automatically canonicalize each name, so
                 it does not matter if the user passes <code>abaker@foo.net</code> or <code>W\bcarter</code> or
@@ -419,7 +419,7 @@ foreach ($multiOptions as $name => $options) {
 
             <para>
                 The above code is very similar to code used within
-                <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>. In fact, we
+                <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link>. In fact, we
                 recommend that you simply use that authentication adapter for multi-domain + failover LDAP based
                 authentication (or copy the code).
             </para>

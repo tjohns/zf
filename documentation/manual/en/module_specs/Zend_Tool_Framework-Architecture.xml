@@ -52,7 +52,7 @@ interface Zend_Tool_Framework_Registry_Interface
 
         <para>
             Classes that should be registry-aware should implement
-            <code>Zend_Tool_Framework_Registry_EnabledInterface</code>. This
+            <classname>Zend_Tool_Framework_Registry_EnabledInterface</classname>. This
             interface merely allows initialization of the registry in the target
             class.
         </para>
@@ -71,15 +71,15 @@ interface Zend_Tool_Framework_Registry_EnabledInterface
         <title>Providers</title>
 
         <para>
-            <code>Zend_Tool_Framework_Provider</code> represents the functional
+            <classname>Zend_Tool_Framework_Provider</classname> represents the functional
             or "capability" aspect of the framework.  Fundamentally,
-            <code>Zend_Tool_Framework_Provider</code> will provide the
+            <classname>Zend_Tool_Framework_Provider</classname> will provide the
             interfaces necessary to produce "providers", or bits of tooling
             functionality that can be called and used inside the
-            <code>Zend_Tool_Framework</code> toolchain. The simplistic nature of
+            <classname>Zend_Tool_Framework</classname> toolchain. The simplistic nature of
             implementing this provider interface allows the developer a
             "one-stop-shop" of adding functionality/capabilities to
-            <code>Zend_Tool_Framework</code>.
+            <classname>Zend_Tool_Framework</classname>.
         </para>
 
         <para>
@@ -95,7 +95,7 @@ interface Zend_Tool_Framework_Provider_Interface
         <para>
             Or, if you wish, you can implement the base (or abstract) Provider
             which will give you access to the
-            <code>Zend_Tool_Framework_Registry</code>:
+            <classname>Zend_Tool_Framework_Registry</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -118,7 +118,7 @@ abstract class Zend_Tool_Framework_Provider_Abstract
             create a class named <code>My_Component_HelloProvider</code> in a
             file named <code>HelloProvider.php</code> somewhere on the
             <code>include_path</code>.  This class would implement
-            <code>Zend_Tool_Framework_Provider_Interface</code>, and the body of
+            <classname>Zend_Tool_Framework_Provider_Interface</classname>, and the body of
             this file would only have to look like the following:
         </para>
 

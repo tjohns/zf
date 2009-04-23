@@ -5,7 +5,7 @@
     <title>Constants for General Date Functions</title>
 
     <para>
-        Whenever a <code>Zend_Date</code> method has a <code>$parts</code> parameter, one of the constants below can be
+        Whenever a <classname>Zend_Date</classname> method has a <code>$parts</code> parameter, one of the constants below can be
         used as the argument for that parameter, in order to select a specific part of a date or indicate the date
         format used or desired (e.g. RFC 822).
     </para>
@@ -15,7 +15,7 @@
         <title>Using Constants</title>
 
         <para>
-            For example, the constant <code>Zend_Date::HOUR</code> can be used in the ways shown below. When working
+            For example, the constant <classname>Zend_Date::HOUR</classname> can be used in the ways shown below. When working
             with days of the week, calendar dates, hours, minutes, seconds, and any other date parts that are expressed
             differently when in different parts of the world, the object's timezone will automatically be used to
             compute the correct value, even though the internal timestamp is the same for the same moment in time,
@@ -101,8 +101,8 @@
         <title>List of All Constants</title>
 
         <para>
-            Each part of a date/time has a unique constant in <code>Zend_Date</code>. All constants supported by
-            <code>Zend_Date</code> are listed below.
+            Each part of a date/time has a unique constant in <classname>Zend_Date</classname>. All constants supported by
+            <classname>Zend_Date</classname> are listed below.
         </para>
 
         <table id="zend.date.constants.list.table-1">
@@ -553,8 +553,8 @@
         </table>
 
         <para>
-            Especially note <code>Zend_Date::DATES</code>, since this format specifier has a unique property within
-            <code>Zend_Date</code> as an <emphasis role="strong">input</emphasis> format specifier. When used as an
+            Especially note <classname>Zend_Date::DATES</classname>, since this format specifier has a unique property within
+            <classname>Zend_Date</classname> as an <emphasis role="strong">input</emphasis> format specifier. When used as an
             input format for <code>$part</code>, this constant provides the most flexible acceptance of a variety of
             similar date formats. Heuristics are used to automatically extract dates from an input string and then "fix"
             simple errors in dates (if any), such as swapping of years, months, and days, when possible.
@@ -675,7 +675,7 @@
         <para>
             The accepted format specifiers can be changed from ISO Format to PHP's date format if you are more
             comfortable with it. However, not all formats defined in the ISO norm are supported with PHP's date format
-            specifiers. Use the <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> method to switch
+            specifiers. Use the <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> method to switch
             Zend_Date methods from supporting ISO format specifiers to PHP date() type specifiers (see
             <xref linkend="zend.date.constants.phpformats" />
             below).
@@ -1115,7 +1115,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             If you are more comfortable with PHP's date format specifier than with ISO format specifiers, then you can
-            use the <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> method to switch Zend_Date methods from
+            use the <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> method to switch Zend_Date methods from
             supporting ISO format specifiers to PHP date() type specifiers. Afterwards, all format parameters must be
             given with
             <ulink url="http://php.net/date">PHP's <code>date()</code> format specifiers</ulink>
@@ -1146,7 +1146,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
             The following table shows the list of PHP date format specifiers with their equivalent Zend_Date constants
             and CLDR/ISO equivalent format specifiers. In most cases, when the CLDR/ISO format does not have an
             equivalent format specifier, the PHP format specifier is not altered by
-            <code>Zend_Locale_Format::convertPhpToIsoFormat()</code>, and the Zend_Date methods then recognize these
+            <classname>Zend_Locale_Format::convertPhpToIsoFormat()</classname>, and the Zend_Date methods then recognize these
             "peculiar" PHP format specifiers, even when in the default "ISO" format mode.
         </para>
 

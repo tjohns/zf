@@ -30,7 +30,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
         </programlisting>
 
         <para>
-            Alternately, you can use <code>Zend_Dojo</code>'s
+            Alternately, you can use <classname>Zend_Dojo</classname>'s
             <code>enableView()</code> method to do the work for you:
         </para>
 

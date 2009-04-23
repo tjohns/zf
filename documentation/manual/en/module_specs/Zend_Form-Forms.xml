@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.forms">
-    <title>Creating Forms Using <code>Zend_Form</code></title>
+    <title>Creating Forms Using <classname>Zend_Form</classname></title>
 
     <para>
-        The <code>Zend_Form</code> class is used to aggregate form elements,
+        The <classname>Zend_Form</classname> class is used to aggregate form elements,
         display groups, and subforms. It can then perform the following actions
         on those items:
     </para>
@@ -31,7 +31,7 @@
     </itemizedlist>
 
     <para>
-        While forms created with <code>Zend_Form</code> may be complex, probably
+        While forms created with <classname>Zend_Form</classname> may be complex, probably
         the best use case is for simple forms; its best use is for Rapid
         Application Development (RAD) and prototyping.
     </para>
@@ -50,7 +50,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        You can optionally pass in a instance of <code>Zend_Config</code> or an array, which will be used to set
+        You can optionally pass in a instance of <classname>Zend_Config</classname> or an array, which will be used to set
         object state and potentially create new elements:
     </para>
 
@@ -61,14 +61,14 @@ $form = new Zend_Form($config);
     </programlisting>
 
     <para>
-        <code>Zend_Form</code> is iterable, and will iterate over elements,
+        <classname>Zend_Form</classname> is iterable, and will iterate over elements,
         display groups, and subforms, using the order they were registered and
         any order index each may have. This is useful in cases where you wish to
         render the elements manually in the appropriate order.
     </para>
 
     <para>
-        <code>Zend_Form</code>'s magic lies in its ability to serve as a factory
+        <classname>Zend_Form</classname>'s magic lies in its ability to serve as a factory
         for elements and display groups, as well as the ability to render itself
         through decorators.
     </para>
@@ -76,8 +76,8 @@ $form = new Zend_Form($config);
     <sect2 id="zend.form.forms.plugins">
         <title>Plugin Loaders</title>
         <para>
-            <code>Zend_Form</code> makes use of
-            <code>Zend_Loader_PluginLoader</code> to allow developers to specify
+            <classname>Zend_Form</classname> makes use of
+            <classname>Zend_Loader_PluginLoader</classname> to allow developers to specify
             the locations of alternate elements and decorators. Each has its own
             plugin loader associated with it, and general accessors are used to
             retrieve and modify each.
@@ -127,7 +127,7 @@ $form = new Zend_Form($config);
 
         <para>
             Additionally, you can specify prefix paths for all elements and
-            display groups created through a <code>Zend_Form</code> instance
+            display groups created through a <classname>Zend_Form</classname> instance
             using the following methods:
         </para>
 
@@ -137,7 +137,7 @@ $form = new Zend_Form($config);
                 Just like <code>addPrefixPath()</code>, you must specify a class
                 prefix and a path. <code>$type</code>, when specified, must be
                 one of the plugin loader types specified by
-                <code>Zend_Form_Element</code>; see the <link
+                <classname>Zend_Form_Element</classname>; see the <link
                     linkend="zend.form.elements.loaders">element plugins
                     section</link> for more information on valid
                 <code>$type</code> values. If no <code>$type</code> is
@@ -167,7 +167,7 @@ $form = new Zend_Form($config);
     <sect2 id="zend.form.forms.elements">
         <title>Elements</title>
         <para>
-            <code>Zend_Form</code> provides several accessors for adding and
+            <classname>Zend_Form</classname> provides several accessors for adding and
             removing form elements from a form. These can take element object
             instances or serve as factories for instantiating the element
             objects themselves.
@@ -176,8 +176,8 @@ $form = new Zend_Form($config);
         <para>
             The most basic method for adding an element is
             <code>addElement()</code>. This method can take either an object of
-            type <code>Zend_Form_Element</code> (or of a class extending
-            <code>Zend_Form_Element</code>), or arguments for building a new
+            type <classname>Zend_Form_Element</classname> (or of a class extending
+            <classname>Zend_Form_Element</classname>), or arguments for building a new
             element -- including the element type, name, and any configuration
             options.
         </para>
@@ -207,10 +207,10 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
 
             <para>
                 <code>addElement()</code> implements a fluent interface; that is
-                to say, it returns the <code>Zend_Form</code> object, and not
+                to say, it returns the <classname>Zend_Form</classname> object, and not
                 the element. This is done to allow you to chain together
                 multiple addElement() methods or other form methods that
-                implement the fluent interface (all setters in <code>Zend_Form</code>
+                implement the fluent interface (all setters in <classname>Zend_Form</classname>
                 implement the pattern).
             </para>
 
@@ -566,12 +566,12 @@ $form->setElementFilters(array('StringTrim'));
 
         <para>
             The base class for display groups is
-            <code>Zend_Form_DisplayGroup</code>. While it can be instantiated
-            directly, it is usually best to use <code>Zend_Form</code>'s
+            <classname>Zend_Form_DisplayGroup</classname>. While it can be instantiated
+            directly, it is usually best to use <classname>Zend_Form</classname>'s
             <code>addDisplayGroup()</code> method to do so. This method takes an
             array of elements as its first argument, and a name for the display
             group as its second argument. You may optionally pass in an array of
-            options or a <code>Zend_Config</code> object as the third argument.
+            options or a <classname>Zend_Config</classname> object as the third argument.
         </para>
 
         <para>
@@ -621,7 +621,7 @@ $form->addDisplayGroup(
 
             <para>
                 This option may be mixed with any other options you pass,
-                both as array options or in a <code>Zend_Config</code> object.
+                both as array options or in a <classname>Zend_Config</classname> object.
             </para>
         </note>
 
@@ -677,8 +677,8 @@ $form->setDisplayGroupDecorators(array(
             <title>Using Custom Display Group Classes</title>
 
             <para>
-                By default, <code>Zend_Form</code> uses the
-                <code>Zend_Form_DisplayGroup</code> class for display groups.
+                By default, <classname>Zend_Form</classname> uses the
+                <classname>Zend_Form_DisplayGroup</classname> class for display groups.
                 You may find you need to extend this class in order to provided
                 custom functionality. <code>addDisplayGroup()</code> does not
                 allow passing in a concrete instance, but does allow specifying
@@ -697,8 +697,8 @@ $form->addDisplayGroup(
             </programlisting>
 
             <para>
-                If the class has not yet been loaded, <code>Zend_Form</code>
-                will attempt to do so using <code>Zend_Loader</code>.
+                If the class has not yet been loaded, <classname>Zend_Form</classname>
+                will attempt to do so using <classname>Zend_Loader</classname>.
             </para>
 
             <para>
@@ -779,7 +779,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
             <title>Zend_Form_DisplayGroup Methods</title>
 
             <para>
-                <code>Zend_Form_DisplayGroup</code> has the following methods,
+                <classname>Zend_Form_DisplayGroup</classname> has the following methods,
                 grouped by type:
             </para>
 
@@ -930,8 +930,8 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
         </itemizedlist>
 
         <para>
-            A sub form may be a <code>Zend_Form</code> object, or, more
-            typically, a <code>Zend_Form_SubForm</code> object. The latter
+            A sub form may be a <classname>Zend_Form</classname> object, or, more
+            typically, a <classname>Zend_Form_SubForm</classname> object. The latter
             contains decorators suitable for inclusion in a larger form (i.e.,
             it does not render additional HTML form tags, but does group
             elements). To attach a sub form, simply add it to the form and give
@@ -1070,9 +1070,9 @@ $form->setAction('/user/login')
 
         <para>
             You may also specify the form encoding type specifically using the
-            enctype accessors. <code>Zend_Form</code> defines two constants,
-            <code>Zend_Form::ENCTYPE_URLENCODED</code> and
-            <code>Zend_Form::ENCTYPE_MULTIPART</code>, corresponding to the
+            enctype accessors. <classname>Zend_Form</classname> defines two constants,
+            <classname>Zend_Form::ENCTYPE_URLENCODED</classname> and
+            <classname>Zend_Form::ENCTYPE_MULTIPART</classname>, corresponding to the
             values 'application/x-www-form-urlencoded' and
             'multipart/form-data', respectively; however, you can set this to
             any arbitrary encoding type.
@@ -1094,7 +1094,7 @@ $form->setAction('/user/login')
         </note>
 
         <para>
-            <code>Zend_Form</code> implements the <code>Countable</code>
+            <classname>Zend_Form</classname> implements the <code>Countable</code>
             interface, allowing you to pass it as an argument to count:
         </para>
 
@@ -1105,7 +1105,7 @@ $numItems = count($form);
 
         <para>
             Setting arbitrary metadata is done through the attribs accessors.
-            Since overloading in <code>Zend_Form</code> is used to access
+            Since overloading in <classname>Zend_Form</classname> is used to access
             elements, display groups, and sub forms, this is the only method for
             accessing metadata.
         </para>
@@ -1138,12 +1138,12 @@ $form->clearAttribs();
             Creating the markup for a form is often a time-consuming task,
             particularly if you plan on re-using the same markup to show things
             such as validation errors, submitted values, etc.
-            <code>Zend_Form</code>'s answer to this issue is
+            <classname>Zend_Form</classname>'s answer to this issue is
             <emphasis>decorators</emphasis>.
         </para>
 
         <para>
-            Decorators for <code>Zend_Form</code> objects can be used to render
+            Decorators for <classname>Zend_Form</classname> objects can be used to render
             a form. The FormElements decorator will iterate through all items in
             a form -- elements, display groups, and sub forms -- and render
             them, returning the result. Additional decorators may then be used
@@ -1151,7 +1151,7 @@ $form->clearAttribs();
         </para>
 
         <para>
-            The default decorators for <code>Zend_Form</code> are FormElements,
+            The default decorators for <classname>Zend_Form</classname> are FormElements,
             HtmlTag (wraps in a definition list), and Form; the equivalent code
             for creating them is as follows:
         </para>
@@ -1199,7 +1199,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
 
             <para>
                 This option may be mixed with any other options you pass,
-                both as array options or in a <code>Zend_Config</code> object.
+                both as array options or in a <classname>Zend_Config</classname> object.
             </para>
         </note>
 
@@ -1207,7 +1207,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
             <title>Using Multiple Decorators of the Same Type</title>
 
             <para>
-                Internally, <code>Zend_Form</code> uses a decorator's
+                Internally, <classname>Zend_Form</classname> uses a decorator's
                 class as the lookup mechanism when retrieving decorators. As a
                 result, you cannot register multiple decorators of the same
                 type; subsequent decorators will simply overwrite those that
@@ -1297,7 +1297,7 @@ $fooBar  = $form->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form</code> also uses overloading to allow rendering
+            <classname>Zend_Form</classname> also uses overloading to allow rendering
             specific decorators. <code>__call()</code> will intercept methods
             that lead with the text 'render' and use the remainder of the method
             name to lookup a decorator; if found, it will then render that
@@ -1324,7 +1324,7 @@ echo $form->renderFieldset("<p>This is fieldset content</p>");
 
         <para>
             A primary use case for forms is validating submitted data.
-            <code>Zend_Form</code> allows you to validate an entire form, a partial form, or responses for
+            <classname>Zend_Form</classname> allows you to validate an entire form, a partial form, or responses for
             XmlHttpRequests (AJAX). If the submitted data is not valid, it has
             methods for retrieving the various error codes and messages for
             elements and sub forms.
@@ -1416,7 +1416,7 @@ $messages = $form->getMessages('username');
 
         <note>
             <para>
-                Note: When validating elements, <code>Zend_Form</code> sends a
+                Note: When validating elements, <classname>Zend_Form</classname> sends a
                 second argument to each element's <code>isValid()</code> method:
                 the array of data being validated. This can then be used by
                 individual validators to allow them to utilize other submitted
@@ -1500,7 +1500,7 @@ $messages = $form->getMessages('username');
 
         <para>
             The following is a full list of methods available to
-            <code>Zend_Form</code>, grouped by type:
+            <classname>Zend_Form</classname>, grouped by type:
         </para>
 
         <itemizedlist>
@@ -1694,16 +1694,16 @@ $messages = $form->getMessages('username');
         <title>Configuration</title>
 
         <para>
-            <code>Zend_Form</code> is fully configurable via
+            <classname>Zend_Form</classname> is fully configurable via
             <code>setOptions()</code> and <code>setConfig()</code> (or by
-            passing options or a <code>Zend_Config</code> object to the
+            passing options or a <classname>Zend_Config</classname> object to the
             constructor). Using these methods, you can specify form elements,
             display groups, decorators, and metadata.
         </para>
 
         <para>
             As a general rule, if 'set' + the option key refers to a
-            <code>Zend_Form</code> method, then the value provided will be
+            <classname>Zend_Form</classname> method, then the value provided will be
             passed to that method. If the accessor does not exist, the key is
             assumed to reference an attribute, and will be passed to
             <code>setAttrib()</code>.
@@ -1806,7 +1806,7 @@ decorators.form.decorator = "Form"
 
         <para>
             An alternative to using configuration-based forms is to subclass
-            <code>Zend_Form</code>. This has several benefits:
+            <classname>Zend_Form</classname>. This has several benefits:
         </para>
 
         <itemizedlist>

@@ -37,10 +37,10 @@
         <para>
             The process of creating an authenticated Http client using
             the ClientLogin mechanism is to call the static function
-            <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
+            <classname>Zend_Gdata_ClientLogin::getHttpClient()</classname>
             and pass the Google account credentials in plain text.
             The return value of this function is an object of class
-            <code>Zend_Http_Client</code>.
+            <classname>Zend_Http_Client</classname>.
         </para>
 
         <para>
@@ -51,10 +51,10 @@
         </para>
 
         <para>
-            The optional fourth parameter is an instance of <code>Zend_Http_Client</code>.
+            The optional fourth parameter is an instance of <classname>Zend_Http_Client</classname>.
             This allows you to set options in the client, such as proxy
             server settings. If you pass <code>null</code> for this
-            parameter, a generic <code>Zend_Http_Client</code> object is created.
+            parameter, a generic <classname>Zend_Http_Client</classname> object is created.
         </para>
 
         <para>
@@ -82,8 +82,8 @@
         <para>
             Below is an example of PHP code for a web application
             to acquire authentication to use the Google Calendar service
-            and create a <code>Zend_Gdata</code> client object using that authenticated
-            <code>Zend_Http_Client</code>.
+            and create a <classname>Zend_Gdata</classname> client object using that authenticated
+            <classname>Zend_Http_Client</classname>.
         </para>
 
         <programlisting role="php"><![CDATA[

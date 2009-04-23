@@ -183,8 +183,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         <title>Routing to Modules</title>
 
         <para>
-            The default route in <code>Zend_Controller_Router_Rewrite</code> is
-            an object of type <code>Zend_Controller_Router_Route_Module</code>.
+            The default route in <classname>Zend_Controller_Router_Rewrite</classname> is
+            an object of type <classname>Zend_Controller_Router_Route_Module</classname>.
             This route expects one of the following routing schemas:
         </para>
 

@@ -24,7 +24,7 @@ $mail->send();  // use default again
     <note>
         <title>Additional transports</title>
         <para>
-            Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+            Additional transports can be written by implementing <classname>Zend_Mail_Transport_Interface</classname>.
         </para>
     </note>
 </sect1>

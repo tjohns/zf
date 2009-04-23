@@ -16,7 +16,7 @@
 
         <para>
             Used for creating HTML button elements,
-            <code>Zend_Form_Element_Button</code> extends <link
+            <classname>Zend_Form_Element_Button</classname> extends <link
                 linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>,
             specifying some custom functionality. It specifies the 'formButton'
             view helper for decoration.
@@ -61,7 +61,7 @@
         </para>
 
         <para>
-            Adapters may be any adapters in <code>Zend_Captcha</code>, as well
+            Adapters may be any adapters in <classname>Zend_Captcha</classname>, as well
             as any custom adapters you may have defined elsewhere. To allow
             this, you may pass an additional plugin loader type key, 'CAPTCHA'
             or 'captcha', when specifying a plugin loader prefix path:
@@ -140,7 +140,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             HTML checkboxes allow you return a specific value, but basically
             operate as booleans. When checked, the checkbox's value is submitted.
             When the checkbox is not checked, nothing is submitted. Internally,
-            <code>Zend_Form_Element_Checkbox</code> enforces this state.
+            <classname>Zend_Form_Element_Checkbox</classname> enforces this state.
         </para>
 
         <para>
@@ -163,7 +163,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         </para>
 
         <para>
-            <code>Zend_Form_Element_Checkbox</code> uses the 'formCheckbox' view
+            <classname>Zend_Form_Element_Checkbox</classname> uses the 'formCheckbox' view
             helper. The checked value is always used to populate it.
         </para>
     </sect2>
@@ -275,7 +275,7 @@ $form->getValues();
             <para>
                 Therefor another call of <code>receive()</code> after calling
                 <code>getValues()</code> will not have an effect. Also creating a instance of
-                <code>Zend_File_Transfer</code> will not have an effect as there no file anymore
+                <classname>Zend_File_Transfer</classname> will not have an effect as there no file anymore
                 to receive.
             </para>
         </note>
@@ -367,7 +367,7 @@ if ($form->foo->isUploaded()) {
         </example>
 
         <para>
-            <code>Zend_Form_Element_File</code> also supports multiple files.
+            <classname>Zend_Form_Element_File</classname> also supports multiple files.
             By calling the <code>setMultiFile($count)</code> method you can set
             the number of file elements you want to create. This keeps you
             from setting the same settings multiple times.
@@ -459,7 +459,7 @@ $form->addElement($element, 'foo');
         <para>
             Hidden elements inject data that should be submitted, but
             that should not manipulated by the user .
-            <code>Zend_Form_Element_Hidden</code> accomplishes this with the 'formHidden' view helper.
+            <classname>Zend_Form_Element_Hidden</classname> accomplishes this with the 'formHidden' view helper.
         </para>
     </sect2>
 
@@ -492,7 +492,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             Internally, the element stores a unique identifier using
-            <code>Zend_Session_Namespace</code>, and checks for it at
+            <classname>Zend_Session_Namespace</classname>, and checks for it at
             submission (checking that the TTL has not expired). The 'Identical'
             validator is then used to ensure the submitted hash matches the
             stored hash.
@@ -513,7 +513,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            Images need an image source. <code>Zend_Form_Element_Image</code>
+            Images need an image source. <classname>Zend_Form_Element_Image</classname>
             allows you to specify this by using the <code>setImage()</code>
             accessor (or 'image' configuration key). You can also optionally specify a value to use when
             submitting the image using the <code>setImageValue()</code> accessor
@@ -544,7 +544,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_MultiCheckbox</code> makes this a snap. Like
+            <classname>Zend_Form_Element_MultiCheckbox</classname> makes this a snap. Like
             all other elements extending the base Multi element, you can specify
             a list of options, and easily validate against that same list. The
             'formMultiCheckbox' view helper ensures that these are returned as
@@ -613,12 +613,12 @@ $element->setValue(array('bar', 'bat'));
         <para>
             XHTML <code>select</code> elements allow a 'multiple' attribute,
             indicating multiple options may be selected for submission, instead
-            of the usual one. <code>Zend_Form_Element_Multiselect</code> extends
+            of the usual one. <classname>Zend_Form_Element_Multiselect</classname> extends
             <link
                 linkend="zend.form.standardElements.select">Zend_Form_Element_Select</link>,
             and sets the <code>multiple</code> attribute to 'multiple'. Like
             other classes that inherit from the base
-            <code>Zend_Form_Element_Multi</code> class, you can manipulate the
+            <classname>Zend_Form_Element_Multi</classname> class, you can manipulate the
             options for the select using:
         </para>
 
@@ -664,7 +664,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Password</code> achieves this by calling
+            <classname>Zend_Form_Element_Password</classname> achieves this by calling
             <code>setObscureValue(true)</code> on each validator (ensuring that
             the password is obscured in validation error messages), and using
             the 'formPassword' view helper (which does not display the value
@@ -677,8 +677,8 @@ $element->setValue(array('bar', 'bat'));
 
         <para>
             Radio elements allow you to specify several options, of which you
-            need a single value returned. <code>Zend_Form_Element_Radio</code>
-            extends the base <code>Zend_Form_Element_Multi</code> class,
+            need a single value returned. <classname>Zend_Form_Element_Radio</classname>
+            extends the base <classname>Zend_Form_Element_Multi</classname> class,
             allowing you to specify a number of options, and then uses the
             <code>formRadio</code> view helper to display these.
         </para>
@@ -726,7 +726,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Reset</code> extends <link
+            <classname>Zend_Form_Element_Reset</classname> extends <link
                 linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>.
             As such, the label is used for the button display, and will be
             translated if a translation adapter is present. It utilizes only the
@@ -740,7 +740,7 @@ $element->setValue(array('bar', 'bat'));
 
         <para>
             Select boxes are a common way of limiting to specific choices for a
-            given form datum. <code>Zend_Form_Element_Select</code> allows you
+            given form datum. <classname>Zend_Form_Element_Select</classname> allows you
             to generate these quickly and easily.
         </para>
 
@@ -776,7 +776,7 @@ $element->setValue(array('bar', 'bat'));
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element_Select</code> uses the 'formSelect' view
+            <classname>Zend_Form_Element_Select</classname> uses the 'formSelect' view
             helper for decoration.
         </para>
     </sect2>
@@ -788,7 +788,7 @@ $element->setValue(array('bar', 'bat'));
             Submit buttons are used to submit a form. You may use multiple
             submit buttons; you can use the button used to submit the form to
             decide what action to take with the data submitted.
-            <code>Zend_Form_Element_Submit</code> makes this decisioning easy,
+            <classname>Zend_Form_Element_Submit</classname> makes this decisioning easy,
             by adding a <code>isChecked()</code> method; as only one button
             element will be submitted by the form, after populating or
             validating the form, you can call this method on each submit button
@@ -796,7 +796,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Submit</code> uses the label as the "value"
+            <classname>Zend_Form_Element_Submit</classname> uses the label as the "value"
             of the submit button, translating it if a translation adapter is
             present. <code>isChecked()</code> checks the submitted value against
             the label in order to determine if the button was used.
@@ -819,7 +819,7 @@ $element->setValue(array('bar', 'bat'));
         <para>
             By far the most prevalent type of form element is the text element,
             allowing for limited text entry; it's an ideal element for most data
-            entry. <code>Zend_Form_Element_Text</code> simply uses the
+            entry. <classname>Zend_Form_Element_Text</classname> simply uses the
             'formText' view helper to display the element.
         </para>
     </sect2>
@@ -831,7 +831,7 @@ $element->setValue(array('bar', 'bat'));
             Textareas are used when large quantities of text are expected, and
             place no limits on the amount of text submitted (other than maximum
             size limits as dictated by your server or PHP).
-            <code>Zend_Form_Element_Textarea</code> uses the 'textArea' view
+            <classname>Zend_Form_Element_Textarea</classname> uses the 'textArea' view
             helper to display such elements, placing the value as the content of
             the element.
         </para>

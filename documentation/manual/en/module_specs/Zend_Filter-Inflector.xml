@@ -4,7 +4,7 @@
     <title>Zend_Filter_Inflector</title>
 
     <para>
-        <code>Zend_Filter_Inflector</code> is a general purpose tool for
+        <classname>Zend_Filter_Inflector</classname> is a general purpose tool for
         rules-based inflection of strings to a given target.
     </para>
 
@@ -16,8 +16,8 @@
     </para>
 
     <para>
-        <code>Zend_Filter_Inflector</code> implements
-        <code>Zend_Filter_Interface</code>; you perform inflection by calling
+        <classname>Zend_Filter_Inflector</classname> implements
+        <classname>Zend_Filter_Interface</classname>; you perform inflection by calling
         <code>filter()</code> on the object instance.
     </para>
 
@@ -60,14 +60,14 @@ $filtered = $inflector->filter(array('page' => $string));
         <para>
             Each variable in the target can have zero or more rules associated
             with them. Rules may be either <emphasis>static</emphasis> or refer to a
-            <code>Zend_Filter</code> class. Static rules will replace with the
+            <classname>Zend_Filter</classname> class. Static rules will replace with the
             text provided. Otherwise, a class matching the rule provided will be
             used to inflect the text. Classes are typically specified using a
             short name indicating the filter name stripped of any common prefix.
         </para>
 
         <para>
-            As an example, you can use any <code>Zend_Filter</code> concrete
+            As an example, you can use any <classname>Zend_Filter</classname> concrete
             implementations; however, instead of referring to them as
             'Zend_Filter_Alpha' or 'Zend_Filter_StringToLower', you'd specify
             only 'Alpha' or 'StringToLower'.
@@ -78,10 +78,10 @@ $filtered = $inflector->filter(array('page' => $string));
         <title>Setting Paths To Alternate Filters</title>
 
         <para>
-            <code>Zend_Filter_Inflector</code> uses
-            <code>Zend_Loader_PluginLoader</code> to manage loading filters to
+            <classname>Zend_Filter_Inflector</classname> uses
+            <classname>Zend_Loader_PluginLoader</classname> to manage loading filters to
             use with inflection. By default, any filter prefixed with
-            <code>Zend_Filter</code> will be available. To access filters with
+            <classname>Zend_Filter</classname> will be available. To access filters with
             that prefix but which occur deeper in the hierarchy, such as the
             various Word filters, simply strip off the Zend_Filter prefix:
         </para>
@@ -93,7 +93,7 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
         </programlisting>
 
         <para>
-            To set alternate paths, <code>Zend_Filter_Inflector</code> has a
+            To set alternate paths, <classname>Zend_Filter_Inflector</classname> has a
             utility method that proxies to the plugin loader,
             <code>addFilterPrefixPath()</code>:
         </para>
@@ -151,7 +151,7 @@ $inflector->setTargetReplacementIdentifier('#');
             Typically, you will set the target via the constructor. However, you
             may want to re-set the target later (for instance, to modify the
             default inflector in core components, such as the
-            <code>ViewRenderer</code> or <code>Zend_Layout</code>).
+            <code>ViewRenderer</code> or <classname>Zend_Layout</classname>).
             <code>setTarget()</code> can be used for this purpose:
         </para>
 
@@ -291,7 +291,7 @@ class Foo
             <title>Filter Inflector Rules</title>
 
             <para>
-                <code>Zend_Filter</code> filters may be used as inflector rules
+                <classname>Zend_Filter</classname> filters may be used as inflector rules
                 as well. Just like static rules, these are bound to a target
                 variable; unlike static rules, you may define multiple filters
                 to use when inflecting. These filters are processed in order, so
@@ -317,7 +317,7 @@ class Foo
 
                 <listitem><para>
                         <emphasis>Filter object</emphasis>. Any object instance
-                        implementing <code>Zend_Filter_Interface</code> may be
+                        implementing <classname>Zend_Filter_Interface</classname> may be
                         passed as a filter.
                 </para></listitem>
 
@@ -351,7 +351,7 @@ $inflector->setFilterRule('script', array(
             <para>
                 Typically, it's easier to set many rules at once than to
                 configure a single variable and its inflection rules at a time.
-                <code>Zend_Filter_Inflector</code>'s <code>addRules()</code> and
+                <classname>Zend_Filter_Inflector</classname>'s <code>addRules()</code> and
                 <code>setRules()</code> method allow this.
             </para>
 
@@ -396,7 +396,7 @@ $inflector->addRules(array(
         <title>Utility Methods</title>
 
         <para>
-            <code>Zend_Filter_Inflector</code> has a number of utility methods
+            <classname>Zend_Filter_Inflector</classname> has a number of utility methods
             for retrieving and setting the plugin loader, manipulating and
             retrieving rules, and controlling if and when exceptions are thrown.
         </para>
@@ -405,7 +405,7 @@ $inflector->addRules(array(
             <listitem><para>
                     <code>setPluginLoader()</code> can be used when you have
                     configured your own plugin loader and wish to use it with
-                    <code>Zend_Filter_Inflector</code>;
+                    <classname>Zend_Filter_Inflector</classname>;
                     <code>getPluginLoader()</code> retrieves the currently set
                     one.
             </para></listitem>
@@ -443,9 +443,9 @@ $inflector->addRules(array(
         <title>Using Zend_Config with Zend_Filter_Inflector</title>
 
         <para>
-            You can use <code>Zend_Config</code> to set rules, filter prefix
+            You can use <classname>Zend_Config</classname> to set rules, filter prefix
             paths, and other object state in your inflectors, either by passing
-            a <code>Zend_Config</code> object to the constructor or <code>setConfig()</code>.
+            a <classname>Zend_Config</classname> object to the constructor or <code>setConfig()</code>.
             The following settings may be specified:
         </para>
 

@@ -2,10 +2,10 @@
 <!-- Reviewed: no -->
 <sect1 id="zend.locale.functions">
 
-    <title>Using <code>Zend_Locale</code></title>
+    <title>Using <classname>Zend_Locale</classname></title>
 
     <para>
-        <code>Zend_Locale</code> also provides localized information about locales for each locale,
+        <classname>Zend_Locale</classname> also provides localized information about locales for each locale,
         including localized names for other locales, days of the week, month names, etc.
     </para>
 
@@ -51,7 +51,7 @@ print "copied: ", $copiedLocale;
         <title>Equality</title>
 
         <para>
-            <code>Zend_Locale</code> also provides a convenience function to compare two locales. All locale-aware
+            <classname>Zend_Locale</classname> also provides a convenience function to compare two locales. All locale-aware
             classes should provide a similar equality check.
         </para>
 
@@ -78,7 +78,7 @@ if ($locale->equals($mylocale)) {
         <para>
             The method <code>getDefault()</code> returns an array of relevant locales using information from the user's
             web browser (if available), information from the environment of the host server, and ZF settings. As with
-            the constructor for <code>Zend_Locale</code>, the first parameter selects a preference of which information
+            the constructor for <classname>Zend_Locale</classname>, the first parameter selects a preference of which information
             to consider
             <link linkend="zend.locale.selection">(<code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK)</code>
             </link>
@@ -136,7 +136,7 @@ print_r($found2);
             A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
             parameter. If no locale is given, a locale is
             <link linkend="zend.locale.selection">automatically selected</link>.
-            Since <code>Zend_Locale</code> objects are "light", this method exists primarily to cause side-effects for code that
+            Since <classname>Zend_Locale</classname> objects are "light", this method exists primarily to cause side-effects for code that
             have references to the existing instance object.
         </para>
 
@@ -1069,7 +1069,7 @@ echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
         </example>
 
         <para>
-            To generate a list of all languages known by <code>Zend_Locale</code>, with each language name shown in its own language,
+            To generate a list of all languages known by <classname>Zend_Locale</classname>, with each language name shown in its own language,
             try the example below in a web page. Similarly, <code>getCountryTranslationList()</code> and
             <code>getCountryTranslation()</code> could be used to create a table mapping your native language names for
             regions to the names of the regions shown in another language. Use a
@@ -1235,7 +1235,7 @@ if (Zend_Locale::isLocale($input)) {
         <para>
             You should also note that any given locale string will automatically be degraded if the region
             part does not exist for this locale. In our previous example the language <code>'to'</code> does not
-            exist in the region <code>'RU'</code>, but you will still get true returned as <code>Zend_Locale</code> can
+            exist in the region <code>'RU'</code>, but you will still get true returned as <classname>Zend_Locale</classname> can
             work with the given input.
         </para>
 

@@ -10,7 +10,7 @@
         binary content data.
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> encodes lines starting with one dot or two dots so that the mail
+        <classname>Zend_Mail_Transport_Smtp</classname> encodes lines starting with one dot or two dots so that the mail
         does not violate the SMTP protocol.
     </para>
 </sect1>

@@ -23,7 +23,7 @@
             You can get a list of the Google Documents for a particular user by using
             the <code>getDocumentListFeed</code> method of the docs
             service. The service will return a
-            <code>Zend_Gdata_Docs_DocumentListFeed</code> object
+            <classname>Zend_Gdata_Docs_DocumentListFeed</classname> object
             containing a list of documents associated with the authenticated
             user.
         </para>
@@ -37,9 +37,9 @@ $feed = $docs->getDocumentListFeed();
         </programlisting>
 
         <para>
-        The resulting <code>Zend_Gdata_Docs_DocumentListFeed</code> object
+        The resulting <classname>Zend_Gdata_Docs_DocumentListFeed</classname> object
         represents the response from the server. This feed contains a list of
-        <code>Zend_Gdata_Docs_DocumentListEntry</code> objects
+        <classname>Zend_Gdata_Docs_DocumentListEntry</classname> objects
         (<code>$feed->entries</code>), each of which represents a single
         Google Document.
         </para>
@@ -149,7 +149,7 @@ $feed = $docs->getDocumentListFeed(
             <title>Performing a text query</title>
             <para>
                 You can search the content of documents by using a
-                <code>Zend_Gdata_Docs_Query</code> in your request. A Query object
+                <classname>Zend_Gdata_Docs_Query</classname> in your request. A Query object
                 can be used to construct the query URI, with the search term being
                 passed in as a parameter. Here is an example method which queries
                 the documents list for documents which contain the search string:

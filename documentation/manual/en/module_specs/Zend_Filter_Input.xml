@@ -532,7 +532,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::FIELDS</code> instead of the
+                <classname>Zend_Filter_Input::FIELDS</classname> instead of the
                 string.
             </para>
 
@@ -609,7 +609,7 @@ $validators = array(
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::PRESENCE</code> instead of the
+                <classname>Zend_Filter_Input::PRESENCE</classname> instead of the
                 string.
             </para>
 
@@ -641,7 +641,7 @@ $validators = array(
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::DEFAULT_VALUE</code> instead of the
+                <classname>Zend_Filter_Input::DEFAULT_VALUE</classname> instead of the
                 string.
             </para>
 
@@ -710,7 +710,7 @@ echo $input->month; // echoes 1
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::ALLOW_EMPTY</code> instead of the
+                <classname>Zend_Filter_Input::ALLOW_EMPTY</classname> instead of the
                 string.
             </para>
 
@@ -776,7 +776,7 @@ $input->setOptions($options);
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::BREAK_CHAIN</code> instead of the
+                <classname>Zend_Filter_Input::BREAK_CHAIN</classname> instead of the
                 string.
             </para>
 
@@ -842,7 +842,7 @@ $input = new Zend_Filter_Input(null, $validators);
 
             <para>
                 You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::MESSAGES</code> instead of the
+                <classname>Zend_Filter_Input::MESSAGES</classname> instead of the
                 string.
             </para>
 
@@ -1027,16 +1027,16 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
             <para>
                 As of version 1.5 the function <code>addNamespace($namespace)</code> was deprecated
                 and exchanged with the plugin loader and the <code>addFilterPrefixPath</code> and
-                <code>addValidatorPrefixPath</code> were added. Also the constant <code>Zend_Filter_Input::INPUT_NAMESPACE</code>
-                is now deprecated. The constants <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> and
-                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> are available in releases after 1.7.0.
+                <code>addValidatorPrefixPath</code> were added. Also the constant <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname>
+                is now deprecated. The constants <classname>Zend_Filter_Input::VALIDATOR_NAMESPACE</classname> and
+                <classname>Zend_Filter_Input::FILTER_NAMESPACE</classname> are available in releases after 1.7.0.
             </para>
         </note>
 
         <note>
             <para>
-                As of version 1.0.4, <code>Zend_Filter_Input::NAMESPACE</code>, having value <code>namespace</code>,
-                was changed to <code>Zend_Filter_Input::INPUT_NAMESPACE</code>, having value
+                As of version 1.0.4, <classname>Zend_Filter_Input::NAMESPACE</classname>, having value <code>namespace</code>,
+                was changed to <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname>, having value
                 <code>inputNamespace</code>, in order to comply with the PHP 5.3 reservation of the keyword
                 <code>namespace</code>.
             </para>

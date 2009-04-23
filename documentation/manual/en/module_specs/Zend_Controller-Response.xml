@@ -14,7 +14,7 @@
             caught exceptions to the response object, allowing the developer to
             gracefully handle exceptions. This functionality may be overridden
             by setting
-            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+            <classname>Zend_Controller_Front::throwExceptions(true)</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -39,7 +39,7 @@ $response->sendResponse();
                 never need to call it. However, if you wish to manipulate the
                 response or use it in testing, you can override this
                 behaviour by setting the <code>returnResponse</code> flag with
-                <code>Zend_Controller_Front::returnResponse(true)</code>:
+                <classname>Zend_Controller_Front::returnResponse(true)</classname>:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -79,7 +79,7 @@ $this->getResponse()
                     linkend="zend.controller.action.viewintegration">view
                     integration</link>, you do not need to set the rendered view
                 script content in the response object, as
-                <code>Zend_Controller_Action::render()</code> does this by default.
+                <classname>Zend_Controller_Action::render()</classname> does this by default.
             </para>
         </note>
 
@@ -495,7 +495,7 @@ array(
 
         <para>
             The base response class is
-            <code>Zend_Controller_Response_Abstract</code>, and any subclass you
+            <classname>Zend_Controller_Response_Abstract</classname>, and any subclass you
             create should extend that class or one of its derivatives. The
             various methods available have been listed in the previous sections.
         </para>

@@ -8,12 +8,12 @@
 
         <para>
             Dispatching is the process of taking the request object,
-            <code>Zend_Controller_Request_Abstract</code>, extracting the module
+            <classname>Zend_Controller_Request_Abstract</classname>, extracting the module
             name, controller name, action name, and optional parameters
             contained in it, and then instantiating a controller and calling an
             action of that controller. If any of the module, controller, or
             action are not found, it will use default values for them.
-            <code>Zend_Controller_Dispatcher_Standard</code> specifies
+            <classname>Zend_Controller_Dispatcher_Standard</classname> specifies
             <code>index</code> for each of the controller and action defaults
             and <code>default</code> for the module default value, but allows
             the developer to change the default values for each using the
@@ -102,7 +102,7 @@ public function bazAction()
         <title>Subclassing the Dispatcher</title>
 
         <para>
-            <code>Zend_Controller_Front</code> will first call the router to
+            <classname>Zend_Controller_Front</classname> will first call the router to
             determine the first action in the request. It then enters a dispatch
             loop, which calls on the dispatcher to dispatch the action.
         </para>
@@ -116,7 +116,7 @@ public function bazAction()
         </para>
 
         <para>
-            <code>Zend_Controller_Dispatcher_Interface</code> defines the
+            <classname>Zend_Controller_Dispatcher_Interface</classname> defines the
             following methods as required for any dispatcher implementation:
         </para>
 
@@ -279,9 +279,9 @@ interface Zend_Controller_Dispatcher_Interface
 
         <para>
             In most cases, however, you should simply extend the abstract class
-            <code>Zend_Controller_Dispatcher_Abstract</code>, in which each of
+            <classname>Zend_Controller_Dispatcher_Abstract</classname>, in which each of
             these have already been defined, or
-            <code>Zend_Controller_Dispatcher_Standard</code> to modify
+            <classname>Zend_Controller_Dispatcher_Standard</classname> to modify
             functionality of the standard dispatcher.
         </para>
 

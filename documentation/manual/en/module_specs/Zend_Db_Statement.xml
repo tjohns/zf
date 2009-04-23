@@ -13,7 +13,7 @@
     </para>
 
     <para>
-        <code>Zend_Db_Statement</code> is based on the PDOStatement object in the
+        <classname>Zend_Db_Statement</classname> is based on the PDOStatement object in the
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
     </para>
 
@@ -122,7 +122,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
         <para>
             PDO statements support both positional parameters and named
             parameters, but not both types in a single SQL statement. Some of
-            the <code>Zend_Db_Statement</code> classes for non-PDO extensions may support
+            the <classname>Zend_Db_Statement</classname> classes for non-PDO extensions may support
             only one type of parameter or the other.
         </para>
 
@@ -138,7 +138,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             EXPLAIN are examples of statements that produce a result set.
             INSERT, UPDATE, and DELETE are examples of statements that don't
             produce a result set. You can execute the latter SQL statements
-            using <code>Zend_Db_Statement</code>, but you cannot call methods to fetch rows
+            using <classname>Zend_Db_Statement</classname>, but you cannot call methods to fetch rows
             of results from them.
         </para>
 

@@ -7,13 +7,13 @@
         <title>Creating a New Index</title>
 
         <para>
-            Index creation and updating capabilities are implemented within the <code>Zend_Search_Lucene</code> component, as well as the Java Lucene project.
-            You can use either of these options to create indexes that <code>Zend_Search_Lucene</code> can search.
+            Index creation and updating capabilities are implemented within the <classname>Zend_Search_Lucene</classname> component, as well as the Java Lucene project.
+            You can use either of these options to create indexes that <classname>Zend_Search_Lucene</classname> can search.
         </para>
 
         <para>
             The PHP code listing below provides an example of how to index a file
-            using <code>Zend_Search_Lucene</code> indexing API:
+            using <classname>Zend_Search_Lucene</classname> indexing API:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -72,7 +72,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <code>Zend_Search_Lucene::delete()</code> method operates with an internal index document id. It can be retrieved
+            <classname>Zend_Search_Lucene::delete()</classname> method operates with an internal index document id. It can be retrieved
             from a query hit by 'id' property:
         </para>
 
@@ -90,17 +90,17 @@ foreach ($hits as $hit) {
         <title>Retrieving Index Size</title>
 
         <para>
-            There are two methods to retrieve the size of an index in <code>Zend_Search_Lucene</code>.
+            There are two methods to retrieve the size of an index in <classname>Zend_Search_Lucene</classname>.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::maxDoc()</code> returns one greater than the largest possible document number.
+             <classname>Zend_Search_Lucene::maxDoc()</classname> returns one greater than the largest possible document number.
              It's actually the overall number of the documents in the index including deleted documents,
-             so it has a synonym: <code>Zend_Search_Lucene::count()</code>.
+             so it has a synonym: <classname>Zend_Search_Lucene::count()</classname>.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::numDocs()</code> returns the total number of non-deleted documents.
+             <classname>Zend_Search_Lucene::numDocs()</classname> returns the total number of non-deleted documents.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -110,7 +110,7 @@ $documents = $index->numDocs();
         </programlisting>
 
         <para>
-            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if a document is deleted.
+            <classname>Zend_Search_Lucene::isDeleted($id)</classname> method may be used to check if a document is deleted.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -150,7 +150,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </para>
 
         <para>
-            Full index optimization can be trigger by calling the <code>Zend_Search_Lucene::optimize()</code> method. It merges all
+            Full index optimization can be trigger by calling the <classname>Zend_Search_Lucene::optimize()</classname> method. It merges all
             index segments into one new segment:
         </para>
         <programlisting role="php"><![CDATA[
@@ -226,7 +226,7 @@ $index->optimize();
             <para>
                 Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
                 can also be used to optimize an index. Latest Luke release (v0.8) is based on Lucene v2.3 and compatible with
-                current implementation of <code>Zend_Search_Lucene</code> component (ZF 1.6). Earlier versions of <code>Zend_Search_Lucene</code> implementations
+                current implementation of <classname>Zend_Search_Lucene</classname> component (ZF 1.6). Earlier versions of <classname>Zend_Search_Lucene</classname> implementations
                 need another versions of Java Lucene tools to be compatible:
                 <itemizedlist>
                     <listitem>
@@ -248,7 +248,7 @@ $index->optimize();
         </para>
 
         <para>
-            It's possible to override this with the <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> method:
+            It's possible to override this with the <classname>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</classname> method:
         </para>
 
 
@@ -280,7 +280,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Supported Filesystems</title>
             <para>
-                <code>Zend_Search_Lucene</code> uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
+                <classname>Zend_Search_Lucene</classname> uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
             </para>
 
             <para>
@@ -289,7 +289,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
             </para>
 
             <para>
-                Do not use networked file systems with <code>Zend_Search_Lucene</code>.
+                Do not use networked file systems with <classname>Zend_Search_Lucene</classname>.
             </para>
         </sect3>
     </sect2>

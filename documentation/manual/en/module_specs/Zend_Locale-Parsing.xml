@@ -5,8 +5,8 @@
     <title>Normalization and Localization</title>
 
     <para>
-        <code>Zend_Locale_Format</code> is a internal component used by <code>Zend_Locale</code>. All locale aware classes use
-        <code>Zend_Locale_Format</code> for normalization and localization of numbers and dates. Normalization involves
+        <classname>Zend_Locale_Format</classname> is a internal component used by <classname>Zend_Locale</classname>. All locale aware classes use
+        <classname>Zend_Locale_Format</classname> for normalization and localization of numbers and dates. Normalization involves
         parsing input from a variety of data representations, like dates, into a standardized, structured
         representation, such as a PHP array with year, month, and day elements.
     </para>
@@ -14,7 +14,7 @@
     <para>
         The exact same string containing a number or a date might mean different things to people with different customs
         and conventions. Disambiguation of numbers and dates requires rules about how to interpret these strings and
-        normalize the values into a standardized data structure. Thus, all methods in <code>Zend_Locale_Format</code>
+        normalize the values into a standardized data structure. Thus, all methods in <classname>Zend_Locale_Format</classname>
         require a locale in order to parse the input data.
         <note>
             <title>Default "root" Locale</title>
@@ -36,7 +36,7 @@
             different from the common
             <ulink url="http://en.wikipedia.org/wiki/Decimal">decimal system</ulink>
             (e.g. "3.14"). Numbers can be normalized with the <code>getNumber()</code> function to obtain the standard
-            decimal representation. For all number-related discussions in this manual,
+            decimal representation. for all number-related discussions in this manual,
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">Arabic/European numerals (0,1,2,3,4,5,6,7,8,9)</ulink>
             are implied, unless explicitly stated otherwise. The options array may contain a 'locale' to define grouping
             and decimal characters. The array may also have a 'precision' to truncate excess digits from the result.
@@ -416,14 +416,14 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
         <title>Numeral System Conversion</title>
 
         <para>
-            <code>Zend_Locale_Format::convertNumerals()</code> converts digits between different
+            <classname>Zend_Locale_Format::convertNumerals()</classname> converts digits between different
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">numeral systems</ulink>
             , including the standard Arabic/European/Latin numeral system (0,1,2,3,4,5,6,7,8,9), not to be confused with
             <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Eastern Arabic numerals</ulink>
             sometimes used with the Arabic language to express numerals. Attempts to use an unsupported numeral system
             will result in an exception, to avoid accidentally performing an incorrect conversion due to a spelling
             error. All characters in the input, which are not numerals for the selected numeral system, are copied to
-            the output with no conversion provided for unit separator characters. <code>Zend_Locale</code>* components
+            the output with no conversion provided for unit separator characters. <classname>Zend_Locale</classname>* components
             rely on the data provided by CLDR (see their
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_scripts.html?sortby=date">
                 list of scripts grouped by language</ulink>).

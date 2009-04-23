@@ -52,7 +52,7 @@
 
         <para>
             Having this filter definition established provides the foundation
-            for <code>Zend_Filter_Interface</code>, which requires a single
+            for <classname>Zend_Filter_Interface</classname>, which requires a single
             method named <code>filter()</code> to be implemented by a filter
             class.
         </para>
@@ -81,7 +81,7 @@ echo $htmlEntities->filter('"'); // &quot;
         <para>
             If it is inconvenient to load a given filter class and create an
             instance of the filter, you can use the static method
-            <code>Zend_Filter::get()</code> as an alternative invocation style.
+            <classname>Zend_Filter::get()</classname> as an alternative invocation style.
             The first argument of this method is a data input value, that you
             would pass to the <code>filter()</code> method.  The second
             argument is a string, which corresponds to the basename of the

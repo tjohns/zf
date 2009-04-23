@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.elements">
-    <title>Creating Form Elements Using <code>Zend_Form_Element</code></title>
+    <title>Creating Form Elements Using <classname>Zend_Form_Element</classname></title>
 
     <para>
         A form is made of elements that typically correspond to HTML form
-        input. <code>Zend_Form_Element</code> encapsulates single form elements, with the
+        input. <classname>Zend_Form_Element</classname> encapsulates single form elements, with the
         following areas of responsibility:
     </para>
 
@@ -35,7 +35,7 @@
     </itemizedlist>
 
     <para>
-        The base class, <code>Zend_Form_Element</code>, has reasonable defaults
+        The base class, <classname>Zend_Form_Element</classname>, has reasonable defaults
         for many cases, but it is best to extend the class for commonly used
         special purpose elements. Additionally, Zend Framework ships with a
         number of standard XHTML elements; you can read about them <link
@@ -47,7 +47,7 @@
         <title>Plugin Loaders</title>
 
         <para>
-            <code>Zend_Form_Element</code> makes use of <link
+            <classname>Zend_Form_Element</classname> makes use of <link
                 linkend="zend.loader.pluginloader">Zend_Loader_PluginLoader</link>
             to allow developers to specify locations of alternate validators,
             filters, and decorators. Each has its own plugin loader associated
@@ -201,7 +201,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             all HTML, but run your validations on what remains to ensure the
             submission is valid. Or you may want to trim empty space surrounding input so that a StringLength validator will use the correct length of the input without counting leading or trailing whitespace characters.
             These operations may be performed using
-            <code>Zend_Filter</code>. <code>Zend_Form_Element</code> has
+            <classname>Zend_Filter</classname>. <classname>Zend_Form_Element</classname> has
             support for filter chains, allowing you to specify multiple,
             sequential filters. Filtering happens both during
             validation and when you retrieve the element value via
@@ -257,10 +257,10 @@ $element->addFilter('alnum');
 
             <para>
                 If you have your own set of filter classes, you can tell
-                <code>Zend_Form_Element</code> about these using
+                <classname>Zend_Form_Element</classname> about these using
                 <code>addPrefixPath()</code>. For instance, if you have
                 filters under the 'My_Filter' prefix, you can tell
-                <code>Zend_Form_Element</code> about this as follows:
+                <classname>Zend_Form_Element</classname> about this as follows:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -331,8 +331,8 @@ $unfiltered = $element->getUnfilteredValue();
         <para>
             If you subscribe to the security mantra of "filter input, escape
             output," you'll should use validator to filter input submitted with your form.
-            In <code>Zend_Form</code>, each element includes its own validator
-            chain, consisting of <code>Zend_Validate_*</code> validators.
+            In <classname>Zend_Form</classname>, each element includes its own validator
+            chain, consisting of <classname>Zend_Validate_*</classname> validators.
         </para>
 
         <para>
@@ -378,10 +378,10 @@ $element->addValidator('alnum');
 
             <para>
                 If you have your own set of validator classes, you can tell
-                <code>Zend_Form_Element</code> about these using
+                <classname>Zend_Form_Element</classname> about these using
                 <code>addPrefixPath()</code>. For instance, if you have
                 validators under the 'My_Validator' prefix, you can tell
-                <code>Zend_Form_Element</code> about this as follows:
+                <classname>Zend_Form_Element</classname> about this as follows:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -420,7 +420,7 @@ $element->addValidator('StringLength', false, array(6, 20));
         <para>
             Arguments passed in this way should be in the order in which they
             are defined in the constructor. The above example will instantiate
-            the <code>Zend_Validate_StringLenth</code> class with its
+            the <classname>Zend_Validate_StringLenth</classname> class with its
             <code>$min</code> and <code>$max</code> parameters:
         </para>
 
@@ -434,7 +434,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
 
             <para>
                 Some developers may wish to provide custom error messages for a
-                validator. The <code>$options</code> argument of the <code>Zend_Form_Element::addValidator()</code> method
+                validator. The <code>$options</code> argument of the <classname>Zend_Form_Element::addValidator()</classname> method
                  allows you to do so by providing
                 the key 'messages' and mapping it to an array of key/value pairs
                 for setting the message templates. You will need to know the
@@ -443,7 +443,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
             </para>
 
             <para>
-                A better option is to use a <code>Zend_Translate_Adapter</code>
+                A better option is to use a <classname>Zend_Translate_Adapter</classname>
                 with your form. Error codes are automatically passed to the
                 adapter by the default Errors decorator; you can then specify
                 your own error message strings by setting up translations for
@@ -525,7 +525,7 @@ if ($element->isValid($value)) {
             <title>Validation Operates On Filtered Values</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> filters values through
+                <classname>Zend_Form_Element::isValid()</classname> filters values through
                 the provided filter chain prior to validation. See <link
                     linkend="zend.form.elements.filters">the Filters
                     section</link> for more information.
@@ -536,11 +536,11 @@ if ($element->isValid($value)) {
             <title>Validation Context</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> supports an
+                <classname>Zend_Form_Element::isValid()</classname> supports an
                 additional argument, <code>$context</code>.
-                <code>Zend_Form::isValid()</code> passes the entire array of
+                <classname>Zend_Form::isValid()</classname> passes the entire array of
                 data being processed to <code>$context</code> when validating a
-                form, and <code>Zend_Form_Element::isValid()</code>, in turn,
+                form, and <classname>Zend_Form_Element::isValid()</classname>, in turn,
                 passes it to each validator. This means you can write
                 validators that are aware of data passed to other form
                 elements. As an example, consider a standard registration form
@@ -657,8 +657,8 @@ $messages = $element->getMessages();
             <title>Using Zend_Form_Elements as general-purpose validators</title>
 
             <para>
-                <code>Zend_Form_Element</code> implements
-                <code>Zend_Validate_Interface</code>, meaning an element may
+                <classname>Zend_Form_Element</classname> implements
+                <classname>Zend_Validate_Interface</classname>, meaning an element may
                 also be used as a validator in other, non-form related
                 validation chains.
             </para>
@@ -674,7 +674,7 @@ $messages = $element->getMessages();
                     <code>isRequired()</code> allow you to set and retrieve the
                     status of the 'required' flag. When set to boolean <code>true</code>, this
                     flag requires that the element be in the data processed by
-                    <code>Zend_Form</code>.
+                    <classname>Zend_Form</classname>.
             </para></listitem>
 
             <listitem><para>
@@ -811,7 +811,7 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            <code>Zend_Form_Element</code> tries to solve this issue through
+            <classname>Zend_Form_Element</classname> tries to solve this issue through
             the use of "decorators". Decorators are simply classes that have
             access to the element and a method for rendering content. For more
             information on how decorators work, please see the section on <link
@@ -819,7 +819,7 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            The default decorators used by <code>Zend_Form_Element</code> are:
+            The default decorators used by <classname>Zend_Form_Element</classname> are:
         </para>
 
         <itemizedlist>
@@ -827,13 +827,13 @@ $messages = $element->getMessages();
                 <emphasis>ViewHelper</emphasis>: specifies a view helper to use
                 to render the element. The 'helper' element attribute can be
                 used to specify which view helper to use. By default,
-                <code>Zend_Form_Element</code> specifies the 'formText' view
+                <classname>Zend_Form_Element</classname> specifies the 'formText' view
                 helper, but individual subclasses specify different helpers.
             </para></listitem>
 
             <listitem><para>
                 <emphasis>Errors</emphasis>: appends error messages to the
-                element using <code>Zend_View_Helper_FormErrors</code>. If none are present,
+                element using <classname>Zend_View_Helper_FormErrors</classname>. If none are present,
                 nothing is appended.
             </para></listitem>
 
@@ -851,7 +851,7 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Label</emphasis>: prepends a label to the element
-                using <code>Zend_View_Helper_FormLabel</code>, and wraps it in a &lt;dt&gt;
+                using <classname>Zend_View_Helper_FormLabel</classname>, and wraps it in a &lt;dt&gt;
                 tag. If no label is provided, just the definition term tag is
                 rendered.
             </para></listitem>
@@ -876,7 +876,7 @@ $element = new Zend_Form_Element('foo',
 
             <para>
                 This option may be mixed with any other options you pass,
-                both as array options or in a <code>Zend_Config</code> object.
+                both as array options or in a <classname>Zend_Config</classname> object.
             </para>
         </note>
 
@@ -939,7 +939,7 @@ $this->addDecorators(array(
             <title>Using Multiple Decorators of the Same Type</title>
 
             <para>
-                Internally, <code>Zend_Form_Element</code> uses a decorator's
+                Internally, <classname>Zend_Form_Element</classname> uses a decorator's
                 class as the lookup mechanism when retrieving decorators. As a
                 result, you cannot register multiple decorators of the same
                 type; subsequent decorators will simply overwrite those that
@@ -1022,7 +1022,7 @@ $fooBar  = $element->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element</code> also uses overloading to allow rendering
+            <classname>Zend_Form_Element</classname> also uses overloading to allow rendering
             specific decorators. <code>__call()</code> will intercept methods
             that lead with the text 'render' and use the remainder of the method
             name to lookup a decorator; if found, it will then render that
@@ -1048,7 +1048,7 @@ echo $element->renderHtmlTag("This is the html tag content");
         <title>Metadata and Attributes</title>
 
         <para>
-            <code>Zend_Form_Element</code> handles a variety of attributes and
+            <classname>Zend_Form_Element</classname> handles a variety of attributes and
             element metadata. Basic attributes include:
         </para>
 
@@ -1137,7 +1137,7 @@ echo $element->renderHtmlTag("This is the html tag content");
 
         <para>
             Most of the time, however, you can simply access them as object
-            properties, as <code>Zend_Form_Element</code> utilizes overloading
+            properties, as <classname>Zend_Form_Element</classname> utilizes overloading
             to facilitate access to them:
         </para>
 
@@ -1158,7 +1158,7 @@ $element->class = 'text;
         <title>Standard Elements</title>
 
         <para>
-            <code>Zend_Form</code> ships with a number of standard elements; please read the
+            <classname>Zend_Form</classname> ships with a number of standard elements; please read the
             <link linkend="zend.form.standardElements">Standard Elements</link>
             chapter for full details.
         </para>
@@ -1168,7 +1168,7 @@ $element->class = 'text;
         <title>Zend_Form_Element Methods</title>
 
         <para>
-            <code>Zend_Form_Element</code> has many, many methods. What follows
+            <classname>Zend_Form_Element</classname> has many, many methods. What follows
             is a quick summary of their signatures, grouped by type:
         </para>
 
@@ -1275,8 +1275,8 @@ $element->class = 'text;
         <title>Configuration</title>
 
         <para>
-            <code>Zend_Form_Element</code>'s constructor accepts either an
-            array of options or a <code>Zend_Config</code> object containing
+            <classname>Zend_Form_Element</classname>'s constructor accepts either an
+            array of options or a <classname>Zend_Config</classname> object containing
             options, and it can also be configured using either
             <code>setOptions()</code> or <code>setConfig()</code>. Generally
             speaking, keys are named as follows:
@@ -1284,7 +1284,7 @@ $element->class = 'text;
 
         <itemizedlist>
             <listitem><para>
-                If 'set' + key refers to a <code>Zend_Form_Element</code>
+                If 'set' + key refers to a <classname>Zend_Form_Element</classname>
                 method, then the value provided will be passed to that method.
             </para></listitem>
 
@@ -1369,7 +1369,7 @@ decorators.label.decorator = "Label"
 
         <para>
             You can create your own custom elements by simply extending the
-            <code>Zend_Form_Element</code> class. Common reasons to do so
+            <classname>Zend_Form_Element</classname> class. Common reasons to do so
             include:
         </para>
 
@@ -1436,7 +1436,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
 
         <para>
             Another method you may want to override when extending
-            <code>Zend_Form_Element</code> is the
+            <classname>Zend_Form_Element</classname> is the
             <code>loadDefaultDecorators()</code> method. This method
             conditionally loads a set of default decorators for your element;
             you may wish to substitute your own decorators in your extending
@@ -1460,7 +1460,7 @@ class My_Element_Text extends Zend_Form_Element
 
         <para>
             There are many ways to customize elements. Read the API
-            documentation of <code>Zend_Form_Element</code> to learn about all of the
+            documentation of <classname>Zend_Form_Element</classname> to learn about all of the
             available methods.
         </para>
     </sect2>

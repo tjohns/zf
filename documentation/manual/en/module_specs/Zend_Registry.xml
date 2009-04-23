@@ -13,7 +13,7 @@
 
     <para>
         The typical method to use registries with Zend Framework is through static methods in the
-        <code>Zend_Registry</code> class. Alternatively, the registry can be used as an array object,
+        <classname>Zend_Registry</classname> class. Alternatively, the registry can be used as an array object,
         so you can access elements stored within it with a convenient array-like interface.
     </para>
 
@@ -102,7 +102,7 @@ foreach ($registry as $index => $value) {
 
         <para>
             Use the traditional <code>new</code> operator to instantiate
-            <code>Zend_Registry</code>. Instantiating <code>Zend_Registry</code>
+            <classname>Zend_Registry</classname>. Instantiating <classname>Zend_Registry</classname>
             using its constructor also makes initializing the entries in the registry simple by
             taking an associative array as an argument.
         </para>
@@ -116,9 +116,9 @@ $registry = new Zend_Registry(array('index' => $value));
         </example>
 
         <para>
-            Once such a <code>Zend_Registry</code> object is instantiated,
+            Once such a <classname>Zend_Registry</classname> object is instantiated,
             you can use it by calling any array object method or by setting it
-            as the singleton instance for <code>Zend_Registry</code> with the static method
+            as the singleton instance for <classname>Zend_Registry</classname> with the static method
             <code>setInstance()</code>.
         </para>
 
@@ -133,7 +133,7 @@ Zend_Registry::setInstance($registry);
         </example>
 
         <para>
-            The <code>setInstance()</code> method throws a <code>Zend_Exception</code>
+            The <code>setInstance()</code> method throws a <classname>Zend_Exception</classname>
             if the static registry has already been initialized.
         </para>
 
@@ -263,14 +263,14 @@ if (isset($registry->index)) {
         <title>Extending the Registry</title>
 
         <para>
-            The static registry is an instance of the class <code>Zend_Registry</code>.
+            The static registry is an instance of the class <classname>Zend_Registry</classname>.
             If you want to add functionality to the registry, you should
-            create a class that extends <code>Zend_Registry</code> and
+            create a class that extends <classname>Zend_Registry</classname> and
             specify this class to instantiate for the singleton in the static registry.
             Use the static method <code>setClassName()</code> to specify
             the class.
             <note>
-                <para>The class must be a subclass of <code>Zend_Registry</code>.</para>
+                <para>The class must be a subclass of <classname>Zend_Registry</classname>.</para>
             </note>
         </para>
 
@@ -285,7 +285,7 @@ Zend_Registry::set('index', $value);
         </example>
 
         <para>
-            The registry throws a <code>Zend_Exception</code> if you attempt to set the
+            The registry throws a <classname>Zend_Exception</classname> if you attempt to set the
             classname after the registry has been accessed for the first time.
             It is therefore recommended that you specify the class name for your
             static registry in your application bootstrap.
@@ -318,7 +318,7 @@ Zend_Registry::set('index', $value);
             after the singleton registry object has been initialized.
             Unsetting the singleton instance allows you to use these methods
             even after the singleton registry object has been set. Using
-            <code>Zend_Registry</code> in this manner is not recommended for typical
+            <classname>Zend_Registry</classname> in this manner is not recommended for typical
             applications and environments.
         </para>
 

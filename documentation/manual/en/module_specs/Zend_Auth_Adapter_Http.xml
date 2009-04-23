@@ -9,7 +9,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> provides a mostly-compliant implementation of
+            <classname>Zend_Auth_Adapter_Http</classname> provides a mostly-compliant implementation of
             <ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>,
             <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basic</ulink> and
             <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest</ulink> HTTP Authentication.
@@ -86,7 +86,7 @@
         <title>Configuration Options</title>
 
         <para>
-            The <code>Zend_Auth_Adapter_Http</code> class requires a configuration array passed to its constructor.
+            The <classname>Zend_Auth_Adapter_Http</classname> class requires a configuration array passed to its constructor.
             There are several configuration options available, and some are required:
             <table id="zend.auth.adapter.configuration_options.table">
                 <title>Configuration Options</title>
@@ -166,8 +166,8 @@
         </para>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> relies on objects implementing
-            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code>. A text file resolver class is included with this
+            <classname>Zend_Auth_Adapter_Http</classname> relies on objects implementing
+            <classname>Zend_Auth_Adapter_Http_Resolver_Interface</classname>. A text file resolver class is included with this
             adapter, but any other kind of resolver can be created simply by implementing the resolver interface.
         </para>
 

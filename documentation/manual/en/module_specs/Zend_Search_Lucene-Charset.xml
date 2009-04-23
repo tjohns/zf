@@ -7,12 +7,12 @@
         <title>UTF-8 and single-byte character set support</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> works with the UTF-8 charset internally. Index files store
-            unicode data in Java's "modified UTF-8 encoding". <code>Zend_Search_Lucene</code> core
+            <classname>Zend_Search_Lucene</classname> works with the UTF-8 charset internally. Index files store
+            unicode data in Java's "modified UTF-8 encoding". <classname>Zend_Search_Lucene</classname> core
             completely supports this encoding with one exception.
             <footnote>
                <para>
-                   <code>Zend_Search_Lucene</code> supports only Basic Multilingual Plane
+                   <classname>Zend_Search_Lucene</classname> supports only Basic Multilingual Plane
                    (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
                    "supplementary characters" (characters whose code points are
                    greater than 0xFFFF)
@@ -29,7 +29,7 @@
         </para>
 
         <para>
-            Actual input data encoding may be specified through <code>Zend_Search_Lucene</code> API. Data will
+            Actual input data encoding may be specified through <classname>Zend_Search_Lucene</classname> API. Data will
             be automatically converted into UTF-8 encoding.
         </para>
     </sect2>
@@ -64,9 +64,9 @@
         <title>UTF-8 compatible text analyzers</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> also contains a set of UTF-8 compatible analyzers: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>, <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>,
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>.
+            <classname>Zend_Search_Lucene</classname> also contains a set of UTF-8 compatible analyzers: <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</classname>,
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</classname>, <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</classname>,
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</classname>.
         </para>
 
         <para>

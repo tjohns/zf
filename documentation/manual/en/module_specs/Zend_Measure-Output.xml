@@ -33,7 +33,7 @@
         <title>Automatic output</title>
 
         <para>
-            <code>Zend_Measure</code> supports outputting of strings automatically.
+            <classname>Zend_Measure</classname> supports outputting of strings automatically.
             <example id="zend.measure.output.auto.example-1">
                 <title>Automatic output</title>
                 <programlisting role="php"><![CDATA[

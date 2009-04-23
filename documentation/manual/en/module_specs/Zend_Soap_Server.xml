@@ -4,7 +4,7 @@
     <title>Zend_Soap_Server</title>
 
     <para>
-        <code>Zend_Soap_Server</code> class is intended to simplify Web Services server part development for PHP programmers.
+        <classname>Zend_Soap_Server</classname> class is intended to simplify Web Services server part development for PHP programmers.
     </para>
 
     <para>
@@ -19,7 +19,7 @@
     <para>
         WSDL document may be auto-generated with functionality provided by
         <link linkend="zend.soap.autodiscovery.introduction">Zend_Soap_AutoDiscovery component</link> or should be constructed manually using
-        <link linkend="zend.soap.wsdl"><code>Zend_Soap_Wsdl</code> class</link> or any other XML generating tool.
+        <link linkend="zend.soap.wsdl"><classname>Zend_Soap_Wsdl</classname> class</link> or any other XML generating tool.
     </para>
 
     <para>
@@ -27,15 +27,15 @@
     </para>
 
     <sect2 id="zend.soap.server.constructor">
-        <title><code>Zend_Soap_Server</code> constructor.</title>
+        <title><classname>Zend_Soap_Server</classname> constructor.</title>
         <para>
-            <code>Zend_Soap_Server</code> constructor should be used a bit differently for WSDL and non-WSDL modes.
+            <classname>Zend_Soap_Server</classname> constructor should be used a bit differently for WSDL and non-WSDL modes.
         </para>
 
         <sect3 id="zend.soap.server.constructor.wsdl_mode">
-            <title><code>Zend_Soap_Server</code> constructor for the WSDL mode.</title>
+            <title><classname>Zend_Soap_Server</classname> constructor for the WSDL mode.</title>
             <para>
-                <code>Zend_Soap_Server</code> constructor takes two optional parameters when it works in WSDL mode:
+                <classname>Zend_Soap_Server</classname> constructor takes two optional parameters when it works in WSDL mode:
                 <orderedlist>
                     <listitem>
                         <para>
@@ -94,10 +94,10 @@
         </sect3>
 
         <sect3 id="zend.soap.server.wsdl_mode">
-            <title><code>Zend_Soap_Server</code> constructor for the non-WSDL mode.</title>
+            <title><classname>Zend_Soap_Server</classname> constructor for the non-WSDL mode.</title>
             <para>
                 The first constructor parameter <emphasis role="strong">must</emphasis> be set to <code>null</code> if you
-                plan to use <code>Zend_Soap_Server</code> functionality in non-WSDL mode.
+                plan to use <classname>Zend_Soap_Server</classname> functionality in non-WSDL mode.
             </para>
             <para>
                 You also have to set 'uri' option in this case (see below).
@@ -156,7 +156,7 @@
         </para>
 
         <para>
-            The first one is to attach some class to the <code>Zend_Soap_Server</code> object which has to completely describe
+            The first one is to attach some class to the <classname>Zend_Soap_Server</classname> object which has to completely describe
             Web Service API:
             <programlisting role="php"><![CDATA[
 ...
@@ -257,7 +257,7 @@ $server->handle();
             <title>Request processing.</title>
 
             <para>
-                <code>Zend_Soap_Server::handle()</code> method takes request from the standard input stream ('php://input').
+                <classname>Zend_Soap_Server::handle()</classname> method takes request from the standard input stream ('php://input').
                 It may be overridden either by supplying optional parameter to the <code>handle()</code> method or
                 by setting request using <code>setRequest()</code> method:
                 <programlisting role="php"><![CDATA[
@@ -323,7 +323,7 @@ $request = $server->getLastRequest();
             <title>Response pre-processing.</title>
 
             <para>
-                <code>Zend_Soap_Server::handle()</code> method automatically emits generated response to the output stream.
+                <classname>Zend_Soap_Server::handle()</classname> method automatically emits generated response to the output stream.
                 It may be blocked using <code>setReturnResponse()</code> with <code>true</code> or <code>false</code>
                 as a parameter<footnote>
                                 <para>

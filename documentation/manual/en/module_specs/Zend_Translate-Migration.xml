@@ -5,8 +5,8 @@
     <title>Migrating from previous versions</title>
 
     <para>
-        The API of <code>Zend_Translate</code> has changed from time to time.
-        If you started to use <code>Zend_Translate</code> and its subcomponents
+        The API of <classname>Zend_Translate</classname> has changed from time to time.
+        If you started to use <classname>Zend_Translate</classname> and its subcomponents
         in earlier versions follow the guidelines below to migrate your scripts to
         use the new API.
     </para>
@@ -18,7 +18,7 @@
 
             <para>
                 When using automatic detection of languages, or setting languages manually
-                to <code>Zend_Translate</code> you may have mentioned that from time to time a
+                to <classname>Zend_Translate</classname> you may have mentioned that from time to time a
                 notice is thrown about not added or empty translations. In some previous
                 release also an exception was raised in some cases.
             </para>

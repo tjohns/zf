@@ -3,7 +3,7 @@
 <sect1 id="zend.feed.consuming-rss">
     <title>Consuming an RSS Feed</title>
     <para>
-        Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
+        Reading an RSS feed is as simple as instantiating a <classname>Zend_Feed_Rss</classname> object with the URL
         of the feed:
     </para>
     <programlisting role="php"><![CDATA[
@@ -11,7 +11,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 ]]>
     </programlisting>
     <para>
-        If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
+        If any errors occur fetching the feed, a <classname>Zend_Feed_Exception</classname> will be thrown.
     </para>
 
     <para>
@@ -23,7 +23,7 @@ echo $channel->title();
 ]]>
     </programlisting>
     <para>
-        Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
+        Note the function syntax. <classname>Zend_Feed</classname> uses a convention of treating properties as XML
         object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
         strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
         to the full text of any individual node while still allowing full access to all children.
@@ -43,7 +43,7 @@ echo $channel->category['domain'];
 
     <para>
         Most commonly you'll want to loop through the feed and do something with its entries.
-        <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
+        <classname>Zend_Feed_Abstract</classname> implements PHP's <code>Iterator</code> interface, so printing all
         titles of articles in a channel is just a matter of:
     </para>
     <programlisting role="php"><![CDATA[

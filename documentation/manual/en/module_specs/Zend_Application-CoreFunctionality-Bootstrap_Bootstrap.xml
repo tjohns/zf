@@ -4,7 +4,7 @@
     <title>Zend_Application_Bootstrap_Bootstrap</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_Bootstrap</code> is a concrete
+        <classname>Zend_Application_Bootstrap_Bootstrap</classname> is a concrete
         implementation of <link linkend="zend.application.core-functionality.bootstrap-bootstrapabstract">Zend_Application_Bootstrap_BootstrapAbstract</link>.
         It's primary feature are that it registers the <link
             linkend="zend.application.available-resources.frontcontroller">Front

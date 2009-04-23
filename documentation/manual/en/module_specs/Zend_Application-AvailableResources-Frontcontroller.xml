@@ -5,16 +5,16 @@
 
     <para>
         Probably the most common resource you will load with
-        <code>Zend_Application</code> will be the Front Controller resource,
+        <classname>Zend_Application</classname> will be the Front Controller resource,
         which provides the ability to configure
-        <code>Zend_Controller_Front</code>. This resource provides the ability
+        <classname>Zend_Controller_Front</classname>. This resource provides the ability
         to set arbitrary front controller parameters, specify plugins to
         initialize, and much more.
     </para>
 
     <para>
         Once initialized, the resource assigns the <code>frontController</code>
-        property of the bootstrap to the <code>Zend_Controller_Front</code>
+        property of the bootstrap to the <classname>Zend_Controller_Front</classname>
         instance.
     </para>
 

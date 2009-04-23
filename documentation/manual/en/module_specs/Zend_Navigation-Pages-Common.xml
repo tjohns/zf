@@ -124,7 +124,7 @@
                 </row>
                 <row>
                     <entry><code>resource</code></entry>
-                    <entry><code>string</code> | <code>Zend_Acl_Resource_Interface</code> | <code>null</code></entry>
+                    <entry><code>string</code> | <classname>Zend_Acl_Resource_Interface</classname> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
                         ACL resource to associate with the page. Read more in
@@ -165,11 +165,11 @@
                 </row>
                 <row>
                     <entry><code>pages</code></entry>
-                    <entry><code>array</code> | <code>Zend_Config</code> | <code>null</code></entry>
+                    <entry><code>array</code> | <classname>Zend_Config</classname> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
                         Child pages of the page. This could be an <code>array</code>
-                        or <code>Zend_Config</code> object containing either page
+                        or <classname>Zend_Config</classname> object containing either page
                         options that can be passed to the <code>factory()</code>
                         method, or actual <classname>Zend_Navigation_Page</classname>
                         instances, or a mixture of both.

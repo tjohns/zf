@@ -20,7 +20,7 @@
     </para>
 
     <para>
-        <code>Zend_Application</code> aims to make this easier and to
+        <classname>Zend_Application</classname> aims to make this easier and to
         promote reuse by encapsulating bootstrapping into OOP paradigms.
     </para>
 
@@ -31,16 +31,16 @@
     <itemizedlist>
         <listitem>
             <para>
-                <code>Zend_Application</code>: loads the PHP environment,
+                <classname>Zend_Application</classname>: loads the PHP environment,
                 including include_paths and autoloading, and instantiates
                 the requested bootstrap class.
             </para>
         </listitem>
         <listitem>
             <para>
-                <code>Zend_Application_Bootstrap</code>: provides
+                <classname>Zend_Application_Bootstrap</classname>: provides
                 interfaces for bootstrap classes.
-                <code>Zend_Application_Bootstrap_Bootstrap</code> provides common
+                <classname>Zend_Application_Bootstrap_Bootstrap</classname> provides common
                 functionality for most bootstrapping needs, including
                 dependency checking algorithms and the ability to load
                 bootstrap resources on demand.
@@ -48,7 +48,7 @@
         </listitem>
         <listitem>
             <para>
-                <code>Zend_Application_Resource</code> provides an
+                <classname>Zend_Application_Resource</classname> provides an
                 interface for standard bootstrapping resources that can be
                 loaded on demand by a bootstrap instance, as well as several
                 default resource implementations.
@@ -58,9 +58,9 @@
 
     <para>
         Developers create a bootstrap class for their application, extending
-        <code>Zend_Application_Bootstrap_Bootstrap</code> or implementing (minimally)
-        <code>Zend_Application_Bootstrap_Bootstrapper</code>. The entry point
-        (e.g., public/index.php) will load <code>Zend_Application</code>,
+        <classname>Zend_Application_Bootstrap_Bootstrap</classname> or implementing (minimally)
+        <classname>Zend_Application_Bootstrap_Bootstrapper</classname>. The entry point
+        (e.g., public/index.php) will load <classname>Zend_Application</classname>,
         and instantiate it by passing:
     </para>
 
@@ -126,7 +126,7 @@
     </itemizedlist>
 
     <para>
-        Options may be an array, a <code>Zend_Config</code> object, or the path
+        Options may be an array, a <classname>Zend_Config</classname> object, or the path
         to a configuration file.
     </para>
 
@@ -134,9 +134,9 @@
         <title>Bootstrapping</title>
 
         <para>
-            <code>Zend_Application</code>'s second area of responsibility is
+            <classname>Zend_Application</classname>'s second area of responsibility is
             executing the application bootstrap. Bootstraps minimally need to
-            implement <code>Zend_Application_Bootstrap_Bootstrapper</code>,
+            implement <classname>Zend_Application_Bootstrap_Bootstrapper</classname>,
             which defines the following API:
         </para>
 
@@ -163,8 +163,8 @@ interface Zend_Application_Bootstrap_Bootstrapper
 
         <para>
             You can implement this interface on your own, extend
-            <code>Zend_Application_Bootstrap_BootstrapAbstract</code>, or use
-            <code>Zend_Application_Bootstrap_Bootstrap</code>.
+            <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname>, or use
+            <classname>Zend_Application_Bootstrap_Bootstrap</classname>.
         </para>
 
         <para>
@@ -176,7 +176,7 @@ interface Zend_Application_Bootstrap_Bootstrapper
             <title>Resource Methods</title>
 
             <para>
-                The <code>Zend_Application_Bootstrap_BootstrapAbstract</code>
+                The <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname>
                 implementation provides a simple convention for defining class
                 resource methods. Any protected method beginning with a name
                 prefixed with <code>_init</code> will be considered a resource
@@ -263,7 +263,7 @@ $bootstrap->bootstrap();
             <para>
                 If your bootstrap should be capable of using resource plugins,
                 you will need to implement an additional interface,
-                <code>Zend_Application_Bootstrap_ResourceBootstrapper</code>.
+                <classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname>.
                 This interface defines an API for locating, registering, and
                 loading resource plugins:
             </para>
@@ -291,8 +291,8 @@ interface Zend_Application_Bootstrap_ResourceBootstrapper
             </para>
 
             <para>
-                <code>Zend_Application_Bootstrap_BootstrapAbstract</code> (and
-                <code>Zend_Application_Bootstrap_Bootstrap</code> by extension)
+                <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname> (and
+                <classname>Zend_Application_Bootstrap_Bootstrap</classname> by extension)
                 implement this interface as well, allowing you to utilize
                 resource plugins.
             </para>
@@ -328,7 +328,7 @@ $application = new Zend_Application(APPLICATION_ENV, array(
                 If you begin writing your own resource plugins, or utilize
                 third-party resource plugins, you will need to tell your
                 bootstrap where to look for them. Internally, the bootstrap
-                utilizes <code>Zend_Loader_PluginLoader</code>, so you will only
+                utilizes <classname>Zend_Loader_PluginLoader</classname>, so you will only
                 need to indicate the common class prefix an path pairs.
             </para>
 
@@ -386,7 +386,7 @@ $bootstrap->bootstrap();
             </para>
 
             <para>
-                <code>Zend_Application_Bootstrap_BootstrapAbstract</code>
+                <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname>
                 provides a local registry for these objects. To store your
                 objects in them, you simply return them from your resources.
             </para>
@@ -396,7 +396,7 @@ $bootstrap->bootstrap();
                 "container" internally; its only requirements are that it is an
                 object. Resources are then registered as properties named after
                 the resource name. By default, an instance of
-                <code>Zend_Registry</code> is used, but you may also specify any
+                <classname>Zend_Registry</classname> is used, but you may also specify any
                 other object you wish. The methods <code>setContainer()</code>
                 and <code>getContainer()</code> may be used to manipulate the
                 container itself. <code>getResource($resource)</code> can be
@@ -442,7 +442,7 @@ if (isset($container->view)) {
             <para>
                 Please note that the registry/container is not global. This
                 means that you need access to the bootstrap in order to fetch
-                resources. <code>Zend_Application_Bootstrap_Bootstrap</code>
+                resources. <classname>Zend_Application_Bootstrap_Bootstrap</classname>
                 provides some convenience for this: during its
                 <code>run()</code> execution, it registers itself as the front
                 controller parameter "bootstrap", which allows you to fetch it
@@ -480,7 +480,7 @@ class FooController extends Zend_Controller_Action
             <para>
                 At the same time, some resources may depend on other
                 resources being executed. To solve these two issues,
-                <code>Zend_Application_Bootstrap_BootstrapAbstract</code>
+                <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname>
                 provides a simple, effective mechanism for dependency
                 tracking.
             </para>
@@ -540,9 +540,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         <para>
             Resources need only implement
-            <code>Zend_Application_Resource_Resource</code>, or, more simply
+            <classname>Zend_Application_Resource_Resource</classname>, or, more simply
             still, extend
-            <code>Zend_Application_Resource_ResourceAbstract</code>. The basic
+            <classname>Zend_Application_Resource_ResourceAbstract</classname>. The basic
             interface is simply this:
         </para>
 

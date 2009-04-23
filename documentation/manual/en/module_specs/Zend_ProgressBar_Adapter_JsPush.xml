@@ -3,7 +3,7 @@
 <sect3 id="zend.progressbar.adapter.jspush">
     <title>Zend_ProgressBar_Adapter_JsPush</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_JsPush</code> is an adapter which let's
+        <classname>Zend_ProgressBar_Adapter_JsPush</classname> is an adapter which let's
         you update a progressbar in a browser via Javascript Push. This means
         that no second connection is required to gather the status about a
         running process, but that the process itself sends its status directly
@@ -11,7 +11,7 @@
     </para>
     <para>
         You can set the adapter options either via the <code>set*</code> methods
-        or give an array or a <code>Zend_Config</code> instance with options as first
+        or give an array or a <classname>Zend_Config</classname> instance with options as first
         parameter to the constructor. The available options are:
     </para>
     <itemizedlist>
@@ -19,7 +19,7 @@
             <para>
                 <code>updateMethodName</code>: The javascript method which
                 should be called on every update. Default value is
-                <code>Zend_ProgressBar_Update</code>.
+                <classname>Zend_ProgressBar_Update</classname>.
             </para>
         </listitem>
         <listitem>

@@ -5,17 +5,17 @@
     <title>Basic Usage</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> instances provide the primary API for manipulating session data in the Zend
+        <classname>Zend_Session_Namespace</classname> instances provide the primary API for manipulating session data in the Zend
         Framework. Namespaces are used to segregate all session data, although a default namespace exists for those who
-        only want one namespace for all their session data. <code>Zend_Session</code> utilizes ext/session and its
+        only want one namespace for all their session data. <classname>Zend_Session</classname> utilizes ext/session and its
         special <code>$_SESSION</code> superglobal as the storage mechanism for session state data. While
         <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain from directly
-        accessing it, so that <code>Zend_Session</code> and <code>Zend_Session_Namespace</code> can most effectively and
+        accessing it, so that <classname>Zend_Session</classname> and <classname>Zend_Session_Namespace</classname> can most effectively and
         securely provide its suite of session related functionality.
     </para>
 
     <para>
-        Each instance of <code>Zend_Session_Namespace</code> corresponds to an entry of the <code>$_SESSION</code>
+        Each instance of <classname>Zend_Session_Namespace</classname> corresponds to an entry of the <code>$_SESSION</code>
         superglobal array, where the namespace is used as the key.
 
         <programlisting role="php"><![CDATA[
@@ -27,7 +27,7 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 
         It is possible to use Zend_Session in conjunction with other code that uses <code>$_SESSION</code> directly. To
         avoid problems, however, it is highly recommended that such code only uses parts of <code>$_SESSION</code> that
-        do not correspond to instances of <code>Zend_Session_Namespace</code>.
+        do not correspond to instances of <classname>Zend_Session_Namespace</classname>.
     </para>
 
     <sect2 id="zend.session.basic_usage.basic_examples">
@@ -35,10 +35,10 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
         <title>Tutorial Examples</title>
 
         <para>
-            If no namespace is specified when instantiating <code>Zend_Session_Namespace</code>, all data will be
-            transparently stored in a namespace called "<code>Default</code>". <code>Zend_Session</code> is not intended
+            If no namespace is specified when instantiating <classname>Zend_Session_Namespace</classname>, all data will be
+            transparently stored in a namespace called "<code>Default</code>". <classname>Zend_Session</classname> is not intended
             to work directly on the contents of session namespace containers. Instead, we use
-            <code>Zend_Session_Namespace</code>. The example below demonstrates use of this default namespace, showing
+            <classname>Zend_Session_Namespace</classname>. The example below demonstrates use of this default namespace, showing
             how to count the number of client requests during a session:
         </para>
 
@@ -64,8 +64,8 @@ echo "Page requests this session: ",
         </example>
 
         <para>
-            When multiple modules use instances of <code>Zend_Session_Namespace</code> having different namespaces, each
-            module obtains data encapsulation for its session data. The <code>Zend_Session_Namespace</code> constructor
+            When multiple modules use instances of <classname>Zend_Session_Namespace</classname> having different namespaces, each
+            module obtains data encapsulation for its session data. The <classname>Zend_Session_Namespace</classname> constructor
             can be passed an optional <code>$namespace</code> argument, which allows developers to partition session
             data into separate namespaces. Namespacing provides an effective and popular way to secure session state
             data against changes due to accidental naming collisions.
@@ -118,7 +118,7 @@ $_SESSION['Some_Web_Service']['user'] = "mywebusername";
         <title>Iterating Over Session Namespaces</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> provides the full
+            <classname>Zend_Session_Namespace</classname> provides the full
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate
             interface</ulink>, including support for the <code>foreach</code> statement:
         </para>
@@ -146,7 +146,7 @@ foreach ($aNamespace as $index => $value) {
         <title>Accessors for Session Namespaces</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> implements the <code>__get()</code>, <code>__set()</code>,
+            <classname>Zend_Session_Namespace</classname> implements the <code>__get()</code>, <code>__set()</code>,
             <code>__isset()</code>, and <code>__unset()</code>
             <ulink url="http://www.php.net/manual/en/language.oop5.overloading.php">magic methods</ulink>, which should
             not be invoked directly, except from within a subclass. Instead, the normal operators automatically invoke

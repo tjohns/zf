@@ -7,7 +7,7 @@
         <title>Overview</title>
 
         <para>
-            <code>Zend_Controller_Front</code> implements a <ulink
+            <classname>Zend_Controller_Front</classname> implements a <ulink
                 url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front
                 Controller pattern</ulink> used in <ulink
                 url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller
@@ -18,7 +18,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> also implements the <ulink
+            <classname>Zend_Controller_Front</classname> also implements the <ulink
                 url="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton
             pattern</ulink>, meaning only a single instance of it may be available at
             any given time. This allows it to also act as a registry on which
@@ -26,7 +26,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> registers a <link
+            <classname>Zend_Controller_Front</classname> registers a <link
                 linkend="zend.controller.plugins">plugin broker</link> with
             itself, allowing various events it triggers to be observed by
             plugins. In most cases, this gives the developer the opportunity to
@@ -236,7 +236,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <title>run()</title>
 
             <para>
-                <code>Zend_Controller_Front::run($path)</code> is a static
+                <classname>Zend_Controller_Front::run($path)</classname> is a static
                 method taking simply a path to a directory containing
                 controllers. It fetches a front controller instance (via
                 <link
@@ -414,7 +414,7 @@ Zend_Controller_Front::run('../application/controllers');
                     response should be automatically emitted
                     (<code>false</code>). By default, the response is
                     automatically emitted (by calling
-                    <code>Zend_Controller_Response_Abstract::sendResponse()</code>);
+                    <classname>Zend_Controller_Response_Abstract::sendResponse()</classname>);
                     turning on <code>returnResponse()</code> will override this
                     behaviour.
                 </para>
@@ -560,9 +560,9 @@ class My_Controller_Front extends Zend_Controller_Front
         <para>
             Overriding the <code>getInstance()</code> method ensures that
             subsequent calls to
-            <code>Zend_Controller_Front::getInstance()</code> will return an
+            <classname>Zend_Controller_Front::getInstance()</classname> will return an
             instance of your new subclass instead of a
-            <code>Zend_Controller_Front</code> instance -- this is particularly
+            <classname>Zend_Controller_Front</classname> instance -- this is particularly
             useful for some of the alternate routers and view helpers.
         </para>
 

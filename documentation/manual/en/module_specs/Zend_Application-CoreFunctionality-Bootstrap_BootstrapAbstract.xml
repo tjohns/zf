@@ -4,10 +4,12 @@
     <title>Zend_Application_Bootstrap_BootstrapAbstract</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_BootstrapAbstract</code> is an abstract class which
+        <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname> is an abstract class which
         provides the base functionallity of a common bootstrap. It implements
-        both <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>
-        and <link linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">Zend_Application_Bootstrap_ResourceBootstrapper</link>.
+        both <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">
+            Zend_Application_Bootstrap_Bootstrapper</link> and <link
+            linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">
+            Zend_Application_Bootstrap_ResourceBootstrapper</link>.
     </para>
 
     <table id="zend.application.core-functionality.bootstrap-bootstrapabstract.api.table">
@@ -28,21 +30,21 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$application</code>: <emphasis>required</emphasis>.
-                            Accepts either a <code>Zend_Application</code> or a
-                            <code>Zend_Application_Bootstrap_Bootstrapper</code>
+                            Accepts either a <classname>Zend_Application</classname> or a
+                            <classname>Zend_Application_Bootstrap_Bootstrapper</classname>
                             object as the sole argument.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
                         Constructor. Accepts a single argument, which should be a
-                        <code>Zend_Application</code> object, or another bootstrap
+                        <classname>Zend_Application</classname> object, or another bootstrap
                         object.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -107,9 +109,9 @@
                 </row>
 
                 <row>
-                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_Bootstrapper
-                            $application)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
+                    <entry><code>setApplication(Zend_Application |
+                            Zend_Application_Bootstrap_Bootstrapper $application)</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_BootstrapAbstract</classname></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$application</code>: <emphasis>required</emphasis>.
@@ -122,7 +124,8 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application |
+                            Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the application/bootstrap object passed via the
@@ -165,7 +168,7 @@
 
                 <row>
                     <entry><code>setContainer($container)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_BootstrapAbstract</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$container</code>, <emphasis>required</emphasis>.

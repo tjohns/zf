@@ -233,9 +233,9 @@ $client->setParameterPost(array(
         <para>
             Zend_Http_Client provides methods of accessing the last request
             sent and last response received by the client object.
-            <code>Zend_Http_Client->getLastRequest()</code> takes no parameters
+            <classname>Zend_Http_Client->getLastRequest()</classname> takes no parameters
             and returns the last HTTP request sent by the client as a string.
-            Similarly, <code>Zend_Http_Client->getLastResponse()</code> returns
+            Similarly, <classname>Zend_Http_Client->getLastResponse()</classname> returns
             the last HTTP response received by the client as a
             <link linkend="zend.http.response">Zend_Http_Response</link> object.
         </para>

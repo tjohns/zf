@@ -5,7 +5,7 @@
 
     <note>
         <para>
-            <code>Zend_Soap_Wsdl</code> class is used by Zend_Soap_Server component internally to operate with WSDL
+            <classname>Zend_Soap_Wsdl</classname> class is used by Zend_Soap_Server component internally to operate with WSDL
             documents. Nevertheless, you could also use functionality provided by this class for your own needs.
             The Zend_Soap_Wsdl package contains both a parser and a builder of WSDL documents.
         </para>
@@ -15,9 +15,9 @@
     </note>
 
     <sect2 id="zend.soap.wsdl.constructor">
-        <title><code>Zend_Soap_Wsdl</code> constructor.</title>
+        <title><classname>Zend_Soap_Wsdl</classname> constructor.</title>
         <para>
-            <code>Zend_Soap_Wsdl</code> constructor takes three parameters:
+            <classname>Zend_Soap_Wsdl</classname> constructor takes three parameters:
             <orderedlist>
                 <listitem>
                     <simpara><code>$name</code> - name of the Web Service being described.</simpara>
@@ -49,8 +49,8 @@
             (/definitions/message element).
         </para>
         <para>
-            Each message correspond to methods in terms of <code>Zend_Soap_Server</code> and
-            <code>Zend_Soap_Client</code> functionality.
+            Each message correspond to methods in terms of <classname>Zend_Soap_Server</classname> and
+            <classname>Zend_Soap_Client</classname> functionality.
         </para>
         <para>
            <code>$name</code> parameter represents message name.
@@ -77,7 +77,7 @@
                 (see <ulink url="http://schemas.xmlsoap.org/soap/encoding/"/>).
             </para>
             <para>
-                All non-standard types, which may be added using <code>Zend_Soap_Wsdl::addComplexType()</code> method, are
+                All non-standard types, which may be added using <classname>Zend_Soap_Wsdl::addComplexType()</classname> method, are
                 described using 'complexType' node of '/definitions/types/schema/' section of WSDL document.
             </para>
             <para>
@@ -118,7 +118,7 @@
             <note>
                 <para>
                     Zend_Soap_Server component generates two messages for each port operation while describing service based on
-                    <code>Zend_Soap_Server</code> class:
+                    <classname>Zend_Soap_Server</classname> class:
                     <itemizedlist>
                         <listitem>
                             <para>
@@ -223,7 +223,7 @@
         </para>
         <para>
             WSDL 1.1 allows to have several port types (sets of operations) per service. This ability is not used by
-            Zend_Soap_Server implementation and not supported by <code>Zend_Soap_Wsdl</code> class.
+            Zend_Soap_Server implementation and not supported by <classname>Zend_Soap_Wsdl</classname> class.
         </para>
         <para>
             Zend_Soap_Server implementation uses:
@@ -294,12 +294,12 @@
                         PHP class &lt;-&gt; based on complex type strategy (See: <xref linkend="zend.soap.wsdl.types.add_complex" />)
                         <footnote>
                             <para>
-                                By default <code>Zend_Soap_Wsdl</code> will be created with the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
+                                By default <classname>Zend_Soap_Wsdl</classname> will be created with the <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname>
                                 class as detection algorithm for complex types. The first parameter of the AutoDiscover constructor takes
-                                any complex type strategy implementing <code>Zend_Soap_Wsdl_Strategy_Interface</code> or a string with the name
+                                any complex type strategy implementing <classname>Zend_Soap_Wsdl_Strategy_Interface</classname> or a string with the name
                                 of the class. For backwards compatibility with <code>$extractComplexType</code> boolean variables are parsed
-                                the following way: If true, <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>, if false
-                                <code>Zend_Soap_Wsdl_Strategy_AnyType</code>.
+                                the following way: If true, <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname>, if false
+                                <classname>Zend_Soap_Wsdl_Strategy_AnyType</classname>.
                             </para>
                         </footnote>.
                     </para>
@@ -354,42 +354,42 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <para>
                 Its detection and building algorithm is based on the currently
                 active detection strategy for complex types. You can set the detection strategy either by
-                specifying the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
+                specifying the class name as string or instance of a <classname>Zend_Soap_Wsdl_Strategy_Interface</classname>
                 implementation as the third parameter of the constructor or using the <code>setComplexTypeStrategy($strategy)</code>
                 function of Zend_Soap_Wsdl. The following detection strategies currently exist:
             </para>
 
             <itemizedlist>
                 <listitem>
-                    <para>Class <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>: Enabled by default (when no
+                    <para>Class <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname>: Enabled by default (when no
                     third constructor parameter is set). Iterates over the public attributes of a class type and
                     registers them as subtypes of the complex object type.</para>
                 </listitem>
                 <listitem>
-                    <para>Class <code>Zend_Soap_Wsdl_Strategy_AnyType</code>: Casts all complex types into the
+                    <para>Class <classname>Zend_Soap_Wsdl_Strategy_AnyType</classname>: Casts all complex types into the
                     simple XSD type xsd:anyType. Be careful this shortcut for complex type detection can probably only
                     be handled successfully by weakly typed languages such as PHP.
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence</code>: This strategy allows
+                    <para>Class <classname>Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence</classname>: This strategy allows
                     to specify return parameters of the type: <code>int[]</code> or <code>string[]</code>. It can only
                     handle simple PHP types such as int, string, boolean, float and so on, but allows to specify
                     nested arrays of arrays of type.</para>
                 </listitem>
                 <listitem>
-                    <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex</code>: This strategy allows
+                    <para>Class <classname>Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex</classname>: This strategy allows
                     to detect very complex arrays of objects. Objects types are detected based on the
-                    <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> and an array is wrapped
+                    <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname> and an array is wrapped
                     around that definition.</para>
                 </listitem>
                 <listitem>
-                    <para>Class <code>Zend_Soap_Wsdl_Strategy_Composite</code>: This strategy can
+                    <para>Class <classname>Zend_Soap_Wsdl_Strategy_Composite</classname>: This strategy can
                     combine all strategies by connecting PHP Complex types (Classnames) to the desired strategy
                     via the <code>connectTypeToStrategy($type, $strategy)</code> method. A complete typemap can be
                     given to the constructor as an array with <code>$type</code> -> <code>$strategy</code> pairs.
                     The second parameter specifies the default strategy that will be used if an unknown type is
-                    requested for adding. This parameter defaults to the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
+                    requested for adding. This parameter defaults to the <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname>
                     strategy.</para>
                 </listitem>
             </itemizedlist>
@@ -495,7 +495,7 @@ foreach($result->types AS $type) {
 ]]>
         </programlisting>
 
-        <para>All elements implement the interface <code>Zend_Soap_Wsdl_Element_Interface</code>
+        <para>All elements implement the interface <classname>Zend_Soap_Wsdl_Element_Interface</classname>
         that proxies a <code>getName()</code> and a <code>getDocumentation()</code> function with the
         unique identifier of the element and its documentation respectivly. All the elements have
         public properties that describe its state in more detail and also contain their nested

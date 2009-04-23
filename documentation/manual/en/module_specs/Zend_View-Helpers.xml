@@ -16,7 +16,7 @@
         (you can specify a custom prefix when setting a helper path), and the
         last segment of the class name is the helper name; this segment should
         be TitleCapped; the full class name is then:
-        <code>Zend_View_Helper_FooBar</code>. This class should contain at the
+        <classname>Zend_View_Helper_FooBar</classname>. This class should contain at the
         minimum a single method, named after the helper, and camelCased:
         <code>fooBar()</code>.
     </para>
@@ -45,10 +45,10 @@
     <para>
         To use a helper in your view script, call it using
         <code>$this->helperName()</code>. Behind the scenes,
-        <code>Zend_View</code> will load the
-        <code>Zend_View_Helper_HelperName</code> class, create an object
+        <classname>Zend_View</classname> will load the
+        <classname>Zend_View_Helper_HelperName</classname> class, create an object
         instance of it, and call its <code>helperName()</code> method. The
-        object instance is persistent within the <code>Zend_View</code>
+        object instance is persistent within the <classname>Zend_View</classname>
         instance, and is reused for all future calls to
         <code>$this->helperName()</code>.
     </para>
@@ -57,7 +57,7 @@
         <title>Initial Helpers</title>
 
         <para>
-            <code>Zend_View</code> comes with an initial set of helper classes,
+            <classname>Zend_View</classname> comes with an initial set of helper classes,
             most of which relate to form element generation and perform
             the appropriate output escaping automatically. In addition, there
             are helpers for creating route-based URLs and HTML lists, as well as
@@ -377,9 +377,9 @@ echo $this->formCheckbox('foo',
 
         <para>
             As with view scripts, your controller can specify a stack of paths
-            for <code>Zend_View</code> to search for helper classes. By default,
-            <code>Zend_View</code> looks in "Zend/View/Helper/*" for helper
-            classes. You can tell <code>Zend_View</code> to look in other
+            for <classname>Zend_View</classname> to search for helper classes. By default,
+            <classname>Zend_View</classname> looks in "Zend/View/Helper/*" for helper
+            classes. You can tell <classname>Zend_View</classname> to look in other
             locations using the <code>setHelperPath()</code> and
             <code>addHelperPath()</code> methods. Additionally, you can
             indicate a class prefix to use for helpers in the path provided, to
@@ -399,7 +399,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
         <para>
             In fact, you can "stack" paths using the
             <code>addHelperPath()</code> method. As you add paths to the stack,
-            <code>Zend_View</code> will look at the most-recently-added path for
+            <classname>Zend_View</classname> will look at the most-recently-added path for
             the requested helper class. This allows you to add to (or even
             override) the initial distribution of helpers with your own custom
             helpers.
@@ -435,8 +435,8 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 While not strictly necessary, we recommend either implementing
-                <code>Zend_View_Helper_Interface</code> or extending
-                <code>Zend_View_Helper_Abstract</code> when creating your
+                <classname>Zend_View_Helper_Interface</classname> or extending
+                <classname>Zend_View_Helper_Abstract</classname> when creating your
                 helpers. Introduced in 1.6.0, these simply define a
                 <code>setView()</code> method; however, in upcoming releases, we
                 plan to implement a strategy pattern that will simplify much of
@@ -480,7 +480,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
         <para>
             Place the helper class file somewhere in your helper path stack, and
-            <code>Zend_View</code> will automatically load, instantiate,
+            <classname>Zend_View</classname> will automatically load, instantiate,
             persist, and execute it for you.
         </para>
 
@@ -505,7 +505,7 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
         <para>
             Then in a view script, you can call the <code>SpecialPurpose</code>
             helper as many times as you like; it will be instantiated once, and
-            then it persists for the life of that <code>Zend_View</code>
+            then it persists for the life of that <classname>Zend_View</classname>
             instance.
         </para>
 
@@ -528,7 +528,7 @@ I have seen 'The Jerk' 3 time(s).
         </programlisting>
 
         <para>
-            Sometimes you will need access to the calling <code>Zend_View</code>
+            Sometimes you will need access to the calling <classname>Zend_View</classname>
             object -- for instance, if you need to use the registered encoding,
             or want to render another view script as part of your helper. To get
             access to the view object, your helper class should have a
@@ -561,7 +561,7 @@ class My_View_Helper_ScriptPath
         </para>
 
         <para>
-            If you are extending <code>Zend_View_Helper_Abstract</code>, you do
+            If you are extending <classname>Zend_View_Helper_Abstract</classname>, you do
             not need to define this method, as it is defined for you.
         </para>
     </sect2>

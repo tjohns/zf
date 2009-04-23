@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        The <code>Zend_InfoCard</code> component implements relying-party
+        The <classname>Zend_InfoCard</classname> component implements relying-party
         support for Information Cards. Information Cards are used for identity
         management on the internet and authentication of users to web sites. The web sites
         that the user ultimately authenticates to are called <emphasis>relying-parties</emphasis>.
@@ -20,9 +20,9 @@
         <title>Basic Theory of Usage</title>
 
         <para>
-            Usage of <code>Zend_InfoCard</code> can be done one of two ways:
-            either as part of the larger <code>Zend_Auth</code> component via
-            the <code>Zend_InfoCard</code> authentication adapter or as a
+            Usage of <classname>Zend_InfoCard</classname> can be done one of two ways:
+            either as part of the larger <classname>Zend_Auth</classname> component via
+            the <classname>Zend_InfoCard</classname> authentication adapter or as a
             stand-alone component. In both cases an information card can be
             requested from a user by using the following HTML block in your HTML
             login form:
@@ -62,7 +62,7 @@
             also allows them to select which information card to use if multiple
             meet the criteria. This information card is transmitted as an XML
             document to the specified <code>POST</code> URL and is ready to be
-            processed by the <code>Zend_InfoCard</code> component.
+            processed by the <classname>Zend_InfoCard</classname> component.
         </para>
 
         <para>
@@ -76,10 +76,10 @@
         <title>Using as part of Zend_Auth</title>
 
         <para>
-            In order to use the component as part of the <code>Zend_Auth</code>
+            In order to use the component as part of the <classname>Zend_Auth</classname>
             authentication system, you must use the provided
-            <code>Zend_Auth_Adapter_InfoCard</code> to do so (not available in
-            the standalone <code>Zend_InfoCard</code> distribution). An example
+            <classname>Zend_Auth_Adapter_InfoCard</classname> to do so (not available in
+            the standalone <classname>Zend_InfoCard</classname> distribution). An example
             of its usage is shown below:
         </para>
 
@@ -142,7 +142,7 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             In the example above, we first create an instance of the
-            <code>Zend_Auth_Adapter_InfoCard</code> and pass the XML data posted
+            <classname>Zend_Auth_Adapter_InfoCard</classname> and pass the XML data posted
             by the card selector into it. Once an instance has been created you
             must then provide at least one SSL certificate public/private key
             pair used by the web server that received the <code>HTTP
@@ -153,7 +153,7 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             Once the adapter has been configured, you can then use the standard
-            <code>Zend_Auth</code> facilities to validate the provided
+            <classname>Zend_Auth</classname> facilities to validate the provided
             information card token and authenticate the user by examining the
             identity provided by the <code>getIdentity()</code> method.
         </para>
@@ -165,8 +165,8 @@ if (isset($_POST['xmlToken'])) {
         <para>
             It is also possible to use the Zend_InfoCard component as a
             standalone component by interacting with the
-            <code>Zend_InfoCard</code> class directly. Using the Zend_InfoCard
-            class is very similar to its use with the <code>Zend_Auth</code>
+            <classname>Zend_InfoCard</classname> class directly. Using the Zend_InfoCard
+            class is very similar to its use with the <classname>Zend_Auth</classname>
             component. An example of its use is shown below:
         </para>
 
@@ -209,10 +209,10 @@ if (isset($_POST['xmlToken'])) {
         </programlisting>
 
         <para>
-            In the example above, we use the <code>Zend_InfoCard</code> component
+            In the example above, we use the <classname>Zend_InfoCard</classname> component
             independently to validate the token provided by the user. As was the
-            case with the <code>Zend_Auth_Adapter_InfoCard</code>, we create an
-            instance of <code>Zend_InfoCard</code> and then set one or more SSL
+            case with the <classname>Zend_Auth_Adapter_InfoCard</classname>, we create an
+            instance of <classname>Zend_InfoCard</classname> and then set one or more SSL
             certificate public/private key pairs used by the web server. Once
             configured, we can use the <code>process()</code> method to process
             the information card and return the results.
@@ -223,16 +223,16 @@ if (isset($_POST['xmlToken'])) {
         <title>Working with a Claims object</title>
 
         <para>
-            Regardless of whether the <code>Zend_InfoCard</code> component is used as
-            a standalone component or as part of <code>Zend_Auth</code> via
-            <code>Zend_Auth_Adapter_InfoCard</code>, the ultimate
+            Regardless of whether the <classname>Zend_InfoCard</classname> component is used as
+            a standalone component or as part of <classname>Zend_Auth</classname> via
+            <classname>Zend_Auth_Adapter_InfoCard</classname>, the ultimate
             result of the processing of an information card is a
-            <code>Zend_InfoCard_Claims</code> object. This object contains the
+            <classname>Zend_InfoCard_Claims</classname> object. This object contains the
             assertions (a.k.a. claims) made by the submitting user based on the
             data requested by your web site when the user authenticated. As
             shown in the examples above, the validity of the information card
             can be ascertained by calling the
-            <code>Zend_InfoCard_Claims::isValid()</code> method. Claims
+            <classname>Zend_InfoCard_Claims::isValid()</classname> method. Claims
             themselves can either be retrieved by simply accessing the
             identifier desired (i.e. <code>givenname</code>) as a property of
             the object or through the <code>getClaim()</code> method.
@@ -245,7 +245,7 @@ if (isset($_POST['xmlToken'])) {
             you will need to extract them explicitly using this method (simply
             pass it the full URI of the claim to retrieve its value from within
             the information card). Generally speaking however, the
-            <code>Zend_InfoCard</code> component will set the default URI for
+            <classname>Zend_InfoCard</classname> component will set the default URI for
             claims to be the one used the most frequently within the information
             card itself and the simplified property-access method can be used.
         </para>
@@ -255,7 +255,7 @@ if (isset($_POST['xmlToken'])) {
             examine the issuing source of the claims contained within the
             information card and to decide if that source is a trusted source of
             information. To do so, the <code>getIssuer()</code> method is
-            provided within the <code>Zend_InfoCard_Claims</code> object which
+            provided within the <classname>Zend_InfoCard_Claims</classname> object which
             returns the URI of the issuer of the information card claims.
         </para>
     </sect2>
@@ -270,7 +270,7 @@ if (isset($_POST['xmlToken'])) {
             including at least the
             <code>http://schemas.xmlsoap.org/ws/2005/05/identity/claims/privatepersonalidentifier</code>
             claim as part of the <code>requiredClaims</code> of the request. If
-            this claim is requested then the <code>Zend_InfoCard_Claims</code>
+            this claim is requested then the <classname>Zend_InfoCard_Claims</classname>
             object will provide a unique identifier for the specific card that
             was submitted by calling the <code>getCardID()</code> method.
         </para>
@@ -332,16 +332,16 @@ public function submitinfocardAction()
         <title>Creating Zend_InfoCard Adapters</title>
 
         <para>
-            The <code>Zend_InfoCard</code> component was designed to allow for
+            The <classname>Zend_InfoCard</classname> component was designed to allow for
             growth in the information card standard through the use of a modular
             architecture. At this time, many of these hooks are unused and can be
             ignored, but there is one class that should be written for
             any serious information card implementation: the
-            <code>Zend_InfoCard</code> adapter.
+            <classname>Zend_InfoCard</classname> adapter.
         </para>
 
         <para>
-            The <code>Zend_InfoCard</code> adapter is used as a callback
+            The <classname>Zend_InfoCard</classname> adapter is used as a callback
             mechanism within the component to perform various tasks, such as
             storing and retrieving Assertion IDs for information cards when they
             are processed by the component.  While storing the assertion IDs of
@@ -352,12 +352,12 @@ public function submitinfocardAction()
 
         <para>
             To prevent this, one must implement the
-            <code>Zend_InfoCard_Adapter_Interface</code> and set an
+            <classname>Zend_InfoCard_Adapter_Interface</classname> and set an
             instance of this interface prior to calling either the
             <code>process()</code> (standalone) or <code>authenticate()</code>
-            method as a <code>Zend_Auth</code> adapter. To set this interface,
+            method as a <classname>Zend_Auth</classname> adapter. To set this interface,
             the <code>setAdapter()</code> method should be used. In the example below,
-            we set a <code>Zend_InfoCard</code> adapter and use it in our
+            we set a <classname>Zend_InfoCard</classname> adapter and use it in our
             application:
         </para>
 

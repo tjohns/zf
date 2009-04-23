@@ -9,19 +9,19 @@
       <para>This class represents a single part of a MIME message. It contains the
       actual content of the message part plus information about its encoding,
       content type and original filename. It provides a method for generating a
-      string from the stored data. <code>Zend_Mime_Part</code> objects can be
+      string from the stored data. <classname>Zend_Mime_Part</classname> objects can be
       added to <link
-      linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> to
+      linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link> to
       assemble a complete multipart message.</para>
     </sect2>
 
   <sect2 id="zend.mime.part.instantiation">
     <title>Instantiation</title>
 
-    <para><code>Zend_Mime_Part</code> is instantiated with a string that
+    <para><classname>Zend_Mime_Part</classname> is instantiated with a string that
     represents the content of the new part. The type is assumed to be
     OCTET-STREAM, encoding is 8Bit. After instantiating a
-    <code>Zend_Mime_Part</code>, meta information can be set by accessing its
+    <classname>Zend_Mime_Part</classname>, meta information can be set by accessing its
     attributes directly:</para>
 
     <programlisting role="php"><![CDATA[

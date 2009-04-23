@@ -5,11 +5,11 @@
     <sect2 id="zend.service.simpy.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Simpy</code> is a lightweight wrapper for the free REST API available
+            <classname>Zend_Service_Simpy</classname> is a lightweight wrapper for the free REST API available
             for the Simpy social bookmarking service.
         </para>
         <para>
-            In order to use <code>Zend_Service_Simpy</code>, you should already have a Simpy account.
+            In order to use <classname>Zend_Service_Simpy</classname>, you should already have a Simpy account.
             To get an account, visit the <ulink url="http://simpy.com">Simpy web site</ulink>. For more
             information on the Simpy REST API, refer to the
             <ulink url="http://www.simpy.com/doc/api/rest">Simpy REST API documentation</ulink>.
@@ -17,7 +17,7 @@
         <para>
             The Simpy REST API allows developers to interact with specific aspects of the service that
             the Simpy web site offers. The sections following will outline the use of
-            <code>Zend_Service_Simpy</code> for each of these areas.
+            <classname>Zend_Service_Simpy</classname> for each of these areas.
             <itemizedlist>
                 <listitem>
                     <para>

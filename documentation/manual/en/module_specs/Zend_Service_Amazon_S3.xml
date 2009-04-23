@@ -20,7 +20,7 @@
         <title>Registering with Amazon S3</title>
 
         <para>
-            Before you can get started with <code>Zend_Service_Amazon_S3</code>, you must first
+            Before you can get started with <classname>Zend_Service_Amazon_S3</classname>, you must first
             register for an account.  Please see the
             <ulink url="http://aws.amazon.com/s3/faqs/">S3 FAQ</ulink>
             page on the Amazon website for more information.
@@ -36,7 +36,7 @@
         <title>API Documentation</title>
 
         <para>
-            The <code>Zend_Service_Amazon_S3</code> class provides the PHP wrapper to the
+            The <classname>Zend_Service_Amazon_S3</classname> class provides the PHP wrapper to the
             Amazon S3 REST interface. Please consult the
             <ulink url="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=48">Amazon S3 documentation</ulink>
             for detailed description of the service. You will need to be familiar with basic concepts
@@ -49,7 +49,7 @@
         <title>Features</title>
 
         <para>
-            <code>Zend_Service_Amazon_S3</code> provides the following functionality:
+            <classname>Zend_Service_Amazon_S3</classname> provides the following functionality:
 
             <itemizedlist>
                 <listitem>
@@ -116,7 +116,7 @@ echo $s3->getObject("my-own-bucket/myobject");
         </example>
 
         <para>
-            Since <code>Zend_Service_Amazon_S3</code> service requires authentication,
+            Since <classname>Zend_Service_Amazon_S3</classname> service requires authentication,
             you should pass your credentials (AWS key and secret key) to the constructor.
 
             If you only use one account, you can set default credentials for the service:
@@ -382,7 +382,7 @@ foreach($list as $name) {
     <sect2 id="zend.service.amazon.s3.streams">
         <title>Stream wrapper</title>
         <para>
-        In addition to the interfaces described above, <code>Zend_Service_Amazon_S3</code> also supports
+        In addition to the interfaces described above, <classname>Zend_Service_Amazon_S3</classname> also supports
         operating as a stream wrapper. For this, you need to register the client object as the stream wrapper:
         </para>
         <example id="zend.service.amazon.s3.streams.example">

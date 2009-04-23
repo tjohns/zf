@@ -25,7 +25,7 @@
         <title>Registering with Nirvanix</title>
 
         <para>
-            Before you can get started with <code>Zend_Service_Nirvanix</code>, you must first
+            Before you can get started with <classname>Zend_Service_Nirvanix</classname>, you must first
             register for an account. Please see the
             <ulink url="http://www.nirvanix.com/gettingStarted.aspx">Getting Started</ulink>
             page on the Nirvanix website for more information.
@@ -33,7 +33,7 @@
 
         <para>
             After registering, you will receive a Username, Password, and
-            Application Key. All three are required to use <code>Zend_Service_Nirvanix</code>.
+            Application Key. All three are required to use <classname>Zend_Service_Nirvanix</classname>.
         </para>
     </sect2>
 
@@ -42,12 +42,12 @@
 
         <para>
             Access to the Nirvanix IMFS is available through both SOAP and a faster
-            REST service. <code>Zend_Service_Nirvanix</code> provides a
+            REST service. <classname>Zend_Service_Nirvanix</classname> provides a
             relatively thin PHP 5 wrapper around the REST service.
         </para>
 
         <para>
-            <code>Zend_Service_Nirvanix</code> aims to make using the Nirvanix REST service
+            <classname>Zend_Service_Nirvanix</classname> aims to make using the Nirvanix REST service
             easier but understanding the service itself is still essential to be successful
             with Nirvanix.
         </para>
@@ -56,7 +56,7 @@
             The <ulink url="http://developer.nirvanix.com/sitefiles/1000/API.html">Nirvanix API Documentation</ulink>
             provides an overview as well as detailed information using the
             service. Please familiarize yourself with this document and refer back to it
-            as you use <code>Zend_Service_Nirvanix</code>.
+            as you use <classname>Zend_Service_Nirvanix</classname>.
         </para>
     </sect2>
 
@@ -66,14 +66,14 @@
         <para>
             Nirvanix's REST service can be used effectively with PHP using the
             <ulink url="http://www.php.net/simplexml">SimpleXML</ulink>
-            extension and <code>Zend_Http_Client</code> alone. However, using it this way
+            extension and <classname>Zend_Http_Client</classname> alone. However, using it this way
             is somewhat inconvenient due to repetitive operations like passing the
             session token on every request and repeatedly checking the response body for
             error codes.
         </para>
 
         <para>
-            <code>Zend_Service_Nirvanix</code> provides the following functionality:
+            <classname>Zend_Service_Nirvanix</classname> provides the following functionality:
 
             <itemizedlist>
                 <listitem>
@@ -115,7 +115,7 @@
             Once you have registered with Nirvanix, you're ready to store your first
             file on the IMFS. The most common operations that you will need to do
             on the IMFS are creating a new file, downloading an existing file, and
-            deleting a file. <code>Zend_Service_Nirvanix</code> provides convenience
+            deleting a file. <classname>Zend_Service_Nirvanix</classname> provides convenience
             methods for these three operations.
         </para>
 
@@ -136,9 +136,9 @@ $imfs->unlink('/foo.txt');
         </programlisting>
 
         <para>
-            The first step to using <code>Zend_Service_Nirvanix</code> is always
+            The first step to using <classname>Zend_Service_Nirvanix</classname> is always
             to authenticate against the service. This is done by passing your
-            credentials to the <code>Zend_Service_Nirvanix</code> constructor
+            credentials to the <classname>Zend_Service_Nirvanix</classname> constructor
             above. The associative array is passed directly to Nirvanix as POST
             parameters.
         </para>
@@ -147,7 +147,7 @@ $imfs->unlink('/foo.txt');
             Nirvanix divides its web services into
             <ulink url="http://developer.nirvanix.com/sitefiles/1000/API.html#_Toc175999879">namespaces</ulink>.
             Each namespace encapsulates a group of related operations. After getting
-            an instance of <code>Zend_Service_Nirvanix</code>, call the
+            an instance of <classname>Zend_Service_Nirvanix</classname>, call the
             <code>getService()</code> method to create a proxy for the namespace
             you want to use. Above, a proxy for the <code>IMFS</code> namespace is created.
         </para>
@@ -173,11 +173,11 @@ $imfs->unlink('/foo.txt');
 
         <para>
             A proxy object may provide convenience methods. These are methods that the
-            <code>Zend_Service_Nirvanix</code> provides to simplify the use of
+            <classname>Zend_Service_Nirvanix</classname> provides to simplify the use of
             the Nirvanix web services. In the previous example, the methods
             <code>putContents()</code>, <code>getContents()</code>, and <code>unlink()</code>
             do not have direct equivalents in the REST API. They are convenience methods
-            provided by <code>Zend_Service_Nirvanix</code> that abstract more complicated
+            provided by <classname>Zend_Service_Nirvanix</classname> that abstract more complicated
             operations on the REST API.
         </para>
 
@@ -191,7 +191,7 @@ $imfs->unlink('/foo.txt');
         <para>
             Let's say you want to call the REST API method
             <ulink url="http://developer.nirvanix.com/sitefiles/1000/API.html#_Toc175999923">RenameFile</ulink>,
-            which does not have a convenience method in <code>Zend_Service_Nirvanix</code>:
+            which does not have a convenience method in <classname>Zend_Service_Nirvanix</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -222,8 +222,8 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
         </para>
 
         <para>
-            The result of this operation will either be a <code>Zend_Service_Nirvanix_Response</code>
-            object wrapping the XML returned by Nirvanix, or a <code>Zend_Service_Nirvanix_Exception</code>
+            The result of this operation will either be a <classname>Zend_Service_Nirvanix_Response</classname>
+            object wrapping the XML returned by Nirvanix, or a <classname>Zend_Service_Nirvanix_Exception</classname>
             if an error occurred.
         </para>
     </sect2>
@@ -232,9 +232,9 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
         <title>Examining Results</title>
 
         <para>
-            The Nirvanix REST API always returns its results in XML. <code>Zend_Service_Nirvanix</code>
+            The Nirvanix REST API always returns its results in XML. <classname>Zend_Service_Nirvanix</classname>
             parses this XML with the <code>SimpleXML</code> extension and then decorates
-            the resulting <code>SimpleXMLElement</code> with a <code>Zend_Service_Nirvanix_Response</code>
+            the resulting <code>SimpleXMLElement</code> with a <classname>Zend_Service_Nirvanix_Response</classname>
             object.
         </para>
 
@@ -279,7 +279,7 @@ Zend_Service_Nirvanix_Response Object
         <para>
             The most common response from Nirvanix is success (<code>ResponseCode</code> of zero).
             It is not normally necessary to check <code>ResponseCode</code> because any non-zero
-            result will throw a <code>Zend_Service_Nirvanix_Exception</code>. See the next
+            result will throw a <classname>Zend_Service_Nirvanix_Exception</classname>. See the next
             section on handling errors.
         </para>
     </sect2>
@@ -313,9 +313,9 @@ Zend_Service_Nirvanix_Response Object
 
         <para>
             To alleviate the need to repeatedly check if the <code>ResponseCode</code>
-            is non-zero, <code>Zend_Service_Nirvanix</code> automatically checks each response
+            is non-zero, <classname>Zend_Service_Nirvanix</classname> automatically checks each response
             returned by Nirvanix. If the <code>ResponseCode</code> indicates an
-            error, a <code>Zend_Service_Nirvanix_Exception</code> will be thrown.
+            error, a <classname>Zend_Service_Nirvanix_Exception</classname> will be thrown.
         </para>
 
         <programlisting role="xml"><![CDATA[
@@ -341,7 +341,7 @@ try {
             <code>DeleteFiles</code> command on the REST API. The <code>filePath</code> parameter required by the
             <ulink url="http://developer.nirvanix.com/sitefiles/1000/API.html#_Toc175999918">DeleteFiles</ulink>
             command contains a path that does not exist. This will result in a
-            <code>Zend_Service_Nirvanix</code> exception being thrown with the message
+            <classname>Zend_Service_Nirvanix</classname> exception being thrown with the message
             "Invalid path" and code 70005.
         </para>
 
