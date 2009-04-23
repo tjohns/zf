@@ -103,8 +103,7 @@ class Zend_CodeGenerator_Php_MethodTest extends PHPUnit_Framework_TestCase
      */
     public function someMethod()
     {
-                /* test test */    
-        
+        /* test test */
     }
 
 EOS;
