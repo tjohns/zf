@@ -54,10 +54,10 @@ class Zend_View_Helper_Json extends Zend_View_Helper_Abstract
      */
     public function json($data, $keepLayouts = false)
     {
-
+        $options = array();
         if (is_array($keepLayouts))
         {
-            $options = $keepLayouts;
+            $options     = $keepLayouts;
             $keepLayouts = (array_key_exists('keepLayouts', $keepLayouts))
                             ? $keepLayouts['keepLayouts']
                             : false;
