@@ -84,7 +84,7 @@
             <title>Use translation and localization caches</title>
 
             <para>
-                Both <code>Zend_Translate</code> and <code>Zend_Locale</code>
+                Both <classname>Zend_Translate</classname> and <classname>Zend_Locale</classname>
                 implement caching functionality that can greatly affect
                 performance. In the case of each, the major bottleneck is
                 typically reading the files, not the actual lookups; using a
@@ -100,15 +100,15 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <link linkend="zend.translate.adapter.caching"><code>Zend_Translate</code>
-                            adapter caching</link>
+                        <link linkend="zend.translate.adapter.caching"><classname>
+                        Zend_Translate</classname> adapter caching</link>
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <link linkend="zend.locale.cache"><code>Zend_Locale</code>
-                            caching</link>
+                        <link linkend="zend.locale.cache"><classname>Zend_Locale</classname>
+                        caching</link>
                     </para>
                 </listitem>
             </itemizedlist>
