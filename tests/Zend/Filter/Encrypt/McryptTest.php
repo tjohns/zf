@@ -103,7 +103,8 @@ class Zend_Filter_Encrypt_McryptTest extends PHPUnit_Framework_TestCase
                   'algorithm_directory' => '',
                   'mode' => MCRYPT_MODE_CBC,
                   'mode_directory' => '',
-                  'vector' => 'testvect'),
+                  'vector' => 'testvect',
+                  'salt' => false),
             $filter->getEncryption()
         );
     }
@@ -130,7 +131,8 @@ class Zend_Filter_Encrypt_McryptTest extends PHPUnit_Framework_TestCase
                   'algorithm_directory' => '',
                   'mode' => MCRYPT_MODE_ECB,
                   'mode_directory' => '',
-                  'vector' => 'testvect'),
+                  'vector' => 'testvect',
+                  'salt' => false),
             $filter->getEncryption()
         );
     }

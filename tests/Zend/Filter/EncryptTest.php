@@ -156,7 +156,8 @@ PIDs9E7uuizAKDhRRRvho8BS
                   'algorithm_directory' => '',
                   'mode' => MCRYPT_MODE_CBC,
                   'mode_directory' => '',
-                  'vector' => 'testvect'),
+                  'vector' => 'testvect',
+                  'salt' => false),
             $filter->getEncryption()
         );
     }
@@ -183,7 +184,8 @@ PIDs9E7uuizAKDhRRRvho8BS
                   'algorithm_directory' => '',
                   'mode' => MCRYPT_MODE_ECB,
                   'mode_directory' => '',
-                  'vector' => 'testvect'),
+                  'vector' => 'testvect',
+                  'salt' => false),
             $filter->getEncryption()
         );
     }

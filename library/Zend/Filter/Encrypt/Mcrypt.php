@@ -42,7 +42,7 @@ class Zend_Filter_Encrypt_Mcrypt implements Zend_Filter_Encrypt_Interface
      *     'algorithm_directory' => directory where to find the algorithm
      *     'mode' => encryption mode to use
      *     'modedirectory' => directory where to find the mode
-     *  ))
+     * )
      */
     protected $_encryption = array(
         'key'                 => 'ZendFramework',
@@ -50,7 +50,8 @@ class Zend_Filter_Encrypt_Mcrypt implements Zend_Filter_Encrypt_Interface
         'algorithm_directory' => '',
         'mode'                => 'cbc',
         'mode_directory'      => '',
-        'vector'              => null
+        'vector'              => null,
+        'salt'                => false
     );
 
     /**
@@ -211,10 +212,14 @@ class Zend_Filter_Encrypt_Mcrypt implements Zend_Filter_Encrypt_Interface
             throw new Zend_Filter_Exception('Mcrypt can not be opened with your settings');
         }
 
-        srand();
+        $key     = $this->_encryption['key'];
         $keysize = mcrypt_enc_get_key_size($cipher);
-        $key     = substr(md5($this->_encryption['key']), 0, $keysize);
+        if ($this->_encryption['salt']) {
+            srand();
+            $key = md5($key);
+        }
 
+        $key = substr($key, 0, $keysize);
         mcrypt_generic_init($cipher, $key, $this->_encryption['vector']);
         $encrypted = mcrypt_generic($cipher, $value);
         mcrypt_generic_deinit($cipher);
@@ -239,10 +244,14 @@ class Zend_Filter_Encrypt_Mcrypt implements Zend_Filter_Encrypt_Interface
             $this->_encryption['mode'],
             $this->_encryption['mode_directory']);
 
-        srand();
+        $key     = $this->_encryption['key'];
         $keysize = mcrypt_enc_get_key_size($cipher);
-        $key     = substr(md5($this->_encryption['key']), 0, $keysize);
+        if ($this->_encryption['salt']) {
+            srand();
+            $key = md5($key);
+        }
 
+        $key = substr($key, 0, $keysize);
         mcrypt_generic_init($cipher, $key, $this->_encryption['vector']);
         $decrypted = mdecrypt_generic($cipher, $value);
         mcrypt_generic_deinit($cipher);

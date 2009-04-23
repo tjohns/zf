@@ -37,12 +37,10 @@ class Zend_Filter_Encrypt_Openssl implements Zend_Filter_Encrypt_Interface
     /**
      * Definitions for encryption
      * array(
-     *     'key' => encryption key string
-     *     'algorithm' => algorithm to use
-     *     'algorithm_directory' => directory where to find the algorithm
-     *     'mode' => encryption mode to use
-     *     'modedirectory' => directory where to find the mode
-     *  ))
+     *     'public'   => public keys
+     *     'private'  => private keys
+     *     'envelope' => resulting envelope keys
+     * )
      */
     protected $_keys = array(
         'public'   => array(),

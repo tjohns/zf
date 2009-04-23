@@ -99,6 +99,13 @@ $filter->setAdapter('openssl');
                     it will be a random vector.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>salt</emphasis>: If the key should be used as salt value. The key used for
+                    encryption will then itself also be encrypted. Default is false.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
