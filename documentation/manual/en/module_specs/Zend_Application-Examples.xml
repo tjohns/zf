@@ -159,8 +159,8 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     array(
         'resources' => array(
-            'My_Bootstrap_Resource_View', // full class name; OR
-            'view',                       // short name
+            'My_Bootstrap_Resource_View' => array(), // full class name; OR
+            'view' => array(),                       // short name
 
             'FrontController' => array(
                 'controllerDirectory' => APPLICATION_PATH . '/controllers',
