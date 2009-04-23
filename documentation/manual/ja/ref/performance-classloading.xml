@@ -5,14 +5,14 @@
     <title>クラスの読み込み</title>
 
     <para>
-        Anyone who ever performs profiling of a Zend Framework application will
-        immediately recognize that class loading is relatively expensive in Zend
-        Framework. Between the sheer number of class files that need to be
+        Zend Frameworkアプリケーションのプロファイルをとってみた人は誰でも、
+        Zend Frameworkではクラスの読み込みが比較的高くつくことにすぐ気がつくでしょう。
+        Between the sheer number of class files that need to be
         loaded for many components, to the use of plugins that do not have a 1:1
         relationship between their class name and the file system, the various
         calls to <code>include_once</code> and <code>require_once</code> can be
-        problematic. This chapter intends to provide some concrete solutions to
-        these issues.
+        problematic. 
+        この章ではこれらの問題に対して確立したいくつかの解決方法を提示するつもりです。
     </para>
 
     <sect2 id="performance.classloading.includepath">
@@ -24,7 +24,7 @@
             特に４つのことをすべきでしょう:
             絶対パスを使うこと（または相対パスを絶対パスに変えること）、
             定義したincludeパスの数を減らすこと、
-            Zend Frameworkをinclude_pathにできる限り先に設定すること、
+            include_pathにZend Frameworkをできる限り先に設定すること、
             そして現行ディレクトリパスをinclude_pathの最後にだけincludeすることです。
         </para>
 
@@ -32,15 +32,14 @@
             <title>絶対パスを使う</title>
 
             <para>
-                While this may seem a micro-optimization, the fact is that if
-                you don't, you'll get very little benefit from PHP's realpath
-                cache, and as a result, opcode caching will not perform nearly
-                as you may expect.
+                これは些細な最適化に見えますが、実は、やらなければPHPのrealpathキャッシュの
+                恩恵がほとんど受けられません。
+                結果として、あなたが期待するようにはopcodeキャッシュもほとんど動作しません。
             </para>
 
             <para>
                 このことを確かめる易しい方法が２つあります。
-                ひとつはパスをphp.iniやhttpd.confもしくは.htaccessで
+                ひとつはパスをphp.iniやhttpd.confもしくは .htaccessで
                 ハードコーディングすることです。
                 もうひとつはPHPの<code>realpath()</code>関数を使ってinclude_pathを
                 設定することです:
@@ -78,10 +77,10 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
             <title>定義したincludeパスの数を減らす</title>
 
             <para>
-                Include paths are scanned in the order in which they appear in
-                the include_path. Obviously, this means that you'll get a result
-                faster if the file is found on the first scan rather than the
-                last. Thus, a rather obvious enhancement is to simply reduce the
+                includeパスはinclude_pathに記載された順番にスキャンされます。
+                ファイルが後からではなく最初のほうのスキャンで見つかれば、
+                結果を早く得られることをこのことは明らかに意味します。
+                Thus, a rather obvious enhancement is to simply reduce the
                 number of paths in your include_path to only what you need. Look
                 through each include_path you've defined, and determine if you
                 actually have any functionality in that path that is used in
@@ -320,8 +319,8 @@ Zend_Loader::registerAutoload();
                 追加されました。
                 This functionality writes "include_once" calls to
                 a file, which you can then include in your bootstrap. While this
-                introduces extra include_once calls to your code, it also
-                ensures that the PluginLoader returns as early as possible.
+                introduces extra include_once calls to your code, またそのことは
+                PluginLoaderができるだけ早く returns <!-- TODO --> することを保証します。
             </para>
 
             <para>
