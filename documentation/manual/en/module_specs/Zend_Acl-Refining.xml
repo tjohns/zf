@@ -13,8 +13,8 @@
             <link linkend="zend.acl.introduction">previous section</link> shows how various
             privileges may be allowed upon the entire ACL (all resources). In practice, however,
             access controls tend to have exceptions and varying degrees of complexity.
-            <code>Zend_Acl</code> allows to you accomplish these refinements in a straightforward
-            and flexible manner.
+            <classname>Zend_Acl</classname> allows to you accomplish these refinements in a
+            straightforward and flexible manner.
         </para>
 
         <para>
