@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.validate.writing_validators">
 
     <title>バリデータの書き方</title>
@@ -12,20 +12,20 @@
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> では、３つのメソッド <code>isValid()</code>、
+        <classname>Zend_Validate_Interface</code> では、３つのメソッド <code>isValid()</classname>、
         <code>getMessages()</code> および <code>getErrors()</code>
         を定義しています。これらを自分のクラスで実装して
         独自のバリデーションオブジェクトを作成します。
-        <code>Zend_Validate_Interface</code> を実装したクラスは、
-        <code>Zend_Validate::addValidator()</code>
+        <classname>Zend_Validate_Interface</classname> を実装したクラスは、
+        <classname>Zend_Validate::addValidator()</classname>
         でバリデータチェインに追加することができます。
         このオブジェクトは
-        <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>
+        <link linkend="zend.filter.input"><classname>Zend_Filter_Input</classname></link>
         でも使用します。
     </para>
 
     <para>
-        上の <code>Zend_Validate_Interface</code> についての説明からも推測できるように、
+        上の <classname>Zend_Validate_Interface</classname> についての説明からも推測できるように、
         Zend Framework が提供しているバリデーションクラスの返り値は、
         検証に成功したか失敗したかを表す boolean 値となります。また、<emphasis role="bold">なぜ</emphasis>
         検証が失敗したのかについての情報も提供します。この理由がわかると、
@@ -33,9 +33,9 @@
     </para>
 
     <para>
-        基本的な検証失敗メッセージ機能を実装しているのが <code>Zend_Validate_Abstract</code> です。
+        基本的な検証失敗メッセージ機能を実装しているのが <classname>Zend_Validate_Abstract</classname> です。
         バリデーションクラスを作成する際にこの機能を組み込むには、
-        <code>Zend_Validate_Abstract</code> を継承します。
+        <classname>Zend_Validate_Abstract</classname> を継承します。
         継承したクラス内で <code>isValid()</code> メソッドのロジックを実装し、
         発生しうる失敗の形式に対応したメッセージ変数とメッセージテンプレートを定義します。
         検証に失敗した場合には <code>isValid()</code> は <code>false</code>

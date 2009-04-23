@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.mail.smtp-secure">
   <title>セキュアな SMTP トランスポート</title>
 
-  <para><code>Zend_Mail</code> は、TLS や SSL を使用したセキュアな
+  <para><classname>Zend_Mail</classname> は、TLS や SSL を使用したセキュアな
   SMTP 接続もサポートしています。これを有効にするには、
-  <code>Zend_Mail_Transport_Smtp</code> のコンストラクタに渡す設定配列で、
+  <classname>Zend_Mail_Transport_Smtp</classname> のコンストラクタに渡す設定配列で、
   パラメータ 'ssl' を指定します。値は 'ssl' あるいは 'tls' となります。
   オプションでポートを指定することもできます。省略した場合のデフォルトは
   TLS の場合は 25、SSL の場合は 465 となります。</para>
 
   <example id="zend.mail.smtp-secure.example-1">
-    <title><code>Zend_Mail_Transport_Smtp</code> によるセキュアな接続の有効化</title>
+    <title><classname>Zend_Mail_Transport_Smtp</classname> によるセキュアな接続の有効化</title>
 
     <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',

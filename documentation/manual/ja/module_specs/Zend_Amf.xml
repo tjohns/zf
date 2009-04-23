@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.amf.introduction">
     <title>導入</title>
 
     <para>
-        <code>Zend_Amf</code> は Adobe の <ulink
+        <classname>Zend_Amf</classname> は Adobe の <ulink
             url="http://en.wikipedia.org/wiki/Action_Message_Format">Action
             Message Format</ulink> (AMF) をサポートし、Adobe の
         <ulink url="http://en.wikipedia.org/wiki/Adobe_Flash_Player">Flash

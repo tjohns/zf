@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() ビューヘルパー</title>
 
@@ -321,8 +321,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     登録済みレイヤーの一覧から削除します。</para></listitem>
             <listitem><para><code>setCdnBase($url)</code>:
                     CDN 用のベース URL を設定します。一般的には
-                    <code>Zend_Dojo::CDN_BASE_AOL</code> あるいは
-                    <code>Zend_Dojo::CDN_BASE_GOOGLE</code>
+                    <classname>Zend_Dojo::CDN_BASE_AOL</classname> あるいは
+                    <classname>Zend_Dojo::CDN_BASE_GOOGLE</classname>
                     となりますが、これはバージョン番号より前に URL 文字列に必要となります。</para></listitem>
             <listitem><para><code>getCdnBase()</code>:
                     使用するベース CDN の URL を取得します。</para></listitem>
@@ -332,8 +332,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     CDN からどのバージョンの Dojo を使用しているかを取得します。</para></listitem>
             <listitem><para><code>setCdnDojoPath($path)</code>:
                     CDN 上のファイル dojo.js あるいは dojo.xd.js への相対パスを設定します。一般的には
-                    <code>Zend_Dojo::CDN_DOJO_PATH_AOL</code> あるいは
-                    <code>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</code>
+                    <classname>Zend_Dojo::CDN_DOJO_PATH_AOL</classname> あるいは
+                    <classname>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</classname>
                     となりますが、これはバージョン番号の後の URL 文字列に必要となります。</para></listitem>
             <listitem><para><code>getCdnDojoPath()</code>:
                     dojo.js ファイルを指す、CDN url のパスの最後の部分を取得します。</para></listitem>

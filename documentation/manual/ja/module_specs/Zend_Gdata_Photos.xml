@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.photos">
     <title>Picasa Web Albums の使用法</title>
 
@@ -50,7 +50,7 @@
             何らかのトランザクションが発生する際には、
             必ず接続を確立する必要があります。
             Picasa サーバとの接続は、まず HTTP クライアントを作成して
-            <code>Zend_Gdata_Photos</code>
+            <classname>Zend_Gdata_Photos</classname>
             サービスのインスタンスをそこにバインドするという手順で行います。
         </para>
 
@@ -90,7 +90,7 @@
             </itemizedlist>
 
             <para>
-                <code>Zend_Gdata</code> ライブラリは、
+                <classname>Zend_Gdata</classname> ライブラリは、
                 これらのすべての方式に対応しています。
                 これ以降の説明は、認証方式については理解しており
                 適切な認証方式で接続できるようになっていることを前提として進めていきます。
@@ -107,7 +107,7 @@
             <title>サービスのインスタンスの作成</title>
             <para>
                 サーバとのやりとりを行うためのクラスとして、このライブラリでは
-                <code>Zend_Gdata_Photos</code> サービスクラスを用意しています。
+                <classname>Zend_Gdata_Photos</classname> サービスクラスを用意しています。
                 このクラスは Google Data や Atom Publishing Protocol
                 モデルへの共通インターフェイスを提供し、
                 サーバとのリクエストのやりとりを支援します。
@@ -115,13 +115,13 @@
 
             <para>
                 使用する認証方式を決めたら、次に
-                <code>Zend_Gdata_Photos</code> のインスタンスを作成します。
+                <classname>Zend_Gdata_Photos</classname> のインスタンスを作成します。
                 このクラスのコンストラクタには、引数として
-                <code>Zend_Http_Client</code> のインスタンスを渡します。
+                <classname>Zend_Http_Client</classname> のインスタンスを渡します。
                 これは、AuthSub 認証および ClientAuth 認証へのインターフェイスを提供します。
                 これらの認証を使用する場合には、認証済みの HTTP クライアントが必要です。
                 引数を省略した場合は、未認証の
-                <code>Zend_Http_Client</code>
+                <classname>Zend_Http_Client</classname>
                 のインスタンスを自動的に作成して使用します。
             </para>
 

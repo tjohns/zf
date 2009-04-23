@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.youtube">
     <title>YouTube Data API の使用法</title>
 
@@ -43,7 +43,7 @@
             サービスオブジェクトに渡すものです。
         </para>
         <example id="zend.gdata.youtube.developer_key.example">
-          <title>Developer Key と ClientID を <code>Zend_Gdata_YouTube</code> に渡す</title>
+          <title>Developer Key と ClientID を <classname>Zend_Gdata_YouTube</classname> に渡す</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
@@ -109,7 +109,7 @@ foreach ($videoFeed as $videoEntry) {
                 <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">
                 リファレンスガイド</ulink>を参照ください。
                 <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoQuery.html">
-                <code>Zend_Gdata_YouTube_VideoQuery</code></ulink>
+                <classname>Zend_Gdata_YouTube_VideoQuery</classname></ulink>
                 には、これらのパラメータ用のヘルパー関数もあります。詳細は
                 <ulink url="http://code.google.com/apis/youtube/developers_guide_php.html#SearchingVideos">PHP Developer's Guide</ulink>
                 を参照ください。
@@ -175,7 +175,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
               たとえば、今日いちばん評価の高い動画を取得するには次のようにします。
             </para>
 <example id="zend.gdata.youtube.videos.standard.example-2">
-          <title><code>Zend_Gdata_YouTube_VideoQuery</code> を使用した動画の取得</title>
+          <title><classname>Zend_Gdata_YouTube_VideoQuery</classname> を使用した動画の取得</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -280,7 +280,7 @@ foreach ($commentFeed as $commentEntry) {
             オブジェクトがあるのなら、それを用いてその動画のコメントを取得することもできます。
         </para>
            <example id="zend.gdata.youtube.videos.comments.example-2">
-          <title><code>Zend_Gdata_YouTube_VideoEntry</code> からの動画へのコメントのフィードの取得</title>
+          <title><classname>Zend_Gdata_YouTube_VideoEntry</classname> からの動画へのコメントのフィードの取得</title>
 
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();

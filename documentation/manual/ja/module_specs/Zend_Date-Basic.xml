@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.date.basic">
 
     <title>基本メソッド</title>
 
     <para>
-        この章では、<code>Zend_Date</code> の基本的な使用法を、
+        この章では、<classname>Zend_Date</classname> の基本的な使用法を、
         例をもとに説明します。このマニュアルで "日付"
         というときは、常に時刻も含んでいるものとします。
         これは、明示的に説明していなくても同様です。
@@ -56,7 +56,7 @@ print $date;
         <title>Zend_Date の使用例</title>
 
         <para>
-            <code>Zend_Date</code> の基本的なメソッドを見ていきましょう。
+            <classname>Zend_Date</classname> の基本的なメソッドを見ていきましょう。
             他の言語やフレームワークの日付オブジェクトではあまり見かけないメソッドもあります。
             以下の各メソッドについて、簡単な例を示しています。
         </para>
@@ -66,7 +66,7 @@ print $date;
             <title>日付の出力</title>
 
             <para>
-                <code>Zend_Date</code> オブジェクトの日付を
+                <classname>Zend_Date</classname> オブジェクトの日付を
                 地域化された形式の整数あるいは文字列で取得する際に、
                 <code>get()</code> メソッドを使用します。このメソッドには、
                 さまざまなオプションが使用可能です。これらのオプションについてはあとで説明します。
@@ -146,7 +146,7 @@ echo "toString() で取得した日付 = ", $date, "\n";
             <title>日付の比較</title>
 
             <para>
-                <code>Zend_Date</code> の基本メソッド群はすべて、
+                <classname>Zend_Date</classname> の基本メソッド群はすべて、
                 オブジェクトに含まれる日付データ全体に対して操作することができます。
                 また、日付の一部に対して操作する (日付の "分"
                 の部分だけをある値と比較するなど) こともできます。

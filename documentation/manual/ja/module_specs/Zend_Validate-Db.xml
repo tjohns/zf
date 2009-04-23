@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect2 id="zend.validate.Db">
     <title>Db_RecordExists および Db_NoRecordExists</title>
 
     <para>
-        <code>Zend_Validate_Db_RecordExists</code> および
-        <code>Zend_Validate_Db_NoRecordExists</code> は、
+        <classname>Zend_Validate_Db_RecordExists</classname> および
+        <classname>Zend_Validate_Db_NoRecordExists</classname> は、
         データベースのテーブル上に
         指定した値のレコードが存在するかどうかを調べる手段を提供します。
     </para>
@@ -62,8 +62,8 @@ if ($validator->isValid($username)) {
         <title>レコードの除外</title>
 
         <para>
-            <code>Zend_Validate_Db_RecordExists</code> および
-            <code>Zend_Validate_Db_NoRecordExists</code> には、
+            <classname>Zend_Validate_Db_RecordExists</classname> および
+            <classname>Zend_Validate_Db_NoRecordExists</classname> には、
             テーブルの一部を除外してその内容を調べる方法があります。
             where 句を文字列で指定するか、あるいはキー
             "field" および "value" を含む配列を指定します。

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.view.helpers.initial.translate">
 
     <title>翻訳ヘルパー</title>
@@ -16,15 +16,15 @@
 
     <para>
         これ以降のすべての例では、単純は配列翻訳アダプタを使用します。
-        もちろん <code>Zend_Translate</code> の任意のインスタンスやお好みの
-        <code>Zend_Translate_Adapter</code> のサブクラスを使うことも可能です。
+        もちろん <classname>Zend_Translate</classname> の任意のインスタンスやお好みの
+        <classname>Zend_Translate_Adapter</classname> のサブクラスを使うことも可能です。
         <code>Translate</code> ビューヘルパーのインスタンスを作成するにはいくつかの方法があります。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                事前に <code>Zend_Registry</code> に登録済みのインスタンスを使用する
+                事前に <classname>Zend_Registry</classname> に登録済みのインスタンスを使用する
             </para>
         </listitem>
         <listitem>
@@ -40,7 +40,7 @@
     </itemizedlist>
 
     <para>
-        登録済みの <code>Zend_Translate</code> のインスタンスを使用する方法をおすすめします。
+        登録済みの <classname>Zend_Translate</classname> のインスタンスを使用する方法をおすすめします。
         アダプタをレジストリに追加する際に、使用するロケールを選択することができます。
     </para>
 
@@ -59,10 +59,10 @@
         <title>登録済みのインスタンス</title>
 
         <para>
-            登録済みのインスタンスを使用するには、まず <code>Zend_Translate</code> あるいは
-            <code>Zend_Translate_Adapter</code> のインスタンスを作成し、
-            それを <code>Zend_Registry</code> に登録します。登録する際のキーとして
-            <code>Zend_Translate</code> を使用します。
+            登録済みのインスタンスを使用するには、まず <classname>Zend_Translate</classname> あるいは
+            <classname>Zend_Translate_Adapter</classname> のインスタンスを作成し、
+            それを <classname>Zend_Registry</classname> に登録します。登録する際のキーとして
+            <classname>Zend_Translate</classname> を使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -88,8 +88,8 @@ echo $this->translate('simple');
         <title>ビューの中で</title>
 
         <para>
-            流れるようなインターフェイスで <code>Zend_Translate</code> あるいは
-            <code>Zend_Translate_Adapter</code> のインスタンスを作成するには、
+            流れるようなインターフェイスで <classname>Zend_Translate</classname> あるいは
+            <classname>Zend_Translate_Adapter</classname> のインスタンスを作成するには、
             パラメータを指定せずにヘルパーをコールし、それから
             <code>setTranslator()</code> メソッドをコールします。
         </para>
@@ -105,7 +105,7 @@ $this->translate()->setTranslator($adapter)->translate('simple');
     </example>
 
     <para>
-        ヘルパーを <code>Zend_View</code> なしで使用すると、
+        ヘルパーを <classname>Zend_View</classname> なしで使用すると、
         ヘルパーを直接使用することもできます。
     </para>
 
@@ -124,7 +124,7 @@ print $translate->translate('simple'); // これは 'einfach' を返します
         </programlisting>
 
         <para>
-            <code>Zend_View</code> は使わないけれど、
+            <classname>Zend_View</classname> は使わないけれど、
             翻訳した結果がほしいという場合にこの方式を使用します。
         </para>
 

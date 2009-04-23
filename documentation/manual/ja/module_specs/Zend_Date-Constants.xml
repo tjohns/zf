@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.date.constants">
 
     <title>日付関数全般用の定数</title>
 
     <para>
-        <code>Zend_Date</code> のメソッドでパラメータ <code>$parts</code>
+        <classname>Zend_Date</code> のメソッドでパラメータ <code>$parts</classname>
         を持つものはすべて、以下の定数のいずれかをパラメータとして指定することができます。
         これにより、日付の中の特定の要素や使用する書式
         (例: RFC 822) を指定します。
@@ -17,7 +17,7 @@
         <title>定数の使用</title>
 
         <para>
-            たとえば、定数<code>Zend_Date::HOUR</code> の使用法は次のようになります。
+            たとえば、定数<classname>Zend_Date::HOUR</classname> の使用法は次のようになります。
             曜日・時・分・秒・その他の要素が世界各地でさまざまな形式で表されていたとしても、
             オブジェクトのタイムゾーン設定を使用して自動的に正しい値で計算を行います。
             これは、内部のタイムスタンプの値が何であるかや
@@ -106,8 +106,8 @@
         <title>全定数の一覧</title>
 
         <para>
-            日付/時刻の各要素に対応する定数が <code>Zend_Date</code> で定義されています。
-            <code>Zend_Date</code> がサポートするすべての定数を以下に示します。
+            日付/時刻の各要素に対応する定数が <classname>Zend_Date</classname> で定義されています。
+            <classname>Zend_Date</classname> がサポートするすべての定数を以下に示します。
         </para>
 
         <table id="zend.date.constants.list.table-1">
@@ -558,8 +558,8 @@
         </table>
 
         <para>
-            特に注意すべきなのは <code>Zend_Date::DATES</code> です。これは、
-            <code>Zend_Date</code> で <emphasis role="strong">入力</emphasis>
+            特に注意すべきなのは <classname>Zend_Date::DATES</classname> です。これは、
+            <classname>Zend_Date</classname> で <emphasis role="strong">入力</emphasis>
             フォーマットを指定する際に使用すると、特別な働きをします。
             入力フォーマットとして <code>$part</code> で使用すると、
             この定数は、さまざまな類似日付書式をできるだけ受け入れようとします。
@@ -683,7 +683,7 @@
             もし PHP 風の日付書式のほうがなじみがあるのなら、
             ISO 書式ではなく PHP の書式を用いるように変更することも可能です。
             しかし、ISO で定められているすべての書式が PHP の日付書式で指定できるわけではありません。
-            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> メソッドを使用すると、
+            <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> メソッドを使用すると、
             Zend_Date のメソッドで ISO 書式指定子ではなく PHP の date() での指定子を用いるようになります
             (以下の <xref linkend="zend.date.constants.phpformats" /> を参照ください)。
         </para>
@@ -1130,7 +1130,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             もし PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるのなら、
-            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> を使用しましょう。これで、
+            <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> を使用しましょう。これで、
             Zend_Date のメソッドで ISO 書式指定子ではなく PHP の date() での指定子を用いるようになります
             その後の書式パラメータは、すべて
             <ulink url="http://php.net/date">PHP の <code>date()</code> 書式指定子</ulink>
@@ -1161,7 +1161,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
             次の表は、PHP の日付書式指定子とそれに対応する Zend_Date の定数、
             そして同等な CLDR/ISO 書式指定子を示したものです。
             たいていの場合は、もし CLDR/ISO 書式に同等のものがなければ
-            <code>Zend_Locale_Format::convertPhpToIsoFormat()</code>
+            <classname>Zend_Locale_Format::convertPhpToIsoFormat()</classname>
             で PHP の書式指定子がそのまま残されます。そして Zend_Date
             のメソッドは、たとえ "ISO" 書式モードであったとしても、これらの
             PHP "独特の" 書式指定を理解します。

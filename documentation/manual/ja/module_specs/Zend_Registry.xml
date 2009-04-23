@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.registry.using">
 
     <title>レジストリの使用法</title>
@@ -104,9 +104,9 @@ foreach ($registry as $index => $value) {
         </para>
 
         <para>
-            <code>Zend_Registry</code> のインスタンスを作成するには、
+            <classname>Zend_Registry</classname> のインスタンスを作成するには、
             ごく普通に <code>new</code> コンストラクタを使用します。
-            コンストラクタで <code>Zend_Registry</code>
+            コンストラクタで <classname>Zend_Registry</classname>
             のインスタンスを作成する際に連想配列を渡すと、
             レジストリのエントリを初期化できるようになります。
         </para>
@@ -120,10 +120,10 @@ $registry = new Zend_Registry(array('index' => $value));
         </example>
 
         <para>
-            <code>Zend_Registry</code> のインスタンスを作成すると、
+            <classname>Zend_Registry</classname> のインスタンスを作成すると、
             配列風の方法でアクセスできるようになります。
             あるいは、静的メソッド <code>setInstance()</code>
-            を使用することで、このインスタンスを <code>Zend_Registry</code>
+            を使用することで、このインスタンスを <classname>Zend_Registry</classname>
             のシングルトンインスタンスに設定することもできます。
         </para>
 
@@ -140,7 +140,7 @@ Zend_Registry::setInstance($registry);
         <para>
             <code>setInstance()</code> メソッドは、もしすでに
             静的レジストリが初期化されている場合に
-            <code>Zend_Exception</code> をスローします。
+            <classname>Zend_Exception</classname> をスローします。
         </para>
 
     </sect2>
@@ -269,14 +269,14 @@ if (isset($registry->index)) {
         <title>レジストリの拡張</title>
 
         <para>
-            静的レジストリは <code>Zend_Registry</code> クラスのインスタンスです。
+            静的レジストリは <classname>Zend_Registry</classname> クラスのインスタンスです。
             レジストリに何らかの機能を追加したい場合は、
-            <code>Zend_Registry</code> を継承したクラスを作成し、
+            <classname>Zend_Registry</classname> を継承したクラスを作成し、
             それを静的レジストリで使用するシングルトンとして指定します。
             クラスを指定するには、静的メソッド
             <code>setClassName()</code> を使用します。
             <note>
-                <para>このクラスは <code>Zend_Registry</code> のサブクラスでなければなりません。</para>
+                <para>このクラスは <classname>Zend_Registry</classname> のサブクラスでなければなりません。</para>
             </note>
         </para>
 
@@ -292,7 +292,7 @@ Zend_Registry::set('index', $value);
 
         <para>
             最初にレジストリにアクセスした後でクラス名を設定しようとすると、
-            レジストリは <code>Zend_Exception</code> をスローします。静的レジストリのクラス名は、
+            レジストリは <classname>Zend_Exception</classname> をスローします。静的レジストリのクラス名は、
             アプリケーションの起動ファイルで指定することをお勧めします。
         </para>
 
@@ -324,7 +324,7 @@ Zend_Registry::set('index', $value);
             を使用する場合です。シングルトンインスタンスを削除することで、
             シングルトンレジストリオブジェクトを設定した後であっても
             これらのメソッドを使用できるようになります。特別な場合を除き、
-            <code>Zend_Registry</code> をこの方式で使うことは推奨しません。
+            <classname>Zend_Registry</classname> をこの方式で使うことは推奨しません。
         </para>
 
         <example id="zend.registry.using.unsetting.example">

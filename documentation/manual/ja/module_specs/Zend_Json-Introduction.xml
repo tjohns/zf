@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.json.introduction">
     <title>導入</title>
     <para>
-        <code>Zend_Json</code> は、PHP のネイティブデータを JSON
+        <classname>Zend_Json</classname> は、PHP のネイティブデータを JSON
         形式にシリアライズしたり、JSON のデータを PHP
         のネイティブデータに戻したりする便利なメソッドを提供します。
         JSON についてのより詳細な情報は、<ulink url="http://www.json.org/">
@@ -19,7 +19,7 @@
     </para>
 
     <para>
-        さらに <code>Zend_Json</code> には、任意の XML 文字列を
+        さらに <classname>Zend_Json</classname> には、任意の XML 文字列を
         JSON 形式に変換する機能も用意されています。
         この機能を使用すると、エンタープライズアプリケーションの
         XML データを Ajax アプリケーションで使うための JSON

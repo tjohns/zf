@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.log.formatters">
   <title>フォーマッタ</title>
   <para>
@@ -19,7 +19,7 @@
   <sect2 id="zend.log.formatters.simple">
     <title>単純なフォーマット</title>
     <para>
-      <code>Zend_Log_Formatter_Simple</code> はデフォルトのフォーマッタです。
+      <classname>Zend_Log_Formatter_Simple</classname> はデフォルトのフォーマッタです。
       これは、何もフォーマッタを指定しなかった場合に自動的に設定されます。
       デフォルトの設定は、次のようになります。
 
@@ -50,12 +50,12 @@ $logger->info('there');
     </para>
 
     <para>
-      <code>Zend_Log_Formatter_Simple</code> のコンストラクタには、
+      <classname>Zend_Log_Formatter_Simple</classname> のコンストラクタには、
       パラメータとして書式指定文字列を渡すことができます。
       この文字列には、キーをパーセント記号で囲んだもの
       (例. <code>%message%</code>) を含めます。
       書式指定文字列には、イベントデータの配列の任意のキーを含めることができます。
-      デフォルトのキーを取得するには、<code>Zend_Log_Formatter_Simple</code>
+      デフォルトのキーを取得するには、<classname>Zend_Log_Formatter_Simple</classname>
       の定数 DEFAULT_FORMAT を使用します。
     </para>
   </sect2>
@@ -63,7 +63,7 @@ $logger->info('there');
   <sect2 id="zend.log.formatters.xml">
     <title>XML へのフォーマット</title>
     <para>
-      <code>Zend_Log_Formatter_Xml</code> は、ログのデータを XML 文字列に変換します。
+      <classname>Zend_Log_Formatter_Xml</classname> は、ログのデータを XML 文字列に変換します。
       デフォルトでは、イベントデータ配列のすべての項目を自動的に記録します。
 
       <programlisting role="php"><![CDATA[
@@ -95,7 +95,7 @@ $logger->info('通知メッセージ');
 
     <para>
       ルート要素を変更したり、XML の要素名とイベントデータ配列の項目名の対応を指定したりすることも可能です。
-      <code>Zend_Log_Formatter_Xml</code> のコンストラクタの最初のパラメータには、
+      <classname>Zend_Log_Formatter_Xml</classname> のコンストラクタの最初のパラメータには、
       ルート要素の名前を指定します。また、
       二番目のパラメータには要素名の対応を表す連想配列を指定します。
 

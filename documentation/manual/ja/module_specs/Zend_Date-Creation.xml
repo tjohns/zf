@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.date.creation">
 
     <title>日付の作成</title>
 
     <para>
-        <code>Zend_Date</code> は、さまざまな方法で自分自身のインスタンスを作成することができます。
+        <classname>Zend_Date</classname> は、さまざまな方法で自分自身のインスタンスを作成することができます。
         本章では、そのなかでもより便利な方法を紹介します。
     </para>
 
@@ -18,7 +18,7 @@
             日付オブジェクトを作成する最も簡単な方法は、実際の日付を作成することです。
             <emphasis role="strong">new Zend_Date()</emphasis> か、あるいは便利な静的メソッド
             <emphasis role="strong">Zend_Date::now()</emphasis> を使用すれば、
-            作成時の日付情報を持つ <code>Zend_Date</code> のインスタンスが作成されます。
+            作成時の日付情報を持つ <classname>Zend_Date</classname> のインスタンスが作成されます。
             日付、時刻、タイムゾーンのすべてに値が設定されます。
         </para>
 
@@ -29,7 +29,7 @@
             <para>
                 新しいインスタンスの作成によって日付を作成する場合は、パラメータは何もいりません。
                 もちろん後で説明するようにいくつかのパラメータは存在しますが、
-                通常は、何も指定せずに <code>Zend_Date</code>
+                通常は、何も指定せずに <classname>Zend_Date</classname>
                 のインスタンスを作成すれば現在の日付情報が得られます。
             </para>
 
@@ -48,7 +48,7 @@ $date = new Zend_Date();
                 静的メソッドを使用したほうが簡単に日付を作成できるという場合もあるでしょう。
                 そんな場合は <emphasis role="strong"><code>now()</code></emphasis>
                 メソッドが使用できます。これは、<code>new Zend_Date()</code>
-                とした時と同じ内容の <code>Zend_Date</code> オブジェクトを返します。
+                とした時と同じ内容の <classname>Zend_Date</classname> オブジェクトを返します。
                 しかし、これは常にその時の日付情報を持つオブジェクトとなり、
                 オプションのパラメータで値を変更することはできません。
             </para>
@@ -70,7 +70,7 @@ $date = Zend_Date::now();
             データベースに日付データが格納されることもよくあります。
             しかし、データベースの種類によって日付データの扱いかたが異なるので面倒です。
             <code>MsSQL</code> は、<code>MySQL</code> などとくらべて大きく異なる日付出力を行います。
-            しかし、<code>Zend_Date</code>
+            しかし、<classname>Zend_Date</classname>
             を使用すると、データベースの日付データからの日付の作成を非常にシンプルに行えます。
         </para>
 
@@ -117,8 +117,8 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
                 一見同じように見えてもそれぞれ異なっています。
                 しかし、どれも <code>ISO</code> 標準の一部です。
                 つまり、日付を作成するための最も簡単な方法は
-                <code>Zend_Date::ISO_8601</code> を使うということになります。
-                <code>Zend_Date::ISO_8601</code> を使用できるデータベースには、
+                <classname>Zend_Date::ISO_8601</classname> を使うということになります。
+                <classname>Zend_Date::ISO_8601</classname> を使用できるデータベースには、
                 たとえば <code>MySQL</code> や <code>MsSQL</code> があります。
                 しかし、それ以外のデータベースでも日付カラムを
                 <code>ISO 8601</code> 形式で返すことが可能です。

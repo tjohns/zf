@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> を使用すると、
+        <classname>Zend_File_Transfer</classname> を使用すると、
         ファイルのアップロードやダウンロードを管理することができます。
         組み込みのバリデータを使ってファイルを検証したり、
         フィルタによってファイルを変更したりという機能があります。
-        <code>Zend_File_Transfer</code> はアダプタ形式を採用しており、
+        <classname>Zend_File_Transfer</classname> はアダプタ形式を採用しており、
         HTTP や FTP、WEBDAV などのさまざまな転送プロトコルを同じ API で使用することができます。
     </para>
 
     <note>
         <title>制限</title>
         <para>
-            現在の <code>Zend_File_Transfer</code>
+            現在の <classname>Zend_File_Transfer</classname>
             の実装では、HTTP Post によるアップロードにしか対応していません。
             ファイルのダウンロードやその他のアダプタについては次のリリースで追加される予定です。
             実装されていないメソッドを実行すると例外をスローします。
             したがって、実際のところは
-            <code>Zend_File_Transfer_Adapter_Http</code>
+            <classname>Zend_File_Transfer_Adapter_Http</classname>
             のインスタンスを直接操作することになります。
             これは、将来複数のアダプタが使用可能になった段階で変更される予定です。
         </para>
@@ -31,20 +31,20 @@
     <note>
         <title>フォーム</title>
         <para>
-            <code>Zend_Form</code> を使う場合は <code>Zend_Form</code>
-            の API を使うようにし、<code>Zend_File_Transfer</code>
-            を直接使わないようにしましょう。<code>Zend_Form</code>
-            のファイル転送機能は <code>Zend_File_Transfer</code>
-            で実装されているので、この章の説明は <code>Zend_Form</code>
+            <classname>Zend_Form</code> を使う場合は <code>Zend_Form</classname>
+            の API を使うようにし、<classname>Zend_File_Transfer</classname>
+            を直接使わないようにしましょう。<classname>Zend_Form</classname>
+            のファイル転送機能は <classname>Zend_File_Transfer</classname>
+            で実装されているので、この章の説明は <classname>Zend_Form</classname>
             のユーザにも有用です。
         </para>
     </note>
 
     <para>
-        <code>Zend_File_Transfer</code> の使い方はきわめて単純です。
+        <classname>Zend_File_Transfer</classname> の使い方はきわめて単純です。
         ふたつの部分から成り立っており、
         アップロードを行う HTTP フォームとアップロードされたファイルを
-        <code>Zend_File_Transfer</code> で処理するコードを作成します。
+        <classname>Zend_File_Transfer</classname> で処理するコードを作成します。
         次の例を参照ください。
     </para>
 
@@ -87,7 +87,7 @@ if (!$adapter->receive()) {
 ]]>
         </programlisting>
         <para>
-            このコードは <code>Zend_File_Transfer</code> のもっともシンプルな使用法を示すものです。
+            このコードは <classname>Zend_File_Transfer</classname> のもっともシンプルな使用法を示すものです。
             ローカルの保存先を <code>setDestination</code> メソッドで指定して
             <code>receive()</code> メソッドをコールします。
             アップロード時に何らかのエラーが発生した場合は、
@@ -99,7 +99,7 @@ if (!$adapter->receive()) {
     <note>
         <title>注意</title>
         <para>
-            この例は、<code>Zend_File_Transfer</code> の基本的な API を説明するためだけのものです。
+            この例は、<classname>Zend_File_Transfer</classname> の基本的な API を説明するためだけのものです。
             これをそのまま実際の環境で使用しては
             <emphasis role="strong">いけません</emphasis>。
             深刻なセキュリティ問題を引き起こしてしまいます。
@@ -112,7 +112,7 @@ if (!$adapter->receive()) {
         <title>Zend_File_Transfer がサポートするアダプタ</title>
 
         <para>
-            <code>Zend_File_Transfer</code> は、
+            <classname>Zend_File_Transfer</classname> は、
             さまざまなアダプタと転送方向をサポートするように作られています。
             ファイルのアップロードやダウンロードだけでなく、転送
             (あるアダプタでのアップロードと別のアダプタでのダウンロードを同時に行う)
@@ -127,7 +127,7 @@ if (!$adapter->receive()) {
         <title>Zend_File_Transfer のオプション</title>
 
         <para>
-            <code>Zend_File_Transfer</code> やそのアダプタはさまざまなオプションをサポートしています。
+            <classname>Zend_File_Transfer</classname> やそのアダプタはさまざまなオプションをサポートしています。
             オプションはコンストラクタで指定することもできますし、
             <code>setOptions($options)</code> で指定することもできます。
             <code>getOptions()</code> は、実際に設定されているオプションを返します。
@@ -151,7 +151,7 @@ if (!$adapter->receive()) {
         <title>ファイルのチェック</title>
 
         <para>
-            <code>Zend_File_Transfer</code>
+            <classname>Zend_File_Transfer</classname>
             のメソッドの中には、さまざまな前提条件をチェックするためのものもあります。
             これらは、アップロードされたファイルを処理する際に便利です。
         </para>
@@ -221,7 +221,7 @@ $upload->receive();
         <title>さらなるファイル情報</title>
 
         <para>
-            <code>Zend_File_Transfer</code> は、ファイルについてのさらなる情報を返すことができます。
+            <classname>Zend_File_Transfer</classname> は、ファイルについてのさらなる情報を返すことができます。
             次のメソッドが使用可能です。
         </para>
 
@@ -394,7 +394,7 @@ $names = $upload->getMimeType('foo');
         <title>ファイルアップロードの進捗</title>
 
         <para>
-            <code>Zend_File_Transfer</code> では、ファイルアップロードの進捗状況を知ることができます。
+            <classname>Zend_File_Transfer</classname> では、ファイルアップロードの進捗状況を知ることができます。
             この機能を使用するには、<code>APC</code> 拡張モジュール
             (ほとんどの PHP 環境においてデフォルトで提供されています)
             あるいは <code>uploadprogress</code> 拡張モジュールが必要です。
@@ -410,9 +410,9 @@ $names = $upload->getMimeType('foo');
 
         <para>
             次に、ファイルを送信するフォームの中に適切な hidden
-            フィールドを追加しなければなりません。<code>Zend_Form_Element_File</code>
+            フィールドを追加しなければなりません。<classname>Zend_Form_Element_File</classname>
             を使う場合は、この hidden フィールドは
-            <code>Zend_Form</code> が自動的に追加します。
+            <classname>Zend_Form</classname> が自動的に追加します。
         </para>
 
         <para>
@@ -466,7 +466,7 @@ while (!$upload['done']) {
             <title>getProgress() を手動で使用する</title>
 
             <para>
-                <code>Zend_ProgressBar</code> を使わずに手動で
+                <classname>Zend_ProgressBar</classname> を使わずに手動で
                 <code>getProgress()</code> を動作させることもできます。
             </para>
 
@@ -540,7 +540,7 @@ while (!$upload['done']) {
                         このオプションキーには Zend_ProgressBar
                         内で使用するセッション名前空間の名前が含まれます。
                         このキーが与えられなかったときのデフォルトは
-                        <code>Zend_File_Transfer_Adapter_Http_ProgressBar</code> です。
+                        <classname>Zend_File_Transfer_Adapter_Http_ProgressBar</classname> です。
                     </para>
                 </listitem>
             </itemizedlist>

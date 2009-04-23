@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.json.basics">
     <title>基本的な使用法</title>
     <para>
-        <code>Zend_Json</code> を使用するために、
+        <classname>Zend_Json</classname> を使用するために、
         静的な publicメソッドが 2 つ公開されています。
-        名前は <code>Zend_Json::encode()</code> および
-        <code>Zend_Json::decode()</code> となります。
+        名前は <classname>Zend_Json::encode()</classname> および
+        <classname>Zend_Json::decode()</classname> となります。
     </para>
     <programlisting role="php"><![CDATA[
 // 値を取得します

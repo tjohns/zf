@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>インデックスの構築</title>
 
@@ -9,13 +9,13 @@
 
         <para>
             インデックスの作成機能および更新機能は、
-            <code>Zend_Search_Lucene</code> モジュールと Java Lucene で実装されています。
+            <classname>Zend_Search_Lucene</classname> モジュールと Java Lucene で実装されています。
             これらのいずれかの機能を使用して作成したインデックスについて、
-            <code>Zend_Search_Lucene</code> による検索が可能です。
+            <classname>Zend_Search_Lucene</classname> による検索が可能です。
         </para>
 
         <para>
-            以下の PHP コードでは、<code>Zend_Search_Lucene</code> のインデックス作成
+            以下の PHP コードでは、<classname>Zend_Search_Lucene</classname> のインデックス作成
             API を用いてファイルをインデックス化する例を示します。
         </para>
 
@@ -77,7 +77,7 @@ $index->addDocument($doc);
 
         <para>
             そのためには、インデックス内部のドキュメント ID を使用して
-            <code>Zend_Search_Lucene::delete()</code> メソッドをコールします。
+            <classname>Zend_Search_Lucene::delete()</classname> メソッドをコールします。
             この ID は、クエリでヒットした内容から 'id' プロパティで取得できます。
         </para>
 
@@ -95,19 +95,19 @@ foreach ($hits as $hit) {
         <title>インデックスの大きさの取得</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> のインデックスの大きさを知るには、二通りの方法があります。
+            <classname>Zend_Search_Lucene</classname> のインデックスの大きさを知るには、二通りの方法があります。
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::maxDoc()</code> は、
+             <classname>Zend_Search_Lucene::maxDoc()</classname> は、
              最大のドキュメント番号にひとつ足した値を返します。
              これは、削除されたドキュメントを含む、インデックス内のドキュメントの総数を表します。
-             そこで、このメソッドのシノニムとして <code>Zend_Search_Lucene::count()</code>
+             そこで、このメソッドのシノニムとして <classname>Zend_Search_Lucene::count()</classname>
              を用意しました。
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::numDocs()</code> は、削除されていないドキュメントの総数を返します。
+             <classname>Zend_Search_Lucene::numDocs()</classname> は、削除されていないドキュメントの総数を返します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -117,7 +117,7 @@ $documents = $index->numDocs();
         </programlisting>
 
         <para>
-            <code>Zend_Search_Lucene::isDeleted($id)</code>
+            <classname>Zend_Search_Lucene::isDeleted($id)</classname>
             メソッドで、そのドキュメントが削除されているかどうかを調べます。
         </para>
 
@@ -164,7 +164,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </para>
 
         <para>
-            インデックス全体の最適化を行うには、<code>Zend_Search_Lucene::optimize()</code>
+            インデックス全体の最適化を行うには、<classname>Zend_Search_Lucene::optimize()</classname>
             をコールします。これは、すべてのインデックスセグメントを新しいひとつのセグメントにまとめます。
         </para>
         <programlisting role="php"><![CDATA[
@@ -249,8 +249,8 @@ $index->optimize();
                 Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
                 を使用してインデックスを最適化することもできます。
                 Luke の最新リリース (v0.8) は Lucene v2.3 をベースにしており、
-                現在の <code>Zend_Search_Lucene</code> コンポーネントの実装 (ZF 1.6) と互換性があります。
-                古いのバージョンの <code>Zend_Search_Lucene</code> の実装を使う場合は、
+                現在の <classname>Zend_Search_Lucene</classname> コンポーネントの実装 (ZF 1.6) と互換性があります。
+                古いのバージョンの <classname>Zend_Search_Lucene</classname> の実装を使う場合は、
                 それと互換性のある別のバージョンの Java Lucene ツールを使う必要があります。
                 <itemizedlist>
                     <listitem>
@@ -273,7 +273,7 @@ $index->optimize();
 
         <para>
             この設定を上書きするには
-            <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
+            <classname>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</classname>
             メソッドを使用します。
         </para>
 
@@ -308,7 +308,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>サポートするファイルシステム</title>
             <para>
-                <code>Zend_Search_Lucene</code> は、
+                <classname>Zend_Search_Lucene</classname> は、
                 検索処理やインデックス更新、インデックスの最適化を処理する際に
                 <code>flock()</code> を使用しています。
             </para>
@@ -321,7 +321,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
             </para>
 
             <para>
-                ネットワークファイルシステムは、<code>Zend_Search_Lucene</code> では使用しないでください。
+                ネットワークファイルシステムは、<classname>Zend_Search_Lucene</classname> では使用しないでください。
             </para>
         </sect3>
     </sect2>

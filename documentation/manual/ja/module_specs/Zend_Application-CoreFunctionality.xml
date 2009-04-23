@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.application.core-functionality" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>コア機能</title>
 
     <para>
-        ここでは<code>Zend_Application</code>のコアコンポーネントの
+        ここでは<classname>Zend_Application</classname>のコアコンポーネントの
         すべてについて、APIのようにドキュメントをご覧いただけます。
     </para>
 

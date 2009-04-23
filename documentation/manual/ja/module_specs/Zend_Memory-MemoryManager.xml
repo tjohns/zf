@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.memory.memory-manager">
     <title>メモリマネージャ</title>
 
@@ -10,14 +10,14 @@
 
         <para>
             新しいメモリマネージャ
-            (<code>Zend_Memory_Manager</code> オブジェクト) を作成するには、
-            <code>Zend_Memory::factory($backendName [, $backendOprions])</code>
+            (<classname>Zend_Memory_Manager</classname> オブジェクト) を作成するには、
+            <classname>Zend_Memory::factory($backendName [, $backendOprions])</classname>
             メソッドを使用します。
         </para>
 
         <para>
             最初の引数 <code>$backendName</code> は文字列で、
-            <code>Zend_Cache</code> がサポートするバックエンド実装のいずれかの名前を指定します。
+            <classname>Zend_Cache</classname> がサポートするバックエンド実装のいずれかの名前を指定します。
         </para>
 
         <para>
@@ -35,12 +35,12 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
         </programlisting>
 
         <para>
-            <code>Zend_Memory</code> は <link linkend="zend.cache.backends">Zend_Cache のバックエンド</link>
+            <classname>Zend_Memory</classname> は <link linkend="zend.cache.backends">Zend_Cache のバックエンド</link>
             を使用してデータを保存します。
         </para>
 
         <para>
-            標準の <code>Zend_Cache</code> のバックエンドに加え、特別な名前
+            標準の <classname>Zend_Cache</classname> のバックエンドに加え、特別な名前
             '<code>None</code>' をバックエンド名として使用することもできます。
 
             <programlisting role="php"><![CDATA[
@@ -77,7 +77,7 @@ $memoryManager = Zend_Memory::factory('None');
 
             <para>
                 移動可能なオブジェクト (スワップされる可能性のあるオブジェクト)
-                を作成するには、<code>Zend_Memory_Manager::create([$data])</code>
+                を作成するには、<classname>Zend_Memory_Manager::create([$data])</classname>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
@@ -100,7 +100,7 @@ $memObject = $memoryManager->create($data);
 
             <para>
                 ロックされたオブジェクト (スワップされないオブジェクト)
-                を作成するには、<code>Zend_Memory_Manager::createLocked([$data])</code>
+                を作成するには、<classname>Zend_Memory_Manager::createLocked([$data])</classname>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);

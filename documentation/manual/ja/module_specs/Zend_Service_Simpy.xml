@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.service.simpy">
     <title>Zend_Service_Simpy</title>
     <sect2 id="zend.service.simpy.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Service_Simpy</code> は、ソーシャルブックマークサービスである
+            <classname>Zend_Service_Simpy</classname> は、ソーシャルブックマークサービスである
             Simpy 用のフリーな REST API の、軽量なラッパーです。
         </para>
         <para>
-            <code>Zend_Service_Simpy</code> を使用するには
+            <classname>Zend_Service_Simpy</classname> を使用するには
             Simpy アカウントが必要です。アカウントを取得するには、
             <ulink url="http://simpy.com">Simpy のウェブサイト</ulink> にいきます。
             Simpy REST API についての詳細な情報は
@@ -20,7 +20,7 @@
         <para>
             Simpy REST API を使用すると、Simpy
             のウェブサイトが提供するサービスを利用することができます。
-            以下の節は、<code>Zend_Service_Simpy</code>
+            以下の節は、<classname>Zend_Service_Simpy</classname>
             で利用できる機能の概要をまとめたものです。
             <itemizedlist>
                 <listitem>

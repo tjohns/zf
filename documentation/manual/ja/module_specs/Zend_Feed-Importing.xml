@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.feed.importing">
 
     <title>フィードの読み込み</title>
 
     <para>
-        <code>Zend_Feed</code> を使用すると、フィードの取得が非常に簡単に行えます。
-        フィードの URI がわかれば、単に <code>Zend_Feed::import()</code>
+        <classname>Zend_Feed</classname> を使用すると、フィードの取得が非常に簡単に行えます。
+        フィードの URI がわかれば、単に <classname>Zend_Feed::import()</classname>
         メソッドを使用すればよいのです。
     </para>
 
@@ -17,7 +17,7 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
     </programlisting>
 
     <para>
-        <code>Zend_Feed</code> を使用して、ファイルや PHP
+        <classname>Zend_Feed</classname> を使用して、ファイルや PHP
         文字列変数からフィードを読み込むこともできます。
     </para>
 
@@ -32,12 +32,12 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 
     <para>
         上のすべての例では、成功した場合に返されるのは
-        <code>Zend_Feed_Abstract</code> を実装したクラスのオブジェクトで、
+        <classname>Zend_Feed_Abstract</classname> を実装したクラスのオブジェクトで、
         フィードの形式によって異なります。もし上のメソッドで RSS フィードを取得したのなら、
-        返されるオブジェクトは <code>Zend_Feed_Rss</code> です。一方、Atom
-        フィードを読み込んだのなら <code>Zend_Feed_Atom</code>
+        返されるオブジェクトは <classname>Zend_Feed_Rss</classname> です。一方、Atom
+        フィードを読み込んだのなら <classname>Zend_Feed_Atom</classname>
         オブジェクトが返されます。読み込みに失敗したりフィードの形式がおかしかったりした場合は
-        <code>Zend_Feed_Exception</code> がスローされます。
+        <classname>Zend_Feed_Exception</classname> がスローされます。
     </para>
 
     <sect2 id="zend.feed.importing.custom">
@@ -45,11 +45,11 @@ $feedFromPHP = Zend_Feed::importString($feedString);
         <title>独自のフィード</title>
 
         <para>
-            <code>Zend_Feed</code> を使用すると、独自のフィードを簡単に作成することができます。
-            単に、配列を作成してそれを <code>Zend_Feed</code> で読み込むだけでいいのです。
-            配列を読み込むには <code>Zend_Feed::importArray()</code> あるいは
-            <code>Zend_Feed::importBuilder()</code> を使用します。
-            この場合、<code>Zend_Feed_Builder_Interface</code>
+            <classname>Zend_Feed</classname> を使用すると、独自のフィードを簡単に作成することができます。
+            単に、配列を作成してそれを <classname>Zend_Feed</classname> で読み込むだけでいいのです。
+            配列を読み込むには <classname>Zend_Feed::importArray()</classname> あるいは
+            <classname>Zend_Feed::importBuilder()</classname> を使用します。
+            この場合、<classname>Zend_Feed_Builder_Interface</classname>
             を実装した独自のデータソースによって配列がその場で算出されます。
         </para>
 
@@ -292,30 +292,30 @@ array(
             <title>独自のデータソースの読み込み</title>
 
             <para>
-                <code>Zend_Feed_Builder_Interface</code> を実装した任意のデータソースから、
+                <classname>Zend_Feed_Builder_Interface</classname> を実装した任意のデータソースから、
                 Zend_Feed のインスタンスを作成することができます。単に
                 <code>getHeader()</code> メソッドおよび <code>getEntries()</code>
                 メソッドを実装するだけで、自分で作成したオブジェクトが
-                <code>Zend_Feed::importBuilder()</code> で使用できるようになります。
-                <code>Zend_Feed_Builder</code> は、これを単純に実装したものです。
+                <classname>Zend_Feed::importBuilder()</classname> で使用できるようになります。
+                <classname>Zend_Feed_Builder</classname> は、これを単純に実装したものです。
                 コンストラクタで配列を受け取り、ちょっとした検証を行い、
                 そして <code>importBuilder()</code> メソッドで使用できるようにします。
-                <code>getHeader()</code> メソッドは <code>Zend_Feed_Builder_Header</code>
+                <code>getHeader()</code> メソッドは <classname>Zend_Feed_Builder_Header</classname>
                 のインスタンスを返さなければなりません。また <code>getEntries()</code> は
-                <code>Zend_Feed_Builder_Entry</code> のインスタンスの配列を返さなければなりません。
+                <classname>Zend_Feed_Builder_Entry</classname> のインスタンスの配列を返さなければなりません。
             </para>
 
             <note>
                 <para>
-                    <code>Zend_Feed_Builder</code> は、使用法を説明するための具体的な実装例です。
+                    <classname>Zend_Feed_Builder</classname> は、使用法を説明するための具体的な実装例です。
                     実際に使用する際には、
-                    <code>Zend_Feed_Builder_Interface</code>
+                    <classname>Zend_Feed_Builder_Interface</classname>
                     を実装した独自のクラスを作成することを推奨します。
                 </para>
             </note>
 
             <para>
-                これが、<code>Zend_Feed::importBuilder()</code> の使用例です。
+                これが、<classname>Zend_Feed::importBuilder()</classname> の使用例です。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -341,7 +341,7 @@ $rssFeedFromArray =
             <title>フィードの内容の出力</title>
 
             <para>
-                <code>Zend_Feed_Abstract</code> インスタンスの内容を出力するには、
+                <classname>Zend_Feed_Abstract</classname> インスタンスの内容を出力するには、
                 <code>send()</code> メソッドあるいは <code>saveXml()</code> メソッドを使用します。
             </para>
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code>
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname>
         は、アプリケーションからスローされた例外を処理するためのプラグインです。
         たとえば、指定したコントローラやアクションが見つからないといったエラーを処理します。
         これは、<link linkend="zend.controller.exceptions">MVC の例外についてのセクション</link>
@@ -34,7 +34,7 @@
     </para>
 
     <para>
-        デフォルトでは、<code>Zend_Controller_Plugin_ErrorHandler</code>
+        デフォルトでは、<classname>Zend_Controller_Plugin_ErrorHandler</classname>
         はデフォルトモジュールの <code>ErrorController::errorAction()</code>
         に処理を転送します。これを変更するには、以下のようなアクセス用メソッドを使用します。
     </para>
@@ -78,7 +78,7 @@
     </para>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> は
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> は
         <code>postDispatch()</code> フックとして登録され、
         <link linkend="zend.controller.response">レスポンスオブジェクト</link>
         に格納された例外を確認します。もし何かの例外が見つかったら、
@@ -105,7 +105,7 @@
         <para>
             捕捉した例外は、リクエストで登録したオブジェクトの中に記録されます。
             これを取得するには、
-            <code>Zend_Controller_Action::_getParam('error_handler')</code>
+            <classname>Zend_Controller_Action::_getParam('error_handler')</classname>
             を使用します。
         </para>
 
@@ -129,21 +129,21 @@ class ErrorController extends Zend_Controller_Action
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</classname>
                     は、コントローラが見つからなかったことを表します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</classname>
                     は、アクションが見つからなかったことを表します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</classname>
                     は、その他の例外を表します。
                 </para>
             </listitem>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.paginator.usage">
     <title>使用法</title>
 
@@ -8,14 +8,14 @@
         <title>データコレクションのページ処理</title>
 
         <para>
-            ページ処理を行うには、<code>Zend_Paginator</code>
+            ページ処理を行うには、<classname>Zend_Paginator</classname>
             がデータにアクセスするための汎用的な方法が必要です。
             そのため、データへのアクセスはすべてデータソースアダプタを用いて行います。
             Zend Framework には、いくつかのアダプタが標準で同梱されています。
         </para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title><code>Zend_Paginator</code> 用のアダプタ</title>
+            <title><classname>Zend_Paginator</classname> 用のアダプタ</title>
 
             <tgroup cols="2">
                 <thead>
@@ -32,16 +32,16 @@
                     <row>
                         <entry>DbSelect</entry>
                         <entry>
-                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
+                            <link linkend="zend.db.select"><classname>Zend_Db_Select</classname></link>
                             のインスタンスを使用し、配列を返します。
                         </entry>
                     </row>
                     <row>
                         <entry>DbTableSelect</entry>
                         <entry>
-                            <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>
+                            <link linkend="zend.db.table.fetch-all"><classname>Zend_Db_Table_Select</classname></link>
                             のインスタンスを使用し、
-                            <code>Zend_Db_Table_Rowset_Abstract</code>
+                            <classname>Zend_Db_Table_Rowset_Abstract</classname>
                             のインスタンスを返します。
                             これは、結果セットについての追加情報
                             (カラム名など) を提供します。
@@ -57,7 +57,7 @@
                     <row>
                         <entry>Null</entry>
                         <entry>
-                            データのページ処理を管理する際に <code>Zend_Paginator</code>
+                            データのページ処理を管理する際に <classname>Zend_Paginator</classname>
                             を使用しません。その場合でもページ処理コントロールの機能を使うことはできます。
                         </entry>
                     </row>
@@ -81,7 +81,7 @@
         </note>
 
         <para>
-            <code>Zend_Paginator</code> のインスタンスを作成するには、
+            <classname>Zend_Paginator</classname> のインスタンスを作成するには、
             コンストラクタでアダプタを指定しなければなりません。
         </para>
 
@@ -126,7 +126,7 @@ $paginator->setCurrentPageNumber($page);
 
         <para>
             ページ番号は URL で指定するのがもっともシンプルな方法でしょう。
-            <code>Zend_Controller_Router_Interface</code>
+            <classname>Zend_Controller_Router_Interface</classname>
             互換のルータを使うことを推奨しますが、
             それが必須というわけではありません。
         </para>
@@ -167,7 +167,7 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
 
         <para>
             最後に、paginator のインスタンスをビューに割り当てます。
-            <code>Zend_View</code> と ViewRenderer アクションヘルパーを使っている場合は、
+            <classname>Zend_View</classname> と ViewRenderer アクションヘルパーを使っている場合は、
             次のようになります。
         </para>
 
@@ -184,12 +184,12 @@ $this->view->paginator = $paginator;
 
         <para>
             ビュースクリプトを使用してページ項目のレンダリング
-            (<code>Zend_Paginator</code> を使うよう設定している場合)
+            (<classname>Zend_Paginator</classname> を使うよう設定している場合)
             とページ処理コントロールの表示を行います。
         </para>
 
         <para>
-            <code>Zend_Paginator</code> は SPL の
+            <classname>Zend_Paginator</classname> は SPL の
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html"><code>IteratorAggregate</code></ulink>
             インターフェイスを実装しているので、
             項目を順次処理したり表示したりするのは簡単です。
@@ -255,7 +255,7 @@ $this->view->paginator = $paginator;
         </para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title><code>Zend_Paginator</code> のスクロール形式</title>
+            <title><classname>Zend_Paginator</classname> のスクロール形式</title>
 
             <tgroup cols="2">
                 <thead>
@@ -343,7 +343,7 @@ $paginator->setView($view);
 
         <note>
             <para>
-                もちろん、<code>Zend_Paginator</code>
+                もちろん、<classname>Zend_Paginator</classname>
                 を別のテンプレートエンジンで使用することもできます。
                 たとえば、Smarty を使用する場合は次のようになります。
             </para>

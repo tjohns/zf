@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
 
     <para>
-        <code>Zend_File_Transfer</code> にはファイル関連のバリデータがいくつか同梱されています。
+        <classname>Zend_File_Transfer</classname> にはファイル関連のバリデータがいくつか同梱されています。
         これらを使用してセキュリティを向上させ、攻撃から身を守るようにしましょう。
         バリデータは、それを使ってこそ役に立つものなのですから。
-        <code>Zend_File_Transfer</code> が提供するバリデータは
-        <code>Zend_Validator</code> コンポーネントに含まれ、
-        <code>Zend_Validate_File_*</code> という名前がついています。
+        <classname>Zend_File_Transfer</classname> が提供するバリデータは
+        <classname>Zend_Validator</classname> コンポーネントに含まれ、
+        <classname>Zend_Validate_File_*</classname> という名前がついています。
         現在使用できるバリデータは次のとおりです。
     </para>
 
@@ -145,7 +145,7 @@
                 <code>Upload</code>: このバリデータは内部的に使用するもので、
                 アップロード時に何らかの問題が発生していないかどうかをチェックします。
                 自分でこれを設定してはいけません。これは、
-                <code>Zend_File_Transfer</code> 自身が自動的に設定します。
+                <classname>Zend_File_Transfer</classname> 自身が自動的に設定します。
                 ですので、このバリデータのことは忘れてしまってもかまいません。
                 ただ、そういうバリデータが存在することだけを覚えておきましょう。
             </para>
@@ -160,7 +160,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title><code>Zend_File_Transfer</code> でのバリデータの使用法</title>
+        <title><classname>Zend_File_Transfer</classname> でのバリデータの使用法</title>
 
         <para>
             バリデータの使い方はきわめて簡単です。

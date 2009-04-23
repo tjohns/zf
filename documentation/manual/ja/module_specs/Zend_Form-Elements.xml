@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.form.elements">
-    <title><code>Zend_Form_Element</code> を用いたフォーム要素の作成</title>
+    <title><classname>Zend_Form_Element</classname> を用いたフォーム要素の作成</title>
 
     <para>
         フォームは、いくつかの要素から構成されています。
         これらの要素は、HTML フォームの入力項目に対応します。
-        <code>Zend_Form_Element</code> は個々のフォーム要素をカプセル化し、
+        <classname>Zend_Form_Element</classname> は個々のフォーム要素をカプセル化し、
         以下の機能を提供します。
     </para>
 
@@ -36,7 +36,7 @@
     </itemizedlist>
 
     <para>
-        基底クラスである <code>Zend_Form_Element</code> は、
+        基底クラスである <classname>Zend_Form_Element</classname> は、
         ほとんどの場合にうまく利用できるデフォルトを定義しています。
         しかし、よく使われる特別な要素については
         それを継承したクラスを作成するほうがいいでしょう。
@@ -49,7 +49,7 @@
         <title>プラグインローダー</title>
 
         <para>
-            <code>Zend_Form_Element</code> は、<link
+            <classname>Zend_Form_Element</classname> は、<link
                 linkend="zend.loader.pluginloader">Zend_Loader_PluginLoader</link>
             を使用しており、バリデータやフィルタ、デコレータの場所を指定することができます。
             それぞれに独自のプラグインローダーが関連付けられており、
@@ -205,8 +205,8 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             あるいは、入力の前後に含まれるスペースを取り除いてから検証を行わないと
             StringLength バリデータが正しい判断をできないなどという場合もあります。
             これらの操作は
-            <code>Zend_Filter</code> が行います。
-            <code>Zend_Form_Element</code> はフィルタチェインをサポートしているので、
+            <classname>Zend_Filter</classname> が行います。
+            <classname>Zend_Form_Element</classname> はフィルタチェインをサポートしているので、
             複数のフィルタを順に適用することができます。
             フィルタリングは、バリデーションの際や要素の値を <code>getValue()</code>
             で取得する際に行われます。
@@ -262,9 +262,9 @@ $element->addFilter('alnum');
             <para>
                 自作のフィルタクラスを使う場合は、
                 <code>addPrefixPath()</code> を用いてそれを
-                <code>Zend_Form_Element</code> に教えます。
+                <classname>Zend_Form_Element</classname> に教えます。
                 たとえば、'My_Filter' プレフィックス配下のフィルタを使う場合は
-                <code>Zend_Form_Element</code> に次のように通知します。
+                <classname>Zend_Form_Element</classname> に次のように通知します。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -335,8 +335,8 @@ $unfiltered = $element->getUnfilteredValue();
             セキュリティ界で有名なお言葉 "入力はフィルタリングせよ。
             出力はエスケープせよ。" に賛同する人なら、フォームの入力を検証
             ("入力のフィルタリング") したくなるでしょう。
-            <code>Zend_Form</code> では、各要素が個別にバリデータチェインを保持しています。
-            これは <code>Zend_Validate_*</code> のバリデータでできています。
+            <classname>Zend_Form</classname> では、各要素が個別にバリデータチェインを保持しています。
+            これは <classname>Zend_Validate_*</classname> のバリデータでできています。
         </para>
 
         <para>
@@ -383,9 +383,9 @@ $element->addValidator('alnum');
             <para>
                 自作のバリデータクラスを使う場合は、
                 <code>addPrefixPath()</code> を用いてそれを
-                <code>Zend_Form_Element</code> に教えます。
+                <classname>Zend_Form_Element</classname> に教えます。
                 たとえば、'My_Validator' プレフィックス配下のバリデータを使う場合は
-                <code>Zend_Form_Element</code> に次のように通知します。
+                <classname>Zend_Form_Element</classname> に次のように通知します。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -422,7 +422,7 @@ $element->addValidator('StringLength', false, array(6, 20));
 
         <para>
             この方式で引数を渡す場合は、コンストラクタで定義されているとおりの順で指定する必要があります。
-            上の例では、<code>Zend_Validate_StringLenth</code>
+            上の例では、<classname>Zend_Validate_StringLenth</classname>
             クラスのインスタンスを作成する際にパラメータ
             <code>$min</code> と <code>$max</code> を指定しています。
         </para>
@@ -437,7 +437,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
 
             <para>
                 バリデータのエラーメッセージをカスタマイズしたいこともあるでしょう。
-                その場合は、<code>Zend_Form_Element::addValidator()</code> の引数
+                その場合は、<classname>Zend_Form_Element::addValidator()</classname> の引数
                 <code>$options</code> で、キー 'messages' にメッセージテンプレートを指定します。
                 これは キー/値 のペアの配列となります。
                 これを使用するには、そのバリデータのさまざまな検証エラーに対応する
@@ -445,7 +445,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
             </para>
 
             <para>
-                もっとよいやりかたは、<code>Zend_Translate_Adapter</code>
+                もっとよいやりかたは、<classname>Zend_Translate_Adapter</classname>
                 をフォームで使用することでしょう。エラーコードは、
                 デフォルトのエラーデコレータが自動的にアダプタに渡します。
                 そこで、バリデータのエラーコードに対応する翻訳文字列を設定すればいいのです。
@@ -527,7 +527,7 @@ if ($element->isValid($value)) {
             <title>フィルタリング後の値の検証</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> は、
+                <classname>Zend_Form_Element::isValid()</classname> は、
                 フィルタチェインを通した後の値を検証します。
                 詳細は <link
                 linkend="zend.form.elements.filters">フィルタの説明
@@ -539,12 +539,12 @@ if ($element->isValid($value)) {
             <title>バリデーションコンテキスト</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> は、
+                <classname>Zend_Form_Element::isValid()</classname> は、
                 追加の引数 <code>$context</code> をサポートしています。
-                <code>Zend_Form::isValid()</code> は、
+                <classname>Zend_Form::isValid()</classname> は、
                 フォームをバリデートする際にデータの配列を
                 <code>$context</code> に渡します。一方、
-                <code>Zend_Form_Element::isValid()</code>
+                <classname>Zend_Form_Element::isValid()</classname>
                 はそれを個々のバリデータに渡します。
                 つまり、他の要素に渡された内容を使用するバリデータも作成できるということです。
                 たとえば、パスワードの確認用の入力欄を持つ登録フォームを考えてみましょう。
@@ -663,8 +663,8 @@ $messages = $element->getMessages();
             <title>Zend_Form_Elements の汎用バリデータとしての使用法</title>
 
             <para>
-                <code>Zend_Form_Element</code> は
-                <code>Zend_Validate_Interface</code> を実装しています。
+                <classname>Zend_Form_Element</classname> は
+                <classname>Zend_Validate_Interface</classname> を実装しています。
                 つまり、フォーム以外のバリデータチェインでも
                 フォーム要素を使用できるということです。
             </para>
@@ -679,7 +679,7 @@ $messages = $element->getMessages();
                     <code>setRequired($flag)</code> および
                     <code>isRequired()</code> は、'required' フラグの状態を設定あるいは取得します。
                     これを <code>true</code> に設定すると、
-                    <code>Zend_Form</code> が処理したデータにその要素が必須であるものとします。
+                    <classname>Zend_Form</classname> が処理したデータにその要素が必須であるものとします。
             </para></listitem>
 
             <listitem><para>
@@ -814,7 +814,7 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            <code>Zend_Form_Element</code> は、この問題を解決するために
+            <classname>Zend_Form_Element</classname> は、この問題を解決するために
             "デコレータ" を使用します。デコレータは、
             要素にアクセスしてその中身をレンダリングするためのメソッドを持つクラスです。
             デコレータの動作原理については、<link
@@ -823,21 +823,21 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            <code>Zend_Form_Element</code> がデフォルトで使用するデコレータは次のとおりです。
+            <classname>Zend_Form_Element</classname> がデフォルトで使用するデコレータは次のとおりです。
         </para>
 
         <itemizedlist>
             <listitem><para>
                 <emphasis>ViewHelper</emphasis>: 要素のレンダリング用のビューヘルパーを指定します。
                 要素の 'helper' 属性を使用して、どのヘルパーを使用するのかを指定します。
-                デフォルトで <code>Zend_Form_Element</code> は
+                デフォルトで <classname>Zend_Form_Element</classname> は
                 'formText' ビューヘルパーを使用しますが、
                 サブクラスで別のヘルパーを指定することもできます。
             </para></listitem>
 
             <listitem><para>
                 <emphasis>Errors</emphasis>:
-                <code>Zend_View_Helper_FormErrors</code>
+                <classname>Zend_View_Helper_FormErrors</classname>
                 を用いて要素の後にエラーメッセージを追加します。
                 エラーが発生していない場合は何も行いません。
             </para></listitem>
@@ -856,7 +856,7 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Label</emphasis>:
-                <code>Zend_View_Helper_FormLabel</code>
+                <classname>Zend_View_Helper_FormLabel</classname>
                 を用いて要素の前にラベルを追加し、それを
                 &lt;dt&gt; タグで囲みます。
                 ラベルが存在しない場合は、用語定義タグのみをレンダリングします。
@@ -883,7 +883,7 @@ $element = new Zend_Form_Element('foo',
 
             <para>
                 このオプションは、他のオプションと混用することもできます。
-                その場合はオプションの配列や <code>Zend_Config</code>
+                その場合はオプションの配列や <classname>Zend_Config</classname>
                 オブジェクトを使用します。
             </para>
         </note>
@@ -947,7 +947,7 @@ $this->addDecorators(array(
             <title>同じ型の複数のデコレータの使用法</title>
 
             <para>
-                内部的には、<code>Zend_Form_Element</code>
+                内部的には、<classname>Zend_Form_Element</classname>
                 はデコレータのクラス名をもとにしてデコレータを取得しています。
                 つまり、同じ型のデコレータを複数登録することはできないということです。
                 複数回登録すると、それまでに登録されていたデコレータを上書きします。
@@ -1028,7 +1028,7 @@ $fooBar  = $element->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element</code> は、
+            <classname>Zend_Form_Element</classname> は、
             オーバーロードを使用して特定のデコレータをレンダリングすることもできます。
             'render' で始まる名前のメソッドを <code>__call()</code>
             で捕捉し、メソッド名の残りの部分にもとづいてデコレータを探します。
@@ -1055,7 +1055,7 @@ echo $element->renderHtmlTag("This is the html tag content");
         <title>メタデータおよび属性</title>
 
         <para>
-            <code>Zend_Form_Element</code> は、
+            <classname>Zend_Form_Element</classname> は、
             要素の属性やメタデータを処理することができます。
             基本的な属性には次のようなものがあります。
         </para>
@@ -1152,7 +1152,7 @@ echo $element->renderHtmlTag("This is the html tag content");
 
         <para>
             しかし、たいていの場合はもっとシンプルにオブジェクトのプロパティとしてアクセスすることになるでしょう。
-            <code>Zend_Form_Element</code> はオーバーロードを使用してこの機能を実現しています。
+            <classname>Zend_Form_Element</classname> はオーバーロードを使用してこの機能を実現しています。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -1172,7 +1172,7 @@ $element->class = 'text;
         <title>標準の要素</title>
 
         <para>
-            <code>Zend_Form</code> には、標準的な要素が同梱されています。詳細は
+            <classname>Zend_Form</classname> には、標準的な要素が同梱されています。詳細は
             <link linkend="zend.form.standardElements">標準要素</link>
             の章を参照ください。
         </para>
@@ -1182,7 +1182,7 @@ $element->class = 'text;
         <title>Zend_Form_Element のメソッド</title>
 
         <para>
-            <code>Zend_Form_Element</code> には非常にたくさんのメソッドがあります。
+            <classname>Zend_Form_Element</classname> には非常にたくさんのメソッドがあります。
             以下に、それらのシグネチャを種類別に分けて簡単にまとめました。
         </para>
 
@@ -1289,8 +1289,8 @@ $element->class = 'text;
         <title>設定</title>
 
         <para>
-            <code>Zend_Form_Element</code> のコンストラクタには、配列あるいは
-            <code>Zend_Config</code> オブジェクトでオプションを指定することができます。
+            <classname>Zend_Form_Element</classname> のコンストラクタには、配列あるいは
+            <classname>Zend_Config</classname> オブジェクトでオプションを指定することができます。
             また、<code>setOptions()</code> や
             <code>setConfig()</code> で設定を変更することもできます。
             一般に、キーの名前は次のようになります。
@@ -1298,7 +1298,7 @@ $element->class = 'text;
 
         <itemizedlist>
             <listitem><para>
-                'set' + キーの名前のメソッドが <code>Zend_Form_Element</code>
+                'set' + キーの名前のメソッドが <classname>Zend_Form_Element</classname>
                 にあれば、値をそのメソッドに渡します。
             </para></listitem>
 
@@ -1381,7 +1381,7 @@ decorators.label.decorator = "Label"
         <title>カスタム要素</title>
 
         <para>
-            独自の要素を作成するには <code>Zend_Form_Element</code>
+            独自の要素を作成するには <classname>Zend_Form_Element</classname>
             クラスを継承したクラスを作成します。
             独自の要素を作成することになるのは、たとえば次のような場合です。
         </para>
@@ -1447,7 +1447,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         </para>
 
         <para>
-            <code>Zend_Form_Element</code> を継承したクラスでオーバーライドしたくなる
+            <classname>Zend_Form_Element</classname> を継承したクラスでオーバーライドしたくなる
             その他のメソッドとして、<code>loadDefaultDecorators()</code>
             があります。このメソッドは、条件付きで
             要素にデフォルトのデコレータセットを読み込みます。
@@ -1471,7 +1471,7 @@ class My_Element_Text extends Zend_Form_Element
 
         <para>
             要素のカスタマイズにはさまざまな方法があります。
-            <code>Zend_Form_Element</code> の API ドキュメントを熟読し、
+            <classname>Zend_Form_Element</classname> の API ドキュメントを熟読し、
             どんな機能が使用できるのかを覚えていきましょう。
         </para>
     </sect2>

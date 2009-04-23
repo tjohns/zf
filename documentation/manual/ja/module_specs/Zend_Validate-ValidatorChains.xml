@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.validate.validator_chains">
 
     <title>バリデータチェイン</title>
@@ -30,7 +30,7 @@ if ($validatorChain->isValid($username)) {
 ]]>
         </programlisting>
 
-        バリデータは、<code>Zend_Validate</code> に追加した順に適用されます。
+        バリデータは、<classname>Zend_Validate</classname> に追加した順に適用されます。
         上の例では、まずユーザ名の長さが 6 文字から 12 文字までの間であるかどうかを調べます。
         その後で、英数字のみであるかどうかだけを調べます。
         二番目の検証である「英数字かどうか」は、最初の検証である
@@ -41,7 +41,7 @@ if ($validatorChain->isValid($username)) {
 
     <para>
         検証が失敗した時点で、その後の検証を行わずにチェインを抜け出したいこともあるでしょう。
-        <code>Zend_Validate</code> はそのような使用法もサポートしています。
+        <classname>Zend_Validate</classname> はそのような使用法もサポートしています。
         そのためには、<code>addValidator()</code>
         メソッドの二番目のパラメータを使用します。
         <code>$breakChainOnFailure</code> を <code>true</code>
@@ -59,7 +59,7 @@ $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> を実装したオブジェクトなら何でも、
+        <classname>Zend_Validate_Interface</classname> を実装したオブジェクトなら何でも、
         バリデータチェインで使用できます。
     </para>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.mail.different-transports">
     <title>異なる転送手段の使用</title>
     <para>
@@ -26,7 +26,7 @@ $mail->send();  // もう一度デフォルトを使用します
     <note>
         <title>転送手段の追加</title>
         <para>
-            別の転送手段を用意するには、<code>Zend_Mail_Transport_Interface</code>
+            別の転送手段を用意するには、<classname>Zend_Mail_Transport_Interface</classname>
             を実装します。
         </para>
     </note>

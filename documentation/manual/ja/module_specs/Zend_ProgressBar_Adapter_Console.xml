@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_Console</code> は、
+        <classname>Zend_ProgressBar_Adapter_Console</classname> は、
         ターミナル用に使用するテキストベースのアダプタです。
         ターミナルの横幅を自動的に検出することができますが、
         独自に幅を指定することもできます。
@@ -23,7 +23,7 @@
     <para>
         アダプタのオプションを設定するには、<code>set*</code>
         メソッドを使用するか、あるいはコンストラクタの最初のパラメータで
-        配列か <code>Zend_Config</code> インスタンスを渡します。
+        配列か <classname>Zend_Config</classname> インスタンスを渡します。
         使用できるオプションは次のとおりです。
     </para>
     <itemizedlist>
@@ -38,13 +38,13 @@
         <listitem>
             <para>
                 <code>width</code>: 整数値、あるいは
-                <code>Zend_Console_ProgressBar</code> の定数 <code>AUTO</code>。
+                <classname>Zend_Console_ProgressBar</code> の定数 <code>AUTO</classname>。
             </para>
         </listitem>
         <listitem>
             <para>
                 <code>elements</code>: デフォルトは <code>NULL</code>。
-                あるいは以下の <code>Zend_Console_ProgressBar</code>
+                あるいは以下の <classname>Zend_Console_ProgressBar</classname>
                 の定数のうちの少なくともひとつを値として持つ配列。
             </para>
 

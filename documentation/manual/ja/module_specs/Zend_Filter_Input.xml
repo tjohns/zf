@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -539,7 +539,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::FIELDS</code> を使用することができます。
+                <classname>Zend_Filter_Input::FIELDS</classname> を使用することができます。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -614,7 +614,7 @@ $validators = array(
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::PRESENCE</code> を使用することができます。
+                <classname>Zend_Filter_Input::PRESENCE</classname> を使用することができます。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -645,7 +645,7 @@ $validators = array(
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::DEFAULT_VALUE</code> を使用することができます。
+                <classname>Zend_Filter_Input::DEFAULT_VALUE</classname> を使用することができます。
             </para>
 
             <para>
@@ -710,7 +710,7 @@ echo $input->month; // 1 を出力します
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::ALLOW_EMPTY</code> を使用することができます。
+                <classname>Zend_Filter_Input::ALLOW_EMPTY</classname> を使用することができます。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -775,7 +775,7 @@ $input->setOptions($options);
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::BREAK_CHAIN</code> を使用することができます。
+                <classname>Zend_Filter_Input::BREAK_CHAIN</classname> を使用することができます。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -839,7 +839,7 @@ $input = new Zend_Filter_Input(null, $validators);
 
             <para>
                 このメタコマンドを指定する際に、文字列ではなくクラス定数
-                <code>Zend_Filter_Input::MESSAGES</code> を使用することができます。
+                <classname>Zend_Filter_Input::MESSAGES</classname> を使用することができます。
             </para>
 
             <para>
@@ -1021,9 +1021,9 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
                 バージョン 1.5 で関数 <code>addNamespace($namespace)</code> は非推奨となり、
                 代わりにプラグインローダと <code>addFilterPrefixPath</code> および
                 <code>addValidatorPrefixPath</code> が追加されました。
-                また、定数 <code>Zend_Filter_Input::INPUT_NAMESPACE</code> も非推奨となりました。
-                定数 <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> および
-                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> が 1.7.0
+                また、定数 <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname> も非推奨となりました。
+                定数 <classname>Zend_Filter_Input::VALIDATOR_NAMESPACE</classname> および
+                <classname>Zend_Filter_Input::FILTER_NAMESPACE</classname> が 1.7.0
                 以降のリリースで使用可能です。
             </para>
         </note>
@@ -1031,9 +1031,9 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
         <note>
             <para>
                 バージョン 1.0.4 で、値 <code>namespace</code>
-                をもつ定数 <code>Zend_Filter_Input::NAMESPACE</code>
+                をもつ定数 <classname>Zend_Filter_Input::NAMESPACE</classname>
                 が値 <code>inputNamespace</code> を持つ定数
-                <code>Zend_Filter_Input::INPUT_NAMESPACE</code> に変わりました。
+                <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname> に変わりました。
                 これは、PHP 5.3 以降の予約語 <code>namespace</code>
                 に対応させるためです。
             </para>

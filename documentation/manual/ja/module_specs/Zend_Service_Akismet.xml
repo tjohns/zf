@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
 
@@ -8,7 +8,7 @@
         <title>導入</title>
 
         <para>
-            <code>Zend_Service_Akismet</code> は、
+            <classname>Zend_Service_Akismet</classname> は、
             <ulink url="http://akismet.com/development/api/">Akismet API</ulink>
             のクライアント機能を提供します。Akismet サービスは、
             入力データがスパムかどうかを判定するために用いられます。
@@ -40,7 +40,7 @@
         <title>API キーの検証</title>
 
         <para>
-            <code>Zend_Service_Akismet::verifyKey($key)</code>
+            <classname>Zend_Service_Akismet::verifyKey($key)</classname>
             を使用して、Akismet API キーが有効かどうかを検証します。
             たいていの場合は特に検証する必要もないでしょうが、
             改ざんされていないかどうか調べたり、
@@ -76,7 +76,7 @@ if ($akismet->verifyKey($apiKey) {
         <title>スパムのチェック</title>
 
         <para>
-            <code>Zend_Service_Akismet::isSpam($data)</code>
+            <classname>Zend_Service_Akismet::isSpam($data)</classname>
             を使用して、Akismet がそのデータをスパムとみなすかどうかを調べます。
             引数はひとつで、ここに連想配列を指定することができます。
             この配列には、次のキーを設定しなければなりません。
@@ -216,7 +216,7 @@ if ($akismet->isSpam($data)) {
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitSpam()</code> に指定する配列は、
+            <classname>Zend_Service_Akismet::submitSpam()</classname> に指定する配列は、
             <code>isSpam()</code> に渡すものと同じ形式です。
             しかし、このメソッドは値を返しません。
             API キーが無効な場合は例外が発生します。
@@ -258,7 +258,7 @@ $akismet->submitSpam($data));
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitHam()</code> に指定する配列は、
+            <classname>Zend_Service_Akismet::submitHam()</classname> に指定する配列は、
             <code>isSpam()</code> や <code>submitSpam()</code>
             に渡すものと同じ形式です。また、
             <code>submitSpam()</code> と同様、値を返しません。
@@ -294,7 +294,7 @@ $akismet->submitHam($data));
 
         <para>
             Akismet API では四つのメソッドしか定義されていませんが、
-            <code>Zend_Service_Akismet</code> では
+            <classname>Zend_Service_Akismet</classname> では
             それ以外のアクセス用メソッドも用意しています。
             これらを使用して、内部のプロパティを変更します。
         </para>
@@ -345,7 +345,7 @@ $akismet->submitHam($data));
                     <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>
                     です。<code>ZF-VERSION</code> の部分には現在の
                     Zend Framework のバージョン、つまり定数
-                    <code>Zend_Framework::VERSION</code>
+                    <classname>Zend_Framework::VERSION</classname>
                     の値があてはまります。
                 </para>
             </listitem>

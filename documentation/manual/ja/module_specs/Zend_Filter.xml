@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.filter.introduction">
 
     <title>導入</title>
@@ -51,7 +51,7 @@
 
         <para>
             ここで考えたフィルタについての定義をもとにして
-            <code>Zend_Filter_Interface</code> が作成されました。
+            <classname>Zend_Filter_Interface</classname> が作成されました。
             これは、フィルタクラスに対して <code>filter()</code>
             という名前のメソッドを実装するよう強制するものです。
         </para>
@@ -78,7 +78,7 @@ echo $htmlEntities->filter('"'); // &quot;
 
         <para>
             指定したフィルタクラスを読み込んでそのインスタンスを作成するというのが面倒ならば、
-            もうひとつの方法として、静的メソッド <code>Zend_Filter::get()</code>
+            もうひとつの方法として、静的メソッド <classname>Zend_Filter::get()</classname>
             を実行する方法もあります。このメソッドの最初の引数には、
             <code>filter()</code> メソッドに渡す入力値を指定します。
             二番目の引数は文字列で、フィルタクラスのベースネーム

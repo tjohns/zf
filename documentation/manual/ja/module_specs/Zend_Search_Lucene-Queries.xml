@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>クエリ作成用の API</title>
 
@@ -26,18 +26,18 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Exception</code> がスローされるのは、
+                    <classname>Zend_Search_Lucene_Exception</classname> がスローされるのは、
                     クエリパーサ自体に何らかの問題が発生した場合です。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Search_QueryParserException</code>
+                    <classname>Zend_Search_Lucene_Search_QueryParserException</classname>
                     がスローされるのは、クエリの構文エラーが発生した場合です。
                 </para>
             </listitem>
         </itemizedlist>
-        つまり、<code>Zend_Search_Lucene_Search_QueryParserException</code>
+        つまり、<classname>Zend_Search_Lucene_Search_QueryParserException</classname>
         を捕捉して適切なメッセージを表示させるようにしておくことが大切です。
         <programlisting role="php"><![CDATA[
 try {
@@ -50,7 +50,7 @@ try {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> オブジェクトの find() メソッドでも同様のテクニックを使えます。
+            <classname>Zend_Search_Lucene</classname> オブジェクトの find() メソッドでも同様のテクニックを使えます。
         </para>
 
         <para>
@@ -59,10 +59,10 @@ try {
             トークン化された単語で検索します。
 
             例外を有効にするには
-            <code>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</code>
+            <classname>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</classname>
             メソッドを使用します。
-            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> メソッドおよび
-            <code>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</code>
+            <classname>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</classname> メソッドおよび
+            <classname>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</classname>
             メソッドも、例外処理の振る舞いを変更するためのものです。
 
         </para>
@@ -97,7 +97,7 @@ $hits  = $index->find($query);
 
         <para>
             単語のフィールドは任意で指定します。
-            指定しなかった場合は、<code>Zend_Search_Lucene</code>
+            指定しなかった場合は、<classname>Zend_Search_Lucene</classname>
             は全フィールドを対象に検索します。
             <programlisting role="php"><![CDATA[
 // インデックス化されている全フィールドから 'word1' を探します
@@ -420,7 +420,7 @@ $hits  = $index->find($query);
 
         <para>
             フィールドの指定はオプションです。省略した場合は、
-            <code>Zend_Search_Lucene</code> は全フィールドを対象に検索を行います。
+            <classname>Zend_Search_Lucene</classname> は全フィールドを対象に検索を行います。
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -486,7 +486,7 @@ $hits  = $index->find($query);
 
         <para>
             単語のフィールドはオプションです。
-            このフィールドを省略した場合、<code>Zend_Search_Lucene</code>
+            このフィールドを省略した場合、<classname>Zend_Search_Lucene</classname>
             は各ドキュメントのすべてのフィールドを検索します。
             <programlisting role="php"><![CDATA[
 
@@ -548,12 +548,12 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             フレーズクエリを作成するには、コンストラクタで一気に構築してしまう方法と
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
+            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname>
             メソッドでひとつひとつ作成する方法に 2 通りがあります。
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Search_Query_Phrase</code> クラスのコンストラクタで、
+            <classname>Zend_Search_Lucene_Search_Query_Phrase</classname> クラスのコンストラクタで、
             オプションの 3 つの引数を指定することができます。
         </para>
         <programlisting role="php"><![CDATA[
@@ -617,8 +617,8 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(
 
 
         <para>
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> メソッドは
-            2 つの引数をとります。<code>Zend_Search_Lucene_Index_Term</code>
+            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> メソッドは
+            2 つの引数をとります。<classname>Zend_Search_Lucene_Index_Term</classname>
             オブジェクトが必須で、position はオプションです。
         </para>
         <programlisting role="php"><![CDATA[
@@ -743,7 +743,7 @@ $hits  = $index->find($query);
 
         <para>
             フィールドの指定はオプションです。省略した場合は、
-            <code>Zend_Search_Lucene</code> は全フィールドを対象に検索を行います。
+            <classname>Zend_Search_Lucene</classname> は全フィールドを対象に検索を行います。
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');

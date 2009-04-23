@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.form.forms">
-    <title><code>Zend_Form</code> によるフォームの作成</title>
+    <title><classname>Zend_Form</classname> によるフォームの作成</title>
 
     <para>
-        <code>Zend_Form</code> クラスは、フォームの要素や
+        <classname>Zend_Form</classname> クラスは、フォームの要素や
         表示グループ、そしてサブフォームの集約を行います。
         そして、その要素に対して次のような操作を行います。
     </para>
@@ -32,7 +32,7 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Form</code> で作成したフォームが複雑なものになることもありますが、
+        <classname>Zend_Form</classname> で作成したフォームが複雑なものになることもありますが、
         シンプルなフォームで使用するのがもっともよくある使用例でしょう。
         手早いアプリケーション開発 (RAD) やプロトタイピングでの使用に最適です。
     </para>
@@ -51,7 +51,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        <code>Zend_Config</code> のインスタンスあるいは配列で設定を渡すことができます。
+        <classname>Zend_Config</classname> のインスタンスあるいは配列で設定を渡すことができます。
         これを使用すると、オブジェクトの状態を設定したり新しい要素を作成したりすることができます。
     </para>
 
@@ -62,22 +62,22 @@ $form = new Zend_Form($config);
     </programlisting>
 
     <para>
-        <code>Zend_Form</code> は順次処理が可能です。
+        <classname>Zend_Form</classname> は順次処理が可能です。
         各要素や表示グループ、サブフォームごとに処理することができます。
         処理順は、登録した順番および各項目に設定されている順番となります。
         これは、各要素のレンダリングを適切な順で行いたいときに便利です。
     </para>
 
     <para>
-        <code>Zend_Form</code> は、要素や表示グループのファクトリとして使用できると同時に
+        <classname>Zend_Form</classname> は、要素や表示グループのファクトリとして使用できると同時に
         デコレータで自分自身をレンダリングすることもできます。
     </para>
 
     <sect2 id="zend.form.forms.plugins">
         <title>プラグインローダー</title>
         <para>
-            <code>Zend_Form</code> では、
-            <code>Zend_Loader_PluginLoader</code> を使用することで
+            <classname>Zend_Form</classname> では、
+            <classname>Zend_Loader_PluginLoader</classname> を使用することで
             別の要素やデコレータの位置を指定することができます。
             それぞれにプラグインローダーを関連づけることができ、
             汎用的なアクセサを使用してそれを取得したり変更したりします。
@@ -126,7 +126,7 @@ $form = new Zend_Form($config);
         </itemizedlist>
 
         <para>
-            さらに、<code>Zend_Form</code>
+            さらに、<classname>Zend_Form</classname>
             のインスタンスで作成したすべての要素や表示グループ用のプレフィックスパスを設定するには
             次のメソッドを使用します。
         </para>
@@ -137,7 +137,7 @@ $form = new Zend_Form($config);
                 <code>addPrefixPath()</code> と同じですが、
                 クラスのプレフィックスとパスを指定しなければなりません。
                 <code>$type</code> を指定する場合は、それは
-                <code>Zend_Form_Element</code>
+                <classname>Zend_Form_Element</classname>
                 で指定したプラグインローダーの型のひとつでなければなりません。
                 <code>$type</code> にどんな値が指定できるのかについては <link
                     linkend="zend.form.elements.loaders">要素のプラグインのセクション</link>
@@ -168,7 +168,7 @@ $form = new Zend_Form($config);
     <sect2 id="zend.form.forms.elements">
         <title>要素</title>
         <para>
-            <code>Zend_Form</code> では、フォームに要素を追加したり
+            <classname>Zend_Form</classname> では、フォームに要素を追加したり
             フォームから要素を削除したりするためのアクセサを提供しています。
             これらは要素オブジェクトのインスタンスを受け取ることもできますし、
             ファクトリとして要素オブジェクトのインスタンスを作成させることもできます。
@@ -177,8 +177,8 @@ $form = new Zend_Form($config);
         <para>
             要素を追加するもっとも基本的なメソッドが
             <code>addElement()</code> です。
-            このメソッドは、 <code>Zend_Form_Element</code> 型
-            (あるいは <code>Zend_Form_Element</code> を継承したクラス) のオブジェクト
+            このメソッドは、 <classname>Zend_Form_Element</classname> 型
+            (あるいは <classname>Zend_Form_Element</classname> を継承したクラス) のオブジェクト
             あるいは新しい要素を作成するための引数
             (要素の型や名前、設定オプション) を受け取ります。
         </para>
@@ -209,9 +209,9 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
             <para>
                 <code>addElement()</code> は「流れるようなインターフェイス」
                 を実装しています。つまり、このメソッドは要素ではなく
-                <code>Zend_Form</code> オブジェクトを返すということです。
+                <classname>Zend_Form</classname> オブジェクトを返すということです。
                 これによって、複数の addElement() メソッドやその他のフォームメソッド
-                (<code>Zend_Form</code> のすべてのセッターは流れるようなインターフェイスを実装しています)
+                (<classname>Zend_Form</classname> のすべてのセッターは流れるようなインターフェイスを実装しています)
                 を連結させることができます。
             </para>
 
@@ -560,14 +560,14 @@ $form->setElementFilters(array('StringTrim'));
         </para>
 
         <para>
-            表示グループの基底クラスは <code>Zend_Form_DisplayGroup</code> です。
+            表示グループの基底クラスは <classname>Zend_Form_DisplayGroup</classname> です。
             このクラスのインスタンスを直接作成することもできますが、
-            一般的には <code>Zend_Form</code> の
+            一般的には <classname>Zend_Form</classname> の
             <code>addDisplayGroup()</code> メソッドでインスタンスを作成することになります。
             このメソッドの最初の引数には要素の配列を渡し、
             表示グループの名前を 2 番目の引数で指定します。
             オプションの 3 番目の引数で、設定の配列や
-            <code>Zend_Config</code> オブジェクトを渡すこともできます。
+            <classname>Zend_Config</classname> オブジェクトを渡すこともできます。
         </para>
 
         <para>
@@ -617,7 +617,7 @@ $form->addDisplayGroup(
 
             <para>
                 このオプションは、他のオプションと混用することもできます。
-                その場合はオプションの配列や <code>Zend_Config</code>
+                その場合はオプションの配列や <classname>Zend_Config</classname>
                 オブジェクトを使用します。
             </para>
         </note>
@@ -673,8 +673,8 @@ $form->setDisplayGroupDecorators(array(
             <title>独自の表示グループクラスの使用</title>
 
             <para>
-                デフォルトでは、<code>Zend_Form</code> は
-                表示グループ用に <code>Zend_Form_DisplayGroup</code>
+                デフォルトでは、<classname>Zend_Form</classname> は
+                表示グループ用に <classname>Zend_Form_DisplayGroup</classname>
                 クラスを使用します。
                 このクラスを継承すれば、独自の機能を持つクラスを作成することができます。
                 <code>addDisplayGroup()</code>
@@ -694,8 +694,8 @@ $form->addDisplayGroup(
             </programlisting>
 
             <para>
-                そのクラスがまだ読み込まれていない場合は、<code>Zend_Form</code>
-                は <code>Zend_Loader</code> を使ってクラスを読み込みます。
+                そのクラスがまだ読み込まれていない場合は、<classname>Zend_Form</classname>
+                は <classname>Zend_Loader</classname> を使ってクラスを読み込みます。
             </para>
 
             <para>
@@ -776,7 +776,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
             <title>Zend_Form_DisplayGroup のメソッド</title>
 
             <para>
-                <code>Zend_Form_DisplayGroup</code> には次のようなメソッドがあります。
+                <classname>Zend_Form_DisplayGroup</classname> には次のようなメソッドがあります。
                 タイプ別にまとめます。
             </para>
 
@@ -931,8 +931,8 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
         </itemizedlist>
 
         <para>
-            サブフォームは <code>Zend_Form</code> のオブジェクトです。一般的には
-            <code>Zend_Form_SubForm</code> のオブジェクトとなります。
+            サブフォームは <classname>Zend_Form</classname> のオブジェクトです。一般的には
+            <classname>Zend_Form_SubForm</classname> のオブジェクトとなります。
             後者のクラスには、大きなフォームに含めるのに適したデコレータが含まれています
             (HTML の form タグをレンダリングせず、要素をグループ化するものです)。
             サブフォームをアタッチするには、単にそれを要素に追加して名前を指定するだけです。
@@ -1071,9 +1071,9 @@ $form->setAction('/user/login')
         <para>
             フォームのエンコード形式を設定するには
             enctype アクセサを使用します。
-            <code>Zend_Form</code> では 2 つの定数
-            <code>Zend_Form::ENCTYPE_URLENCODED</code> と
-            <code>Zend_Form::ENCTYPE_MULTIPART</code> を定義しており、
+            <classname>Zend_Form</classname> では 2 つの定数
+            <classname>Zend_Form::ENCTYPE_URLENCODED</classname> と
+            <classname>Zend_Form::ENCTYPE_MULTIPART</classname> を定義しており、
             これらはそれぞれ 'application/x-www-form-urlencoded' と
             'multipart/form-data' に対応します。
             しかし、これ以外にも任意のエンコード形式を指定することができます。
@@ -1095,7 +1095,7 @@ $form->setAction('/user/login')
         </note>
 
         <para>
-            <code>Zend_Form</code> は <code>Countable</code>
+            <classname>Zend_Form</code> は <code>Countable</classname>
             インターフェイスを実装しており、count 関数の引数として使用することができます。
         </para>
 
@@ -1106,7 +1106,7 @@ $numItems = count($form);
 
         <para>
             任意のメタデータを設定するには attribs アクセサを使用します。
-            <code>Zend_Form</code> ではオーバーロードを使用して
+            <classname>Zend_Form</classname> ではオーバーロードを使用して
             要素や表示グループそしてサブフォームにアクセスしているので、
             これがメタデータにアクセスするための唯一の方法となります。
         </para>
@@ -1138,12 +1138,12 @@ $form->clearAttribs();
         <para>
             フォームのマークアップを作成するのは手間のかかる作業です。
             特に、検証エラーの表示や値の送信などの決まりきった処理を何度も行うのは大変なことです。
-            この問題に対する <code>Zend_Form</code>
+            この問題に対する <classname>Zend_Form</classname>
             からの回答が <emphasis>デコレータ</emphasis> です。
         </para>
 
         <para>
-            <code>Zend_Form</code> オブジェクトのデコレータを使用して、
+            <classname>Zend_Form</classname> オブジェクトのデコレータを使用して、
             フォームをレンダリングします。
             FormElements デコレータは、フォームのすべての項目
             (要素、表示グループ、サブフォーム)
@@ -1153,7 +1153,7 @@ $form->clearAttribs();
         </para>
 
         <para>
-            <code>Zend_Form</code> のデフォルトのデコレータは、FormElements と
+            <classname>Zend_Form</classname> のデフォルトのデコレータは、FormElements と
             HtmlTag (定義リストによるラッピングをします)、そして Form です。
             以下のコードと同様です。
         </para>
@@ -1202,7 +1202,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
 
             <para>
                 このオプションは、他のオプションと混用することもできます。
-                その場合はオプションの配列や <code>Zend_Config</code>
+                その場合はオプションの配列や <classname>Zend_Config</classname>
                 オブジェクトを使用します。
             </para>
         </note>
@@ -1211,7 +1211,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
             <title>同じ型の複数のデコレータの使用法</title>
 
             <para>
-                内部的には、<code>Zend_Form</code>
+                内部的には、<classname>Zend_Form</classname>
                 はデコレータのクラスをもとにデコレータを取得しています。
                 その結果、同じ型のデコレータを複数使うことができなくなります。
                 同じ型のデコレータを複数指定すると、
@@ -1299,7 +1299,7 @@ $fooBar  = $form->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form</code> は、
+            <classname>Zend_Form</classname> は、
             オーバーロードを使用して特定のデコレータをレンダリングすることもできます。
             'render' で始まる名前のメソッドを <code>__call()</code>
             で捕捉し、メソッド名の残りの部分にもとづいてデコレータを探します。
@@ -1327,7 +1327,7 @@ echo $form->renderFieldset("<p>This is fieldset content</p>");
 
         <para>
             フォームの主な使用法は、送信されたデータを検証することです。
-            <code>Zend_Form</code> は、フォーム全体あるいはその一部を一度に検証したり、
+            <classname>Zend_Form</classname> は、フォーム全体あるいはその一部を一度に検証したり、
             XmlHttpRequests (AJAX) のレスポンスを自動的に検証したりすることができます。
             送信されたデータが無効な場合は、
             要素やサブフォームについて
@@ -1419,7 +1419,7 @@ $messages = $form->getMessages('username');
 
         <note>
             <para>
-                注意: 要素を検証する際、<code>Zend_Form</code> は各要素の
+                注意: 要素を検証する際、<classname>Zend_Form</classname> は各要素の
                 <code>isValid()</code> メソッドに 2 番目の引数を渡します。
                 これは検証対象のデータの配列です。
                 これを使用すると、他の要素の入力内容をもとにした検証を
@@ -1502,7 +1502,7 @@ $messages = $form->getMessages('username');
         <title>メソッド</title>
 
         <para>
-            以下の一覧は、<code>Zend_Form</code> のメソッドをタイプ別にまとめたものです。
+            以下の一覧は、<classname>Zend_Form</classname> のメソッドをタイプ別にまとめたものです。
         </para>
 
         <itemizedlist>
@@ -1696,10 +1696,10 @@ $messages = $form->getMessages('username');
         <title>設定</title>
 
         <para>
-            <code>Zend_Form</code> は、
+            <classname>Zend_Form</classname> は、
             <code>setOptions()</code> や <code>setConfig()</code> を用いて
             (あるいはコンストラクタでオプションや
-            <code>Zend_Config</code> オブジェクトを渡して)
+            <classname>Zend_Config</classname> オブジェクトを渡して)
             さまざまに設定することができます。
             これらのメソッドを使用して、フォームの要素や表示グループ、デコレータ、
             そしてメタデータを設定することができます。
@@ -1707,7 +1707,7 @@ $messages = $form->getMessages('username');
 
         <para>
             全般的なルールとして、もし 'set' + オプションのキー
-            という名前のメソッドが <code>Zend_Form</code>
+            という名前のメソッドが <classname>Zend_Form</classname>
             にあった場合は、そのメソッドを使用するとオプションを設定することができます。
             アクセサが存在しない場合は
             キーが属性への参照とみなされ、
@@ -1809,7 +1809,7 @@ decorators.form.decorator = "Form"
 
         <para>
             独自の設定のフォームを使用するもうひとつの方法は、
-            <code>Zend_Form</code> のサブクラスを作成することです。
+            <classname>Zend_Form</classname> のサブクラスを作成することです。
             これには次のような利点があります。
         </para>
 

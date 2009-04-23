@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC での例外</title>
 
@@ -21,7 +21,7 @@
             システムの重要な情報が含まれていることがあります。
             たとえば SQL 文の内容やファイルの位置といった情報です。
             あなたのサイトを守るため、デフォルトでは
-            <code>Zend_Controller_Front</code> がすべての例外を捕捉し、
+            <classname>Zend_Controller_Front</classname> がすべての例外を捕捉し、
             それをレスポンスオブジェクトに登録するようになっています。
             また、レスポンスオブジェクトは、
             デフォルトではそれらの例外メッセージを表示しません。
@@ -64,7 +64,7 @@
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Front::throwExceptions()</code></para>
+                <para><classname>Zend_Controller_Front::throwExceptions()</classname></para>
 
                 <para>
                     このメソッドに true を渡すと、
@@ -91,7 +91,7 @@ try {
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Response_Abstract::renderExceptions()</code></para>
+                <para><classname>Zend_Controller_Response_Abstract::renderExceptions()</classname></para>
 
                 <para>
                     このメソッドに true を渡すと、
@@ -104,13 +104,13 @@ try {
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::returnResponse()</code> および
-                    <code>Zend_Controller_Response_Abstract::isException()</code>
+                    <classname>Zend_Controller_Front::returnResponse()</classname> および
+                    <classname>Zend_Controller_Response_Abstract::isException()</classname>
                 </para>
 
                 <para>
-                    <code>Zend_Controller_Front::returnResponse()</code> に true を渡すと、
-                    <code>Zend_Controller_Front::dispatch()</code> はレスポンスをレンダリングせず、
+                    <classname>Zend_Controller_Front::returnResponse()</classname> に true を渡すと、
+                    <classname>Zend_Controller_Front::dispatch()</classname> はレスポンスをレンダリングせず、
                     そのまま返します。レスポンスを受け取った後で、
                     処理すべき例外があるかどうかを <code>isException()</code>
                     メソッドで調べ、その内容を <code>getException()</code> メソッドで取得します。
@@ -131,7 +131,7 @@ if ($response->isException()) {
                 </programlisting>
 
                 <para>
-                    <code>Zend_Controller_Front::throwExceptions()</code>
+                    <classname>Zend_Controller_Front::throwExceptions()</classname>
                     に比べてこの方法が優れている点は、例外を処理した後で、
                     それをレンダリングするかどうかを判断できるところです。
                     エラーハンドラプラグインとは異なり、
@@ -157,7 +157,7 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher::dispatch()</code> は、デフォルトでは、
+                    <classname>Zend_Controller_Dispatcher::dispatch()</classname> は、デフォルトでは、
                     無効なコントローラがリクエストされた際に例外をスローします。
                     この例外への対処方法としては、次のふたつを推奨します。
                 </para>
@@ -193,7 +193,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                     <listitem>
                         <para>
                             <code>dispatch()</code> がスローする例外は
-                            <code>Zend_Controller_Dispatcher_Exception</code> で、この中には
+                            <classname>Zend_Controller_Dispatcher_Exception</classname> で、この中には
                             'Invalid controller specified' というテキストが含まれます。
                             <link linkend="zend.controller.exceptions.handling">
                             先ほどの節</link>
@@ -206,9 +206,9 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::__call()</code> は、存在しないアクションを
+                    <classname>Zend_Controller_Action::__call()</classname> は、存在しないアクションを
                     メソッドにディスパッチできなかった場合に
-                    <code>Zend_Controller_Action_Exception</code> をスローします。
+                    <classname>Zend_Controller_Action_Exception</classname> をスローします。
                     このような場合は、何らかのデフォルトアクションを
                     コントローラで使用したいことでしょう。そのためには次のようにします。
                 </para>
@@ -216,7 +216,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            <code>Zend_Controller_Action</code> のサブクラスを作成し、
+                            <classname>Zend_Controller_Action</classname> のサブクラスを作成し、
                             <code>__call()</code> メソッドをオーバーライドします。
                             たとえば次のようになります。
                         </para>
@@ -245,7 +245,7 @@ class My_Controller_Action extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            <code>Zend_Controller_Dispatcher</code> のサブクラスを作成し、
+                            <classname>Zend_Controller_Dispatcher</classname> のサブクラスを作成し、
                             <code>getAction()</code> メソッドをオーバーライドして、
                             アクションが存在するかどうかを調べます。
                             たとえば次のようになります。
@@ -293,13 +293,13 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
                     <listitem>
                         <para>
-                            <code>Zend_Controller_Action::preDispatch()</code> あるいは
-                            <code>Zend_Controller_Plugin_Abstract::preDispatch()</code>
+                            <classname>Zend_Controller_Action::preDispatch()</classname> あるいは
+                            <classname>Zend_Controller_Plugin_Abstract::preDispatch()</classname>
                             を使用して、無効なアクションを判別します。
                         </para>
 
                         <para>
-                            <code>Zend_Controller_Action</code> のサブクラスを作成して
+                            <classname>Zend_Controller_Action</classname> のサブクラスを作成して
                             <code>preDispatch()</code> を変更することで、
                             実際にアクションをディスパッチする前に
                             コントローラ内で別のアクションに転送したり

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.currency.migration">
 
     <title>以前のバージョンからの移行</title>
 
     <para>
-        <code>Zend_Currency</code> の API は、利便性を考慮して変更されました。
-        ここで説明しているバージョンの <code>Zend_Currency</code>
+        <classname>Zend_Currency</classname> の API は、利便性を考慮して変更されました。
+        ここで説明しているバージョンの <classname>Zend_Currency</classname>
         を使用していた方は、以下の手順にしたがって移行作業を行い、
         スクリプトを新しい API に対応させてください。
     </para>
@@ -17,7 +17,7 @@
         <title>1.0.2 から 1.0.3 以降への移行</title>
 
         <para>
-            <code>Zend_Currency</code> のオブジェクトを、
+            <classname>Zend_Currency</classname> のオブジェクトを、
             よりシンプルに作成できるようになりました。
             script パラメータを指定したり null に設定したりする必要がなくなったのです。
             script パラメータはオプションとなり、後で

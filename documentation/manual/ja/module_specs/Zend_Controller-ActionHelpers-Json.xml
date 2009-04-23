@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15052 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.actionhelpers.json">
     <title>JSON</title>
 
@@ -22,9 +22,9 @@
         <listitem>
             <para>
                 任意で、オプションの配列を
-                <code>Zend_Json::encode()</code> の 2 番目の引数として渡す。
+                <classname>Zend_Json::encode()</classname> の 2 番目の引数として渡す。
                 このオプションの配列で、レイアウト機能を有効にしたり
-                <code>Zend_Json_Expr</code> によるエンコードを有効にしたりする。
+                <classname>Zend_Json_Expr</classname> によるエンコードを有効にしたりする。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -101,8 +101,8 @@ $this->_helper->json($data, array('keepLayouts' => true);
         <title>Zend_Json_Expr を使用したエンコードの有効化</title>
 
         <para>
-            <code>Zend_Json::encode()</code> は、ネイティブ JSON 式を
-            <code>Zend_Json_Expr</code> オブジェクトを使用してエンコードすることができます。
+            <classname>Zend_Json::encode()</classname> は、ネイティブ JSON 式を
+            <classname>Zend_Json_Expr</classname> オブジェクトを使用してエンコードすることができます。
             このオプションはデフォルトでは無効になっています。
             有効にするには、<code>enableJsonExprFinder</code>
             オプションに <code>true</code> を設定します。
@@ -115,7 +115,7 @@ $this->_helper->json($data, array('enableJsonExprFinder' => true);
         <para>
             これを行いたい場合は、2 番目の引数に必ず配列を渡さなければなりません。
             また、たとえば <code>keepLayouts</code> のような他のオプションと組み合わせることもできます。
-            これらすべてのオプションが <code>Zend_Json::encode()</code> に渡されます。
+            これらすべてのオプションが <classname>Zend_Json::encode()</classname> に渡されます。
         </para>
 
         <programlisting role="php"><![CDATA[

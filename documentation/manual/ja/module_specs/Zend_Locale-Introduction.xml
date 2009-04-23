@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
 
     <para>
-        <code>Zend_Locale</code> は、
+        <classname>Zend_Locale</classname> は、
         "ひとつのアプリケーションを世界中で使用するにはどうしたらいいでしょう?"
         という質問に対するフレームワーク側からの回答です。たいていの人は
         "かんたんじゃん。出力内容をいくつかの言語に翻訳すればいいんだよ。"
@@ -30,9 +30,9 @@
         記号、並び順など) が該当します。
         <code>L10n</code> と <code>I18n</code> は、お互い補完しあうものです。
         Zend Framework では、いくつかのコンポーネントを組み合わせることで
-        これらのサポートを提供しています。たとえば <code>Zend_Locale</code>、<code>Zend_Date</code>、
-        <code>Zend_Measure</code>、<code>Zend_Translate</code>、<code>Zend_Currency</code>
-        そして <code>Zend_TimeSync</code> といったコンポーネントがあります。
+        これらのサポートを提供しています。たとえば <classname>Zend_Locale</code>、<code>Zend_Date</classname>、
+        <classname>Zend_Measure</code>、<code>Zend_Translate</code>、<code>Zend_Currency</classname>
+        そして <classname>Zend_TimeSync</classname> といったコンポーネントがあります。
     </para>
 
     <tip>
@@ -45,8 +45,8 @@
             スクリプトで <code>setlocale()</code> を使用すると、予期せぬ挙動を引き起こすことがあります。
         </para>
         <para>
-            <code>Zend_Locale</code> にはこのような制限はありません。なぜなら
-            <code>Zend_Locale</code> は PHP の <code>setlocale()</code>
+            <classname>Zend_Locale</classname> にはこのような制限はありません。なぜなら
+            <classname>Zend_Locale</code> は PHP の <code>setlocale()</classname>
             を使用しているわけではないからです。
         </para>
     </tip>
@@ -65,39 +65,39 @@
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <code>Zend_Locale</code> -
+                    <classname>Zend_Locale</classname> -
                     他の ZF コンポーネントにおける地域化サポートで対応しているロケールのバックエンドとなります。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Translate</code> - 文字列を翻訳します。
+                    <classname>Zend_Translate</classname> - 文字列を翻訳します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Date</code> - 日付や時刻を地域化します。
+                    <classname>Zend_Date</classname> - 日付や時刻を地域化します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Calendar</code> -
+                    <classname>Zend_Calendar</classname> -
                     カレンダーを地域化します (グレゴリオ暦以外の暦もサポートしています)。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Currency</code> - 通貨を地域化します。
+                    <classname>Zend_Currency</classname> - 通貨を地域化します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Format</code> - 地域化された数値のパースおよび生成を行います。
+                    <classname>Zend_Locale_Format</classname> - 地域化された数値のパースおよび生成を行います。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Data</code> -
+                    <classname>Zend_Locale_Data</classname> -
                     国名や言語名、そして
                     <ulink url="http://unicode.org/cldr/">CLDR にあるさまざまな内容</ulink>
                     について、各地域の標準文字列を取得します。
@@ -130,7 +130,7 @@
 
         <para>
             ロケール文字列あるいはロケールを表すオブジェクトを使用して、
-            <code>Zend_Locale</code> およびそのサブクラスはユーザが希望する言語および地域を知ります。
+            <classname>Zend_Locale</classname> およびそのサブクラスはユーザが希望する言語および地域を知ります。
             この情報にもとづいて、正しい書式化や正規化、規約を適用します。
         </para>
 
@@ -154,7 +154,7 @@
                 大半の人の予想に反して、実はロケールは 2 文字とは限りません。
                 言語についても地域についても、短縮形が 2 文字にならないものがあります。
                 したがって、地域や言語の切り出しは自前では行わないようにしましょう。
-                ロケール文字列から言語や地域を切り出したい場合は <code>Zend_Locale</code> を使用しましょう。
+                ロケール文字列から言語や地域を切り出したい場合は <classname>Zend_Locale</classname> を使用しましょう。
                 自前で行ってしまうと、予期せぬ結果となってしまうことがあります。
             </para>
         </note>
@@ -239,12 +239,12 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         </example>
 
         <para>
-            <code>Zend_Locale</code> がロケールの自動選択に使用する検索アルゴリズムは、
+            <classname>Zend_Locale</classname> がロケールの自動選択に使用する検索アルゴリズムは、
             三種類の情報をもとにしています。
             <orderedlist>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::BROWSER</code> -
+                        const <classname>Zend_Locale::BROWSER</classname> -
                         ユーザのウェブブラウザは、リクエストの際に情報を送信します。これは、
                         PHP のグローバル変数 <code>HTTP_ACCEPT_LANGUAGE</code> で取得できます。
                         対応するロケールが見つからない場合は <code>ENVIRONMENT</code>
@@ -254,7 +254,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::ENVIRONMENT</code> -
+                        const <classname>Zend_Locale::ENVIRONMENT</classname> -
                         PHP は、ホストサーバのロケールを
                         <code>setlocale()</code> 関数で取得します。
                         対応するロケールが見つからない場合は <code>FRAMEWORK</code> による検索を行い、
@@ -263,7 +263,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::FRAMEWORK</code> -
+                        const <classname>Zend_Locale::FRAMEWORK</classname> -
                         Zend Framework がコンポーネントのデフォルトを指定できる仕組みが定まったら
                         (予定されていますが、現在はまだありません)、
                         この定数を使用することでデフォルト設定を選択できるようになります。
@@ -283,7 +283,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         <title>自動ロケールの使用法</title>
 
         <para>
-            <code>Zend_Locale</code> では、さらに 3 つのロケールを用意しています。
+            <classname>Zend_Locale</classname> では、さらに 3 つのロケールを用意しています。
             これらのロケールは、どこか特定の言語や地域を表すものではありません。
             これらは "自動" ロケール、つまり
             <code>getDefault()</code> メソッドと同じような働きをするものです。
@@ -299,14 +299,14 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
             <orderedlist>
                 <listitem>
                     <para>
-                        <code>'browser'</code> - <code>Zend_Locale</code>
+                        <code>'browser'</code> - <classname>Zend_Locale</classname>
                         は、ユーザが使用するウェブブラウザが提供する情報を使用します。
                         これは、PHP のグローバル変数 <code>HTTP_ACCEPT_LANGUAGE</code>
                         で取得します。
                     </para>
                     <para>
                         ブラウザが複数のロケールを指定している場合は、
-                        <code>Zend_Locale</code> は最初に見つけたロケールを使用します。
+                        <classname>Zend_Locale</classname> は最初に見つけたロケールを使用します。
                         ブラウザがロケールを指定していなかったり、
                         あるいはコマンドラインからスクリプトを実行したりした場合は、
                         代わりに自動ロケール <code>'environment'</code>
@@ -315,13 +315,13 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'environment'</code> - <code>Zend_Locale</code> は、
+                        <code>'environment'</code> - <classname>Zend_Locale</classname> は、
                         サーバが提供する情報を使用します。これは、PHP の内部関数
                         <code>setlocale()</code> で取得します。
                     </para>
                     <para>
                         複数のロケールを指定している場合は、
-                        <code>Zend_Locale</code> は最初に見つけたロケールを使用します。
+                        <classname>Zend_Locale</classname> は最初に見つけたロケールを使用します。
                         サーバがロケールを指定していない場合は、
                         代わりに自動ロケール <code>'browser'</code>
                         を使用してその結果を返します。
@@ -329,7 +329,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'auto'</code> - <code>Zend_Locale</code> は、
+                        <code>'auto'</code> - <classname>Zend_Locale</classname> は、
                         可能な限りの方法でロケールを検出しようとします。
                         まず最初にユーザが指定するロケールを探し、
                         それに失敗するとホストのロケールを探します。
@@ -370,7 +370,7 @@ $date = new Zend_Date('auto');
         </para>
 
         <para>
-            このような場合は、<code>Zend_Locale</code>
+            このような場合は、<classname>Zend_Locale</classname>
             は通常は例外をスローして自動検出に失敗したことを示します。
             このような状況への対応方法は二通りあります。
             新たなロケールを手動で設定するか、あるいはデフォルトのロケールを定義するかです。
@@ -393,7 +393,7 @@ $date = new Zend_Date($locale);
         </example>
 
         <para>
-            この方法には大きな問題点があります。<code>Zend_Locale</code>
+            この方法には大きな問題点があります。<classname>Zend_Locale</classname>
             を使用するすべてのクラス内で、ロケールオブジェクトを設定することになるのです。
             複数のクラスを使用している場合など、これはとても面倒です。
         </para>
@@ -402,7 +402,7 @@ $date = new Zend_Date($locale);
             Zend Framework リリース 1.5 以降では、もっとうまいやりかたが用意されています。
             デフォルトのロケールを、静的メソッド <code>setDefault()</code> で設定できるのです。
             もちろん、未知のロケールや不完全なロケールが指定された場合も例外をスローします。
-            <code>setDefault()</code> は、<code>Zend_Locale</code>
+            <code>setDefault()</code> は、<classname>Zend_Locale</classname>
             を使用するクラスのインスタンスを作成する前に最初にコールする必要があります。
             詳細は、次の例を参照ください。
         </para>
@@ -432,9 +432,9 @@ $date = new Zend_Date();
         <title>ZF のロケール対応のクラス</title>
 
         <para>
-            ZF では、ロケール対応のクラスは <code>Zend_Locale</code>
+            ZF では、ロケール対応のクラスは <classname>Zend_Locale</classname>
             を使用しています。そして、上で説明したように自動的にロケールを選択します。
-            たとえば、ZF のウェブアプリケーションで <code>Zend_Date</code>
+            たとえば、ZF のウェブアプリケーションで <classname>Zend_Date</classname>
             を使用して日付を作成すると、何もロケールを指定しなくても
             ユーザのウェブブラウザの設定からロケール情報を取得してそれを使用します。
         </para>
@@ -491,7 +491,7 @@ $temp = new Zend_Measure_Temperature('100,10',
 
         <para>
             Zend Framework ではアプリケーション単位でのロケールの使用も可能です。
-            そのためには、<code>Zend_Locale</code> のインスタンスをレジストリに
+            そのためには、<classname>Zend_Locale</classname> のインスタンスをレジストリに
             'Zend_Locale' というキーで登録します。すると、Zend Framework
             のロケール対応のクラスすべてがこのインスタンスを使うようになります。
             このようにして一度レジストリにロケールを設定してしまえば、
@@ -552,8 +552,8 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
         </example>
 
         <para>
-            ロケールの標準の定義を使用する場合は、オプション <code>Zend_Locale_Format::STANDARD</code>
-            を指定します。<code>date_format</code> に <code>Zend_Locale_Format::STANDARD</code> を設定すると、
+            ロケールの標準の定義を使用する場合は、オプション <classname>Zend_Locale_Format::STANDARD</classname>
+            を指定します。<code>date_format</code> に <classname>Zend_Locale_Format::STANDARD</classname> を設定すると、
             実際に設定されているロケールの標準定義を使用します。
             これを number_format に設定すると、このロケールの標準数値書式を使用します。
             また、locale に設定すると、この環境あるいはブラウザの標準のロケールを使用します。
@@ -581,16 +581,16 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title><code>Zend_Locale</code> とそのサブクラスの高速化</title>
+        <title><classname>Zend_Locale</classname> とそのサブクラスの高速化</title>
 
         <para>
-            <code>Zend_Locale</code> およびそのサブクラスを高速化するには、
-            <code>Zend_Cache</code> を使用します。<code>Zend_Locale</code>
-            を使用している場合は、静的メソッド <code>Zend_Locale::setCache($cache)</code>
-            を使用します。<code>Zend_Locale_Format</code> を高速化するには、
+            <classname>Zend_Locale</classname> およびそのサブクラスを高速化するには、
+            <classname>Zend_Cache</code> を使用します。<code>Zend_Locale</classname>
+            を使用している場合は、静的メソッド <classname>Zend_Locale::setCache($cache)</classname>
+            を使用します。<classname>Zend_Locale_Format</classname> を高速化するには、
             オプション <code>cache</code> を
-            <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code>
-            のように指定します。両方のクラスを使用している場合は <code>Zend_Locale</code>
+            <classname>Zend_Locale_Format::setOptions(array('cache' => $adapter));</classname>
+            のように指定します。両方のクラスを使用している場合は <classname>Zend_Locale</classname>
             にのみキャッシュを設定します。そうしないと、
             後から設定したキャッシュがそれまでの内容を上書きしてしまうことになります。
             利便性を考慮して、静的メソッド

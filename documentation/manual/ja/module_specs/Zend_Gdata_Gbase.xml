@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base の使用法</title>
     <para>
@@ -42,7 +42,7 @@
         <para>
             トランザクションを実行するには、まずこの接続を作成する必要があります。
             Base サーバへの接続を作成するには、次の二段階の手順を踏みます。
-            まずは HTTP クライアントを作成し、それから <code>Zend_Gdata_Gbase</code>
+            まずは HTTP クライアントを作成し、それから <classname>Zend_Gdata_Gbase</classname>
             サービスのインスタンスをそのクライアントにバインドします。
         </para>
         <sect3 id="zend.gdata.gbase.connect.authentication">
@@ -75,7 +75,7 @@
                 </listitem>
             </itemizedlist>
             <para>
-                <code>Zend_Gdata</code> ライブラリは、これら三種類の認証方式にすべて対応しています。
+                <classname>Zend_Gdata</classname> ライブラリは、これら三種類の認証方式にすべて対応しています。
                 本章のこれ以降では、読者が認証方式についてよく知っていること、
                 そして認証済み接続の作成方法を知っていることを前提として説明を進めます。
                 詳細な情報は、<xref linkend="zend.gdata.introduction.authentication" />
@@ -89,19 +89,19 @@
             <title>サービスのインスタンスの作成</title>
             <para>
                 Google Base に対する作業を行うために
-                <code>Zend_Gdata_Gbase</code> サービスクラスが用意されています。
+                <classname>Zend_Gdata_Gbase</classname> サービスクラスが用意されています。
                 このクラスは Google Data および Atom Publishing Protocol
                 に対する共通のインターフェイスを提供し、
                 Base サーバとの間のリクエストのやりとりを支援します。
             </para>
             <para>
                 使用する認証方式が決まったら、次に行うのは
-                <code>Zend_Gdata_Gbase</code> のインスタンスを作成することです。
-                このクラスの引数には <code>Zend_Http_Client</code>
+                <classname>Zend_Gdata_Gbase</classname> のインスタンスを作成することです。
+                このクラスの引数には <classname>Zend_Http_Client</classname>
                 のインスタンスを指定します。これが AuthSub および ClientAuth
                 認証へのインターフェイスとなる認証済みの HTTP クライアントです。
                 引数を省略した場合は、未認証の
-                <code>Zend_Http_Client</code> のインスタンスを自動的に作成します。
+                <classname>Zend_Http_Client</classname> のインスタンスを自動的に作成します。
             </para>
             <para>
                 以下の例は、ClientAuth 認証を使用した Base サービスクラスを作成するものです。
@@ -235,8 +235,8 @@ $service = new Zend_Gdata_Gbase();
             <para>
                 Base API でデータを取得する際には、特別な構造のクエリ URL
                 を使用してどんなイベントがほしいのかを指定します。
-                <code>Zend_Gdata_Gbase_ItemQuery</code> および
-                <code>Zend_Gdata_Gbase_SnippetQuery</code>
+                <classname>Zend_Gdata_Gbase_ItemQuery</classname> および
+                <classname>Zend_Gdata_Gbase_SnippetQuery</classname>
                 クラスのおかげで、この作業が簡単にできるようになります。
                 パラメータを指定すると、これらのクラスがクエリ URL を作成してくれるのです。
             </para>
@@ -426,9 +426,9 @@ $entry->save($dryRun);
 ]]>
             </programlisting>
             <para>
-                変更した後は、<code>Zend_Gdata_Gbase_ItemEntry</code>
+                変更した後は、<classname>Zend_Gdata_Gbase_ItemEntry</classname>
                 オブジェクトの <code>save($dryRun)</code> メソッドを実行するか
-                <code>Zend_Gdata_Gbase</code> オブジェクトの
+                <classname>Zend_Gdata_Gbase</classname> オブジェクトの
                 <code>updateGbaseItem($entry, $dryRun)</code>
                 メソッドをコールしてその内容を保存する必要があります。
             </para>
@@ -445,7 +445,7 @@ $service->deleteGbaseItem($entry, $dryRun);
 ]]>
             </programlisting>
             <para>
-                あるいは、<code>Zend_Gdata_Gbase_ItemEntry</code> オブジェクトの
+                あるいは、<classname>Zend_Gdata_Gbase_ItemEntry</classname> オブジェクトの
                 <code>delete()</code> を実行することもできます。
             </para>
             <programlisting role="php"><![CDATA[

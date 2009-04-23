@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.uri.chapter">
   <title>Zend_Uri</title>
 
@@ -8,24 +8,24 @@
     <title>概要</title>
 
     <para>
-      <code>Zend_Uri</code> は、
+      <classname>Zend_Uri</classname> は、
       <ulink url="http://www.w3.org/Addressing/">Uniform Resource
       Identifiers</ulink> (URIs) の操作および検証を行うためのコンポーネントです。
-      <code>Zend_Uri</code> の本来の目的は
-      <code>Zend_Http_Client</code> のような他のコンポーネントを支援することですが、
+      <classname>Zend_Uri</classname> の本来の目的は
+      <classname>Zend_Http_Client</classname> のような他のコンポーネントを支援することですが、
       単体で使用しても便利です。
     </para>
 
     <para>
       URI の最初は常にスキームから始まり、その後にコロンが続きます。
       スキームにはさまざまなものがあります。
-      <code>Zend_Uri</code> クラスは、
+      <classname>Zend_Uri</classname> クラスは、
       各スキームに特化した自身のサブクラスを返すファクトリメソッドを提供しています。
-      サブクラスの名前は <code>Zend_Uri_&lt;scheme&gt;</code>
+      サブクラスの名前は <classname>Zend_Uri_&lt;scheme&gt;</classname>
       となり、<code>&lt;scheme&gt;</code> の部分には
       スキーム名の最初の文字だけを大文字にしたものがあてはまります。
       この規則にはひとつ例外があり、HTTPS スキームについては
-      <code>Zend_Uri_Http</code> で扱われます。
+      <classname>Zend_Uri_Http</classname> で扱われます。
     </para>
   </sect2>
 
@@ -33,12 +33,12 @@
     <title>新しい URI の作成</title>
 
     <para>
-      スキームのみを <code>Zend_Uri::factory()</code> に渡すと、
-      <code>Zend_Uri</code> は新しい URI をゼロから作成します。
+      スキームのみを <classname>Zend_Uri::factory()</classname> に渡すと、
+      <classname>Zend_Uri</classname> は新しい URI をゼロから作成します。
     </para>
 
     <example id="zend.uri.creation.example-1">
-      <title><code>Zend_Uri::factory()</code> による新しい URI の作成</title>
+      <title><classname>Zend_Uri::factory()</classname> による新しい URI の作成</title>
 
       <programlisting role="php"><![CDATA[
 // 何もないところから新しい URI を作成するには、スキームのみを渡します
@@ -51,16 +51,16 @@ $uri = Zend_Uri::factory('http');
 
     <para>
       新しい URI を作成するには、スキームのみを
-      <code>Zend_Uri::factory()</code> に渡します
+      <classname>Zend_Uri::factory()</classname> に渡します
       <footnote><para>現時点では、
       Zend_Uri がサポートしているスキームは HTTP および HTTPS だけです。</para></footnote>。
       サポートしていないスキームが渡された場合は、
-      <code>Zend_Uri_Exception</code> がスローされます。
+      <classname>Zend_Uri_Exception</classname> がスローされます。
     </para>
 
     <para>
       渡されたスキームあるいは URI をサポートしている場合は、
-      <code>Zend_Uri::factory()</code> は自分自身のサブクラスを返します。
+      <classname>Zend_Uri::factory()</classname> は自分自身のサブクラスを返します。
       これは、指定したスキームに特化したものとなります。
     </para>
   </sect2>
@@ -70,11 +70,11 @@ $uri = Zend_Uri::factory('http');
 
     <para>
       既存の URI を操作するには、完全な URI を
-      <code>Zend_Uri::factory()</code> に渡します。
+      <classname>Zend_Uri::factory()</classname> に渡します。
     </para>
 
     <example id="zend.uri.manipulation.example-1">
-      <title><code>Zend_Uri::factory()</code> による既存の URI の操作</title>
+      <title><classname>Zend_Uri::factory()</classname> による既存の URI の操作</title>
 
       <programlisting role="php"><![CDATA[
 // 既存の URI を操作するには、それを渡します
@@ -88,8 +88,8 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     <para>
       このとき、URI のパースと検証が行われます。
       もし妥当な形式でなかった場合は、そこで
-      <code>Zend_Uri_Exception</code> がスローされます。それ以外の場合は
-      <code>Zend_Uri::factory()</code> は自分自身のサブクラスを返します。
+      <classname>Zend_Uri_Exception</classname> がスローされます。それ以外の場合は
+      <classname>Zend_Uri::factory()</classname> は自分自身のサブクラスを返します。
       これは、操作するスキームに特化したものとなります。
     </para>
   </sect2>
@@ -98,12 +98,12 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     <title>URI の検証</title>
 
     <para>
-      <code>Zend_Uri::check()</code> 関数を使用すると、
+      <classname>Zend_Uri::check()</classname> 関数を使用すると、
       既存の URI の検証のみを行うことができます。
     </para>
 
     <example id="zend.uri.validation.example-1">
-      <title><code>Zend_Uri::check()</code> による URI の検証</title>
+      <title><classname>Zend_Uri::check()</classname> による URI の検証</title>
 
       <programlisting role="php"><![CDATA[
 // 指定した URI が正しい形式かどうかを調べます
@@ -115,8 +115,8 @@ $valid = Zend_Uri::check('http://uri.in.question');
     </example>
 
     <para>
-      <code>Zend_Uri::check()</code> は boolean 値を返します。
-      これは <code>Zend_Uri::factory()</code>
+      <classname>Zend_Uri::check()</classname> は boolean 値を返します。
+      これは <classname>Zend_Uri::factory()</classname>
       を使用して例外を処理するよりも便利です。
     </para>
 
@@ -155,7 +155,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
         </example>
 
         <note>
-            <para><code>Zend_Uri::setConfig()</code> は、全体の設定オプションを変更します。
+            <para><classname>Zend_Uri::setConfig()</classname> は、全体の設定オプションを変更します。
             そのため、上の例のように最後は 'allow_unwise' を 'false'
             に戻すことを推奨します。unwise な文字を常に許可したいという場合は別です。</para>
         </note>
@@ -166,8 +166,8 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
     <title>共通のインスタンスメソッド</title>
 
     <para>
-      すべての <code>Zend_Uri</code> のサブクラス (例
-      <code>Zend_Uri_Http</code>) のインスタンスには、
+      すべての <classname>Zend_Uri</classname> のサブクラス (例
+      <classname>Zend_Uri_Http</classname>) のインスタンスには、
       URI 操作のために便利なインスタンスメソッドがいくつか提供されています。
     </para>
 
@@ -181,7 +181,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
       </para>
 
       <example id="zend.uri.instance-methods.getscheme.example-1">
-        <title><code>Zend_Uri_*</code> オブジェクトからのスキームの取得</title>
+        <title><classname>Zend_Uri_*</classname> オブジェクトからのスキームの取得</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
@@ -202,7 +202,7 @@ $scheme = $uri->getScheme();  // "http"
       <title>URI 全体の取得</title>
 
       <example id="zend.uri.instance-methods.geturi.example-1">
-        <title><code>Zend_Uri_*</code> オブジェクトからの URI 全体の取得</title>
+        <title><classname>Zend_Uri_*</classname> オブジェクトからの URI 全体の取得</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
@@ -221,16 +221,16 @@ echo $uri->getUri();  // "http://www.zend.com"
       <title>URI の検証</title>
 
       <para>
-        <code>Zend_Uri::factory()</code> は渡された URI を常に検証しており、
-        渡された URI が無効な場合は <code>Zend_Uri</code>
+        <classname>Zend_Uri::factory()</classname> は渡された URI を常に検証しており、
+        渡された URI が無効な場合は <classname>Zend_Uri</classname>
         のサブクラスのインスタンスを作成しません。しかし、いったん
-        <code>Zend_Uri</code> のサブクラスのインスタンスを
+        <classname>Zend_Uri</classname> のサブクラスのインスタンスを
         (新規に、あるいは既存のものから) 作成し、
         それを操作した後でもまだ妥当な形式であるかどうかを調べることもできます。
       </para>
 
       <example id="zend.uri.instance-methods.valid.example-1">
-        <title><code>Zend_Uri_*</code> オブジェクトの検証</title>
+        <title><classname>Zend_Uri_*</classname> オブジェクトの検証</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');

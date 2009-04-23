@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>導入</title>
 
     <para>
-        <code>Zend_TimeSync</code> は、インターネット時刻
+        <classname>Zend_TimeSync</classname> は、インターネット時刻
         あるいはネットワーク時刻をタイムサーバから取得するものです。
         プロトコルとして <emphasis role="strong">NTP</emphasis>
         あるいは <emphasis role="strong">SNTP</emphasis> を使用します。
-        <code>Zend_TimeSync</code> を使用すれば、
+        <classname>Zend_TimeSync</classname> を使用すれば、
         Zend Framework が稼動しているサーバの時刻設定を気にせずに動作させられるようになります。
     </para>
 
     <para>
         サーバの実際の時刻とは独立した立場でいるために、
-        <code>Zend_TimeSync</code> は内部的に
+        <classname>Zend_TimeSync</classname> は内部的に
         NTP や SNTP 経由の実際の時刻とサーバの時刻との差を考慮して動作します。
     </para>
 
@@ -25,7 +25,7 @@
         <title>背景</title>
 
         <para>
-            <code>Zend_TimeSync</code> はサーバの時刻を変更することはできません。
+            <classname>Zend_TimeSync</classname> はサーバの時刻を変更することはできません。
             しかし、実際の時刻とサーバの時刻との差を表す
             <link linkend="zend.date.introduction">Zend_Date</link> のインスタンスを返します。
         </para>
@@ -34,23 +34,23 @@
 
     <sect2 id="zend.timesync.introduction.why">
 
-        <title>なぜ <code>Zend_TimeSync</code> ?</title>
+        <title>なぜ <classname>Zend_TimeSync</classname> ?</title>
 
         <para>
-            いったいなぜ <code>Zend_TimeSync</code> を使うのでしょう?
+            いったいなぜ <classname>Zend_TimeSync</classname> を使うのでしょう?
         </para>
 
         <para>
             複数のサーバで運用されている環境では、通常はタイムサーバを用いて
             各サーバの時刻を同期させていることでしょう。
             そのようなごく普通の環境なら、必ずしも
-            <code>Zend_TimeSync</code> を使う必要はありません。
+            <classname>Zend_TimeSync</classname> を使う必要はありません。
             しかし、タイムサーバを使用できない環境であったり
             そのようなサービスを実行する権限がなかったりする場合などには便利です。
         </para>
 
         <para>
-            <code>Zend_TimeSync</code> の使用に適した例をいくつかあげてみます。
+            <classname>Zend_TimeSync</classname> の使用に適した例をいくつかあげてみます。
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -60,7 +60,7 @@
                 </para>
                 <para>
                     アプリケーションを動作させているサーバ上でタイムサービスが稼動していない場合は、
-                    アプリケーション内で <code>Zend_TimeSync</code> を実装するとよいでしょう。
+                    アプリケーション内で <classname>Zend_TimeSync</classname> を実装するとよいでしょう。
                 </para>
             </listitem>
             <listitem>
@@ -92,13 +92,13 @@
                 </para>
                 <para>
                     バッチファイルやコマンドラインアプリケーションで
-                    タイムサービスを使用したい場合、<code>Zend_TimeSync</code> が使えるでしょう。
+                    タイムサービスを使用したい場合、<classname>Zend_TimeSync</classname> が使えるでしょう。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            これらのすべての場合について <code>Zend_TimeSync</code> は最適なソリューションであり、
+            これらのすべての場合について <classname>Zend_TimeSync</classname> は最適なソリューションであり、
             サーバ上で何らかのサービスを実行することができない場合にも使用できます。
         </para>
 
@@ -137,10 +137,10 @@
         <title>問題のある使用法</title>
 
         <para>
-            <code>Zend_TimeSync</code> を使用する際は、
+            <classname>Zend_TimeSync</classname> を使用する際は、
             時刻同期の仕組みやウェブ自体の仕組みを考慮するようにしましょう。
             問題を回避する方法についてここで説明するので、
-            <code>Zend_TimeSync</code>
+            <classname>Zend_TimeSync</classname>
             を使う前に熟読しておきましょう。
         </para>
 

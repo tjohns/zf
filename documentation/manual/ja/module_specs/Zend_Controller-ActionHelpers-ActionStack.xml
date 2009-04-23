@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -31,7 +31,7 @@
         <para>
             単純にアクションとコントローラそしてモジュール
             (およびオプションでリクエストパラメータ)
-            を指定して <code>Zend_Controller_Action::_forward()</code>
+            を指定して <classname>Zend_Controller_Action::_forward()</classname>
             をコールするのが一番シンプルな方法です。
         </para>
 

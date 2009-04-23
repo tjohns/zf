@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.feed.consuming-atom-single-entry">
     <title>単一の Atom エントリの処理</title>
 
@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        単一のエントリを読み込む場合にも <code>Zend_Feed_Atom</code>
+        単一のエントリを読み込む場合にも <classname>Zend_Feed_Atom</classname>
         オブジェクトを使用しますが、この場合は「無名 (anonymous)」
         フィードが自動的に作成され、エントリがその中に含まれる形式になります。
     </para>

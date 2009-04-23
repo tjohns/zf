@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.feed.custom-feed">
     <title>独自のフィードクラスおよびエントリクラス</title>
 
     <para>
         独自のフォーマットを提供したい、
         あるいは要素が自動的に所定の名前空間に配置されるなどの素敵な機能を追加したい、
-        といった場合は <code>Zend_Feed</code> クラスを拡張して対応します。
+        といった場合は <classname>Zend_Feed</classname> クラスを拡張して対応します。
     </para>
 
     <para>

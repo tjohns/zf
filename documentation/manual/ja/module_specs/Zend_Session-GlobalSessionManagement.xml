@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.session.global_session_management">
 
     <title>グローバルセッションの管理</title>
@@ -11,10 +11,10 @@
         Zend_Session を使用します。たとえば
         <ulink url="http://www.php.net/session#session.configuration">
         ext/session のオプション</ulink>
-        を設定するには、<code>Zend_Session::setOptions()</code> を使用します。
+        を設定するには、<classname>Zend_Session::setOptions()</classname> を使用します。
         また、安全な <code>save_path</code> を使わなかったり ext/session
         で一意なクッキー名を使用しなかったりすると、
-        <code>Zend_Session::setOptions()</code> はセキュリティの問題を引き起こします。
+        <classname>Zend_Session::setOptions()</classname> はセキュリティの問題を引き起こします。
     </para>
 
     <sect2 id="zend.session.global_session_management.configuration_options">
@@ -23,17 +23,17 @@
 
         <para>
             セッション名前空間が要求されると、事前に
-            <link linkend="zend.session.advanced_usage.starting_a_session"><code>Zend_Session::start()</code></link>
+            <link linkend="zend.session.advanced_usage.starting_a_session"><classname>Zend_Session::start()</classname></link>
             で開始されていない場合には Zend_Session が自動的にセッションを開始します。
             もととなる PHP セッションの設定は Zend_Session
             のデフォルトを使用します。これを変更するには、事前に
-            <code>Zend_Session::setOptions()</code>
+            <classname>Zend_Session::setOptions()</classname>
             を使用して設定しておきます。
         </para>
 
         <para>
             オプションを指定するには、そのベース名 ("<code>session.</code>" の後に続く部分)
-            を <code>Zend_Session::setOptions()</code> に渡す配列のキーとします。
+            を <classname>Zend_Session::setOptions()</classname> に渡す配列のキーとします。
             配列の値が、そのセッションオプションの値として用いられます。
             何もオプションを設定しなければ、Zend_Session はまずデフォルトオプションを使用し、
             それがなければ php.ini の設定を使用します。
@@ -48,7 +48,7 @@
 
             <para>
                 このコンポーネントを
-                <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
+                <link linkend="zend.config.adapters.ini"><classname>Zend_Config_Ini</classname></link>
                 で設定するには、まず設定オプションを INI ファイルに追加します。
             </para>
 
@@ -98,7 +98,7 @@ remember_me_seconds = 864000
 
             <para>
                 次に、この設定ファイルを読み込んで、その内容を配列として
-                <code>Zend_Session::setOptions()</code> に渡します。
+                <classname>Zend_Session::setOptions()</classname> に渡します。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -119,7 +119,7 @@ Zend_Session::setOptions($config->toArray());
                     <para>
                         boolean <code>strict</code> -
                         <code>new Zend_Session_Namespace()</code> を使用する際に、
-                        <code>Zend_Session</code> が自動的に開始しないようにします。
+                        <classname>Zend_Session</classname> が自動的に開始しないようにします。
                     </para>
                 </listitem>
                 <listitem>
@@ -136,7 +136,7 @@ Zend_Session::setOptions($config->toArray());
                         <emphasis role="strong">絶対パス</emphasis> を指定する必要があります。
                         このディレクトリは、PHP のプロセスから読み書き可能でなければなりません。
                         書き込み可能なパスを指定しなかった場合は、
-                        <code>Zend_Session</code> の開始時 (<code>start()</code> がコールされた場合)
+                        <classname>Zend_Session</code> の開始時 (<code>start()</classname> がコールされた場合)
                         に例外をスローします。
                     </para>
                     <note>
@@ -335,7 +335,7 @@ Zend_Session::setOptions($config->toArray());
 
         <para>
             いつ regenerateId() を使うのか?:
-            <code>Zend_Session::regenerateId()</code> を Zend Framework
+            <classname>Zend_Session::regenerateId()</classname> を Zend Framework
             の起動ファイルに追加するのが、もっとも安全かつ確実に
             ユーザエージェントのクッキーにあるセッション ID を再生成する方法です。
             セッション ID をいつ再生成するのかについての条件判断がない場合は、
@@ -392,7 +392,7 @@ Zend_Session::setOptions($config->toArray());
 
             <para>
                 それ単体では、セッションを最初に使用する際に
-                <code>Zend_Session::regenerateId()</code>
+                <classname>Zend_Session::regenerateId()</classname>
                 をコールしてもセッション固定化攻撃は防げません。そのセッションが、
                 攻撃者によって偽装されたものであるかどうかを判別できる必要があります。
                 先ほど説明したこととは矛盾しているように感じられるかもしれません。
@@ -473,11 +473,11 @@ if (!isset($defaultNamespace->initialized)) {
             つまりユーザがウェブブラウザと閉じたときです。
             しかし、アプリケーション側で、ブラウザを閉じた後でもユーザセッションを有効にしておくこともできます。
             この機能を実現するには、持続クッキーを使用します。
-            セッションの開始前に <code>Zend_Session::rememberMe()</code>
+            セッションの開始前に <classname>Zend_Session::rememberMe()</classname>
             を使用すると、セッションクッキーの有効期限を制御することができます。
             秒数を指定しなかった場合は、セッションクッキーの持続期間はデフォルトの
             <code>remember_me_seconds</code> となります。このデフォルト値は
-            <code>Zend_Session::setOptions()</code> で設定します。
+            <classname>Zend_Session::setOptions()</classname> で設定します。
             セッションの固定化/のっとり を防ぐには、
             ユーザがアプリケーションの認証を通過したとき (「ログイン」フォームなどから)
             にこの関数を使用します。
@@ -505,7 +505,7 @@ if (!isset($defaultNamespace->initialized)) {
             このメソッドを使用して、現在のユーザエージェント/リクエスト
             に対応するセッションが既に存在するかどうかを調べます。
             これはセッションを開始する前に使用します。その他の
-            <code>Zend_Session</code> および <code>Zend_Session_Namespace</code>
+            <classname>Zend_Session</code> および <code>Zend_Session_Namespace</classname>
             のメソッドとは独立しています。
         </para>
 
@@ -516,18 +516,18 @@ if (!isset($defaultNamespace->initialized)) {
         <title><code>destroy(bool $remove_cookie = true, bool $readonly = true)</code></title>
 
         <para>
-            <code>Zend_Session::destroy()</code> は、
+            <classname>Zend_Session::destroy()</classname> は、
             現在のセッションに関連付けられているすべての持続的データを破棄します。
             しかし、PHP の変数の値は何の影響も受けません。
             したがって、名前空間つきのセッション
-            (<code>Zend_Session_Namespace</code> のインスタンス)
+            (<classname>Zend_Session_Namespace</classname> のインスタンス)
             は読み込み可能な状態のままです。
             「ログアウト」を行うには、オプションのパラメータを <code>true</code>
             (デフォルト) に設定し、
             ユーザエージェントのセッション ID クッキーを削除します。
             オプションのパラメータ <code>$readonly</code>
-            を使用すると、<code>Zend_Session_Namespace</code> のインスタンスを作成したり
-            <code>Zend_Session</code> のメソッドからセッションデータへ書き込んだりすることができなくなります。
+            を使用すると、<classname>Zend_Session_Namespace</classname> のインスタンスを作成したり
+            <classname>Zend_Session</classname> のメソッドからセッションデータへ書き込んだりすることができなくなります。
         </para>
 
         <para>
@@ -535,7 +535,7 @@ if (!isset($defaultNamespace->initialized)) {
             というエラーが出た場合は、最初の引数として <code>true</code>
             (セッションクッキーを削除) を使用しないようにするか、あるいは
             <xref linkend="zend.session.global_session_management.headers_sent" /> を参照ください。
-            つまり、<code>Zend_Session::destroy(true)</code> をコールするなら
+            つまり、<classname>Zend_Session::destroy(true)</classname> をコールするなら
             PHP が HTTP ヘッダを送信する前にするか、
             あるいは出力バッファリングを有効にしなければなりません。
             また、出力データの大きさが、設定したバッファサイズをこえてはいけません。
@@ -562,8 +562,8 @@ if (!isset($defaultNamespace->initialized)) {
             セッションデータへの書き込みをできないようにするだけのものです。
             その他どのような機能を実装するかについては、フィードバックを受付中です。
             潜在的な使用法としては、一時的に
-            <code>Zend_Session_Namespace</code> インスタンスや
-            <code>Zend_Session</code> のメソッドから
+            <classname>Zend_Session_Namespace</classname> インスタンスや
+            <classname>Zend_Session</classname> のメソッドから
             セッションデータに書き込めなくすることがあります。
             この場合、実行はビュー関連のコードに移譲されます。
             これらのインスタンスやメソッドからの書き込みを含むアクションは、
@@ -581,7 +581,7 @@ if (!isset($defaultNamespace->initialized)) {
             <code>$_SESSION</code> をバックエンドから切り離します。
             これにより、このリクエストにおける内部データの変換が終了します。
             オプションのパラメータ <code>$readonly</code> を使用すると、書き込み権限をなくします
-            (<code>Zend_Session</code> あるいは <code>Zend_Session_Namespace</code>
+            (<classname>Zend_Session</code> あるいは <code>Zend_Session_Namespace</classname>
             のメソッドから書き込みを試みると、例外をスローします)。
         </para>
 
@@ -639,8 +639,8 @@ if (!isset($defaultNamespace->initialized)) {
         <note>
             <title>例外/エラー</title>
             <para>
-                <code>Zend_Session</code> が読み取り可能に設定されていない場合
-                (<code>Zend_Session</code> が開始される前など)
+                <classname>Zend_Session</classname> が読み取り可能に設定されていない場合
+                (<classname>Zend_Session</classname> が開始される前など)
                 に例外がスローされます。
             </para>
         </note>
@@ -652,7 +652,7 @@ if (!isset($defaultNamespace->initialized)) {
         <title><code>namespaceUnset($namespace)</code></title>
 
         <para>
-            <code>Zend_Session::namespaceUnset($namespace)</code> を使用すると、
+            <classname>Zend_Session::namespaceUnset($namespace)</classname> を使用すると、
             名前空間全体およびその内容を効率的に削除することができます。
             PHP のすべての配列と同様、
             配列を含む変数を初期化しても配列の中身のオブジェクトまでは初期化されません。
@@ -682,7 +682,7 @@ if (!isset($defaultNamespace->initialized)) {
         <title><code>namespaceGet($namespace)</code></title>
 
         <para>
-            非推奨: <code>Zend_Session_Namespace</code> の <code>getIterator()</code>
+            非推奨: <classname>Zend_Session_Namespace</code> の <code>getIterator()</classname>
             を使用しましょう。このメソッドは、<code>$namespace</code>
             の内容を配列で返します。このメソッドを外部から使用し続けたいという
             論理的な理由がある場合は、メーリングリスト
@@ -694,8 +694,8 @@ if (!isset($defaultNamespace->initialized)) {
         <note>
             <title>例外/エラー</title>
             <para>
-                <code>Zend_Session</code> が読み取り可能に設定されていない場合
-                (<code>Zend_Session</code> が開始される前など)
+                <classname>Zend_Session</classname> が読み取り可能に設定されていない場合
+                (<classname>Zend_Session</classname> が開始される前など)
                 に例外がスローされます。
             </para>
         </note>
@@ -713,8 +713,8 @@ if (!isset($defaultNamespace->initialized)) {
         <note>
             <title>例外/エラー</title>
             <para>
-                <code>Zend_Session</code> が読み取り可能に設定されていない場合
-                (<code>Zend_Session</code> が開始される前など)
+                <classname>Zend_Session</classname> が読み取り可能に設定されていない場合
+                (<classname>Zend_Session</classname> が開始される前など)
                 に例外がスローされます。
             </para>
         </note>

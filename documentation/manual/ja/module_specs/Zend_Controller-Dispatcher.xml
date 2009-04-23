@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.dispatcher">
     <title>ディスパッチャ</title>
 
@@ -9,11 +9,11 @@
 
         <para>
             ディスパッチ処理は、リクエストオブジェクトである
-            <code>Zend_Controller_Request_Abstract</code> を受け取り、
+            <classname>Zend_Controller_Request_Abstract</classname> を受け取り、
             そこに含まれる情報 (モジュール名、コントローラ名、アクション名およびオプションのパラメータ)
             を展開し、コントローラのインスタンスを作成してそのコントローラのアクションをコールします。
             モジュールやコントローラ、アクションが見つからない場合は、
-            デフォルト値を使用します。<code>Zend_Controller_Dispatcher_Standard</code>
+            デフォルト値を使用します。<classname>Zend_Controller_Dispatcher_Standard</classname>
             では、コントローラとアクションのデフォルトはどちらも
             <code>index</code> で、モジュールのデフォルトは <code>default</code> です。しかし、
             <code>setDefaultController()</code> メソッドや
@@ -100,7 +100,7 @@ public function bazAction()
         <title>ディスパッチャのサブクラスの作成</title>
 
         <para>
-            <code>Zend_Controller_Front</code> は、
+            <classname>Zend_Controller_Front</classname> は、
             まず最初にルータをコールして、
             リクエスト内で最初にディスパッチできるアクションを決定します。
             その後、ディスパッチャループに入り、ディスパッチャをコールしてアクションを振り分けます。
@@ -115,7 +115,7 @@ public function bazAction()
         </para>
 
         <para>
-            <code>Zend_Controller_Dispatcher_Interface</code>
+            <classname>Zend_Controller_Dispatcher_Interface</classname>
             では次のようなメソッドを定義しています。ディスパッチャは、これを実装しなければなりません。
         </para>
 
@@ -278,9 +278,9 @@ interface Zend_Controller_Dispatcher_Interface
 
         <para>
             しかし、たいていの場合は単純に抽象クラス
-            <code>Zend_Controller_Dispatcher_Abstract</code>
+            <classname>Zend_Controller_Dispatcher_Abstract</classname>
             を継承するだけで事足りるでしょう。ここには、これらのメソッドがすでに定義されています。
-            あるいは、<code>Zend_Controller_Dispatcher_Standard</code>
+            あるいは、<classname>Zend_Controller_Dispatcher_Standard</classname>
             を継承して、標準の機能と異なる部分だけを変更するということも可能です。
         </para>
 

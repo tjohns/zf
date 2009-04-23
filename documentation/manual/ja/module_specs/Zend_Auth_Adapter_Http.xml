@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.auth.adapter.http">
 
     <title>HTTP 認証アダプタ</title>
@@ -10,7 +10,7 @@
         <title>導入</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> は、
+            <classname>Zend_Auth_Adapter_Http</classname> は、
             <ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink> や
             <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">ベーシック</ulink>、
             <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">ダイジェスト</ulink>
@@ -91,7 +91,7 @@
         <title>設定オプション</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> クラスのコンストラクタには、
+            <classname>Zend_Auth_Adapter_Http</classname> クラスのコンストラクタには、
             設定配列を渡す必要があります。使用可能なオプションはいくつかあり、
             その中には必須のものもあります。
             <table id="zend.auth.adapter.configuration_options.table">
@@ -175,8 +175,8 @@
         </para>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code>
-            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code>
+            <classname>Zend_Auth_Adapter_Http</classname>
+            <classname>Zend_Auth_Adapter_Http_Resolver_Interface</classname>
             を実装したオブジェクトを使用しています。
             このアダプタにはテキストファイル用のリゾルバクラスが含まれていますが、
             リゾルバインターフェイスを実装することで、

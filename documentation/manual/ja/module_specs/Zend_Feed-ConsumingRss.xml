@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.feed.consuming-rss">
     <title>RSS フィードの使用</title>
     <para>
         RSS フィードの読み込みは、フィードの URL を指定して
-        <code>Zend_Feed_Rss</code> のインスタンスを作成するのと同じくらい簡単です。
+        <classname>Zend_Feed_Rss</classname> のインスタンスを作成するのと同じくらい簡単です。
     </para>
     <programlisting role="php"><![CDATA[
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
@@ -13,7 +13,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     </programlisting>
     <para>
         フィードの取得時にエラーが発生した場合は
-        <code>Zend_Feed_Exception</code> がスローされます。
+        <classname>Zend_Feed_Exception</classname> がスローされます。
     </para>
 
     <para>
@@ -26,7 +26,7 @@ echo $channel->title();
     </programlisting>
     <para>
         関数の構文に注意しましょう。"getter" 方式の構文 (<code>$obj->property</code>)
-        をした場合は、<code>Zend_Feed</code> はプロパティを XML オブジェクトとして扱います。
+        をした場合は、<classname>Zend_Feed</classname> はプロパティを XML オブジェクトとして扱います。
         一方、メソッドの構文 (<code>$obj->property()</code>)
         を使用した場合は文字列として扱います。
         これにより、特定のノードを取得したあとで、さらにその子要素にもアクセスできるようになります。
@@ -48,7 +48,7 @@ echo $channel->category['domain'];
     <para>
         たいていの場合は、フィードをループさせたうえで、
         個々のエントリに対して何かをすることになるでしょう。
-        <code>Zend_Feed_Abstract</code> は PHP の <code>Iterator</code>
+        <classname>Zend_Feed_Abstract</code> は PHP の <code>Iterator</classname>
         インターフェイスを実装しているので、
         例えばチャネル内の全記事のタイトルを表示するには単にこのようにするだけです。
     </para>

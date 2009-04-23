@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.paginator.configuration">
     <title>設定</title>
 
     <para>
-        <code>Zend_Paginator</code> には設定用のメソッドがいくつか用意されています。
+        <classname>Zend_Paginator</classname> には設定用のメソッドがいくつか用意されています。
     </para>
 
     <table id="zend.paginator.configuration.table">
-        <title><code>Zend_Paginator</code> の設定用メソッド</title>
+        <title><classname>Zend_Paginator</classname> の設定用メソッド</title>
 
         <tgroup cols="2">
             <thead>

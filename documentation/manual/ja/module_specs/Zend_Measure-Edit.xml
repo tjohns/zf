@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.measure.edit">
 
     <title>計測値の操作</title>
@@ -8,7 +8,7 @@
     <para>
         入力のパースと正規化、そしてローカライズされた表記での出力により、
         さまざまなロケールのユーザがデータにアクセスできるようになります。
-        <code>Zend_Measure_*</code> コンポーネントには
+        <classname>Zend_Measure_*</classname> コンポーネントには
         それ以外にもさまざまなメソッドがあり、
         正規化されたデータを操作することができます。
     </para>

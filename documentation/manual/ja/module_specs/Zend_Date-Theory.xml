@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.date.definition.theory">
 
     <title>動作原理</title>
 
     <para>
         なぜ Zend Framework で日付や時刻を処理するクラスが
-        <code>Zend_Date</code> 以外に存在しないのでしょうか?
+        <classname>Zend_Date</classname> 以外に存在しないのでしょうか?
     </para>
 
     <para>
@@ -15,7 +15,7 @@
         しかし、Zend Framework はシンプルであることを目指しています。
         二つの異なるクラスの異なるメソッドを使用して日付と時刻をまとめるなどといったことは、
         開発者にとっては面倒なことでしょう。
-        <code>Zend_Date</code> のメソッドは、すべての要素
+        <classname>Zend_Date</classname> のメソッドは、すべての要素
         (era, year, month, day, hour, minute, second, timezone)
         を含んでいるわけではないあいまいな日付でも動作するので、
         開発者は柔軟かつ簡単に同じクラスの同じメソッドで同じ操作
@@ -41,7 +41,7 @@
                         であっても内部的には特定の時刻で表されます。
                         内部での形式は UNIX タイムスタンプとなります。これは、指定した時刻と
                         January 1st, 1970 00:00:00 GMT/UTC の差です。
-                        これが可能なのは、<code>Zend_Date</code>
+                        これが可能なのは、<classname>Zend_Date</classname>
                         が UNIX タイムスタンプや整数値の制限を受けないからです。
                         BCMath 拡張モジュールにより、
                         Fri, 13 Dec 1901 20:45:54 GMT から Tue, 19 Jan 2038 03:14:07 GMT
@@ -65,7 +65,7 @@
                         PHP 関数
                     </para>
                     <para>
-                        使用できるところでは、<code>Zend_Date</code> はできるだけ
+                        使用できるところでは、<classname>Zend_Date</classname> はできるだけ
                         PHP の関数を使用してパフォーマンスを向上させます。
                     </para>
                 </listitem>

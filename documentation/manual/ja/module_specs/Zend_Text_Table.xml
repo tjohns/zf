@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.text.table.introduction">
     <title>Zend_Text_Table</title>
     <para>
-        <code>Zend_Text_Table</code> は、さまざまなデコレータを使用して
+        <classname>Zend_Text_Table</classname> は、さまざまなデコレータを使用して
         テキストベースの表をその場で作成するためのコンポーネントです。
         これは、たとえばテキスト形式のメールで構造化されたデータを送信したい場合などに便利です。
         その場合は等幅フォントを使う必要があります。
         また、CLI アプリケーションで表形式の情報を表示する場合にも便利です。
-        <code>Zend_Text_Table</code> は、複数行にわたるカラムやカラムの連結、
+        <classname>Zend_Text_Table</classname> は、複数行にわたるカラムやカラムの連結、
         テキストの配置の指定に対応しています。
     </para>
     <note>
         <title>エンコーディング</title>
         <para>
-            <code>Zend_Text_Table</code> のデフォルトでは、文字列が
+            <classname>Zend_Text_Table</classname> のデフォルトでは、文字列が
             UTF-8 でエンコードされていることを前提としています。
             もしそれ以外を使用している場合は、文字エンコーディングを
-            コンストラクタあるいは <code>Zend_Text_Table_Column</code>
+            コンストラクタあるいは <classname>Zend_Text_Table_Column</classname>
             の <code>setContent</code> メソッドのパラメータで指定します。
             もうひとつの方法として、もしそのエンコーディングをプロセス全体で使う場合には
-            <code>Zend_Text_Table::setInputCharset($charset)</code>
+            <classname>Zend_Text_Table::setInputCharset($charset)</classname>
             で標準の入力文字セットを定義することができます。
             表を出力する際に別の文字セットを使用したい場合は、
-            <code>Zend_Text_Table::setOutputCharset($charset)</code> で設定します。
+            <classname>Zend_Text_Table::setOutputCharset($charset)</classname> で設定します。
         </para>
     </note>
     <para>
-        <code>Zend_Text_Table</code> オブジェクトは行の集まりで構成されており、
+        <classname>Zend_Text_Table</classname> オブジェクトは行の集まりで構成されており、
         行は列の集まりで構成されています。行と列を表すのが、それぞれ
-        <code>Zend_Text_Table_Row</code> および
-        <code>Zend_Text_Table_Column</code> です。
+        <classname>Zend_Text_Table_Row</classname> および
+        <classname>Zend_Text_Table_Column</classname> です。
         表を作成する際に、表のオプションを配列で指定することができます。
         指定できるオプションは次のとおりです。
 
@@ -59,19 +59,19 @@
                 <para>
                     <code>AutoSeparate</code>: 各行を横線でどのように区切るかの方法。
                     デフォルトは、すべての行間を区切ります。これは、次の
-                    <code>Zend_Text_Table</code> の定数のビットマスクで指定します。
+                    <classname>Zend_Text_Table</classname> の定数のビットマスクで指定します。
                     <itemizedlist>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_NONE</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_HEADER</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_FOOTER</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_ALL</classname></para>
                         </listitem>
                     </itemizedlist>
                     ヘッダは常に最初の行、フッタは常に最後の行となります。
@@ -81,20 +81,20 @@
     </para>
     <para>
         表に行を追加するには、
-        <code>Zend_Text_Table_Row</code> のインスタンスを作成して、それを
+        <classname>Zend_Text_Table_Row</classname> のインスタンスを作成して、それを
         <code>appendRow</code> メソッドで追加します。行自体には何もオプションはありません。
         配列を直接 <code>appendRow</code> メソッドに渡すこともできます。
         この場合は、複数の列オブジェクトからなる行オブジェクトに自動的に変換されます。
     </para>
     <para>
         行に列を追加する方法も同じです。
-        <code>Zend_Text_Table_Column</code> のインスタンスを作成し、
+        <classname>Zend_Text_Table_Column</classname> のインスタンスを作成し、
         列のオプションをコンストラクタで指定するか、あるいは後から
         <code>set*</code> メソッドで設定します。
         最初のパラメータは列の中身で、これは複数行にすることもできます。
         複数行にする場合は <code>\n</code> で行を区切ります。
         2 番目のパラメータは配置を指定します。デフォルトは左詰めで、
-        <code>Zend_Text_Table_Column</code> のクラス定数のいずれかを指定することができます。
+        <classname>Zend_Text_Table_Column</classname> のクラス定数のいずれかを指定することができます。
 
         <itemizedlist>
             <listitem>
@@ -132,7 +132,7 @@
     <example id="zend.text.table.example.using">
         <title>Zend_Text_Table の使用例</title>
         <para>
-            この例では、<code>Zend_Text_Table</code>
+            この例では、<classname>Zend_Text_Table</classname>
             でシンプルな表を作成するための方法を示します。
         </para>
         <programlisting role="php"><![CDATA[

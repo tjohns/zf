@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.json.advanced">
     <title>Zend_Json の高度な使用法</title>
 
@@ -15,8 +15,8 @@
             JSON はオブジェクトへの参照を扱うことができません。
             再帰的な参照を伴うオブジェクトをエンコードしないように気をつけましょう。
             再帰に関する問題が発生しないよう、
-            <code>Zend_Json::encode()</code> および
-            <code>Zend_Json_Encoder::encode()</code>
+            <classname>Zend_Json::encode()</classname> および
+            <classname>Zend_Json_Encoder::encode()</classname>
             のオプションの二番目のパラメータで再帰をチェックすることができます。
             オブジェクトが二度シリアライズされると、例外がスローされるようになります。
         </para>
@@ -28,7 +28,7 @@
             また、そんなことをするとセキュリティ上問題があるという人もいるでしょう。
         </para>
         <para>
-            デフォルトでは、<code>Zend_Json</code> は JSON
+            デフォルトでは、<classname>Zend_Json</classname> は JSON
             オブジェクトを連想配列にデコードします。しかし、
             もしオブジェクトとして受け取りたいのなら、そのように指定することもできます。
         </para>
@@ -47,7 +47,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
             オブジェクトのデコード方法を決めるべきだというものです。
             もし特定の型のオブジェクトを返してほしいのなら、
             お望みの型のオブジェクトを開発者自身が作成したうえで、
-            <code>Zend_Json</code> がデコードした値をそこに代入していけばいいのです。
+            <classname>Zend_Json</classname> がデコードした値をそこに代入していけばいいのです。
         </para>
     </sect2>
 
@@ -59,7 +59,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
             デフォルトでエンコードメカニズムがアクセスできるのはオブジェクトの
             public プロパティのみです。エンコードするオブジェクトに
             <code>toJson()</code> メソッドが実装されていれば、
-            <code>Zend_Json</code> はこのメソッドを実行します。
+            <classname>Zend_Json</classname> はこのメソッドを実行します。
             このメソッドは、オブジェクトの内部状態を JSON 表現で返すものと期待されています。
         </para>
     </sect2>
@@ -98,17 +98,17 @@ Zend_Json::$useBuiltinEncoderDecoder = true:
             Javascript では無名関数のコールバックを多用します。
             そしてそれが JSON オブジェクト変数内に保存されます。
             これが動作するのはダブルクォートの中で返されていない場合のみであり、
-            <code>Zend_Json</code> は当然そのようにします。
+            <classname>Zend_Json</classname> は当然そのようにします。
             Zend_Json の式サポートを使用すれば、JSON オブジェクトを
             javascript コールバックとして正しい形式でエンコードすることができます。
             これは、<code>json_encode()</code> と内部エンコーダの両方で動作します。
         </para>
 
         <para>
-            javascript コールバックは <code>Zend_Json_Expr</code> オブジェクトで表されます。
+            javascript コールバックは <classname>Zend_Json_Expr</classname> オブジェクトで表されます。
             これは value object パターンを実装しており、不変 (immutable) です。
             javascript の式を、コンストラクタの最初の引数として指定することができます。
-            デフォルトでは <code>Zend_Json::encode</code> は javascript
+            デフォルトでは <classname>Zend_Json::encode</classname> は javascript
             コールバックをエンコードしません。エンコードするには、
             オプション <code>'enableJsonExprFinder' = true</code> を
             <code>encode</code> 関数に渡さなければなりません。これを有効にすると、

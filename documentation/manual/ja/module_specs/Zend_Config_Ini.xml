@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
-        <code>Zend_Config_Ini</code> は、おなじみの INI
-        形式のファイルに保存された設定データを、<code>Zend_Config</code>
+        <classname>Zend_Config_Ini</classname> は、おなじみの INI
+        形式のファイルに保存された設定データを、<classname>Zend_Config</classname>
         を通じてオブジェクトのプロパティとして扱えるようにします。
         この INI 形式は、階層化された設定データを扱うこと、
         そしてセクション間の継承関係を扱うことに特化されています。
@@ -18,9 +18,9 @@
     <note>
         <title>INI ファイルのパース</title>
         <para>
-            <code>Zend_Config_Ini</code> は、PHP の
+            <classname>Zend_Config_Ini</classname> は、PHP の
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-            関数を使用しています。このドキュメントでは、<code>Zend_Config_Ini</code>
+            関数を使用しています。このドキュメントでは、<classname>Zend_Config_Ini</classname>
             固有の挙動に注意しましょう。例えば、特殊な値として
             <code>true</code> や <code>false</code>、
             <code>yes</code>、<code>no</code> そして <code>null</code>
@@ -32,7 +32,7 @@
         <para>
             デフォルトでは、キーの区切り文字はピリオド (<code>.</code>) です。
             しかし、これは変更することもできます。変更するには、
-            <code>Zend_Config_Ini</code> オブジェクトの作成時に
+            <classname>Zend_Config_Ini</classname> オブジェクトの作成時に
             <code>$options</code> のキー
             <code>'nestSeparator'</code> を設定します。たとえばこのようになります。
             <programlisting role="php"><![CDATA[
@@ -45,9 +45,9 @@ $config = new Zend_Config_Ini('/path/to/config.ini',
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
-        <title><code>Zend_Config_Ini</code> の使用法</title>
+        <title><classname>Zend_Config_Ini</classname> の使用法</title>
         <para>
-            この例は、<code>Zend_Config_Ini</code> を使用して
+            この例は、<classname>Zend_Config_Ini</classname> を使用して
             INI ファイルから設定データを読み込むための基本的な方法を説明するものです。
             この例では、運用環境の設定と開発環境の設定を両方管理しています。
             開発環境用の設定データは運用環境用のものと非常に似ているので、

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.form.advanced">
-    <title><code>Zend_Form</code> の高度な使用法</title>
+    <title><classname>Zend_Form</classname> の高度な使用法</title>
 
     <para>
-        <code>Zend_Form</code> にはさまざまな機能があり、
+        <classname>Zend_Form</classname> にはさまざまな機能があり、
         その多くは熟練者向けに用意されています。本章では、
         それらの機能について例を交えて説明します。
     </para>
@@ -151,7 +151,7 @@
         </para>
 
         <para>
-            <code>Zend_Form</code> は、この処理を
+            <classname>Zend_Form</classname> は、この処理を
             <link linkend="zend.form.forms.subforms">サブフォーム</link>
             で自動化します。デフォルトで、
             サブフォームのレンダリングには先ほどのような配列記法を使用します。
@@ -159,7 +159,7 @@
             配列のキーはサブフォーム内に含まれる要素となります。
             サブフォームは、何段階でもネストさせることができます。
             その場合も、ネストした配列形式でその構造を表します。
-            さらに、<code>Zend_Form</code>
+            さらに、<classname>Zend_Form</classname>
             のさまざまなバリデーション機能は、この配列構造をきちんと処理するようにできています。
             サブフォームをどれだけ深くネストさせたとしても、
             フォームの検証は正しく行ってくれます。
@@ -175,7 +175,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Form::setIsArray($flag)</code>:
+                    <classname>Zend_Form::setIsArray($flag)</classname>:
                     このフラグを true にすると、フォーム全体を配列として扱うことができます。
                     デフォルトでは、<code>setElementsBelongTo()</code>
                     がコールされていない限りはフォーム名を配列の名前とします。
@@ -191,7 +191,7 @@
             </listitem>
 
             <listitem><para>
-                    <code>Zend_Form::setElementsBelongTo($array)</code>:
+                    <classname>Zend_Form::setElementsBelongTo($array)</classname>:
                     このメソッドを使用すると、フォームの全要素が属する
                     配列の名前を指定することができます。現在設定されている値を調べるには
                     <code>getElementsBelongTo()</code> アクセサを使用します。
@@ -200,7 +200,7 @@
 
         <para>
             さらに、要素レベルでは、特定の要素を特定の配列に属させるために
-            <code>Zend_Form_Element::setBelongsTo()</code> メソッドを使うこともできます。
+            <classname>Zend_Form_Element::setBelongsTo()</classname> メソッドを使うこともできます。
             この値が何者なのか (明示的に設定されたものなのか
             フォームを経由して暗黙的に設定されたものなのか)
             を知るには <code>getBelongsTo()</code> アクセサを使用します。
@@ -212,7 +212,7 @@
 
         <para>
             現在、複数ページのフォームは
-            <code>Zend_Form</code> では公式にはサポートしていません。
+            <classname>Zend_Form</classname> では公式にはサポートしていません。
             しかし、それを実装するための機能の大半はサポートしており、
             ほんの少し手を加えるだけでこの機能を実現することができます。
         </para>
@@ -437,7 +437,7 @@ class My_Form_Registration extends Zend_Form
                 次に、フォームの情報のうちどの部分が入力済みなのか、
                 そしてその部分に対応するサブフォームがどれなのか
                 といった情報を取得するロジックも必要です。今回は
-                <code>Zend_Session_Namespace</code> を使用してデータを持続させることにします。
+                <classname>Zend_Session_Namespace</classname> を使用してデータを持続させることにします。
                 そうすれば、二番目の問題に対応するのも簡単になるでしょう。
             </para>
 

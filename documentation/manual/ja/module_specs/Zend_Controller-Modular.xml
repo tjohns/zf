@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.modular">
     <title>モジュラーディレクトリ構造の規約の使用</title>
 
@@ -186,8 +186,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         <title>モジュールへのルーティング</title>
 
         <para>
-            <code>Zend_Controller_Router_Rewrite</code> のデフォルトのルートは
-            <code>Zend_Controller_Router_Route_Module</code> 型のオブジェクトです。
+            <classname>Zend_Controller_Router_Rewrite</classname> のデフォルトのルートは
+            <classname>Zend_Controller_Router_Route_Module</classname> 型のオブジェクトです。
             このルートは、以下のいずれかの形式のルーティングを行います。
         </para>
 

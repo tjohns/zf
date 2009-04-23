@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.filter.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のフィルタクラス群</title>
@@ -104,10 +104,10 @@
             '/./' あるいは '/../' が含まれなくなります。
         </para>
         <para>
-            <code>Zend_Filter_RealPath</code> は、
+            <classname>Zend_Filter_RealPath</classname> は、
             ファイルが存在しないなどで失敗した場合に <code>FALSE</code> を返します。
             BSD システムでは、パスの最後の部分だけが存在しない場合には
-            <code>Zend_Filter_RealPath</code> は失敗しません。しかし他のシステムではこのような場合も
+            <classname>Zend_Filter_RealPath</classname> は失敗しません。しかし他のシステムではこのような場合も
             <code>FALSE</code> を返します。
         </para>
     </sect2>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>クエリ言語</title>
 
     <para>
-        Java Lucene および <code>Zend_Search_Lucene</code> では、非常に強力なクエリ言語を使用できます。
+        Java Lucene および <classname>Zend_Search_Lucene</classname> では、非常に強力なクエリ言語を使用できます。
     </para>
 
     <para>
@@ -57,7 +57,7 @@
             <emphasis>すべてのフィールド</emphasis> が検索の対象になるということです。
         </para>
         <para>
-            <code>Zend_Search_Lucene</code> クラスにはふたつの静的メソッドがあり、
+            <classname>Zend_Search_Lucene</classname> クラスにはふたつの静的メソッドがあり、
             この設定を操作することができます。
         </para>
         <programlisting role="php"><![CDATA[
@@ -196,7 +196,7 @@ title:{Aida TO Carmen}
             でクエリを指定します。
         </para>
         <para>
-            フィールドを指定しなかった場合は、<code>Zend_Search_Lucene</code>
+            フィールドを指定しなかった場合は、<classname>Zend_Search_Lucene</classname>
             はすべてのフィールドに対して範囲検索を行います。
             <programlisting role="querystring"><![CDATA[
 {Aida TO Carmen}
@@ -208,7 +208,7 @@ title:{Aida TO Carmen}
     <sect2 id="zend.search.lucene.query-language.fuzzy">
         <title>あいまい検索</title>
         <para>
-            <code>Zend_Search_Lucene</code> は、Java Lucene と同様にあいまい検索をサポートします。
+            <classname>Zend_Search_Lucene</classname> は、Java Lucene と同様にあいまい検索をサポートします。
             これは、レーベンシュタイン距離のアルゴリズムにもとづくものです。
             あいまい検索を行うには、チルダ記号 "~" を単語の最後に指定します。
             たとえば、"roam" と似たスペルの単語を探すには、次のようなあいまい検索を使用します。
@@ -254,7 +254,7 @@ roam~0.8
         <title>単語の強調</title>
 
         <para>
-            Java Lucene および <code>Zend_Search_Lucene</code> は、
+            Java Lucene および <classname>Zend_Search_Lucene</classname> は、
             見つかった単語にもとづいてドキュメントの関連度を提供します。
             ある単語の関連性を高くするには、キャレット記号 "^" に強調度 (数値)
             をあわせたものを、検索する単語の最後につなげます。
@@ -291,12 +291,12 @@ PHP^4 framework
             論理演算子によって、複数の単語を組み合わせることができます。
             Lucene では、論理演算子として AND、"+"、OR、NOT および "-"
             をサポートしています。Java Lucene では論理演算子をすべて大文字にする必要がありますが、
-            <code>Zend_Search_Lucene</code> ではその必要はありません。
+            <classname>Zend_Search_Lucene</classname> ではその必要はありません。
         </para>
 
         <para>
             論理クエリを作成するための方式は、大きく AND、OR および NOT の組と "+"、"-"
-            の組に分けられます。Java Lucene とは異なり、<code>Zend_Search_Lucene</code>
+            の組に分けられます。Java Lucene とは異なり、<classname>Zend_Search_Lucene</classname>
             ではこれらの二つの組を混ぜて使うことはできません。
         </para>
         <para>
@@ -417,13 +417,13 @@ PHP^4 framework
 
             <para>
                 デフォルトの boolean 演算子を設定したり取得したりするには、それぞれ
-                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</code> および
-                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</code> を使用します。
+                <classname>Zend_Search_Lucene_Search_QueryParser::setDefaultOperator($operator)</classname> および
+                <classname>Zend_Search_Lucene_Search_QueryParser::getDefaultOperator()</classname> を使用します。
             </para>
             <para>
                 これらのメソッドで使用する定数は、
-                <code>Zend_Search_Lucene_Search_QueryParser::B_AND</code> および
-                <code>Zend_Search_Lucene_Search_QueryParser::B_OR</code> です。
+                <classname>Zend_Search_Lucene_Search_QueryParser::B_AND</classname> および
+                <classname>Zend_Search_Lucene_Search_QueryParser::B_OR</classname> です。
             </para>
         </sect3>
     </sect2>
@@ -432,14 +432,14 @@ PHP^4 framework
         <title>グループ化</title>
 
         <para>
-            Java Lucene および <code>Zend_Search_Lucene</code> では、
+            Java Lucene および <classname>Zend_Search_Lucene</classname> では、
             括弧を使用して条件をグループ化することによるサブクエリの作成をサポートしています。
             これは、クエリのロジックを制御したい場合や異なるスタイルの論理クエリを共用したい場合などに便利です。
             <programlisting role="querystring"><![CDATA[
 +(framework OR library) +php
 ]]>
 </programlisting>
-            <code>Zend_Search_Lucene</code> は、あらゆるレベルのサブクエリをサポートしています。
+            <classname>Zend_Search_Lucene</classname> は、あらゆるレベルのサブクエリをサポートしています。
         </para>
     </sect2>
 

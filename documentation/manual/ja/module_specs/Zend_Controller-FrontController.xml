@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.front">
     <title>フロントコントローラ</title>
 
@@ -8,7 +8,7 @@
         <title>概要</title>
 
         <para>
-            <code>Zend_Controller_Front</code> は
+            <classname>Zend_Controller_Front</classname> は
             <ulink url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller
             (MVC)</ulink> アプリケーションで用いられる
             <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">
@@ -19,14 +19,14 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> は <ulink
+            <classname>Zend_Controller_Front</classname> は <ulink
             url="http://en.wikipedia.org/wiki/Singleton_pattern">シングルトンパターン</ulink>
             も実装しています。つまり、どんな場合でもひとつのインスタンスしか存在しないことになります。
             これを利用すると、コントローラをレジストリとして扱えるようになります。
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> は <link
+            <classname>Zend_Controller_Front</classname> は <link
                 linkend="zend.controller.plugins">プラグインブローカ</link>
             を持っています。これにより、さまざまなイベントをプラグインで処理できるようになります。
             開発者は、ディスパッチ処理をカスタマイズして機能を追加する際に
@@ -229,7 +229,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <title>run()</title>
 
             <para>
-                <code>Zend_Controller_Front::run($path)</code>
+                <classname>Zend_Controller_Front::run($path)</classname>
                 は静的メソッドで、コントローラを含むディレクトリへのパスを指定します。
                 このメソッドは
                 <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>
@@ -390,7 +390,7 @@ Zend_Controller_Front::run('../application/controllers');
                     <code>dispatch()</code> からのレスポンスを返す (<code>true</code>)
                     かレスポンスを自動的に発行する (<code>false</code>)
                     かを切り替えます。デフォルトでは、レスポンスは
-                    (<code>Zend_Controller_Response_Abstract::sendResponse()</code> によって)
+                    (<classname>Zend_Controller_Response_Abstract::sendResponse()</classname> によって)
                     自動的に発行されます。<code>returnResponse()</code>
                     をオンにすると、この挙動を変更できます。
                     behaviour.
@@ -538,8 +538,8 @@ class My_Controller_Front extends Zend_Controller_Front
 
         <para>
             <code>getInstance()</code> メソッドをオーバーライドすることで、それ以降の
-            <code>Zend_Controller_Front::getInstance()</code> のコールが
-            <code>Zend_Controller_Front</code> ではなく新しいサブクラスのインスタンスを返すようになります。
+            <classname>Zend_Controller_Front::getInstance()</classname> のコールが
+            <classname>Zend_Controller_Front</classname> ではなく新しいサブクラスのインスタンスを返すようになります。
             これは、デフォルト以外のルータやビューヘルパーを使用する場合などに便利です。
         </para>
 

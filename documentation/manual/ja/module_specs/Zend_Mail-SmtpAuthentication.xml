@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.mail.smtp-authentication">
   <title>SMTP 認証</title>
 
-  <para><code>Zend_Mail</code> は SMTP 認証の使用をサポートしています。
-  これを使用するには、<code>Zend_Mail_Transport_Smtp</code>
+  <para><classname>Zend_Mail</classname> は SMTP 認証の使用をサポートしています。
+  これを使用するには、<classname>Zend_Mail_Transport_Smtp</classname>
   のコンストラクタに渡す設定配列で、パラメータ 'auth' を指定します。
   組み込みの認証方式は PLAIN、LOGIN および CRAM-MD5 で、
   これらはすべて、設定配列に 'username' および 'password'
   が指定されていることを想定しています。</para>
 
   <example id="zend.mail.smtp-authentication.example-1">
-    <title><code>Zend_Mail_Transport_Smtp</code> での認証の有効化</title>
+    <title><classname>Zend_Mail_Transport_Smtp</classname> での認証の有効化</title>
 
     <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',
@@ -37,7 +37,7 @@ $mail->send($transport);
     <para>
         認証方式は大文字小文字を区別しませんが、区切り文字は含めません。
         たとえば CRAM-MD5 を使用する場合は、
-        <code>Zend_Mail_Transport_Smtp</code> のコンストラクタに渡す値は
+        <classname>Zend_Mail_Transport_Smtp</classname> のコンストラクタに渡す値は
         'auth' => 'crammd5' となります。</para>
   </note>
 </sect1>

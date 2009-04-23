@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>導入</title>
         <para>
-            アクションヘルパーを使用すると、<code>Zend_Controller_Action</code>
+            アクションヘルパーを使用すると、<classname>Zend_Controller_Action</classname>
             を継承した任意のアクションコントローラに対して
             実行時やその他必要に応じて機能追加をすることができます。
             アクションヘルパーの狙いは、
@@ -22,7 +22,7 @@
             や <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>
             と同じように、処理の仲買をするために用いることもできます。
-            アクションヘルパーは (<code>Zend_View_Helper</code> と同様に)、
+            アクションヘルパーは (<classname>Zend_View_Helper</classname> と同様に)、
             必要になった時点で読み込むこともできますし、
             リクエスト時 (起動時) やアクションコントローラの作成時 (init())
             で読み込むこともできます。詳細は、以下の使用例を参照ください。
@@ -38,7 +38,7 @@
         </para>
 
         <para>
-            ヘルパーブローカは、<code>Zend_Controller_Action</code>
+            ヘルパーブローカは、<classname>Zend_Controller_Action</classname>
             の <code>$_helper</code> に格納されます。
             このブローカを使用して、ヘルパーを取得したりコールしたりします。
             以下のような方法があります。
@@ -104,7 +104,7 @@ $this->_helper->FlashMessenger('先ほどのリクエストで、あることを
         <title>ヘルパーブローカ</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code>
+            <classname>Zend_Controller_Action_HelperBroker</classname>
             がヘルパーオブジェクトやそのパスの登録に関する詳細を処理します。
             また、必要に応じてそこからヘルパーを取得することができます。
         </para>
@@ -269,7 +269,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             アクションヘルパーは、抽象クラス
-            <code>Zend_Controller_Action_Helper_Abstract</code>
+            <classname>Zend_Controller_Action_Helper_Abstract</classname>
             を継承して作成します。
             ここには、基本的なインターフェイスやヘルパーブローカが使用する必須機能などが含まれています。
             具体的には、次のようなメソッドです。
@@ -329,7 +329,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
                     はヘルパーの名前を取得します。
                     クラス名にアンダースコアが含まれる場合は最後のアンダースコア以降の文字、
                     そうでない場合はクラス名全体を返します。たとえば、クラス名が
-                    <code>Zend_Controller_Action_Helper_Redirector</code>
+                    <classname>Zend_Controller_Action_Helper_Redirector</classname>
                     の場合は <code>Redirector</code> を、クラス名が
                     <code>FooMessage</code> の場合はそのままの名前を返します。
                 </para>

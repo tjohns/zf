@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.locale.functions">
 
-    <title><code>Zend_Locale</code> の使用法</title>
+    <title><classname>Zend_Locale</classname> の使用法</title>
 
     <para>
-        <code>Zend_Locale</code> は、各ロケールについての情報も、
+        <classname>Zend_Locale</classname> は、各ロケールについての情報も、
         自分自身のロケールに合わせた形式で提供します。
         たとえば他のロケールの名前や曜日名、月名などがこれにあたります。
     </para>
@@ -53,7 +53,7 @@ print "copied: ", $copiedLocale;
         <title>等式</title>
 
         <para>
-            <code>Zend_Locale</code> は、
+            <classname>Zend_Locale</classname> は、
             二つのロケールを比較するための便利な関数も提供しています。
             ロケール対応のクラスはすべて、これと同等の同一性チェック機能を提供しなければなりません。
         </para>
@@ -82,7 +82,7 @@ if ($locale->equals($mylocale)) {
             <code>getDefault()</code> メソッドは、関連するロケールの配列を返します。
             これは、ユーザのウェブブラウザからの情報 (取得できる場合)、
             ホストサーバの環境変数および ZF の設定をもとに取得します。
-            <code>Zend_Locale</code> のコンストラクタの最初のパラメータで、
+            <classname>Zend_Locale</classname> のコンストラクタの最初のパラメータで、
             <link linkend="zend.locale.selection">
               (<code>BROWSER</code>、<code>ENVIRONMENT</code> あるいは <code>FRAMEWORK</code> のうちの)
             </link>
@@ -143,7 +143,7 @@ print_r($found2);
             を使用します。この関数は、ロケール文字列をパラメータとして受け取ります。
             ロケールを省略した場合は、ロケールが
             <link linkend="zend.locale.selection">自動的に選択</link>
-            されます。<code>Zend_Locale</code> オブジェクトは "light"
+            されます。<classname>Zend_Locale</classname> オブジェクトは "light"
             なので、このメソッドは既存のインスタンスを参照しているすべてのコードに影響をおよぼします。
         </para>
 
@@ -1406,7 +1406,7 @@ echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
         </example>
 
         <para>
-            <code>Zend_Locale</code> で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
+            <classname>Zend_Locale</classname> で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
             以下の例をウェブページで使用してみましょう。
             同様に <code>getCountryTranslationList()</code> および
             <code>getCountryTranslation()</code> を使用すると、
@@ -1589,7 +1589,7 @@ if (Zend_Locale::isLocale($input)) {
             自動的に地域部をはずして検出してくれることにもお気づきでしょう。
             先ほどの例では、言語 <code>'to'</code> は地域
             <code>'RU'</code> 内に存在しません。しかし、返される結果は true となります。
-            <code>Zend_Locale</code> は指定した入力を処理できるからです。
+            <classname>Zend_Locale</classname> は指定した入力を処理できるからです。
         </para>
 
         <para>

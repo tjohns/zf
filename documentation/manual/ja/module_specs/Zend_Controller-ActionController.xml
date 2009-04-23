@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
     <sect2 id="zend.controller.action.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Controller_Action</code> は、
+            <classname>Zend_Controller_Action</classname> は、
             モデル - ビュー - コントローラ (MVC)
             パターンにもとづいたウェブアプリケーションを作成する際に、
             フロントコントローラで使用するアクションコントローラを実装するための抽象クラスです。
         </para>
 
         <para>
-            <code>Zend_Controller_Action</code> を使用するには、
+            <classname>Zend_Controller_Action</classname> を使用するには、
             実際のアクションコントローラクラス内でこのクラスのサブクラスを作成する必要があります
             (あるいは、作成したサブクラスをもとにしてアクションコントローラを作成します)。
             基本的な使い方としては、まずサブクラスを作成し、
             そしてあなたのサイト上で処理したいさまざまなアクションに対応する
             アクションメソッドを作成するという流れになります。
-            <code>Zend_Controller</code> は、このクラス内のメソッドで 'Action'
+            <classname>Zend_Controller</classname> は、このクラス内のメソッドで 'Action'
             という名前で終わるものを見つけると、
             ルーティングやディスパッチの際にそれらを自動的にアクションとして扱います。
         </para>
@@ -138,7 +138,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             アクションコントローラのコンストラクタをオーバーライドすることもできますが、
-            お勧めしません。<code>Zend_Controller_Action::__construct()</code>
+            お勧めしません。<classname>Zend_Controller_Action::__construct()</classname>
             は、リクエストオブジェクトやレスポンスオブジェクトを登録するなどの重要な作業を行います。
             また、フロントコントローラから渡された起動時引数の処理も行います。
             コンストラクタをオーバーライドする場合は、必ずその中で
@@ -174,7 +174,7 @@ class FooController extends Zend_Controller_Action
         <title>ディスパッチ前後のフック</title>
 
         <para>
-            <code>Zend_Controller_Action</code> には、
+            <classname>Zend_Controller_Action</classname> には、
             リクエストされたアクションの前後にコールされるふたつのメソッドがあります。それが
             <code>preDispatch()</code> と <code>postDispatch()</code> です。
             これらはさまざまな場面で活用できます。
@@ -285,7 +285,7 @@ if ($this->_hasParam('id') {
         </note>
 
         <para>
-            <code>Zend_Controller_Action</code> では、
+            <classname>Zend_Controller_Action</classname> では、
             ビューの統合のためのちょっとした柔軟な仕組みを提供しています。
             これを行うのは <code>initView()</code> と <code>render()</code>
             のふたつのメソッドです。前者のメソッドはパブリックプロパティ
@@ -302,9 +302,9 @@ if ($this->_hasParam('id') {
                 <code>render()</code> は <code>initView()</code>
                 をコールしてビューオブジェクトを取得しますが、
                 その初期化はいつでも好きなときに行うことができます。
-                デフォルトでは、取得した結果は <code>Zend_View</code>
+                デフォルトでは、取得した結果は <classname>Zend_View</classname>
                 オブジェクトのプロパティ <code>$view</code> に格納されますが、
-                <code>Zend_View_Interface</code> を実装したクラスなら何でも好きなものを使用することができます。
+                <classname>Zend_View_Interface</classname> を実装したクラスなら何でも好きなものを使用することができます。
                 <code>$view</code> がすでに初期化されている場合は、そのプロパティの内容を返します。
             </para>
 
@@ -421,7 +421,7 @@ class MyController extends Zend_Controller_Action
         <title>ユーティリティメソッド</title>
 
         <para>
-            アクセス用メソッドやビューの統合用メソッド以外にも、<code>Zend_Controller_Action</code>
+            アクセス用メソッドやビューの統合用メソッド以外にも、<classname>Zend_Controller_Action</classname>
             にはいくつかのユーティリティメソッドが用意されています。
             これらを使用して、アクションメソッド
             (あるいはディスパッチ前後のフックメソッド)
@@ -502,14 +502,14 @@ class MyController extends Zend_Controller_Action
 
         <para>
             アクションコントローラを作成するには、必ず
-            <code>Zend_Controller_Action</code> のサブクラスを作成しなければならないようになっています。
+            <classname>Zend_Controller_Action</classname> のサブクラスを作成しなければならないようになっています。
             最低限、コントローラがコールするアクションメソッドを定義しなければなりません。
         </para>
 
         <para>
             自分のウェブアプリケーション用に便利な機能を実装していく一方で、
             同じような前処理やちょっとした処理をあちこちのコントローラで書いているといったことはありませんか？
-            そのような場合は、<code>Zend_Controller_Action</code>
+            そのような場合は、<classname>Zend_Controller_Action</classname>
             を継承した共通基底コントローラクラスを作成し、
             共通処理をそこにまとめていくようにしましょう。
         </para>
@@ -519,14 +519,14 @@ class MyController extends Zend_Controller_Action
 
             <para>
                 コントローラへのリクエストの際に未定義のアクションメソッドが指定された場合は、
-                <code>Zend_Controller_Action::__call()</code> を実行します。
+                <classname>Zend_Controller_Action::__call()</classname> を実行します。
                 <code>__call()</code> とはもちろん、PHP
                 のマジックメソッドで、メソッドのオーバーロード用に使用するものです。
             </para>
 
             <para>
                 デフォルトでは、このメソッドは
-                <code>Zend_Controller_Action_Exception</code>
+                <classname>Zend_Controller_Action_Exception</classname>
                 をスローして、コントローラの中にアクションが見つからなかったことを示します。
                 メソッド名の最後が 'Action' であった場合は、
                 おそらく存在しないアクションをリクエストしたのであろうとみなします。

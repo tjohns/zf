@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.spreadsheets">
     <title>Google Spreadsheets の使用法</title>
 
@@ -32,7 +32,7 @@
         <para>
             特定のユーザのスプレッドシートの一覧を取得するには
             Spredsheets サービスの <code>getSpreadsheetFeed</code> メソッドを使用します。
-            このサービスが返す <code>Zend_Gdata_Spreadsheets_SpreadsheetFeed</code>
+            このサービスが返す <classname>Zend_Gdata_Spreadsheets_SpreadsheetFeed</classname>
             オブジェクトに、認証済みユーザのスプレッドシート一覧が格納されます。
         </para>
 
@@ -54,7 +54,7 @@ $feed = $spreadsheetService->getSpreadsheetFeed();
 
         <para>
             スプレッドシートのキー
-            (すでに取得済みの <code>Zend_Gdata_Spreadsheets_SpreadsheetEntry</code>
+            (すでに取得済みの <classname>Zend_Gdata_Spreadsheets_SpreadsheetEntry</classname>
             オブジェクトの &lt;id&gt;)
             を指定すると、そのスプレッドシートのワークシート一覧を含むフィードを取得できます。
         </para>
@@ -67,10 +67,10 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
         </programlisting>
 
         <para>
-            この結果である <code>Zend_Gdata_Spreadsheets_WorksheetFeed</code>
+            この結果である <classname>Zend_Gdata_Spreadsheets_WorksheetFeed</classname>
             オブジェクトは、サーバからのレスポンスを表します。
             その他の場合と同じように、このフィードには
-            <code>Zend_Gdata_Spreadsheets_WorksheetEntry </code> オブジェクト
+            <classname>Zend_Gdata_Spreadsheets_WorksheetEntry </classname> オブジェクト
             (<code>$feed->entries</code>) の一覧が含まれます。
             個々のオブジェクトがひとつのワークシートを表します。
         </para>
@@ -134,15 +134,15 @@ $listFeed = $spreadsheetService->getListFeed($query);
             </programlisting>
 
             <para>
-                その結果得られた <code>Zend_Gdata_Spreadsheets_ListFeed</code>
+                その結果得られた <classname>Zend_Gdata_Spreadsheets_ListFeed</classname>
                 オブジェクトである <code>$listfeed</code> が、サーバからのレスポンスを表します。
-                またこのフィードは <code>Zend_Gdata_Spreadsheets_ListEntry</code>
+                またこのフィードは <classname>Zend_Gdata_Spreadsheets_ListEntry</classname>
                 オブジェクトの配列 (<code>$listFeed->entries</code>)
                 を含んでおり、この配列の各要素がワークシートのひとつの行を表します。
             </para>
 
             <para>
-              各 <code>Zend_Gdata_Spreadsheets_ListEntry</code> には配列
+              各 <classname>Zend_Gdata_Spreadsheets_ListEntry</classname> には配列
               <code>custom</code> が含まれ、これがその行のデータを保持します。
               この配列の内容を取り出して表示するには次のようにします。
             </para>
@@ -174,7 +174,7 @@ echo $customEntry->getColumnName() . " = " . $customEntry->getText();
             <para>
                 デフォルトでは、フィード内の行の並び順は GUI
                 で見たときの行の並び順と同じです。つまり行番号順ということです。
-                行を逆順で取得するには、<code>Zend_Gdata_Spreadsheets_ListQuery</code>
+                行を逆順で取得するには、<classname>Zend_Gdata_Spreadsheets_ListQuery</classname>
                 オブジェクトの reverse プロパティを true に設定します。
             </para>
 
@@ -190,7 +190,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
             <para>
                 もしワークシート内での位置ではなく特定のカラムの値で
                 (あるいはその逆順で) 並べ替えたい場合は、
-                <code>Zend_Gdata_Spreadsheets_ListQuery</code>
+                <classname>Zend_Gdata_Spreadsheets_ListQuery</classname>
                 オブジェクトの <code>orderby</code> の値を
                 <code>column:&lt;そのカラムのヘッダ&gt;</code>
                 とします。
@@ -201,7 +201,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
             <title>構造化問い合わせ</title>
 
             <para>
-                <code>Zend_Gdata_Spreadsheets_ListQuery</code> の
+                <classname>Zend_Gdata_Spreadsheets_ListQuery</classname> の
                 <code>sq</code> を設定することで、
                 指定した条件を満たすエントリだけのフィードを得ることができます。
                 たとえば、個人データを記録したワークシートがあるとしましょう。
@@ -239,7 +239,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
                 <code>$rowData</code> パラメータには、
                 カラムのキーとその値を関連付けた配列を指定します。
                 このメソッドは、追加した行に対応する
-                <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code>
+                <classname>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</classname>
                 オブジェクトを返します。
             </para>
 
@@ -253,7 +253,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
             <title>行の編集</title>
 
             <para>
-                <code>Zend_Gdata_Spreadsheets_ListEntry</code>
+                <classname>Zend_Gdata_Spreadsheets_ListEntry</classname>
                 オブジェクトを取得したら、Spreadsheet サービスの
                 <code>updateRow</code> メソッドを使用してその中身を更新することができます。
             </para>
@@ -268,7 +268,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
                 <code>$oldListEntry</code> パラメータには、更新するエントリを指定します。
                 <code>$newRowData</code> はカラムのキーと値を関連付けた配列です。
                 これを新しいデータとして使用します。このメソッドは、更新した行に対応する
-                <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code>
+                <classname>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</classname>
                 オブジェクトを返します。
             </para>
         </sect3>
@@ -278,7 +278,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
 
             <para>
                 行を削除するには、単に
-                <code>Zend_Gdata_Spreadsheets</code> オブジェクトの
+                <classname>Zend_Gdata_Spreadsheets</classname> オブジェクトの
                 <code>deleteRow</code> メソッドをコールするだけです。
                 削除したい既存のエントリを指定します。
             </para>
@@ -330,9 +330,9 @@ $cellFeed = $spreadsheetService->getCellFeed($query);
             </programlisting>
 
             <para>
-                その結果得られた <code>Zend_Gdata_Spreadsheets_CellFeed</code>
+                その結果得られた <classname>Zend_Gdata_Spreadsheets_CellFeed</classname>
                 オブジェクトである <code>$cellFeed</code> が、サーバからのレスポンスを表します。
-                またこのフィードは <code>Zend_Gdata_Spreadsheets_CellEntry</code>
+                またこのフィードは <classname>Zend_Gdata_Spreadsheets_CellEntry</classname>
                 オブジェクトの配列 (<code>$cellFeed>entries</code>)
                 を含んでおり、この配列の各要素がワークシートのひとつのセルを表します。
                 この情報を表示するには次のようにします。

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect2 id="zend.validate.set.email_address">
 
     <title>メールアドレス</title>
 
     <para>
-        <code>Zend_Validate_EmailAddress</code> は、メールアドレスの検証を行います。
+        <classname>Zend_Validate_EmailAddress</classname> は、メールアドレスの検証を行います。
         このバリデータは、まずメールアドレスを
         local-part @ hostname
         に分割し、メールアドレスやホスト名の仕様にあわせて検証します。
@@ -42,7 +42,7 @@ if ($validator->isValid($email)) {
     </para>
 
     <para>
-        <code>Zend_Validate_EmailAddress</code> は、メールアドレスの検証を
+        <classname>Zend_Validate_EmailAddress</classname> は、メールアドレスの検証を
         RFC2822 にもとづいて行います。たとえば、妥当な形式のメールアドレスとしては
         <code>bob@domain.com</code>、<code>bob+jones@domain.us</code>、
         <code>"bob@jones"@domain.com</code> および <code>"bob jones"@domain.com</code>
@@ -60,17 +60,17 @@ if ($validator->isValid($email)) {
 
     <para>
         メールアドレスのホスト名部分の検証は、
-        <link linkend="zend.validate.set.hostname"><code>Zend_Validate_Hostname</code></link>
+        <link linkend="zend.validate.set.hostname"><classname>Zend_Validate_Hostname</classname></link>
         で行います。デフォルトでは、<code>domain.com</code>
         形式の DNS ホスト名のみが有効となります。しかし、
         IP アドレスやローカルホスト名も有効にしたいこともあるでしょう。
     </para>
 
     <para>
-        その場合は、<code>Zend_Validate_EmailAddress</code>
+        その場合は、<classname>Zend_Validate_EmailAddress</classname>
         のインスタンスを作成する際にパラメータを渡さなければなりません。
         このパラメータで、認めたいホスト名の形式を指定します。
-        詳細は <code>Zend_Validate_Hostname</code> を参照ください。
+        詳細は <classname>Zend_Validate_Hostname</classname> を参照ください。
         たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
 
         <programlisting role="php"><![CDATA[
@@ -106,7 +106,7 @@ if ($validator->isValid($email)) {
     <para>
         MX のチェックはデフォルトでは無効になっており、
         現時点では UNIX プラットフォームでのみサポートしています。
-        MX のチェックを有効にするには、<code>Zend_Validate_EmailAddress</code>
+        MX のチェックを有効にするには、<classname>Zend_Validate_EmailAddress</classname>
         コンストラクタの 2 番目のパラメータを渡します。
 
         <programlisting role="php"><![CDATA[
@@ -131,11 +131,11 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
     </para>
 
     <para>
-        <code>Zend_Validate_EmailAddress</code> は、ドメインの中に国際文字が使われている場合も処理できます。
+        <classname>Zend_Validate_EmailAddress</classname> は、ドメインの中に国際文字が使われている場合も処理できます。
         このようなドメインは、国際化ドメイン名 (International Domain Name: IDN)
         と呼ばれています。これはデフォルトで有効になっていますが、無効にすることも可能です。
-        無効にするには、<code>Zend_Validate_EmailAddress</code> が内部で保持している
-        <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
+        無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
+        <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
 
         <programlisting role="php"><![CDATA[
 $validator->hostnameValidator->setValidateIdn(false);
@@ -143,7 +143,7 @@ $validator->hostnameValidator->setValidateIdn(false);
         </programlisting>
 
         <code>setValidateIdn()</code> の詳細な使用法は、
-        <code>Zend_Validate_Hostname</code> のドキュメントを参照ください。
+        <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
     </para>
 
     <para>
@@ -157,8 +157,8 @@ $validator->hostnameValidator->setValidateIdn(false);
     <para>
         デフォルトでは、ホスト名の検証は既知の TLD の一覧に基づいて行われます。
         これはデフォルトで有効になっていますが、無効にすることもできます。無効にするには、
-        無効にするには、<code>Zend_Validate_EmailAddress</code> が内部で保持している
-        <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
+        無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
+        <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
 
         <programlisting role="php"><![CDATA[
 $validator->hostnameValidator->setValidateTld(false);
@@ -166,7 +166,7 @@ $validator->hostnameValidator->setValidateTld(false);
         </programlisting>
 
         <code>setValidateTld()</code> の詳細な使用法は、
-        <code>Zend_Validate_Hostname</code> のドキュメントを参照ください。
+        <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
     </para>
 
     <para>

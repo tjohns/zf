@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.view.introduction">
 
     <title>導入</title>
 
     <para>
-        <code>Zend_View</code> は、モデル - ビュー - コントローラ パターンにおける
+        <classname>Zend_View</classname> は、モデル - ビュー - コントローラ パターンにおける
         「ビュー」として働くクラスです。
         ビューのスクリプトを、モデルおよびコントローラから分離するために存在します。
         このクラスでは、
@@ -14,19 +14,19 @@
     </para>
 
     <para>
-        <code>Zend_View</code> は、テンプレートシステムに対しては特にこだわりはありません。
+        <classname>Zend_View</classname> は、テンプレートシステムに対しては特にこだわりはありません。
         テンプレート言語として PHP を使用するか、
         あるいは他のテンプレートエンジンのインスタンスを作成して、
         それをビュースクリプトの中で操作することができます。
     </para>
 
     <para>
-        基本的に、<code>Zend_View</code> を使用する際には 2 つの段階をとることになります。
+        基本的に、<classname>Zend_View</classname> を使用する際には 2 つの段階をとることになります。
 
-        1.  コントローラスクリプトが <code>Zend_View</code> のインスタンスを作成し、
+        1.  コントローラスクリプトが <classname>Zend_View</classname> のインスタンスを作成し、
         そのインスタンスに変数を代入します。
 
-        2. コントローラが <code>Zend_View</code> に対して適切なビューをレンダリングするように指示し、
+        2. コントローラが <classname>Zend_View</classname> に対して適切なビューをレンダリングするように指示し、
         それによってコントローラがビュースクリプトを制御します。
         そこでビューの出力が作成されます。
     </para>
@@ -77,11 +77,11 @@ echo $view->render('booklist.php');
         <para>
             次に必要なのは、関連付けるビュースクリプト "booklist.php" です。
             これは一般的な PHP スクリプトと同じですが、ひとつだけ違いがあります。
-            <code>Zend_View</code> インスタンスのスコープで実行されるということです。
-            つまり $this への参照は、<code>Zend_View</code>
+            <classname>Zend_View</classname> インスタンスのスコープで実行されるということです。
+            つまり $this への参照は、<classname>Zend_View</classname>
             のインスタンスのプロパティやメソッドを指すことになるのです
             (コントローラによってインスタンスに代入された変数は、
-            <code>Zend_View</code> インスタンスの public プロパティとなります)。
+            <classname>Zend_View</classname> インスタンスの public プロパティとなります)。
             したがって、基本的なビュースクリプトはこのようになります。
         </para>
 
@@ -123,7 +123,7 @@ echo $view->render('booklist.php');
         <title>オプション</title>
 
         <para>
-            <code>Zend_View</code> のオプションを設定すると、
+            <classname>Zend_View</classname> のオプションを設定すると、
             ビュースクリプトの振る舞いを変更することができます。
         </para>
 
@@ -173,7 +173,7 @@ base/path/
             </para></listitem>
 
             <listitem><para>
-                <code>strictVars:</code> は、初期化していない変数に <code>Zend_View</code>
+                <code>strictVars:</code> は、初期化していない変数に <classname>Zend_View</classname>
                 からアクセスしようとした際に notice や warning を発生させるようにします。
                 <code>strictVars(true)</code> か、あるいはコンストラクタのオプション
                 <code>strictVars</code> で設定します。
@@ -244,7 +244,7 @@ $view->setUseStreamWrapper(true);
         </programlisting>
 
                 <para>
-                    これは、<code>Zend_View_Stream</code>
+                    これは、<classname>Zend_View_Stream</classname>
                     をビュースクリプトのストリームラッパーとして登録します。
                     そして、まるで短いタグが有効になっているかのようにコードを動作させることができます。
                 </para>
@@ -272,7 +272,7 @@ $view->setUseStreamWrapper(true);
         <para>
             通常は、<code>assign()</code> と <code>render()</code>、
             あるいはフィルタ、ヘルパー、スクリプトのパス用の設定メソッドだけで十分事足りるでしょう。
-            しかし、<code>Zend_View</code> を独自に拡張したい場合や
+            しかし、<classname>Zend_View</classname> を独自に拡張したい場合や
             その内部にアクセスしたい場合のために、さらにいくつかのメソッドを用意しています。
         </para>
 

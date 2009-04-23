@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
 
@@ -20,22 +20,22 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Socket</code> (デフォルト)
+                        <classname>Zend_Http_Client_Adapter_Socket</classname> (デフォルト)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Proxy</code>
+                        <classname>Zend_Http_Client_Adapter_Proxy</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Test</code>
+                        <classname>Zend_Http_Client_Adapter_Test</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Curl</code>
+                        <classname>Zend_Http_Client_Adapter_Curl</classname>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -62,7 +62,7 @@
         </para>
         <para>
             ソケットアダプタには、追加の設定オプションを指定することができます。これは
-            <code>Zend_Http_Client->setConfig()</code> で指定するか、
+            <classname>Zend_Http_Client->setConfig()</classname> で指定するか、
             あるいはクライアントのコンストラクタに渡します。
             <table id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket の設定パラメータ</title>

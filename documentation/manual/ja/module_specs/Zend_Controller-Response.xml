@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.response">
     <title>レスポンスオブジェクト</title>
 
@@ -15,7 +15,7 @@
             さらに、フロントコントローラで捕捉した例外はすべてレスポンスオブジェクトに渡されます。
             これにより、例外の処理がやりやすくなります。
             この挙動を変更するには
-            <code>Zend_Controller_Front::throwExceptions(true)</code>
+            <classname>Zend_Controller_Front::throwExceptions(true)</classname>
             と設定します。
         </para>
 
@@ -40,7 +40,7 @@ $response->sendResponse();
                 <code>sendResponse()</code> をコールします。通常はこれをコールする必要はありません。
                 しかし、テスト中などにレスポンスの内容を操作したい場合は、
                 <code>returnResponse</code> フラグを
-                <code>Zend_Controller_Front::returnResponse(true)</code>
+                <classname>Zend_Controller_Front::returnResponse(true)</classname>
                 と設定することでこの振る舞いを変更できます。
             </para>
 
@@ -81,7 +81,7 @@ $this->getResponse()
                     linkend="zend.controller.action.viewintegration">ビューの統合
                     </link> を使用する場合は、
                 レンダリングされたビュースクリプトの内容をレスポンスオブジェクトに設定する必要はありません。
-                <code>Zend_Controller_Action::render()</code> がデフォルトでこれを行います。
+                <classname>Zend_Controller_Action::render()</classname> がデフォルトでこれを行います。
             </para>
         </note>
 
@@ -489,7 +489,7 @@ array(
 
         <para>
             レスポンスクラスの基底クラスは
-            <code>Zend_Controller_Response_Abstract</code>
+            <classname>Zend_Controller_Response_Abstract</classname>
             です。レスポンスクラスを作成する際には、
             このクラスあるいはその派生クラスのいずれかを継承しなければなりません。
             このクラスが提供するメソッドについては、先ほど説明しました。

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
-        <code>Zend_Config_Xml</code> を使用すると、シンプルな XML
+        <classname>Zend_Config_Xml</classname> を使用すると、シンプルな XML
         形式で保存した設定データを、オブジェクトのプロパティとして扱えるようになります。
         XML ファイルあるいは文字列のルート要素は設定には関係しないので、任意の名前がつけられます。
         その直下のレベルの XML 要素が設定データのセクションに対応します。
@@ -18,15 +18,15 @@
     <note>
         <title>返り値の型</title>
         <para>
-            <code>Zend_Config_Xml</code> で読み込んだ設定データは、
+            <classname>Zend_Config_Xml</classname> で読み込んだ設定データは、
             常に文字列形式で返されます。必要に応じて、
             文字列から適切な型に変換してください。
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title><code>Zend_Config_Xml</code> の使用法</title>
+        <title><classname>Zend_Config_Xml</classname> の使用法</title>
         <para>
-            この例は、<code>Zend_Config_Xml</code> を使用して
+            この例は、<classname>Zend_Config_Xml</classname> を使用して
             XML ファイルから設定データを読み込むための基本的な方法を説明するものです。
             この例では、運用環境の設定と開発環境の設定を両方管理しています。
             開発環境用の設定データは運用環境用のものと非常に似ているので、
@@ -76,9 +76,9 @@ echo $config->database->params->dbname; // "dbname" と出力します
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title><code>Zend_Config_Xml</code> におけるタグの属性の使用</title>
+        <title><classname>Zend_Config_Xml</classname> におけるタグの属性の使用</title>
         <para>
-            <code>Zend_Config_Xml</code> では、設定内でノードを定義する際にさらに 2 通りの方法を用意しています。
+            <classname>Zend_Config_Xml</classname> では、設定内でノードを定義する際にさらに 2 通りの方法を用意しています。
             どちらも属性を使用するものです。<code>extends</code> 属性や
             <code>value</code> 属性は予約語
             (後者は、属性を使う 2 番目の方法で使用します)
@@ -139,7 +139,7 @@ echo $config->database->params->dbname; // "dbname" と出力します
 <note>
         <title>XML 文字列</title>
         <para>
-            <code>Zend_Config_Xml</code> は、データベースなどから取得した
+            <classname>Zend_Config_Xml</classname> は、データベースなどから取得した
             XML 文字列を直接読み込むこともできます。
             文字列はコンストラクタの最初のパラメータとして渡し、最初は
             <code>'&lt;?xml':</code> で始まらなければなりません。

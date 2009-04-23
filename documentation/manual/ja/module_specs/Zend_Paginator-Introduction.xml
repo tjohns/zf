@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.paginator.introduction">
     <title>導入</title>
 
     <para>
-        <code>Zend_Paginator</code> は、
+        <classname>Zend_Paginator</classname> は、
         データのコレクションにページを割り振ったりそれをユーザに表示したりするためのコンポーネントです。
     </para>
 
     <para>
-        <code>Zend_Paginator</code> は次のような設計を目指しています。
+        <classname>Zend_Paginator</classname> は次のような設計を目指しています。
 
         <itemizedlist>
             <listitem>
@@ -31,10 +31,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Paginator</code> と他の Zend Framework
+                    <classname>Zend_Paginator</classname> と他の Zend Framework
                     コンポーネントは疎結合にし、たとえば
-                    <code>Zend_View</code> や
-                    <code>Zend_Db</code> などと組み合わせて使用できるようにする
+                    <classname>Zend_View</classname> や
+                    <classname>Zend_Db</classname> などと組み合わせて使用できるようにする
                 </para>
             </listitem>
         </itemizedlist>

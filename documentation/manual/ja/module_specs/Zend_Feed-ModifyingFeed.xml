@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.feed.modifying-feed">
     <title>フィードおよびエントリの構造の変更</title>
 
     <para>
         フィードやエントリを読み込むだけでなく、それらを作成したり変更したりする場合にも
-        <code>Zend_Feed</code> の自然な構文が使用できます。
+        <classname>Zend_Feed</classname> の自然な構文が使用できます。
         作成したり変更したりしたオブジェクトを、
         妥当な形式の XML でファイルに保存したりサーバに送信したりといったことが簡単にできます。
     </para>
@@ -39,8 +39,8 @@ echo $entry->saveXML();
 
     <para>
         <code>atom:</code>、<code>rss:</code>、<code>osrss:</code>
-        以外の名前空間をエントリで使用したい場合は、<code>Zend_Feed::registerNamespace()</code>
-        を使用して <code>Zend_Feed</code> で名前空間を登録する必要があります。
+        以外の名前空間をエントリで使用したい場合は、<classname>Zend_Feed::registerNamespace()</classname>
+        を使用して <classname>Zend_Feed</classname> で名前空間を登録する必要があります。
         既存の要素を書き換えた場合は、常にもとの名前空間が維持されます。
         新しい要素を追加する場合には、
         明示的に名前空間を指定しない限りデフォルトの名前空間に配置されます。

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.http.client">
     <title>導入</title>
     <para>
@@ -240,10 +240,10 @@ $client->setParameterPost(array(
             Zend_Http_Client では、そのクライアントオブジェクトが
             直近に送信したリクエストおよび
             直近に受信したレスポンスにアクセスするためのメソッドを提供しています。
-            <code>Zend_Http_Client->getLastRequest()</code>
+            <classname>Zend_Http_Client->getLastRequest()</classname>
             は何もパラメータを受け取らず、クライアントが直近に送信した
             HTTP リクエストを文字列で返します。同様に
-            <code>Zend_Http_Client->getLastResponse()</code> は、
+            <classname>Zend_Http_Client->getLastResponse()</classname> は、
             クライアントが直近に受信した HTTP レスポンスを
             <link linkend="zend.http.response">Zend_Http_Response</link>
             オブジェクトで返します。

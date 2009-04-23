@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.basics">
     <title>Zend_Controller の基本</title>
 
     <para>
-        <code>Zend_Controller</code> は軽量で部品化されており、拡張しやすいように設計されています。
+        <classname>Zend_Controller</classname> は軽量で部品化されており、拡張しやすいように設計されています。
         この設計は、柔軟性および利用者に対する自由度を確保するための最低限のものであり、
-        <code>Zend_Controller</code> を使用して構築したシステムは、
+        <classname>Zend_Controller</classname> を使用して構築したシステムは、
         ほぼ同じようなコード配置・規約を共有することができます。
     </para>
 
@@ -21,7 +21,7 @@
     </para>
 
     <para>
-        <code>Zend_Controller</code> の処理の流れは、
+        <classname>Zend_Controller</classname> の処理の流れは、
         いくつかの部品にわかれて実装されています。
         これらの部品のすべてを完璧に理解する必要はありませんが、
         処理の概要を知っておくことは有用です。
@@ -30,21 +30,21 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front</code> は、
-                    <code>Zend_Controller</code> の処理全体を取りまとめます。
+                    <classname>Zend_Controller_Front</classname> は、
+                    <classname>Zend_Controller</classname> の処理全体を取りまとめます。
                     FrontController パターンであるといえます。
-                    サーバから受け取ったすべてのリクエストを <code>Zend_Controller_Front</code>
+                    サーバから受け取ったすべてのリクエストを <classname>Zend_Controller_Front</classname>
                     が処理し、最終的にリクエストを ActionController
-                    (<code>Zend_Controller_Action</code>) に委譲します。
+                    (<classname>Zend_Controller_Action</classname>) に委譲します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Request_Abstract</code>
+                    <classname>Zend_Controller_Request_Abstract</classname>
                     はリクエスト環境を表し、コントローラ名やアクション名
                     そしてリクエストパラメータを設定したり取得したりする機能を提供します。
-                    さらに、アクションが <code>Zend_Controller_Dispatcher</code>
+                    さらに、アクションが <classname>Zend_Controller_Dispatcher</classname>
                     でディスパッチされたかどうかを追跡する機能もあります。
                     この抽象リクエストオブジェクトを拡張し、
                     リクエスト情報をカプセル化します。それによって、
@@ -53,26 +53,26 @@
                 </para>
 
                 <para>
-                    デフォルトでは <code>Zend_Controller_Request_Http</code>
+                    デフォルトでは <classname>Zend_Controller_Request_Http</classname>
                     が用いられます。これは、HTTP リクエスト環境全体へのアクセス機能を提供します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_Interface</code> を使用してルータを定義します。
+                    <classname>Zend_Controller_Router_Interface</classname> を使用してルータを定義します。
                     ルーティングとは、リクエストの内容を調べて、
                     そのリクエストを処理するコントローラとアクションを決定する処理のことです。
                     このコントローラとアクション、そしてリクエストパラメータがリクエストオブジェクトに設定され、
-                    <code>Zend_Controller_Dispatcher_Standard</code> で処理されます。
+                    <classname>Zend_Controller_Dispatcher_Standard</classname> で処理されます。
                     ルーティングが発生するのは一度だけ、
                     つまり最初にリクエストを受け取ってから
                     最初のコントローラにディスパッチされるまでの間だけです。
                 </para>
 
                 <para>
-                    デフォルトのルータである <code>Zend_Controller_Router_Rewrite</code> は、
-                    <code>Zend_Controller_Request_Http</code> で指定された URI
+                    デフォルトのルータである <classname>Zend_Controller_Router_Rewrite</classname> は、
+                    <classname>Zend_Controller_Request_Http</classname> で指定された URI
                     を受け取ってそれを分解し、コントローラや
                     アクション、そして URL に含まれたパスのパラメータを取得します。
                     たとえば、<code>http://localhost/foo/bar/key/value</code>
@@ -82,7 +82,7 @@
                 </para>
 
                 <para>
-                    <code>Zend_Controller_Router_Rewrite</code>
+                    <classname>Zend_Controller_Router_Rewrite</classname>
                     は、任意のパスにマッチさせることもできます。
                     詳細は <link
                         linkend="zend.controller.router">
@@ -93,7 +93,7 @@
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher_Interface</code>
+                    <classname>Zend_Controller_Dispatcher_Interface</classname>
                     を使用してディスパッチャを定義します。ディスパッチとは、
                     コントローラとアクションをリクエストオブジェクトから受け取り、
                     それを実際のコントローラファイル/クラスとメソッドに対応させる処理のことです。
@@ -115,7 +115,7 @@
 
                 <para>
                     デフォルトのディスパッチャは
-                    <code>Zend_Controller_Dispatcher_Standard</code> です。
+                    <classname>Zend_Controller_Dispatcher_Standard</classname> です。
                     これは、MixedCasedClasses 形式の名前の最後に
                     Controller がついたクラスをコントローラとして使用し、
                     アクションメソッドの名前は camelCasedMethods
@@ -156,39 +156,39 @@
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action</code> はコントローラの基底コンポーネントです。
-                    各コントローラはこの <code>Zend_Controller_Action</code>
+                    <classname>Zend_Controller_Action</classname> はコントローラの基底コンポーネントです。
+                    各コントローラはこの <classname>Zend_Controller_Action</classname>
                     クラスを継承して作成します。このクラスではアクションメソッドを定義します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Response_Abstract</code>
+                    <classname>Zend_Controller_Response_Abstract</classname>
                     は基底レスポンスクラスで、アクションコントローラからの応答内容を収集し、
                     それをレスポンスとして返します。これはヘッダと本文の両方を収集します。
                 </para>
 
                 <para>
                     デフォルトのレスポンスクラスは
-                    <code>Zend_Controller_Response_Http</code> で、
+                    <classname>Zend_Controller_Response_Http</classname> で、
                     これは HTTP 環境での使用に適しています。
                 </para>
             </listitem>
         </itemizedlist>
 
     <para>
-        <code>Zend_Controller</code> の処理の流れは比較的シンプルです。
-        <code>Zend_Controller_Front</code> がリクエストを受け取り、
-        <code>Zend_Controller_Router_Rewrite</code> をコールして、
+        <classname>Zend_Controller</classname> の処理の流れは比較的シンプルです。
+        <classname>Zend_Controller_Front</classname> がリクエストを受け取り、
+        <classname>Zend_Controller_Router_Rewrite</classname> をコールして、
         配送先となるコントローラ (そしてコントローラ内のアクション)
-        を決定します。<code>Zend_Controller_Router_Rewrite</code> は URI
+        を決定します。<classname>Zend_Controller_Router_Rewrite</classname> は URI
         を分解し、リクエストからコントローラ名とアクション名を取得します。
-        その後、<code>Zend_Controller_Front</code> はディスパッチループに突入します。
-        まず <code>Zend_Controller_Dispatcher_Standard</code> をコールしてそこにリクエストを渡し、
+        その後、<classname>Zend_Controller_Front</classname> はディスパッチループに突入します。
+        まず <classname>Zend_Controller_Dispatcher_Standard</classname> をコールしてそこにリクエストを渡し、
         リクエストで指定されたコントローラとアクションを取得します
         (あるいはデフォルトを使用します)。
-        コントローラが終了すると、処理は <code>Zend_Controller_Front</code>
+        コントローラが終了すると、処理は <classname>Zend_Controller_Front</classname>
         に戻ります。リクエストのディスパッチ状態がリセットされ、
         別のコントローラをディスパッチするように指示された場合は、
         ループが続けられて次の配送処理が行われます。

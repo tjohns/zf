@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.file.transfer.migration">
 
     <title>以前のバージョンからの移行</title>
 
     <para>
-        <code>Zend_File_Transfer</code> の API は日々変わっています。
-        <code>Zend_File_Transfer</code> やそのサブコンポーネントを
+        <classname>Zend_File_Transfer</classname> の API は日々変わっています。
+        <classname>Zend_File_Transfer</classname> やそのサブコンポーネントを
         初期のバージョンから使っている方は、以下のガイドラインに従ってスクリプトを変更し、
         新しい API にあわせましょう。
     </para>
@@ -18,13 +18,13 @@
             <title>フィルタやバリデータを使用する際の変更点</title>
 
             <para>
-                <code>Zend_File_Transfer</code> のバリデータが
-                <code>Zend_Config</code> と組み合わせて使えないという指摘がありました。
+                <classname>Zend_File_Transfer</classname> のバリデータが
+                <classname>Zend_Config</classname> と組み合わせて使えないという指摘がありました。
                 名前つき配列を使っていなかったからです。
             </para>
 
             <para>
-                そこで、<code>Zend_File_Transfer</code> 用のすべてのフィルタとバリデータを作り直しました。
+                そこで、<classname>Zend_File_Transfer</classname> 用のすべてのフィルタとバリデータを作り直しました。
                 古い構文でも動作しますがこれは非推奨となり、
                 設定せずに実行すると PHP の notice が発生するようになります。
             </para>
@@ -38,11 +38,11 @@
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Filter_File_Rename($oldfile, $newfile, $overwrite)</code>
+                        古い形式の API: <classname>Zend_Filter_File_Rename($oldfile, $newfile, $overwrite)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Filter_File_Rename($options)</code>
+                        新しい形式の API: <classname>Zend_Filter_File_Rename($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>source</emphasis> ($oldfile と同等)、
                         <emphasis>target</emphasis> ($newfile と同等)、
@@ -75,11 +75,11 @@ $upload->addFilter('Rename',
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_Count($min, $max)</code>
+                        古い形式の API: <classname>Zend_Validate_File_Count($min, $max)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_Count($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_Count($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>min</emphasis> ($min と同等)、
                         <emphasis>max</emphasis> ($max と同等)
@@ -111,11 +111,11 @@ $upload->addValidator('Count',
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_Extension($extension, $case)</code>
+                        古い形式の API: <classname>Zend_Validate_File_Extension($extension, $case)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_Extension($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_Extension($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>*</emphasis> ($extension と同等、任意の他のキーを使用可能)、
                         <emphasis>case</emphasis> ($case と同等)
@@ -147,11 +147,11 @@ $upload->addValidator('Extension',
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_FilesSize($min, $max, $bytestring)</code>
+                        古い形式の API: <classname>Zend_Validate_File_FilesSize($min, $max, $bytestring)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_FilesSize($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_FilesSize($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>min</emphasis> ($min と同等)、
                         <emphasis>max</emphasis> ($max と同等)、
@@ -199,11 +199,11 @@ $upload->setUseByteSting(true); // set flag
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_Hash($hash, $algorithm)</code>
+                        古い形式の API: <classname>Zend_Validate_File_Hash($hash, $algorithm)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_Hash($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_Hash($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>*</emphasis> ($hash と同等、任意の他のキーを使用可能)、
                         <emphasis>algorithm</emphasis> ($algorithm と同等)、
@@ -235,11 +235,11 @@ $upload->addValidator('Hash',
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_ImageSize($minwidth, $minheight, $maxwidth, $maxheight)</code>
+                        古い形式の API: <classname>Zend_Validate_File_ImageSize($minwidth, $minheight, $maxwidth, $maxheight)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_FilesSize($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_FilesSize($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>minwidth</emphasis> ($minwidth と同等)、
                         <emphasis>maxwidth</emphasis> ($maxwidth と同等)、
@@ -275,11 +275,11 @@ $upload->addValidator('ImageSize',
 
                 <itemizedlist>
                     <listitem><para>
-                        古い形式の API: <code>Zend_Validate_File_Size($min, $max, $bytestring)</code>
+                        古い形式の API: <classname>Zend_Validate_File_Size($min, $max, $bytestring)</classname>
                     </para></listitem>
 
                     <listitem><para>
-                        新しい形式の API: <code>Zend_Validate_File_Size($options)</code>
+                        新しい形式の API: <classname>Zend_Validate_File_Size($options)</classname>
                         $options には次の配列キーを使えます。
                         <emphasis>min</emphasis> ($min と同等)、
                         <emphasis>max</emphasis> ($max と同等)、
@@ -316,15 +316,15 @@ $upload->addValidator('Size',
             <title>バリデータを使う際の変更点</title>
 
             <para>
-                <code>Zend_File_Transfer</code> のバリデータが
-                <code>Zend_Form</code> のデフォルトのものと同じようには動作しないという指摘がありました。
-                <code>Zend_Form</code> では <code>breakChainOnFailure</code>
+                <classname>Zend_File_Transfer</classname> のバリデータが
+                <classname>Zend_Form</classname> のデフォルトのものと同じようには動作しないという指摘がありました。
+                <classname>Zend_Form</code> では <code>breakChainOnFailure</classname>
                 パラメータを利用でき、検証エラーが発生した際に
                 それ以降のバリデータを動作させないようにすることができます。
             </para>
 
             <para>
-                そこで、<code>Zend_File_Transfer</code>
+                そこで、<classname>Zend_File_Transfer</classname>
                 の既存のバリデータにもこのパラメータを追加することにしました。
             </para>
 

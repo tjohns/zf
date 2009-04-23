@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.date.introduction">
 
     <title>導入</title>
 
     <para>
-        <code>Zend_Date</code> コンポーネントは、
+        <classname>Zend_Date</classname> コンポーネントは、
         日付や時刻を操作するための、きめ細かくシンプルな API を提供します。
         このメソッドを使用すると、日付の各部分を含めた広範囲の情報を扱えます。
         さまざまな機能がもたらす可能性は、PHP
@@ -25,14 +25,14 @@
         たとえば、カレンダーの日付を表す際にまず月が最初にくるところもあれば、
         年が最初にくるところもあります。
         地域の処理および正規化についての詳細は、
-        <link linkend="zend.locale.date.datesandtimes"><code>Zend_Locale</code>
+        <link linkend="zend.locale.date.datesandtimes"><classname>Zend_Locale</classname>
         </link>
         を参照ください。
     </para>
 
     <para>
-        <code>Zend_Date</code> は、多くの言語における月名の短縮表記に対応しています。
-        <code>Zend_Locale</code> は、タイムスタンプにおける各地域の月名や曜日名に対応しており、
+        <classname>Zend_Date</classname> は、多くの言語における月名の短縮表記に対応しています。
+        <classname>Zend_Locale</classname> は、タイムスタンプにおける各地域の月名や曜日名に対応しており、
         それを他の地域での表記に変換することもできます。
     </para>
 
@@ -72,7 +72,7 @@ date_default_timezone_set('Europe/Berlin');
             タイムゾーン <emphasis role="strong">UTC</emphasis> および
             <emphasis role="strong">GMT</emphasis> には夏時間が存在しないことに注意しましょう。
             つまり、たとえ手動で DST を使うよう設定したとしても、
-            UTC や GMT に設定された <code>Zend_Date</code>
+            UTC や GMT に設定された <classname>Zend_Date</classname>
             のインスタンスはその影響を受けないということです。
         </para>
     </sect2>
@@ -82,7 +82,7 @@ date_default_timezone_set('Europe/Berlin');
         <title>なぜ Zend_Date なのか?</title>
 
         <para>
-            <code>Zend_Date</code> が提供する機能は次のとおりで、これは
+            <classname>Zend_Date</classname> が提供する機能は次のとおりで、これは
             PHP の日付関数群を拡張したものです。
         </para>
 
@@ -92,7 +92,7 @@ date_default_timezone_set('Europe/Berlin');
                     シンプルな API
                 </para>
                 <para>
-                    <code>Zend_Date</code> の提供する API は非常にシンプルです。
+                    <classname>Zend_Date</classname> の提供する API は非常にシンプルです。
                     これは、四つのプログラミング言語の日付/時刻関連機能から、
                     いいところを抜き出してまとめたものです。
                     たとえば、二つの時刻を加算したり比較したりすることは一行でできてしまいます。
@@ -114,7 +114,7 @@ date_default_timezone_set('Europe/Berlin');
                 <para>
                     PHP 5.2 のドキュメントでは "タイムスタンプの有効範囲は、通常は
                     Fri, 13 Dec 1901 20:45:54 GMT から Tue, 19 Jan 2038 03:14:07 GMT までです"
-                    と書かれていますが、<code>Zend_Date</code> は
+                    と書かれていますが、<classname>Zend_Date</classname> は
                     ほぼ無制限に近い範囲をサポートしています。これは、BCMath
                     拡張モジュールのおかげです。
                     BCMath が使用できない場合は、Zend_Date がサポートするタイムスタンプの範囲が制限され、
@@ -140,7 +140,7 @@ date_default_timezone_set('Europe/Berlin');
                     たとえば、MsSQL と
                     <ulink url="http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html">MySQL</ulink>
                     の日付書式は微妙に異なりますが、
-                    <code>Zend_Date</code> は、書式指定定数
+                    <classname>Zend_Date</classname> は、書式指定定数
                     <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>
                     によって両方ともサポートしています。
                     日付文字列が PHP の date() フォーマットトークンである

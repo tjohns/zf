@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15036 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Calendar の使用法</title>
     <para>
-        <code>Zend_Gdata_Calendar</code>
+        <classname>Zend_Gdata_Calendar</classname>
         クラスを使うと、Google Calendar サービスで
         イベントの閲覧や作成、更新、削除ができるようになります。
     </para>
@@ -26,7 +26,7 @@
             何らかのトランザクションが発生する際には、
             必ず接続を確立する必要があります。
             カレンダーサーバとの接続は、まず HTTP クライアントを作成して
-            <code>Zend_Gdata_Calendar</code>
+            <classname>Zend_Gdata_Calendar</classname>
             サービスのインスタンスをそこにバインドするという手順で行います。
         </para>
         <sect3 id="zend.gdata.calendar.connecting.authentication">
@@ -74,7 +74,7 @@
                 </listitem>
             </itemizedlist>
             <para>
-                <code>Zend_Gdata</code> ライブラリは、
+                <classname>Zend_Gdata</classname> ライブラリは、
                 これらのすべての方式に対応しています。
                 これ以降の説明は、認証方式については理解しており
                 適切な認証方式で接続できるようになっていることを前提として進めていきます。
@@ -90,20 +90,20 @@
             <title>サービスのインスタンスの作成</title>
             <para>
                 Google Calendar を使用するためのクラスとして、このライブラリでは
-                <code>Zend_Gdata_Calendar</code> を用意しています。
+                <classname>Zend_Gdata_Calendar</classname> を用意しています。
                 このクラスは Google Data や Atom Publishing Protocol
                 モデルへの共通インターフェイスを提供し、
                 カレンダーサーバとのリクエストのやりとりを支援します。
             </para>
             <para>
                 使用する認証方式を決めたら、次に
-                <code>Zend_Gdata_Calendar</code> のインスタンスを作成します。
+                <classname>Zend_Gdata_Calendar</classname> のインスタンスを作成します。
                 このクラスのコンストラクタには、引数として
-                <code>Zend_Http_Client</code> のインスタンスを渡します。
+                <classname>Zend_Http_Client</classname> のインスタンスを渡します。
                 これは、AuthSub 認証および ClientAuth 認証へのインターフェイスを提供します。
                 これらの認証を使用する場合には、認証済みの HTTP クライアントが必要です。
                 引数を省略した場合は、未認証の
-                <code>Zend_Http_Client</code>
+                <classname>Zend_Http_Client</classname>
                 のインスタンスを自動的に作成して使用します。
             </para>
             <para>
@@ -259,9 +259,9 @@ try {
         </programlisting>
         <para>
             <code>getCalendarListFeed()</code> をコールすると
-            <code>Zend_Gdata_Calendar_ListFeed</code>
+            <classname>Zend_Gdata_Calendar_ListFeed</classname>
             の新しいインスタンスを作成します。この中には、使用できるカレンダーの一覧が
-            <code>Zend_Gdata_Calendar_ListEntry</code>
+            <classname>Zend_Gdata_Calendar_ListEntry</classname>
             のインスタンスとして格納されています。
             フィードを取得したら、それを使用して中身を取得することができます。
         </para>
@@ -280,12 +280,12 @@ echo "</ul>";
         <title>イベントの取得</title>
         <para>
             カレンダーリストと同様、イベントも
-            <code>Zend_Gdata_Calendar</code>
+            <classname>Zend_Gdata_Calendar</classname>
             クラスで取得することができます。
             返されるイベントリストの型は
-            <code>Zend_Gdata_Calendar_EventFeed</code>
+            <classname>Zend_Gdata_Calendar_EventFeed</classname>
             で、各イベントは
-            <code>Zend_Gdata_Calendar_EventEntry</code>
+            <classname>Zend_Gdata_Calendar_EventEntry</classname>
             のインスタンスとして格納されています。
             先ほどの例と同様の方法で、個々のイベントの情報を取得することができます。
         </para>
@@ -294,7 +294,7 @@ echo "</ul>";
             <para>
                 Calendar API でイベントを取得する際には、
                 クエリ URL を用いてほしいイベントを指定します。
-                <code>Zend_Gdata_Calendar_EventQuery</code> クラスは、
+                <classname>Zend_Gdata_Calendar_EventQuery</classname> クラスは、
                 指定したパラメータに基づいたクエリ URL
                 を自動的に作成することでこの作業の手間を軽減します。
                 使用できるパラメータの一覧は
@@ -341,7 +341,7 @@ echo "</ul>";
             <title>開始時刻順によるイベントの取得</title>
             <para>
                 以下の例は、
-                <code>Zend_Gdata_Query</code> を使用して非公開フィードを指定しています。
+                <classname>Zend_Gdata_Query</classname> を使用して非公開フィードを指定しています。
                 つまり、認証済みの接続が必要となります。
                 認証に MagicCookie を使用している場合は、可視性は
                 "<code>private-magicCookieValue</code>"
@@ -379,7 +379,7 @@ echo "</ul>";
             <para>
                 ID や author、when、event status、visibility、web content、
                 そして content などのさまざまなプロパティが
-                <code>Zend_Gdata_Calendar_EventEntry</code>
+                <classname>Zend_Gdata_Calendar_EventEntry</classname>
                 で使用できます。プロパティの一覧は
                 <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework
                 API ドキュメント</ulink>
@@ -479,9 +479,9 @@ try {
             <title>一度だけのイベントの作成</title>
             <para>
                 イベントをカレンダーに追加するには、
-                <code>Zend_Gdata_EventEntry</code> のインスタンスを作成して
+                <classname>Zend_Gdata_EventEntry</classname> のインスタンスを作成して
                 そこに適切なデータを代入します。カレンダーサービスのインスタンス
-                (<code>Zend_Gdata_Calendar</code>) はそのデータを XML
+                (<classname>Zend_Gdata_Calendar</classname>) はそのデータを XML
                 に変換し、カレンダーサーバに POST します。
                 イベントを作成するには、AuthSub 認証あるいは
                 ClientAuth 認証でカレンダーサーバと接続する必要があります。

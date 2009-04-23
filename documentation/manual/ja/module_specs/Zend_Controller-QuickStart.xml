@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller クイックスタート</title>
 
     <sect2 id="zend.controller.quickstart.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Controller</code> は、Zend Framework の MVC
+            <classname>Zend_Controller</classname> は、Zend Framework の MVC
             システムの中心となるものです。MVC は <ulink
                 url="http://en.wikipedia.org/wiki/Model-view-controller">モデル-ビュー-コントローラ</ulink>
             の頭文字をとったもので、アプリケーションのロジックと表示ロジックを分離させる設計手法です。
-            <code>Zend_Controller_Front</code> は
+            <classname>Zend_Controller_Front</classname> は
             <ulink
                 url="http://www.martinfowler.com/eaaCatalog/frontController.html">
                 フロントコントローラ</ulink> パターンを実装しており、
@@ -19,7 +19,7 @@
             URL にもとづいたアクションコントローラに配送します。
         </para>
         <para>
-            <code>Zend_Controller</code> は、拡張性を考慮して作成されています。
+            <classname>Zend_Controller</classname> は、拡張性を考慮して作成されています。
             拡張の方法としては、既存のクラスのサブクラスを作成する方法と
             アクションヘルパーを作成する方法があります。
             新しいサブクラスを作成すると、コントローラクラスの基盤となる
@@ -178,7 +178,7 @@ Zend_Controller_Front::run('/path/to/app/controllers');
             </para>
 
             <para>
-                <code>Zend_Controller</code> のディスパッチャは、
+                <classname>Zend_Controller</classname> のディスパッチャは、
                 コントローラを対応するクラスに関連付けます。
                 デフォルトでは、コントローラ名の先頭を大文字にしたものに
                 <code>Controller</code> をつなげたものがクラス名となります。
@@ -222,7 +222,7 @@ class IndexController extends Zend_Controller_Action
                 アクションヘルパーが有効になります。つまり、
                 アクションメソッドとそれに対応するビュースクリプトを用意すれば、
                 すぐにその内容をレンダリングできるというわけです。
-                デフォルトでは、MVCのビュー層として <code>Zend_View</code> を使用します。
+                デフォルトでは、MVCのビュー層として <classname>Zend_View</classname> を使用します。
                 <code>ViewRenderer</code> は、コントローラ名
                 (たとえば <code>index</code>) とアクション名
                 (たとえば <code>index</code>) から処理するテンプレートを決定します。

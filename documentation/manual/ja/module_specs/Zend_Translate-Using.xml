@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -55,12 +55,12 @@ print $translate->_("Here is line two") . "\n";
 
     <para>
         では、何が起こっているのか、そしてどうやって
-        <code>Zend_Translate</code> をコードに組み込むのかについて
+        <classname>Zend_Translate</classname> をコードに組み込むのかについて
         もうすこし詳しく見ていきましょう。
     </para>
 
     <para>
-        新しい <code>Zend_Translate</code> オブジェクトを作成し、もととなるアダプタを定義します。
+        新しい <classname>Zend_Translate</classname> オブジェクトを作成し、もととなるアダプタを定義します。
 
         <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate
@@ -135,16 +135,16 @@ print $translate->_(2) . "\n";
     <para>
         また、文字列の一部が翻訳されていない場合にも問題が起こるでしょう。
         翻訳の動作原理について考えてみましょう。
-        まず <code>Zend_Translate</code> は、指定した ID あるいは文字列に対応する翻訳が
+        まず <classname>Zend_Translate</classname> は、指定した ID あるいは文字列に対応する翻訳が
         その言語に存在するかどうかを探します。
-        翻訳文字列が見つからない場合は、<code>Zend_Locale</code>
+        翻訳文字列が見つからない場合は、<classname>Zend_Locale</classname>
         で定義されているその次の言語の翻訳を探します。
         つまり "<emphasis role="strong">de_AT</emphasis>" の場合は
         "<emphasis role="strong">de</emphasis>" のみで探します。
         "<emphasis role="strong">de</emphasis>" の翻訳も見つからない場合は、
         もとのメッセージをそのまま返します。
         このようにして、たとえ翻訳文字列がなくても何らかの出力を得ることになっています。
-        <code>Zend_Translate</code> は、文字列の翻訳の際に
+        <classname>Zend_Translate</classname> は、文字列の翻訳の際に
         エラーや例外を発生させることはありません。
     </para>
 
@@ -160,7 +160,7 @@ print $translate->_(2) . "\n";
 
         <para>
             どこに翻訳ソースファイルを保存すべきなのかを知っておきましょう。
-            <code>Zend_Translate</code> では特に制限はありませんが、
+            <classname>Zend_Translate</classname> では特に制限はありませんが、
             以下のような構造を推奨します。
         </para>
 
@@ -293,7 +293,7 @@ print $translate->_(2) . "\n";
         </itemizedlist>
 
         <para>
-            <code>Zend_Translate</code> で最も便利なのは、単一構造か
+            <classname>Zend_Translate</classname> で最も便利なのは、単一構造か
             言語ごとに分けた構造でしょう。
         </para>
 
@@ -334,7 +334,7 @@ $translate->addTranslation($deutsch, 'de');
 
         <para>
             リリース 1.5 以降では、配列を外部のファイルに含めることもサポートしています。
-            ファイル名を指定すると、<code>Zend_Translate</code>
+            ファイル名を指定すると、<classname>Zend_Translate</classname>
             が自動的にそれをインクルードして配列を探します。
             詳細は、次の例を参照ください。
         </para>
@@ -714,7 +714,7 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
                         <entry>すべて</entry>
                         <entry>
                             未翻訳のメッセージや注意が書き込まれる
-                            <code>Zend_Log</code> のインスタンス
+                            <classname>Zend_Log</classname> のインスタンス
                         </entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                     </row>
@@ -740,9 +740,9 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
                         <entry>すべて</entry>
                         <entry>
                             null にすると、ディレクトリ構造のスキャンを行いません。
-                            <code>Zend_Translate::LOCALE_DIRECTORY</code> にすると、
+                            <classname>Zend_Translate::LOCALE_DIRECTORY</classname> にすると、
                             ディレクトリからロケールを検出します。
-                            <code>Zend_Translate::LOCALE_FILENAME</code> にすると、
+                            <classname>Zend_Translate::LOCALE_FILENAME</classname> にすると、
                             ファイル名からロケールを検出します。
                             詳細は <xref linkend="zend.translate.using.detection" />
                             を参照ください。
@@ -805,7 +805,7 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
         <para>
             <code>getLocale()</code> メソッドを使用すると、
             実際に設定されている言語を取得することができます。
-            これは、<code>Zend_Locale</code>
+            これは、<classname>Zend_Locale</classname>
             のインスタンスかロケール ID のいずれかとなります。
         </para>
 
@@ -866,7 +866,7 @@ if ($translate->isAvailable("fr")) {
                 新しい翻訳ソースの追加を <code>addTranslation()</code>
                 メソッドでのみ行っている場合は、自動ロケール
                 '<code>auto</code>' あるいは '<code>browser</code>'
-                を使用していれば <code>Zend_Translate</code>
+                を使用していれば <classname>Zend_Translate</classname>
                 が環境にあわせて適切な言語を自動設定します。
                 つまり、通常は <code>setLocale()</code> をコールする必要はありません。
                 これは、自動ソース検出と組み合わせて使用しなければなりません。
@@ -929,14 +929,14 @@ $translate->setLocale('it_IT');
             <para>
                 自動検出を再度有効にしたい場合は、<code>setLocale()</code>
                 で言語として <emphasis role="strong">auto</emphasis>
-                を指定します。これにより、<code>Zend_Translate</code>
+                を指定します。これにより、<classname>Zend_Translate</classname>
                 の自動検出機能が再度有効になります。
             </para>
 
             <para>
-                Zend Framework 1.7.0 以降では、<code>Zend_Translate</code>
+                Zend Framework 1.7.0 以降では、<classname>Zend_Translate</classname>
                 はアプリケーション単位でのロケールの使用にも対応します。
-                そのためには、<code>Zend_Locale</code>
+                そのためには、<classname>Zend_Locale</classname>
                 のインスタンスを以下のようにレジストリに登録します。
                 このようにすれば、同じロケールを何度も使用したいときに
                 各インスタンスで毎回ロケールを設定する手間を省けます。
@@ -970,9 +970,9 @@ $translate->getLocale();
         <title>自動的なソースの検出</title>
 
         <para>
-            <code>Zend_Translate</code> は、翻訳ソースを自動的に検出することができます。
+            <classname>Zend_Translate</classname> は、翻訳ソースを自動的に検出することができます。
             つまり、各ソースファイルを手動で宣言する必要はないということです。
-            そんな作業は <code>Zend_Translate</code> に任せてしまい、
+            そんな作業は <classname>Zend_Translate</classname> に任せてしまい、
             ディレクトリ内からソースファイルを見つけさせることができるのです。
         </para>
 
@@ -1005,10 +1005,10 @@ $translate = new Zend_Translate('tmx', '/language');
         </example>
 
         <para>
-            <code>Zend_Translate</code> は、指定したディレクトリだけでなく
+            <classname>Zend_Translate</classname> は、指定したディレクトリだけでなく
             そのサブディレクトリすべてから翻訳ソースファイルを探します。
             おかげで、非常に簡単に使用できるようになっています。
-            しかし、<code>Zend_Translate</code> では
+            しかし、<classname>Zend_Translate</classname> では
             ソースを含まないファイルは無視します。
             また翻訳データの読み込みに失敗した場合もそのファイルを無視します。
             つまり、翻訳ソースが正しい形式であることと
@@ -1019,7 +1019,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <note>
             <para>
                 ディレクトリ階層の深さやその中のファイルの数によっては、
-                <code>Zend_Translate</code> の処理に長い時間がかかることもあります。
+                <classname>Zend_Translate</classname> の処理に長い時間がかかることもあります。
             </para>
         </note>
 
@@ -1042,7 +1042,7 @@ $translate = new Zend_Translate('tmx', '/language');
             </para>
 
             <para>
-                <code>Zend_Translate</code> に '<code>scan</code>' オプションを指定すると、
+                <classname>Zend_Translate</code> に '<code>scan</classname>' オプションを指定すると、
                 ディレクトリ名から言語を検出させることができます。
                 詳細は次の例を参照ください。
             </para>
@@ -1164,7 +1164,7 @@ $translate = new Zend_Translate(
                 <title>ファイル名の一部</title>
 
                 <para>
-                    <code>Zend_Translate</code> は、
+                    <classname>Zend_Translate</classname> は、
                     ファイル名の一部に言語名が含まれている場合にもそれを検出することができます。
                     しかし、この方式を使用する場合は言語名をトークンで分割する必要があります。
                     トークンとしてサポートされているのは、小数点 '.' かアンダーライン '_'、
@@ -1271,13 +1271,13 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <para>
             大規模なサイトを管理していたり翻訳ファイルを手作業で作ったりしている場合に、
             うまく翻訳ができないメッセージに悩まされることがよくあるでしょう。
-            <code>Zend_Translate</code> を使っていれば、こんなときにも簡単な解決方法があります。
+            <classname>Zend_Translate</classname> を使っていれば、こんなときにも簡単な解決方法があります。
         </para>
 
         <para>
             そのためには、次の 2、3 のステップに従う必要があります。
-            まず <code>Zend_Log</code> のインスタンスを作成します。
-            そして、そのインスタンスを <code>Zend_Translate</code> にアタッチします。
+            まず <classname>Zend_Log</classname> のインスタンスを作成します。
+            そして、そのインスタンスを <classname>Zend_Translate</classname> にアタッチします。
             次の例を参照ください。
         </para>
 

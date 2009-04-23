@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>高度な使用法</title>
@@ -35,7 +35,7 @@ Zend_Session::start();
             起動ファイルでセッションを開始する際には、
             ヘッダがブラウザに送信される前に確実にセッションが始まるようにします。
             そうしないと例外が発生してしまい、おそらくユーザが見るページは崩れてしまうでしょう。
-            さまざまな高度な機能を使用するには、まず <code>Zend_Session::start()</code>
+            さまざまな高度な機能を使用するには、まず <classname>Zend_Session::start()</classname>
             が必要です (高度な機能の詳細については後で説明します)。
         </para>
 
@@ -65,17 +65,17 @@ php_value session.auto_start 0
                     間違い: PHP の
                     <ulink url="http://www.php.net/session_start"><code>session_start()</code></ulink>
                     関数を直接使用してはいけません。
-                    <code>session_start()</code> を直接使用した後で <code>Zend_Session_Namespace</code> を使用した場合は、
-                    <code>Zend_Session::start()</code> が例外 ("session has already been started")
-                    をスローします。<code>Zend_Session_Namespace</code> を使用するか
-                    明示的に <code>Zend_Session::start()</code> で開始した後で
+                    <code>session_start()</code> を直接使用した後で <classname>Zend_Session_Namespace</classname> を使用した場合は、
+                    <classname>Zend_Session::start()</classname> が例外 ("session has already been started")
+                    をスローします。<classname>Zend_Session_Namespace</classname> を使用するか
+                    明示的に <classname>Zend_Session::start()</classname> で開始した後で
                     <code>session_start()</code> をコールすると、<code>E_NOTICE</code>
                     が発生し、そのコールは無視されます。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    正解: <code>Zend_Session::start()</code> を使用します。
+                    正解: <classname>Zend_Session::start()</classname> を使用します。
                     すべてのリクエストでセッションを使用したい場合は、
                     この関数コールを起動コードの最初のほうで無条件に記述します。
                     セッションにはある程度のオーバーヘッドがあります。
@@ -84,34 +84,34 @@ php_value session.auto_start 0
                 <itemizedlist mark="opencircle">
                     <listitem>
                         <para>
-                            起動コード内で、<code>Zend_Session::setOptions()</code> を使用して
+                            起動コード内で、<classname>Zend_Session::setOptions()</classname> を使用して
                             無条件にオプション <code>strict</code> を <code>true</code> にします。
                         </para>
                     </listitem>
                     <listitem>
                         <para>
                             セッションを必要とするリクエスト内で、
-                            <code>Zend_Session_Namespace</code> のインスタンスを作成する前に
-                            <code>Zend_Session::start()</code> をコールします。
+                            <classname>Zend_Session_Namespace</classname> のインスタンスを作成する前に
+                            <classname>Zend_Session::start()</classname> をコールします。
                         </para>
                     </listitem>
                     <listitem>
                         <para>
                             通常どおり、必要に応じて "<code>new Zend_Session_Namespace()</code>"
-                            を使用します。事前に <code>Zend_Session::start()</code>
+                            を使用します。事前に <classname>Zend_Session::start()</classname>
                             がコールされていることを確認しておきましょう。
                         </para>
                     </listitem>
                 </itemizedlist>
                 <para>
                     <code>strict</code> オプションにより、<code>new Zend_Session_Namespace()</code>
-                    が自動的に <code>Zend_Session::start()</code> でセッションを開始することがなくなります。
+                    が自動的に <classname>Zend_Session::start()</classname> でセッションを開始することがなくなります。
                     したがって、このオプションを使用すると、アプリケーションの開発者が
                     特定のリクエストにはセッションを使用しないという設計をおこなうことができます。
                     このオプションを使用すると、明示的に
-                    <code>Zend_Session::start()</code> をコールする前に Zend_Session_Namespace
+                    <classname>Zend_Session::start()</classname> をコールする前に Zend_Session_Namespace
                     のインスタンスを作成しようとしたときに例外がスローされます。
-                    開発者は、<code>Zend_Session::setOptions()</code>
+                    開発者は、<classname>Zend_Session::setOptions()</classname>
                     の使用がユーザにどれだけの影響を与えるかを注意するようにしましょう。
                     これらのオプションは
                     (もととなる ext/session のオプションと同様)、
@@ -120,7 +120,7 @@ php_value session.auto_start 0
             </listitem>
             <listitem>
                 <para>
-                    正解: 必要に応じて <code>Zend_Session_Namespace</code> のインスタンスを作成します。
+                    正解: 必要に応じて <classname>Zend_Session_Namespace</classname> のインスタンスを作成します。
                     PHP のセッションは、自動的に開始されます。
                     これはもっともシンプルな使用法で、たいていの場合にうまく動作します。
                     しかし、デフォルトであるクッキーベースのセッション (強く推奨します)
@@ -153,7 +153,7 @@ php_value session.auto_start 0
             セッターメソッドには何の影響も及ぼしません。
             しかし、名前空間自体のセッターメソッドは使用できず、
             名前空間に直接格納されたオブジェクトの削除や置換ができなくなります。同様に、
-            <code>Zend_Session_Namespace</code> のインスタンスをロックしたとしても、
+            <classname>Zend_Session_Namespace</classname> のインスタンスをロックしたとしても、
             同じデータをさすシンボルテーブルの使用をとめることはできません
             (<ulink url="http://www.php.net/references">PHP
             のリファレンスについての説明</ulink>も参照ください)。
@@ -289,12 +289,12 @@ else {
         <para>
             <link linkend="zend.session.advanced_usage.locking">セッションのロック</link>
             を利用すれば、名前空間つきセッションデータを予期せず使用してしまうことはある程度防げます。
-            しかし、<code>Zend_Session_Namespace</code> には、
+            しかし、<classname>Zend_Session_Namespace</classname> には、
             単一の名前空間内で複数のインスタンスを作成することを防ぐ機能もあります。
         </para>
 
         <para>
-            この機能を有効にするには、<code>Zend_Session_Namespace</code>
+            この機能を有効にするには、<classname>Zend_Session_Namespace</classname>
             のインスタンスを作成する際に、コンストラクタの第二引数に <code>true</code>
             を渡します。それ以降は、同一名前空間でインスタンスを作成しようとすると例外がスローされます。
         </para>
@@ -331,8 +331,8 @@ try {
 
         <para>
             上の例では、コンストラクタの第二引数を用いて
-            "<code>Zend_Auth</code>" 名前空間では今後インスタンスを作成させないよう
-            <code>Zend_Session_Namespace</code> に指示しています。
+            "<classname>Zend_Auth</classname>" 名前空間では今後インスタンスを作成させないよう
+            <classname>Zend_Session_Namespace</classname> に指示しています。
             インスタンスを作成しようとすると、コンストラクタから例外がスローされます。
             したがって、このセッション名前空間へのアクセスが必要となった場合は、
             今後は現在あるインスタンス (上の例の場合なら <code>$authSpaceAccessor1</code>、
@@ -478,9 +478,9 @@ echo $myNamespace->someArray['foo']; // "bar" と表示されます
             ユニットテスト中で、セッションの終了後に書き込み関連のメソッドを使用すると
             "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>"
             という例外がスローされます。しかし、Zend_Session を使用するユニットテストには要注意です。
-            セッションを閉じたり (<code>Zend_Session::writeClose()</code>)
-            破棄したり (<code>Zend_Session::destroy()</code>) したら、
-            それ以降は <code>Zend_Session_Namespace</code> のインスタンスへのキーの設定や削除ができなくなります。
+            セッションを閉じたり (<classname>Zend_Session::writeClose()</classname>)
+            破棄したり (<classname>Zend_Session::destroy()</classname>) したら、
+            それ以降は <classname>Zend_Session_Namespace</classname> のインスタンスへのキーの設定や削除ができなくなります。
             これは、ext/session や、PHP の
             PHP <code>session_destroy()</code> および <code>session_write_close()</code>
             の仕様によるものです, これらには、ユニットテストの setup/teardown

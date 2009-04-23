@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.actionhelpers.flashmessenger">
     <title>FlashMessenger</title>
 
@@ -10,10 +10,10 @@
             <code>FlashMessenger</code> ヘルパーは、
             次のリクエストの際にユーザに見せる必要のあるメッセージを渡すためのものです。
             この機能を実現するため、<code>FlashMessenger</code> は
-            <code>Zend_Session_Namespace</code> を使用してメッセージを保管しています。
-            <code>Zend_Session</code> や
-            <code>Zend_Session_Namespace</code> を使用する際には、起動ファイル中で
-            <code>Zend_Session::start()</code> を実行するようにしましょう
+            <classname>Zend_Session_Namespace</classname> を使用してメッセージを保管しています。
+            <classname>Zend_Session</classname> や
+            <classname>Zend_Session_Namespace</classname> を使用する際には、起動ファイル中で
+            <classname>Zend_Session::start()</classname> を実行するようにしましょう
             (詳細な使用例は <link linkend="zend.session.advanced_usage.starting_a_session">Zend Session</link>
             のドキュメントを参照ください)。
         </para>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.rest.client">
     <title>Zend_Rest_Client</title>
     <sect2 id="zend.rest.client.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Rest_Client</code> の使用法は、
+            <classname>Zend_Rest_Client</classname> の使用法は、
             <code>SoapClient</code> オブジェクト (<ulink
             url="http://www.php.net/soap">SOAP ウェブサービス拡張モジュール</ulink>)
             の使用法と非常によく似ています。REST サービスのプロシージャは、簡単に
-            <code>Zend_Rest_Client</code> のメソッドとしてコールすることができます。
-            まず、そのサービスのアドレスを <code>Zend_Rest_Client</code> のコンストラクタに指定します。
+            <classname>Zend_Rest_Client</classname> のメソッドとしてコールすることができます。
+            まず、そのサービスのアドレスを <classname>Zend_Rest_Client</classname> のコンストラクタに指定します。
         </para>
 
         <example id="zend.rest.client.introduction.example-1">
@@ -31,7 +31,7 @@ echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
         <note>
             <title>コール方法の違い</title>
             <para>
-                <code>Zend_Rest_Client</code> は、
+                <classname>Zend_Rest_Client</classname> は、
                 リモートメソッドのコールをできるだけネイティブなメソッドと同様に行おうとします。
                 唯一の違いは、続けて <code>get()</code> か <code>post()</code>、
                 <code>put()</code> あるいは <code>delete()</code>
@@ -52,14 +52,14 @@ echo $client->get();
         <title>レスポンス</title>
 
         <para>
-            <code>Zend_Rest_Client</code> を使用して行ったリクエストは、すべて
-            <code>Zend_Rest_Client_Response</code> オブジェクトを返します。
+            <classname>Zend_Rest_Client</classname> を使用して行ったリクエストは、すべて
+            <classname>Zend_Rest_Client_Response</classname> オブジェクトを返します。
             このオブジェクトには多くのプロパティがあり、結果に簡単にアクセスすることができます。
         </para>
 
         <para>
-            <code>Zend_Rest_Server</code> に基づくサービスにアクセスした場合には、
-            <code>Zend_Rest_Client</code> は結果についていくつかの前提条件を想定しています。
+            <classname>Zend_Rest_Server</classname> に基づくサービスにアクセスした場合には、
+            <classname>Zend_Rest_Client</classname> は結果についていくつかの前提条件を想定しています。
             たとえばレスポンスステータス (成功あるいは失敗) や返り値の型などです。
         </para>
 
@@ -80,15 +80,15 @@ if ($result->isSuccess()) {
             <code>isSuccess()</code> をコールしていることがごらんいただけるでしょう。
             また、<code>__toString()</code> をサポートしているため、
             単に <code>echo</code> とするだけでオブジェクトの結果を取得できます。
-            <code>Zend_Rest_Client_Response</code> は、任意のスカラー値を
+            <classname>Zend_Rest_Client_Response</classname> は、任意のスカラー値を
             echo することが可能です。複雑な形式の場合は、
             配列記法あるいはオブジェクト記法が使用できます。
         </para>
 
         <para>
-            しかし、<code>Zend_Rest_Server</code>
+            しかし、<classname>Zend_Rest_Server</classname>
             を使用していないサービスに問い合わせたいこともあるでしょう。このような場合、
-            <code>Zend_Rest_Client_Response</code> オブジェクトは
+            <classname>Zend_Rest_Client_Response</classname> オブジェクトは
             <code>SimpleXMLElement</code> と同様の振る舞いをします。
             しかし、より簡単に処理するため、プロパティがルート要素の直下にない場合には
             自動的に XPath で XML を探すようにしています。さらに、
@@ -170,14 +170,14 @@ echo $result->firstname() .' '. $result->lastname();
         <title>リクエストの引数</title>
 
         <para>
-            <code>Zend_Rest_Server</code> ベースのサービスにリクエストを送るのではない場合は、
+            <classname>Zend_Rest_Server</classname> ベースのサービスにリクエストを送るのではない場合は、
             リクエストの際に複数の引数を指定する必要があります。
             これを行うには、引数名と同じ名前のメソッドをコールし、
             その最初の (そして唯一の) 引数として値を指定します。
             これらのメソッドコールはそのオブジェクト自身を返すので、
             メソッドを連結する "流れるような" 形式で使用できます。
             最初のコール (あるいは複数の引数を指定した場合の最初の引数)
-            は常に、<code>Zend_Rest_Server</code>
+            は常に、<classname>Zend_Rest_Server</classname>
             サービスをコールする際のメソッドとみなされます。
         </para>
 
@@ -207,7 +207,7 @@ $client->arg('value1')->arg2('value2')->get();
             最初の <code>$client->arg('value1');</code> のコールが
             <code>method=arg&amp;arg1=value1</code> および <code>arg=value1</code>
             の二通りの結果となることにお気づきでしょう。これによって、
-            <code>Zend_Rest_Server</code> がリクエストを適切に理解できるようになるのです。
+            <classname>Zend_Rest_Server</classname> がリクエストを適切に理解できるようになるのです。
             そのサービスを使用するにあたっての前提知識を必要としなくなります。
         </para>
 
@@ -216,7 +216,7 @@ $client->arg('value1')->arg2('value2')->get();
 
             <para>
                 受け取る引数について厳格な REST サービスでは、
-                <code>Zend_Rest_Client</code> の使用に失敗することがあります。
+                <classname>Zend_Rest_Client</classname> の使用に失敗することがあります。
                 これは上で説明した挙動のせいです。
                 これはそう頻繁に起こることではないので、特に問題とはならないでしょう。
             </para>

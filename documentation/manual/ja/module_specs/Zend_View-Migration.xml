@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.view.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -14,7 +14,7 @@
 
         <para>
             Zend Framework 開発陣は、1.7.5 より前のバージョンにおいて
-            <code>Zend_View::render()</code> メソッドにローカルファイル読み込み
+            <classname>Zend_View::render()</classname> メソッドにローカルファイル読み込み
             (Local File Inclusion: LFI) 脆弱性の問題があることに気づきました。
             1.7.5 より前のバージョンでは、このメソッドはデフォルトで
             親ディレクトリを指す記法 ("../" や "..\")
@@ -29,7 +29,7 @@ echo $view->render($_GET['foobar']); // LFI
 ]]></programlisting>
 
         <para>
-            <code>Zend_View</code> は、このようなビュースクリプトがリクエストされると
+            <classname>Zend_View</classname> は、このようなビュースクリプトがリクエストされると
             デフォルトで例外を発生させるようになりました。
         </para>
 

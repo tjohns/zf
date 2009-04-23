@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.validate.introduction">
 
     <title>導入</title>
@@ -40,7 +40,7 @@
 
         <para>
             ここで考えたバリデータについての定義をもとにして
-            <code>Zend_Validate_Interface</code> が作成されました。これは、
+            <classname>Zend_Validate_Interface</classname> が作成されました。これは、
             <code>isValid()</code> および <code>getMessages()</code>
             のふたつのメソッドを定義するものです。
             <code>isValid()</code> メソッドは指定した値に対する検証を行います。
@@ -105,7 +105,7 @@ if ($validator->isValid($email)) {
             トークン <code>%value%</code> はすべてのバリデータがサポートしており、
             これは <code>isValid()</code> に渡した値に置き換えられます。
             その他、バリデーションクラスによっていろいろなトークンをサポートしています。
-            たとえば、<code>Zend_Validate_LessThan</code> では
+            たとえば、<classname>Zend_Validate_LessThan</classname> では
             <code>%max%</code> というトークンをサポートしています。
             <code>getMessageVariables()</code> メソッドは、
             そのバリデータがサポートする変数トークンの配列を返します。
@@ -187,11 +187,11 @@ if (!validator->isValid('word')) {
 
         <para>
             指定したバリデーションクラスを読み込んでそのインスタンスを作成するというのが面倒ならば、
-            もうひとつの方法として、静的メソッド <code>Zend_Validate::is()</code>
+            もうひとつの方法として、静的メソッド <classname>Zend_Validate::is()</classname>
             を実行する方法もあります。このメソッドの最初の引数には、
             <code>isValid()</code> メソッドに渡す入力値を指定します。
             二番目の引数は文字列で、バリデーションクラスのベースネーム
-            (<code>Zend_Validate</code> 名前空間における相対的な名前) を指定します。
+            (<classname>Zend_Validate</classname> 名前空間における相対的な名前) を指定します。
             <code>is()</code> メソッドは自動的にクラスを読み込んでそのインスタンスを作成し、
             指定した入力に対して <code>isValid()</code> メソッドを適用します。
 
@@ -233,7 +233,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            また、<code>Zend_Filter_Input</code> クラスでも、特定の入力データのセットを処理する際に
+            また、<classname>Zend_Filter_Input</classname> クラスでも、特定の入力データのセットを処理する際に
             複数のフィルタやバリデータを必要に応じて実行させる機能も提供しています。
             詳細は <xref linkend="zend.filter.input" /> を参照ください。
         </para>
@@ -247,7 +247,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
 
         <para>
             Validate クラスには <code>setTranslator()</code> メソッドがあり、
-            <code>Zend_Translate</code> のインスタンスを指定することができます。
+            <classname>Zend_Translate</classname> のインスタンスを指定することができます。
             これが、検証に失敗したときのメッセージを翻訳します。
             <code>getTranslator()</code> メソッドは、設定されているインスタンスを返します。
         </para>
@@ -266,7 +266,7 @@ $validator->setTranslator($translate);
 
         <para>
             静的メソッド <code>setDefaultTranslator()</code> で
-            <code>Zend_Translate</code> のインスタンスを設定すると、
+            <classname>Zend_Translate</classname> のインスタンスを設定すると、
             それをすべての検証クラスで使用することができます。この設定内容を取得するのが
             <code>getDefaultTranslator()</code> です。これを使用すると、
             個々のバリデータクラスで手動で翻訳器を設定せずに済むのでコードがシンプルになります。

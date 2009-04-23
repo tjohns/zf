@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -74,7 +74,7 @@
                 <code>noViewRenderer</code> を指定する
                 (<code>$front->setParam('noViewRenderer', true)</code>) か、
                 あるいはヘルパーブローカからヘルパーを削除
-                (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>)
+                (<classname>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</classname>)
                 します。
             </para>
 
@@ -456,8 +456,8 @@ $viewRenderer =
 
                     <para>
                         内部的には、インフレクタはフィルタ
-                        <code>Zend_Filter_Word_CamelCaseToDash</code> および
-                        <code>Zend_Filter_StringToLower</code> を使用します。
+                        <classname>Zend_Filter_Word_CamelCaseToDash</classname> および
+                        <classname>Zend_Filter_StringToLower</classname> を使用します。
                     </para>
                 </listitem>
 
@@ -473,9 +473,9 @@ $viewRenderer =
 
                     <para>
                         内部的には、インフレクタはフィルタ
-                        <code>Zend_Filter_Word_CamelCaseToDash</code>、
-                        <code>Zend_Filter_Word_UnderscoreToSeparator</code> および
-                        <code>Zend_Filter_StringToLower</code> を使用します。
+                        <classname>Zend_Filter_Word_CamelCaseToDash</classname>、
+                        <classname>Zend_Filter_Word_UnderscoreToSeparator</classname> および
+                        <classname>Zend_Filter_StringToLower</classname> を使用します。
                     </para>
                 </listitem>
 
@@ -491,9 +491,9 @@ $viewRenderer =
 
                     <para>
                         内部的には、インフレクタはフィルタ
-                        <code>Zend_Filter_Word_CamelCaseToDash</code>、
-                        <code>Zend_Filter_PregReplace</code> および
-                        <code>Zend_Filter_StringToLower</code> を使用します。
+                        <classname>Zend_Filter_Word_CamelCaseToDash</classname>、
+                        <classname>Zend_Filter_PregReplace</classname> および
+                        <classname>Zend_Filter_StringToLower</classname> を使用します。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -526,7 +526,7 @@ $viewRenderer =
                 <note>
                     <para>
                         デフォルトでは、
-                        <code>Zend_Controller_Action::renderScript()</code>
+                        <classname>Zend_Controller_Action::renderScript()</classname>
                         は <code>ViewRenderer</code> の
                         <code>renderScript()</code> メソッドへのプロキシとなります。
                     </para>
@@ -563,7 +563,7 @@ $viewRenderer =
                 <note>
                     <para>
                         デフォルトでは、
-                        <code>Zend_Controller_Action::getViewScript()</code>
+                        <classname>Zend_Controller_Action::getViewScript()</classname>
                         は <code>ViewRenderer</code> の
                         <code>getViewScript()</code> メソッドへのプロキシとなります。
                     </para>
@@ -596,7 +596,7 @@ $viewRenderer =
                 <note>
                     <para>
                         デフォルトでは、
-                        <code>Zend_Controller_Action::render()</code> は
+                        <classname>Zend_Controller_Action::render()</classname> は
                         <code>ViewRenderer</code> の <code>render()</code>
                         メソッドへのプロキシとなります。
                     </para>

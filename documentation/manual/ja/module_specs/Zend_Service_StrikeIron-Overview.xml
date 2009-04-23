@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.service.strikeiron">
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        <code>Zend_Service_StrikeIron</code> は、StrikeIron
+        <classname>Zend_Service_StrikeIron</classname> は、StrikeIron
         ウェブサービス用の PHP 5 クライアントです。以下のセクションを参照ください。
     </para>
 
@@ -47,7 +47,7 @@
           のみでも使用することができるでしょう。
           しかし、StrikeIron をこの方法で使用すると、
           真の PHP 風インターフェイスを活用することができません。
-          <code>Zend_Service_StrikeIron</code> コンポーネントは、SOAP
+          <classname>Zend_Service_StrikeIron</classname> コンポーネントは、SOAP
           拡張モジュールの上にもう一枚薄い皮をかぶせることによって、
           StrikeIron のサービスをより便利かつ PHP
           らしく使えるようにしています。
@@ -55,13 +55,13 @@
 
         <note>
           <para>
-            <code>Zend_Service_StrikeIron</code> を使うには、
+            <classname>Zend_Service_StrikeIron</classname> を使うには、
             PHP 5 の SOAP 拡張モジュールがインストールされて有効になっている必要があります。
           </para>
         </note>
 
         <para>
-          <code>Zend_Service_StrikeIron</code> コンポーネントが提供する機能を以下にまとめます。
+          <classname>Zend_Service_StrikeIron</classname> コンポーネントが提供する機能を以下にまとめます。
 
           <itemizedlist>
             <listitem>
@@ -101,7 +101,7 @@
     <sect2 id="zend.service.strikeiron.registering">
       <title>StrikeIron への登録</title>
       <para>
-        <code>Zend_Service_StrikeIron</code> を使用するには、まず
+        <classname>Zend_Service_StrikeIron</classname> を使用するには、まず
         StrikeIron 開発者アカウントを取得するために
         <ulink url="http://strikeiron.com/Register.aspx">登録</ulink>
         する必要があります。
@@ -109,7 +109,7 @@
 
       <para>
         登録したら、StrikeIron のユーザ名とパスワードを受け取ります。
-        <code>Zend_Service_StrikeIron</code> で StrikeIron に接続する際には、
+        <classname>Zend_Service_StrikeIron</classname> で StrikeIron に接続する際には、
         このユーザ名とパスワードを使用します。
       </para>
 
@@ -132,7 +132,7 @@
         <ulink url="http://strikeiron.com/Register.aspx">取得</ulink>
         して
         <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink>
-        にも参加したら、<code>Zend_Service_StrikeIron</code>
+        にも参加したら、<classname>Zend_Service_StrikeIron</classname>
         を使うための準備は完了です。
       </para>
 
@@ -155,7 +155,7 @@
       </itemizedlist>
 
       <para>
-        <code>Zend_Service_StrikeIron</code> クラスには、
+        <classname>Zend_Service_StrikeIron</classname> クラスには、
         そのコンストラクタで StrikeIron アカウント情報やその他のオプションを設定することができます。
         また、StrikeIron の各種サービス用のクライアントを帰すファクトリメソッドも用意しています。
 
@@ -173,7 +173,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
         のサービス用のクライアントを帰します。引数には
         PHP のラッパークラスの名前を指定します。
         この場合の <code>SalesUseTaxBasic</code> は、ラッパークラス
-        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code>
+        <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname>
         を指しています。標準で組み込まれている 3 つのラッパーについては
         <link linkend="zend.service.strikeiron.bundled-services">バンドルされているサービス</link>
         で説明します。
@@ -243,7 +243,7 @@ echo $rateInfo->GST;
         StrikeIron サービスについて学習したりデバッグしたりする際には、
         メソッドから返された内容を出力できると便利です。
         メソッドの返り値は常に
-        <code>Zend_Service_StrikeIron_Decorator</code> のインスタンスとなります。
+        <classname>Zend_Service_StrikeIron_Decorator</classname> のインスタンスとなります。
         これはちょっとした
         <ulink url="http://ja.wikipedia.org/wiki/Decorator_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">デコレータ</ulink>
         オブジェクトであり、メソッドのコール結果をラップしています。
@@ -347,7 +347,7 @@ try {
 }
 ]]>
         </programlisting>
-        スローされる例外は、常に <code>Zend_Service_StrikeIron_Exception</code>
+        スローされる例外は、常に <classname>Zend_Service_StrikeIron_Exception</classname>
         となります。
       </para>
 

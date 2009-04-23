@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.gdata.docs">
     <title>Google Documents List Data API の使用法</title>
 
@@ -25,7 +25,7 @@
         <para>
             特定のユーザの Google Documents の一覧を取得するには、docs サービスの
             <code>getDocumentListFeed</code> メソッドを使用します。
-            このサービスは <code>Zend_Gdata_Docs_DocumentListFeed</code>
+            このサービスは <classname>Zend_Gdata_Docs_DocumentListFeed</classname>
             オブジェクトを返します。
             その中には、認証済みユーザに関連付けられたドキュメントの一覧が含まれます。
         </para>
@@ -39,9 +39,9 @@ $feed = $docs->getDocumentListFeed();
         </programlisting>
 
         <para>
-        結果として得られる <code>Zend_Gdata_Docs_DocumentListFeed</code>
+        結果として得られる <classname>Zend_Gdata_Docs_DocumentListFeed</classname>
         オブジェクトが、サーバからの応答を表します。
-        このフィードには <code>Zend_Gdata_Docs_DocumentListEntry</code>
+        このフィードには <classname>Zend_Gdata_Docs_DocumentListEntry</classname>
         オブジェクトの一覧 (<code>$feed->entries</code>) が含まれ、
         それぞれがひとつの Google Document を表します。
         </para>
@@ -154,7 +154,7 @@ $feed = $docs->getDocumentListFeed(
             <title>テキストクエリの実行</title>
             <para>
                 ドキュメントの中身を検索するには、リクエスト内で
-                <code>Zend_Gdata_Docs_Query</code> を使用します。
+                <classname>Zend_Gdata_Docs_Query</classname> を使用します。
                 クエリオブジェクトを使用してクエリ URI を組み立て、
                 検索する単語をパラメータとして渡します。
                 これは、ある文字列を含むドキュメントを一覧から探すクエリの例です。

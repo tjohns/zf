@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.log.overview">
     <title>概要</title>
 
     <para>
-      <code>Zend_Log</code> は、ログ出力用の汎用コンポーネントです。
+      <classname>Zend_Log</classname> は、ログ出力用の汎用コンポーネントです。
       複数のバックエンドに対応しており、ログに出力するメッセージをフォーマットしたり
       記録するメッセージをフィルタリングしたりすることができます。
       これらの関数は、以下のオブジェクトに分けられています。
@@ -13,7 +13,7 @@
       <itemizedlist>
         <listitem>
           <para>
-            ログ (<code>Zend_Log</code> のインスタンス) は、
+            ログ (<classname>Zend_Log</classname> のインスタンス) は、
             アプリケーション内でもっともよく使用するオブジェクトです。
             いくつでも望みの数だけのログオブジェクトを保持することができます。
             それらが互いに影響しあうことはありません。
@@ -22,12 +22,12 @@
           </para>
         </listitem><listitem>
           <para>
-            ライター (<code>Zend_Log_Writer_Abstract</code> を継承したもの)
+            ライター (<classname>Zend_Log_Writer_Abstract</classname> を継承したもの)
             は、データを保存する役割を受け持ちます。
           </para>
         </listitem><listitem>
           <para>
-            フィルタ (<code>Zend_Log_Filter_Interface</code> を実装したもの)
+            フィルタ (<classname>Zend_Log_Filter_Interface</classname> を実装したもの)
             は、保存するログデータをブロックします。
             フィルタは個々のライターに適用することもできますし、
             ログに適用することもできます。ログに適用した場合は、
@@ -36,7 +36,7 @@
           </para>
         </listitem><listitem>
           <para>
-            フォーマッタ (<code>Zend_Log_Formatter_Interface</code> を実装したもの)
+            フォーマッタ (<classname>Zend_Log_Formatter_Interface</classname> を実装したもの)
             は、ログのデータをライターに書き出す前に書式設定できます。
             個々のライターは、それぞれひとつのフォーマッタを保持しています。
           </para>
@@ -130,7 +130,7 @@ $logger = null;
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>組み込みの優先度の使用</title>
     <para>
-      <code>Zend_Log</code> クラスでは以下の優先度を定義しています。
+      <classname>Zend_Log</classname> クラスでは以下の優先度を定義しています。
 
       <programlisting role="php"><![CDATA[
 EMERG   = 0;  // 緊急事態 (Emergency): システムが使用不可能です
@@ -154,7 +154,7 @@ DEBUG   = 7;  // デバッグ (Debug): デバッグメッセージ
       <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink>
       で示されています。それぞれの名前と優先度番号は、PHP におけるもうひとつのログ記録システムである
       <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>
-      とも互換性があります。おそらく、これと <code>Zend_Log</code>
+      とも互換性があります。おそらく、これと <classname>Zend_Log</classname>
       は相互運用できるでしょう。
     </para>
 

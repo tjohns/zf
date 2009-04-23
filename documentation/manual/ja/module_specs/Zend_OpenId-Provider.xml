@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
-        <code>Zend_OpenId_Provider</code>
+        <classname>Zend_OpenId_Provider</classname>
         は、OpenID サーバを実装するために使用するものです。
         本章では、とりあえず動作するサーバを作成するための初歩的な例を説明します。
         しかし、実際に運用する OpenID サーバ
@@ -15,7 +15,7 @@
     <sect2 id="zend.openid.provider.start">
         <title>クイックスタート</title>
         <para>
-            以下の識別子は、<code>Zend_OpenId_Provider::register</code>
+            以下の識別子は、<classname>Zend_OpenId_Provider::register</classname>
             を使用してユーザアカウントを作成するコードを含みます。
             <code>rel="openid.server"</code> が指定されているリンク要素は、
             自前のサーバスクリプトを指しています。この識別子を OpenID
@@ -53,14 +53,14 @@ if (!$server->hasUser(TEST_ID)) {
         <para>
             次の識別サーバスクリプトは、OpenID 対応のサイトからの二種類のリクエスト
             (関連付けと認証) を処理します。どちらについても、同じメソッド
-            <code>Zend_OpenId_Provider::handle</code> で処理します。
-            <code>Zend_OpenId_Provider</code> へ渡すふたつの引数は
+            <classname>Zend_OpenId_Provider::handle</classname> で処理します。
+            <classname>Zend_OpenId_Provider</classname> へ渡すふたつの引数は
             ログイン URL と信頼済みページの URL で、
             これらはエンドユーザから指定されたものです。
         </para>
 
         <para>
-            成功した場合、<code>Zend_OpenId_Provider::handle</code>
+            成功した場合、<classname>Zend_OpenId_Provider::handle</classname>
             メソッドは文字列を返します。これはそのまま OpenID
             対応のサイトに戻さなければなりません。
             失敗した場合は <code>false</code> を返します。
@@ -95,7 +95,7 @@ if (is_string($ret)) {
        </note>
 
         <para>
-            次のスクリプトは、識別サーバ <code>Zend_OpenId_Provider</code>
+            次のスクリプトは、識別サーバ <classname>Zend_OpenId_Provider</classname>
             用のログイン画面を実装したものです。
             ユーザがまだログインしていない場合は、このページにリダイレクトします。
             このページでユーザがパスワードを入力してログインを行います。
@@ -106,9 +106,9 @@ if (is_string($ret)) {
         </para>
 
         <para>
-            送信すると、このスクリプトは <code>Zend_OpenId_Provider::login</code>
+            送信すると、このスクリプトは <classname>Zend_OpenId_Provider::login</classname>
             にエンドユーザの識別子とパスワードを渡し、識別プロバイダのスクリプトにリダイレクトします。
-            成功した場合、<code>Zend_OpenId_Provider::login</code>
+            成功した場合、<classname>Zend_OpenId_Provider::login</classname>
             はエンドユーザと識別プロバイダの間のセッションを確立し、
             ログインしたユーザの情報を保存します。
             それ以降、同一ユーザからのリクエストでは
@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         <para>
             プロバイダのすべての関数をひとつのスクリプトにまとめることもできます。
             この場合はログイン URL と信頼済み URL は省略され、
-            <code>Zend_OpenId_Provider</code> は同一ページに GET 引数
+            <classname>Zend_OpenId_Provider</classname> は同一ページに GET 引数
             "openid.action" を追加した場所を指すことになります。
         </para>
 
@@ -364,15 +364,15 @@ if (!$server->hasUser(TEST_ID)) {
             信頼済みページに関する情報は含んでいません。
             ユーザは既に、このサンプルのスクリプトを "永久に" 信頼しています。
             これを行っているのは、識別子スクリプトの
-            <code>Zend_OpenId_Provider::alowSite</code> メソッドです。
+            <classname>Zend_OpenId_Provider::alowSite</classname> メソッドです。
             同じメソッドでプロファイルと信頼済み URL を関連付け、
             信頼済み URL からリクエストがあった場合にこのプロファイルが自動的に返されます。
         </para>
 
         <para>
             Simple Registration Extension を動作させるために唯一必要なのは、
-            <code>Zend_OpenId_Extension_Sreg</code> のオブジェクトを
-            <code>Zend_OpenId_Provider::handle</code> の 2 番目の引数として渡すことです。
+            <classname>Zend_OpenId_Extension_Sreg</classname> のオブジェクトを
+            <classname>Zend_OpenId_Provider::handle</classname> の 2 番目の引数として渡すことです。
         </para>
 
         <example id="zend.openid.provider.example-7">
@@ -413,8 +413,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         <para>
             OpenID サーバの作成は、
             OpenID 対応のサイトの作成ほど頻繁に行うものではありません。
-            そこで、<code>Zend_OpenId_Consumer</code> のマニュアルとは異なり
-            <code>Zend_OpenId_Provider</code> のマニュアルではすべての機能を網羅することをやめます。
+            そこで、<classname>Zend_OpenId_Consumer</classname> のマニュアルとは異なり
+            <classname>Zend_OpenId_Provider</classname> のマニュアルではすべての機能を網羅することをやめます。
         </para>
 
         <para>
@@ -432,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
                 <para>
                     ユーザやサイト、プロファイルといった情報を格納するための抽象化された保存レイヤ。
                     ここには、プロバイダと OpenID 対応サイトとの関連付け情報も保存します。
-                    このレイヤは <code>Zend_OpenId_Consumer</code>
+                    このレイヤは <classname>Zend_OpenId_Consumer</classname>
                     のものと非常によく似ています。
                     デフォルトではファイルストレージを使用しますが、
                     別の実装で置き換えることも可能です。
@@ -447,10 +447,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         </itemizedlist>
 
         <para>
-            <code>Zend_OpenId_Provider</code> は、
+            <classname>Zend_OpenId_Provider</classname> は、
             OpenID サーバが実装できる全機能をサポートしているわけではありません
             (たとえばデジタル証明書など)。しかし、
-            <code>Zend_OpenId_Extension</code> を使用したり子クラスを作成したりして、
+            <classname>Zend_OpenId_Extension</classname> を使用したり子クラスを作成したりして、
             簡単に拡張することが可能です。
         </para>
     </sect2>

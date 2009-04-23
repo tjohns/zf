@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.memory.memory-objects">
 
     <title>メモリオブジェクト</title>
@@ -47,7 +47,7 @@ $memObject = $memoryManager->createLocked($data);
 
         <para>
             ロックされたオブジェクトは、移動可能なオブジェクトと同じインターフェイス
-            (<code>Zend_Memory_Container_Interface</code>) を提供します。
+            (<classname>Zend_Memory_Container_Interface</classname>) を提供します。
             したがって、ロックされたオブジェクトは
             どんな場面でも、移動可能なオブジェクトのかわりに使用することができます。
         </para>
@@ -63,7 +63,7 @@ $memObject = $memoryManager->createLocked($data);
         </para>
 
         <para>
-            ロックされたオブジェクトのクラス (<code>Zend_Memory_Container_Locked</code>)
+            ロックされたオブジェクトのクラス (<classname>Zend_Memory_Container_Locked</classname>)
             は、通常の文字列変数と事実上同程度のパフォーマンスを保証します。
             オーバーヘッドとなるのは、クラスのプロパティを取得する際の参照の解決のみです。
         </para>

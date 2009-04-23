@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
 
     <para>
-        <code>Zend_Currency</code> をアプリケーションで使用するには、
+        <classname>Zend_Currency</classname> をアプリケーションで使用するには、
         何もパラメータを指定せずに単にそのインスタンスを作成します。
-        これで、実際のロケールにもとづいた <code>Zend_Currency</code>
+        これで、実際のロケールにもとづいた <classname>Zend_Currency</classname>
         のインスタンスができあがります。このインスタンスには、
         そのロケールで使用する通貨が定義されています。
     </para>
@@ -19,7 +19,7 @@
 
         <para>
             この例では、あなたの環境のロケールが 'en_US' であるものと仮定します。
-            何もパラメータを指定せずに <code>Zend_Currency</code> のインスタンスを作成すると、
+            何もパラメータを指定せずに <classname>Zend_Currency</classname> のインスタンスを作成すると、
             実際の環境のロケールである 'en_US' を使用することになります。
             その結果として通貨単位は米ドルとなり、数値フォーマット規則は
             'en_US' となります。
@@ -34,9 +34,9 @@ $currency = new Zend_Currency();
     </example>
 
     <para>
-        Zend Framework 1.7.0 以降、<code>Zend_Currency</code>
+        Zend Framework 1.7.0 以降、<classname>Zend_Currency</classname>
         アプリケーション単位でのロケールの指定をサポートするようになりました。
-        下の例のように、<code>Zend_Locale</code> のインスタンスをレジストリに登録します。
+        下の例のように、<classname>Zend_Locale</classname> のインスタンスをレジストリに登録します。
         このようにすると、インスタンスを作成する際に
         いちいちロケールの設定を気にする必要がなくなります。
         これは同じロケールを何度も使用する場合に便利です。
@@ -56,7 +56,7 @@ $currency = new Zend_Currency();
         <para>
             システムでデフォルトのロケールが設定されていないかったり
             システムのロケールの検出に失敗したりした場合は、
-            <code>Zend_Currency</code> は例外をスローします。
+            <classname>Zend_Currency</classname> は例外をスローします。
             このような場合は、ロケールを明示的に指定する必要があります。
         </para>
     </note>
@@ -82,7 +82,7 @@ $currency = new Zend_Currency();
                 通貨の短い名前は、アルファベット大文字で 3 文字となります。
                 たとえば <code>USD</code> (米ドル) や <code>EUR</code> (ユーロ)
                 などがよく知られています。
-                既知の通貨の一覧を得るメソッドが <code>Zend_Currency</code>
+                既知の通貨の一覧を得るメソッドが <classname>Zend_Currency</classname>
                 に用意されています。
             </para>
         </listitem>
@@ -203,7 +203,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
         <title>通貨の表示形式の変更</title>
 
         <para>
-            <code>Zend_Currency</code> の作成時に指定したフォーマットが、
+            <classname>Zend_Currency</classname> の作成時に指定したフォーマットが、
             当然標準の表示形式となります。しかし、ときにはそれを変更したくなることもあるでしょう。
         </para>
 
@@ -236,7 +236,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 </para>
                 <para>
                     数値を表示する際に使用する文字です。詳細な情報は、
-                    <code>Zend_Locale</code> のドキュメントにある
+                    <classname>Zend_Locale</classname> のドキュメントにある
                     <link linkend="zend.locale.appendix.numberscripts.supported">サポートする数値系</link>
                     を参照ください。
                 </para>
@@ -288,7 +288,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                     数値フォーマットに含まれる内容としては、たとえば 3 桁ごとの区切り文字などがあります。
                     ロケール ID を指定してデフォルトのフォーマットを使用することもできますし、
                     数値フォーマットを手動で定義することもできます。
-                    省略した場合は <code>Zend_Currency</code> オブジェクトのロケールを使用します。
+                    省略した場合は <classname>Zend_Currency</classname> オブジェクトのロケールを使用します。
                 </para>
             </listitem>
             <listitem>
@@ -311,7 +311,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     <emphasis role="strong">name</emphasis>:
                     表示に使用する完全な通貨名を定義します。
-                    このオプションは、<code>Zend_Currency</code>
+                    このオプションは、<classname>Zend_Currency</classname>
                     の作成時に設定した通貨名を上書きします。
                 </para>
             </listitem>
@@ -319,7 +319,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     <emphasis role="strong">currency</emphasis>:
                     表示に使用する国際通貨略称を定義します。
-                    このオプションは、<code>Zend_Currency</code>
+                    このオプションは、<classname>Zend_Currency</classname>
                     の作成時に設定した通貨略称を上書きします。
                 </para>
             </listitem>
@@ -327,7 +327,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     <emphasis role="strong">symbol</emphasis>:
                     表示に使用する通貨記号を定義します。
-                    このオプションは、<code>Zend_Currency</code>
+                    このオプションは、<classname>Zend_Currency</classname>
                     の作成時に設定した通貨記号を上書きします。
                 </para>
             </listitem>
@@ -430,8 +430,8 @@ echo $currency->toCurrency(1000);
         <title>Zend_Currency の情報取得用メソッド</title>
 
         <para>
-            もちろん、<code>Zend_Currency</code>
-            では通貨に関する情報を <code>Zend_Locale</code>
+            もちろん、<classname>Zend_Currency</classname>
+            では通貨に関する情報を <classname>Zend_Locale</classname>
             から取得するメソッドもサポートしています。これらを使用すると、
             現在用いられている通貨だけでなく以前に使われていたものについての情報も得ることができます。
             以下のようなメソッドが存在します。
@@ -538,7 +538,7 @@ print_r($currency->getCurrencyList('de_AT');
 
         <para>
             <code>setLocale</code> メソッドは、
-            <code>Zend_Currency</code> に新しいロケールを設定します。
+            <classname>Zend_Currency</classname> に新しいロケールを設定します。
             この関数をコールすると、通貨のすべてのデフォルト値が上書きされます。
             つまり、通貨名や略称、記号などが上書きされるということです。
         </para>
@@ -566,10 +566,10 @@ print $currency->toCurrency(1000);
         <title>Zend_Currency の高速化</title>
 
         <para>
-            <code>Zend_Currency</code> による作業を高速化するには
-            <code>Zend_Cache</code> を使用します。これを使用するには、
-            静的メソッド <code>Zend_Currency::setCache($cache)</code>
-            に <code>Zend_Cache</code> アダプタを指定します。そうすると、
+            <classname>Zend_Currency</classname> による作業を高速化するには
+            <classname>Zend_Cache</classname> を使用します。これを使用するには、
+            静的メソッド <classname>Zend_Currency::setCache($cache)</classname>
+            に <classname>Zend_Cache</classname> アダプタを指定します。そうすると、
             Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
             利便性を考慮して、静的メソッド
             <code>getCache()</code>、<code>hasCache()</code>、<code>clearCache()</code> および

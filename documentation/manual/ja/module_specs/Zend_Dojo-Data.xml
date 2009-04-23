@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data エンベロープ</title>
 
@@ -35,7 +35,7 @@
 </programlisting>
 
     <para>
-        <code>Zend_Dojo_Data</code> は、
+        <classname>Zend_Dojo_Data</classname> は、
         このような構造をプログラムで作成したりそれを操作したり、
         配列や JSON にシリアライズしたりといった機能のシンプルなインターフェイスを提供します。
     </para>
@@ -76,7 +76,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title><code>Zend_Dojo_Data</code> へのデータの追加</title>
+            <title><classname>Zend_Dojo_Data</classname> へのデータの追加</title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -93,7 +93,7 @@ $data->addItems($someMoreItems);
             <para>
                 すべての dojo.data データストアは、identifier
                 カラムがメタデータに存在することを必須としています。
-                <code>Zend_Dojo_Data</code> でもそれは同じです。
+                <classname>Zend_Dojo_Data</classname> でもそれは同じです。
                 identifier のないアイテムを追加しようとすると、
                 例外が発生します。
             </para>
@@ -142,7 +142,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title><code>Zend_Dojo_Data</code> での label フィールドの指定</title>
+            <title><classname>Zend_Dojo_Data</classname> での label フィールドの指定</title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -151,13 +151,13 @@ $data->setLabel('name');
         </example>
 
         <para>
-            最後に、<code>Zend_Dojo_Data</code> のアイテムを
+            最後に、<classname>Zend_Dojo_Data</classname> のアイテムを
             dojo.data JSON 配列から読み込むには <code>fromJson()</code>
             メソッドを使用します。
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>JSON からの <code>Zend_Dojo_Data</code> の作成</title>
+            <title>JSON からの <classname>Zend_Dojo_Data</classname> の作成</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
@@ -184,7 +184,7 @@ $data->fromJson($json);
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> では、
+            <classname>Zend_Dojo_Data</classname> では、
             このようなプロパティをオブジェクトのメタデータとして設定することができます。
             以下の使用例をご覧ください。
         </para>
@@ -218,12 +218,12 @@ $data->clearMetadata();
 
         <para>
             シリアライズ可能なデータコンテナとしての働きだけではなく、
-            <code>Zend_Dojo_Data</code> にはデータを様々な方法で操作したり
+            <classname>Zend_Dojo_Data</classname> にはデータを様々な方法で操作したり
             読み込んだりする機能もあります。
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> は、インターフェイス
+            <classname>Zend_Dojo_Data</classname> は、インターフェイス
             <code>ArrayAccess</code>、<code>Iterator</code> および
             <code>Countable</code> を実装しています。
             そのため、データコレクションをまるで配列であるかのように使用することができます。

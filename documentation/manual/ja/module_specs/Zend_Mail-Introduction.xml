@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.mail.introduction">
 
     <title>導入</title>
@@ -10,21 +10,21 @@
         <title>まずはじめに</title>
 
         <para>
-            <code>Zend_Mail</code> は、テキストメールや MIME
+            <classname>Zend_Mail</classname> は、テキストメールや MIME
             マルチパートメールを作成・送信するための一般的な機能を提供します。
-            <code>Zend_Mail</code> を使用すると、デフォルトの
-            <code>Zend_Mail_Transport_Sendmail</code> か、あるいは
-            <code>Zend_Mail_Transport_Smtp</code>
+            <classname>Zend_Mail</classname> を使用すると、デフォルトの
+            <classname>Zend_Mail_Transport_Sendmail</classname> か、あるいは
+            <classname>Zend_Mail_Transport_Smtp</classname>
             を使用してメールを送信することが可能です。
         </para>
 
         <example id="zend.mail.introduction.example-1">
 
-            <title><code>Zend_Mail</code> を使用したシンプルなメール送信</title>
+            <title><classname>Zend_Mail</classname> を使用したシンプルなメール送信</title>
 
             <para>
                 受信者、表題、本文および送信者を指定しただけの単純なメールです。
-                このようなメールを <code>Zend_Mail_Transport_Sendmail</code>
+                このようなメールを <classname>Zend_Mail_Transport_Sendmail</classname>
                 を用いて送信するには、次のようにします。
             </para>
 
@@ -43,7 +43,7 @@ $mail->send();
         <note>
             <title>最低限の定義</title>
             <para>
-                <code>Zend_Mail</code> でメールを送信するには、
+                <classname>Zend_Mail</classname> でメールを送信するには、
                 最低 1 か所以上の受信者、送信者 (<code>setFrom()</code> を使用します)、
                 そして本文 (テキストや HTML) を指定しなければなりません。
             </para>
@@ -57,7 +57,7 @@ $mail->send();
         </para>
 
         <para>
-            セキュリティの観点から、<code>Zend_Mail</code>
+            セキュリティの観点から、<classname>Zend_Mail</classname>
             はすべてのヘッダフィールドの改行文字 (<code>\n</code>) を取り除きます。
             これにより、ヘッダインジェクションを防ぎます。
             送信者名およびあて先名中の２重引用符は単一引用符に、山括弧は角括弧に変更されます。
@@ -65,7 +65,7 @@ $mail->send();
         </para>
 
         <para>
-            <code>Zend_Mail</code> オブジェクトのほとんどのメソッドは、
+            <classname>Zend_Mail</classname> オブジェクトのほとんどのメソッドは、
             流れるようなインターフェイス形式でコールすることもできます。
         </para>
 
@@ -86,21 +86,21 @@ $mail->setBodyText('This is the text of the mail.')
         <title>デフォルトの sendmail トランスポートの設定</title>
 
         <para>
-            <code>Zend_Mail</code> がデフォルトで使用するのは <code>Zend_Mail_Transport_Sendmail</code>
+            <classname>Zend_Mail</code> がデフォルトで使用するのは <code>Zend_Mail_Transport_Sendmail</classname>
             です。これは、単に PHP の <ulink url="http://php.net/mail"><code>mail()</code></ulink>
             関数をラップしただけのものです。
             <ulink url="http://php.net/mail"><code>mail()</code></ulink>
             関数に追加のパラメータを渡したい場合は、
             新しいインスタンスを作成する際のコンストラクタにパラメータを渡します。
-            新しく作成したインスタンスは、<code>Zend_Mail</code>
+            新しく作成したインスタンスは、<classname>Zend_Mail</classname>
             のデフォルトのトランスポートとすることができます。
-            あるいは <code>Zend_Mail</code> の <code>send()</code>
+            あるいは <classname>Zend_Mail</code> の <code>send()</classname>
             メソッドに渡すこともできます。
         </para>
 
         <example id="zend.mail.introduction.sendmail.example-1">
 
-            <title><code>Zend_Mail_Transport_Sendmail</code> トランスポートへの追加パラメータの渡し方</title>
+            <title><classname>Zend_Mail_Transport_Sendmail</classname> トランスポートへの追加パラメータの渡し方</title>
 
             <para>
                 この例は、<ulink url="http://php.net/mail"><code>mail()</code></ulink>

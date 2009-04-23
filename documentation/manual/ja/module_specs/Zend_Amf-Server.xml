@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15101 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.amf.server">
     <title>Zend_Amf_Server</title>
 
     <para>
-        <code>Zend_Amf_Server</code> は RPC スタイルのサーバで、
+        <classname>Zend_Amf_Server</classname> は RPC スタイルのサーバで、
         Adobe Flash Player からの AMF プロトコルによるリクエストを処理します。
         他の Zend Framework のサーバクラス群と同様に SoapServer API にしたがっており、
         サーバを作成するための習得しやすいインターフェイスを提供します。
@@ -134,9 +134,9 @@ class World
         <title>サーバへの Flex からの接続</title>
 
         <para>
-            <code>Zend_Amf_Server</code> に Flex プロジェクトから接続するのはきわめて簡単です。
+            <classname>Zend_Amf_Server</classname> に Flex プロジェクトから接続するのはきわめて簡単です。
             エンドポイントの URI を
-            <code>Zend_Amf_Server</code> スクリプトに指定するだけでよいのです。
+            <classname>Zend_Amf_Server</classname> スクリプトに指定するだけでよいのです。
         </para>
 
         <para>
@@ -210,7 +210,7 @@ class World
         <para>
             この例にはポイントがふたつあります。まず
             AMF チャネルを作成し、そしてエンドポイントの URL を
-            <code>Zend_Amf_Server</code> に指定します。
+            <classname>Zend_Amf_Server</classname> に指定します。
         </para>
 
         <programlisting role="xml"><![CDATA[
@@ -354,7 +354,7 @@ echo $response;
         </para>
 
         <para>
-            <code>Zend_Amf</code> には、
+            <classname>Zend_Amf</classname> には、
             ActionScript と PHP オブジェクトを関連付けるための 3 つのメソッドが用意されています。
         </para>
 
@@ -462,11 +462,11 @@ private function getContactHandler(event:ResultEvent):void {
         <title>サーバへの Flash からの接続</title>
 
         <para>
-            <code>Zend_Amf_Server</code> に Flash プロジェクトから接続する方法は、
+            <classname>Zend_Amf_Server</classname> に Flash プロジェクトから接続する方法は、
             Flex からの場合とは多少異なります。しかし、いったん接続してしまえば
-            <code>Zend_Amf_Server</code> は flex の場合と同じように動作します。
+            <classname>Zend_Amf_Server</classname> は flex の場合と同じように動作します。
             次の例は Flex AS3 ファイルからでも使用できます。
-            同じ <code>Zend_Amf_Server</code> 設定ファイルを用い、
+            同じ <classname>Zend_Amf_Server</classname> 設定ファイルを用い、
             World クラスを用いて接続します。
         </para>
         <para>
@@ -533,7 +533,7 @@ import flash.net.Responder;
 ]]></programlisting>
         <para>
             クラスの中で 3 つの変数を用意します。これらがそれぞれ NetConnection、Responder
-            そして <code>Zend_Amf_Server</code> へのゲートウェイ URL をあらわします。
+            そして <classname>Zend_Amf_Server</classname> へのゲートウェイ URL をあらわします。
         </para>
         <programlisting role="as"><![CDATA[
 private var gateway:String = "http://example.com/server.php";
@@ -542,7 +542,7 @@ private var responder:Responder;
 ]]></programlisting>
         <para>
             Main のコンストラクタでレスポンダを作成し、また
-            <code>Zend_Amf_Server</code> エンドポイントへの新規接続も作成します。
+            <classname>Zend_Amf_Server</classname> エンドポイントへの新規接続も作成します。
             レスポンダでは、サーバからのレスポンスを処理するメソッドが 2 つ定義されています。
             わかりやすくするため、それぞれ onResult および onFault と名づけます。
         </para>
@@ -554,7 +554,7 @@ connection.connect(gateway);
         <para>
             onComplete 関数は、コンストラクタの処理が終わった直後に実行されます。
             ここで、データをサーバに送信します。
-            <code>Zend_Amf_Server</code> World->hello 関数をコールするコードを 1 行追加しています。
+            <classname>Zend_Amf_Server</classname> World->hello 関数をコールするコードを 1 行追加しています。
         </para>
         <programlisting role="as"><![CDATA[
 connection.call("World.hello", responder, params);

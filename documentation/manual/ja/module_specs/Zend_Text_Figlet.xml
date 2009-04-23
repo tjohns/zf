@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.text.figlet">
     <title>Zend_Text_Figlet</title>
     <para>
-        <code>Zend_Text_Figlet</code> は、いわゆる
+        <classname>Zend_Text_Figlet</classname> は、いわゆる
         FIGlet テキストを作成するためのコンポーネントです。
         FIGlet テキストとは、ASCII アートで表した文字列のことです。
         FIGlet では、FLT (FigLet Font) と呼ばれる特殊なフォント形式を使用します。
-        デフォルトで <code>Zend_Text_Figlet</code>
+        デフォルトで <classname>Zend_Text_Figlet</classname>
         に同梱されているフォントは標準フォント 1 つだけですが、
         <ulink url="http://www.figlet.org/fontdb.cgi">http://www.figlet.org</ulink>
         からその他のフォントをダウンロードすることができます。
@@ -16,9 +16,9 @@
     <note>
         <title>圧縮されたフォント</title>
         <para>
-            <code>Zend_Text_Figlet</code> は gzip で圧縮されたフォントに対応しています。
+            <classname>Zend_Text_Figlet</classname> は gzip で圧縮されたフォントに対応しています。
             つまり、<code>.flf</code> ファイルを gzip した状態で使えるということです。
-            <code>Zend_Text_Figlet</code> でこれを使用するには、gzip
+            <classname>Zend_Text_Figlet</classname> でこれを使用するには、gzip
             したフォントの拡張子が <code>.gz</code> でなければなりません。
             さらに、gzip されたフォントを使用するには PHP
             の GZIP 拡張モジュールを有効にする必要があります。
@@ -27,7 +27,7 @@
     <note>
         <title>エンコーディング</title>
         <para>
-            <code>Zend_Text_Figlet</code> は、デフォルトでは文字列が UTF-8
+            <classname>Zend_Text_Figlet</classname> は、デフォルトでは文字列が UTF-8
             でエンコードされていることを想定しています。それ以外の場合は、
             <code>render()</code> メソッドの
             2 番目のパラメータで文字エンコーディングを指定します。
@@ -35,8 +35,8 @@
     </note>
     <para>
         FIGlet 用のさまざまなオプションを指定することができます。
-        <code>Zend_Text_Figlet</code> のインスタンスを作成する際に、
-        配列あるいは <code>Zend_Config</code> のインスタンスで指定します。
+        <classname>Zend_Text_Figlet</classname> のインスタンスを作成する際に、
+        配列あるいは <classname>Zend_Config</classname> のインスタンスで指定します。
 
         <itemizedlist>
             <listitem>
@@ -65,7 +65,7 @@
             <listitem>
                 <para>
                     <code>justification</code> -
-                    <code>Zend_Text_Figlet::JUSTIFICATION_*</code>
+                    <classname>Zend_Text_Figlet::JUSTIFICATION_*</classname>
                     のいずれかの値。<code>JUSTIFICATION_LEFT</code>、
                     <code>JUSTIFICATION_CENTER</code> そして
                     <code>JUSTIFICATION_RIGHT</code> があります。
@@ -76,8 +76,8 @@
             <listitem>
                 <para>
                     <code>rightToLeft</code> - テキストを記述する方向。
-                    <code>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</code> あるいは
-                    <code>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</code>
+                    <classname>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</classname> あるいは
+                    <classname>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</classname>
                     となります。デフォルトでは、フォントファイルの設定を使用します。
                     justification が定義されていない場合は、
                     右から左にテキストを書くときには自動的に右揃えとなります。
@@ -87,7 +87,7 @@
                 <para>
                     <code>smushMode</code> - 整数値。
                     各文字の並べ方を定義します。
-                    <code>Zend_Text_Figlet::SM_*</code> の複数の値の和を指定することができます。
+                    <classname>Zend_Text_Figlet::SM_*</classname> の複数の値の和を指定することができます。
                     SM_EQUAL, SM_LOWLINE,
                     SM_HIERARCHY, SM_PAIR, SM_BIGX, SM_HARDBLANK, SM_KERN そして
                     SM_SMUSH といったモードがあります。値 0 は、
@@ -107,7 +107,7 @@
     <example id="zend.text.figlet.example.using">
         <title>Zend_Text_Figlet の使用法</title>
         <para>
-            この例は、<code>Zend_Text_Figlet</code>
+            この例は、<classname>Zend_Text_Figlet</classname>
             の基本的な使用法を説明するためにシンプルな
             FIGlet テキストを作成するものです。
         </para>

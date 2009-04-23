@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
     <sect2 id="zend.auth.adapter.dbtable.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> は、
+            <classname>Zend_Auth_Adapter_DbTable</classname> は、
             データベースのテーブルに保存された証明情報に基づいた認証の機能を提供します。
-            <code>Zend_Auth_Adapter_DbTable</code> のコンストラクタには
-            <code>Zend_Db_Adapter_Abstract</code> のインスタンスを渡す必要があるので、
+            <classname>Zend_Auth_Adapter_DbTable</classname> のコンストラクタには
+            <classname>Zend_Db_Adapter_Abstract</classname> のインスタンスを渡す必要があるので、
             各インスタンスは特定のデータベース接続に関連付けられます。
             コンストラクタではその他の設定オプションも指定することができます。
             これらは個別にインスタンスメソッドで指定することもできます。
@@ -57,8 +57,8 @@
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
             <title>基本的な使用法</title>
             <para>
-                導入部で説明したとおり、<code>Zend_Auth_Adapter_DbTable</code>
-                のコンストラクタには <code>Zend_Db_Adapter_Abstract</code>
+                導入部で説明したとおり、<classname>Zend_Auth_Adapter_DbTable</classname>
+                のコンストラクタには <classname>Zend_Db_Adapter_Abstract</classname>
                 のインスタンスを渡す必要があります。これは、認証アダプタのインスタンスと
                 関連付けるデータベース接続を表します。
                 まず、データベース接続を作成する必要があります。
@@ -92,7 +92,7 @@ $dbAdapter->query($sqlInsert);]]>
             </programlisting>
             <para>
                 データベース接続およびテーブルが使用可能となったので
-                <code>Zend_Auth_Adapter_DbTable</code> のインスタンスが作成できます。
+                <classname>Zend_Auth_Adapter_DbTable</classname> のインスタンスが作成できます。
                 設定オプションの値は、コンストラクタで渡すか、
                 あるいはインスタンスを作成した後に設定用メソッドで指定します。
             </para>
@@ -131,7 +131,7 @@ $result = $authAdapter->authenticate();]]>
             </programlisting>
             <para>
                 認証結果オブジェクトでの <code>getIdentity()</code>
-                メソッドに加え、<code>Zend_Auth_Adapter_DbTable</code>
+                メソッドに加え、<classname>Zend_Auth_Adapter_DbTable</classname>
                 は認証の成功時にテーブルの行を取得する機能もサポートしています。
             </para>
             <programlisting role="php"><![CDATA[
@@ -162,9 +162,9 @@ Array
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
         <title>応用例: 持続的な DbTable 結果オブジェクト</title>
         <para>
-            デフォルトでは <code>Zend_Auth_Adapter_DbTable</code> は、
+            デフォルトでは <classname>Zend_Auth_Adapter_DbTable</classname> は、
             認証に成功した際に認証情報を返します。場合によっては、
-            <code>Zend_Auth</code> の持続ストレージの仕組みを利用して
+            <classname>Zend_Auth</classname> の持続ストレージの仕組みを利用して
             別の有用な情報を格納したいこともあるでしょう。その場合は、
             <code>getResultRowObject()</code> メソッドを使用して
             <code>stdClass</code> オブジェクトを返します。
@@ -200,14 +200,14 @@ if ($result->isValid()) {
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>高度な使用例</title>
         <para>
-            <code>Zend_Auth</code> (そして <code>Zend_Auth_Adapter_DbTable</code>) の主な目的は
+            <classname>Zend_Auth</code> (そして <code>Zend_Auth_Adapter_DbTable</classname>) の主な目的は
             <emphasis role="strong">認証 (authentication)</emphasis> であって
             <emphasis role="strong">認可 (authorization)</emphasis>,
             ではありませんが、認可にもかかわる問題も多少あります。
             問題によっては、認証アダプタの中で認可にかかわる問題を解決することもあるでしょう。
         </para>
         <para>
-            ちょっとしたおまけとして <code>Zend_Auth_Adapter_DbTable</code>
+            ちょっとしたおまけとして <classname>Zend_Auth_Adapter_DbTable</classname>
             に組み込まれている仕組みを使用すると、
             認証時にありがちな問題を解決するチェックを加えることができます。
         </para>

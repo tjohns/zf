@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partial ヘルパー</title>
 
@@ -125,7 +125,7 @@ $view->partialLoop()->setObjectKey('model');
 
             <para>
                 このテクニックが特に役立つのは、
-                <code>Zend_Db_Table_Rowset</code> を
+                <classname>Zend_Db_Table_Rowset</classname> を
                 <code>partialLoop()</code> に渡すような場合です。
                 ビュースクリプト内で row オブジェクトに自由にアクセスでき、
                 そのメソッド (親の値を取得したり従属行を取得したりなど)

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.pdf.pages">
     <title>ページの操作</title>
     <sect2 id="zend.pdf.pages.creation">
         <title>ページの作成</title>
         <para>
-            PDF ドキュメントのページは、<code>Zend_Pdf</code> の
-            <code>Zend_Pdf_Page</code> クラスで表されます。
+            PDF ドキュメントのページは、<classname>Zend_Pdf</classname> の
+            <classname>Zend_Pdf_Page</classname> クラスで表されます。
         </para>
 
         <para>
@@ -16,10 +16,10 @@
         </para>
 
         <para>
-            新しいページを取得するには、直接 <code>Zend_Pdf_Page</code>
-            オブジェクトを作成するか、<code>Zend_Pdf::newPage()</code>
-            メソッドをコールします。このメソッドは <code>Zend_Pdf_Page</code>
-            オブジェクトを返します。<code>Zend_Pdf::newPage()</code>
+            新しいページを取得するには、直接 <classname>Zend_Pdf_Page</classname>
+            オブジェクトを作成するか、<classname>Zend_Pdf::newPage()</classname>
+            メソッドをコールします。このメソッドは <classname>Zend_Pdf_Page</classname>
+            オブジェクトを返します。<classname>Zend_Pdf::newPage()</classname>
             の場合は、すでにドキュメントにアタッチされているページを作成するという点が異なります。
             こうするとそのページを複数の PDF ドキュメントで使いまわすことができませんが、
             多少高速になります
@@ -34,7 +34,7 @@
         </para>
 
         <para>
-        <code>Zend_Pdf::newPage()</code> メソッドおよび <code>Zend_Pdf_Page</code>
+        <classname>Zend_Pdf::newPage()</code> メソッドおよび <code>Zend_Pdf_Page</classname>
         のコンストラクタは、どちらも同じ形式のパラメータを受け取ります。
         ページサイズを ($x, $y) 形式のポイント数 (1/72 インチ)
         で表したものか、定義済みの定数のうちのいずれかになります。
@@ -56,8 +56,8 @@
         </para>
 
         <para>
-            ドキュメントのページは、<code>Zend_Pdf</code> クラスの public メンバである
-            <code>$pages</code> に保存されます。これは <code>Zend_Pdf_Page</code>
+            ドキュメントのページは、<classname>Zend_Pdf</classname> クラスの public メンバである
+            <code>$pages</code> に保存されます。これは <classname>Zend_Pdf_Page</classname>
             オブジェクトの配列です。これによってページの並び順も定義され、
             一般的な配列と同じように操作することができます。
         </para>
@@ -86,7 +86,7 @@ unset($pdf->pages[$id]);
     <sect2 id="zend.pdf.pages.cloning">
         <title>ページの複製</title>
         <para>
-            既存の PDF ページを複製するには、新しい <code>Zend_Pdf_Page</code>
+            既存の PDF ページを複製するには、新しい <classname>Zend_Pdf_Page</classname>
             オブジェクトを作成する際に既存のページをパラメータとして指定します。
         </para>
 

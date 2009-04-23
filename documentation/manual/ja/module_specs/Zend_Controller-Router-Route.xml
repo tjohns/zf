@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
     <para>
-        <code>Zend_Controller_Router_Route</code> はフレームワークの標準のルートです。
+        <classname>Zend_Controller_Router_Route</classname> はフレームワークの標準のルートです。
         簡単に利用でき、柔軟なルート定義が可能です。各ルートには、まず
         (静的および動的な) URL のマッピングが含まれ、
         そしてデフォルト値および変数についての制限を指定して初期化します。
@@ -32,7 +32,7 @@ $router->addRoute('user', $route);
     </programlisting>
 
     <para>
-        <code>Zend_Controller_Router_Route</code>
+        <classname>Zend_Controller_Router_Route</classname>
         のコンストラクタの最初のパラメータは、ルートの定義です。
         これを URL にマッチさせます。ルート定義は静的な部分と動的な部分で構成され、
         それをスラッシュ ('/') で連結します。
@@ -55,7 +55,7 @@ $router->addRoute('user', $route);
     <para>
         この例のルートは、ブラウザで
         <code>'http://domain.com/author/martel'</code> を指した際にマッチします。
-        この場合、すべての変数の値が <code>Zend_Controller_Request</code>
+        この場合、すべての変数の値が <classname>Zend_Controller_Request</classname>
         オブジェクトに注入され、ProfileController からアクセスできるようになります。
         この例が返す変数は、以下のようなキーと値のペアを持つ配列となります。
     </para>
@@ -70,11 +70,11 @@ $values = array(
     </programlisting>
 
     <para>
-        その後、<code>Zend_Controller_Dispatcher</code> は
+        その後、<classname>Zend_Controller_Dispatcher</classname> は
         (デフォルトモジュールの) <code>ProfileController</code> クラスにある
         <code>userinfoAction()</code> メソッドを実行します。変数にアクセスするには、
-        <code>Zend_Controller_Action::_getParam()</code> あるいは
-        <code>Zend_Controller_Request::getParam()</code> メソッドを使用します。
+        <classname>Zend_Controller_Action::_getParam()</classname> あるいは
+        <classname>Zend_Controller_Request::getParam()</classname> メソッドを使用します。
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -110,7 +110,7 @@ $router->addRoute('default', $route);
 
         <para>
             ルートで使用するすべての変数についてデフォルト値を指定することができます。
-            これは、 <code>Zend_Controller_Router_Route</code>
+            これは、 <classname>Zend_Controller_Router_Route</classname>
             のコンストラクタの 2 番目のパラメータで指定します。
             このパラメータは、変数名をキーとする配列で、
             対応する値にそのデフォルト値を指定します。
@@ -137,7 +137,7 @@ $router->addRoute('archive', $route);
             そしてルーティング情報が存在しない
             (コントローラやアクションのパラメータが定義されていない) ので、
             アプリケーションはデフォルトのコントローラのデフォルトアクションメソッド
-            (ともに <code>Zend_Controller_Dispatcher_Abstract</code> で定義されています)
+            (ともに <classname>Zend_Controller_Dispatcher_Abstract</classname> で定義されています)
             にディスパッチします。より使いやすくするには、
             ルートのデフォルトとしてコントローラとアクションを定義しておく必要があります。
         </para>
@@ -166,7 +166,7 @@ $router->addRoute('archive', $route);
         <title>変数の制約</title>
 
         <para>
-            <code>Zend_Controller_Router_Route</code> のコンストラクタの
+            <classname>Zend_Controller_Router_Route</classname> のコンストラクタの
             三番目のパラメータで、変数の制約を指定することができます。
             これは、正規表現で指定します。
         </para>
@@ -199,20 +199,20 @@ $router->addRoute('archive', $route);
 
         <para>
             標準のルートは、翻訳済みセグメントをサポートします。この機能を使用するには、
-            次のいずれかの方法で翻訳器 (<code>Zend_Translate</code> のインスタンス)
+            次のいずれかの方法で翻訳器 (<classname>Zend_Translate</classname> のインスタンス)
             を定義しなければなりません。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    レジストリに、キー <code>Zend_Translate</code> で格納する
+                    レジストリに、キー <classname>Zend_Translate</classname> で格納する
                 </para>
             </listitem>
             <listitem>
                 <para>
                     静的メソッド
-                    <code>Zend_Controller_Router_Route::setDefaultTranslator()</code> で設定する
+                    <classname>Zend_Controller_Router_Route::setDefaultTranslator()</classname> で設定する
                 </para>
             </listitem>
             <listitem>
@@ -223,22 +223,22 @@ $router->addRoute('archive', $route);
         </itemizedlist>
 
         <para>
-            デフォルトでは、<code>Zend_Translate</code>
+            デフォルトでは、<classname>Zend_Translate</classname>
             のインスタンスで指定したロケールを使用します。これを上書きするには、
-            (<code>Zend_Locale</code> のインスタンスあるいはロケール文字列で)
+            (<classname>Zend_Locale</classname> のインスタンスあるいはロケール文字列で)
             次のいずれかの方法で設定します。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    レジストリに、キー <code>Zend_Locale</code> で格納する
+                    レジストリに、キー <classname>Zend_Locale</classname> で格納する
                 </para>
             </listitem>
             <listitem>
                 <para>
                     静的メソッド
-                    <code>Zend_Controller_Router_Route::setDefaultLocale()</code> で設定する
+                    <classname>Zend_Controller_Router_Route::setDefaultLocale()</classname> で設定する
                 </para>
             </listitem>
             <listitem>
