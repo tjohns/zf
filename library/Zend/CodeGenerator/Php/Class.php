@@ -468,7 +468,7 @@ class Zend_CodeGenerator_Php_Class extends Zend_CodeGenerator_Php_Abstract
         $properties = $this->getProperties();
         if (!empty($properties)) {
             foreach ($properties as $property) {
-                $output .= $property->generate() . PHP_EOL;
+                $output .= $property->generate() . PHP_EOL . PHP_EOL;
             }
         }
         

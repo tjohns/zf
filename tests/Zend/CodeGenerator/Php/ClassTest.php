@@ -172,12 +172,12 @@ abstract class SampleClass extends ExtendedClassName implements Iterator, Traver
     }
 
 
-
 }
 
 EOS;
             
-        $this->assertEquals($codeGenClass->generate(), $expectedOutput);
+        $output = $codeGenClass->generate();
+        $this->assertEquals($expectedOutput, $output, $output);
     }
 
 }
