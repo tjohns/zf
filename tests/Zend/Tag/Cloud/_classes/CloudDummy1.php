@@ -1,7 +1,7 @@
 <?php
-require_once 'Zend/Tag/Cloud/Decorator/HtmlTag.php';
+require_once 'Zend/Tag/Cloud/Decorator/HtmlCloud.php';
 
-class Zend_Tag_Cloud_Decorator_Dummy_TagDummy extends Zend_Tag_Cloud_Decorator_HtmlTag
+class Zend_Tag_Cloud_Decorator_Dummy_CloudDummy1 extends Zend_Tag_Cloud_Decorator_HtmlCloud
 {
     protected $_foo;
 

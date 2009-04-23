@@ -43,6 +43,21 @@
         </listitem>
         <listitem>
             <para>
+                <code>pluginLoader</code>: a different plugin loader to use.
+                Must be an instance of
+                <classname>Zend_Loader_PluginLoader_Interface</classname>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>prefixPath</code>: prefix paths to add to the plugin
+                loader. Must be an array containing the keys prefix and path or
+                multiple arrays containing the keys prefix and path. Invalid
+                elements will be skipped.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 <code>itemList</code>: a different item list to use. Must be an
                 instance of <code>Zend_Tag_ItemList</code>.
             </para>
