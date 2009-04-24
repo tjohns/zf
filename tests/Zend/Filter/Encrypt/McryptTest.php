@@ -82,6 +82,13 @@ class Zend_Filter_Encrypt_McryptTest extends PHPUnit_Framework_TestCase
         $filter = new Zend_Filter_Encrypt_Mcrypt(array('key' => 'testkey'));
         $filter->setVector('testvect');
         $this->assertEquals('testvect', $filter->getVector());
+
+        try {
+            $filter->setVector('1');
+            $this->fail();
+        } catch (Zend_Filter_Exception $e) {
+            $this->assertContains('wrong size', $e->getMessage());
+        }
     }
 
     /**
