@@ -1,6 +1,0 @@
-<?php
-
-class Zend_Entity_Mapper_Definition_Relation_OneToOne extends Zend_Entity_Mapper_Definition_Relation_ManyToOne
-{
-
-}
