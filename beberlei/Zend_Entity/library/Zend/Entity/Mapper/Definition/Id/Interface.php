@@ -19,7 +19,15 @@
 
 interface Zend_Entity_Mapper_Definition_Id_Interface
 {
+    /**
+     * @param Zend_Db_Adapter_Abstract $db
+     * @return int|null Sequence Number or null if none generated
+     */
     public function nextSequenceId(Zend_Db_Adapter_Abstract $db);
 
+    /**
+     * @param Zend_Db_Adapter_Abstract $db
+     * @return int|null Sequence Number or null if none generated
+     */
     public function lastSequenceId(Zend_Db_Adapter_Abstract $db);
 }

@@ -21,12 +21,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     implements Zend_Entity_Mapper_Definition_Property_Interface
 {
     /**
-     * @var string
-     */
-    protected $load = Zend_Entity_Mapper_Definition_Property::LOAD_LAZY;
-
-    /**
-     * @var Zend_Entity_Mapper_Definition_Relation_Interface
+     * @var Zend_Entity_Mapper_Definition_Relation
      */
     protected $relation;
 
@@ -43,36 +38,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * @var string
      */
-    protected $fetch = Zend_Entity_Mapper_Definition_Property::FETCH_LAZY;
-
-    /**
-     * @var string
-     */
-    protected $cascade = Zend_Entity_Mapper_Definition_Property::CASCADE_NONE;
-
-    /**
-     * @var string
-     */
     protected $_additionalWhereCondition = null;
-
-    /**
-     * @var array
-     */
-    static protected $_allowedFetchValues = array(
-        Zend_Entity_Mapper_Definition_Property::FETCH_JOIN,
-        Zend_Entity_Mapper_Definition_Property::FETCH_LAZY,
-        Zend_Entity_Mapper_Definition_Property::FETCH_SELECT,
-    );
-
-    /**
-     * @var array
-     */
-    static protected $_allowedCascadeValues = array(
-        Zend_Entity_Mapper_Definition_Property::CASCADE_ALL,
-        Zend_Entity_Mapper_Definition_Property::CASCADE_NONE,
-        Zend_Entity_Mapper_Definition_Property::CASCADE_SAVE,
-        Zend_Entity_Mapper_Definition_Property::CASCADE_DELETE,
-    );
 
     /**
      * Construct Collection Definition
@@ -135,66 +101,6 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     }
 
     /**
-     * @return string
-     */
-    public function getFetch()
-    {
-        return $this->fetch;
-    }
-
-    /**
-     * @param string $fetch
-     */
-    public function setFetch($fetch)
-    {
-        if(in_array($fetch, self::$_allowedFetchValues)) {
-            $this->fetch = $fetch;
-        } else {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "Cannot set fetching-strategy of collection ".
-                "'".$this->getPropertyName()."' to unknown value '".$fetch."'"
-            );
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getColumnName()
-    {
-        return null;
-    }
-
-    /**
-     * Get Cascading type of Collection
-     *
-     * @return string
-     */
-    public function getCascade()
-    {
-        return $this->cascade;
-    }
-
-    /**
-     * Set Cascading type of collection
-     *
-     * @param string $cascade
-     * @throws Zend_Entity_Exception
-     */
-    public function setCascade($cascade)
-    {
-        if(!in_array($cascade, self::$_allowedCascadeValues)) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "An invalid cascade value '".$cascade."' is set in collection ".
-                "definition '".$this->getPropertyName()."'."
-            );
-        }
-        $this->cascade = $cascade;
-    }
-
-    /**
      * Set Where for Additional Conditional Clause on the Collection.
      *
      * @param string $additionalWhereCondition
@@ -217,7 +123,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * What type of relation is this collection?
      *
-     * @return Zend_Entity_Mapper_Definition_Relation_Interface
+     * @return Zend_Entity_Mapper_Definition_Relation
      */
     public function getRelation()
     {
@@ -227,9 +133,9 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * Set type of relation of this collection.
      *
-     * @param Zend_Entity_Mapper_Definition_Relation_Interface $relation
+     * @param Zend_Entity_Mapper_Definition_Relation $relation
      */
-    public function setRelation(Zend_Entity_Mapper_Definition_Relation_Interface $relation)
+    public function setRelation(Zend_Entity_Mapper_Definition_Relation $relation)
     {
         $this->relation = $relation;
     }

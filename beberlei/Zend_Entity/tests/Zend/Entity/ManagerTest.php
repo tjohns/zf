@@ -180,7 +180,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
     public function testCloseConnectionDelegatesToAdapter()
     {
-        $db = $this->getDatabaseConnection();
+        $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
            ->method('closeConnection')
            ->will($this->returnValue(true));

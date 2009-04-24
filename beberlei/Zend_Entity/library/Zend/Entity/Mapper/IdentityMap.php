@@ -26,30 +26,9 @@ class Zend_Entity_Mapper_IdentityMap
      */
     protected $_loadedObjects = array();
 
-    /**
-     * Loaded Collections
-     *
-     * @var array
-     */
-    protected $_loadedCollections = array();
-
-    /**
-     * Read Only flag. Does not save entitys.
-     *
-     * @var boolean
-     */
-    protected $_readOnly = false;
-
-    public function setReadOnly()
-    {
-        $this->_readOnly = true;
-    }
-
     public function addObject($entityInterface, $key, Zend_Entity_Interface $entity)
     {
-        if($this->_readOnly == false) {
-            $this->_loadedObjects[$entityInterface][$key] = $entity;
-        }
+        $this->_loadedObjects[$entityInterface][$key] = $entity;
     }
 
     public function hasObject($entityInterface, $key)
@@ -65,28 +44,6 @@ class Zend_Entity_Mapper_IdentityMap
         return $this->_loadedObjects[$entityInterface][$key];
     }
 
-    public function hasCollection($select)
-    {
-        $key = md5($select);
-        if(isset($this->_loadedCollections[$key])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function addCollection($select, $collection)
-    {
-        $key = md5($select);
-        $this->_loadedCollections[$key] = $collection;
-    }
-
-    public function getCollection($select)
-    {
-        $key = md5($select);
-        return $this->_loadedCollections[$key];
-    }
-
     /**
      * Clear this identity map
      *
@@ -94,7 +51,6 @@ class Zend_Entity_Mapper_IdentityMap
      */
     public function clear()
     {
-        $this->_loadedCollections = array();
         $this->_loadedObjects = array();
     }
 }

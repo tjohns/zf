@@ -27,6 +27,11 @@ class Zend_Entity_Mapper_Definition_Utility
     private static $definitionLoader = null;
 
     /**
+     * @var array
+     */
+    private static $definitionClassNames = array();
+
+    /**
      * Get PluginLoader for Definitions
      *
      * @var Zend_Loader_PluginLoader
@@ -37,7 +42,7 @@ class Zend_Entity_Mapper_Definition_Utility
             self::$definitionLoader = new Zend_Loader_PluginLoader(array(), 'Zend_Entity_Mapper_Definition');
             self::$definitionLoader->addPrefixPath('Zend_Entity_Mapper_Definition', 'Zend/Entity/Mapper/Definition');
             self::$definitionLoader->addPrefixPath('Zend_Entity_Mapper_Definition_Relation', 'Zend/Entity/Mapper/Definition/Relation');
-            self::$definitionLoader->addPrefixPath('Zend_Entity_Mapper_Definition_PrimaryKey', 'Zend/Entity/Mapper/Definition/PrimaryKey');
+            self::$definitionLoader->addPrefixPath('Zend_Entity_Mapper_Definition_Id', 'Zend/Entity/Mapper/Definition/Id');
         }
         return self::$definitionLoader;
     }
@@ -58,19 +63,31 @@ class Zend_Entity_Mapper_Definition_Utility
      *
      * @param  string $definitionShortname
      * @param  string $propertyName
-     * @param   $options
-     * @return <type>
+     * @param  array $options
+     * @return Zend_Entity_Mapper_Definition_Property_Interface
      */
     public static function loadDefinition($definitionShortname, $propertyName, $options=array())
     {
-        $definitionLoader = self::getDefinitionLoader();
-        $class = $definitionLoader->load($definitionShortname);
+        if(!isset(self::$definitionClassNames[$definitionShortname])) {
+            $definitionLoader = self::getDefinitionLoader();
+            $class = $definitionLoader->load($definitionShortname);
+            self::$definitionClassNames[$definitionShortname] = $class;
+        } else {
+            $class = self::$definitionClassNames[$definitionShortname];
+        }
         if(!class_exists($class)) {
-            throw new Exception("Definition Class ".$class." resolved from ".$definitionShortname." does not exist.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "Definition Class ".$class." resolved from ".$definitionShortname." does not exist."
+            );
         }
         $definition = new $class($propertyName, $options);
         if(!($definition instanceof Zend_Entity_Mapper_Definition_Property_Interface)) {
-            throw new Exception("Definition ".$definitionShortname." resolved to class ".$class." which does not implement the definition property interface.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "Definition ".$definitionShortname." resolved to class ".$class." which does not implement ".
+                "the definition property interface."
+            );
         }
         return $definition;
     }

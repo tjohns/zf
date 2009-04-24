@@ -14,6 +14,7 @@ require_once "Adapter/TestCase.php";
 require_once "Adapter/PDO/MySQL/ClinicScenario.php";
 require_once "Adapter/PDO/SqLite/ClinicScenario.php";
 require_once "Mapper/AllTests.php";
+require_once "MapperTest.php";
 
 class Zend_Entity_AllTests
 {
@@ -24,6 +25,7 @@ class Zend_Entity_AllTests
         $suite->addTestSuite('Zend_Entity_IdentityMapTest');
         $suite->addTestSuite('Zend_Entity_UnitOfWorkTest');
         $suite->addTestSuite('Zend_Entity_ManagerTest');
+        $suite->addTestSuite('Zend_Entity_MapperTest');
         $suite->addTestSuite('Zend_Entity_Resource_AllTests');
         $suite->addTest(Zend_Entity_Mapper_AllTests::suite());
         //$suite->addTestSuite('Zend_Entity_Adapter_PDO_MySQL_ClinicScenario');

@@ -19,11 +19,23 @@
 
 class Zend_Entity_Mapper_Definition_Id_AutoIncrement implements Zend_Entity_Mapper_Definition_Id_Interface
 {
+    /**
+     * Returns null
+     *
+     * @param Zend_Db_Adapter_Abstract $db
+     * @return null
+     */
     public function nextSequenceId(Zend_Db_Adapter_Abstract $db)
     {
         return null;
     }
 
+    /**
+     * Returns Last Insert Id
+     *
+     * @param Zend_Db_Adapter_Abstract $db
+     * @return int
+     */
     public function lastSequenceId(Zend_Db_Adapter_Abstract $db)
     {
         return $db->lastInsertId();

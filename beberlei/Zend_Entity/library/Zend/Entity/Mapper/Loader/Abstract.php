@@ -61,7 +61,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 if($extension->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
                     $this->_lateSelectedCollections[] = $extension;
                     $this->_hasLateLoadingObjects     = true;
-                } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+                } else if($extension->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
                     $this->_lazyLoadCollections[]     = $extension;
                     $this->_hasLazyLoads              = true;
                 } elseif($extension->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {

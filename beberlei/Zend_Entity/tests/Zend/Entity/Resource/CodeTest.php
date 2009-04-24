@@ -38,16 +38,16 @@ class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
 
     public function testCorrectDefinitionFileShouldReturnDefinitionObject()
     {
-        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../ScenarioData/Clinic/Definition/");
-        $def = $map->getDefinitionByEntityName("Clinic_Bed");
+        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../Fixture/");
+        $def = $map->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertTrue($def instanceof Zend_Entity_Mapper_Definition_Entity);
     }
 
     public function testResourceMapShouldCacheReturnedDefinitions()
     {
-        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../ScenarioData/Clinic/Definition/");
-        $def1 = $map->getDefinitionByEntityName("Clinic_Bed");
-        $def2 = $map->getDefinitionByEntityName("Clinic_Bed");
+        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../Fixture/");
+        $def1 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
+        $def2 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertEquals($def1, $def2);
     }
 

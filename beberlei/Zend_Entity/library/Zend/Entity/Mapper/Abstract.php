@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interface
+abstract class Zend_Entity_Mapper_Abstract
 {
     /**
      * Zend Database adapter
@@ -92,7 +92,8 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
         if(count($collection) == 1) {
             return $collection[0];
         } else {
-            throw new Exception(count($collection)." elements found, but exactly one was asked for in entity '".$this->getEntityInterfaceTypeResponsibleFor()."'");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(count($collection)." elements found, but exactly one was asked for in entity '".$this->getEntityClassName()."'");
         }
     }
 
@@ -100,21 +101,32 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
      * Find By Primary Key
      *
      * @throws Exception
-     * @param  array|string
+     * @param  int|string
      * @return Zend_Entity_Interface
      */
     public function findByKey($keyValue, Zend_Entity_Manager $entityManager)
     {
         $keyIdent = Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($keyValue);
-        if($entityManager->getIdentityMap()->hasObject($this->getEntityInterfaceTypeResponsibleFor(), $keyIdent)) {
-            return $entityManager->getIdentityMap()->getObject($this->getEntityInterfaceTypeResponsibleFor(), $keyIdent);
+        $entityClassName = $this->getEntityClassName();
+        if($entityManager->getIdentityMap()->hasObject($entityClassName, $keyIdent)) {
+            return $entityManager->getIdentityMap()->getObject($entityClassName, $keyIdent);
         } else {
-            $key    = $this->getPrimaryKey()->getColumnName();
-            $select = $this->select();
-            $cond = $this->getAdapter()->quoteIdentifier($this->getMapperTable().".".$key);
-            $select->where($cond." = ?", $keyValue);
+            $select = $this->buildFindByKeySelectQuery($keyValue);
             return $this->findOne($select, $entityManager);
         }
+    }
+
+    /**
+     * @param  string|int $keyValue
+     * @return Zend_Db_Select
+     */
+    protected function buildFindByKeySelectQuery($keyValue)
+    {
+        $key    = $this->getPrimaryKey()->getColumnName();
+        $select = $this->select();
+        $cond = $this->getAdapter()->quoteIdentifier($this->getMapperTable().".".$key);
+        $select->where($cond." = ?", $keyValue);
+        return $select;
     }
 
     /**
@@ -149,11 +161,6 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
      */
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager )
     {
-        if($entity instanceof Zend_Entity_Mapper_LazyLoad_Entity &&
-            $entity->entityWasLoaded() == false) {
-            return;
-        }
-
         $unitOfWork = $entityManager->getUnitOfWork();
         if($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN) {
             return;
@@ -163,6 +170,27 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
 
         $this->getPersister()->delete($entity, $entityManager);
         return;
+    }
+
+    /**
+     *
+     * @return Zend_Entity_Mapper_Definition_Entity
+     */
+    public function getDefinition()
+    {
+        return $this->_entityDefinition;
+    }
+
+    /**
+     * Return select statement object
+     *
+     * @return Zend_Db_Select
+     */
+    public function select()
+    {
+        $select = new Zend_Entity_Mapper_Select( $this->getAdapter() );
+        $this->getLoader()->initSelect($select);
+        return $select;
     }
     
     /**
@@ -183,24 +211,22 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
     protected function getPersister()
     {
         if($this->_persister === null) {
-            $persisterClassName = $this->getDefinition()->getPersisterClass();
-            $this->_persister = new $persisterClassName();
-            $this->_persister->initialize($this->_entityDefinition, $this->_entityResourceMap);
+            $this->createPersister();
         }
 
         return $this->_persister;
     }
 
     /**
-     * Return select statement object
+     * Create Persister Object
      *
-     * @return Zend_Db_Select
+     * @return void
      */
-    public function select()
+    protected function createPersister()
     {
-        $select = new Zend_Entity_Mapper_Select( $this->getAdapter() );
-        $this->getLoader()->initSelect($select);
-        return $select;
+        $persisterClassName = $this->getDefinition()->getPersisterClass();
+        $this->_persister = new $persisterClassName();
+        $this->_persister->initialize($this->_entityDefinition, $this->_entityResourceMap);
     }
 
     /**
@@ -211,9 +237,17 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
     protected function getLoader()
     {
         if($this->_loader === null) {
-            $this->_loader = new Zend_Entity_Mapper_Loader_Basic($this->getDefinition());
+            $this->createLoader();
         }
         return $this->_loader;
+    }
+
+    /**
+     * Create new Entity Loader Object
+     */
+    protected function createLoader()
+    {
+        $this->_loader = new Zend_Entity_Mapper_Loader_Basic($this->getDefinition());
     }
 
     /**
@@ -225,39 +259,11 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
      */
     protected function query(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
     {
-        $identityMap = $entityManager->getIdentityMap();
-        if($identityMap->hasCollection($select)) {
-            return $identityMap->getCollection($select);
-        } else {
-            #$select->reset(Zend_Db_Select::COLUMNS);
-            $loader = $this->getLoader();
-            $loader->initColumns($select);
+        $loader = $this->getLoader();
+        $loader->initColumns($select);
 
-            try {
-                $stmt = $this->getAdapter()->query($select);
-            } catch(Exception $e) {
-                throw new Exception("In '".$this->getEntityInterfaceTypeResponsibleFor()."' Mapper: ".$e->getMessage()." - ".$select." ".$e->getTraceAsString());
-            }
-            $collection = $loader->processResultset($stmt, $entityManager);
-            $identityMap->addCollection($select, $collection);
-
-            return $collection;
-        }
-    }
-
-    /**
-     *
-     * @return Zend_Entity_Mapper_Definition_Entity
-     */
-    public function getDefinition()
-    {
-        if($this->_entityDefinition == null) {
-            throw new Exception(
-                sprintf("No table name or primary key given for metadata retrieval in mapper '%s'.",
-                get_class($this)
-            ));
-        }
-        return $this->_entityDefinition;
+        $stmt = $this->getAdapter()->query($select);
+        return $loader->processResultset($stmt, $entityManager);
     }
     
     protected function getMapperTable()
@@ -275,7 +281,7 @@ abstract class Zend_Entity_Mapper_Abstract implements Zend_Entity_Mapper_Interfa
         return $this->getDefinition()->getPrimaryKey();
     }
 
-    public function getEntityInterfaceTypeResponsibleFor()
+    protected function getEntityClassName()
     {
         return $this->getDefinition()->getClass();
     }

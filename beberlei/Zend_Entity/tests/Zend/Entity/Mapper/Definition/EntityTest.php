@@ -31,14 +31,6 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
         $this->assertEquals(self::TEST_TABLE, $entityDef->getTable());
     }
 
-    public function testSetGetFetchMode()
-    {
-        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS, array('fetch' => 'test'));
-        $this->assertEquals('test', $entityDef->getFetch());
-        $entityDef->setFetch("test2");
-        $this->assertEquals('test2', $entityDef->getFetch());
-    }
-
     public function testAddPropertyViaCallIntercept()
     {
         $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
@@ -102,7 +94,7 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
     public function testAddRelationAccessibleWithGetRelations()
     {
         $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
-        $entityDef->addOneToOne(self::TEST_PROPERTY);
+        $entityDef->addOneToOneRelation(self::TEST_PROPERTY);
 
         $relation = $entityDef->getRelations();
         $this->assertEquals(1, count($relation));
@@ -114,7 +106,7 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
     public function testAddRelationAccessibleByPropertyName()
     {
         $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
-        $entityDef->addOneToOne(self::TEST_PROPERTY);
+        $entityDef->addOneToOneRelation(self::TEST_PROPERTY);
 
         $relation = $entityDef->getPropertyByName(self::TEST_PROPERTY);
         $this->assertEquals(self::TEST_PROPERTY, $relation->getPropertyName());

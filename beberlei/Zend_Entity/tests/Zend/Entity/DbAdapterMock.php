@@ -2,6 +2,11 @@
 
 class Zend_Entity_DbAdapterMock extends Zend_Db_Adapter_Abstract
 {
+    public function __construct()
+    {
+        
+    }
+
     /**
      * @var boolean
      */

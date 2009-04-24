@@ -52,26 +52,6 @@ abstract class Zend_Entity_Mapper_Definition_Table
     }
 
     /**
-     * Get fetchmode of table.
-     *
-     * @return int
-     */
-    public function getFetch()
-    {
-        return $this->_fetch;
-    }
-
-    /**
-     * Set fetchmode.
-     *
-     * @param int $fetch
-     */
-    public function setFetch($fetch)
-    {
-        $this->_fetch = $fetch;
-    }
-
-    /**
      * Get current tablename
      *
      * @return string

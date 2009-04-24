@@ -19,9 +19,17 @@
 
 abstract class Zend_Entity_Mapper_Definition_Property_Abstract implements Zend_Entity_Mapper_Definition_Property_Interface
 {
+    /**
+     * @var string
+     */
     protected $propertyName;
-    protected $columnName;
 
+    /**
+     * Construct a property and call existing methods for all options if present.
+     *
+     * @param string $propertyName
+     * @param array $options
+     */
     public function __construct($propertyName, $options=array())
     {
         $this->setPropertyName($propertyName);
@@ -35,23 +43,19 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract implements Zend_E
         }
     }
 
+    /**
+     * @return string
+     */
     public function getPropertyName()
     {
         return $this->propertyName;
     }
 
+    /**
+     * @param string $propertyName
+     */
     public function setPropertyName($propertyName)
     {
         $this->propertyName = $propertyName;
-    }
-
-    public function getColumnName()
-    {
-        return $this->columnName;
-    }
-
-    public function setColumnName($columnName)
-    {
-        $this->columnName = $columnName;
     }
 }

@@ -29,14 +29,4 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);
         $this->assertEquals($entity, $identityMap->getObject("Zend_TestEntity1", "1"));
     }
-
-    public function testIdentityMapReadOnlyDoesNotAddObjects()
-    {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
-        $identityMap->setReadOnly();
-
-        $entity = new Zend_TestEntity1();
-        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
-        $this->assertFalse($identityMap->hasObject("Zend_TestEntity1", "1"));
-    }
 }

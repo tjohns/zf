@@ -10,6 +10,10 @@ require_once "EntityTest.php";
 require_once "JoinTest.php";
 require_once "PrimaryKeyTest.php";
 require_once "CollectionTest.php";
+require_once "UtilityTest.php";
+require_once "OneToOneRelationTest.php";
+require_once "ManyToOneRelationTest.php";
+require_once "Id/AllTests.php";
 
 class Zend_Entity_Mapper_Definition_AllTests
 {
@@ -22,6 +26,11 @@ class Zend_Entity_Mapper_Definition_AllTests
         $suite->addTestSuite('Zend_Entity_Mapper_Definition_JoinTest');
         $suite->addTestSuite('Zend_Entity_Mapper_Definition_PrimaryKeyTest');
         $suite->addTestSuite('Zend_Entity_Mapper_Definition_CollectionTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_Definition_UtilityTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_Definition_OneToOneRelationTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_Definition_ManyToOneRelationTest');
+
+        $suite->addTest(Zend_Entity_Mapper_Definition_Id_AllTests::suite());
 
         return $suite;
     }

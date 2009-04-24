@@ -8,7 +8,7 @@ $def->addProperty("birthDate");
 
 $def->addCollection("occupancies", array(
     "key" => "occupancy_id",
-    "relation" => new Zend_Entity_Mapper_Definition_Relation_OneToMany("id", array("class" => "Clinic_Occupancy")),
+    "relation" => new Zend_Entity_Mapper_Definition_OneToManyRelation("id", array("class" => "Clinic_Occupancy")),
 ));
 
 return $def;

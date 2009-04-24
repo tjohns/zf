@@ -91,7 +91,7 @@ class Zend_Entity_Mapper_Loader_ForeignKey extends Zend_Entity_Mapper_Loader_Bas
     }
 
 
-    public function processResultset(Zend_Db_Statement $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
+    public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
     {
         $map        = $entityManager->getIdentityMap();
         $unitOfWork = $entityManager->getUnitOfWork();

@@ -38,7 +38,7 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
      * @param <type> $fetchMode
      * @return <type> 
      */
-    public function processResultset(Zend_Db_Statement $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
+    public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
     {
         $unitOfWork = $entityManager->getUnitOfWork();
 
