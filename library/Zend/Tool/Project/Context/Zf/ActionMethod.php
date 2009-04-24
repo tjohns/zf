@@ -168,7 +168,7 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
             return false;
         }
         
-        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFilePath($controllerPath);
+        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFileName($controllerPath, true, false);
         $controllerCodeGenFile->getClass()->setMethod(array(
             'name' => $actionName . 'Action',
             'body' => $body
@@ -191,7 +191,7 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
             return false;
         }
             
-        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFilePath($controllerPath);
+        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFileName($controllerPath);
         return $controllerCodeGenFile->getClass()->hasMethod($actionName . 'Action');
     }
     
