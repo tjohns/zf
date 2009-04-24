@@ -519,6 +519,25 @@ class Zend_Cache_Core
         }
         return $this->_backend->getFillingPercentage();
     }
+    
+    /**
+     * Return an array of metadatas for the given cache id
+     *
+     * The array will include these keys :
+     * - expire : the expire timestamp
+     * - tags : a string array of tags
+     * - mtime : timestamp of last modification time
+     *
+     * @param string $id cache id
+     * @return array array of metadatas (false if the cache id is not found)
+     */
+    public function getMetadatas($id)
+    {
+    	if (!$this->_extendedBackend) {
+            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+        }
+        return $this->_backend->getMetadatas($id);
+    }
 
     /**
      * Give (if possible) an extra lifetime to the given cache id
