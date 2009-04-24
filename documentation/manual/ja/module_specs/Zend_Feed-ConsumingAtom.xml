@@ -5,7 +5,7 @@
 <title>Atom フィードの使用</title>
 
     <para>
-        <classname>Zend_Feed_Atom</code> の使用法は <code>Zend_Feed_Rss</classname>
+        <classname>Zend_Feed_Atom</classname> の使用法は <classname>Zend_Feed_Rss</classname>
         と似ていで、フィードのプロパティへのアクセス、
         フィード内のエントリの順次処理などができるようになります。大きな違いは
         Atom プロトコルの構造自体によるものです。Atom は RSS の後継として作成されたもので、

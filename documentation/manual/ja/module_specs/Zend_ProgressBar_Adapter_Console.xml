@@ -38,7 +38,7 @@
         <listitem>
             <para>
                 <code>width</code>: 整数値、あるいは
-                <classname>Zend_Console_ProgressBar</code> の定数 <code>AUTO</classname>。
+                <classname>Zend_Console_ProgressBar</classname> の定数 <code>AUTO</code>。
             </para>
         </listitem>
         <listitem>

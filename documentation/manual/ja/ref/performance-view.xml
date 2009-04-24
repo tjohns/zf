@@ -6,7 +6,7 @@
 
     <para>
         When using Zend Framework's MVC layer, chances are you will be using
-        <classname>Zend_View</code>. <code>Zend_View</classname> is performs well
+        <classname>Zend_View</classname>. <classname>Zend_View</classname> is performs well
         compared to other view or templating engines; since view scripts
         are written in PHP, you do not incur the overhead of compiling custom
         markup to PHP, nor do you need to worry that the compiled PHP is
@@ -178,7 +178,7 @@ class My_View extends Zend_View
                 partial and need the clean variable scope, or rendering a view
                 script from another MVC module, there is no reason to incur the
                 overhead of <code>partial()</code>; instead, use
-                <classname>Zend_View</code>'s built-in <code>render()</classname> method
+                <classname>Zend_View</classname>'s built-in <code>render()</code> method
                 to render the view script.
             </para>
         </sect3>

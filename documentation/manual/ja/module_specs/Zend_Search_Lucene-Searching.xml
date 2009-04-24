@@ -192,7 +192,7 @@ foreach ($hits as $hit) {
 
         <para>
             オプションで、
-            <classname>Zend_Search_Lucene_Search_QueryHit</code> から元の <code>Zend_Search_Lucene_Document</classname>
+            <classname>Zend_Search_Lucene_Search_QueryHit</classname> から元の <classname>Zend_Search_Lucene_Document</classname>
             を取得することができます。
 
             保存されたドキュメントを取得するには、

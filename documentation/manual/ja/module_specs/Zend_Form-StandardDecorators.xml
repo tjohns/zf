@@ -77,7 +77,7 @@ class Util
 
         <para>
             Description デコレータは
-            <classname>Zend_Form</code>、<code>Zend_Form_Element</classname>
+            <classname>Zend_Form</classname>、<classname>Zend_Form_Element</classname>
             あるいは <classname>Zend_Form_DisplayGroup</classname> の説明を表示します。
             説明は、各オブジェクトの <code>getDescription()</code>
             メソッドで取得します。

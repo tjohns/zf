@@ -340,7 +340,7 @@ try {
         <title>全アダプタの高速化</title>
 
         <para>
-            <classname>Zend_Translate</code> では、内部的に <code>Zend_Cache</classname>
+            <classname>Zend_Translate</classname> では、内部的に <classname>Zend_Cache</classname>
             を使用して翻訳ソースの読み込みを高速化することができます。
             これは、多数の翻訳ソースを使用していたり
             XML ベースの複雑なソース形式を使用していたりする場合に非常に便利です。

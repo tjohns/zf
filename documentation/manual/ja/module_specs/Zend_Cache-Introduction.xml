@@ -148,7 +148,7 @@ echo 'これはキャッシュされません ('.time().').';
        </para>
     </example>
     <note><para>
-        <classname>Zend_Cache</code> を使用する際には、キャッシュ ID (<code>save()</classname> および
+        <classname>Zend_Cache</classname> を使用する際には、キャッシュ ID (<code>save()</code> および
         <code>start()</code> で使用します) に十分な注意を払うようにしましょう。
         これは、キャッシュしようとしているリソース内で一意である必要があります。
         さもないと、無関係なレコードによってキャッシュを削除されてしまったり、

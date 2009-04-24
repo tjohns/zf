@@ -25,7 +25,7 @@
         <title>行セットの取得</title>
 
         <para>
-            <classname>Zend_Db_Table_Abstract</code> には <code>find()</classname> と
+            <classname>Zend_Db_Table_Abstract</classname> には <classname>find()</classname> と
             <code>fetchAll()</code> というメソッドがあります。
             これらはどちらも <classname>Zend_Db_Table_Rowset_Abstract</classname> 型のオブジェクトを返します。
         </para>

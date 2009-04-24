@@ -243,7 +243,7 @@ Array
                 ドメインがマッチ <emphasis>しない</emphasis> 場合、
                 あるいはユーザがドメインつきのユーザ名を指定しなかった場合は、
                 <classname>Zend_Ldap</classname> は指定された認証情報でのバインドを試みます。
-                バインドに失敗した場合は <classname>Zend_Ldap</code> は <code>Zend_Ldap_Exception</classname>
+                バインドに失敗した場合は <classname>Zend_Ldap</classname> は <classname>Zend_Ldap_Exception</classname>
                 をスローします。これは <classname>Zend_Auth_Adapter_Ldap</classname> で捕捉され、
                 次に設定されているサーバでの認証を試みます。
                 バインドが成功した場合はそこで処理を終了し、アダプタの <code>authenticate()</code>
@@ -392,7 +392,7 @@ Array
                         そして 4 はプリンシパル形式のユーザ名 (例: <emphasis>alice@foo.net</emphasis>)
                         となります。デフォルト値は 4 (例: <emphasis>alice@foo.net</emphasis>) です。
                         たとえば 3 を指定したとすると、<classname>Zend_Auth_Result::getIdentity()</classname>
-                        (<classname>Zend_Auth</code> を使う場合は <code>Zend_Auth::getIdentity()</classname>)
+                        (<classname>Zend_Auth</classname> を使う場合は <classname>Zend_Auth::getIdentity()</classname>)
                         の返す識別子は常に <emphasis>FOO\alice</emphasis> となります。これは、Alice が入力した内容が
                         <emphasis>alice</emphasis>、<emphasis>alice@foo.net</emphasis>、<emphasis>FOO\alice</emphasis>、
                         <emphasis>FoO\aLicE</emphasis>、<emphasis>foo.net\alice</emphasis>
@@ -494,7 +494,7 @@ Array
         <title>デバッグメッセージの収集</title>
 
         <para>
-            <classname>Zend_Auth_Adapter_Ldap</code> は、<code>authenticate()</classname>
+            <classname>Zend_Auth_Adapter_Ldap</classname> は、<classname>authenticate()</classname>
             メソッド内でのデバッグ情報を収集します。この情報は、<classname>Zend_Auth_Result</classname>
             オブジェクト内にメッセージとして保存されます。<classname>Zend_Auth_Result::getMessages()</classname>
             が返す配列は次のような形式になります。

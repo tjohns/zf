@@ -115,7 +115,7 @@
                 <listitem>
                     <para>
                         サービスクラス - これは <classname>Zend_Gdata_App</classname> を継承したものです。
-                        <classname>Zend_Gdata</code> や <code>Zend_Gdata_Spreadsheets</classname>
+                        <classname>Zend_Gdata</classname> や <classname>Zend_Gdata_Spreadsheets</classname>
                         といったその他のクラスもここに含まれます。
                         これらのクラスは APP や GData サービス とのやり取りを行うもので、
                         フィードを取得したりエントリを取得したり、
@@ -150,7 +150,7 @@
                 <listitem>
                     <para>
                         エントリクラス - これは <classname>Zend_Gdata_App_Entry</classname> を継承したものです。
-                        <classname>Zend_Gdata_Entry</code> や <code>Zend_Gdata_Spreadsheets_ListEntry</classname>
+                        <classname>Zend_Gdata_Entry</classname> や <classname>Zend_Gdata_Spreadsheets_ListEntry</classname>
                         といったその他のクラスもここに含まれます。
                         これらのクラスは、サービスから取得したエントリを表すものです。また、
                         サービスに送信するデータを作成するためにも用います。
@@ -195,7 +195,7 @@
             Google データサービスは、Atom Publishing Protocol (APP)
             および Atom syndication format に基づいたサービスです。
             <classname>Zend_Gdata</classname> コンポーネントを用いて APP や Google
-            サービスを扱うには、<classname>Zend_Gdata_App</code> や <code>Zend_Gdata</classname>
+            サービスを扱うには、<classname>Zend_Gdata_App</classname> や <classname>Zend_Gdata</classname>
             そして <classname>Zend_Gdata_Spreadsheets</classname> などのサービスクラスを使用する必要があります。
             サービスクラスには、サービスからデータのフィードを取得したり
             新しいエントリをフィードに挿入したり
@@ -223,7 +223,7 @@
         </para>
         <para>
             ということで、すべてのサービスクラス
-            (<classname>Zend_Gdata_App</code>、<code>Zend_Gdata</code>、<code>Zend_Gdata_Spreadsheets</classname> など)
+            (<classname>Zend_Gdata_App</classname>、<classname>Zend_Gdata</classname>、<classname>Zend_Gdata_Spreadsheets</classname> など)
             に特別なファクトリメソッドを用意するようにしました。
             これを用いることで、データモデルやクエリ、
             その他のクラスのインスタンスをより簡単に作成できるようになります。
@@ -286,7 +286,7 @@ $entry->cell = $cell;
             <link linkend="zend.http.client">Zend_Http_Client</link>
             を用いてリクエストを google.com に送信し、結果を取得します。
             ほとんどの Google Data リクエストに対する応答は
-            <classname>Zend_Gdata_App_Feed</code> あるいは <code>Zend_Gdata_App_Entry</classname>
+            <classname>Zend_Gdata_App_Feed</classname> あるいは <classname>Zend_Gdata_App_Entry</classname>
             クラスのサブクラスで返されます。
         </para>
 
@@ -302,7 +302,7 @@ $entry->cell = $cell;
         <title>新しい Gdata クライアントの作成</title>
 
         <para>
-            <classname>Zend_Gdata_App</code> クラス、<code>Zend_Gdata</classname> クラス、
+            <classname>Zend_Gdata_App</classname> クラス、<classname>Zend_Gdata</classname> クラス、
             あるいはそのサブクラスのひとつのオブジェクトを作成します。
             各サブクラスではサービス固有のヘルパーメソッドを提供します。
         </para>
@@ -311,7 +311,7 @@ $entry->cell = $cell;
             <classname>Zend_Gdata_App</classname> のコンストラクタに渡すオプションの引数は
             <link linkend="zend.http.client">Zend_Http_Client</link>
             のインスタンスです。このパラメータを渡さなかった場合は、
-            <classname>Zend_Gdata</code> はデフォルトの <code>Zend_Http_Client</classname> オブジェクトを作成します。
+            <classname>Zend_Gdata</classname> はデフォルトの <classname>Zend_Http_Client</classname> オブジェクトを作成します。
             これには、プライベートフィードにアクセスするための認証データは設定されていません。
             <classname>Zend_Http_Client</classname> オブジェクトを自分で指定すると、
             クライアントオブジェクトに対する設定オプションを指定することができます。
@@ -628,7 +628,7 @@ foreach ($feed as $entry) {
         <title>Google サーバへのエントリの送信</title>
 
         <para>
-            <classname>Zend_Gdata</code> オブジェクトの関数 <code>insertEntry()</classname>
+            <classname>Zend_Gdata</classname> オブジェクトの関数 <code>insertEntry()</code>
             にアップロードしたいデータを指定し、
             新しいエントリを Google Data サービスに保存します。
         </para>
@@ -678,7 +678,7 @@ echo 'この結果のエントリの <id> は、' . $entryResult->id->text;
         <title>Google サーバからのデータの削除</title>
 
         <para>
-            方法 1: <classname>Zend_Gdata</code> オブジェクトの関数 <code>delete()</classname>
+            方法 1: <classname>Zend_Gdata</classname> オブジェクトの関数 <code>delete()</code>
             に削除したいエントリを指定して、Google Data
             サービスからデータを削除します。
             フィードエントリの編集用 URL を

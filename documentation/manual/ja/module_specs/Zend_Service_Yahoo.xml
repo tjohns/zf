@@ -19,7 +19,7 @@
     <sect2 id="zend.service.yahoo.websearch">
         <title>Yahoo! を使用したウェブの検索</title>
         <para>
-            <classname>Zend_Service_Yahoo</code> の <code>webSearch()</classname>
+            <classname>Zend_Service_Yahoo</classname> の <code>webSearch()</code>
             メソッドを使用すると、Yahoo! でウェブを検索できます。
             最初の引数に検索パラメータ、
             オプションで二番目の引数に検索オプションの配列を指定します。
@@ -43,7 +43,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.imagesearch">
         <title>Yahoo! を使用した画像の検索</title>
         <para>
-            <classname>Zend_Service_Yahoo</code> の <code>imageSearch()</classname>
+            <classname>Zend_Service_Yahoo</classname> の <code>imageSearch()</code>
             メソッドを使用すると、画像の検索ができます。
             <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> メソッド</link>
             と同様、最初の引数に検索パラメータ、
@@ -67,7 +67,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.videosearch">
         <title>Yahoo! を使用した動画の検索</title>
         <para>
-            <classname>Zend_Service_Yahoo</code> の <code>videoSearch()</classname>
+            <classname>Zend_Service_Yahoo</classname> の <code>videoSearch()</code>
             メソッドを使用すると、Yahoo で動画を検索できます。
             詳細は
             <ulink url="http://developer.yahoo.com/search/video/V1/videoSearch.html">Yahoo! Video Search

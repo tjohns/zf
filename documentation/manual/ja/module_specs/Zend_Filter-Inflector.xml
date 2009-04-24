@@ -360,7 +360,7 @@ $inflector->setFilterRule('script', array(
             <para>
                 一般に、各変数に対して個別にインフレクタルールを設定するよりも、
                 一括してルールを設定できたほうが楽でしょう。
-                <classname>Zend_Filter_Inflector</code> の <code>addRules()</classname>
+                <classname>Zend_Filter_Inflector</classname> の <code>addRules()</code>
                 メソッドや <code>setRules()</code> メソッドを使用すると、
                 一括設定することができます。
             </para>

@@ -29,7 +29,7 @@ $height = $pdfPage->getHeight();
         グレイスケール、RGB および CMYK 色空間をサポートしています。
         <classname>Zend_Pdf_Color</classname> オブジェクトが要求される箇所では、
         これらのどれでも使用することができます。それぞれの色空間に対応する機能を提供するのが
-        <classname>Zend_Pdf_Color_GrayScale</code>、<code>Zend_Pdf_Color_Rgb</classname> および
+        <classname>Zend_Pdf_Color_GrayScale</classname>、<classname>Zend_Pdf_Color_Rgb</classname> および
         <classname>Zend_Pdf_Color_Cmyk</classname> クラスです。
         </para>
         <programlisting role="php"><![CDATA[
@@ -489,7 +489,7 @@ $pdfPage->setFont($font, 36)
         </para>
 
         <para>
-            <classname>Zend_Pdf</code> オブジェクトおよび <code>Zend_Pdf_Page</classname> オブジェクトには、
+            <classname>Zend_Pdf</classname> オブジェクトおよび <classname>Zend_Pdf_Page</classname> オブジェクトには、
             ドキュメントやページ内のすべてのフォントを抽出するためのメソッドが用意されています。
         </para>
         <example id="zend.pdf.drawing.extracting-fonts.example-1">
@@ -682,8 +682,8 @@ public function setLineDashingPattern($pattern, $phase = 0);
     <sect2 id="zend.pdf.drawing.fill-style">
         <title>塗りつぶしのスタイル</title>
         <para>
-        <classname>Zend_Pdf_Page::drawRectangle()</code>、<code>Zend_Pdf_Page::drawPolygon()</classname>、
-        <classname>Zend_Pdf_Page::drawCircle()</code> および <code>Zend_Pdf_Page::drawEllipse()</classname>
+        <classname>Zend_Pdf_Page::drawRectangle()</classname>、<classname>Zend_Pdf_Page::drawPolygon()</classname>、
+        <classname>Zend_Pdf_Page::drawCircle()</classname> および <classname>Zend_Pdf_Page::drawEllipse()</classname>
         メソッドは、オプションのパラメータとして <code>$fillType</code>
         を受け取ります。これは以下のいずれかの値となります。
         </para>

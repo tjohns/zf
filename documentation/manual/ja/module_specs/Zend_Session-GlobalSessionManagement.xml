@@ -136,7 +136,7 @@ Zend_Session::setOptions($config->toArray());
                         <emphasis role="strong">絶対パス</emphasis> を指定する必要があります。
                         このディレクトリは、PHP のプロセスから読み書き可能でなければなりません。
                         書き込み可能なパスを指定しなかった場合は、
-                        <classname>Zend_Session</code> の開始時 (<code>start()</classname> がコールされた場合)
+                        <classname>Zend_Session</classname> の開始時 (<code>start()</code> がコールされた場合)
                         に例外をスローします。
                     </para>
                     <note>
@@ -505,7 +505,7 @@ if (!isset($defaultNamespace->initialized)) {
             このメソッドを使用して、現在のユーザエージェント/リクエスト
             に対応するセッションが既に存在するかどうかを調べます。
             これはセッションを開始する前に使用します。その他の
-            <classname>Zend_Session</code> および <code>Zend_Session_Namespace</classname>
+            <classname>Zend_Session</classname> および <classname>Zend_Session_Namespace</classname>
             のメソッドとは独立しています。
         </para>
 
@@ -581,7 +581,7 @@ if (!isset($defaultNamespace->initialized)) {
             <code>$_SESSION</code> をバックエンドから切り離します。
             これにより、このリクエストにおける内部データの変換が終了します。
             オプションのパラメータ <code>$readonly</code> を使用すると、書き込み権限をなくします
-            (<classname>Zend_Session</code> あるいは <code>Zend_Session_Namespace</classname>
+            (<classname>Zend_Session</classname> あるいは <classname>Zend_Session_Namespace</classname>
             のメソッドから書き込みを試みると、例外をスローします)。
         </para>
 
@@ -682,7 +682,7 @@ if (!isset($defaultNamespace->initialized)) {
         <title><code>namespaceGet($namespace)</code></title>
 
         <para>
-            非推奨: <classname>Zend_Session_Namespace</code> の <code>getIterator()</classname>
+            非推奨: <classname>Zend_Session_Namespace</classname> の <code>getIterator()</code>
             を使用しましょう。このメソッドは、<code>$namespace</code>
             の内容を配列で返します。このメソッドを外部から使用し続けたいという
             論理的な理由がある場合は、メーリングリスト

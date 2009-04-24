@@ -11,7 +11,7 @@
         次に配列や <classname>Zend_Config</classname> オブジェクトをコンストラクタあるいは
         <code>startMvc()</code> に渡すこと、
         オプションの配列を <code>setOptions()</code> に渡すこと、
-        そして <classname>Zend_Config</code> オブジェクトを <code>setConfig()</classname>
+        そして <classname>Zend_Config</classname> オブジェクトを <code>setConfig()</code>
         に渡すことです。
     </para>
 

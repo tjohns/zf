@@ -55,7 +55,7 @@
         </programlisting>
 
         <para>
-            <classname>Zend_Layout</code> は <code>Zend_View</classname>
+            <classname>Zend_Layout</classname> は <classname>Zend_View</classname>
             を用いてレンダリングをしているので、
             登録されているビューヘルパーはすべて使用することができます。
             またビューに登録されている変数も使用することができます。

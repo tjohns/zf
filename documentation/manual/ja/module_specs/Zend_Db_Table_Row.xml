@@ -10,7 +10,7 @@
         <title>導入</title>
 
         <para>
-            <classname>Zend_Db_Table_Row</code> は、<code>Zend_Db_Table</classname> オブジェクトの個々の行を含むクラスです。
+            <classname>Zend_Db_Table_Row</classname> は、<classname>Zend_Db_Table</classname> オブジェクトの個々の行を含むクラスです。
             テーブルクラスに対してクエリを実行すると、返される結果は
             <classname>Zend_Db_Table_Row</classname> オブジェクトのセットとなります。
             このオブジェクトを使用して新しい行を作成し、
@@ -30,7 +30,7 @@
         <title>行の取得</title>
 
         <para>
-            <classname>Zend_Db_Table_Abstract</code> は <code>find()</classname> や
+            <classname>Zend_Db_Table_Abstract</classname> は <code>find()</code> や
             <code>fetchAll()</code> といったメソッドを提供します。
             これらはそれぞれ <classname>Zend_Db_Table_Rowset</classname> 型のオブジェクトを返します。
             また <code>fetchRow()</code> メソッドは、
@@ -262,7 +262,7 @@ $newRow->save();
             <note>
 
                 <para>
-                    <classname>Zend_Db_Table</code> の初期のリリースでは、<code>createRow()</classname>
+                    <classname>Zend_Db_Table</classname> の初期のリリースでは、<code>createRow()</code>
                     メソッドは <code>fetchNew()</code> という名前でした。
                     今後は新しい名前を用いることを推奨しますが、
                     過去との互換性を確保するため古い名前も使用できるようになっています。
@@ -479,7 +479,7 @@ $rowClone->save();
         <title>行クラスの拡張</title>
 
         <para>
-            <classname>Zend_Db_Table_Row</code> は、<code>Zend_Db_Table_Row_Abstract</classname>
+            <classname>Zend_Db_Table_Row</classname> は、<classname>Zend_Db_Table_Row_Abstract</classname>
             を継承したデフォルトの具象クラスです。
             <classname>Zend_Db_Table_Row_Abstract</classname> を継承した具象クラスを新たに作成し、
             それを用いて行のインスタンスを作成することができます。

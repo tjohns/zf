@@ -318,7 +318,7 @@ $upload->addValidator('Size',
             <para>
                 <classname>Zend_File_Transfer</classname> のバリデータが
                 <classname>Zend_Form</classname> のデフォルトのものと同じようには動作しないという指摘がありました。
-                <classname>Zend_Form</code> では <code>breakChainOnFailure</classname>
+                <classname>Zend_Form</classname> では <classname>breakChainOnFailure</classname>
                 パラメータを利用でき、検証エラーが発生した際に
                 それ以降のバリデータを動作させないようにすることができます。
             </para>

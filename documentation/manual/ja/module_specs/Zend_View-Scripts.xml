@@ -7,7 +7,7 @@
 
     <para>
         コントローラが変数を代入して <code>render()</code> をコールすると、
-        指定されたビュースクリプトを <classname>Zend_View</code> が読み込み、<code>Zend_View</classname>
+        指定されたビュースクリプトを <classname>Zend_View</classname> が読み込み、<classname>Zend_View</classname>
         インスタンスのスコープでそれを実行します。したがって、
         ビュースクリプトの中で $this を参照すると、
         実際には <classname>Zend_View</classname> のインスタンスを指すことになります。

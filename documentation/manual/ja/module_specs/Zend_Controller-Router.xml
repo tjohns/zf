@@ -351,7 +351,7 @@ $router->removeDefaultRoutes();
 
         <para>
             ベース URL の検出に失敗する場合は、
-            <classname>Zend_Controller_Request_Http</code> のメソッド <code>setBaseUrl()</classname>
+            <classname>Zend_Controller_Request_Http</classname> のメソッド <code>setBaseUrl()</code>
             を使用してベースパスを上書き指定することができます
             (<xref linkend="zend.controller.request.http.baseurl" /> を参照ください)。
         </para>

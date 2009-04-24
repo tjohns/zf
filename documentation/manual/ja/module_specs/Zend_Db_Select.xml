@@ -10,7 +10,7 @@
         <title>導入</title>
 
         <para>
-            <classname>Zend_Db_Select</code> オブジェクトは、SQL の <code>SELECT</classname> 文を表すものです。
+            <classname>Zend_Db_Select</classname> オブジェクトは、SQL の <code>SELECT</code> 文を表すものです。
             このクラスには、クエリの各部分を追加するためのメソッドが用意されています。
             PHP のメソッドやデータをもとにクエリの各部分を指定すると、
             このクラスが正確な SQL 文を作成してくれます。クエリを作成したら、
@@ -331,7 +331,7 @@ $select = $db->select()
                 <classname>Zend_Db_Expr</classname> 型のオブジェクトを明示的に作成し、
                 文字列がカラム名と解釈されてしまうことを防ぐこともできます。
                 <classname>Zend_Db_Expr</classname> は、文字列をひとつだけ含む最小限のクラスです。
-                <classname>Zend_Db_Select</code> は <code>Zend_Db_Expr</classname> 型のオブジェクトを認識し、
+                <classname>Zend_Db_Select</classname> は <code>Zend_Db_Expr</code> 型のオブジェクトを認識し、
                 それを文字列に変換しますが、
                 その際にクォートや相関名などの処理を適用しません。
             </para>
@@ -838,7 +838,7 @@ $select = $db->select()
             </example>
 
             <para>
-                <classname>Zend_Db_Select</code> オブジェクト上で、<code>where()</classname>
+                <classname>Zend_Db_Select</classname> オブジェクト上で、<code>where()</code>
                 メソッドを複数回実行することもできます。その結果のクエリは、
                 指定した条件を <code>AND</code> でひとつにまとめたものとなります。
             </para>
@@ -901,7 +901,7 @@ $select = $db->select()
             </example>
 
             <para>
-                <classname>Zend_Db_Select</code> は、<code>where()</classname> メソッドや
+                <classname>Zend_Db_Select</classname> は、<code>where()</code> メソッドや
                 <code>orWhere()</code> メソッドで指定した式の両側に
                 自動的に括弧をつけます。これにより、
                 論理演算子が予期せぬ結果を引き起こすことを防ぎます。
@@ -1074,7 +1074,7 @@ $select = $db->select()
             </para>
 
             <para>
-                <classname>Zend_Db_Select</code> では、<code>order()</classname> メソッドを使用して
+                <classname>Zend_Db_Select</classname> では、<code>order()</code> メソッドを使用して
                 並べ替えの基準となるカラムあるいはカラムの配列を指定します。
                 配列の各要素はカラム名を表す文字列です。オプションとして、
                 スペースをはさんでキーワード
@@ -1130,7 +1130,7 @@ $select = $db->select()
             </para>
 
             <para>
-                <classname>Zend_Db_Select</code> では、<code>limit()</classname>
+                <classname>Zend_Db_Select</classname> では、<code>limit()</code>
                 メソッドを使用して結果の行数および読み飛ばしの行数を指定します。
                 このメソッドの最初の引数は取得したい行数、
                 そして二番目の引数は読み飛ばす行数となります。
@@ -1270,7 +1270,7 @@ $select = $db->select()
 
             <para>
                 <classname>Zend_Db_Select</classname> オブジェクトが表すクエリを実行するには、それを
-                <classname>Zend_Db_Adapter_Abstract</code> オブジェクトの <code>query()</classname>
+                <classname>Zend_Db_Adapter_Abstract</classname> オブジェクトの <code>query()</code>
                 メソッドの最初の引数として渡します。すると、
                 文字列のクエリのかわりに <classname>Zend_Db_Select</classname> オブジェクトを使用するようになります。
             </para>

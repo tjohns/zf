@@ -101,12 +101,12 @@
             <title>日付の地域化や正規化の、Zend_Cache による高速化</title>
 
             <para>
-                <classname>Zend_Date</code> を高速に動作させるには <code>Zend_Cache</classname>
+                <classname>Zend_Date</classname> を高速に動作させるには <classname>Zend_Cache</classname>
                 アダプタを使用します。これを使用すると、地域化したデータを扱う際の
                 <classname>Zend_Date</classname> のすべてのメソッドが高速化します。
                 たとえば、定数 <classname>Zend_Date::DATE</classname> や
                 <classname>Zend_Date::TIME</classname> を扱うメソッドは、すべてこの影響を受けます。
-                <classname>Zend_Cache</code> アダプタを <code>Zend_Date</classname> に設定するには、
+                <classname>Zend_Cache</classname> アダプタを <classname>Zend_Date</classname> に設定するには、
                 <classname>Zend_Date::setOptions(array('cache' => $adapter));</classname>
                 とするだけです。
             </para>
@@ -199,7 +199,7 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
             </code> を参照ください)。
             各地域固有の形式の文字列で <code>$date</code> オペランドが指定された際に
             自動で正規化が行われるのは、<code>$part</code> が
-            定数 <classname>Zend_Date::DATE*</code> あるいは <code>Zend_Date::TIME*</classname> のいずれかであるときです。
+            定数 <classname>Zend_Date::DATE*</classname> あるいは <classname>Zend_Date::TIME*</classname> のいずれかであるときです。
             <code>$date</code> が日付を含む文字列の場合は、
             月名や曜日名をパースする際に使用する言語はロケールをもとに決定します。
             入力パラメータ <code>$date</code> が指定されなかった場合は、
@@ -370,12 +370,12 @@ print $date;
                                 <ulink url="http://ja.wikipedia.org/wiki/%E6%97%A5">Day (日)</ulink>
                             </entry>
                             <entry>
-                             <classname>Zend_Date::DAY_SHORT</code> は <code>$date</classname>
+                             <classname>Zend_Date::DAY_SHORT</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
                              <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
                              それ以外の場合は、以下の定数によって指定した規約に基づいて抽出します。
-                             <classname>Zend_Date::WEEKDAY_NARROW</code>、<code>Zend_Date::WEEKDAY_NAME</classname>、
+                             <classname>Zend_Date::WEEKDAY_NARROW</classname>、<classname>Zend_Date::WEEKDAY_NAME</classname>、
                              <classname>Zend_Date::WEEKDAY_SHORT</classname>、
                              <classname>Zend_Date::WEEKDAY</classname> (グレゴリオ暦とみなして処理します)。
                             </entry>
@@ -385,7 +385,7 @@ print $date;
                                 <ulink url="http://ja.wikipedia.org/wiki/%E9%80%B1">Week (週)</ulink>
                             </entry>
                             <entry>
-                             <classname>Zend_Date::WEEK</code> は <code>$date</classname>
+                             <classname>Zend_Date::WEEK</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
                              <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
@@ -395,7 +395,7 @@ print $date;
                         <row>
                             <entry>Date (日)</entry>
                             <entry>
-                             <classname>Zend_Date::DAY_MEDIUM</code> は <code>$date</classname>
+                             <classname>Zend_Date::DAY_MEDIUM</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
                              <classname>Zend_Date</classname> のインスタンスである場合に行われます。
                              それ以外の場合は、文字列 <code>$date</code>
@@ -408,12 +408,12 @@ print $date;
                             <entry>Weekday (曜日)</entry>
                             <entry>
                              曜日は、0 (日曜日) から 6 (土曜日) までの数字で表されます。
-                             <classname>Zend_Date::WEEKDAY_DIGIT</code> は <code>$date</classname>
+                             <classname>Zend_Date::WEEKDAY_DIGIT</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
                              <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
                              それ以外の場合は、以下の定数によって指定した規約に基づいて抽出します。
-                             <classname>Zend_Date::WEEKDAY_NARROW</code>、<code>Zend_Date::WEEKDAY_NAME</classname>、
+                             <classname>Zend_Date::WEEKDAY_NARROW</classname>、<classname>Zend_Date::WEEKDAY_NAME</classname>、
                              <classname>Zend_Date::WEEKDAY_SHORT</classname>、
                              <classname>Zend_Date::WEEKDAY</classname> (グレゴリオ暦とみなして処理します)。
                             </entry>

@@ -21,8 +21,8 @@
     <para>
         <classname>Zend_Form</classname> は、これらの機能を実現するために
         Zend Framework の他のコンポーネントを活用しています。
-        たとえば <classname>Zend_Config</code>, <code>Zend_Validate</classname>,
-        <classname>Zend_Filter</code>, <code>Zend_Loader_PluginLoader</classname>,
+        たとえば <classname>Zend_Config</classname>, <classname>Zend_Validate</classname>,
+        <classname>Zend_Filter</classname>, <classname>Zend_Loader_PluginLoader</classname>,
         そしてオプションで <classname>Zend_View</classname> を使用します。
     </para>
 </sect1>

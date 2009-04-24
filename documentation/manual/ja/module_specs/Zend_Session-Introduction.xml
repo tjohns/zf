@@ -37,7 +37,7 @@
     </para>
 
     <para>
-        <classname>Zend_Session_Namespace</code> のインスタンスは、<code>$_SESSION</classname>
+        <classname>Zend_Session_Namespace</classname> のインスタンスは、<code>$_SESSION</code>
         の一部を切り取って名前空間つきでアクセスするためのオブジェクトとなります。
         <classname>Zend_Session</classname> コンポーネントは、PHP の既存の
         ext/session をラップして管理用インターフェイスを提供します。また、

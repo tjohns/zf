@@ -12,7 +12,7 @@
         <link linkend="zend.rest.client"><classname>Zend_Rest_Client</classname></link> を参照ください。
     </para>
     <para>
-        <classname>Zend_Service</code> を継承したクラスや <code>Zend_Rest_Client</classname>
+        <classname>Zend_Service</classname> を継承したクラスや <classname>Zend_Rest_Client</classname>
         を使用して REST ベースのウェブサービスにアクセスすることに加え、
         Zend では有名なウェブサービスも個別にサポートしています。
         サポートするウェブサービスについての情報は、次のセクションを参照ください。

@@ -200,7 +200,7 @@ if ($result->isValid()) {
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>高度な使用例</title>
         <para>
-            <classname>Zend_Auth</code> (そして <code>Zend_Auth_Adapter_DbTable</classname>) の主な目的は
+            <classname>Zend_Auth</classname> (そして <classname>Zend_Auth_Adapter_DbTable</classname>) の主な目的は
             <emphasis role="strong">認証 (authentication)</emphasis> であって
             <emphasis role="strong">認可 (authorization)</emphasis>,
             ではありませんが、認可にもかかわる問題も多少あります。

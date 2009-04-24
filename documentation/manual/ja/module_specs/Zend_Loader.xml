@@ -107,7 +107,7 @@ Zend_Loader::loadClass('Container_Tree',
 
         <para>
             ファイルが見つからない場合、あるいは読み込んだファイルにクラスが存在しない場合は
-            <classname>Zend_Loader::loadClass()</code> は <code>Zend_Exception</classname>
+            <classname>Zend_Loader::loadClass()</classname> は <classname>Zend_Exception</classname>
             をスローします。
         </para>
 
@@ -159,7 +159,7 @@ if (Zend_Loader::isReadable($filename)) {
             <classname>Zend_Loader</classname> クラスには、PHP の SPL
             自動ローダーに登録するためのメソッドが含まれています。そのコールバックメソッドが
             <classname>Zend_Loader::autoload()</classname> です。利便性を考慮して、
-            <classname>Zend_Loader</code> では <code>registerAutoload()</classname> 関数を提供しています。
+            <classname>Zend_Loader</classname> では <code>registerAutoload()</code> 関数を提供しています。
             この関数は、<code>autoload()</code> メソッドを登録するものです。
             <code>spl_autoload</code> 拡張モジュールが使用できない環境の場合は、
             <code>registerAutoload()</code> メソッドは <classname>Zend_Exception</classname> をスローします。
@@ -181,7 +181,7 @@ Zend_Loader::registerAutoload();
         </para>
 
         <para>
-            <classname>Zend_Loader</code> クラスを継承した場合は、<code>registerAutoload()</classname>
+            <classname>Zend_Loader</classname> クラスを継承した場合は、<code>registerAutoload()</code>
             に引数を追加することができます。この引数で、どのクラスから
             <code>autoload()</code> メソッドを登録するのかを指定します。
         </para>

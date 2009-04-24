@@ -456,7 +456,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.zendserver">
-        <title><classname>Zend_Cache_Backend_ZendServer_Disk</code> および <code>Zend_Cache_Backend_ZendServer_ShMem</classname></title>
+        <title><classname>Zend_Cache_Backend_ZendServer_Disk</classname> および <classname>Zend_Cache_Backend_ZendServer_ShMem</classname></title>
         <para>
             これらのバックエンドは、キャッシュレコードの保存に
             <ulink url="http://www.zend.com/en/products/server/downloads-all?zfs=zf_download">Zend Server</ulink>

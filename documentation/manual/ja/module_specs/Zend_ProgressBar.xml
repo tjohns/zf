@@ -46,7 +46,7 @@ $progressBar->finish();
             ループを抜けた後で、プログレスバーを処理完了状態に設定します。
         </para>
         <para>
-            <classname>Zend_ProgressBar</code> の <code>update()</classname>
+            <classname>Zend_ProgressBar</classname> の <code>update()</code>
             メソッドを引数なしでコールすることもできます。
             その場合は、単に残り時間を再計算してアダプタに通知します。
             これは、データが何も更新されていないけれども

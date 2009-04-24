@@ -48,7 +48,7 @@ echo $channel->category['domain'];
     <para>
         たいていの場合は、フィードをループさせたうえで、
         個々のエントリに対して何かをすることになるでしょう。
-        <classname>Zend_Feed_Abstract</code> は PHP の <code>Iterator</classname>
+        <classname>Zend_Feed_Abstract</classname> は PHP の <code>Iterator</code>
         インターフェイスを実装しているので、
         例えばチャネル内の全記事のタイトルを表示するには単にこのようにするだけです。
     </para>

@@ -485,7 +485,7 @@ try {
         </para>
 
         <para>
-            <classname>Zend_XmlRpcClient</code> の <code>getIntrospector()</classname> メソッドをコールすると、
+            <classname>Zend_XmlRpcClient</classname> の <code>getIntrospector()</code> メソッドをコールすると、
             <classname>Zend_XmlRpc_Client_ServerIntrospection</classname> のインスタンスを取得できます。
             これを使用してサーバのイントロスペクションを行います。
         </para>
@@ -494,7 +494,7 @@ try {
     <sect2 id="zend.xmlrpc.client.request-to-response">
         <title>リクエストからレスポンスへ</title>
         <para>
-            <classname>Zend_XmlRpc_Client</code> のインスタンスメソッド <code>call()</classname> 中で行われていることは、
+            <classname>Zend_XmlRpc_Client</classname> のインスタンスメソッド <code>call()</code> 中で行われていることは、
             まずリクエストオブジェクト (<classname>Zend_XmlRpc_Request</classname>) を作成し、
             それを別のメソッド <code>doRequest()</code> で送信し、
             その結果返されるレスポンスオブジェクト (<classname>Zend_XmlRpc_Response</classname>)

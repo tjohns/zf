@@ -80,7 +80,7 @@
         <para>
             以下の例は、PHP のウェブアプリケーションのコードです。
             Google Calendar サービスに対する認証を行い、
-            認証済みの <classname>Zend_Http_Client</code> を使用して <code>Zend_Gdata</classname>
+            認証済みの <classname>Zend_Http_Client</classname> を使用して <classname>Zend_Gdata</classname>
             クライアントオブジェクトを作成します。
         </para>
 

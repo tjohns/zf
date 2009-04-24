@@ -352,7 +352,7 @@ $index->commit();
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene</code> には <code>termDocs()</classname>
+            <classname>Zend_Search_Lucene</classname> には <code>termDocs()</code>
             というメソッドがあり、指定した単語を含むドキュメントを取得することができます。
         </para>
 

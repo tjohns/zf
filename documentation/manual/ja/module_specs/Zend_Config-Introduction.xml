@@ -63,7 +63,7 @@ $db = Zend_Db::factory($config->database);
     </para>
     <para>
         このようにオブジェクト思考形式でデータの値にアクセスするだけでなく、
-        <classname>Zend_Config</code> では <code>get()</classname> メソッドも用意しています。
+        <classname>Zend_Config</classname> では <code>get()</code> メソッドも用意しています。
         これは、指定した要素が存在しない場合にデフォルト値を返すように設定できます。
         たとえば次のように使用します。
     </para>

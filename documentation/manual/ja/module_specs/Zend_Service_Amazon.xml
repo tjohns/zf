@@ -95,7 +95,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.amazon.countrycodes">
         <title>国コード</title>
         <para>
-            デフォルトでは、<classname>Zend_Service_Amazon</code> は米国 ("<code>US</classname>")
+            デフォルトでは、<classname>Zend_Service_Amazon</classname> は米国 ("<code>US</code>")
             の Amazon Web Service に接続します。他の国のサービスに接続するには、
             コンストラクタの 2 番目のパラメータとして、適切な国コード文字列を指定するだけです。
         </para>

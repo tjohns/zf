@@ -6,7 +6,7 @@
     <title>日付関数全般用の定数</title>
 
     <para>
-        <classname>Zend_Date</code> のメソッドでパラメータ <code>$parts</classname>
+        <classname>Zend_Date</classname> のメソッドでパラメータ <code>$parts</code>
         を持つものはすべて、以下の定数のいずれかをパラメータとして指定することができます。
         これにより、日付の中の特定の要素や使用する書式
         (例: RFC 822) を指定します。

@@ -34,7 +34,7 @@
         </para>
 
         <para>
-        <classname>Zend_Pdf::newPage()</code> メソッドおよび <code>Zend_Pdf_Page</classname>
+        <classname>Zend_Pdf::newPage()</classname> メソッドおよび <classname>Zend_Pdf_Page</classname>
         のコンストラクタは、どちらも同じ形式のパラメータを受け取ります。
         ページサイズを ($x, $y) 形式のポイント数 (1/72 インチ)
         で表したものか、定義済みの定数のうちのいずれかになります。

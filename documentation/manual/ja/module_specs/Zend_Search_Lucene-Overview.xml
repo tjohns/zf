@@ -389,7 +389,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Docx</code> クラスは、<code>ZipArchive</classname> クラスと
+            <classname>Zend_Search_Lucene_Document_Docx</classname> クラスは、<code>ZipArchive</code> クラスと
             <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
             が使用できない場合は、<classname>Zend_Search_Lucene_Document_Docx</classname> を Zend Framework で使用することはできません。
         </para>
@@ -443,7 +443,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Docx</code> クラスの <code>loadDocxFile()</classname>
+            <classname>Zend_Search_Lucene_Document_Docx</classname> クラスの <code>loadDocxFile()</code>
             メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
             本文もインデックスに格納されてインデックスから取得できるようになります。
             デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。
@@ -480,7 +480,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Pptx</code> クラスは、<code>ZipArchive</classname> クラスと
+            <classname>Zend_Search_Lucene_Document_Pptx</classname> クラスは、<code>ZipArchive</code> クラスと
             <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
             が使用できない場合は、<classname>Zend_Search_Lucene_Document_Pptx</classname> を Zend Framework で使用することはできません。
         </para>
@@ -534,7 +534,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Pptx</code> クラスの <code>loadPptxFile()</classname>
+            <classname>Zend_Search_Lucene_Document_Pptx</classname> クラスの <code>loadPptxFile()</code>
             メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
             本文もインデックスに格納されてインデックスから取得できるようになります。
             デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。
@@ -568,7 +568,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Xlsx</code> クラスは、<code>ZipArchive</classname> クラスと
+            <classname>Zend_Search_Lucene_Document_Xlsx</classname> クラスは、<code>ZipArchive</code> クラスと
             <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
             が使用できない場合は、<classname>Zend_Search_Lucene_Document_Xlsx</classname> を Zend Framework で使用することはできません。
         </para>
@@ -622,7 +622,7 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Document_Xlsx</code> クラスの <code>loadXlsxFile()</classname>
+            <classname>Zend_Search_Lucene_Document_Xlsx</classname> クラスの <code>loadXlsxFile()</code>
             メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
             本文もインデックスに格納されてインデックスから取得できるようになります。
             デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。

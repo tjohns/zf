@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        <classname>Zend_Validate_Interface</code> では、３つのメソッド <code>isValid()</classname>、
+        <classname>Zend_Validate_Interface</classname> では、３つのメソッド <code>isValid()</code>、
         <code>getMessages()</code> および <code>getErrors()</code>
         を定義しています。これらを自分のクラスで実装して
         独自のバリデーションオブジェクトを作成します。

@@ -30,8 +30,8 @@
         記号、並び順など) が該当します。
         <code>L10n</code> と <code>I18n</code> は、お互い補完しあうものです。
         Zend Framework では、いくつかのコンポーネントを組み合わせることで
-        これらのサポートを提供しています。たとえば <classname>Zend_Locale</code>、<code>Zend_Date</classname>、
-        <classname>Zend_Measure</code>、<code>Zend_Translate</code>、<code>Zend_Currency</classname>
+        これらのサポートを提供しています。たとえば <classname>Zend_Locale</classname>、<classname>Zend_Date</classname>、
+        <classname>Zend_Measure</classname>、<classname>Zend_Translate</classname>、<classname>Zend_Currency</classname>
         そして <classname>Zend_TimeSync</classname> といったコンポーネントがあります。
     </para>
 
@@ -46,7 +46,7 @@
         </para>
         <para>
             <classname>Zend_Locale</classname> にはこのような制限はありません。なぜなら
-            <classname>Zend_Locale</code> は PHP の <code>setlocale()</classname>
+            <classname>Zend_Locale</classname> は PHP の <code>setlocale()</code>
             を使用しているわけではないからです。
         </para>
     </tip>
@@ -585,7 +585,7 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
         <para>
             <classname>Zend_Locale</classname> およびそのサブクラスを高速化するには、
-            <classname>Zend_Cache</code> を使用します。<code>Zend_Locale</classname>
+            <classname>Zend_Cache</classname> を使用します。<classname>Zend_Locale</classname>
             を使用している場合は、静的メソッド <classname>Zend_Locale::setCache($cache)</classname>
             を使用します。<classname>Zend_Locale_Format</classname> を高速化するには、
             オプション <code>cache</code> を

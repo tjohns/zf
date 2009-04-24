@@ -25,7 +25,7 @@
         階層構造になっている設定データは任意のレベルでこの構造が繰り返されることになります。
     </para>
     <para>
-        <classname>Zend_Config</code> は内部で <code>Countable</classname>
+        <classname>Zend_Config</classname> は内部で <code>Countable</code>
         インターフェイスおよび <code>Iterator</code>
         インターフェイスを実装しており、
         これを使用して設定データに容易にアクセスできるようになっています。

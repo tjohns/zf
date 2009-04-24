@@ -5,7 +5,7 @@
     <title>Zend_Application_Resource_View</title>
 
     <para>
-        <classname>Zend_Application_Resource_View</code>は<code>Zend_View</classname>の
+        <classname>Zend_Application_Resource_View</classname>は<classname>Zend_View</classname>の
         インスタンスを設定するために使用できます。設定オプションは
         <link linkend="zend.view.introduction.options">Zend_Viewオプション</link>に
         従います。

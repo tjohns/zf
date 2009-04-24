@@ -5,7 +5,7 @@
     <title>PDF ドキュメントへの変更内容の保存</title>
     <para>
     PDF ドキュメントの変更内容を保存するには 2 種類の方法があります。
-    <classname>Zend_Pdf::save()</code> および <code>Zend_Pdf::render()</classname> メソッドです。
+    <classname>Zend_Pdf::save()</classname> および <classname>Zend_Pdf::render()</classname> メソッドです。
     </para>
 
     <para>

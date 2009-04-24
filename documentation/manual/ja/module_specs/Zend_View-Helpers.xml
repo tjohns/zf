@@ -47,7 +47,7 @@
     <para>
         ビュースクリプト内でヘルパーを使用するには、
         <code>$this->helperName()</code> をコールします。これをコールすると、裏側では
-        <classname>Zend_View</code> が <code>Zend_View_Helper_HelperName</classname> クラスを読み込み、
+        <classname>Zend_View</classname> が <classname>Zend_View_Helper_HelperName</classname> クラスを読み込み、
         そのクラスのインスタンスを作成して <code>helperName()</code> メソッドをコールします。
         オブジェクトのインスタンスは <classname>Zend_View</classname> インスタンスの中に残り続け、
         後で <code>$this->helperName()</code> がコールされたときには再利用されます。

@@ -377,7 +377,7 @@ $cache->call('veryExpensiveFunc', $params);
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>導入</title>
             <para>
-                <classname>Zend_Cache_Frontend_Class</code> は、<code>Zend_Cache_Frontend_Function</classname>
+                <classname>Zend_Cache_Frontend_Class</classname> は、<classname>Zend_Cache_Frontend_Function</classname>
                 と異なり、オブジェクトおよびスタティックメソッドのコールをキャッシュします。
             </para>
         </sect3>
@@ -580,7 +580,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>導入</title>
             <para>
-                <classname>Zend_Cache_Frontend_Page</code> は <code>Zend_Cache_Frontend_Output</classname>
+                <classname>Zend_Cache_Frontend_Page</classname> は <classname>Zend_Cache_Frontend_Output</classname>
                 と似ていますが、ページ全体をキャッシュする目的で設計されています。
                 <classname>Zend_Cache_Frontend_Page</classname> を使用して、
                 ページの一部だけをキャッシュすることはできません。

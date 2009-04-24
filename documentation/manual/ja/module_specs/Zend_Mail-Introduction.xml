@@ -86,7 +86,7 @@ $mail->setBodyText('This is the text of the mail.')
         <title>デフォルトの sendmail トランスポートの設定</title>
 
         <para>
-            <classname>Zend_Mail</code> がデフォルトで使用するのは <code>Zend_Mail_Transport_Sendmail</classname>
+            <classname>Zend_Mail</classname> がデフォルトで使用するのは <classname>Zend_Mail_Transport_Sendmail</classname>
             です。これは、単に PHP の <ulink url="http://php.net/mail"><code>mail()</code></ulink>
             関数をラップしただけのものです。
             <ulink url="http://php.net/mail"><code>mail()</code></ulink>
@@ -94,7 +94,7 @@ $mail->setBodyText('This is the text of the mail.')
             新しいインスタンスを作成する際のコンストラクタにパラメータを渡します。
             新しく作成したインスタンスは、<classname>Zend_Mail</classname>
             のデフォルトのトランスポートとすることができます。
-            あるいは <classname>Zend_Mail</code> の <code>send()</classname>
+            あるいは <classname>Zend_Mail</classname> の <code>send()</code>
             メソッドに渡すこともできます。
         </para>
 

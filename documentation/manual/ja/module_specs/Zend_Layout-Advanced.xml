@@ -162,7 +162,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>レイアウトスクリプトのパス解決方法のカスタマイズ: インフレクタの使用法</title>
 
         <para>
-            <classname>Zend_Layout</code> は、<code>Zend_Filter_Inflector</classname>
+            <classname>Zend_Layout</classname> は、<classname>Zend_Filter_Inflector</classname>
             を使用して確立したフィルタチェインで
             レイアウト名からレイアウトスクリプトのパスへの変換を行います。
             デフォルトで使用するルールは、まず 'Word_CamelCaseToDash'、

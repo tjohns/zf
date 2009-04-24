@@ -908,9 +908,9 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
             <para>
                 つまり、もしデータベース自身が参照整合性制約を実装している場合、
-                <classname>Zend_Db_Table</code> クラスが実行した連鎖 <code>UPDATE</classname>
+                <classname>Zend_Db_Table</classname> クラスが実行した連鎖 <code>UPDATE</code>
                 がその制約と競合し、参照整合性に違反してしまうことになるということです。
-                <classname>Zend_Db_Table</code> の連鎖 <code>UPDATE</classname> を使用できるのは、
+                <classname>Zend_Db_Table</classname> の連鎖 <code>UPDATE</code> を使用できるのは、
                 データベース側で参照整合性制約を設定していない場合
                 <emphasis>のみ</emphasis> です。
             </para>

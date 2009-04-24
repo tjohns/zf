@@ -191,7 +191,7 @@ $server->addFunction('somefunc', 'funcs');
 
         <para>
             ほとんどの場合は、
-            <classname>Zend_XmlRpc_Server</code> や <code>Zend_XmlRpc_Request_Http</classname>
+            <classname>Zend_XmlRpc_Server</classname> や <classname>Zend_XmlRpc_Request_Http</classname>
             に含まれるデフォルトのリクエスト型を使用するでしょう。
             しかし、XML-RPC を CLI や GUI 環境などで動かしたい場合もあるでしょうし、
             リクエストの内容をログに記録したい場合もあるでしょう。

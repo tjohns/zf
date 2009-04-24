@@ -144,7 +144,7 @@
         <para>
             問い合わせを実行したら、その結果のオブジェクトを用いてノードの情報を取得したり、
             そのノード (あるいはノードの内容) を取り出して操作したりすることができます。
-            <classname>Zend_Dom_Query_Result</code> は <code>Countable</classname>
+            <classname>Zend_Dom_Query_Result</classname> は <code>Countable</code>
             と <code>Iterator</code> を実装しており、内部では結果を
             DOMNodes/DOMElements で保持しています。
             たとえば、次のようなコードを上の HTML に対して実行することを考えてみましょう。

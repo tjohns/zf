@@ -18,7 +18,7 @@
         デフォルトでは、国際化 (I18n) は行われません。
         i18n 機能を <classname>Zend_Form</classname> で使うには、まず適切なアダプタを指定して
         <classname>Zend_Translate</classname> のインスタンスを作成し、それを
-        <classname>Zend_Form</code> や <code>Zend_Validate</classname>
+        <classname>Zend_Form</classname> や <classname>Zend_Validate</classname>
         にアタッチしなければなりません。翻訳オブジェクトや翻訳ファイルの作成方法についての詳細は
         <link linkend="zend.translate">Zend_Translate
         のドキュメント</link> を参照ください。

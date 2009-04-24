@@ -43,7 +43,7 @@
     <sect2 id="zend.auth.adapter.openid.specifics">
         <title>仕様</title>
         <para>
-            他の <classname>Zend_Auth</code> アダプタ同様、<code>Zend_Auth_Adapter_OpenId</classname>
+            他の <classname>Zend_Auth</classname> アダプタ同様、<classname>Zend_Auth_Adapter_OpenId</classname>
             クラスは <classname>Zend_Auth_Adapter_Interface</classname> を実装しています。
             このインターフェイスで定義されているメソッドは
             <code>authenticate()</code> です。

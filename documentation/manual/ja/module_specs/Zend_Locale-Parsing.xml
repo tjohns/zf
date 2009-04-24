@@ -6,7 +6,7 @@
     <title>正規化および地域化</title>
 
     <para>
-        <classname>Zend_Locale_Format</code> は、<code>Zend_Locale</classname> が内部で使用しているコンポーネントです。
+        <classname>Zend_Locale_Format</classname> は、<classname>Zend_Locale</classname> が内部で使用しているコンポーネントです。
         ロケール対応のクラスは、<classname>Zend_Locale_Format</classname>
         を用いて数値や日付の正規化および地域化を行います。
         正規化とは、さまざまな形式で表されるデータ (日付など) を取り込んで解析し、

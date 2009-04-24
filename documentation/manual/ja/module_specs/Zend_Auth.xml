@@ -50,7 +50,7 @@
         </para>
 
         <para>
-            各 <classname>Zend_Auth</code> アダプタクラスは、<code>Zend_Auth_Adapter_Interface</classname>
+            各 <classname>Zend_Auth</classname> アダプタクラスは、<classname>Zend_Auth_Adapter_Interface</classname>
             を実装しています。このインターフェイスで定義されているメソッドが
             <code>authenticate()</code> で、アダプタクラスは
             認証クエリを実行するためにこれを実装する必要があります。
@@ -98,7 +98,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
 
             docblock コメントで説明しているとおり、
             <code>authenticate()</code> は
-            <classname>Zend_Auth_Result</code> (あるいは <code>Zend_Auth_Result</classname> の派生クラス)
+            <classname>Zend_Auth_Result</classname> (あるいは <classname>Zend_Auth_Result</classname> の派生クラス)
             のインスタンスを返す必要があります。何らかの理由で認証の問い合わせができなかった場合は、
             <code>authenticate()</code> は
             <classname>Zend_Auth_Adapter_Exception</classname>
@@ -112,7 +112,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>結果</title>
 
         <para>
-            <classname>Zend_Auth</code> アダプタは、<code>authenticate()</classname> の結果として
+            <classname>Zend_Auth</classname> アダプタは、<classname>authenticate()</classname> の結果として
             <classname>Zend_Auth_Result</classname> のインスタンスを返します。
             これにより、認証を試みた結果を表します。アダプタのインスタンスを作成した際に
             <classname>Zend_Auth_Result</classname> オブジェクトが作成され、

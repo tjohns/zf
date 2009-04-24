@@ -71,7 +71,7 @@ public function getAllPosts($tag = null);
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
         <para>
-            <classname>Zend_Service_Delicious</code> のメソッド <code>getPosts()</code>、<code>getAllPosts()</classname>、
+            <classname>Zend_Service_Delicious</classname> のメソッド <code>getPosts()</code>、<code>getAllPosts()</code>、
             <code>getRecentPosts()</code> および <code>getUserPosts()</code>
             が、このクラスのインスタンスを返します。
         </para>
@@ -380,7 +380,7 @@ print_r($delicious->getUserTags('someUser'));
     <sect2 id="zend.service.delicious.httpclient">
         <title>HTTP クライアント</title>
         <para>
-            <classname>Zend_Service_Delicious</code> は、<code>Zend_Rest_Client</classname>
+            <classname>Zend_Service_Delicious</classname> は、<code>Zend_Rest_Client</code>
             を使用して del.icio.us ウェブサービスへの HTTP リクエストを作成します。
             <classname>Zend_Service_Delicious</classname> が使用する HTTP
             クライアントを変更するには、<classname>Zend_Rest_Client</classname>

@@ -16,7 +16,7 @@
     <para>
     <classname>Zend_Pdf</classname> クラスでは、既存の PDF を読み込むための
     2 つの静的メソッドも提供しています。
-    <classname>Zend_Pdf::load()</code> および <code>Zend_Pdf::parse()</classname> です。
+    <classname>Zend_Pdf::load()</classname> および <classname>Zend_Pdf::parse()</classname> です。
     これらは両方とも <classname>Zend_Pdf</classname> オブジェクトを返します。
     エラーが発生した場合には例外がスローされます。
     </para>

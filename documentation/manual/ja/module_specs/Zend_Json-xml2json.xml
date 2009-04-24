@@ -13,7 +13,7 @@
     </para>
 
     <para>
-        <classname>Zend_Json</code> には、静的関数 <code>Zend_Json::fromXml()</classname>
+        <classname>Zend_Json</classname> には、静的関数 <code>Zend_Json::fromXml()</code>
         が搭載されています。この関数は、XML を受け取って JSON を作成します。
         入力パラメータには、任意の XML 文字列を渡すことができます。
         また、オプションのパラメータで論理値を渡し、

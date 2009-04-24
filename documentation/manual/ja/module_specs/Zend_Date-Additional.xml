@@ -20,7 +20,7 @@
             しかし、文字列で渡されると、それが本当に日付を表すものなのかがわかりません。
             そこで <classname>Zend_Date</classname> では、
             日付文字列を調べるために独自の静的関数を用意することにしました。
-            <classname>Zend_Locale</code> には <code>getDate($date, $locale);</classname>
+            <classname>Zend_Locale</classname> には <code>getDate($date, $locale);</code>
             という関数があり、これは日付を受け取って、適切に正規化された内容を返します。
             たとえば、月の名前が指定されていた場合もそれを適切に解釈し、
             数値に変換して返します。しかし、<classname>Zend_Locale</classname>

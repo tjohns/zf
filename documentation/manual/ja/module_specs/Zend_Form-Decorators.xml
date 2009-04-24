@@ -46,7 +46,7 @@
             デコレータを設定するには、オプションの配列あるいは
             <classname>Zend_Config</classname> オブジェクトをコンストラクタに渡します。
             あるいは、配列を <code>setOptions()</code> に渡したり
-            <classname>Zend_Config</code> オブジェクトを <code>setConfig()</classname>
+            <classname>Zend_Config</classname> オブジェクトを <code>setConfig()</code>
             に渡すことでも設定できます。
         </para>
 
@@ -106,7 +106,7 @@
             デコレータは、
             <classname>Zend_Form</classname> のさまざまなクラスで使用できるようになっています。
             <classname>Zend_Form</classname> や
-            <classname>Zend_Form_Element</code>、<code>Zend_Form_DisplayGroup</classname>、
+            <classname>Zend_Form_Element</classname>、<classname>Zend_Form_DisplayGroup</classname>、
             そしてその派生クラスのすべてで使用することができます。
             <code>setElement()</code> メソッドを使用すると、
             デコレータが処理するオブジェクトを指定することができます。一方

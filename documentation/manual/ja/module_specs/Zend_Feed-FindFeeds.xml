@@ -21,7 +21,7 @@ $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
         の対応するエントリは <classname>Zend_Feed_Rss</classname> あるいは
         <classname>Zend_Feed_Atom</classname> のインスタンスとなります。
         HTTP 404 が返された場合やフィードの形式がおかしかった場合など、失敗した場合には
-        <classname>Zend_Feed</code> は <code>Zend_Feed_Exception</classname>
+        <classname>Zend_Feed</classname> は <classname>Zend_Feed_Exception</classname>
         をスローします。
     </para>
 </sect1>

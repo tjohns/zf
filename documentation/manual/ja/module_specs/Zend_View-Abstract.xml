@@ -6,7 +6,7 @@
 
     <para>
         <classname>Zend_View_Abstract</classname> は
-        <classname>Zend_View</code> の基底クラスです。<code>Zend_View</classname>
+        <classname>Zend_View</classname> の基底クラスです。<classname>Zend_View</classname>
         は、単にこれを継承したうえで <code>_run()</code>
         メソッドの具象実装を宣言したものです
         (このメソッドは <code>render()</code> から実行されます)。
@@ -57,7 +57,7 @@ protected function _run()
         幸いなことに、PHP 5 では可視性を宣言することでこの問題を回避することができます。
         private 宣言されたメンバーは、そのクラスを継承したオブジェクトからは
         アクセスできなくなるのです。このおかげで現在の設計が可能となりました。
-        <classname>Zend_View</code> は <code>Zend_View_Abstract</classname>
+        <classname>Zend_View</classname> は <classname>Zend_View_Abstract</classname>
         を <emphasis>継承した</emphasis> クラスなので、
         <classname>Zend_View_Abstract</classname> のメソッドやメンバーのうち
         ビュースクリプトからアクセスできるのは protected あるいは public

@@ -243,7 +243,7 @@ foreach ($previousWeeklyArtists as $artist) {
         <title>アーティスト (Artists)</title>
 
         <para>
-            <classname>Zend_Service_Audioscrobbler</code> は、<code>setArtist()</classname>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setArtist()</code>
             で指定した特定のアーティストに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -310,7 +310,7 @@ foreach ($relatedArtists as $artist) {
         <title>曲 (Tracks)</title>
 
         <para>
-            <classname>Zend_Service_Audioscrobbler</code> は、<code>setTrack()</classname>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setTrack()</code>
             メソッドで指定した曲についてのデータを取得する、ふたつのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -337,7 +337,7 @@ foreach ($relatedArtists as $artist) {
         <title>タグ (Tags)</title>
 
         <para>
-            <classname>Zend_Service_Audioscrobbler</code> は、<code>setTag()</classname>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setTag()</code>
             メソッドで指定したタグに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -378,7 +378,7 @@ foreach ($relatedArtists as $artist) {
         <title>グループ (Groups)</title>
 
         <para>
-            <classname>Zend_Service_Audioscrobbler</code> は、<code>setGroup()</classname>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setGroup()</code>
             メソッドで指定したグループに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -452,7 +452,7 @@ foreach ($relatedArtists as $artist) {
         <title>フォーラム (Forums)</title>
 
         <para>
-            <classname>Zend_Service_Audioscrobbler</code> は、<code>setForum()</classname>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setForum()</code>
             メソッドで指定した特定のフォーラムの情報を取得するメソッドを提供しています。
             <itemizedlist>
                 <listitem>

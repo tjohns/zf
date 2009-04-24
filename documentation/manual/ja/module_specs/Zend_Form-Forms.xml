@@ -1095,7 +1095,7 @@ $form->setAction('/user/login')
         </note>
 
         <para>
-            <classname>Zend_Form</code> は <code>Countable</classname>
+            <classname>Zend_Form</classname> は <code>Countable</code>
             インターフェイスを実装しており、count 関数の引数として使用することができます。
         </para>
 

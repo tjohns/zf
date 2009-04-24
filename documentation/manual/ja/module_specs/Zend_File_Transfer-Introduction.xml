@@ -31,7 +31,7 @@
     <note>
         <title>フォーム</title>
         <para>
-            <classname>Zend_Form</code> を使う場合は <code>Zend_Form</classname>
+            <classname>Zend_Form</classname> を使う場合は <classname>Zend_Form</classname>
             の API を使うようにし、<classname>Zend_File_Transfer</classname>
             を直接使わないようにしましょう。<classname>Zend_Form</classname>
             のファイル転送機能は <classname>Zend_File_Transfer</classname>

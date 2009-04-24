@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        <classname>Zend_Feed</code> の構成は、基底クラス <code>Zend_Feed</classname>、
+        <classname>Zend_Feed</classname> の構成は、基底クラス <classname>Zend_Feed</classname>、
         フィードやエントリを扱うための基底抽象クラス <classname>Zend_Feed_Abstract</classname>
         および <classname>Zend_Feed_Entry_Abstract</classname>、RSS や Atom
         用のフィードクラスとエントリクラスの実装、

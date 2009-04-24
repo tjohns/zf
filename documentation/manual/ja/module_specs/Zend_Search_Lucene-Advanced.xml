@@ -55,7 +55,7 @@
         <para>
             変換作業を管理するために、対象となるインデックスフォーマットを
             <code>$index->setFormatVersion()</code> で指定することができます。ここでは定数
-            <classname>Zend_Search_Lucene::FORMAT_2_1</code> あるいは <code>Zend_Search_Lucene::FORMAT_2_3</classname>
+            <classname>Zend_Search_Lucene::FORMAT_2_1</classname> あるいは <classname>Zend_Search_Lucene::FORMAT_2_3</classname>
             をパラメータとして使用します。
             <itemizedlist>
                 <listitem>
@@ -151,7 +151,7 @@ Searcher::initIndex();
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene</code> は、この問題を <code>commit()</classname>
+            <classname>Zend_Search_Lucene</classname> は、この問題を <code>commit()</code>
             メソッドで処理できるようにしています。これは、未保存の変更内容をすべて保存し、
             新しいセグメントを保存するために使用しているメモリを解放します。
             コミット操作は、スクリプトの実行中にいつでも何度でも行うことができます。

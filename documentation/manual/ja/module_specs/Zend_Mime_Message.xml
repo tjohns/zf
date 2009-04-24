@@ -10,7 +10,7 @@
       <para><classname>Zend_Mime_Message</classname> は MIME 準拠のメッセージを表すものであり、
       ひとつあるいは複数の部分に分かれたメッセージ (<link
       linkend="zend.mime.part"><classname>Zend_Mime_Part</classname></link> オブジェクトで表されます)
-      を保持することができます。<classname>Zend_Mime_Message</code> では、<code>Zend_Mime_Part</classname> を使用して
+      を保持することができます。<classname>Zend_Mime_Message</classname> では、<classname>Zend_Mime_Part</classname> を使用して
       MIME 準拠のマルチパートメッセージを作成します。
       エンコーディングやバウンダリの処理も透過的に行われます。
       与えられた文字列から <classname>Zend_Mime_Message</classname> オブジェクトを再構成することも可能です
@@ -52,11 +52,11 @@
         <para><classname>Zend_Mime_Message</classname> は、バウンダリを生成するために通常は
         <classname>Zend_Mime</classname> オブジェクトを使用します。
         バウンダリを独自に定義する必要があったり
-        <classname>Zend_Mime_Message</code> が使用する <code>Zend_Mime</classname>
+        <classname>Zend_Mime_Message</classname> が使用する <classname>Zend_Mime</classname>
         オブジェクトの振る舞いを変更したりしたい場合は、
-        <classname>Zend_Mime</code> オブジェクトを自分で作成して <code>Zend_Mime_Message</classname>
+        <classname>Zend_Mime</classname> オブジェクトを自分で作成して <classname>Zend_Mime_Message</classname>
         に登録します。通常は、この必要はありません。
-        この <classname>Zend_Mime_Message</code> で使用する <code>Zend_Mime</classname>
+        この <classname>Zend_Mime_Message</classname> で使用する <classname>Zend_Mime</classname>
         インスタンスを設定するには、<code>-&gt;setMime(Zend_Mime
         $mime)</code> を使用します。</para>
 

@@ -182,7 +182,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
 
         <para>
             どちらのコンストラクタも、エラーの形式によって
-            <classname>Zend_Mail_Exception</code> あるいは <code>Zend_Mail_Protocol_Exception</classname>
+            <classname>Zend_Mail_Exception</classname> あるいは <classname>Zend_Mail_Protocol_Exception</classname>
             (<classname>Zend_Mail_Exception</classname> を継承したもの) をスローします。
         </para>
 
@@ -343,7 +343,7 @@ echo '</pre>';
         <para>マルチパートメッセージであるかどうかを調べるには <code>isMultipart()</code>
         メソッドを使用します。マルチパートメッセージがある場合は、
         <code>getPart()</code> メソッドで <classname>Zend_Mail_Part</classname> のインスタンスを取得します。
-        <classname>Zend_Mail_Part</code> は <code>Zend_Mail_Message</classname> の基底クラスなので、
+        <classname>Zend_Mail_Part</classname> は <classname>Zend_Mail_Message</classname> の基底クラスなので、
         <code>getHeader()</code> や <code>getHeaders()</code>、<code>getContent()</code>、
         <code>getPart()</code>、<code>isMultipart</code> といったメソッドを同様に使えます。
         また、ヘッダもプロパティとして使用できます。</para>
@@ -360,7 +360,7 @@ echo $part->getContent();
 ]]>
         </programlisting>
 
-        <para><classname>Zend_Mail_Part</code> は <code>RecursiveIterator</classname> も実装しています。
+        <para><classname>Zend_Mail_Part</classname> は <code>RecursiveIterator</code> も実装しています。
         つまり、すべてのパートを順にスキャンすることも簡単にできます。また、
         結果を簡単に出力できるよう、マジックメソッド <code>__toString()</code>
         を実装しています。このメソッドは、パートの中身を返します。</para>
@@ -634,7 +634,7 @@ foreach ($mail as $message) {
             <title>インスタンスのキャッシュ</title>
 
             <para>
-            <classname>Zend_Mail_Storage_Mbox</code>、<code>Zend_Mail_Storage_Folder_Mbox</code>、<code>Zend_Mail_Storage_Maildir</classname>
+            <classname>Zend_Mail_Storage_Mbox</classname>、<classname>Zend_Mail_Storage_Folder_Mbox</classname>、<classname>Zend_Mail_Storage_Maildir</classname>
             および <classname>Zend_Mail_Storage_Folder_Maildir</classname> は、マジックメソッド
             <code>__sleep()</code> と <code>__wakeup()</code> を実装しています。
             つまり、シリアライズが可能であるということです。
