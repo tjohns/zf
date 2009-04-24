@@ -177,6 +177,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                     return false;
                 }
 
+                if ($rename !== null) {
+                    $this->_files[$file]['destination'] = dirname($filename);
+                    $this->_files[$file]['name']        = basename($filename);
+                }
+
                 $this->_files[$file]['tmp_name'] = $filename;
                 $this->_files[$file]['received'] = true;
             }
