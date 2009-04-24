@@ -76,6 +76,21 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
      * @var string
      */
     protected $_body = null;
+
+    public static function registerFileCodeGenerator(Zend_CodeGenerator_Php_File $fileCodeGenerator, $fileName = null)
+    {
+        if ($fileName == null) {
+            $fileName = $fileCodeGenerator->getFilename();
+        }
+        
+        if ($fileName == '') {
+            require_once 'Zend/CodeGenerator/Php/Exception.php';
+            throw new Zend_CodeGenerator_Php_Exception('FileName does not exist.');
+        }
+        
+        self::$_fileCodeGenerators[$fileName] = $fileCodeGenerator;
+        
+    }
     
     /**
      * fromReflectedFilePath() - use this if you intend on generating code generation objects based on the same file.
@@ -86,7 +101,7 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
      * @param bool $includeIfNotAlreadyIncluded
      * @return Zend_CodeGenerator_Php_File
      */
-    public static function fromReflectedFilePath($filePath, $usePreviousCodeGeneratorIfItExists = true, $includeIfNotAlreadyIncluded = true)
+    public static function fromReflectedFileName($filePath, $usePreviousCodeGeneratorIfItExists = true, $includeIfNotAlreadyIncluded = true)
     {
         $realpath = realpath($filePath);
         
@@ -412,17 +427,29 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
                 }
             }
             
-            $output .= PHP_EOL;
         }
 
         if (!empty($body)) {
+
+            // add an extra space betwee clsses and 
+            if (!empty($classes)) {
+                $output .= PHP_EOL;
+            }
+        
             $output .= $body;
         }
 
-        $output = preg_replace('/^<\?php(\s+<\?php)/s', '<?php', $output);
-        $output = trim($output);
-
         return $output;
+    }
+    
+    public function write()
+    {
+        if ($this->_filename == '' || !is_writable(dirname($this->_filename))) {
+            require_once 'Zend/CodeGenerator/Php/Exception.php';
+            throw new Zend_CodeGenerator_Php_Exception('This code generator object is not writable.');
+        }
+        file_put_contents($this->_filename, $this->generate());
+        return $this;
     }
     
 }

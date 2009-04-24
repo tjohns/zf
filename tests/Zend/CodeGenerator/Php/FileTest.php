@@ -84,6 +84,8 @@ abstract class SampleClass extends ExtendedClassName implements Iterator, Traver
 
 
 }
+
+
 EOS;
 
         $output = $codeGenFile->generate();
