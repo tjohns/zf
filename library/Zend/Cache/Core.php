@@ -536,6 +536,7 @@ class Zend_Cache_Core
     	if (!$this->_extendedBackend) {
             Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
         }
+        $id = $this->_id($id); // cache id may need prefix
         return $this->_backend->getMetadatas($id);
     }
 
