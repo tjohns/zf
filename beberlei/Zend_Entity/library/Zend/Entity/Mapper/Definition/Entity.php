@@ -25,26 +25,39 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
 
     protected $_relations = array();
 
-    protected $_id;
+    protected $_id = null;
 
     protected $_loaderClass = null;
 
     protected $_persisterClass = null;
 
+    /**
+     * Construct entity
+     * 
+     * @param string $className
+     * @param array $options
+     */
     public function __construct($className=null, $options=array())
     {
         $this->setClass($className);
         parent::__construct($className, $options);
     }
 
+    /**
+     * Get entity classname
+     *
+     * @return string
+     */
     public function getClass()
     {
-        if($this->_className == null) {
-            throw new Exception("Class of the Entity is not set in the definition.");
-        }
         return $this->_className;
     }
 
+    /**
+     * Set entity classname
+     * 
+     * @param string $className
+     */
     public function setClass($className)
     {
         $this->_className = $className;
@@ -61,7 +74,8 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     public function addCompositeKey($key, array $options=array())
     {
         if(!is_array($key)) {
-            throw new Exception("CAnnot add invalid composite key, has to have array as first value.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Cannot add invalid composite key, has to have array as first value.");
         }
         $this->_id = Zend_Entity_Mapper_Definition_Utility::loadDefinition('CompositeKey', $key, $options);
         foreach($key as $field) {
@@ -71,14 +85,23 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
         return $this->_id;
     }
 
+    /**
+     * Implementation of Abstract Property Add method.
+     * 
+     * @param  string $propertyType
+     * @param  string $propertyName
+     * @param  array $options
+     * @return object
+     */
     protected function _add($propertyType, $propertyName, $options)
     {
         if(isset($this->_properties[$propertyName]) || isset($this->_relations[$propertyName])) {
-            throw new Exception("Property ".$propertyName." already exists! Cannot have the same property twice.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Property ".$propertyName." already exists! Cannot have the same property twice.");
         }
         $property = Zend_Entity_Mapper_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
 
-        if( $property instanceof Zend_Entity_Mapper_Definition_Table ) {
+        if($property instanceof Zend_Entity_Mapper_Definition_Table) {
             $this->_extensions[$propertyName] = $property;
         } elseif($property instanceof Zend_Entity_Mapper_Definition_Relation_Interface) {
             $this->_relations[$propertyName] = $property;
@@ -91,6 +114,12 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
         return $property;
     }
 
+    /**
+     * Get property object by name
+     *
+     * @param  string $propertyName
+     * @return object
+     */
     public function getPropertyByName($propertyName)
     {
         if(isset($this->_properties[$propertyName])) {
@@ -100,7 +129,8 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
         } else if(isset($this->_extensions[$propertyName])) {
             return $this->_extensions[$propertyName];
         } else {
-            throw new Exception("No Property found!");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("No Property found!");
         }
     }
 
@@ -136,26 +166,54 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
         return $this->_id;
     }
 
+    /**
+     * Get the loader class name
+     * 
+     * @return string
+     */
     public function getLoaderClass()
     {
         return $this->_loaderClass;
     }
 
+    /**
+     * Set the loader class name
+     * 
+     * @param string $loaderClass
+     * @return void
+     */
     public function setLoaderClass($loaderClass)
     {
         $this->_loaderClass = $loaderClass;
     }
 
+    /**
+     * Get the persister class name
+     *
+     * @return string
+     */
     public function getPersisterClass()
     {
         return $this->_persisterClass;
     }
 
+    /**
+     * Set persister class name
+     *
+     * @param string $persisterClass
+     * @return void
+     */
     public function setPersisterClass($persisterClass)
     {
         $this->_persisterClass = $persisterClass;
     }
 
+    /**
+     * Compile Entity Definition
+     * 
+     * @param Zend_Entity_Resource_Interface $map
+     * @return void
+     */
     public function compile(Zend_Entity_Resource_Interface $map)
     {
         foreach($this->getProperties() AS $property) {

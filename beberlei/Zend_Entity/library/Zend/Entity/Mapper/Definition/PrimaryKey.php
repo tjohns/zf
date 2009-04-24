@@ -19,27 +19,28 @@
 
 class Zend_Entity_Mapper_Definition_PrimaryKey extends Zend_Entity_Mapper_Definition_Property
 {
-    protected $generator;
+    /**
+     * @var Zend_Entity_Mapper_Definition_Id_Interface
+     */
+    protected $_generator;
 
+    /**
+     * Get Key String identifier
+     * 
+     * @return string
+     */
     public function getKey()
     {
         return $this->getPropertyName();
     }
 
-    public function uniqueStringIdentifier($forValues)
-    {
-        // TODO: Compound and matching
-        if(is_string($forValues)) {
-            return md5($forValues);
-        } else if(is_array($forValues)) {
-            if(isset($forValues[$this->getKey()])) {
-                $forValues = $forValues[$this->getKey()];
-                return md5($forValues);
-            }
-        }
-    }
-
-    public function containValidPrimaryKey($values)
+    /**
+     * Does the database state of an entity contain a valid primary key?
+     *
+     * @param  array $values
+     * @return boolean
+     */
+    public function containValidPrimaryKey(array $values)
     {
         $key = $this->getColumnName();
         if(!isset($values[$key]) || $values[$key] === null) {
@@ -48,33 +49,56 @@ class Zend_Entity_Mapper_Definition_PrimaryKey extends Zend_Entity_Mapper_Defini
         return true;
     }
 
-    public function buildWhereCondition(Zend_Db_Adapter_Abstract $db, $tableName, $forValues)
+    /**
+     * Build a where condition for finding a specific entity using the primary key.
+     * 
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @param  string $tableName
+     * @param  array $forValues
+     * @return string
+     */
+    public function buildWhereCondition(Zend_Db_Adapter_Abstract $db, $tableName, array $forValues)
     {
         if($this->containValidPrimaryKey($forValues)) {
-            $whereCondition = array();
-            foreach($forValues AS $k => $v) {
-                if($k == $this->getColumnName()) {
-                    $whereCondition[] = $db->quoteInto(
-                        sprintf('%s.%s = ?', $tableName, $k
-                    ), $v);
-                }
-            }
-            return implode(" AND ", $whereCondition);
+            $primaryKeyValue = $forValues[$this->getKey()];
+            $whereCondition = $db->quoteInto(
+                sprintf('%s.%s = ?', $tableName, $this->getKey()),
+                $primaryKeyValue
+            );
+        
+            return $whereCondition;
         } else {
-            throw new Exception("Invalid key data given.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Invalid data given for matching primary key of table '".$tableName."'.");
         }
     }
 
+    /**
+     * Get Id Generator
+     * 
+     * @return Zend_Entity_Mapper_Definition_Id_Interface
+     */
     public function getGenerator()
     {
-        return $this->generator;
+        return $this->_generator;
     }
 
-    public function setGenerator($generator)
+    /**
+     * Set Id Generator
+     *
+     * @param Zend_Entity_Mapper_Definition_Id_Interface $generator
+     */
+    public function setGenerator(Zend_Entity_Mapper_Definition_Id_Interface $generator)
     {
-        $this->generator = $generator;
+        $this->_generator = $generator;
     }
 
+    /**
+     * Compile Primary Key
+     *
+     * @param Zend_Entity_Mapper_Definition_Entity $entityDef
+     * @param Zend_Entity_Resource_Interface $map
+     */
     public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
     {
         if($this->getColumnName() === null) {
@@ -86,41 +110,66 @@ class Zend_Entity_Mapper_Definition_PrimaryKey extends Zend_Entity_Mapper_Defini
         }
     }
 
-    public function applyNextSequenceId(Zend_Db_Adapter_Abstract $db, $entityDatabaseState)
+    /**
+     * Apply the net sequence id as column of the entities database state.
+     * 
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @param  array $entityDatabaseState
+     * @return array
+     */
+    public function applyNextSequenceId(Zend_Db_Adapter_Abstract $db, array $entityDatabaseState)
     {
         $sequenceId = $this->getGenerator()->nextSequenceId($db);
         $entityDatabaseState[$this->getColumnName()] = $sequenceId;
         return $entityDatabaseState;
     }
 
-    public function getSequenceState(Zend_Db_Adapter_Abstract $db, $entityDatabaseState)
+    /**
+     *
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @param  array $entityDatabaseState
+     * @return array
+     */
+    public function getSequenceState(Zend_Db_Adapter_Abstract $db, array $entityDatabaseState)
     {
         $lastId = $this->getGenerator()->lastSequenceId($db);
-
         $newSequenceState = array($this->getPropertyName() => $lastId);
         return $newSequenceState;
     }
 
+    /**
+     * @param  array $databaseState
+     * @return array
+     */
     public function removeSequenceFromState($databaseState)
     {
-        unset($databaseState[$this->getColumnName()]);
+        $columnKey = $this->getColumnName();
+        if(isset($databaseState[$columnKey])) {
+            unset($databaseState[$columnKey]);
+        }
         return $databaseState;
     }
 
+    /**
+     * Get an array with a null key property.
+     * 
+     * @return array
+     */
     public function getEmptyKeyProperties()
     {
         return array($this->getPropertyName() => null);
     }
 
+    /**
+     * Return array of primary key fields values of a state.
+     *
+     * @param  array $state
+     * @return array
+     */
     public function retrieveKeyValuesFromProperties(array $state)
     {
-        $key = array();
-        foreach($state AS $k => $v) {
-            if($k == $this->getPropertyName()) {
-                $key[$this->getPropertyName()] = $v;
-                break;
-            }
-        }
-        return $key;
+        return array(
+            $this->getColumnName() => $state[$this->getColumnName()]
+        );
     }
 }

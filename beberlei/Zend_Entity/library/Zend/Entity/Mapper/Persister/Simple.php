@@ -22,10 +22,29 @@
  */
 class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persister_Interface
 {
+    /**
+     * @var array
+     */
     protected $_properties;
+
+    /**
+     * @var array
+     */
     protected $_relations;
+
+    /**
+     * @var string
+     */
     protected $_class;
+
+    /**
+     * @var Zend_Entity_Mapper_Definition_PrimaryKey
+     */
     protected $_primaryKey;
+
+    /**
+     * @var string
+     */
     protected $_table;
 
     /**

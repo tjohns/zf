@@ -26,6 +26,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         $this->_class = $entityDefinition->getClass();
         $this->_primaryKey = $entityDefinition->getPrimaryKey();
 
+        // TODO: Much code duplication in here
         foreach($entityDefinition->getProperties() AS $property) {
             // TODO: Implement Lazy Load Properties
             $columnName = $property->getColumnName();
@@ -38,16 +39,19 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 $columnName = $relation->getColumnName();
                 $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
                 $this->_columnsToPropertyNames[$columnName] = $relation->getPropertyName();
+                
+                // Save Relation to the later retrieval stack
+                $this->_lateSelectedRelations[] = $relation;
+                $this->_hasLateLoadingObjects   = true;
+            } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+                // Setup retrieval of the foreign key value
+                $columnName = $relation->getColumnName();
+                $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
+                $this->_columnsToPropertyNames[$columnName] = $relation->getPropertyName();
 
-                if($relation->getLoad() == Zend_Entity_Mapper_Definition_Property::LOAD_LAZY) {
-                    // Prepare for Lazy Load building.
-                    $this->_lazyLoadRelations[]     = $relation;
-                    $this->_hasLazyLoads            = true;
-                } else {
-                    // Save Relation to the later retrieval stack
-                    $this->_lateSelectedRelations[] = $relation;
-                    $this->_hasLateLoadingObjects   = true;
-                }
+                // Prepare for Lazy Load building.
+                $this->_lazyLoadRelations[]     = $relation;
+                $this->_hasLazyLoads            = true;
             } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
                 // TODO: Save relation related join information
             }
@@ -55,14 +59,11 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         foreach($entityDefinition->getExtensions() AS $extension) {
             if($extension instanceof Zend_Entity_Mapper_Definition_Collection) {
                 if($extension->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
-
-                    if($extension->getLoad() == Zend_Entity_Mapper_Definition_Property::LOAD_LAZY) {
-                        $this->_lazyLoadCollections[]     = $extension;
-                        $this->_hasLazyLoads              = true;
-                    } else {
-                        $this->_lateSelectedCollections[] = $extension;
-                        $this->_hasLateLoadingObjects     = true;
-                    }
+                    $this->_lateSelectedCollections[] = $extension;
+                    $this->_hasLateLoadingObjects     = true;
+                } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+                    $this->_lazyLoadCollections[]     = $extension;
+                    $this->_hasLazyLoads              = true;
                 } elseif($extension->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
                     // TODO: Implement Join saving of information
                 }

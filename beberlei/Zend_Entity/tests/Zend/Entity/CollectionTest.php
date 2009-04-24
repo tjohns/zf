@@ -8,13 +8,15 @@ class Zend_Entity_CollectionTest extends PHPUnit_Framework_TestCase
 
         $collection = new Zend_Entity_Collection($initial);
         $i = 0;
-        foreach($collection AS $element) {
+        foreach($collection AS $key => $element) {
             $this->assertEquals($initial[$i], $element);
+            $this->assertEquals($i, $key);
             $i++;
         }
         $i = 0;
-        foreach($collection AS $element) {
+        foreach($collection AS $key => $element) {
             $this->assertEquals($initial[$i], $element);
+            $this->assertEquals($i, $key);
             $i++;
         }
     }

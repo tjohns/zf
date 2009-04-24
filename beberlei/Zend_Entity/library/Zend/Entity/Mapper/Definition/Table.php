@@ -19,12 +19,27 @@
 
 abstract class Zend_Entity_Mapper_Definition_Table
 {
+    /**
+     * @var string
+     */
     protected $_fetch;
 
+    /**
+     * @var string
+     */
     protected $_tableName;
 
+    /**
+     * @var array
+     */
     protected $_properties = array();
 
+    /**
+     * Construct a table
+     * 
+     * @param string $tableName
+     * @param array $options
+     */
     public function __construct($tableName=null, array $options=array())
     {
         $this->setTable($tableName);
@@ -36,16 +51,31 @@ abstract class Zend_Entity_Mapper_Definition_Table
         }
     }
 
+    /**
+     * Get fetchmode of table.
+     *
+     * @return int
+     */
     public function getFetch()
     {
         return $this->_fetch;
     }
 
+    /**
+     * Set fetchmode.
+     *
+     * @param int $fetch
+     */
     public function setFetch($fetch)
     {
         $this->_fetch = $fetch;
     }
 
+    /**
+     * Get current tablename
+     *
+     * @return string
+     */
     public function getTable()
     {
         if($this->_tableName == null) {
@@ -54,11 +84,23 @@ abstract class Zend_Entity_Mapper_Definition_Table
         return $this->_tableName;
     }
 
+    /**
+     * Set table
+     * 
+     * @param string $tableName
+     */
     public function setTable($tableName)
     {
         $this->_tableName = $tableName;
     }
 
+    /**
+     * Add new property via magic __call()
+     *
+     * @param  string $method
+     * @param  array $args
+     * @return object
+     */
     public function __call($method, $args)
     {
         if(substr($method, 0, 3) == "add") {
@@ -76,26 +118,54 @@ abstract class Zend_Entity_Mapper_Definition_Table
             }
             return $this->_add($propertyType, $propertyName, $options);
         } else {
-            throw new Exception("Unknown method '".$method."' called.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Unknown method '".$method."' called.");
         }
     }
 
     protected function _add($propertyType, $propertyName, $options)
     {
-        if(isset($this->_properties[$propertyName])) {
-            throw new Exception("Property '".$propertyName."' already exists! Cannot have the same property twice.");
+        if($this->hasProperty($propertyName)) {
+            throw new Zend_Entity_Exception("Property '".$propertyName."' already exists! Cannot have the same property twice.");
         }
         $this->_properties[$propertyName] = Zend_Entity_Mapper_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
         return $this->_properties[$propertyName];
     }
 
+    /**
+     * Get all current properties of table
+     * 
+     * @return array
+     */
     public function getProperties()
     {
         return $this->_properties;
     }
 
+    /**
+     * Does a property exist?
+     * 
+     * @param  string $propertyName
+     * @return boolean
+     */
+    public function hasProperty($propertyName)
+    {
+        return isset($this->_properties[$propertyName]);
+    }
+
+    /**
+     * Property Name
+     *
+     * @param  string $propertyName
+     * @return object
+     */
     public function getPropertyByName($propertyName)
     {
-        return $this->_properties[$propertyName];
+        if($this->hasProperty($propertyName)) {
+            return $this->_properties[$propertyName];
+        } else {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Accessed property '".$propertyName."' does not exist for table '".$this->getTable()."'");
+        }
     }
 }
