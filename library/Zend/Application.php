@@ -285,11 +285,12 @@ class Zend_Application
     /**
      * Bootstrap application
      * 
-     * @return void
+     * @return Zend_Application
      */
     public function bootstrap()
     {
         $this->getBootstrap()->bootstrap();
+        return $this;
     }
 
     /**
