@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,7 +20,6 @@
  * @version    $Id$
  */
 
-
 /**
  * Test helper
  */
@@ -31,7 +29,6 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
  * @see Zend_Filter_RealPath
  */
 require_once 'Zend/Filter/RealPath.php';
-
 
 /**
  * @category   Zend
@@ -56,7 +53,7 @@ class Zend_Filter_RealPathTest extends PHPUnit_Framework_TestCase
      */
     public function __construct()
     {
-        $this->_filesPath = dirname(__FILE__) . '/_files';
+        $this->_filesPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
     }
 
     /**
@@ -84,7 +81,7 @@ class Zend_Filter_RealPathTest extends PHPUnit_Framework_TestCase
     public function testFileExists()
     {
         $filename = 'file.1';
-        $this->assertContains($filename, $this->_filter->filter("$this->_filesPath/$filename"));
+        $this->assertContains($filename, $this->_filter->filter($this->_filesPath . DIRECTORY_SEPARATOR . $filename));
     }
 
     /**
@@ -100,5 +97,42 @@ class Zend_Filter_RealPathTest extends PHPUnit_Framework_TestCase
         } else {
             $this->assertEquals(false, $this->_filter->filter($path));
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAndSetExistsParameter()
+    {
+        $this->assertTrue($this->_filter->getExists());
+        $this->_filter->setExists(false);
+        $this->assertFalse($this->_filter->getExists());
+
+        $this->_filter->setExists(true);
+        $this->_filter->setExists(array('exists' => false));
+        $this->assertFalse($this->_filter->getExists());
+
+        $this->_filter->setExists(array('unknown'));
+        $this->assertTrue($this->_filter->getExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNonExistantPath()
+    {
+        $this->_filter->setExists(false);
+
+        $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        $this->assertEquals($path, $this->_filter->filter($path));
+
+        $path2 = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'
+               . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files';
+        $this->assertEquals($path, $this->_filter->filter($path2));
+
+        $path3 = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files'
+               . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.'
+               . DIRECTORY_SEPARATOR . '_files';
+        $this->assertEquals($path, $this->_filter->filter($path3));
     }
 }
