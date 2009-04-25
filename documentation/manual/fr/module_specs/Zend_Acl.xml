@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15030 -->
+<!-- EN-Revision: 15101 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.introduction">
 
@@ -119,7 +119,7 @@
                 "admin" - desquels d'autres rôles peuvent hériter. Ensuite, un rôle identifié par
                 "unUser" est créé et hérite des trois autres rôles. L'ordre selon lequel ces rôles
                 apparaissent dans le tableau
-                <varname>$parents</varname> est important. Lorsque cela est nécessaire
+                <code>$parents</code> est important. Lorsque cela est nécessaire
                 <classname>Zend_Acl</classname> recherche les règles d'accès définies non seulement
                 pour le rôle demandé (ici "unUser"), mais aussi pour les autres rôles desquels le
                 rôle recherché hérite (ici "invite", "membre", et "admin")&#160;:

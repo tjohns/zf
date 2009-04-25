@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.captcha.adapters">
 
@@ -49,8 +49,8 @@
                 <para>
                     <code>setSessionClass($class)</code> et <code>getSessionClass()</code>
                     vous permettent de piloter la classe de session, si vous désirez utiliser une
-                    alternative à <classname>Zend_Session_Namespace</classname>, ceci dans le but de faire
-                    persister le jeton captcha en session.
+                    alternative à <classname>Zend_Session_Namespace</classname>, ceci dans le but
+                    de faire persister le jeton captcha en session.
                 </para>
             </listitem>
             <listitem>
@@ -74,9 +74,10 @@
 
         <para>
             Tous les captcha Word vous autorisent à passer un tableau d'options au
-            constructeur, ou à <code>setOptions()</code> (un objet <classname>Zend_Config</classname> peut
-            être utilisé avec <code>setConfig()</code>). Par défaut, les clés <code>timeout</code>
-            <code>wordLen</code> et <code>sessionClass</code> seront utilisées.
+            constructeur, ou à <code>setOptions()</code> (un objet
+            <classname>Zend_Config</classname> peut être utilisé avec <code>setConfig()</code>).
+            Par défaut, les clés <code>timeout</code> <code>wordLen</code> et
+            <code>sessionClass</code> seront utilisées.
         </para>
 
         <note>

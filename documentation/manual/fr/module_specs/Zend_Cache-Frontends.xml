@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.frontends">
 
@@ -90,8 +90,8 @@
                             <entry><code>false</code></entry>
                             <entry>
                                 Si défini à <code>true</code>, le logging par
-                                <classname>Zend_Log</classname> est activé (mais le système sera plus
-                                lent)
+                                <classname>Zend_Log</classname> est activé (mais le système sera
+                                plus lent)
                             </entry>
                         </row>
                         <row>
@@ -272,7 +272,7 @@ if (!($cache->test($id))) {
 
     <sect2 id="zend.cache.frontends.output">
 
-        <title><classname>Zend_Cache_Frontend_Output</classname></title>
+        <title>Zend_Cache_Frontend_Output</title>
 
         <sect3 id="zend.cache.frontends.output.introduction">
 
@@ -332,7 +332,7 @@ echo 'This is never cached ('.time().').';
 
     <sect2 id="zend.cache.frontends.function">
 
-        <title><classname>Zend_Cache_Frontend_Function</classname></title>
+        <title>Zend_Cache_Frontend_Function</title>
 
         <sect3 id="zend.cache.frontends.function.introduction">
 
@@ -434,7 +434,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));
 
     <sect2 id="zend.cache.frontends.class">
 
-        <title><classname>Zend_Cache_Frontend_Class</classname></title>
+        <title>Zend_Cache_Frontend_Class</title>
 
         <sect3 id="zend.cache.frontends.class.introduction">
 
@@ -442,8 +442,8 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));
 
             <para>
                 <classname>Zend_Cache_Frontend_Class</classname> est différent de
-                <classname>Zend_Cache_Frontend_Function</classname> parce qu'elle permet de mettre en cache
-                les objets et les méthodes statiques.
+                <classname>Zend_Cache_Frontend_Function</classname> parce qu'elle permet de mettre
+                en cache les objets et les méthodes statiques.
             </para>
 
         </sect3>
@@ -472,9 +472,9 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));
                             <entry></entry>
                             <entry>
                                 si défini avec un nom de classe, nous allons mettre en cache
-                                une classe abstraite et utiliser uniquement les appels statiques ;
-                                si défini avec un objet, nous allons mettre en cache les méthodes
-                                de cet objet.
+                                une classe abstraite et utiliser uniquement les appels
+                                statiques&#160;; si défini avec un objet, nous allons mettre en
+                                cache les méthodes de cet objet.
                             </entry>
                         </row>
                         <row>
@@ -569,7 +569,7 @@ $res = $cache->foobar2('1', '2');
 
     <sect2 id="zend.cache.frontends.file">
 
-        <title><classname>Zend_Cache_Frontend_File</classname></title>
+        <title>Zend_Cache_Frontend_File</title>
 
         <sect3 id="zend.cache.frontends.file.introduction">
 
@@ -671,7 +671,7 @@ $res = $cache->foobar2('1', '2');
 
     <sect2 id="zend.cache.frontends.page">
 
-        <title><classname>Zend_Cache_Frontend_Page</classname></title>
+        <title>Zend_Cache_Frontend_Page</title>
 
         <sect3 id="zend.cache.frontends.page.introduction">
 
@@ -680,8 +680,8 @@ $res = $cache->foobar2('1', '2');
             <para>
                 <classname>Zend_Cache_Frontend_Page</classname> est comme
                 <classname>Zend_Cache_Frontend_Output</classname> mais créé pour une page complète.
-                Il est impossible d'utiliser <classname>Zend_Cache_Frontend_Page</classname> pour mettre en
-                cache un bloc unique.
+                Il est impossible d'utiliser <classname>Zend_Cache_Frontend_Page</classname> pour
+                mettre en cache un bloc unique.
             </para>
 
             <para>
@@ -743,110 +743,110 @@ $res = $cache->foobar2('1', '2');
                             <entry><code>array</code></entry>
                             <entry><code>array(...see below...)</code></entry>
                             <entry>
-                                un tableau associatif d'options par défaut :
+                                un tableau associatif d'options par défaut&#160;:
                                 <itemizedlist>
                                     <listitem>
-                                        <para><code>(boolean, true par défaut) cache</code> : le
-                                        cache est activé si <code>true</code>
+                                        <para><code>(boolean, true par défaut) cache</code>&#160;:
+                                        le cache est activé si <code>true</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, false par défaut)
-                                        cache_with_get_variables</code> : si <code>true</code>, le
-                                        cache est toujours activé même s'il y a des variables dans
-                                        le tableau <code>$_GET</code>
+                                        cache_with_get_variables</code>&#160;: si
+                                        <code>true</code>, le cache est toujours activé même s'il
+                                        y a des variables dans le tableau <code>$_GET</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, false par défaut)
-                                        cache_with_post_variables</code> : si <code>true</code>, le
-                                        cache est toujours activé même s'il y a des variables dans
-                                        le tableau <code>$_POST</code>
+                                        cache_with_post_variables</code>&#160;: si
+                                        <code>true</code>, le cache est toujours activé même s'il
+                                        y a des variables dans le tableau <code>$_POST</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, false par défaut)
-                                        cache_with_session_variables</code> : si <code>true</code>,
-                                        le cache est toujours activé s'il y a des variables dans le
-                                        tableau <code>$_SESSION</code>
+                                        cache_with_session_variables</code>&#160;: si
+                                        <code>true</code>, le cache est toujours activé s'il y a
+                                        des variables dans le tableau <code>$_SESSION</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, false par défaut)
-                                        cache_with_files_variables</code> : si <code>true</code>,
-                                        le cache est toujours activé s'il y a des variables dans le
-                                        tableau <code>$_FILES</code>
+                                        cache_with_files_variables</code>&#160;: si
+                                        <code>true</code>, le cache est toujours activé s'il y a
+                                        des variables dans le tableau <code>$_FILES</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, false par défaut)
-                                        cache_with_cookie_variables</code> : si <code>true</code>,
-                                        le cache est toujours activé s'il y a des variables dans le
-                                        tableau <code>$_COOKIE</code>
+                                        cache_with_cookie_variables</code>&#160;: si
+                                        <code>true</code>, le cache est toujours activé s'il y a
+                                        des variables dans le tableau <code>$_COOKIE</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, true par défaut)
-                                        make_id_with_get_variables</code> : si <code>true</code>,
-                                        l'identifiant du cache sera dépendant du contenu du tableau
-                                        <code>$_GET</code>
+                                        make_id_with_get_variables</code>&#160;: si
+                                        <code>true</code>, l'identifiant du cache sera dépendant
+                                        du contenu du tableau <code>$_GET</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, true par défaut)
-                                        make_id_with_post_variables</code> : si <code>true</code>,
-                                        l'identifiant du cache sera dépendant du contenu du tableau
-                                        <code>$_POST</code>
+                                        make_id_with_post_variables</code>&#160;: si
+                                        <code>true</code>, l'identifiant du cache sera dépendant
+                                        du contenu du tableau <code>$_POST</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, true par défaut)
-                                        make_id_with_session_variables</code> : si
-                                        <code>true</code>, l'identifiant du cache sera dépendant du
-                                        contenu du tableau <code>$_SESSION</code>
+                                        make_id_with_session_variables</code>&#160;: si
+                                        <code>true</code>, l'identifiant du cache sera dépendant
+                                        du contenu du tableau <code>$_SESSION</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, true par défaut)
-                                        make_id_with_files_variables</code> : si <code>true</code>,
-                                        l'identifiant du cache sera dépendant du contenu du tableau
-                                        <code>$_FILES</code>
+                                        make_id_with_files_variables</code>&#160;: si
+                                        <code>true</code>, l'identifiant du cache sera dépendant
+                                        du contenu du tableau <code>$_FILES</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(boolean, true par défaut)
-                                        make_id_with_cookie_variables</code> : si
-                                        <code>true</code>, l'identifiant du cache sera dépendant du
-                                        contenu du tableau <code>$_COOKIE</code>
+                                        make_id_with_cookie_variables</code>&#160;: si
+                                        <code>true</code>, l'identifiant du cache sera dépendant
+                                        du contenu du tableau <code>$_COOKIE</code>
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
                                         <code>(int, false par défaut)
-                                        specific_lifetime</code> : si <code>true</code>, la durée
-                                        de vie fournie sera utilisée pour l'expression régulière
-                                        choisie
+                                        specific_lifetime</code>&#160;: si <code>true</code>, la
+                                        durée de vie fournie sera utilisée pour l'expression
+                                        régulière choisie
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
-                                        <code>(array, array() par défaut) tags</code> :
+                                        <code>(array, array() par défaut) tags</code>&#160;:
                                         balises pour l'enregistrement en cache
                                     </para>
                                 </listitem>
                                 <listitem>
                                     <para>
-                                        <code>(int, null par défaut) priority</code> :
+                                        <code>(int, null par défaut) priority</code>&#160;:
                                         priorité (si le backend le supporte)
                                     </para>
                                 </listitem>

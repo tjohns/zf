@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.http">
 
@@ -127,8 +127,8 @@
                                 <code>"digest"</code>
                             </entry>
                             <entry>
-                                Liste d'URI, séparées d'espace, pour lesquelles la même
-                                information d'authentification est valide. Elles peuvent pointer vers
+                                Liste d'URI, séparées d'espace, pour lesquelles la même information
+                                d'authentification est valide. Elles peuvent pointer vers
                                 différents serveurs.
                             </entry>
                         </row>
@@ -205,8 +205,8 @@
                 <programlisting><![CDATA[
     <username>:<realm>:<credentials>\n
 ]]></programlisting>
-                Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>, et
-                <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que
+                Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>,
+                et <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que
                 retourner la valeur de "<code>credentials</code>". Ainsi, avec Basic cette valeur
                 devra être le mot de passe en clair de l'utilisateur identifié par
                 <code>username</code>. En mode Digest, la valeur MD5 de toute la chaîne
@@ -215,7 +215,7 @@
 
 
             <para>
-                Pour créer des résolveurs de fichiers séparés, utilisez :
+                Pour créer des résolveurs de fichiers séparés, utilisez&#160;:
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
@@ -238,7 +238,7 @@ $resolver->setFile($path);
         <title>Usage général&#160;:</title>
 
         <para>
-            Tout d'abord, créez un tableau de configuration avec les options requises :
+            Tout d'abord, créez un tableau de configuration avec les options requises&#160;:
             <programlisting role="php"><![CDATA[
 $config = array(
     'accept_schemes' => 'basic digest',

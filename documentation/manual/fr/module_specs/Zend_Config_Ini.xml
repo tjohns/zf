@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.ini">
 
@@ -24,8 +24,9 @@
             <ulink url="http://fr.php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> de
             PHP. Veuillez prendre connaissance de la documentation pour appréhender ses
             comportements spécifiques, qui se propagent à <classname>Zend_Config_Ini</classname>,
-            tel que la façon dont les valeurs spéciales&#160;: <code>true</code>, <code>false</code>,
-            <code>yes</code>, <code>no</code> et <code>null</code> sont manipulées.
+            tel que la façon dont les valeurs spéciales&#160;: <code>true</code>,
+            <code>false</code>, <code>yes</code>, <code>no</code> et <code>null</code> sont
+            manipulées.
         </para>
     </note>
 
@@ -46,7 +47,7 @@ $options = new Zend_Config_Ini('/chemin/vers/config.ini',
 
     <example id="zend.config.adapters.ini.example.using">
 
-        <title>Utiliser <classname>Zend_Config_Ini</classname></title>
+        <title>Utiliser Zend_Config_Ini</title>
 
         <para>
             Cet exemple illustre une utilisation de base de <classname>Zend_Config_Ini</classname>

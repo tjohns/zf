@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.introduction">
 
@@ -89,10 +89,10 @@
     </para>
 
     <para>
-        <classname>Zend_Console_Getopt</classname> fournit une interface pour déclarer quels drapeaux
-        sont valides pour votre application, produit une erreur et un message s'ils emploient un
-        drapeau invalide, et transmet à votre application les drapeaux spécifiés par
-        l'utilisateur.
+        <classname>Zend_Console_Getopt</classname> fournit une interface pour déclarer quels
+        drapeaux sont valides pour votre application, produit une erreur et un message s'ils
+        emploient un drapeau invalide, et transmet à votre application les drapeaux spécifiés
+        par l'utilisateur.
     </para>
 
     <note>

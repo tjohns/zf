@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.theory_of_operation">
 
@@ -87,11 +87,11 @@
     <para>
         Si vous avez deux objets <classname>Zend_Config</classname>, vous pouvez les fusionner en
         un objet unique en utilisant la fonction <code>merge()</code>. Par exemple, prenons
-        <varname>$config</varname> et <varname>$localConfig</varname>, vous pouvez fusionner
-        <varname>$localConfig</varname> dans <varname>$config</varname> en utilisant
+        <code>$config</code> et <code>$localConfig</code>, vous pouvez fusionner
+        <code>$localConfig</code> dans <code>$config</code> en utilisant
         <code>$config-&gt;merge($localConfig);</code>. Les éléments de
-        <varname>$localConfig</varname> surchargeront les éléments nommés de la même manière dans
-        <varname>$config</varname>.
+        <code>$localConfig</code> surchargeront les éléments nommés de la même manière dans
+        <code>$config</code>.
         <note>
             <para>
                 L'objet <classname>Zend_Config</classname> qui réalise la fusion doit avoir été

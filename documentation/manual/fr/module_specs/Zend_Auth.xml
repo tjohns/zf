@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.introduction">
 
@@ -114,20 +114,22 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
             aux résultats des adaptateurs <classname>Zend_Auth</classname>&#160;:
             <itemizedlist>
                 <listitem>
-                    <para><code>isValid()</code>&#160;: retourne <code>true</code> si et seulement si le
-                    résultat représente une tentative réussie d'authentification
-                </para>
+                    <para>
+                        <code>isValid()</code>&#160;: retourne <code>true</code> si et seulement
+                        si le résultat représente une tentative réussie d'authentification
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>getCode()</code>&#160;: retourne une constante
-                        <classname>Zend_Auth_Result</classname> qui détermine le type de retour accepté ou refusé
-                        (NDT : voir tableau ci dessous). Cela peut être utilisé pour les développeurs
-                        voulant distinguer en amont les différents types de résultat. Il est possible
-                        d'avoir des statistiques détaillées, par exemple. Une autre utilisation est la
-                        personnalisation du message de retour au client. Attention cependant à ne pas
-                        trop donner de détails aux clients pour des raisons de sécurité. Pour plus de
-                        détails, consultez les notes ci-dessous.
+                        <classname>Zend_Auth_Result</classname> qui détermine le type de retour
+                        accepté ou refusé (NDT : voir tableau ci dessous). Cela peut être utilisé
+                        pour les développeurs voulant distinguer en amont les différents types de
+                        résultat. Il est possible d'avoir des statistiques détaillées, par exemple.
+                        Une autre utilisation est la personnalisation du message de retour au
+                        client. Attention cependant à ne pas trop donner de détails aux clients
+                        pour des raisons de sécurité. Pour plus de détails, consultez les notes
+                        ci-dessous.
                     </para>
                 </listitem>
                 <listitem>
@@ -138,8 +140,8 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getMessages()</code>&#160;: retourne un tableau de messages relatifs à
-                        une tentative infructueuse d'authentification.
+                        <code>getMessages()</code>&#160;: retourne un tableau de messages relatifs
+                        à une tentative infructueuse d'authentification.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -212,16 +214,17 @@ switch ($resultat->getCode()) {
             <title>Persistance par défaut dans une session PHP</title>
 
             <para>
-                <link linkend="zend.session">Zend_Session</link>est utilisé par
-                <classname>Zend_Auth</classname> pour fournir un stockage persistant de l'identité, après une
-                authentification réussie, via les sessions PHP. Après une authentification réussie,
-                <classname>Zend_Auth::authenticate()</classname> conserve l'identité résultant de
-                l'authentification dans un stockage persistant. Par défaut,
+                <link linkend="zend.session"><classname>Zend_Session</classname></link>est utilisé
+                par <classname>Zend_Auth</classname> pour fournir un stockage persistant de
+                l'identité, après une authentification réussie, via les sessions PHP. Après une
+                authentification réussie, <classname>Zend_Auth::authenticate()</classname> conserve
+                l'identité résultant de l'authentification dans un stockage persistant. Par défaut,
                 <classname>Zend_Auth</classname> utilise une classe de stockage basée sur
                 <link linkend="zend.session">Zend_Session</link>. La classe de stockage peut être
                 changée en fournissant un objet de stockage différent à
-                <classname>Zend_Auth::setStorage()</classname>. Une classe personnalisée peut fournir une
-                implémentation de l'objet <classname>Zend_Auth_Storage_Interface</classname> à
+                <classname>Zend_Auth::setStorage()</classname>. Une classe personnalisée peut
+                fournir une implémentation de l'objet
+                <classname>Zend_Auth_Storage_Interface</classname> à
                 <classname>Zend_Auth::setStorage()</classname>.
             </para>
 
@@ -244,8 +247,9 @@ switch ($resultat->getCode()) {
                     valeurs au constructeur de <classname>Zend_Auth_Storage_Session</classname>, et
                     ces valeurs sont passées en interne au constructeur de
                     <classname>Zend_Session_Namespace</classname>. Cela doit être fait avant
-                    l'authentification, et avant que <classname>Zend_Auth::authenticate()</classname> ait
-                    accompli le stockage automatique de l'identité.
+                    l'authentification, et avant que
+                    <classname>Zend_Auth::authenticate()</classname> ait accompli le stockage
+                    automatique de l'identité.
                     <programlisting role="php"><![CDATA[
 // Sauver une référence du singleton, instance de Zend_Auth
 $auth = Zend_Auth::getInstance();
@@ -388,7 +392,9 @@ $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);
             proposées&#160;:
             <orderedlist>
                 <listitem>
-                    <para>indirectement, via <classname>Zend_Auth::authenticate()</classname>&#160;;</para>
+                    <para>
+                        indirectement, via <classname>Zend_Auth::authenticate()</classname>&#160;;
+                    </para>
                 </listitem>
                 <listitem>
                     <para>

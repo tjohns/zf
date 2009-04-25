@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.theory">
 
@@ -12,12 +12,12 @@
         définit combien de temps la ressource de cache est considérée comme à jour. Le troisième
         est l'exécution conditionnelle, ainsi chaque partie de votre code peut être évitée
         entièrement, pour améliorer les performances. La fonction principale du frontend
-        (<classname>Zend_Cache_Core::get()</classname>) est toujours faite pour retourner <code>false</code>
-        en cas de cache manquant, si cela donne du sens à la nature d'un frontend. Cela permet aux
-        utilisateurs d'entourer des parties de code qu'ils veulent mettre en cache (et éviter) dans
-        une instruction <code>if(){ ... }</code> où la condition est une méthode
-        <classname>Zend_Cache</classname>. A la fin de ces blocs, vous devez sauvegarder ce que
-        vous avez généré (par exemple <classname>Zend_Cache_Core::save()</classname>).
+        (<classname>Zend_Cache_Core::get()</classname>) est toujours faite pour retourner
+        <code>false</code> en cas de cache manquant, si cela donne du sens à la nature d'un
+        frontend. Cela permet aux utilisateurs d'entourer des parties de code qu'ils veulent mettre
+        en cache (et éviter) dans une instruction <code>if(){ ... }</code> où la condition est une
+        méthode <classname>Zend_Cache</classname>. A la fin de ces blocs, vous devez sauvegarder ce
+        que vous avez généré (par exemple <classname>Zend_Cache_Core::save()</classname>).
     </para>
 
     <note>
@@ -41,7 +41,7 @@
 
     <sect2 id="zend.cache.factory">
 
-        <title>La méthode de fabrique de <classname>Zend_Cache</classname></title>
+        <title>La méthode de fabrique de Zend_Cache</title>
 
         <para>
             Une bonne manière de construire une instance utilisable d'un frontend
@@ -72,7 +72,7 @@ $cache = Zend_Cache::factory($frontendName,
 
         <para>
             Dans les exemples suivants, nous nous assurerons que la variable
-            <varname>$cache</varname> utilise une instance de frontend valide, et que vous
+            <code>$cache</code> utilise une instance de frontend valide, et que vous
             comprenez comment passer des paramètres à vos backends.
         </para>
 
@@ -107,7 +107,7 @@ $cache->save($grande_donnees,
         <note>
             <para>
                 Notez que la méthode <code>save()</code> accepte un quatrième paramètre
-                optionnel : <varname>$specificLifetime</varname> (si différent de <code>false</code>, il
+                optionnel : <code>$specificLifetime</code> (si différent de <code>false</code>, il
                 affecte un '<code>lifeTime</code>' spécifique pour cet enregistrement de cache
                 particulier).
             </para>

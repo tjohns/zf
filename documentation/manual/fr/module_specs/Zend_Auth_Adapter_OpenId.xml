@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.openid">
 
@@ -59,19 +59,20 @@
             A la différence des autres adaptateurs <classname>Zend_Auth</classname>, l'adaptateur
             OpenID utilise une authentification sur un serveur externe à l'application, et
             nécessitera donc deux requêtes HTTP. Ainsi
-            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> devra être appelée deux fois :
-            d'abord pour rediriger l'utilisateur vers le serveur OpenID (rien ne sera donc retourné
-            par la méthode), qui lui-même redirigera l'utilisateur vers l'application, où un
-            deuxième appel de méthode <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname>
-            vérifiera la signature et complétera le processus. Un objet
-            <classname>Zend_Auth_Result</classname> sera alors cette fois-ci retourné.
+            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> devra être appelée deux
+            fois : d'abord pour rediriger l'utilisateur vers le serveur OpenID (rien ne sera donc
+            retourné par la méthode), qui lui-même redirigera l'utilisateur vers l'application, où
+            un deuxième appel de méthode
+            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> vérifiera la signature
+            et complétera le processus. Un objet <classname>Zend_Auth_Result</classname> sera alors
+            cette fois-ci retourné.
         </para>
 
         <para>
             L'exemple suivant montre l'utilisation de
             <classname>Zend_Auth_Adapter_OpenId</classname>.
-            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> est appelée deux fois. La
-            première fois juste après avoir envoyé le formulaire, lorsque
+            <classname>Zend_Auth_Adapter_OpenId::authenticate()</classname> est appelée deux fois.
+            La première fois juste après avoir envoyé le formulaire, lorsque
             <code>$_POST['openid_action']</code> vaut <code>"login"</code>, et la deuxième fois
             après la redirection du serveur OpenID vers l'application, lorsque
             <code>$_GET['openid_mode']</code> ou <code>$_POST['openid_mode']</code> existe.

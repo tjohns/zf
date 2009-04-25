@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.configuration">
 
@@ -224,14 +224,14 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
                     <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname>
                     ("<code>ruleMode</code>") peut avoir les valeurs
                     <classname>Zend_Console_Getopt::MODE_ZEND</classname> ("zend") ou
-                    <classname>Zend_Console_Getopt::MODE_GNU</classname> ("<code>gnu</code>"). Il ne devrait
-                    pas être nécessaire d'employer cette option à moins que vous n'étendiez la
-                    classe avec les formes additionnelles de syntaxe. Les deux modes supportés dans
-                    la classe <classname>Zend_Console_Getopt</classname> de base sont sans équivoque. Si le
-                    spécificateur est une chaîne de caractère, la classe passe en
-                    <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>. Mais si
-                    vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous pouvez
-                    avoir à indiquer le mode en utilisant cette option.
+                    <classname>Zend_Console_Getopt::MODE_GNU</classname> ("<code>gnu</code>"). Il
+                    ne devrait pas être nécessaire d'employer cette option à moins que vous
+                    n'étendiez la classe avec les formes additionnelles de syntaxe. Les deux modes
+                    supportés dans la classe <classname>Zend_Console_Getopt</classname> de base
+                    sont sans équivoque. Si le spécificateur est une chaîne de caractère, la classe
+                    passe en <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>.
+                    Mais si vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous
+                    pouvez avoir à indiquer le mode en utilisant cette option.
                 </para>
             </listitem>
         </itemizedlist>
