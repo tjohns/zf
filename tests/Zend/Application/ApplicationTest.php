@@ -319,6 +319,12 @@ class Zend_Application_ApplicationTest extends PHPUnit_Framework_TestCase
         $application = new Zend_Application('testing', $config->toArray());
         $this->assertTrue($application->hasOption('foo'));
     }
+
+    public function testBootstrapImplementsFluentInterface()
+    {
+        $application = $this->application->bootstrap();
+        $this->assertSame($application, $this->application);
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Application_ApplicationTest::main') {
