@@ -100,8 +100,8 @@ $this->_helper->json($data, array('keepLayouts' => true);
 
         <para>
             <classname>Zend_Json::encode()</classname> allows the encoding of native JSON
-            expressions <code>using Zend_Json_Expr</code> objects. This option
-            is disabled by default.  To enable this option, pass a boolean
+            expressions using <code>Zend_Json_Expr</code> objects. This option
+            is disabled by default. To enable this option, pass a boolean
             <code>true</code> value to the <code>enableJsonExprFinder</code>
             option:
         </para>
