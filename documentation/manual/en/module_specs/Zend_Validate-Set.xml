@@ -132,8 +132,7 @@ if ($validator->isValid($iban)) {
         echo "$message\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This should be done when you want to validate IBAN numbers for a single countries. The simpler way
             of validation is not to give a locale like shown in the next example.
@@ -146,8 +145,7 @@ if ($validator->isValid($iban)) {
 } else {
     // IBAN is invalid
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             But this shows one big problem: When you have to accept only IBAN numbers from one single country,
             for example france, then IBAN numbers from other countries would also be valid. Therefor just

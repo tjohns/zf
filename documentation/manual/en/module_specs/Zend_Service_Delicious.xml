@@ -21,8 +21,7 @@ foreach ($posts as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.retrieving_posts">
@@ -62,8 +61,7 @@ public function getRecentPosts($tag = null, $count = 15);
  * @return Zend_Service_Delicious_PostList
  */
 public function getAllPosts($tag = null);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
@@ -93,8 +91,7 @@ foreach ($posts as $post) {
 
 // get post using array access
 echo $posts[0]->getTitle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <para>
@@ -121,8 +118,7 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <example id="zend.service.delicious.postlist.example.byUrl">
             <title>Filtering a Post List by URL</title>
@@ -139,8 +135,7 @@ foreach ($posts->withUrl('/help/') as $post) {
     echo "Title: {$post->getTitle()}\n";
     echo "Url: {$post->getUrl()}\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.editing_posts">
@@ -155,8 +150,7 @@ $posts = $delicious->getPosts();
 $posts[0]->setTitle('New title');
 // save changes
 $posts[0]->save();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <example id="zend.service.delicious.editing_posts.method_call_chaining">
             <title>Method call chaining</title>
@@ -170,8 +164,7 @@ $posts = $delicious->getPosts();
 $posts[0]->setTitle('New title')
          ->setNotes('New notes')
          ->save();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.deleting_posts">
@@ -194,8 +187,7 @@ $posts[0]->delete();
 
 // another way of using deletePost()
 $delicious->deletePost($posts[0]->getUrl());
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.adding_posts">
@@ -220,8 +212,7 @@ $newPost = $delicious->createNewPost('Zend Framework',
                                      'http://framework.zend.com');
 $newPost->setNotes('Zend Framework Homepage');
 $newPost->save();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.tags">
@@ -236,8 +227,7 @@ print_r($delicious->getTags());
 
 // rename tag ZF to zendFramework
 $delicious->renameTag('ZF', 'zendFramework');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.bundles">
@@ -255,8 +245,7 @@ $delicious->deleteBundle('someBundle');
 
 // add bundle
 $delicious->addBundle('newBundle', array('tag1', 'tag2'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.delicious.public_data">
@@ -318,8 +307,7 @@ print_r($delicious->getUserNetwork('someUser'));
 
 // get tags of user someUser
 print_r($delicious->getUserTags('someUser'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <sect3 id="zend.service.delicious.public_data.posts">
             <title>Public posts</title>
@@ -377,8 +365,7 @@ print_r($delicious->getUserTags('someUser'));
             <programlisting role="php"><![CDATA[
 $myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             When you are making more than one request with <classname>Zend_Service_Delicious</classname> to speed your
@@ -390,8 +377,7 @@ Zend_Rest_Client::setHttpClient($myHttpClient);
 Zend_Rest_Client::getHttpClient()->setConfig(array(
         'keepalive' => true
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <para>

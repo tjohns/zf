@@ -27,8 +27,7 @@
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 $ip = $ec2_img->register('imageLocation');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.images.deregister">
@@ -44,8 +43,7 @@ $ip = $ec2_img->register('imageLocation');
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 $ip = $ec2_img->deregister($imageId);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.images.describe">
@@ -122,8 +120,7 @@ $ip = $ec2_img->deregister($imageId);
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 $ip = $ec2_img->allocate();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -185,8 +182,7 @@ $return = $ec2_img->modifyAttribute('imageId',
                                     null,
                                     null,
                                     'productCode');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -199,8 +195,7 @@ $return = $ec2_img->modifyAttribute('imageId',
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 $return = $ec2_img->resetAttribute('imageId', 'launchPermission');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.images.attribute.describe">
@@ -217,8 +212,7 @@ $return = $ec2_img->resetAttribute('imageId', 'launchPermission');
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 $return = $ec2_img->describeAttribute('imageId', 'launchPermission');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

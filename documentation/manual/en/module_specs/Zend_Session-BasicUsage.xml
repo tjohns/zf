@@ -22,8 +22,7 @@
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
 // $myNamespace corresponds to $_SESSION['myNamespace']
-]]>
-        </programlisting>
+]]></programlisting>
 
         It is possible to use Zend_Session in conjunction with other code that uses <code>$_SESSION</code> directly. To
         avoid problems, however, it is highly recommended that such code only uses parts of <code>$_SESSION</code> that
@@ -58,8 +57,7 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
 
 echo "Page requests this session: ",
     $defaultNamespace->numberOfPageRequests;
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -89,8 +87,7 @@ $authNamespace->user = "myusername";
 // in a web services component
 $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
 $webServiceNamespace->user = "mywebusername";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -106,8 +103,7 @@ $webServiceNamespace->user = "mywebusername";
             <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "myusername";
 $_SESSION['Some_Web_Service']['user'] = "mywebusername";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -134,8 +130,7 @@ $aNamespace =
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -169,8 +164,7 @@ if (!isset($namespace->bar)) {
 }
 
 unset($namespace->foo);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 

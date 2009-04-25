@@ -55,8 +55,7 @@
 $language = new Zend_Translate('gettext',
                                '/path/to/translations',
                                'auto');
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     In this case we will get an notice about a not available language 'fr'.
@@ -68,8 +67,7 @@ $language = new Zend_Translate('gettext',
                                '/path/to/translations',
                                'auto',
                                array('disableNotices' => true));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 

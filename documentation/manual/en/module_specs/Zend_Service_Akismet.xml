@@ -55,8 +55,7 @@ if ($akismet->verifyKey($apiKey) {
 } else {
     echo "Key is not valid\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If called with no arguments, <code>verifyKey()</code> uses
@@ -194,8 +193,7 @@ if ($akismet->isSpam($data)) {
 } else {
     echo "Welcome to our site!";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -234,8 +232,7 @@ $data = array(
     'comment_content'      => "I'm not a spammer, honest!"
 );
 $akismet->submitSpam($data));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -277,8 +274,7 @@ $data = array(
     'comment_content'      => "I'm not a spammer, honest!"
 );
 $akismet->submitHam($data));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

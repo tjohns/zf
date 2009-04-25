@@ -64,8 +64,7 @@
 $index = Zend_Search_Lucene::open('/data/my_index');
 
 $index->find($query);
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             The <classname>Zend_Search_Lucene::find()</classname> method determines the input type automatically and
             uses the query parser to construct an appropriate <classname>Zend_Search_Lucene_Search_Query</classname> object
@@ -112,8 +111,7 @@ $query->addSubquery($userQuery, true /* required */);
 $query->addSubquery($pathQuery, true /* required */);
 
 $hits = $index->find($query);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -122,8 +120,7 @@ $hits = $index->find($query);
             <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
                                                           'iso-8859-5');
-]]>
-            </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -137,8 +134,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -171,8 +167,7 @@ foreach ($hits as $hit) {
     echo $hit->title;
     echo $hit->author;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Stored fields are always returned in UTF-8 encoding.
@@ -204,8 +199,7 @@ foreach ($hits as $hit) {
     // same as getFieldValue()
     echo $document->title;
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
         The fields available from the <classname>Zend_Search_Lucene_Document</classname> object are determined at
         the time of indexing. The document fields are either indexed, or
@@ -233,8 +227,7 @@ foreach ($hits as $hit) {
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
 Zend_Search_Lucene::setResultSetLimit($newLimit);
-]]>
-            </programlisting>
+]]></programlisting>
             The default value of 0 means 'no limit'.
         </para>
 
@@ -266,8 +259,7 @@ foreach ($hits as $hit) {
     echo $hit->id;
     echo $hit->score;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The <classname>Zend_Search_Lucene_Search_Similarity</classname> class is used to calculate the score for each hit.
@@ -289,8 +281,7 @@ foreach ($hits as $hit) {
 $index->find($query [, $sortField [, $sortType [, $sortOrder]]]
                     [, $sortField2 [, $sortType [, $sortOrder]]]
              ...);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -314,16 +305,13 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]]
             Examples:
             <programlisting role="php"><![CDATA[
 $index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]>
-            </programlisting>
+]]></programlisting>
             <programlisting role="php"><![CDATA[
 $index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
-]]>
-            </programlisting>
+]]></programlisting>
             <programlisting role="php"><![CDATA[
 $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -350,8 +338,7 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
  * @return string
  */
 public function highlight($words, $colour = '#66ffff');
-]]>
-            </programlisting>
+]]></programlisting>
             <programlisting role="php"><![CDATA[
 /**
  * Highlight text using specified View helper or callback function.
@@ -364,8 +351,7 @@ public function highlight($words, $colour = '#66ffff');
  * @throws Zend_Search_Lucene_Exception
  */
 public function highlightExtended($words, $callback, $params = array())
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
         <para>
             To customize highlighting behavior use <code>highlightExtended()</code> method with specified callback, which takes
@@ -383,8 +369,7 @@ public function highlightExtended($words, $callback, $params = array())
             <link linkend="zend.view.helpers">View helpers</link> also can be used as callbacks in context of view script:
             <programlisting role="php"><![CDATA[
 $doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
         <para>
             The result of highlighting operation is retrieved by <classname>Zend_Search_Lucene_Document_Html->getHTML()</classname> method.
@@ -416,8 +401,7 @@ $doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
             <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $highlightedHTML = $query->highlightMatches($sourceHTML);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
         <para>
             Optional second parameter is a highlighter object which has to implement
@@ -446,8 +430,7 @@ interface Zend_Search_Lucene_Search_Highlighter_Interface
      */
     public function highlight($words);
 }
-]]>
-            </programlisting>
+]]></programlisting>
             Where <classname>Zend_Search_Lucene_Document_Html</classname> object is an object constructed from the source HTML
             provided to the <classname>Zend_Search_Lucene_Search_Query->highlightMatches()</classname> method.
         </para>

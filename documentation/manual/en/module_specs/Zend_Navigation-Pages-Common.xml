@@ -215,7 +215,6 @@ echo $page->foo;
 if ($page->meaning != 42) {
     // action should be taken
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

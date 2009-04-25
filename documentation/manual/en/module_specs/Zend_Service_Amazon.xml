@@ -64,8 +64,7 @@ $results = $amazon->itemSearch(array('SearchIndex' => 'Books',
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
-]]>
-</programlisting>
+]]></programlisting>
         </example>
         <example id="zend.service.amazon.introduction.example.query_api">
             <title>Search Amazon Using the Query API</title>
@@ -80,8 +79,7 @@ $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
-]]>
-</programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
@@ -96,8 +94,7 @@ foreach ($results as $result) {
             <programlisting><![CDATA[
 // Connect to Amazon in Japan
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-]]>
-</programlisting>
+]]></programlisting>
         </example>
         <note>
             <title>Country codes</title>
@@ -118,8 +115,7 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
             <programlisting><![CDATA[
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $item = $amazon->itemLookup('B0000A432X');
-]]>
-</programlisting>
+]]></programlisting>
         </example>
         <para>
             The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
@@ -150,8 +146,7 @@ $results = $amazon->itemSearch(array('SearchIndex' => 'Books',
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
-]]>
-</programlisting>
+]]></programlisting>
         </example>
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
             <title>Using the <code>ResponseGroup</code> Option</title>
@@ -170,8 +165,7 @@ $results = $amazon->itemSearch(array(
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             The <code>itemSearch()</code> method accepts a single array parameter for handling search
@@ -213,8 +207,7 @@ $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
 }
-]]>
-</programlisting>
+]]></programlisting>
                 <para>
                     This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
                 </para>

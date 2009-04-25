@@ -107,8 +107,7 @@ class Searcher {
 }
 
 Searcher::initIndex();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
 
@@ -153,8 +152,7 @@ Searcher::initIndex();
 ...
 Searcher::commit();
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

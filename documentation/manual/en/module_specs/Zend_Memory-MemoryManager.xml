@@ -30,8 +30,7 @@ $backendOptions = array(
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <classname>Zend_Memory</classname> uses <link linkend="zend.cache.backends"><classname>Zend_Cache backends</classname></link>
@@ -44,8 +43,7 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -79,8 +77,7 @@ $memoryManager = Zend_Memory::factory('None');
                 the <classname>Zend_Memory_Manager::create([$data])</classname> method:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </para>
 
@@ -101,8 +98,7 @@ $memObject = $memoryManager->create($data);
                 the <classname>Zend_Memory_Manager::createLocked([$data])</classname> method:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -145,8 +141,7 @@ function foo()
     // but $memObject3 object is still referenced by $memList
     // and is not destroyed
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -183,8 +178,7 @@ function foo()
                 <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
 $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -217,8 +211,7 @@ $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
                 <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
 $memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>

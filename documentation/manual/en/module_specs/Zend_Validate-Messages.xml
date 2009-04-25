@@ -505,8 +505,7 @@
     <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Alnum();
 $messages  = $validator->getMessageTemplates();
-]]>
-    </programlisting>
+]]></programlisting>
 
 </sect1>
 <!--

@@ -53,8 +53,7 @@ foreach ($prototypes as $prototype) {
 // Namespaces may be set at instantiation time (second argument), or using
 // setNamespace()
 $reflection->getNamespace();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <code>reflectFunction()</code> returns a

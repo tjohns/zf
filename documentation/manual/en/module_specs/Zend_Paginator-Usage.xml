@@ -88,8 +88,7 @@
         <para>
             <programlisting role="php"><![CDATA[
 $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -101,8 +100,7 @@ $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
         <para>
             <programlisting role="php"><![CDATA[
 $paginator = Zend_Paginator::factory($array);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <note>
@@ -122,8 +120,7 @@ $paginator = Zend_Paginator::factory($array);
         <para>
             <programlisting role="php"><![CDATA[
 $paginator->setCurrentPageNumber($page);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -146,8 +143,7 @@ routes.example.defaults.action = view
 routes.example.defaults.page = 1
 routes.example.reqs.articleName = \w+
 routes.example.reqs.page = \d+
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -158,8 +154,7 @@ routes.example.reqs.page = \d+
         <para>
             <programlisting role="php"><![CDATA[
 $paginator->setCurrentPageNumber($this->_getParam('page'));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -177,8 +172,7 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
         <para>
             <programlisting role="php"><![CDATA[
 $this->view->paginator = $paginator;
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -215,8 +209,7 @@ $this->view->paginator = $paginator;
                              'my_pagination_control.phtml'); ?>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -322,8 +315,7 @@ Zend_View_Helper_PaginationControl::setDefaultViewPartial(
     'my_pagination_control.phtml'
 );
 $paginator->setView($view);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -334,8 +326,7 @@ $paginator->setView($view);
         <para>
             <programlisting role="php"><![CDATA[
 <?php echo $this->paginator; ?>
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <note>
@@ -348,8 +339,7 @@ $paginator->setView($view);
             <para>
                 <programlisting role="php"><![CDATA[
 $smarty->assign('pages', $paginator->getPages());
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -359,8 +349,7 @@ $smarty->assign('pages', $paginator->getPages());
             <para>
                 <programlisting role="php"><![CDATA[
 {$pages.pageCount}
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
         </note>
 
@@ -412,8 +401,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <?php endif; ?>
 </div>
 <?php endif; ?>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -467,8 +455,7 @@ of <?php echo $this->totalItemCount; ?>
 
 </div>
 <?php endif; ?>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -495,8 +482,7 @@ $('paginationControl').observe('change', function() {
     window.location = this.options[this.selectedIndex].value;
 })
 </script>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
         </sect3>
 

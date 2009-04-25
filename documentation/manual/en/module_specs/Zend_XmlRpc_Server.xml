@@ -24,8 +24,7 @@
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
 echo $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
@@ -102,8 +101,7 @@ echo $server->handle();
 function myFunc($val1, $val2, $val3)
 {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             PhpDocumentor does no validation of the types specified for params
@@ -133,8 +131,7 @@ function myFunc($val1, $val2, $val3)
 function myFunc($val1, $val2, $val3)
 {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             One note, however: allowing multiple signatures can lead to
@@ -178,8 +175,7 @@ $server->setClass('My_Service_Class', 'myservice');
 
 // Function 'somefunc' will be accessible as funcs.somefunc
 $server->addFunction('somefunc', 'funcs');
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -238,8 +234,7 @@ $server->addFunction('somefunc', 'funcs');
 
         <programlisting role="php"><![CDATA[
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If you utilize an exception class that your other project exceptions
@@ -292,8 +287,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
 }
 
 echo $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             The above example attempts to retrieve a server definition from
             xmlrpc.cache in the same directory as the script. If unsuccessful,
@@ -333,8 +327,7 @@ function md5Value($value)
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -351,8 +344,7 @@ require_once 'Services/Comb.php';
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -373,8 +365,7 @@ $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -399,8 +390,7 @@ $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -430,8 +420,7 @@ $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 $request = new Services_Request();
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -465,8 +454,7 @@ $request = new Services_Request();
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -503,8 +491,7 @@ $request = new Services_Request();
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

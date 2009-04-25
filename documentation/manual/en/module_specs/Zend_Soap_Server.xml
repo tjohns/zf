@@ -192,8 +192,7 @@ $server->setClass('MyClass');
 $server->setObject(new MyClass());
 ...
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
             <note>
                 <title>Important!</title>
                 <para>
@@ -234,8 +233,7 @@ $server->addFunction('function1');
 $server->addFunction('function2');
 ...
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -270,8 +268,7 @@ $server->handle($request);
 // Set request using setRequest() method
 $server->setRequest();
 $server->handle();
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -313,8 +310,7 @@ $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
 $request = $server->getLastRequest();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </para>
         </sect3>
@@ -342,8 +338,7 @@ $server->setReturnResponse(true);
 ...
 $response = $server->handle();
 ...
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -355,8 +350,7 @@ $server = new Zend_Soap_Server(...);
 $server->handle();
 $response = $server->getLastResponse();
 ...
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
         </sect3>
     </sect2>

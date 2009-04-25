@@ -43,8 +43,7 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 echo $client->call('test.sayHello');
 
 // hello
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -73,8 +72,7 @@ $arg2 = 'foo';
 $result = $client->call('test.sayHello', array($arg1, $arg2));
 
 // $result is a native PHP type
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -190,8 +188,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <programlisting role="php"><![CDATA[
 $client->setSkipSystemLookup(true);
 $result = $client->call('foo.bar', array(array()));
-]]>
-                </programlisting>
+]]></programlisting>
             </note>
         </sect3>
 
@@ -336,8 +333,7 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 $server = $client->getProxy();           // Proxy the default namespace
 
 $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) returns "hello"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -356,8 +352,7 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 $test  = $client->getProxy('test');     // Proxy the "test" namespace
 
 $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -404,8 +399,7 @@ try {
     // $e->getMessage() returns "Not Found"
 
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -451,8 +445,7 @@ try {
     // $e->getMessage() returns "Unknown method"
 
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -516,8 +509,7 @@ $client->doRequest($request);
 
 // $server->getLastRequest() returns instanceof Zend_XmlRpc_Request
 // $server->getLastResponse() returns instanceof Zend_XmlRpc_Response
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

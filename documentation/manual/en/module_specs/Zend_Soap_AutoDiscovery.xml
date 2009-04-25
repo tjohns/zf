@@ -83,8 +83,7 @@ class My_SoapServer_Class {
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -121,8 +120,7 @@ if(isset($_GET['wsdl'])) {
     $soap = new Zend_Soap_Server("http://example.com/soap.php?wsdl");
     $soap->setClass('HelloWorldService');
     $soap->handle();
-}]]>
-                </programlisting>
+}]]></programlisting>
             </para>
         </note>
     </sect2>
@@ -138,8 +136,7 @@ if(isset($_GET['wsdl'])) {
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -206,8 +203,7 @@ $autodiscover->addFunction('function2');
 $autodiscover->addFunction('function3');
 ...
 $autodiscover->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -348,8 +344,7 @@ $autodiscover->setBindingStyle(
 ...
 $autodiscover->addFunction('myfunc1');
 $autodiscover->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

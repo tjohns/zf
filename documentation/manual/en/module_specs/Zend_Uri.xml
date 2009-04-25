@@ -42,8 +42,7 @@
 $uri = Zend_Uri::factory('http');
 
 // $uri instanceof Zend_Uri_Http
-]]>
-      </programlisting>
+]]></programlisting>
     </example>
 
     <para>
@@ -77,8 +76,7 @@ $uri = Zend_Uri::factory('http');
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 // $uri instanceof Zend_Uri_Http
-]]>
-      </programlisting>
+]]></programlisting>
     </example>
 
     <para>
@@ -105,8 +103,7 @@ $uri = Zend_Uri::factory('http://www.zend.com');
 $valid = Zend_Uri::check('http://uri.in.question');
 
 // $valid is TRUE for a valid URI, or FALSE otherwise.
-]]>
-      </programlisting>
+]]></programlisting>
     </example>
 
     <para>
@@ -144,8 +141,7 @@ $valid = Zend_Uri::check('http://example.com/?q=this|that');
 
 // Reset the 'allow_unwise' value to the default FALSE
 Zend_Uri::setConfig(array('allow_unwise' => false));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -181,8 +177,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $scheme = $uri->getScheme();  // "http"
-]]>
-        </programlisting>
+]]></programlisting>
       </example>
 
       <para>
@@ -202,8 +197,7 @@ $scheme = $uri->getScheme();  // "http"
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 echo $uri->getUri();  // "http://www.zend.com"
-]]>
-        </programlisting>
+]]></programlisting>
       </example>
 
       <para>
@@ -231,8 +225,7 @@ echo $uri->getUri();  // "http://www.zend.com"
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $isValid = $uri->valid();  // TRUE
-]]>
-        </programlisting>
+]]></programlisting>
       </example>
 
       <para>

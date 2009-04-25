@@ -25,8 +25,7 @@ if ($validatorChain->isValid($username)) {
         echo "$message\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         Validators are run in the order they were added to <classname>Zend_Validate</classname>. In the above example,
         the username is first checked to ensure that its length is between 6 and 12 characters, and then it is
@@ -48,8 +47,7 @@ if ($validatorChain->isValid($username)) {
         <programlisting role="php"><![CDATA[
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
         ->addValidator(new Zend_Validate_Alnum());
-]]>
-        </programlisting>
+]]></programlisting>
 
     </para>
 

@@ -26,8 +26,7 @@
         <programlisting role="php"><![CDATA[
 // returns -1, 0 or 1
 $cmp = Zend_Version::compareVersion('2.0.0');
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

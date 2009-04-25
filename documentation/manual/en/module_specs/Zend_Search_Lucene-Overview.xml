@@ -93,8 +93,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
 // Field is tokenized and indexed, but is not stored in the index.
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   'My document content'));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Each of these methods (excluding the <classname>Zend_Search_Lucene_Field::Binary()</classname> method) has an optional
@@ -112,8 +111,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('title',
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   $contents,
                                                   'utf-8'));
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -122,8 +120,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -254,8 +251,7 @@ $index->addDocument($doc);
 ...
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -282,7 +278,7 @@ $index->addDocument($doc);
             be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
         </para>
 <!--    <para>
-            The third parameter of <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods optionally specifies source HTML 
+            The third parameter of <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods optionally specifies source HTML
             document encoding. If it's omitted, then encoding is automatically recognized from content type charset meta tag.
         </para>
         <para>
@@ -307,8 +303,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnIndexed('updated',
 $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
                                               'Document annotation text'));
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -319,8 +314,7 @@ $index->addDocument($doc);
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
 $headerLinksArray = $doc->getHeaderLinks();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -340,8 +334,7 @@ $headerLinksArray = $doc->getHeaderLinks();
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -417,8 +410,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text(
     'Document annotation text')
 );
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
     </sect2>
@@ -430,8 +422,7 @@ $index->addDocument($doc);
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -505,8 +496,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text(
     'annotation',
     'Document annotation text'));
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -517,8 +507,7 @@ $index->addDocument($doc);
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -592,8 +581,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text(
     'annotation',
     'Document annotation text'));
 $index->addDocument($doc);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

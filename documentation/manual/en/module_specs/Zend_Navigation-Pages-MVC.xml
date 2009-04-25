@@ -125,8 +125,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'module'     => 'blog',
     'params'     => array('id' => 1337)
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.mvc.example.isActive">
@@ -188,8 +187,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
 
 // returns false, because page requires the id param to be set in the request
 $page->isActive(); // returns false
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.mvc.example.routes">
@@ -244,7 +242,6 @@ $page = new Zend_Navigation_Page_Mvc(array(
 
 // returns: /a/42
 $page->getHref();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

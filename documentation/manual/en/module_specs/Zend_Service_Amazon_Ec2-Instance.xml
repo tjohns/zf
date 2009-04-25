@@ -308,8 +308,7 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320',
                                    'keyName' => 'myKey',
                                    'securityGroup' => array('web',
                                                             'default')));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -331,8 +330,7 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320',
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->reboot('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -350,8 +348,7 @@ $return = $ec2_instance->reboot('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->terminate('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <title>Terminated Instances</title>
@@ -387,8 +384,7 @@ $return = $ec2_instance->terminate('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->describe('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -413,8 +409,7 @@ $return = $ec2_instance->describe('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->describeByImageId('imageId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
             <note>
@@ -446,8 +441,7 @@ $return = $ec2_instance->describeByImageId('imageId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->consoleOutput('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -467,8 +461,7 @@ $return = $ec2_instance->consoleOutput('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->terminate('productCode', 'instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>

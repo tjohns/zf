@@ -56,8 +56,7 @@
             <programlisting role="php"><![CDATA[
 // adding scripts
 $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </note>
 
@@ -101,8 +100,7 @@ $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
         <programlisting role="php"><![CDATA[
 // adding styles
 $this->headStyle()->appendStyle($styles);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Order is very important with CSS; you may need to ensure that
@@ -122,8 +120,7 @@ $this->headStyle()->appendStyle($finalStyles);
 
 // place at beginning
 $this->headStyle()->prependStyle($firstStyles);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When you're finally ready to output all style declarations in your
@@ -132,8 +129,7 @@ $this->headStyle()->prependStyle($firstStyles);
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->headStyle() ?>
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
@@ -153,8 +149,7 @@ body {
     background-color: <?php echo $this->bgColor ?>;
 }
 <?php $this->headStyle()->captureEnd() ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The following assumptions are made:

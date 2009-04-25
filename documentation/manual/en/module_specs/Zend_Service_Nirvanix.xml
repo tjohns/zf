@@ -132,8 +132,7 @@ $imfs->putContents('/foo.txt', 'contents to store');
 echo $imfs->getContents('/foo.txt');
 
 $imfs->unlink('/foo.txt');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The first step to using <classname>Zend_Service_Nirvanix</classname> is always
@@ -204,8 +203,7 @@ $imfs = $nirvanix->getService('IMFS');
 
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
                                   'newFileName' => 'bar.txt'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Above, a proxy for the <code>IMFS</code> namespace is created. A method,
@@ -266,8 +264,7 @@ Zend_Service_Nirvanix_Response Object
             [BytesUploaded] => 14
         )
 )
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You can access any property or method of the decorated <code>SimpleXMLElement</code>.
@@ -301,8 +298,7 @@ Zend_Service_Nirvanix_Response Object
 <Response>
    <ResponseCode>0</ResponseCode>
 </Response>
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             When the <code>ResponseCode</code> is zero such as in the example
@@ -333,8 +329,7 @@ try {
   echo $e->getMessage() . "\n";
   echo $e->getCode();
 }
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             In the example above, <code>unlink()</code> is a convenience method that wraps the

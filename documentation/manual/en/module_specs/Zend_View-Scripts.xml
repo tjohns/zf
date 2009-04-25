@@ -50,8 +50,7 @@
     <p>There are no books to display.</p>
 
 <?php endif;?>
-]]>
-    </programlisting>
+]]></programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
 
@@ -77,8 +76,7 @@ echo $this->variable;
 
 // good view-script practice:
 echo $this->escape($this->variable);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             By default, the escape() method uses the PHP htmlspecialchars()
@@ -104,8 +102,7 @@ $view->setEscape(array($obj, 'methodName'));
 
 // and then render your view
 echo $view->render(...);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The callback function or method should take the value to be
@@ -157,8 +154,7 @@ if ($this->books) {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 These would be the related template files:
@@ -182,8 +178,7 @@ if ($this->books) {
 
 <!-- nobooks.tpl -->
 <p>There are no books to display.</p>
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -245,8 +240,7 @@ public function clearVars();
  * Render the template named $name
  */
 public function render($name);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Using this interface, it becomes relatively easy to wrap a
@@ -425,8 +419,7 @@ class Zend_View_Smarty implements Zend_View_Interface
         return $this->_smarty->fetch($name);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 In this example, you would instantiate the
@@ -469,7 +462,6 @@ class FooController extends Zend_Controller_Action
                      ->setViewScriptPathNoControllerSpec(':action.:suffix')
                      ->setViewSuffix('tpl');
     }
-}
 ]]></programlisting>
         </sect3>
     </sect2>

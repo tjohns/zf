@@ -67,8 +67,7 @@ if ($zips->count == 0) {
 // Detailed status information
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
 $status = $response->serviceStatus;
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -129,8 +128,7 @@ if ($result->addressErrorNumber != 0) {
     // valid address?
     $valid = ($result->valid == 'VALID');
 }
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -176,8 +174,7 @@ echo $rateInfo->GST;              // or just the GST (Goods & Services Tax)
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // show all properties
 echo $rateInfo->state_sales_tax;  // or just the state sales tax
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 </sect1>

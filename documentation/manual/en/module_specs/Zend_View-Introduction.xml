@@ -62,8 +62,7 @@ $view->books = $data;
 
 // and render a view script called "booklist.php"
 echo $view->render('booklist.php');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -106,8 +105,7 @@ echo $view->render('booklist.php');
     <p>There are no books to display.</p>
 
 <?php endif;?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Note how we use the "escape()" method to apply output
@@ -137,8 +135,7 @@ base/path/
     helpers/
     filters/
     scripts/
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     This may be set via <code>setBasePath()</code>,
@@ -219,7 +216,6 @@ base/path/
 
                 <programlisting role="apache"><![CDATA[
 php_value "short_open_tag" "on"
-]]>
 </programlisting>
 
                 <para>
@@ -237,8 +233,7 @@ php_value "short_open_tag" "on"
 
         <programlisting role="php"><![CDATA[
 $view->setUseStreamWrapper(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
                 <para>
                     This registers <classname>Zend_View_Stream</classname> as a stream

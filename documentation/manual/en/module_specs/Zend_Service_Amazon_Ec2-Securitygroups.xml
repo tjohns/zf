@@ -40,8 +40,7 @@
 $ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_sg->create('mygroup', 'my group description');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.describe">
@@ -66,8 +65,7 @@ $return = $ec2_sg->create('mygroup', 'my group description');
 $ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_ebs->describe('mygroup');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.delete">
@@ -88,8 +86,7 @@ $return = $ec2_ebs->describe('mygroup');
 $ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_sg->delete('mygroup');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -126,8 +123,7 @@ $return = $ec2_ebs->authorizeIp('mygroup',
                                 'fromPort',
                                 'toPort',
                                 'ipRange');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.authorize.group">
@@ -148,8 +144,7 @@ $return = $ec2_ebs->authorizeIp('mygroup',
 $ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_sg->authorizeGroup('mygroup', 'securityGruopName', 'ownerId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -187,8 +182,7 @@ $return = $ec2_ebs->revokeIp('mygroup',
                              'fromPort',
                              'toPort',
                              'ipRange');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.revoke.group">
@@ -211,8 +205,7 @@ $return = $ec2_ebs->revokeIp('mygroup',
 $ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_sg->revokeGroup('mygroup', 'securityGruopName', 'ownerId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

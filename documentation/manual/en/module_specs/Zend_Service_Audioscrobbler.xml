@@ -182,8 +182,7 @@ $profileInfo = $as->userGetProfileInformation();
 // Display some of it
 print "Information for $profileInfo->realname "
     . "can be found at $profileInfo->url";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -215,8 +214,7 @@ foreach ($previousWeeklyArtists as $artist) {
     // Display the artists' names with links to their profiles
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -277,8 +275,7 @@ foreach ($relatedArtists as $artist) {
     // Display the related artists
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 

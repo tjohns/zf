@@ -168,8 +168,7 @@ echo $this->formCheckbox('foo',
                          null,
                          array('checked' => false),
                          array('bar', 'baz');
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     In all cases, the markup prepends a hidden element with the
@@ -328,8 +327,7 @@ echo $this->formCheckbox('foo',
 <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The resulting output from the view script will look something like this:
@@ -352,8 +350,7 @@ echo $this->formCheckbox('foo',
         <input type="checkbox" name="opt_in" value="yes" checked="checked" />
     </label></p>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
         <xi:include href="Zend_View-Helpers-Cycle.xml" />
@@ -392,8 +389,7 @@ $view = new Zend_View();
 
 // Set path to /path/to/more/helpers, with prefix 'My_View_Helper'
 $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
-]]>
-        </programlisting>
+]]></programlisting>
 
 
         <para>
@@ -419,8 +415,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // "My_View_Helper_HelperName", and finally for
 // "Zend/View/Helper/HelperName.php" using class name
 // "Zend_View_Helper_HelperName".
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -499,8 +494,7 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
         return htmlspecialchars($output);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Then in a view script, you can call the <code>SpecialPurpose</code>
@@ -514,8 +508,7 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 echo $this->specialPurpose();
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The output would look something like this:
@@ -524,8 +517,7 @@ echo $this->specialPurpose();
 I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).
 I have seen 'The Jerk' 3 time(s).
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Sometimes you will need access to the calling <classname>Zend_View</classname>
@@ -550,8 +542,7 @@ class My_View_Helper_ScriptPath
         return $this->view->getScriptPath($script);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If your helper class has a <code>setView()</code> method, it will be

@@ -132,8 +132,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     // definition of methods would follow...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This allows us to create a bootstrap callback like the following:
@@ -158,8 +157,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Once we have that in place, we can write our tests. However, what
@@ -195,8 +193,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Now let's write tests:
@@ -280,8 +277,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQuery('form .errors');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Notice that these are terse, and, for the most part, don't look for

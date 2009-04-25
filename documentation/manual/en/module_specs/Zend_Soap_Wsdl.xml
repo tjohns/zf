@@ -335,8 +335,7 @@ class MyClass {
 }
 ...
 $soapMyClassType = $wsdl->getType('MyClass');
-]]>
-            </programlisting>
+]]></programlisting>
             </para>
         </sect3>
 
@@ -492,8 +491,7 @@ foreach($result->services AS $service) {
 foreach($result->types AS $type) {
     // do stuff
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>All elements implement the interface <classname>Zend_Soap_Wsdl_Element_Interface</classname>
         that proxies a <code>getName()</code> and a <code>getDocumentation()</code> function with the

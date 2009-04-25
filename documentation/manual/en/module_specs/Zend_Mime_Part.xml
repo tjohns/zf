@@ -35,8 +35,7 @@ public $charset;
 public $boundary;
 public $location;
 public $language;
-]]>
-    </programlisting>
+]]></programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">

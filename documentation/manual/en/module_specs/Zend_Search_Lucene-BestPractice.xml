@@ -47,8 +47,7 @@ foreach ($hits as $hit) {
     // Another way to get 'title' document field
     $title = $hit->getDocument()->title;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -80,8 +79,7 @@ foreach ($hits as $hit) {
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->optimize();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -250,8 +248,7 @@ $index = Zend_Search_Lucene::open($indexPath);
 ...
 
 unset($index);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -260,8 +257,7 @@ unset($index);
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();
-]]>
-            </programlisting>
+]]></programlisting>
             This possibility is also described in the "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
             section.
         </para>
@@ -312,8 +308,7 @@ foreach ($docIds as $id) {
     $contents = $doc->contents;
     ...
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -389,8 +384,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('title',
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   $contents,
                                                   'utf-8'));
-]]>
-            </programlisting>
+]]></programlisting>
             This is the best way to avoid ambiguity in the encoding used.
         </para>
 
@@ -406,8 +400,7 @@ setlocale(LC_ALL, 'de_DE.iso-8859-1');
 
 setlocale(LC_ALL, 'ru_RU.UTF-8');
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -425,8 +418,7 @@ $query =
     Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -435,8 +427,7 @@ $hits = $index->find($query);
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
             The empty string implies 'current locale'.
         </para>
 

@@ -35,8 +35,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
                                   'SHAREDSECRET',
                                   'USERNAME',
                                   'PASSWORD');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -188,8 +187,7 @@ class Zend_Service_SlideShare_SlideShow {
         return $this->_numViews;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
 
@@ -230,8 +228,7 @@ $slideshow = $ss->getSlideShow(123456);
 
 print "Slide Show Title: {$slideshow->getTitle()}<br/>\n";
 print "Number of views: {$slideshow->getNumViews()}<br/>\n";
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -306,8 +303,7 @@ $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 foreach($ss_user as $slideshow) {
    print "Slide Show Title: {$slideshow->getTitle}<br/>\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -342,8 +338,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -369,8 +364,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
                                   'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

@@ -37,8 +37,7 @@
 
         <programlisting role="php"><![CDATA[
 $recaptcha = new Zend_Service_ReCaptcha($pubKey, $privKey);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To render the reCAPTCHA, simply call the <code>getHTML()</code>
@@ -47,8 +46,7 @@ $recaptcha = new Zend_Service_ReCaptcha($pubKey, $privKey);
 
         <programlisting role="php"><![CDATA[
 echo $recaptcha->getHTML();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When the form is submitted, you should receive two fields,
@@ -61,8 +59,7 @@ $result = $recaptcha->verify(
     $_POST['recaptcha_challenge_field'],
     $_POST['recaptcha_response_field']
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Once you have the result, test against it to see if it is valid. The
@@ -74,8 +71,7 @@ $result = $recaptcha->verify(
 if (!$result->isValid()) {
     // Failed validation
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Even simpler is to use <link

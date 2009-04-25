@@ -135,8 +135,7 @@ $client = new Zend_Soap_Client("some.wsdl",
 // Compress requests using deflate compression
 $client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
-]]>
-                        </programlisting>
+]]></programlisting>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -204,8 +203,7 @@ $result1 = $client->method1(10);
 
 // $result2 is a float
 $result2 = $client->method2(22, 'some string');
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

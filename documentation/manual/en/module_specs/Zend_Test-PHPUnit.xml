@@ -93,8 +93,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'User: foobar');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This example could be written somewhat simpler -- not all the

@@ -25,8 +25,7 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             However, this can be tedious when you have already collected the
@@ -59,8 +58,7 @@ $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
 $view->assign((array) $obj);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternatively, you can use the assign method to assign
@@ -73,8 +71,7 @@ $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
 $view->assign('c', "Sea");
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -96,8 +93,7 @@ $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
 echo $view->render('someView.php');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -122,8 +118,7 @@ echo $view->render('someView.php');
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->setScriptPath('/path/to/app/views');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Now when you call $view->render('someView.php'), it will look
@@ -148,8 +143,7 @@ $view->addScriptPath('/path/to/custom/');
 // look first for "/path/to/custom/booklist.php", then for
 // "/path/to/app/views/booklist.php", and finally in the current
 // directory for "booklist.php".
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>Never use user input to set script paths</title>

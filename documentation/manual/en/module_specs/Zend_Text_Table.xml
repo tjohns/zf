@@ -148,8 +148,7 @@ $row->appendColumn(new Zend_Text_Table_Column('Framework'));
 $table->appendRow($row);
 
 echo $table;
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This will result in the following output:
         </para>
@@ -157,8 +156,7 @@ echo $table;
 ┌──────────┬────────────────────┐
 │Zend      │Framework           │
 └──────────┴────────────────────┘
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

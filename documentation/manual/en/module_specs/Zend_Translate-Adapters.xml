@@ -335,8 +335,7 @@ try {
     // File not found, no adapter class...
     // General failure
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -368,8 +367,7 @@ Zend_Translate::setCache($cache);
 $translate = new Zend_Translate('gettext',
                                 '/path/to/translate.mo',
                                 'en');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
