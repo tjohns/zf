@@ -2184,6 +2184,13 @@ if (!is_null($version)) {
                         upper case.
                     </para>
                 </listitem>
+
+                <listitem>
+                    <para>Adapter name is ZendX_Db_Adapter_Firebird.</para>
+                    <para>Remember to use the param adapterNamespace with value ZendX_Db_Adapter.</para>
+                    <para>We recommend to update the gds32.dll (or linux equivalent) bundled with php, to the same version of the server. For Firebird the equivalent gds32.dll is fbclient.dll.</para>
+                    <para>By default all identifiers (tables names, fields) are returned in upper case.</para>
+                </listitem>
             </itemizedlist>
         </sect3>
 
