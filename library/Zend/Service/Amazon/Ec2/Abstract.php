@@ -116,7 +116,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
      */
     protected function addRequiredParameters(array $parameters)
     {
-        $parameters['AWSAccessKeyId']   = $this->getAccessKey();
+        $parameters['AWSAccessKeyId']   = $this->_getAccessKey();
         $parameters['SignatureVersion'] = self::EC2_SIGNATURE_VERSION;
         $parameters['Timestamp']        = gmdate('c');
         $parameters['Version']          = self::EC2_API_VERSION;
@@ -157,7 +157,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
         }
 
         require_once 'Zend/Crypt/Hmac.php';
-        $hmac = Zend_Crypt_Hmac::compute($this->getSecretKey(), 'SHA1', $data, Zend_Crypt_Hmac::BINARY);
+        $hmac = Zend_Crypt_Hmac::compute($this->_getSecretKey(), 'SHA1', $data, Zend_Crypt_Hmac::BINARY);
 
         return base64_encode($hmac);
     }

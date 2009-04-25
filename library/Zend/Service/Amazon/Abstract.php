@@ -37,22 +37,22 @@ abstract class Zend_Service_Amazon_Abstract extends Zend_Service_Abstract
     /**
      * @var string Amazon Access Key
      */
-    protected static $defaultAccessKey = null;
+    protected static $_defaultAccessKey = null;
 
     /**
      * @var string Amazon Secret Key
      */
-    protected static $defaultSecretKey = null;
+    protected static $_defaultSecretKey = null;
 
     /**
      * @var string Amazon Secret Key
      */
-    protected $secretKey;
+    protected $_secretKey;
 
     /**
      * @var string Amazon Access Key
      */
-    protected $accessKey;
+    protected $_accessKey;
 
     /**
      * Set the keys to use when accessing SQS.
@@ -63,8 +63,8 @@ abstract class Zend_Service_Amazon_Abstract extends Zend_Service_Abstract
      */
     public static function setKeys($accessKey, $secretKey)
     {
-        self::$defaultAccessKey = $accessKey;
-        self::$defaultSecretKey = $secretKey;
+        self::$_defaultAccessKey = $accessKey;
+        self::$_defaultSecretKey = $secretKey;
     }
 
     /**
@@ -77,17 +77,17 @@ abstract class Zend_Service_Amazon_Abstract extends Zend_Service_Abstract
     public function __construct($accessKey=null, $secretKey=null)
     {
         if(!$accessKey) {
-            $accessKey = self::$defaultAccessKey;
+            $accessKey = self::$_defaultAccessKey;
         }
         if(!$secretKey) {
-            $secretKey = self::$defaultSecretKey;
+            $secretKey = self::$_defaultSecretKey;
         }
         if(!$accessKey || !$secretKey) {
             require_once 'Zend/Service/Amazon/Exception.php';
             throw new Zend_Service_Amazon_Exception("AWS keys were not supplied");
         }
-        $this->accessKey = $accessKey;
-        $this->secretKey = $secretKey;
+        $this->_accessKey = $accessKey;
+        $this->_secretKey = $secretKey;
     }
 
     /**
@@ -95,9 +95,9 @@ abstract class Zend_Service_Amazon_Abstract extends Zend_Service_Abstract
      *
      * @return string
      */
-    protected function getAccessKey()
+    protected function _getAccessKey()
     {
-        return $this->accessKey;
+        return $this->_accessKey;
     }
 
     /**
@@ -105,8 +105,8 @@ abstract class Zend_Service_Amazon_Abstract extends Zend_Service_Abstract
      *
      * @return string
      */
-    protected function getSecretKey()
+    protected function _getSecretKey()
     {
-        return $this->secretKey;
+        return $this->_secretKey;
     }
 }
