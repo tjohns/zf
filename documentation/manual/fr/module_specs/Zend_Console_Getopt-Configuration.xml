@@ -2,11 +2,9 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.configuration">
-
     <title>Configurer <classname>Zend_Console_Getopt</classname></title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
-
         <title>Ajouter des règles d'options</title>
 
         <para>
@@ -21,7 +19,6 @@
         </para>
 
         <example>
-
             <title>Utilisation d'<code>addRules()</code></title>
 
             <programlisting role="php"><![CDATA[
@@ -32,7 +29,6 @@ $opts->addRules(
   )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -41,11 +37,9 @@ $opts->addRules(
             constructeur. Notez que vous pouvez mélanger des options de syntaxe courte et de
             syntaxe longue dans la même instance de <classname>Zend_Console_Getopt</classname>.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addhelp">
-
         <title>Ajouter des messages d'aide</title>
 
         <para>
@@ -57,7 +51,6 @@ $opts->addRules(
         </para>
 
         <example>
-
             <title>Utiliser <code>setHelp()</code></title>
 
             <programlisting role="php"><![CDATA[
@@ -70,7 +63,6 @@ $opts->setHelp(
     )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -82,11 +74,9 @@ $opts->setHelp(
             La méthode <code>setHelp()</code> est la seule manière de définir des messages
             d'aide si vous déclarez les options en utilisant la syntaxe courte.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addaliases">
-
         <title>Ajouter des alias aux options</title>
 
         <para>
@@ -103,7 +93,6 @@ $opts->setHelp(
         </para>
 
         <example>
-
             <title>Utiliser <code>setAliases()</code></title>
 
             <programlisting role="php"><![CDATA[
@@ -116,7 +105,6 @@ $opts->setAliases(
     )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -130,11 +118,9 @@ $opts->setAliases(
             La méthode <code>setAliases()</code> est la seule manière de définir des alias si
             vous déclarez les options en utilisant la syntaxe courte.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addargs">
-
         <title>Ajouter des listes d'arguments</title>
 
         <para>
@@ -150,7 +136,6 @@ $opts->setAliases(
         </para>
 
         <example>
-
             <title>
                 Utilisation de <code>addArguments()</code> et <code>setArguments()</code>
             </title>
@@ -165,13 +150,10 @@ $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 // Remplace les arguments existants par un nouveau tableau
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 ]]></programlisting>
-
         </example>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
-
         <title>Ajouter une configuration</title>
 
         <para>
@@ -247,14 +229,12 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         </para>
 
         <example>
-
             <title>Utilisation de <code>setOption()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -266,7 +246,6 @@ $opts->setOption('ignoreCase', true);
         </para>
 
         <example>
-
             <title>Utilisation de <code>setOptions()</code></title>
 
             <programlisting role="php"><![CDATA[
@@ -278,9 +257,6 @@ $opts->setOptions(
     )
 );
 ]]></programlisting>
-
         </example>
-
     </sect2>
-
 </sect1>

@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.theory">
-
     <title>Aspect théorique</title>
 
     <para>
@@ -40,7 +39,6 @@
     </note>
 
     <sect2 id="zend.cache.factory">
-
         <title>La méthode de fabrique de Zend_Cache</title>
 
         <para>
@@ -83,11 +81,9 @@ $cache = Zend_Cache::factory($frontendName,
                 fonctionnera pas comme prévu.
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.cache.tags">
-
         <title>Baliser les enregistrements</title>
 
         <para>
@@ -112,11 +108,9 @@ $cache->save($grande_donnees,
                 particulier).
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.cache.clean">
-
         <title>Nettoyer le cache</title>
 
         <para>
@@ -178,7 +172,5 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG,
             sont à combiner avec un tableau de balises pour réaliser les opérations de
             nettoyage.
         </para>
-
     </sect2>
-
 </sect1>

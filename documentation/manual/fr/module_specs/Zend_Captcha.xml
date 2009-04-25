@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.captcha.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -22,5 +21,4 @@
         backends qui peuvent être utilisés de manière autonome ou en conjonction avec
         <classname>Zend_Form</classname>.
     </para>
-
 </sect1>

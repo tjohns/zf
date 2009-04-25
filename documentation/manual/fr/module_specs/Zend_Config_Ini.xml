@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.ini">
-
     <title>Zend_Config_Ini</title>
 
     <para>
@@ -46,7 +45,6 @@ $options = new Zend_Config_Ini('/chemin/vers/config.ini',
     </note>
 
     <example id="zend.config.adapters.ini.example.using">
-
         <title>Utiliser Zend_Config_Ini</title>
 
         <para>
@@ -92,12 +90,10 @@ $config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 echo $config->database->params->host;   // affiche "dev.example.com"
 echo $config->database->params->dbname; // affiche "dbname"
 ]]></programlisting>
-
     </example>
 
     <note>
         <table id="zend.config.adapters.ini.table">
-
             <title>Paramètres du constructeur de Zend_Config_Ini</title>
 
             <tgroup cols="2">
@@ -141,10 +137,7 @@ echo $config->database->params->dbname; // affiche "dbname"
                         </itemizedlist></entry>
                     </row>
                 </tbody>
-
             </tgroup>
-
         </table>
     </note>
-
 </sect1>

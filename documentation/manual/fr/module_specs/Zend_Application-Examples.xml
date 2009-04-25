@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15108 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.application.examples">
-
     <title>Exemples</title>
 
     <para>
@@ -152,8 +151,8 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     array(
         'resources' => array(
-            'My_Bootstrap_Resource_View', // nom de la classe OU
-            'view',                       // nom court
+            'My_Bootstrap_Resource_View' => array(), // nom de la classe OU
+            'view' => array(),                       // nom court
 
             'FrontController' => array(
                 'controllerDirectory' => APPLICATION_PATH . '/controllers',
@@ -194,7 +193,7 @@ class My_Bootstrap_Resource_Layout
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrap();
+$application->bootstrap()
             ->run();
 ]]></programlisting>
 
@@ -221,5 +220,4 @@ echo $service->handle();
 $application = new Zend_Application(...);
 $application->getBootstrap()->bootstrapDb();
 ]]></programlisting>
-
 </sect1>

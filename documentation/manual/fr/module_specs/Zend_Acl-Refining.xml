@@ -2,11 +2,9 @@
 <!-- EN-Revision: 15101 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.refining">
-
     <title>Affiner les Contrôles d'Accès</title>
 
     <sect2 id="zend.acl.refining.precise">
-
         <title>Mieux définir les Contrôles d'Accès</title>
 
         <para>
@@ -117,11 +115,9 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
      "autorisé" : "refusé"; // refusé
 ]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.acl.refining.removing">
-
         <title>Retirer les Contrôles d'Accès</title>
 
         <para>
@@ -173,7 +169,5 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
      "autorisé" : "refusé"; // autorisé
 ]]></programlisting>
-
     </sect2>
-
 </sect1>

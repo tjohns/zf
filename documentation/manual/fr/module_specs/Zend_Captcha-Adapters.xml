@@ -2,13 +2,11 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.captcha.adapters">
-
     <title>Adaptateurs CAPTCHA</title>
 
     <para>Les adaptateurs suivants sont fournis dans Zend Framework par défaut.</para>
 
     <sect2 id="zend.captcha.adapters.word">
-
         <title>Zend_Captcha_Word</title>
 
         <para>
@@ -83,11 +81,9 @@
         <note>
             <para>Word est une classe abstraite et ne peut être utilisée directement.</para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
-
         <title>Zend_Captcha_Dumb</title>
 
         <para>
@@ -96,11 +92,9 @@
             devrait être utilisé comme solution de remplacement extrême, ou pour les tests. Il
             étend <classname>Zend_Captcha_Word</classname>.
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.figlet">
-
         <title>Zend_Captcha_Figlet</title>
 
         <para>
@@ -114,11 +108,9 @@
             <link linkend="zend.text.figlet">Zend_Text_Figlet</link> que l'adaptateur va utiliser.
             Voyez sa documentation pour plus d'informations.
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.image">
-
         <title>Zend_Captcha_Image</title>
 
         <para>
@@ -214,11 +206,9 @@
             pour avoir les clés du tableau d'options que le constructeur utilise. ("suffix",
             "height", "imgUrl", etc...).
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.recaptcha">
-
         <title>Zend_Captcha_ReCaptcha</title>
 
         <para>
@@ -250,7 +240,5 @@
                 </para>
             </listitem>
         </itemizedlist>
-
     </sect2>
-
 </sect1>

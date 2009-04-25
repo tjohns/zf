@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.writer.introduction">
-
     <title>Zend_Config_Writer</title>
 
     <para>
@@ -49,7 +48,6 @@
     </para>
 
     <example id="zend.config.writer.example.using">
-
         <title>Utilisation de Zend_Config_Writer</title>
 
         <para>
@@ -94,11 +92,9 @@ $writer->write('config.xml', $config);
             Ceci créera un fichier de configuration XML avec les sections "production" et
             "staging", où "staging" étend "production".
         </para>
-
     </example>
 
     <example id="zend.config.writer.modifying">
-
         <title>Modifier une configuration existante</title>
 
         <para>
@@ -122,7 +118,6 @@ $writer = new Zend_Config_Writer_Ini(array('config'   => $config,
                                            'filename' => 'config.ini'));
 $writer->write();
 ]]></programlisting>
-
     </example>
 
     <note>

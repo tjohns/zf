@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.xml">
-
     <title>Zend_Config_Xml</title>
 
     <para>
@@ -29,7 +28,6 @@
     </note>
 
     <example id="zend.config.adapters.xml.example.using">
-
         <title>Utiliser Zend_Config_Xml</title>
 
         <para>
@@ -84,11 +82,9 @@ $config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 echo $config->database->params->host;   // affiche "dev.example.com"
 echo $config->database->params->dbname; // affiche "dbname"
 ]]></programlisting>
-
     </example>
 
     <example id="zend.config.adapters.xml.example.attributes">
-
         <title>Utilisation des attributs de balise avec Zend_Config_Xml</title>
 
         <para>
@@ -154,7 +150,5 @@ echo $config->database->params->dbname; // affiche "dbname"
     </staging>
 </configdata>
 ]]></programlisting>
-
     </example>
-
 </sect1>

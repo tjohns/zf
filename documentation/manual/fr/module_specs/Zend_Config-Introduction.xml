@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -17,7 +16,6 @@
     </para>
 
     <example id="zend.config.introduction.example.using">
-
         <title>Utilisation native de Zend_Config</title>
 
         <para>
@@ -82,7 +80,6 @@ $host = $config->database->get('host', 'localhost');
 ]]></programlisting>
 
     <example id="zend.config.introduction.example.file.php">
-
         <title>
             Utilisez <classname>Zend_Config</classname> avec un fichier de configuration en PHP
         </title>
@@ -115,7 +112,5 @@ $config = new Zend_Config(require 'config.php');
 // Affiche une donnée de configuration ('www.example.com')
 echo $config->webhost;
 ]]></programlisting>
-
     </example>
-
 </sect1>

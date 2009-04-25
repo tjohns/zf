@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.amf.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -21,5 +20,4 @@
         AMF3</ulink>est librement disponible, et sert de référence pour les types de messages qui
         peuvent être envoyés entre le Flash Player et le serveur.
     </para>
-
 </sect1>

@@ -2,11 +2,9 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.dbtable">
-
     <title>Authentification avec une table de base de données</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
-
         <title>Introduction</title>
 
         <para>
@@ -62,7 +60,6 @@
         </para>
 
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
-
             <title>Utilisation basique</title>
 
             <para>
@@ -167,13 +164,10 @@ Array
                 Puisque la ligne de la table contient la valeur de crédit, il est important de
                 garantir ces valeurs contre l'accès fortuit.
             </para>
-
         </example>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
-
         <title>Utilisation avancée : maintenir persistant l'objet de résultat DbTable</title>
 
         <para>
@@ -209,11 +203,9 @@ if ($result->isValid()) {
 }
 ]]></programlisting>
         </para>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
-
         <title>Utilisation avancée par l'exemple</title>
 
         <para>
@@ -309,7 +301,5 @@ $adapter = new Zend_Auth_Adapter_DbTable(
                 serveur Web est intact, les données sont inutilisables par l'attaquant.
             </para>
         </note>
-
     </sect2>
-
 </sect1>

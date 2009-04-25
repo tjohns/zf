@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -35,12 +34,14 @@
                 ressources sur lesquelles la commande agit.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>option</code>" : un argument qui signifie que la commande va changer
                 son comportement par défaut d'une manière quelconque.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>flag</code>" (drapeau) : la première partie d'une option, identifie le
@@ -51,6 +52,7 @@
                 un drapeau long. Les drapeaux longs ne peuvent pas être groupés.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>parameter</code>" (paramètre) : la seconde partie d'une option ; une
@@ -68,6 +70,7 @@
                 <classname>Zend_Console_Getopt</classname>.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "cluster" (groupe) : les drapeaux courts peuvent être combinés dans une
@@ -97,6 +100,7 @@
 
     <note>
         <title><code>Getopt</code> n'est pas une application framework</title>
+
         <para>
             <classname>Zend_Console_Getopt</classname> <emphasis>n'</emphasis>interprète
             <emphasis>pas</emphasis> le sens des drapeaux ou des paramètres, cette classe n'exécute
@@ -113,5 +117,4 @@
         Les sections suivantes décrivent l'utilisation de
         <classname>Zend_Console_Getopt</classname>.
     </para>
-
 </sect1>

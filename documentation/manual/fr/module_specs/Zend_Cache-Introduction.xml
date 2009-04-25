@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -27,7 +26,6 @@
     </para>
 
     <example id="zend.cache.introduction.example-1">
-
         <title>Créer un frontend avec <classname>Zend_Cache::factory()</classname></title>
 
         <para>
@@ -53,7 +51,6 @@ $cache = Zend_Cache::factory('Core',
                              $frontendOptions,
                              $backendOptions);
 ]]></programlisting>
-
     </example>
 
     <note>
@@ -66,7 +63,6 @@ $cache = Zend_Cache::factory('Core',
     </note>
 
     <example id="zend.cache.introduction.example-2">
-
         <title>Mettre en cache un résultat de requête sur une base de données</title>
 
         <para>
@@ -99,11 +95,9 @@ if(!$result = $cache->load('myresult')) {
 
 print_r($result);
 ]]></programlisting>
-
     </example>
 
     <example id="zend.cache.introduction.example-3">
-
         <title>Cache de sortie avec le frontend de sortie Zend_Cache</title>
 
         <para>
@@ -118,7 +112,7 @@ print_r($result);
             misent en cache quand la méthode <code>end()</code> est appelée. A la prochaine
             exécution, la section complète sera évitée, au profit de la récupération de son cache
             (si le cache est encore valide).
-        <programlisting role="php"><![CDATA[
+            <programlisting role="php"><![CDATA[
 $frontendOptions = array(
     // temps de vue du cache de 30 secondes
     'lifetime' => 30,
@@ -169,5 +163,4 @@ echo "Ceci n' jamais mis en cache (" . time() . ").";
             des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.
         </para>
     </note>
-
 </sect1>

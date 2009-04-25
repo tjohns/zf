@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.theory_of_operation">
-
     <title>Aspect théorique</title>
 
     <para>
@@ -101,5 +100,4 @@
             </para>
         </note>
     </para>
-
 </sect1>

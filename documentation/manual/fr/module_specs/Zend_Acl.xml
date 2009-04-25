@@ -2,7 +2,6 @@
 <!-- EN-Revision: 15101 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -40,7 +39,6 @@
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-
         <title>A propos des ressources</title>
 
         <para>
@@ -77,11 +75,9 @@
             peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges
             d'une ressource.
         </para>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-
         <title>A propos des rôles</title>
 
         <para>
@@ -111,7 +107,6 @@
         </para>
 
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-
             <title>Héritages multiples entre rôles</title>
 
             <para>
@@ -167,7 +162,6 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
                 exemple, puisque le rôle "membre" est examiné avant le rôle "invite", le résultat
                 devrait afficher "autorisé".
             </para>
-
         </example>
 
         <note>
@@ -180,7 +174,6 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-
         <title>Créer la Liste de Contrôle d'Accès</title>
 
         <para>
@@ -202,11 +195,9 @@ $acl = new Zend_Acl();
                 ressource pour chaque rôle.
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
-
         <title>Registre des rôles</title>
 
         <para>
@@ -224,7 +215,6 @@ $acl = new Zend_Acl();
         </para>
 
         <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
-
             <title>Contrôles d'Accès pour un exemple de CMS</title>
 
             <tgroup cols="3">
@@ -257,9 +247,7 @@ $acl = new Zend_Acl();
                         <entry>N/A</entry>
                     </row>
                 </tbody>
-
             </tgroup>
-
         </table>
 
         <para>
@@ -289,11 +277,9 @@ $acl->addRole(new Zend_Acl_Role('editeur'), 'staff');
 // Administrateur n'hérite pas d'accès
 $acl->addRole(new Zend_Acl_Role('administrateur'));
 ]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-
         <title>Définir les Contrôles d'Accès</title>
 
         <para>
@@ -351,11 +337,9 @@ $acl->allow('administrateur');
             Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont
             utilisées pour indiquer que les règles s'appliquent à toutes les ressources.
         </para>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-
         <title>Interroger les ACL</title>
 
         <para>
@@ -398,7 +382,5 @@ echo $acl->isAllowed('administrateur', null, 'modifier') ?
      "autorisé" : "refusé";
 // autorisé car administrateur est autorisé pour tout
 ]]></programlisting>
-
     </sect2>
-
 </sect1>
