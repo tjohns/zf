@@ -21,9 +21,9 @@
  */
 
 /**
- * @see Zend_Service_Abstract
+ * @see Zend_Service_Amazon_Abstract
  */
-require_once 'Zend/Service/Abstract.php';
+require_once 'Zend/Service/Amazon/Abstract.php';
 
 /**
  * @see Zend_Crypt_Hmac
@@ -39,18 +39,8 @@ require_once 'Zend/Crypt/Hmac.php';
  * @copyright  Copyright (c) 2005-2008, Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
+class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
 {
-    /**
-     * @var string Amazon Access Key
-     */
-    protected static $default_accessKey = null;
-
-    /**
-     * @var string Amazon Secret Key
-     */
-    protected static $default_secretKey = null;
-
     /**
      * Store for stream wrapper clients
      *
@@ -67,55 +57,6 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
 
     const S3_ACL_HEADER = 'x-amz-acl';
     const S3_CONTENT_TYPE_HEADER = 'Content-Type';
-
-    /**
-     * @var string Amazon Secret Key
-     */
-    protected $_secretKey;
-
-    /**
-     * @var string Amazon Access Key
-     */
-    protected $_accessKey;
-
-    /**
-     * Set the keys to use when accessing S3.
-     *
-     * @param  string $access_key
-     * @param  string $secret_key
-     * @return void
-     */
-    public static function setKeys($access_key, $secret_key)
-    {
-        self::$default_accessKey = $access_key;
-        self::$default_secretKey = $secret_key;
-    }
-
-    /**
-     * Create Amazon S3 client.
-     *
-     * @param  string $access_key
-     * @param  string $secret_key
-     * @return void
-     */
-    public function __construct($access_key=null, $secret_key=null)
-    {
-        if (!$access_key) {
-            $access_key = self::$default_accessKey;
-        }
-        if (!$secret_key) {
-            $secret_key = self::$default_accessKey;
-        }
-        if (!$access_key || !$secret_key) {
-            /**
-             * @see Zend_Service_Amazon_S3_Exception
-             */
-            require_once 'Zend/Service/Amazon/S3/Exception.php';
-            throw new Zend_Service_Amazon_S3_Exception("AWS keys were not supplied");
-        }
-        $this->_accessKey = $access_key;
-        $this->_secretKey = $secret_key;
-    }
 
     /**
      * Add a new bucket
@@ -528,8 +469,8 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
             $sig_str .= '?torrent';
         }
 
-        $signature = base64_encode(Zend_Crypt_Hmac::compute($this->_secretKey, 'sha1', utf8_encode($sig_str), Zend_Crypt_Hmac::BINARY));
-        $headers['Authorization'] = 'AWS '.$this->_accessKey.':'.$signature;
+        $signature = base64_encode(Zend_Crypt_Hmac::compute($this->_getSecretKey(), 'sha1', utf8_encode($sig_str), Zend_Crypt_Hmac::BINARY));
+        $headers['Authorization'] = 'AWS '.$this->_getAccessKey().':'.$signature;
 
         return $sig_str;
     }
