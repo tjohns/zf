@@ -16,8 +16,7 @@
         <programlisting role="php"><![CDATA[
 
 Zend_Debug::dump($var, $label=null, $echo=true);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <para>

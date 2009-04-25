@@ -21,8 +21,7 @@
 // fromXml function simply takes a String containing XML contents
 // as input.
 $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         <classname>Zend_Json::fromXml()</classname> function does the conversion of the XML formatted string input
@@ -67,8 +66,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
         <publisher>O'Reilly</publisher>
     </book>
 </books>
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         JSON output string returned from <classname>Zend_Json::fromXml()</classname> function:
@@ -105,8 +103,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
       }
    ]}
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         More details about this xml2json feature can be found in the original proposal itself.

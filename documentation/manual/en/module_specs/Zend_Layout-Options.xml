@@ -107,8 +107,7 @@ $options = array(
     'layoutPath' => '/path/to/layouts',
     'contentKey' => 'CONTENT',           // ignored when MVC not used
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 /**
@@ -118,8 +117,7 @@ layoutPath = "/path/to/layouts"
 contentKey = "CONTENT"
 */
 $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <example id="zend.layout.options.examples.constructor">
             <title>Passing options to the constructor or startMvc()</title>
@@ -141,8 +139,7 @@ $layout = new Zend_Layout($options);
 
 // Using startMvc():
 $layout = Zend_Layout::startMvc($options);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 And now using a config object:
@@ -157,8 +154,7 @@ $layout = new Zend_Layout($config);
 
 // Using startMvc():
 $layout = Zend_Layout::startMvc($config);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Basically, this is the easiest way to customize your
@@ -182,8 +178,7 @@ $layout->setOptions($options);
 
 // Using a Zend_Config object:
 $layout->setConfig($options);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Note, however, that certain options, such as
@@ -206,8 +201,7 @@ $layout->setConfig($options);
 $layout->setLayout('foo')
        ->setLayoutPath('/path/to/layouts')
        ->setContentKey('CONTENT');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

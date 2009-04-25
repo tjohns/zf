@@ -40,8 +40,7 @@ class FooController extends Zend_Controller_Action
         // do something
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The above <code>FooController</code> class (controller
@@ -88,8 +87,7 @@ class FooController extends Zend_Controller_Action
             ->setParam('noViewRenderer', true);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 <code>initView()</code>, <code>getViewScript()</code>,
@@ -114,8 +112,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The primary reasons to disable the <code>ViewRenderer</code> are
@@ -162,8 +159,7 @@ class FooController extends Zend_Controller_Action
         ));
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
@@ -206,8 +202,7 @@ class FooController extends Zend_Controller_Action
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
 $this->getResponse()->appendBody($content);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -256,8 +251,7 @@ if ($this->_hasParam('id') {
 } else {
     $id = 1;
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </note>
             </listitem>
         </itemizedlist>
@@ -314,8 +308,7 @@ applicationOrModule/
                 index.phtml
         helpers/
         filters/
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 In other words, view scripts are assumed to be in the
@@ -339,8 +332,7 @@ applicationOrModule/
 string render(string $action = null,
               string $name = null,
               bool $noController = false);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 <code>render()</code> renders a view script. If no arguments are
@@ -404,8 +396,7 @@ class MyController extends Zend_Controller_Action
         $this->render();
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -553,8 +544,7 @@ class MyController extends Zend_Controller_Action
                             500);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Another possibility is that you may want to forward on to a
@@ -584,8 +574,7 @@ class MyController extends Zend_Controller_Action
                             500);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -614,8 +603,7 @@ abstract class My_Base_Controller extends Zend_Controller_Action
         return $this->view;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Hopefully, from the information in this chapter, you can see the

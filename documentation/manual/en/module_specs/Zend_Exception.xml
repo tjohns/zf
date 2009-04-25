@@ -23,8 +23,7 @@ try {
     echo "Message: " . $e->getMessage() . "\n";
     // Other code to recover from the error
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <para>
         <classname>Zend_Exception</classname> can be used as a catch-all exception class in a

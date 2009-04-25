@@ -54,8 +54,7 @@
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the XML file. It is a
             simple matter to load these data by specifying the XML file and the staging section:
@@ -65,8 +64,7 @@ $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
 echo $config->database->params->dbname; // prints "dbname"
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
         <title>Using Tag Attributes in <classname>Zend_Config_Xml</classname></title>
@@ -91,8 +89,7 @@ echo $config->database->params->dbname; // prints "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             The other way does not really shorten the config, but keeps it easier to maintain since you don't have to write
             the tag name twice. You simply create an empty tag with the value in the <code>value</code>
@@ -123,8 +120,7 @@ echo $config->database->params->dbname; // prints "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
     </example>
 <note>
         <title>XML strings</title>
@@ -157,8 +153,7 @@ $string = <<<EOT
 EOT;
 
 $config = new Zend_Config_Xml($string, 'staging');
-]]>
-        </programlisting>
+]]></programlisting>
     </note>
 </sect1>
 <!--

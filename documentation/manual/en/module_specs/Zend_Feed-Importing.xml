@@ -11,8 +11,7 @@
 
     <programlisting role="php"><![CDATA[
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         You can also use <classname>Zend_Feed</classname> to fetch the contents of a feed from a file or the contents of a PHP
@@ -25,8 +24,7 @@ $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // importing a feed from a PHP string variable
 $feedFromPHP = Zend_Feed::importString($feedString);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         In each of the examples above, an object of a class that extends <classname>Zend_Feed_Abstract</classname> is returned
@@ -61,8 +59,7 @@ $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importing a rss feed from an array
 $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The format of the array must conform to this structure:
@@ -249,8 +246,7 @@ array(
         )
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 References:
@@ -322,8 +318,7 @@ $atomFeedFromArray =
 // importing a rss feed from a custom builder array
 $rssFeedFromArray =
     Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -344,8 +339,7 @@ print $feed->saveXML();
 
 // send http headers and dump the feed
 $feed->send();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 

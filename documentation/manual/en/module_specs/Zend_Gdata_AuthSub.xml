@@ -103,8 +103,7 @@ $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['cal_token']);
 
 // Create a Gdata object using the authenticated Http Client
 $cal = new Zend_Gdata_Calendar($client);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -131,8 +130,7 @@ if (isset($_GET['logout'])) {
     header('Location: ' . $php_self);
     exit();
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     <note>
         <title>Security notes</title>

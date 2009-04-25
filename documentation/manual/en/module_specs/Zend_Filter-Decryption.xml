@@ -40,8 +40,7 @@ $filter->setVector('myvector');
 
 $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -99,8 +98,7 @@ $filter->setEnvelopeKey(array(
     '/key/from/encoder/first.pem',
     '/key/from/encoder/second.pem'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -126,8 +124,7 @@ $filter->setEnvelopeKey(array(
     '/key/from/encoder/second.pem'
 ));
 $filter->setPassphrase('mypassphrase');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             At last, decode the content. Our complete example for decrypting the previously encrypted
@@ -150,8 +147,7 @@ $filter->setPassphrase('mypassphrase');
 
 $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;
-]]>
-        </programlisting>
+]]></programlisting>
     </sect3>
 </sect2>
 <!--

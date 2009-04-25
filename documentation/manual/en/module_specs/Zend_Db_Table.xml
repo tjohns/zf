@@ -52,8 +52,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -72,8 +71,7 @@ class bugs extends Zend_Db_Table_Abstract
 {
     // table name matches class name
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -112,8 +110,7 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name   = 'bug_db.bugs';
     protected $_schema = 'ignored';
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -147,8 +144,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs'));
 
 $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
                             'schema' => 'ignored'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -180,8 +176,7 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bugs';
     protected $_primary = 'bug_id';
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -229,8 +224,7 @@ class Bugs extends Zend_Db_Table_Abstract
         parent::_setupTableName();
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -302,8 +296,7 @@ class Bugs extends Zend_Db_Table_Abstract
         $this->_observer = new MyObserverClass();
     }
 }
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -343,8 +336,7 @@ class Bugs extends Zend_Db_Table_Abstract
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
 $table = new Bugs(array('db' => $db));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -373,8 +365,7 @@ Zend_Db_Table_Abstract::setDefaultAdapter($db);
 // Later...
 
 $table = new Bugs();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -410,8 +401,7 @@ Zend_Registry::set('my_db', $db);
 // Later...
 
 $table = new Bugs(array('db' => 'my_db'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -452,8 +442,7 @@ $data = array(
 );
 
 $table->insert($data);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -475,8 +464,7 @@ $data = array(
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
 );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -515,8 +503,7 @@ class Bugs extends Zend_Db_Table_Abstract
     // you do not need to define this.
     protected $_sequence = true;
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -563,8 +550,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
     protected $_sequence = 'bug_sequence';
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -611,8 +597,7 @@ class BugStatus extends Zend_Db_Table_Abstract
 
     protected $_sequence = false;
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -657,8 +642,7 @@ $data = array(
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1234);
 
 $table->update($data, $where);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -702,8 +686,7 @@ $table = new Bugs();
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
 
 $table->delete($where);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -751,8 +734,7 @@ $rows = $table->find(1234);
 // Find multiple rows
 // Also returns a Rowset
 $rows = $table->find(array(1234, 5678));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -812,8 +794,7 @@ $rows = $table->find(1234, 'ABC');
 // Find multiple rows with compound primary keys
 // Also returns a Rowset
 $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -857,8 +838,7 @@ $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
 $row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
 $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
                                         ->order('bug_id ASC'));
-]]>
-                        </programlisting>
+]]></programlisting>
 
                     </para>
 
@@ -923,8 +903,7 @@ $select = $table->select();
 $select->where('bug_status = ?', 'NEW');
 
 $rows = $table->fetchAll($select);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -946,8 +925,7 @@ $table = new Bugs();
 
 $rows =
     $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -975,8 +953,7 @@ $table = new Bugs();
 $select = $table->select()->where('bug_status = ?', 'NEW');
 
 $rows = $table->fetchAll($select);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1005,8 +982,7 @@ $select = $table->select()->where(array('bug_status = ?' => 'NEW'))
                           ->limit($count, $offset);
 
 $rows = $table->fetchAll($select);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1044,8 +1020,7 @@ $select->from($table, array('bug_id', 'bug_description'))
        ->where('bug_status = ?', 'NEW');
 
 $rows = $table->fetchAll($select);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -1086,8 +1061,7 @@ $select->from($table,
        ->group('reported_by');
 
 $rows = $table->fetchAll($select);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -1111,8 +1085,7 @@ $select->where('bug_status = ?', 'NEW')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </example>
 
@@ -1144,8 +1117,7 @@ $select->where('bug_status = ?', 'NEW')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1173,8 +1145,7 @@ $select  = $table->select()->where('bug_status = ?', 'NEW')
                            ->order('bug_id');
 
 $row = $table->fetchRow($select);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -1206,8 +1177,7 @@ $table = new Bugs();
 $info = $table->info();
 
 echo "The table name is " . $info['name'] . "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -1382,8 +1352,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
 // Each instance of Bugs now uses the default metadata cache
 $bugs = new Bugs();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -1419,8 +1388,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
 // Configure an instance upon instantiation
 $bugs = new Bugs(array('metadataCache' => $cache));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -1554,8 +1522,7 @@ $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
 // Returns an object of type My_Rowset,
 // containing an array of objects of type My_Row.
 $rows = $table->fetchAll($where);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1587,8 +1554,7 @@ $table->setRowsetClass('My_Rowset');
 $rowsCustom = $table->fetchAll($where);
 
 // The $rowsStandard object still exists, and it is unchanged.
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1637,8 +1603,7 @@ class Bugs extends Zend_Db_Table_Abstract
         return parent::update($data, $where);
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1676,8 +1641,7 @@ class Bugs extends Zend_Db_Table_Abstract
         return $this->fetchAll($where, 'bug_id');
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1746,8 +1710,7 @@ abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 class BugsProducts extends MyAbstractTable
 {
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 

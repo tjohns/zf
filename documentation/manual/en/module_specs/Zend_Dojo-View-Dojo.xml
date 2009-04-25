@@ -47,8 +47,7 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Next, the view script. In this case, we're going to specify
@@ -73,8 +72,7 @@ $this->dojo()->enable()
              ->registerModulePath('custom', '../custom/')
              ->requireModule('dijit.form.FilteringSelect')
              ->requireModule('custom.PairedStore'); ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In our layout script, we'll then check to see if Dojo is enabled,
@@ -103,8 +101,7 @@ $this->dojo()->enable()
     <?php echo $this->inlineScript() ?>
 </body>
 </html>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             At this point, you only need to ensure that your files are in the
@@ -164,8 +161,7 @@ $this->dojo()->enable()
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 If you decide instead to use programmatic usage, call the static
@@ -174,8 +170,7 @@ Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Finally, if you want to create your own programmatic rules, you
@@ -186,8 +181,7 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -201,8 +195,7 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
 
         <programlisting role="php"><![CDATA[
 $view->dojo()->addStylesheetModule('dijit.themes.tundra');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The module path is discovered by using the character '.' as a
@@ -220,8 +213,7 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 <body class="tundra">
-]]>
-</programlisting>
+]]></programlisting>
     </sect3>
 
     <sect3 id="zend.dojo.view.dojo.layers">
@@ -272,8 +264,7 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 $view->dojo()->addLayer('/js/foo/foo.js');
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             For more information on creating custom builds, please <ulink

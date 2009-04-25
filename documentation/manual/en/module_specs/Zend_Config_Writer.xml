@@ -88,8 +88,7 @@ $writer->setConfig($config)
 // c)
 $writer = new Zend_Config_Writer_Xml();
 $writer->write('config.xml', $config);
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This will create an XML config file with the sections production
             and staging, where staging extends production.
@@ -115,8 +114,7 @@ $config->production->hostname = 'foobar';
 $writer = new Zend_Config_Writer_Ini(array('config'   => $config,
                                            'filename' => 'config.ini'));
 $writer->write();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <note>

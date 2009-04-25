@@ -130,8 +130,7 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user,
 
 // Create an instance of the Health service
 $service = new Zend_Gdata_Health($client);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
               A Health service using AuthSub can be created in a similar, though slightly more lengthy fashion. AuthSub is the
               recommend interface to communicate with Google Health because each token is directly linked to a specific profile in
@@ -221,8 +220,7 @@ $userH9Sandbox = false;
 $healthService = new Zend_Gdata_Health($client,
                                        'googleInc-MyTestAppName-v1.0',
                                        $userH9Sandbox);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>NOTE: the remainder of this document will assume you are using AuthSub for authentication.</para>
         </sect3>
     </sect2>
@@ -260,8 +258,7 @@ $query->setMaxResultsInGroup(2);
 $query->setCategory("medication");
 
 $profileFeed = $healthService->getHealthProfileFeed($query);
-]]>
-                </programlisting>
+]]></programlisting>
                 <para>Using <code>setDigest("true")</code> returns all of user's CCR data in a single Atom <code>&lt;entry&gt;</code>.</para>
                 <para>The <code>setCategory()</code> helper can be passed an additional parameter to return more specific CCR
                 information. For example, to return just the medication Lipitor, use <code>setCategory("medication", "Lipitor")</code>. The same
@@ -295,8 +292,7 @@ foreach ($entries as $entry) {
         echo "<pre>" . $xmlStr . "</pre>";
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
               Here, the <code>getCcr()</code> method is used in conjunction with a magic helper to drill down and extract just the
               medication data from the entry's CCR. The formentioned magic helper takes the form <code>getCATEGORYNAME()</code>, where
@@ -321,8 +317,7 @@ foreach ($conditions as $cond) {
     $xmlStr = $cond->ownerDocument->saveXML($cond);
     echo "<pre>" . $xmlStr . "</pre>";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.health.profilelist">
@@ -352,8 +347,7 @@ foreach ($entries as $entry) {
     echo '<p>Profile name: ' . $entry->getProfileName() . '<br>';
     echo 'profile ID: ' . $entry->getProfileID() . '</p>';
 }
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
               Once you've determined which profile to use, call <code>setProfileID()</code> with the profileID as an argument.
               This will restrict subsequent API requests to be against that particular profile:
@@ -367,8 +361,7 @@ $profileFeed = $healthService->getHealthProfileFeed();
 
 $profileID = $healthService->getProfileID();
 echo '<p><b>Queried profileID</b>: ' . $profileID . '</p>';
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.health.notice">
@@ -415,8 +408,7 @@ $responseEntry = $healthService->sendHealthNotice($subject,
                                                   $body,
                                                   "html",
                                                   $ccr);
-]]>
-          </programlisting>
+]]></programlisting>
       </sect3>
     </sect2>
 </sect1>

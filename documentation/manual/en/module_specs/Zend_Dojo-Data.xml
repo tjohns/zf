@@ -27,8 +27,7 @@
         ...
     ]
 }
-]]>
-</programlisting>
+]]></programlisting>
 
     <para>
         <classname>Zend_Dojo_Data</classname> provides a simple interface for building
@@ -50,8 +49,7 @@
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data('id', $items);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.dojo.data.usage.mutators">
@@ -61,8 +59,7 @@ $data = new Zend_Dojo_Data('id', $items);
 $data = new Zend_Dojo_Data();
 $data->setIdentifier('id')
      ->addItems($items);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -78,8 +75,7 @@ $data = new Zend_Dojo_Data($identifier, $items);
 $data->addItem($someItem);
 
 $data->addItems($someMoreItems);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -139,8 +135,7 @@ $data->addItems($someMoreItems);
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -153,8 +148,7 @@ $data->setLabel('name');
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -233,8 +227,7 @@ $item = $data->getItem('foo');
 
 // Or use array notation:
 $item = $data['foo'];
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If you know the identifier, you can use it to retrieve an item,
@@ -251,8 +244,7 @@ unset($data['foo']);
 // Test for an item:
 if (isset($data[foo])) {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You can loop over all items as well. Internally, all items are
@@ -263,8 +255,7 @@ if (isset($data[foo])) {
 foreach ($data as $item) {
     echo $item['title'] . ': ' . $item['description'] . "\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Or even count to see how many items you have:
@@ -272,8 +263,7 @@ foreach ($data as $item) {
 
         <programlisting role="php"><![CDATA[
 echo count($data), " items found!";
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Finally, as the class implements <code>__toString()</code>, you can
@@ -284,8 +274,7 @@ echo count($data), " items found!";
 echo $data; // echo as JSON string
 
 $json = (string) $data; // cast to string == cast to JSON
-]]>
-        </programlisting>
+]]></programlisting>
 
         <sect3 id="zend.dojo.data.advanced.methods">
             <title>Available Methods</title>

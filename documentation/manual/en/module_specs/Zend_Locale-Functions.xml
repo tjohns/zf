@@ -40,8 +40,7 @@ print "copied: ", $copiedLocale->toString();
 
 // PHP automatically calls toString() via __toString()
 print "copied: ", $copiedLocale;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -65,8 +64,7 @@ $mylocale = new Zend_Locale('en_US');
 if ($locale->equals($mylocale)) {
     print "Locales are equal";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -98,8 +96,7 @@ print_r($found);
 // Return only browser locales
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
 print_r($found2);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -151,8 +148,7 @@ print $locale->toString();
 // new locale
 $locale->setLocale('aa_DJ');
 print $locale->toString();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -177,8 +173,7 @@ print $locale->getLanguage();
 
 // if locale is 'de_AT' then 'AT' will be returned as region
 print $locale->getRegion();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -213,8 +208,7 @@ print_r ($list);
 // of another language
 print Zend_Locale::getTranslation('de', 'language', 'zh');
 // returns the translation for the language 'de' in chinese
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1047,8 +1041,7 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
             <programlisting role="php"><![CDATA[
 // prints the names of all countries in German language
 print_r(Zend_Locale::getTranslationList('country', 'de'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1064,8 +1057,7 @@ $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
 echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
 // output is the German name of the French language
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1092,8 +1084,7 @@ foreach($list as $language => $content) {
         continue;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -1163,8 +1154,7 @@ Array
     [yesexpr] => ^([jJ][aA]?)|([jJ]?)
     [noexpr] => ^([nN]([eE][iI][nN])?)|([nN]?)
 )
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -1190,8 +1180,7 @@ Array
             <title>getLocaleList()</title>
             <programlisting role="php"><![CDATA[
 $localelist = Zend_Locale::getLocaleList();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -1221,8 +1210,7 @@ if (Zend_Locale::isLocale($input)) {
 } else {
     print "Sorry... the given input is no locale";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1254,8 +1242,7 @@ if (Zend_Locale::isLocale($input, true)) {
 } else {
     print "Sorry... the given input is no locale";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1283,8 +1270,7 @@ if (!Zend_Locale::isLocale($locale, true, false)) {
 if ($locale instanceof Zend_Locale) {
     $locale = $locale->toString();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1338,8 +1324,7 @@ if ($locale instanceof Zend_Locale) {
             <title>Locale aware behaviour as with ZF 1.8</title>
             <programlisting role="php"><![CDATA[
 $locale = Zend_Locale::findLocale($inputstring);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

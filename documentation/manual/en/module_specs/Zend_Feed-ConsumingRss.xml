@@ -8,8 +8,7 @@
     </para>
     <programlisting role="php"><![CDATA[
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         If any errors occur fetching the feed, a <classname>Zend_Feed_Exception</classname> will be thrown.
     </para>
@@ -20,8 +19,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     </para>
     <programlisting role="php"><![CDATA[
 echo $channel->title();
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         Note the function syntax. <classname>Zend_Feed</classname> uses a convention of treating properties as XML
         object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
@@ -34,8 +32,7 @@ echo $channel->title();
     </para>
     <programlisting role="php"><![CDATA[
 echo $channel->category['domain'];
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
         values.
@@ -50,8 +47,7 @@ echo $channel->category['domain'];
 foreach ($channel as $item) {
     echo $item->title() . "\n";
 }
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         If you are not familiar with RSS, here are the standard elements you can expect to be available in
         an RSS channel and in individual RSS items (entries).
@@ -137,8 +133,7 @@ foreach ($channel as $item) {
 if ($item->propname()) {
     // ... proceed.
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         If you use <code>$item->propname</code> instead, you will always get an empty object which will

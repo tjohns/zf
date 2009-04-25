@@ -39,8 +39,7 @@ $cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <note>
@@ -84,8 +83,7 @@ if(!$result = $cache->load('myresult')) {
 }
 
 print_r($result);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.cache.introduction.example-3">
@@ -123,8 +121,7 @@ if(!$cache->start('mypage')) {
 }
 
 echo 'This is never cached ('.time().').';
-]]>
-        </programlisting>
+]]></programlisting>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
            for demonstration purposes. Try running this and then refreshing several times; you will notice

@@ -50,8 +50,7 @@
 date_default_timezone_set('America/Los_Angeles');
 // timezone for a German in Germany
 date_default_timezone_set('Europe/Berlin');
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
             <emphasis role="strong">When creating Zend_Date instances, their timezone will automatically become the
             current default timezone!</emphasis> Thus, the timezone setting will account for any Daylight Savings Time

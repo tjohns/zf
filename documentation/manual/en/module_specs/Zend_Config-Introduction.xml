@@ -47,8 +47,7 @@ $db = Zend_Db::factory($config->database->adapter,
 // Alternative usage: simply pass the Zend_Config object.
 // The Zend_Db factory knows how to interpret it.
 $db = Zend_Db::factory($config->database);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <para>
         As illustrated in the example above, <classname>Zend_Config</classname> provides nested object property syntax to access
@@ -60,8 +59,7 @@ $db = Zend_Db::factory($config->database);
     </para>
     <programlisting role="php"><![CDATA[
 $host = $config->database->get('host', 'localhost');
-]]>
-    </programlisting>
+]]></programlisting>
     <example id="zend.config.introduction.example.file.php">
         <title>Using <classname>Zend_Config</classname> with a PHP Configuration File</title>
         <para>
@@ -82,16 +80,14 @@ return array(
         )
     )
 );
-]]>
-        </programlisting>
+]]></programlisting>
         <programlisting role="php"><![CDATA[
 // Configuration consumption
 $config = new Zend_Config(require 'config.php');
 
 // Print a configuration datum (results in 'www.example.com')
 echo $config->webhost;
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

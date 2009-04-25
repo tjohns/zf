@@ -24,8 +24,7 @@
 
         <programlisting role="php"><![CDATA[
 $currency = new Zend_Currency($currency, $locale);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The <code>setFormat()</code> method takes now an array of options. These options are set permanently and override all previously
@@ -89,8 +88,7 @@ $currency = new Zend_Currency($currency, $locale);
 
         <programlisting role="php"><![CDATA[
 $currency->setFormat(array $options);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The <code>toCurrency()</code> method no longer supports the optional
@@ -100,8 +98,7 @@ $currency->setFormat(array $options);
 
         <programlisting role="php"><![CDATA[
 $currency->toCurrency($value, array $options);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The methods <code>getSymbol()</code>, <code>getShortName()</code>,

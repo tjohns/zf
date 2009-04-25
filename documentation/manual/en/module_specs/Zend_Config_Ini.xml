@@ -32,8 +32,7 @@ $options['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini',
                               'staging',
                               $options);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
@@ -63,8 +62,7 @@ database.params.dbname   = dbname
 database.params.host     = dev.example.com
 database.params.username = devuser
 database.params.password = devsecret
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the INI file. It is a
             simple matter to load these data by specifying the INI file and the staging section:
@@ -74,8 +72,7 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
 echo $config->database->params->dbname; // prints "dbname"
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <note>
     <table id="zend.config.adapters.ini.table">

@@ -26,8 +26,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     )
 );
 $router->addRoute('archive', $route);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Every defined regex subpattern will be injected to the request
@@ -42,8 +41,7 @@ $values = array(
     'controller' => 'archive',
     'action'     => 'show'
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <note>
         <para>
@@ -83,8 +81,7 @@ public function showAction()
     $request = $this->getRequest();
     $year    = $request->getParam(1); // $year = '2006';
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <note>
         <para>Notice the key is an integer (1) instead of a string ('1').</para>
@@ -109,8 +106,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     )
 );
 $router->addRoute('archive', $route);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Now let's get to the problem you have probably noticed on your own by
@@ -133,8 +129,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     )
 );
 $router->addRoute('archive', $route);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         This will result in following values injected into Request:
@@ -146,8 +141,7 @@ $values = array(
     'controller' => 'archive',
     'action'     => 'show'
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         The map may be defined in either direction to make it work in any
@@ -169,8 +163,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     array( ... ),
     array('year' => 1)
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <note>
         <para>
@@ -190,8 +183,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     array( ... ),
     array('year' => 1)
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Which will result in mixed values available in the Request. As an
@@ -206,8 +198,7 @@ $values = array(
     'controller' => 'archive',
     'action'     => 'show'
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Since regex patterns are not easily reversed, you will need to prepare
@@ -223,8 +214,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     array('year' => 1),
     'archive/%s'
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         All of this is something which was already possible by the means of a
@@ -252,8 +242,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     'blog/archive/%d-%s.html'
 );
 $router->addRoute('blogArchive', $route);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         As you can see, this adds a tremendous amount of flexibility over the

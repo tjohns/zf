@@ -39,8 +39,7 @@ $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
                              $clientId,
                              $developerKey);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
     </sect2>
 
@@ -87,8 +86,7 @@ foreach ($videoFeed as $videoEntry) {
     echo $videoEntry->getVideoDescription();
     echo "\n\n\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
 
 
@@ -120,8 +118,7 @@ $query->category = 'Comedy/dog';
 
 echo $query->queryUrl . "\n";
 $videoFeed = $yt->getVideoFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
 
@@ -146,8 +143,7 @@ $videoFeed = $yt->getVideoFeed($query);
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getTopRatedVideoFeed();
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
             <para>
                 There are also query parameters to specify the time period
@@ -164,8 +160,7 @@ $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
 $query->setTime('today');
 $videoFeed = $yt->getTopRatedVideoFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
             <para>
                 Alternatively, you could just retrieve the feed using the
@@ -178,8 +173,7 @@ $videoFeed = $yt->getTopRatedVideoFeed($query);
 $yt = new Zend_Gdata_YouTube();
 $url = 'http://gdata.youtube.com/feeds/standardfeeds/top_rated?time=today'
 $videoFeed = $yt->getVideoFeed($url);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
 
@@ -196,8 +190,7 @@ $videoFeed = $yt->getVideoFeed($url);
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserUploads('liz');
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
 
@@ -214,8 +207,7 @@ $videoFeed = $yt->getUserUploads('liz');
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getUserFavorites('liz');
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
 
         </sect3>
@@ -233,8 +225,7 @@ $videoFeed = $yt->getUserFavorites('liz');
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoFeed = $yt->getVideoResponseFeed('abc123813abc');
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -258,8 +249,7 @@ foreach ($commentFeed as $commentEntry) {
     echo $commentEntry->title->text . "\n";
     echo $commentEntry->content->text . "\n\n\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -275,8 +265,7 @@ $videoEntry = $yt->getVideoEntry('abc123813abc');
 // we don't know the video ID in this example, but we do have the URL
 $commentFeed = $yt->getVideoCommentFeed(null,
                                         $videoEntry->comments->href);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
 
     </sect2>
@@ -309,8 +298,7 @@ foreach ($playlistListFeed as $playlistEntry) {
     echo $playlistEntry->description->text . "\n";
     echo $playlistEntry->getPlaylistVideoFeedUrl() . "\n\n\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
 
@@ -327,8 +315,7 @@ foreach ($playlistListFeed as $playlistEntry) {
             <programlisting role="php"><![CDATA[
 $feedUrl = $playlistEntry->getPlaylistVideoFeedUrl();
 $playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl);
-]]>
-            </programlisting>
+]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -356,8 +343,7 @@ $subscriptionFeed = $yt->getSubscriptionFeed('liz');
 foreach ($subscriptionFeed as $subscriptionEntry) {
     echo $subscriptionEntry->title->text . "\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -378,8 +364,7 @@ $userProfile = $yt->getUserProfile('liz');
 echo "username: " . $userProfile->username->text . "\n";
 echo "age: " . $userProfile->age->text . "\n";
 echo "hometown: " . $userProfile->hometown->text . "\n";
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -509,8 +494,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo $e->getMessage();
 }
-]]>
-    </programlisting>
+]]></programlisting>
 </example>
     <para>
       To upload a video as private, simply use: $myVideoEntry->setVideoPrivate(); prior to
@@ -547,8 +531,7 @@ $tokenHandlerUrl = 'http://gdata.youtube.com/action/GetUploadToken';
 $tokenArray = $yt->getFormUploadToken($myVideoEntry, $tokenHandlerUrl);
 $tokenValue = $tokenArray['token'];
 $postUrl = $tokenArray['url'];
-]]>
-      </programlisting>
+]]></programlisting>
       </example>
     <para>
       The above code prints out a link and a token that is used to construct an
@@ -574,8 +557,7 @@ $form = '<form action="'. $postUrl .'?nexturl='. $nextUrl .
         '<input name="token" type="hidden" value="'. $tokenValue .'"/>'.
         '<input value="Upload Video File" type="submit" />'.
         '</form>';
-]]>
-      </programlisting>
+]]></programlisting>
       </example>
   </sect2>
     <sect2 id="zend.gdata.youtube.uploads.status">
@@ -614,8 +596,7 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
         }
     }
 }
-]]>
-      </programlisting>
+]]></programlisting>
       </example>
   </sect2>
     <sect2 id="zend.gdata.youtube.other">

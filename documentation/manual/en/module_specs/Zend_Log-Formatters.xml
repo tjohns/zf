@@ -24,8 +24,7 @@
       <programlisting role="php"><![CDATA[
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
 $formatter = new Zend_Log_Formatter_Simple($format);
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -43,8 +42,7 @@ $logger->addWriter($writer);
 $logger->info('there');
 
 // outputs "hello there"
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -72,8 +70,7 @@ $logger = new Zend_Log();
 $logger->addWriter($writer);
 
 $logger->info('informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -86,8 +83,7 @@ $logger->info('informational message');
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>
-]]>
-</programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -109,8 +105,7 @@ $logger = new Zend_Log();
 $logger->addWriter($writer);
 
 $logger->info('informational message');
-]]>
-      </programlisting>
+]]></programlisting>
 
       The code above changes the root element from its default of
       <code>logEntry</code> to <code>log</code>. It also maps the element
@@ -122,8 +117,7 @@ $logger->info('informational message');
   <msg>informational message</msg>
   <level>INFO</level>
 </log>
-]]>
-</programlisting>
+]]></programlisting>
     </para>
 
   </sect2>

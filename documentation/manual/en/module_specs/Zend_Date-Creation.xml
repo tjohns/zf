@@ -33,8 +33,7 @@
 
             <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -51,8 +50,7 @@ $date = new Zend_Date();
 
             <programlisting role="php"><![CDATA[
 $date = Zend_Date::now();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -94,8 +92,7 @@ $date = Zend_Date::now();
             <programlisting role="php"><![CDATA[
 // SELECT UNIX_TIMESTAMP(my_datetime_column) FROM my_table
 $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -118,8 +115,7 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
             <programlisting role="php"><![CDATA[
 // SELECT datecolumn FROM my_table
 $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -186,15 +182,13 @@ $datearray = array('year' => 2006,
                    'hour' => 12,
                    'minute' => 3,
                    'second' => 10);
-$date = new Zend_Date($datearray)
-;]]>
-            </programlisting>
+$date = new Zend_Date($datearray);
+]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 $datearray = array('year' => 2006, 'month' => 4, 'day' => 18);
 $date = new Zend_Date($datearray);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

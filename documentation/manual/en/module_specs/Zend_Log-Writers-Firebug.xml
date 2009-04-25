@@ -48,8 +48,7 @@ $logger = new Zend_Log($writer);
 
 // Use this in your model, view and controller files
 $logger->log('This is a log message!', Zend_Log::INFO);
-]]>
-      </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.log.writers.firebug.example.without_front_controller">
@@ -75,8 +74,7 @@ $logger->log('This is a log message!', Zend_Log::INFO);
 // Flush log data to browser
 $channel->flush();
 $response->sendHeaders();
-]]>
-      </programlisting>
+]]></programlisting>
     </example>
 
     <sect3 id="zend.log.writers.firebug.priority-styles">
@@ -90,15 +88,13 @@ $response->sendHeaders();
 $logger->addPriority('FOO', 8);
 $writer->setPriorityStyle(8, 'TRACE');
 $logger->foo('Foo Message');
-]]>
-      </programlisting>
+]]></programlisting>
       <para>
         The default style for user-defined priorities can be set with the <code>setDefaultPriorityStyle()</code> method.
       </para>
       <programlisting role="php"><![CDATA[
 $writer->setDefaultPriorityStyle('TRACE');
-]]>
-      </programlisting>
+]]></programlisting>
       <para>
         The supported styles are as follows:
         <table id="zend.log.writers.firebug.priority-styles.table">
@@ -171,8 +167,7 @@ $writer->setDefaultPriorityStyle('TRACE');
       <programlisting role="php"><![CDATA[
 $exception = new Zend_Exception('Test exception');
 $logger->err($exception);
-]]>
-      </programlisting>
+]]></programlisting>
     </sect3>
 
     <sect3 id="zend.log.writers.firebug.preparing-data.table">
@@ -195,7 +190,6 @@ $table = array('Summary line for the table',
              )
             );
 $logger->table($table);
-]]>
-      </programlisting>
+]]></programlisting>
     </sect3>
 </sect2>

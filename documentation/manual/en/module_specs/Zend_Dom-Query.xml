@@ -127,8 +127,7 @@
     </tr>
 </table>
 </div>
-]]>
-</programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -150,8 +149,7 @@ $count = count($results); // get number of matches: 4
 foreach ($results as $result) {
     // $result is a DOMElement
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <classname>Zend_Dom_Query</classname> also allows straight XPath queries

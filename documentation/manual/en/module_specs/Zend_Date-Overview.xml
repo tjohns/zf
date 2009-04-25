@@ -163,8 +163,7 @@ echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 // strictly restricts interpretation to specified format
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy');
 echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -198,8 +197,7 @@ Zend_Registry::set('Zend_Locale', $locale);
 
 // somewhere in your application
 $date = new Zend_Date('31.Feb.2007');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -226,8 +224,7 @@ $date = new Zend_Date(); // $date's timestamp === time()
 // changes $date by adding 12 hours
 $date->add('12', Zend_Date::HOUR);
 print $date;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

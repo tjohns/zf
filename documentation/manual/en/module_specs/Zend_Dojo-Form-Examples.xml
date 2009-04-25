@@ -348,8 +348,7 @@ class My_Form_Test extends Zend_Dojo_Form
              ->addSubForm($sliderForm, 'slidertab');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.dojo.form.examples.decorating">
@@ -384,8 +383,7 @@ array(
     ),
 )
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternately, you can make a slight tweak to your form
@@ -402,8 +400,7 @@ class My_Custom_Form extends Zend_Form
         // ...
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Of course, if you can do that... you could and should simply alter

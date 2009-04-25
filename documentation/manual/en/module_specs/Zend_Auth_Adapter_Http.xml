@@ -181,8 +181,7 @@
                 for a line with a matching username and realm. The text file format similar to Apache htpasswd files:
                 <programlisting><![CDATA[
 <username>:<realm>:<credentials>\n
-]]>
-</programlisting>
+]]></programlisting>
                 Each line consists of three fields - username, realm, and credentials - each separated by a colon. The
                 credentials field is opaque to the file resolver; it simply returns that value as-is to the caller.
                 Therefore, this same file format serves both Basic and Digest authentication. In Basic authentication,
@@ -195,15 +194,13 @@
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
-]]>
-                </programlisting>
+]]></programlisting>
                 or
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $resolver->setFile($path);
-]]>
-                </programlisting>
+]]></programlisting>
                 If the given path is empty or not readable, an exception is thrown.
             </para>
 
@@ -224,8 +221,7 @@ $config = array(
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
 );
-]]>
-            </programlisting>
+]]></programlisting>
             This array will cause the adapter to accept either Basic or Digest authentication, and will require
             authenticated access to all the areas of the site under <code>/members_only</code> and
             <code>/my_account</code>. The realm value is usually displayed by the browser in the password dialog box.
@@ -236,8 +232,7 @@ $config = array(
             Next, create the Zend_Auth_Adapter_Http object:
             <programlisting role="php"><![CDATA[
 $adapter = new Zend_Auth_Adapter_Http($config);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -252,8 +247,7 @@ $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
 $adapter->setDigestResolver($digestResolver);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -270,8 +264,7 @@ $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Bad userame/password, or canceled password prompt
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
     </sect2>

@@ -50,8 +50,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->actionStack('bat', 'bar');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -87,8 +86,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->actionStack($request);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

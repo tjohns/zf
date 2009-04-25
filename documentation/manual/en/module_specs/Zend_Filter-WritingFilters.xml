@@ -29,8 +29,7 @@ class MyFilter implements Zend_Filter_Interface
         return $valueFiltered;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </para>
 
@@ -40,8 +39,7 @@ class MyFilter implements Zend_Filter_Interface
         <programlisting role="php"><![CDATA[
 $filterChain = new Zend_Filter();
 $filterChain->addFilter(new MyFilter());
-]]>
-        </programlisting>
+]]></programlisting>
 
     </para>
 

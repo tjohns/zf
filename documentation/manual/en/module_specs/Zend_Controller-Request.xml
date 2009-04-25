@@ -182,8 +182,7 @@
                 <programlisting role="php"><![CDATA[
 $request = new Zend_Controller_Request_Apache404();
 $front->setRequest($request);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     This class extends the
@@ -247,8 +246,7 @@ $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // set the base url!
 $response   = $controller->dispatch();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -402,8 +400,7 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function isDispatched();
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The request object is a container for the request environment. The

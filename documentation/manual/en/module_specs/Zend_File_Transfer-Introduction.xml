@@ -50,8 +50,7 @@
     <br />
     <input type="submit" value="Upload File" />
 </form>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
            For convenience, you can use <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> instead of building
            the HTML manually.
@@ -70,8 +69,7 @@ if (!$adapter->receive()) {
     $messages = $adapter->getMessages();
     echo implode("\n", $messages);
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This code listing demonstrates the simplest usage of <classname>Zend_File_Transfer</classname>. A local destination is set with the <code>setDestination</code>
             method, then the <code>receive()</code> method is called. If there are any upload errors, an error will be returned.
@@ -180,8 +178,7 @@ foreach ($files as $file => $info) {
 }
 
 $upload->receive();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>
@@ -256,8 +253,7 @@ $names = $upload->getFileName();
 
 // Returns the file names from the 'foo' form element
 $names = $upload->getFileName('foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -288,8 +284,7 @@ $size = $upload->getFileSize();
 // Switches of the SI notation to return plain numbers
 $upload->setOption(array('useByteString' => false));
 $size = $upload->getFileSize();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -312,8 +307,7 @@ $hash = $upload->getHash('md5');
 
 // Returns the hash for the 'foo' form element
 $names = $upload->getHash('crc32', 'foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -340,8 +334,7 @@ $mime = $upload->getMimeType();
 
 // Returns the mimetype for the 'foo' form element
 $names = $upload->getMimeType('foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -410,8 +403,7 @@ $upload = null;
 while (!$upload['done']) {
     $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -520,8 +512,7 @@ while (!$upload['done']) {
     print "\nActual progress:".$upload['message'];
     // do whatever you need
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 

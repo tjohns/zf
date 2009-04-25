@@ -41,8 +41,7 @@ $service = Zend_Gdata_Spreadsheets::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $spreadsheetService = new Zend_Gdata_Spreadsheets($client);
 $feed = $spreadsheetService->getSpreadsheetFeed();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
      <sect2 id="zend.gdata.spreadsheets.listworksheets">
@@ -64,8 +63,7 @@ $feed = $spreadsheetService->getSpreadsheetFeed();
 $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $feed = $spreadsheetService->getWorksheetFeed($query);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The resulting <classname>Zend_Gdata_Spreadsheets_WorksheetFeed</classname>
@@ -133,8 +131,7 @@ $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $listFeed = $spreadsheetService->getListFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The resulting <classname>Zend_Gdata_Spreadsheets_ListFeed</classname>
@@ -156,8 +153,7 @@ $rowData = $listFeed->entries[1]->getCustom();
 foreach($rowData as $customEntry) {
   echo $customEntry->getColumnName() . " = " . $customEntry->getText();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
               An alternate version of this array, <code>customByName</code>,
@@ -168,8 +164,7 @@ foreach($rowData as $customEntry) {
             <programlisting role="php"><![CDATA[
 $customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
 echo $customEntry->getColumnName() . " = " . $customEntry->getText();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.spreadsheets.listfeeds.reverse">
@@ -189,8 +184,7 @@ $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $query->setReverse('true');
 $listFeed = $spreadsheetService->getListFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Note that if you want to order (or reverse sort) by a
@@ -220,8 +214,7 @@ $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $query->setSpreadsheetQuery('name=John and age>25');
 $listFeed = $spreadsheetService->getListFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.spreadsheets.listfeeds.addrow">
@@ -236,8 +229,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
 $insertedListEntry = $spreadsheetService->insertRow($rowData,
                                                     $spreadsheetKey,
                                                     $worksheetId);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The <code>$rowData</code> parameter contains an array of column
@@ -265,8 +257,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
             <programlisting role="php"><![CDATA[
 $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
                                                    $newRowData);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The <code>$oldListEntry</code> parameter contains the list entry
@@ -289,8 +280,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
 
             <programlisting role="php"><![CDATA[
 $spreadsheetService->deleteRow($listEntry);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Alternatively, you can call the <code>delete</code> method of
@@ -299,8 +289,7 @@ $spreadsheetService->deleteRow($listEntry);
 
             <programlisting role="php"><![CDATA[
 $listEntry->delete();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
     </sect2>
@@ -330,8 +319,7 @@ $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $cellFeed = $spreadsheetService->getCellFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The resulting <classname>Zend_Gdata_Spreadsheets_CellFeed</classname>
@@ -349,8 +337,7 @@ foreach($cellFeed as $cellEntry) {
   $val = $cellEntry->cell->getText();
   echo "$row, $col = $val\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -369,8 +356,7 @@ $query->setMinCol(1);
 $query->setMaxCol(1);
 $query->setMinRow(2);
 $feed = $spreadsheetService->getCellsFeed($query);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 This requests all the data in column 1, starting with row 2.
@@ -392,8 +378,7 @@ $updatedCell = $spreadsheetService->updateCell($row,
                                                $inputValue,
                                                $spreadsheetKey,
                                                $worksheetId);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The new data is placed in the specified cell in the worksheet.

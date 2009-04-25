@@ -38,8 +38,7 @@ $filtered = $inflector->filter(array('page' => $string));
 $string   = 'this_is_not_camel_cased';
 $filtered = $inflector->filter(array('page' => $string));
 // pages/this_is_not_camel_cased.html
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <sect2 id="zend.filter.inflector.operation">
@@ -89,8 +88,7 @@ $filtered = $inflector->filter(array('page' => $string));
         <programlisting role="php"><![CDATA[
 // use Zend_Filter_Word_CamelCaseToDash as a rule
 $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To set alternate paths, <classname>Zend_Filter_Inflector</classname> has a
@@ -100,8 +98,7 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
 
         <programlisting role="php"><![CDATA[
 $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternatively, you can retrieve the plugin loader from the
@@ -111,8 +108,7 @@ $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
         <programlisting role="php"><![CDATA[
 $loader = $inflector->getPluginLoader();
 $loader->addPrefixPath('My_Filter', 'My/Filter/');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             For more options on modifying the paths to filters, please see <link
@@ -144,8 +140,7 @@ $inflector = new Zend_Filter_Inflector('#foo/#bar.#sfx', null, '#');
 
 // Via accessor:
 $inflector->setTargetReplacementIdentifier('#');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Typically, you will set the target via the constructor. However, you
@@ -158,8 +153,7 @@ $inflector->setTargetReplacementIdentifier('#');
         <programlisting role="php"><![CDATA[
 $inflector = $layout->getInflector();
 $inflector->setTarget('layouts/:script.phtml');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Additionally, you may wish to have a class member for your class
@@ -199,8 +193,7 @@ class Foo
         return $this;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.filter.inflector.rules">
@@ -240,8 +233,7 @@ $inflector->setStaticRule('suffix', 'phtml');
 
 // change it later:
 $inflector->setStaticRule('suffix', 'php');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Much like the target itself, you can also bind a static rule to
@@ -283,8 +275,7 @@ class Foo
         return $this;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.filter.inflector.rules.filters">
@@ -341,8 +332,7 @@ $inflector->setFilterRule('script', array(
     'Word_CamelCaseToDash',
     new Zend_Filter_StringToLower()
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.filter.inflector.rules.multiple">
@@ -386,8 +376,7 @@ $inflector->addRules(array(
     // Static rule:
     'suffix'      => 'phtml'
 ));
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </sect3>
     </sect2>
@@ -489,8 +478,7 @@ $inflector = new Zend_Filter_Inflector($config);
 // Or with setConfig():
 $inflector = new Zend_Filter_Inflector();
 $inflector->setConfig($config);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

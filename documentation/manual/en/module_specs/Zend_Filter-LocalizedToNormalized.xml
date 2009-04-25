@@ -90,8 +90,7 @@
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('123.456,78');
 // returns the value '123456.78'
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Let's expect you have set the locale 'de' as application wide locale.
@@ -144,8 +143,7 @@ $filter->filter('123.456');
 
 $filter->filter('123.456,78901');
 // returns the value '123456.79'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect3>
 
@@ -163,8 +161,7 @@ $filter->filter('123.456,78901');
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('12.April.2009');
 // returns array('day' => '12', 'month' => '04', 'year' => '2009')
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Let's expect you have set the locale 'de' again. Now the input is automatically detected
@@ -184,8 +181,7 @@ $filter = new Zend_Filter_LocalizedToNormalized(
 
 $filter->filter('11:22:33');
 // returns array('hour' => '33', 'minute' => '22', 'second' => '11')
-]]>
-        </programlisting>
+]]></programlisting>
     </sect3>
 
 </sect2>

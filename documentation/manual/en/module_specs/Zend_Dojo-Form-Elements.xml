@@ -64,8 +64,7 @@ $element->addDecorator('DijitElement')
         ->addDecorator('Errors')
         ->addDecorator('HtmlTag', array('tag' => 'dd'))
         ->addDecorator('Label', array('tag' => 'dt'));
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         In effect, the DijitElement decorator is used in place of the standard
@@ -130,8 +129,7 @@ $form->addElement(
         'label' => 'Button Label',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -191,8 +189,7 @@ $form->addElement(
         'checked'        => true,
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -312,8 +309,7 @@ $form->addElement(
         ),
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.dojo.form.elements.comboBox.datastoreExample">
@@ -335,8 +331,7 @@ $form->addElement(
         ),
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -413,8 +408,7 @@ $form->addElement(
         'fractional'     => false,
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -487,8 +481,7 @@ $form->addElement(
         'formatLength'   => 'long',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -647,8 +640,7 @@ $form->addElement('editor', 'content', array(
     'height'             => '250px',
     'inheritWidth'       => true,
     'styleSheets'        => array('/js/custom/editor.css'),
-));
-]]></programlisting>
+));]></programlisting>
         </example>
     </sect3>
 
@@ -783,8 +775,7 @@ $form->addElement(
         ),
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -873,8 +864,7 @@ $form->addElement(
         'maxlength'         => 20,
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -947,8 +937,7 @@ $form->addElement(
         ),
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -985,8 +974,7 @@ $form->addElement(
                             'must be at least 6 alphanumeric characters',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1031,8 +1019,7 @@ $form->addElement(
         'value' => 'bar',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1059,8 +1046,7 @@ $form->addElement(
         'style'    => 'width: 80em; height: 25em;',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1151,8 +1137,7 @@ $form->addElement(
         'label'      => 'Submit Button!',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1211,8 +1196,7 @@ $form->addElement(
         'propercase' => true,
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1240,8 +1224,7 @@ $form->addElement(
         'style'    => 'width: 200px;',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1314,8 +1297,7 @@ $form->addElement(
         'clickableIncrement' => 'T00:10:00',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1393,8 +1375,7 @@ $form->addElement(
         'invalidMessage' => 'Invalid non-space text.',
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 
@@ -1454,8 +1435,7 @@ $form->addElement(
         ),
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 </sect2>

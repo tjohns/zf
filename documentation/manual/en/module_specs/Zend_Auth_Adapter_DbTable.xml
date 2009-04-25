@@ -94,8 +94,8 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Insert the data
-$dbAdapter->query($sqlInsert);]]>
-            </programlisting>
+$dbAdapter->query($sqlInsert);
+]]></programlisting>
             <para>
                 With the database connection and table data available, an
                 instance of <classname>Zend_Auth_Adapter_DbTable</classname> may be
@@ -119,8 +119,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
-            </programlisting>
+;
+]]></programlisting>
             <para>
                 At this point, the authentication adapter instance is ready to
                 accept authentication queries. In order to formulate an
@@ -136,8 +136,7 @@ $authAdapter
 ;
 
 // Perform the authentication query, saving the result
-$result = $authAdapter->authenticate();]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 In addition to the availability of the
                 <code>getIdentity()</code> method upon the authentication result
@@ -161,8 +160,7 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Since the table row contains the credential value, it is
                 important to secure the values against unintended access.
@@ -207,8 +205,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
-        </programlisting>
+}
+]]></programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
@@ -245,8 +243,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Another scenario can be the implementation of a salting mechanism.
             Salting is a term referring to a technique which can highly improve
@@ -262,9 +259,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
 $sqlAlter = "ALTER TABLE [users] "
           . "ADD COLUMN [password_salt] "
           . "AFTER [password]";
-
-$dbAdapter->query($sqlAlter);]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Here’s a simple way to generate a salt string for every user at
             registration:
@@ -272,8 +267,7 @@ $dbAdapter->query($sqlAlter);]]>
         <programlisting role="php"><![CDATA[
 for ($i = 0; $i < 50; $i++) {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
-        </programlisting>
+]]></programlisting>
         <para>
             And now let’s build the adapter:
         </para>
@@ -286,8 +280,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     "MD5(CONCAT('"
     . Zend_Registry::get('staticSalt')
     . "', ?, password_salt))"
-);]]>
-        </programlisting>
+);
+]]></programlisting>
         <note>
             <para>
                 You can improve security even more by using a static salt value
@@ -327,8 +321,6 @@ $select->where('active = "TRUE"');
 
 // authenticate, this ensures that users.active = TRUE
 $adapter->authenticate();
-
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>

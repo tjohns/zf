@@ -52,8 +52,7 @@ $number = Zend_Locale_Format::getNumber('13.524,678',
                                        );
 
 print $number; // will return 13524.678
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <sect3 id="zend.locale.number.normalize.precision">
@@ -99,8 +98,7 @@ $number = Zend_Locale_Format::getNumber('13.524,678',
                                               'locale' => $locale)
                                        );
 print $number; // will return 13524.67
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
         </sect3>
@@ -128,8 +126,7 @@ $number = Zend_Locale_Format::toNumber(13547.36,
 
 // will return 13.547,36
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -157,8 +154,7 @@ $number = Zend_Locale_Format::toNumber(13547.3678,
 
 // will return 13.547,37
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -234,8 +230,7 @@ $number = Zend_Locale_Format::toNumber(13547.3,
 
 // will return 13.547,30
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -258,8 +253,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
 } else {
     print "not a Number";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -284,8 +278,7 @@ $number = Zend_Locale_Format::getFloat('13.524,678',
 
 // will return 13524.68
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -310,8 +303,7 @@ $number = Zend_Locale_Format::toFloat(13547.3655,
 
 // will return 13.547,4
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -334,8 +326,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
 } else {
     print "not a float";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -357,8 +348,7 @@ $number = Zend_Locale_Format::getInteger('13.524,678',
 
 // will return 13524
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -381,8 +371,7 @@ $number = Zend_Locale_Format::toInteger(13547.3655,
 
 // will return 13.547
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -405,8 +394,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
 } else {
     print "not a integer";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -454,8 +442,7 @@ $latinScript = Zend_Locale_Format::convertNumerals($arabicScript,
 
 print "\nOriginal:   " . $arabicScript;
 print "\nNormalized: " . $latinScript;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -472,8 +459,7 @@ $arabicScript = Zend_Locale_Format::convertNumerals($latinScript,
 
 print "\nOriginal:  " . $latinScript;
 print "\nLocalized: " . $arabicScript;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.locale.numbersystems.example-3">
@@ -488,8 +474,7 @@ function getScriptCode($scriptName, $locale)
 echo getScriptCode('Latin', 'en'); // outputs "Latn"
 echo getScriptCode('Tamil', 'en'); // outputs "Taml"
 echo getScriptCode('tamoul', 'fr'); // outputs "Taml"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <sect3 id="zend.locale.appendix.numberscripts.supported">

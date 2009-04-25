@@ -123,8 +123,7 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Create an instance of the service
 $service = new Zend_Gdata_Photos($client);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>A service instance using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
             <programlisting role="php"><![CDATA[
@@ -213,15 +212,13 @@ function getAuthSubHttpClient()
  * to the AuthSub server if necessary.
  */
 $service = new Zend_Gdata_Photos(getAuthSubHttpClient());
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>Finally, an unauthenticated server can be created for use with public feeds:</para>
             <programlisting role="php"><![CDATA[
 // Create an instance of the service using an unauthenticated HTTP client
 $service = new Zend_Gdata_Photos();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -264,8 +261,7 @@ $service = new Zend_Gdata_Photos($client);
 
 $query = new Zend_Gdata_Photos_UserQuery();
 $query->setUser("sample.user");
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             For each query, a number of parameters limiting the search can be requested, or specified,
@@ -378,8 +374,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>Or, the feed can be accessed by constructing a query, first:</para>
             <programlisting role="php"><![CDATA[
@@ -395,8 +390,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>Constructing a query also provides the ability to request a user entry object:</para>
             <programlisting role="php"><![CDATA[
@@ -413,8 +407,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.album_retrieval">
@@ -438,8 +431,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Alternatively, the query object can be given an album name with <code>setAlbumName</code>. Setting
@@ -462,8 +454,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_retrieval">
@@ -488,8 +479,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>Constructing a query also provides the ability to request a photo entry object:</para>
             <programlisting role="php"><![CDATA[
@@ -508,8 +498,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_retrieval">
@@ -543,8 +532,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.tag_retrieval">
@@ -577,8 +565,7 @@ try {
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getMessage();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
     </sect2>
@@ -599,8 +586,7 @@ $entry = new Zend_Gdata_Photos_AlbumEntry();
 $entry->setTitle($service->newTitle("test album"));
 
 $service->insertAlbumEntry($entry);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_creation">
@@ -627,8 +613,7 @@ $albumQuery->setAlbumId("1");
 $albumEntry = $service->getAlbumEntry($albumQuery);
 
 $service->insertPhotoEntry($entry, $albumEntry);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_creation">
@@ -652,8 +637,7 @@ $photoQuery->setType('entry');
 $photoEntry = $service->getPhotoEntry($photoQuery);
 
 $service->insertCommentEntry($entry, $photoEntry);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.tag_creation">
@@ -676,8 +660,7 @@ $photoQuery->setType('entry');
 $photoEntry = $service->getPhotoEntry($photoQuery);
 
 $service->insertTagEntry($entry, $photoEntry);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
     </sect2>
@@ -702,8 +685,7 @@ $albumQuery->setType('entry');
 $entry = $service->getAlbumEntry($albumQuery);
 
 $service->deleteAlbumEntry($entry, true);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_deletion">
@@ -723,8 +705,7 @@ $photoQuery->setType('entry');
 $entry = $service->getPhotoEntry($photoQuery);
 
 $service->deletePhotoEntry($entry, true);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_deletion">
@@ -746,8 +727,7 @@ $path = $photoQuery->getQueryUrl() . '/commentid/' . "1000";
 $entry = $service->getCommentEntry($path);
 
 $service->deleteCommentEntry($entry, true);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.tag_deletion">
@@ -776,8 +756,7 @@ foreach ($photoFeed as $entry) {
 }
 
 $service->deleteTagEntry($tagEntry, true);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.optimistic_concurrenty">
@@ -806,8 +785,7 @@ try {
         throw $e;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
     </sect2>

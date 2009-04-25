@@ -19,8 +19,7 @@ $entry->title = 'This is a new title';
 $entry->author->email = 'my_email@example.com';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
             new entry, including any necessary XML namespaces.
@@ -57,8 +56,7 @@ $entry->{'myns:container_elt'}->part1 = 'first nested custom part';
 $entry->{'myns:container_elt'}->part2 = 'second nested custom part';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

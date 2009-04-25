@@ -13,8 +13,7 @@ $phpNative = Zend_Json::decode($encodedValue);
 
 // Encode it to return to the client:
 $json = Zend_Json::encode($phpNative);
-]]>
-    </programlisting>
+]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

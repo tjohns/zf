@@ -73,8 +73,7 @@
             <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory( ...options... );
 $select = $db->select();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -90,8 +89,7 @@ $select = $db->select();
             <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory( ...options... );
 $select = new Zend_Db_Select($db);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -122,8 +120,7 @@ $select->where( ...specify search criteria... )
 
 // Add an ORDER BY clause
 $select->order( ...specify sorting criteria... );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -142,8 +139,7 @@ $select = $db->select()
     ->from( ...specify table and columns... )
     ->where( ...specify search criteria... )
     ->order( ...specify sorting criteria... );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -175,8 +171,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from( 'products' );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -200,8 +195,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from( array('p' => 'products') );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -229,8 +223,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from('products', '*', 'myschema');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -295,8 +288,7 @@ $select = $db->select()
 $select = $db->select()
              ->from(array('p' => 'products'),
                     array('prodno' => 'product_id', 'product_name'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -365,8 +357,7 @@ $select = $db->select()
                           'cost_plus_tax' =>
                               new Zend_Db_Expr('p.cost * 1.08'))
                     );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -409,8 +400,7 @@ $select = $db->select()
                     array('origin' =>
                               '(p.' . $db->quoteIdentifier('from') . ' + 10)')
                    );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -450,8 +440,7 @@ $select = $db->select()
 $select = $db->select()
              ->from(array('p' => 'products'), 'p.product_id')
              ->columns('product_name', 'p');
-             // Alternatively use columns('p.product_name')]]>
-                </programlisting>
+             // Alternatively use columns('p.product_name')]]></programlisting>
 
             </example>
 
@@ -483,8 +472,7 @@ $select = $db->select()
                     array('product_id', 'product_name'))
              ->join(array('l' => 'line_items'),
                     'p.product_id = l.product_id');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -534,8 +522,7 @@ $select = $db->select()
              ->join(array('l' => 'line_items'),
                     'p.product_id = l.product_id',
                     array() ); // empty list of columns
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     Note the empty <code>array()</code> in the above example in place of a list of
@@ -687,8 +674,8 @@ $select = $db->select()
 $select = $db->select()
              ->from('table1')
              ->joinUsing('table2', 'column1')
-             ->where('column2 = ?', 'foo');]]>
-                </programlisting>
+             ->where('column2 = ?', 'foo');
+]]></programlisting>
 
             </example>
 
@@ -749,8 +736,8 @@ $select = $db->select()
 $select = $db->select()
              ->from('products',
                     array('product_id', 'product_name', 'price'))
-             ->where('price > 100.00');]]>
-                </programlisting>
+             ->where('price > 100.00');
+]]></programlisting>
 
             </example>
 
@@ -793,8 +780,7 @@ $select = $db->select()
              ->from('products',
                     array('product_id', 'product_name', 'price'))
              ->where('price > ?', $minimumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -823,8 +809,7 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where('price > ?', $minimumPrice)
              ->where('price < ?', $maximumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -854,8 +839,7 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where('price < ?', $minimumPrice)
              ->orWhere('price > ?', $maximumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -885,8 +869,7 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where("price < $minimumPrice OR price > $maximumPrice")
              ->where('product_name = ?', $prod);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -934,8 +917,7 @@ $select = $db->select()
                     'p.product_id = l.product_id',
                     array('line_items_per_product' => 'COUNT(*)'))
              ->group('p.product_id');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -990,8 +972,7 @@ $select = $db->select()
                     array('line_items_per_product' => 'COUNT(*)'))
              ->group('p.product_id')
              ->having('line_items_per_product > 10');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1056,8 +1037,7 @@ $select = $db->select()
              ->group('p.product_id')
              ->order(array('line_items_per_product DESC',
                            'product_id'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1095,8 +1075,7 @@ $select = $db->select()
              ->from(array('p' => 'products'),
                     array('product_id', 'product_name'))
              ->limit(10, 20);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1135,8 +1114,7 @@ $select = $db->select()
              ->from(array('p' => 'products'),
                     array('product_id', 'product_name'))
              ->limitPage(2, 10);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1163,8 +1141,7 @@ $select = $db->select()
 $select = $db->select()
              ->distinct()
              ->from(array('p' => 'products'), 'product_name');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1191,8 +1168,7 @@ $select = $db->select()
 $select = $db->select()
              ->forUpdate()
              ->from(array('p' => 'products'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1233,8 +1209,7 @@ $select = $db->select()
 
 $stmt = $db->query($select);
 $result = $stmt->fetchAll();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1261,8 +1236,7 @@ $select = $db->select()
 
 $stmt = $select->query();
 $result = $stmt->fetchAll();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1290,8 +1264,7 @@ echo "$sql\n";
 
 // The output is the string:
 //   SELECT * FROM "products"
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1424,8 +1397,7 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 // The return value may be an array structure, not a string.
 // Each part has a different structure.
 print_r( $orderData );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1479,8 +1451,7 @@ $select->order('product_id');
 
 // Clear all parts of the query
 $select->reset();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 

@@ -33,8 +33,7 @@
         <programlisting role="php"><![CDATA[
 // Decode JSON objects as PHP objects
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Any objects thus decoded are returned as <code>StdClass</code> objects
             with properties corresponding to the key/value pairs in the JSON
@@ -80,8 +79,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 
         <programlisting role="php"><![CDATA[
 Zend_Json::$useBuiltinEncoderDecoder = true:
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.json.advanced.expr">
@@ -117,8 +115,7 @@ $jsonObjectWithExpression = Zend_Json::encode(
     false,
     array('enableJsonExprFinder' => true)
 );
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>
 <!--

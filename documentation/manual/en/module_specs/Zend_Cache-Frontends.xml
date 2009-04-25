@@ -144,8 +144,7 @@ if (!($data = $cache->load($id))) {
 }
 
 // [...] do something with $data (echo it, pass it on etc.)
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 If you want to cache multiple blocks or data instances, the idea is the same:
             </para>
@@ -184,8 +183,7 @@ if (!($data = $cache->load($id2))) {
 
 }
 echo($data);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 If you want to cache special values (boolean with "automatic_serialization" option) or empty
                 strings you can't use the compact construction given above. You have to test formally the
@@ -226,8 +224,7 @@ if (!($cache->test($id))) {
 }
 
 // we do something with $data
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -267,8 +264,7 @@ if (!($cache->start('mypage'))) {
 }
 
 echo 'This is never cached ('.time().').';
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Using this form it is fairly easy to set up output caching in your already working project
                 with little or no code refactoring.
@@ -342,8 +338,7 @@ $cache->call('veryExpensiveFunc', $params);
 // For example to call veryExpensiveFunc(1, 'foo', 'bar') with
 // caching, you can use
 // $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 <classname>Zend_Cache_Frontend_Function</classname> is smart enough to cache both the
                 return value of the function and its internal output.
@@ -442,8 +437,7 @@ $frontendOptions = array(
 
 // The cached call
 $result = $cache->foobar('1', '2');
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 To cache classic method calls :
             </para>
@@ -468,8 +462,7 @@ $frontendOptions = array(
 
 // The cached call
 $result = $cache->foobar2('1', '2');
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -747,8 +740,7 @@ $cache->start();
 // and the script stop here
 
 // rest of the page ...
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 a more complex example which shows a way to get a centralized cache management in a bootstrap file
                 (for using with <classname>Zend_Controller</classname> for example)
@@ -802,8 +794,7 @@ $cache->start();
 
 // [...] the end of the bootstrap file
 // these lines won't be executed if the cache is hit
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
             <title>The Specific Cancel Method</title>
@@ -825,8 +816,7 @@ if ($someTest) {
 }
 
 // [...]
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

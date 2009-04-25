@@ -42,8 +42,7 @@ try {
     echo $e->getUsageMessage();
     exit;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Cases where parsing throws an exception include:
@@ -84,8 +83,7 @@ try {
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Alternatively, you can use the magic <code>__get()</code> function
@@ -101,8 +99,7 @@ if (isset($opts->b)) {
     echo "I got the b option.\n";
 }
 $p_parameter = $opts->p; // null if not set
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             If your options are declared with aliases, you may use any of the
@@ -168,8 +165,7 @@ $p_parameter = $opts->p; // null if not set
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
 $args = $opts->getRemainingArgs(); // returns array('filename')
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             <classname>Zend_Console_Getopt</classname> supports the GNU convention that

@@ -304,8 +304,7 @@
         </para>
         <programlisting role="php"><![CDATA[
 $cache = Zend_Cache::factory('Core', 'Zend Platform');
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             There are no options for this backend.
         </para>

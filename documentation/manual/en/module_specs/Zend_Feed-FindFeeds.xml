@@ -9,8 +9,7 @@
     </para>
     <programlisting role="php"><![CDATA[
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         Here the <code>findFeeds()</code> method returns an array of <classname>Zend_Feed_Abstract</classname>
         objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on

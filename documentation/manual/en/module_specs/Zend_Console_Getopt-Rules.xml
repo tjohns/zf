@@ -38,8 +38,7 @@
             <title>Using the Short Syntax</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             The example above shows using <classname>Zend_Console_Getopt</classname>
@@ -108,8 +107,7 @@ $opts = new Zend_Console_Getopt(
     'pear|p-s'   => 'pear option, with optional string parameter'
   )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             In the example declaration above, there are three options.

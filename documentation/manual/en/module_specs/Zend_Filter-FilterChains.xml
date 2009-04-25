@@ -18,8 +18,7 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
 
 // Filter the username
 $username = $filterChain->filter($_POST['username']);
-]]>
-        </programlisting>
+]]></programlisting>
 
         Filters are run in the order they were added to <classname>Zend_Filter</classname>. In the above example, the
         username is first removed of any non-alphabetic characters, and then any uppercase characters are

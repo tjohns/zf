@@ -33,8 +33,7 @@
             <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_status = 'NEW'");
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -70,8 +69,7 @@ if ($rowCount > 0) {
 } else {
     echo 'no rows matched the query';
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -88,8 +86,7 @@ if ($rowCount > 0) {
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
 $row    = $rowset->current();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -129,8 +126,7 @@ foreach ($rowset as $row) {
     // write the change to the database
     $row->save();
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -161,8 +157,7 @@ $row9 = $rowset->current();
 // and use it
 $row9->assigned_to = 'mmouse';
 $row9->save();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -186,8 +181,7 @@ $row9->getRow(8);
 // and use it:
 $row9->assigned_to = 'mmouse';
 $row9->save();
-]]>
-            </programlisting>
+]]></programlisting>
 
 
 
@@ -227,8 +221,7 @@ foreach ($rowsetArray as $rowArray) {
     ++$rowCount;
     echo "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -264,8 +257,7 @@ $rowset = $bugs->fetchAll();
 $serializedRowset = serialize($rowset);
 
 // Now you can write $serializedRowset to a file, etc.
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -291,8 +283,7 @@ $rowsetDisconnected = unserialize($serializedRowset);
 // Now you can use object methods and properties, but read-only
 $row = $rowsetDisconnected->current();
 echo $row->bug_description;
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -333,8 +324,7 @@ $row = $rowset->current();
 // Now you can make changes to the row and save them
 $row->bug_status = 'FIXED';
 $row->save();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -376,8 +366,7 @@ class Products extends Zend_Db_Table_Abstract
 // Or specify a custom Rowset to be used in one
 // instance of a Table class.
 $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -415,8 +404,7 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

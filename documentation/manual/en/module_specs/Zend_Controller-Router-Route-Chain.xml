@@ -46,8 +46,7 @@ $chainedRoute->chain($hostnameRoute)
 
 // Second way, chain them directly
 $chainedRoute = $hostnameRoute->chain($pathRoute);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         When chaining routes together, their default separator is a slash
@@ -65,8 +64,7 @@ $chainedRoute = $firstRoute->chain($secondRoute, '-');
 
 // Assemble the route: "foo-bar"
 echo $chainedRoute->assemble();
-]]>
-    </programlisting>
+]]></programlisting>
 
     <sect4 id="zend.controller.router.routes.chain.config">
         <title>Chain Routes via <classname>Zend_Config</classname></title>
@@ -117,8 +115,7 @@ echo $chainedRoute->assemble();
         <route>misc</route>
     </misc>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This will result in the three routes <code>www-language-index</code>,
@@ -159,8 +156,7 @@ echo $chainedRoute->assemble();
         <chain>www, language, imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You can also give the <code>chain</code> parameter as array instead
@@ -180,8 +176,7 @@ echo $chainedRoute->assemble();
         <chain>imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 </sect3>
 <!--

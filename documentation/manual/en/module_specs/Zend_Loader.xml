@@ -37,8 +37,7 @@
             <title>Example of the loadFile() Method</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);
-]]>
-            </programlisting>
+]]></programlisting>
     </example>
 
         <para>
@@ -86,8 +85,7 @@ Zend_Loader::loadClass('Container_Tree',
         '/home/production/myapp'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -133,8 +131,7 @@ Zend_Loader::loadClass('Container_Tree',
 if (Zend_Loader::isReadable($filename)) {
     // do something with $filename
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -166,8 +163,7 @@ if (Zend_Loader::isReadable($filename)) {
             <title>Example of registering the autoloader callback method</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::registerAutoload();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -216,8 +212,7 @@ class My_Loader extends Zend_Loader
 }
 
 Zend_Loader::registerAutoload('My_Loader');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

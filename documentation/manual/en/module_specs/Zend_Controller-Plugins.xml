@@ -92,8 +92,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             None of the methods of <classname>Zend_Controller_Plugin_Abstract</classname>
@@ -167,8 +166,7 @@ $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Assuming that no actions called emit any output, and only one action
@@ -183,8 +181,7 @@ $front->dispatch();
 <p>preDispatch() called</p>
 <p>postDispatch() called</p>
 <p>dispatchLoopShutdown() called</p>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>

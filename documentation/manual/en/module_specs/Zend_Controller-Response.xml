@@ -19,8 +19,7 @@
 
         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To send the response output, including headers, use
@@ -29,8 +28,7 @@ $front->throwExceptions(true);
 
         <programlisting role="php"><![CDATA[
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -49,8 +47,7 @@ $response = $front->dispatch();
 // do some more processing, such as logging...
 // and then send the output:
 $response->sendResponse();
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
 
         <para>
@@ -65,8 +62,7 @@ $response->sendResponse();
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             By doing this, all headers get sent at once, just prior to
@@ -114,8 +110,7 @@ $response = $front->dispatch();
 
 // finally, echo the response
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             By default, exception messages are not displayed. This behaviour may be
@@ -136,8 +131,7 @@ $response->sendResponse();
 // or:
 $front->throwExceptions(true);
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -293,8 +287,7 @@ class MyController extends Zend_Controller_Action
         $this->render();
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
@@ -308,8 +301,7 @@ array(
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When this is rendered, it will render in the order in which elements

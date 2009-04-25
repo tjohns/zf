@@ -70,8 +70,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
             property:
@@ -84,8 +83,7 @@ $entry->myUpdated = '2005-04-19T15:30';
 $entry->myUpdated();
 // property-style call is handled by __get function
 $entry->myUpdated;
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

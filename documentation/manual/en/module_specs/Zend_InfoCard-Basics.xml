@@ -42,8 +42,7 @@
          http://.../claims/surname" />
  </object>
 </form>
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             In the example above, the <code>requiredClaims</code>
@@ -137,8 +136,7 @@ if (isset($_POST['xmlToken'])) {
   </object>
  </form>
 </div>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In the example above, we first create an instance of the
@@ -205,8 +203,7 @@ if (isset($_POST['xmlToken'])) {
    </object>
  </form>
 </div>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In the example above, we use the <classname>Zend_InfoCard</classname> component
@@ -324,8 +321,7 @@ public function submitinfocardAction()
             ZBlog_Exception("Infomation card failed security checks");
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.infocard.basics.adapters">
@@ -389,8 +385,7 @@ $infoCard->addCertificatePair(SSL_PRIVATE, SSL_PUB);
 $infoCard->setAdapter($adapter);
 
 $claims = $infoCard->process($_POST['xmlToken']);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>
 <!--

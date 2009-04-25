@@ -18,8 +18,7 @@ $mail->createAttachment($myImage,
                         'image/gif',
                         Zend_Mime::DISPOSITION_INLINE,
                         Zend_Mime::ENCODING_8BIT);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <para>
         If you want more control over the MIME part generated for this attachment you can use the return value
@@ -36,8 +35,7 @@ $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
 $mail->send();
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
         An alternative is to create an instance of <classname>Zend_Mime_Part</classname> and add it with <code>addAttachment()</code>:
     </para>
@@ -53,8 +51,7 @@ $at->filename    = 'test.gif';
 $mail->addAttachment($at);
 
 $mail->send();
-]]>
-    </programlisting>
+]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

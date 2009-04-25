@@ -57,8 +57,7 @@ application/
 html/
     .htaccess
     index.php
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -86,8 +85,7 @@ RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 If using IIS 7.0, use the following as your rewrite
@@ -119,8 +117,7 @@ RewriteRule ^.*$ index.php [NC,L]
              </rules>
          </rewrite>
      </system.webServer>
-</configuration>
-]]></programlisting>
+</configuration>]></programlisting>
 
             <para>
                 The above rules will route requests to existing resources
@@ -150,8 +147,7 @@ RewriteRule ^.*$ index.php [NC,L]
 
             <programlisting role="php"><![CDATA[
 Zend_Controller_Front::run('/path/to/app/controllers');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 This will instantiate and dispatch the front controller, which
@@ -211,8 +207,7 @@ class IndexController extends Zend_Controller_Action
     {
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 By default, the <link
@@ -263,8 +258,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Hello, World!</h1>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
@@ -286,8 +280,7 @@ class ErrorController extends Zend_Controller_Action
     {
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Assuming the already discussed directory layout, this file will
@@ -311,8 +304,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <p>An error occurred; please try again later.</p>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

@@ -47,8 +47,7 @@ Zend_Locale::$compatibilityMode = false;
 
 if (Zend_Locale::isLocale($locale)) {
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     Note that you can use the second parameter to see if the locale is correct without
@@ -74,8 +73,7 @@ if (Zend_Locale::isLocale($locale, false)) {
 
     // original string is no locale but can be rerouted
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -108,8 +106,7 @@ $locales = $locale->getDefault(Zend_Locale::BROWSER);
 Zend_Locale::$compatibilityMode = false;
 
 $locale = Zend_Locale::getOrder(Zend_Locale::BROWSER);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     Note that the second parameter of the old getDefault() implementation is not

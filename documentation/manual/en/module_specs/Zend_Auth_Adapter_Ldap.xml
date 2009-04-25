@@ -65,8 +65,7 @@ if ($log_path) {
         }
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
             Of course, the logging code is optional, but it is highly recommended that you use a logger.
             <classname>Zend_Auth_Adapter_Ldap</classname> will record just about every bit of information anyone could want in
             <code>$messages</code> (more below), which is a nice feature in itself for something that has a history of
@@ -104,8 +103,7 @@ ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
-]]>
-</programlisting>
+]]></programlisting>
             The above configuration will instruct <classname>Zend_Auth_Adapter_Ldap</classname> to attempt to authenticate users
             with the OpenLDAP server <code>s0.foo.net</code> first. If the authentication fails for any reason, the AD
             server <code>dc1.w.net</code> will be tried.
@@ -169,8 +167,7 @@ Array
         )
 
 )
-]]>
-</programlisting>
+]]></programlisting>
             The information provided in each set of options above is different mainly because AD does not require a
             username be in DN form when binding (see the <code>bindRequiresDn</code> option in the
             <emphasis>Server Options</emphasis> section below), which means we can omit a number of options

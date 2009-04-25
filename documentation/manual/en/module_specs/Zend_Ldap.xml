@@ -52,8 +52,7 @@ $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('abaker',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </para>
 
@@ -74,8 +73,7 @@ $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('bcarter',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             Note that we use the <code>getCanonicalAccountName()</code> method to retrieve the account DN here only
             because that is what exercises the most of what little code is currently present in this class.
@@ -116,8 +114,7 @@ $ldap->bind('abaker', 'moonbike55');
 $acctname = $ldap->getCanonicalAccountName('abaker',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-                </programlisting>
+]]></programlisting>
 
                 The <code>bind()</code> call in this example sees that the username '<code>abaker</code>' is not in DN
                 form, finds <code>bindRequiresDn</code> is <code>true</code>, uses
@@ -392,8 +389,7 @@ foreach ($multiOptions as $name => $options) {
         }
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
                 If the bind fails for any reason, the next set of server options is tried.
             </para>

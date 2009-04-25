@@ -91,8 +91,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
     );
 
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If you use <classname>Zend_Db_Table</classname> to emulate cascading UPDATE and DELETE operations, declare the
@@ -215,8 +214,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
         <programlisting role="php"><![CDATA[
 $row->findDependentRowset($table, [$rule]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This method returns a <classname>Zend_Db_Table_Rowset_Abstract</classname> object, containing a set of rows
@@ -245,8 +243,7 @@ $accountsRowset = $accountsTable->find(1234);
 $user1234 = $accountsRowset->current();
 
 $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -280,8 +277,7 @@ $accountsRowset = $accountsTable->find(1234);
 $user1234 = $accountsRowset->current();
 
 $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -312,8 +308,7 @@ $select = $accountsTable->select()->order('name ASC')
 $bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
                                                      'Engineer',
                                                      $select);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -375,8 +370,7 @@ $bugsReportedBy = $user1234->findBugs();
 
 // Specify the reference rule
 $bugsAssignedTo = $user1234->findBugsByEngineer();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -393,8 +387,7 @@ $bugsAssignedTo = $user1234->findBugsByEngineer();
 
         <programlisting role="php"><![CDATA[
 $row->findParentRow($table, [$rule]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             There always should be exactly one row in the parent table referenced by a dependent
@@ -423,8 +416,7 @@ $bugsRowset = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
 $bug1 = $bugsRowset->current();
 
 $reporter = $bug1->findParentRow('Accounts');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -457,8 +449,7 @@ $bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
 $bug1 = $bugsRowset->current();
 
 $engineer = $bug1->findParentRow('Accounts', 'Engineer');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -519,8 +510,7 @@ $reporter = $bug1->findParentAccounts();
 
 // Specify the reference rule
 $engineer = $bug1->findParentAccountsByEngineer();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -545,8 +535,7 @@ $row->findManyToManyRowset($table,
                                    [Zend_Db_Table_Select $select]
                                ]
                            ]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This method returns a <classname>Zend_Db_Table_Rowset_Abstract</classname> containing rows from the table
@@ -585,8 +574,7 @@ $bug1234 = $bugsRowset->current();
 
 $productsRowset = $bug1234->findManyToManyRowset('Products',
                                                  'BugsProducts');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -639,8 +627,7 @@ $bug1234 = $bugsRowset->current();
 $productsRowset = $bug1234->findManyToManyRowset('Products',
                                                  'BugsProducts',
                                                  'Bug');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -712,8 +699,7 @@ $products = $bug1234->findProductsViaBugsProducts();
 
 // Specify the reference rule
 $products = $bug1234->findProductsViaBugsProductsByBug();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -776,8 +762,7 @@ $product1234 = $productsRowset->current();
 $product1234->delete();
 // Automatically cascades to Bugs table
 // and deletes dependent rows.
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -836,8 +821,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
         ...
     );
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
