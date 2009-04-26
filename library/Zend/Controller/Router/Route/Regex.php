@@ -219,6 +219,26 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
     public function getDefaults() {
         return $this->_defaults;
     }
+    
+    /**
+     * Get all variables which are used by the route
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        $variables = array();
+        
+        foreach ($this->_map as $key => $value) {
+            if (is_numeric($key)) {
+                $variables[] = $value;
+            } else {
+                $variables[] = $key;
+            }
+        }
+        
+        return $variables;
+    }
 
     /**
      * _arrayMergeNumericKeys() - allows for a strict key (numeric's included) array_merge.
