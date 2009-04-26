@@ -139,14 +139,14 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
      * @param string $path Path used to match against this routing map
      * @return array An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = false)
     {
         $this->_setRequestKeys();
 
         $values = array();
         $params = array();
         
-        if (!$this->isPartial()) {
+        if (!$partial) {
             $path = trim($path, self::URI_DELIMITER);
         } else {
             $matchedPath = $path;
@@ -177,7 +177,7 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
             }
         }
         
-        if ($this->isPartial()) {
+        if ($partial) {
             $this->setMatchedPath($matchedPath);
         }
 

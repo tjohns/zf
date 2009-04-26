@@ -70,9 +70,9 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
      * @param  string $path Path used to match against this routing map
      * @return array|false  An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = false)
     {
-        if (!$this->isPartial()) {
+        if (!$partial) {
             $path = trim(urldecode($path), '/');
             $regex = '#^' . $this->_regex . '$#i';
         } else {
@@ -85,7 +85,7 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
             return false;
         }
         
-        if ($this->isPartial()) {
+        if ($partial) {
             $this->setMatchedPath($values[0]);
         }
 
