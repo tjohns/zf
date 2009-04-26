@@ -8,7 +8,7 @@
         <classname>Zend_Controller_Plugin_ErrorHandler</classname> est un plugin intégré
         d'office dans le modèle MVC, il sert à gérer les exceptions envoyées par l'application, en
         particulier celles concernant des contrôleurs ou des actions manquants. C'est une manière
-        rejoignant la section 
+        rejoignant la section
         <link linkend="zend.controller.exceptions">Exceptions MVC</link>.
     </para>
 
@@ -67,7 +67,7 @@
 
     <para>
         <classname>Zend_Controller_Plugin_ErrorHandler</classname> agit en
-        <code>postDispatch()</code> et analyse 
+        <code>postDispatch()</code> et analyse
         <link linkend="zend.controller.response">l'objet de réponse</link>à la recherche
         d'éventuelles exceptions. Si il y en a, alors le plugin modifie la requête pour distribuer
         le contrôleur et l'action d'erreur.

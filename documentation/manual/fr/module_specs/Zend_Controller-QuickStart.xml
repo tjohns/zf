@@ -9,11 +9,11 @@
 
         <para>
             <classname>Zend_Controller</classname> est le coeur du système MVC de Zend
-            Framework. MVC équivaut à 
+            Framework. MVC équivaut à
             <ulink url="http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur">
             Modèle-Vue-Contrôleur</ulink>et est un motif de conception ("design pattern") visant à
             séparer la logique d'application de la logique d'affichage.
-            <classname>Zend_Controller_Front</classname> implémente un modèle de 
+            <classname>Zend_Controller_Front</classname> implémente un modèle de
             <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">contrôleur
             frontal ("Front Controller")</ulink>, dans lequel toutes les demandes sont arrêtées par
             le contrôleur frontal et distribuées vers différents contrôleurs d'action ("Action
@@ -140,7 +140,7 @@ RewriteRule ^.*$ index.php [NC,L]
             <note>
                 <para>
                     Les règles de réécriture ci-dessus sont pour Apache ; pour des exemples
-                    de règles de réécriture pour d'autres serveurs Web, reportez-vous à la 
+                    de règles de réécriture pour d'autres serveurs Web, reportez-vous à la
                     <link linkend="zend.controller.router.introduction">documentation du
                     routeur</link>.
                 </para>
@@ -220,7 +220,7 @@ class IndexController extends Zend_Controller_Action
 ]]></programlisting>
 
             <para>
-                Par défaut, l'aide d'action 
+                Par défaut, l'aide d'action
                 <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>est
                 activé. Ceci signifie qu'en définissant simplement une méthode d'action et un
                 script de vue correspondant, vous obtiendrez automatiquement le rendu du contenu.
@@ -242,7 +242,7 @@ class IndexController extends Zend_Controller_Action
             <title>Créer votre script de vue</title>
 
             <para>
-                Comme mentionné 
+                Comme mentionné
                 <link linkend="zend.controller.quickstart.go.controller">dans la section
                 précédente</link>, les scripts de vue sont dans
                 <code>application/views/scripts/</code> ; le script de vue pour le contrôleur et
@@ -277,7 +277,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             <title>Créer votre contrôleur d'erreur</title>
 
             <para>
-                Par défaut, 
+                Par défaut,
                 <link linkend="zend.controller.plugins.standard.errorhandler">le plugin de gestion
                 des erreurs</link>est enregistré. Ce plugin nécessite qu'un contrôleur existe pour
                 gérer les erreurs. Par défaut, il s'agit d'un <code>ErrorController</code> dans le

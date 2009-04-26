@@ -199,9 +199,9 @@ $front->setParam('useCaseSensitiveActions', true);
 
         <para>
             Les principaux changements introduits dans la version 1.0.0RC1 sont l'ajout et
-            l'activation par défaut du plugin 
+            l'activation par défaut du plugin
             <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>et de
-            l'aide d'action 
+            l'aide d'action
             <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
             Veuillez lire la documentation de chacun des éléments directement pour apprendre leur
             fonctionnement et quels effets, ils peuvent avoir sur vos applications.
@@ -291,7 +291,7 @@ public function preDispatch()
 ]]></programlisting>
 
         <para>
-            Si vous appelez <code>render()</code>, et que vous utilisez la 
+            Si vous appelez <code>render()</code>, et que vous utilisez la
             <link linkend="zend.controller.modular">structure de dossier modulaire
             conventionnelle</link>, vous voudrez modifier votre code pour utiliser
             l'auto-rendu&#160;:
@@ -324,7 +324,7 @@ public function preDispatch()
             Si vous n'utilisez pas la structure de dossier modulaire conventionnelle, il
             existe une variété de méthodes pour paramétrer le chemin de base des vues et les
             spécifications du chemin vers les scripts ainsi vous pourrez utiliser
-            <code>ViewRenderer</code>. Veuillez lire la 
+            <code>ViewRenderer</code>. Veuillez lire la
             <link linkend="zend.controller.actionhelpers.viewrenderer">documentation de
             ViewRenderer</link>pour plus d'informations sur ces méthodes.
         </para>
@@ -375,10 +375,10 @@ $viewRenderer->setView($view);
         <title>Migrer de la version 0.9.2 vers 0.9.3 ou plus récent</title>
 
         <para>
-            0.9.3 introduit les 
+            0.9.3 introduit les
             <link linkend="zend.controller.actionhelpers">aides d'actions</link>. En lien avec ce
             changement, les méthodes suivantes ont été effacées puisqu'elles sont maintenant
-            encapsulées dans 
+            encapsulées dans
             <link linkend="zend.controller.actionhelpers.redirector">l'aide d'action
             redirector</link>&#160;:
         </para>
@@ -405,10 +405,10 @@ $viewRenderer->setView($view);
         </itemizedlist>
 
         <para>
-            Lisez la 
+            Lisez la
             <link linkend="zend.controller.actionhelpers">documentation des aides
             d'actions</link>pour plus d'informations sur la récupération ou la manipulation des
-            objets "helper", et la 
+            objets "helper", et la
             <link linkend="zend.controller.actionhelpers.redirector">documentation du helper
             redirector</link>pour plus d'informations sur le réglage des options de redirection (de
             même que pour les méthodes alternatives de redirection).
@@ -453,7 +453,7 @@ Zend_Controller_Front::run('/chemin/vers/controleurs');
                 <para>
                     Une nouvelle classe de route à utiliser avec le routeur de réécriture a
                     été introduite, <classname>Zend_Controller_Router_Route_Module</classname> ;
-                    elle couvre la route par défaut utilisée par le MVC, et supporte les 
+                    elle couvre la route par défaut utilisée par le MVC, et supporte les
                     <link linkend="zend.controller.modular">modules de contrôleurs</link>.
                 </para>
             </listitem>
@@ -529,7 +529,7 @@ $ctrl->dispatch();
             en-têtes et tout contenu. Vous pouvez aussi avoir le contrôleur frontal qui retourne la
             réponse en utilisant <code>returnResponse()</code>, et qui ensuite effectue le rendu de
             la réponse suivant votre propre logique. Une version future du contrôleur frontal peut
-            mettre en application l'utilisation de l'objet Réponse via la 
+            mettre en application l'utilisation de l'objet Réponse via la
             <ulink url="http://php.net/manual/fr/ref.outcontrol.php">bufferisation de
             sortie</ulink>.
         </para>

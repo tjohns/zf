@@ -61,7 +61,7 @@
             De plus, l'objet requête est particulièrement utile pour les tests. Le
             développeur peut simuler l'environnement de requête, y compris le module, le
             contrôleur, l'action, les paramètres, l'URI, etc., et passe l'objet requête au
-            contrôleur frontal pour tester une application. Une fois appairés avec 
+            contrôleur frontal pour tester une application. Une fois appairés avec
             <link linkend="zend.controller.response">l'objet réponse</link>, les tests unitaires
             élaboré et précis d'application MVC deviennent possible.
         </para>
@@ -427,7 +427,7 @@ abstract class Zend_Controller_Request_Abstract
         <para>
             Étendez cette classe, ou une de ses dérivés, quand vous avez besoin de la classe
             de requête pour interagir avec un environnement spécifique afin de récupérer des
-            données pour les utiliser dans les tâches ci-dessus. Les exemples incluent 
+            données pour les utiliser dans les tâches ci-dessus. Les exemples incluent
             <link linkend="zend.controller.request.http">l'environnement HTTP</link>, un
             environnement CLI, ou un environnement PHP-GTK.
         </para>

@@ -18,7 +18,7 @@
         </listitem>
         <listitem>
             <para>
-                Optionnellement, un tableau d'options en second argument de 
+                Optionnellement, un tableau d'options en second argument de
                 <code>Zend_Json::encode()</code>. Ce tableau d'options permet l'activation des
                 layouts et l'encodage en utilisant <code>Zend_Json_Expr</code>.
             </para>
@@ -107,7 +107,7 @@ $this->_helper->json($data, array('enableJsonExprFinder' => true);
 
         <programlisting role="php"><![CDATA[
 $this->_helper->json($data, array(
-    'enableJsonExprFinder' => true, 
+    'enableJsonExprFinder' => true,
     'keepLayouts'          => true,
 ));
 ]]></programlisting>

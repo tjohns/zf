@@ -18,8 +18,8 @@
         <para>
             Il y a de nombreuses manières d'utiliser les aides d'action. Les aides d'action
             utilisent le système de gestionnaire ("Broker"), similaire aux gestionnaires vus pour
-            les 
-            <link linkend="zend.view.helpers">Zend_View_Helper</link>, et les 
+            les
+            <link linkend="zend.view.helpers">Zend_View_Helper</link>, et les
             <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Les aides
             d'action (comme les aides de vue <classname>Zend_View_Helper</classname>) peuvent être
             chargées et appelées à la demande, ou elles peuvent être instanciées au début de la
@@ -151,7 +151,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Aides', 'Aide');
         </para>
 
         <para>
-            En interne, le gestionnaire d'aide utilise 
+            En interne, le gestionnaire d'aide utilise
             <link linkend="zend.loader.pluginloader">une instance de PluginLoader</link>pour
             conserver les chemins. Vous pouvez récupérer le PluginLoader en utilisant la méthode
             statique <code>getPluginLoader()</code>, ou alternativement, injecter une instance
@@ -300,7 +300,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <para>
             Vous pouvez optionnellement inclure une méthode <code>direct()</code> dans votre
             classe d'aide. Si définie, ceci vous permet de traiter l'aide comme une méthode du
-            gestionnaire, dans le but de faciliter un usage unique de l'aide. Pour exemple, l'aide 
+            gestionnaire, dans le but de faciliter un usage unique de l'aide. Pour exemple, l'aide
             <link linkend="zend.controller.actionhelpers.redirector">Redirector</link>définit
             <code>direct()</code> comme un alias de <code>goto()</code>, vous permettant d'utiliser
             l'aide comme ceci&#160;:

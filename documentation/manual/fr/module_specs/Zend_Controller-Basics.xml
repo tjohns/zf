@@ -79,7 +79,7 @@
             </para>
             <para>
                 <classname>Zend_Controller_Router_Rewrite</classname> peut également être
-                utilisé pour faire correspondre des chemins arbitraires&#160;; voir 
+                utilisé pour faire correspondre des chemins arbitraires&#160;; voir
                 <link linkend="zend.controller.router">la documentation du routeur</link>pour plus
                 d'information.
             </para>

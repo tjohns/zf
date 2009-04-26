@@ -6,7 +6,7 @@
 
     <para>
         L'aide <code>ActionStack</code> vous permet d'empiler les requêtes dans le plugin de
-        contrôleur frontal 
+        contrôleur frontal
         <link linkend="zend.controller.plugins.standard.actionstack">ActionStack</link>, vous
         aidant effectivement à créer une liste d'actions à exécuter durant la requête. Cette aide
         vous permet d'ajouter des actions, soit en spécifiant de nouveaux objets de requêtes, soit

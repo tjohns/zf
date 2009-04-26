@@ -318,7 +318,7 @@ $viewRenderer =
         </itemizedlist>
 
         <para>
-            <code>ViewRenderer</code> utilise un inflecteur&#160;: 
+            <code>ViewRenderer</code> utilise un inflecteur&#160;:
             <link linkend="zend.filter.inflector">Zend_Filter_Inflector</link>, pour résoudre les
             options de chemin, en chemins réels. Pour une personnalisation maximale, vous pouvez
             interagir avec cet inflecteur à l'aide des méthodes suivantes&#160;:
@@ -685,7 +685,7 @@ class Foo_BarController extends Zend_Controller_Action
             <para>
                 Dans certains cas, il peut être nécessaire d'utiliser un chemin absolu, fixe.
                 Par exemple si vous ne donnez accès à vos graphistes qu'à un seul dossier, en
-                utilisant un moteur de template tel que 
+                utilisant un moteur de template tel que
                 <ulink url="http://smarty.php.net/">Smarty</ulink>.
             </para>
 

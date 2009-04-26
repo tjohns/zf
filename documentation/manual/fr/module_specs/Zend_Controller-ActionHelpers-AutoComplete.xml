@@ -116,7 +116,7 @@ class FooController extends Zend_Controller_Action
             Dojo n'a pas une fonctionnalité d'auto-complétion, mais deux :
             <code>ComboBox</code> et <code>FilteringSelect</code>. Dans les deux cas, elle demande
             une structure de données qui implémente <code>QueryReadStore</code> ; voyez la
-            documentation de 
+            documentation de
             <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-3-programmatic-dijit-and-dojo/data-retrieval-dojo-data-0">
             dojo.data</ulink>
         </para>

@@ -15,7 +15,7 @@
             bonne idée si vous planifiez d'utiliser <classname>Zend_Session</classname> ou
             <classname>Zend_Session_Namespace</classname>, que vous initialisez avec
             <classname>Zend_Session::start()</classname> dans votre fichier d'amorçage. (Reportez
-            vous à la documentation de 
+            vous à la documentation de
             <link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>pour
             plus de détails sur son utilisation.)
         </para>

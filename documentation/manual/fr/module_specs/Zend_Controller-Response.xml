@@ -8,7 +8,7 @@
         <title>Utilisation</title>
 
         <para>
-            L'objet de réponse équilibre la balance du modèle MVC avec 
+            L'objet de réponse équilibre la balance du modèle MVC avec
             <link linkend="zend.controller.request">l'objet de requête</link>. Son but est de
             collecter du contenu et des en-têtes, afin d'être rendue. De plus, le contrôleur
             frontal passe les exceptions qu'il a rencontré à l'objet de réponse, vous offrant une
@@ -65,7 +65,7 @@ $this->getResponse()
 
         <note>
             <para>
-                Si vous utilisez 
+                Si vous utilisez
                 <link linkend="zend.controller.action.viewintegration">des vues dans vos
                 action</link>, vous n'avez pas besoin d'ajouter le rendu de la vue dans la réponse,
                 car <classname>Zend_Controller_Action::render()</classname> le fait par

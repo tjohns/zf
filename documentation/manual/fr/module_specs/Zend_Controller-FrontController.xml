@@ -8,9 +8,9 @@
         <title>Présentation générale</title>
 
         <para>
-            <classname>Zend_Controller_Front</classname> implémente un 
+            <classname>Zend_Controller_Front</classname> implémente un
             <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">motif de
-            contrôleur frontal</ulink>utilisé dans les applications 
+            contrôleur frontal</ulink>utilisé dans les applications
             <ulink url="http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur">
             Modèle-Vue-Contrôleur (MVC)</ulink>. Son but est d'initialiser l'environnement de
             requête, d'acheminer la requête entrante et de distribuer ensuite n'importe quelles
@@ -19,7 +19,7 @@
         </para>
 
         <para>
-            <classname>Zend_Controller_Front</classname> implémente aussi le 
+            <classname>Zend_Controller_Front</classname> implémente aussi le
             <ulink url="http://fr.wikipedia.org/wiki/Singleton_%28motif_de_conception%29">motif
             Singleton</ulink>, signifiant que seule une instance du contrôleur frontal peut être
             disponible à n'importe quel moment. Cela lui permet aussi d'agir comme un
@@ -28,7 +28,7 @@
         </para>
 
         <para>
-            <classname>Zend_Controller_Front</classname> enregistre un 
+            <classname>Zend_Controller_Front</classname> enregistre un
             <link linkend="zend.controller.plugins">plugin broker</link>avec lui, permettant à des
             événements divers qu'il déclenche d'être observés par plugins. Dans la plupart des cas,
             cela donne au développeur l'occasion de construire le processus de distribution du site
@@ -38,7 +38,7 @@
 
         <para>
             Le contrôleur frontal a besoin au minimum d'un ou plusieurs répertoires
-            contenants les 
+            contenants les
             <link linkend="zend.controller.action">contrôleurs d'action</link>pour faire son
             travail. Une variété de méthodes peut aussi être invoquée pour plus tard construire
             l'environnement de contrôleur frontal et celui de ses classes d'aide.
@@ -47,9 +47,9 @@
         <note>
             <title>Comportement par défaut</title>
             <para>
-                Par défaut, le contrôleur frontal charge le plugin 
+                Par défaut, le contrôleur frontal charge le plugin
                 <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>,
-                ainsi que le plugin d'aide d'action 
+                ainsi que le plugin d'aide d'action
                 <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
                 Ceci est fait respectivement pour simplifier la gestion d'erreur et le rendu des
                 vues dans vos contrôleurs.
@@ -101,9 +101,9 @@ $front = Zend_Controller_Front::getInstance();
             <title>setControllerDirectory() et addControllerDirectory</title>
 
             <para>
-                <code>setControllerDirectory()</code> est utilisé pour informer 
+                <code>setControllerDirectory()</code> est utilisé pour informer
                 <link linkend="zend.controller.dispatcher">le distributeur</link>où chercher les
-                fichiers de classes de 
+                fichiers de classes de
                 <link linkend="zend.controller.action">contrôleurs d'action</link>. Ces méthodes
                 acceptent un chemin unique ou un tableau associatif de paires
                 modules/chemins.
@@ -145,7 +145,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <title>addModuleDirectory() et getModuleDirectory()</title>
 
             <para>
-                Un des aspects du contrôleur frontal est que vous puissiez 
+                Un des aspects du contrôleur frontal est que vous puissiez
                 <link linkend="zend.controller.modular">définir une structure de dossiers
                 modulaire</link>pour créer des composants autonomes ; ceux-ci sont nommés
                 "modules".
@@ -178,8 +178,8 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <para>
                 <code>dispatch(Zend_Controller_Request_Abstract $request = null,
                 Zend_Controller_Response_Abstract $response = null)</code> fait le gros travail du
-                contrôleur frontal. Il peut facultativement prendre un 
-                <link linkend="zend.controller.request">objet de requête</link>et/ou un 
+                contrôleur frontal. Il peut facultativement prendre un
+                <link linkend="zend.controller.request">objet de requête</link>et/ou un
                 <link linkend="zend.controller.response">objet de réponse</link>, permettant ainsi
                 au développeur de fournir des objets personnalisés.
             </para>
@@ -192,8 +192,8 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             </para>
 
             <para>
-                De la même manière, <code>dispatch()</code> vérifie s'il existe des objets 
-                <link linkend="zend.controller.router">routeur</link>et 
+                De la même manière, <code>dispatch()</code> vérifie s'il existe des objets
+                <link linkend="zend.controller.router">routeur</link>et
                 <link linkend="zend.controller.dispatcher">distributeur</link>inscrits, et
                 instancie des versions par défaut si aucun n'est trouvé.
             </para>
@@ -228,11 +228,11 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <para>
                 <classname>Zend_Controller_Front::run($path)</classname> est une méthode
                 "raccourci", statique, prenant simplement un chemin vers un répertoire contenant
-                des contrôleurs. Elle récupère l'instance de contrôleur frontal (via 
+                des contrôleurs. Elle récupère l'instance de contrôleur frontal (via
                 <link linkend="zend.controller.front.methods.primary.getinstance">
-                getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de 
+                getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de
                 <link linkend="zend.controller.front.methods.primary.setcontrollerdirectory">
-                setControllerDirectory()</link>, et finalement réalise la 
+                setControllerDirectory()</link>, et finalement réalise la
                 <link linkend="zend.controller.front.methods.primary.dispatch">
                 distribution</link>.
             </para>
@@ -273,7 +273,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)DefaultControllerName()</code> vous permet d'indiquer un
                     nom différent pour l'utilisation du contrôleur par défaut ("index" est employé
-                    sinon) et de rechercher la valeur courante. Ils mandatent 
+                    sinon) et de rechercher la valeur courante. Ils mandatent
                     <link linkend="zend.controller.dispatcher">le distributeur</link>.
                 </para>
             </listitem>
@@ -281,7 +281,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)DefaultAction()</code> vous permet d'indiquer un nom
                     différent pour l'utilisation de l'action par défaut ("index" est employé sinon)
-                    et de rechercher la valeur courante. Ils mandatent 
+                    et de rechercher la valeur courante. Ils mandatent
                     <link linkend="zend.controller.dispatcher">le distributeur</link>.
                 </para>
             </listitem>
@@ -310,7 +310,7 @@ Zend_Controller_Front::run('../application/controllers');
             </listitem>
             <listitem>
                 <para>
-                    <code>(set|get)BaseUrl()</code> vous permet d'indiquer 
+                    <code>(set|get)BaseUrl()</code> vous permet d'indiquer
                     <link linkend="zend.controller.request.http.baseurl">l'URL de base</link> à
                     écarter lors du routage des requêtes et de rechercher la valeur courante. La
                     valeur est fournie à l'objet de requête juste avant le routage.
@@ -333,7 +333,7 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>(set|get)Response()</code> vous permet d'indiquer la classe ou
-                    l'objet de 
+                    l'objet de
                     <link linkend="zend.controller.response">réponse</link> à utiliser durant le
                     processus de distribution et de rechercher la valeur courante. En réglant
                     l'objet de réponse, vous pouvez fournir le nom d'une classe de réponse, dans ce
@@ -343,7 +343,7 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex
-                    = null)</code> vous permet d'inscrire un 
+                    = null)</code> vous permet d'inscrire un
                     <link linkend="zend.controller.plugins">objet plugin</link>. En réglant le
                     paramètre facultatif <code>$stackIndex</code>, vous pouvez contrôler l'ordre
                     dans lequel les plugins seront exécutés.
@@ -351,7 +351,7 @@ Zend_Controller_Front::run('../application/controllers');
             </listitem>
             <listitem>
                 <para>
-                    <code>unregisterPlugin($plugin)</code> vous permet de désinscrire un 
+                    <code>unregisterPlugin($plugin)</code> vous permet de désinscrire un
                     <link linkend="zend.controller.plugins">objet plugin</link>.
                     <code>$plugin</code> peut être soit un objet plugin ou une chaîne représentant
                     la classe du plugin à désinscrire.
@@ -361,7 +361,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>throwExceptions($flag)</code> est utilisée pour activer/désactiver
                     la possibilité de lever des exceptions durant le processus de distribution. Par
-                    défaut, les exceptions sont récupérées et placées dans l'objet 
+                    défaut, les exceptions sont récupérées et placées dans l'objet
                     <link linkend="zend.controller.response">réponse</link>&#160;; activer
                     <code>throwExceptions()</code> surchargera ce comportement et indiquera au
                     contrôleur frontal de ne pas enregistrer le plugin de gestion des
@@ -446,7 +446,7 @@ Zend_Controller_Front::run('../application/controllers');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>useDefaultControllerAlways()</code> est utilisée pour informer 
+                    <code>useDefaultControllerAlways()</code> est utilisée pour informer
                     <link linkend="zend.controller.dispatcher">le distributeur</link> d'utiliser le
                     contrôleur par défaut dans le module par défaut pour toute requête qui ne
                     serait pas distribuable (par exemple si le module/contrôleur/action n'existe
@@ -459,7 +459,7 @@ Zend_Controller_Front::run('../application/controllers');
             </listitem>
             <listitem>
                 <para>
-                    <code>disableOutputBuffering()</code> est utilisée pour informer 
+                    <code>disableOutputBuffering()</code> est utilisée pour informer
                     <link linkend="zend.controller.dispatcher">le distributeur</link> qu'il ne doit
                     pas utiliser l'"output buffering" pour capturer le rendu généré par les
                     contrôleurs d'action. Par défaut, le distributeur capture tout rendu et

@@ -25,7 +25,7 @@
             <listitem>
                 <para>
                     <code>routeStartup()</code> est appelée avant que
-                    <classname>Zend_Controller_Front</classname> n'appelle 
+                    <classname>Zend_Controller_Front</classname> n'appelle
                     <link linkend="zend.controller.router">le routeur</link> pour évaluer ses
                     routes et remplir la requête.
                 </para>
@@ -50,7 +50,7 @@
             <listitem>
                 <para>
                     <code>preDispatch()</code> est appelée avant qu'une action ne soit
-                    distribuée par 
+                    distribuée par
                     <link linkend="zend.controller.dispatcher">le distributeur</link>. Cette
                     méthode permet un filtrage ou un proxy. En jouant sur la requête à ce niveau
                     là, vous êtes capable de changer le processus, et en vous aidant de
@@ -62,7 +62,7 @@
             <listitem>
                 <para>
                     <code>postDispatch()</code> est appelée après qu'une action n'ait été
-                    distribuée par 
+                    distribuée par
                     <link linkend="zend.controller.dispatcher">le distributeur</link>. Cette
                     méthode permet un filtrage ou un proxy. En jouant sur la requête à ce niveau
                     là, vous êtes capable de changer le processus, et en vous aidant de

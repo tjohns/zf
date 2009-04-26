@@ -58,7 +58,7 @@ class FooController extends Zend_Controller_Action
             <title>Comportement par défaut</title>
             <para>
                 Par défaut, le  <link linkend="zend.controller.front">contrôleur frontal</link>
-                active l'aide d'action 
+                active l'aide d'action
                 <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
                 Cette aide s'occupe de l'injection automatique de l'objet de vue dans vos
                 contrôleurs, ainsi que du rendu de cette vue. Vous pouvez la désactiver au sein de
@@ -258,7 +258,7 @@ if ($this->_hasParam('id') {
                 </title>
                 <para>
                     Le contenu de cette section n'est valable que si vous avez explicitement
-                    désactivé le 
+                    désactivé le
                     <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
                     Sinon, vous pouvez passer à la section suivante.
                 </para>
@@ -322,7 +322,7 @@ string render(string $action = null,
                 <code>[controller]</code>. Pour surcharger l'utilisation du sous-dossier
                 <code>[controller]</code>, fournissez la valeur <code>true</code> à
                 <code>$noController</code>. Enfin, les scripts sont rendus dans l'objet
-                réponse&#160;; si vous souhaitez effectuer le rendu dans un 
+                réponse&#160;; si vous souhaitez effectuer le rendu dans un
                 <link linkend="zend.controller.response.namedsegments">segment
                 nommé</link>spécifique de l'objet réponse, fournissez une valeur à
                 <code>$name</code>.

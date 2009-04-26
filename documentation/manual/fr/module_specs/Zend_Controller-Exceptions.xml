@@ -35,7 +35,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    Par défaut, le plugin 
+                    Par défaut, le plugin
                     <link linkend="zend.controller.plugins.standard.errorhandler">error
                     handler</link>est présent, et activé. Ce plugin a été conçu pour gérer&#160;:
                 </para>
@@ -81,7 +81,7 @@ try {
             </listitem>
             <listitem>
                 <para>
-                    
+
                     <classname>Zend_Controller_Response_Abstract::renderExceptions()</classname>
                 </para>
                 <para>
@@ -176,7 +176,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             L'exception envoyée par <code>dispatch()</code> est de type
                             <classname>Zend_Controller_Dispatcher_Exception</classname> et contient
                             le message "Invalid controller specified". Utilisez une méthode comme
-                            vu dans la 
+                            vu dans la
                             <link linkend="zend.controller.exceptions.handling">section
                             précédente</link>pour attraper celle-ci et rediriger vers une page
                             d'erreur générique.
