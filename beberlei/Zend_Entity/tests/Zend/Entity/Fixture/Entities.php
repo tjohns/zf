@@ -2,31 +2,30 @@
 
 class Zend_TestEntity1 implements Zend_Entity_Interface
 {
-    protected $id;
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $state;
 
     public function getState()
     {
-        return array(
-            'id' => $this->id,
-        );
+        return $this->state;
     }
 
     public function setState(array $state)
     {
-        foreach($state AS $k => $v) {
-            if(property_exists($this, $k)) {
-                $this->$k = $v;
-            }
+        $this->state = $state;
+    }
+
+    public function __call($method, $args)
+    {
+        $suffix = substr($method, 3);
+        if(substr($method, 0, 3) == "get") {
+            return $this->state[$suffix];
+        } else if(substr($method, 0, 3) == "set") {
+            $this->state[$suffix] = $args[0];
         }
     }
+}
+
+class Zend_TestEntity2 extends Zend_TestEntity1
+{
+    
 }

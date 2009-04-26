@@ -138,18 +138,27 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
     {
-        if($entity instanceof Zend_Entity_Mapper_LazyLoad_Entity &&
-            $entity->entityWasLoaded() == false) {
-            return;
+        if($this->entityIsSaveable($entity, $entityManager)) {
+            $persister = $this->getPersister();
+            $persister->save($entity, $entityManager);
         }
+    }
 
+    /**
+     * Check if the entity can be saved which means no non-loaded Lazy Load or marked as Clean via the UnitOfWork.
+     *
+     * @param Zend_Entity_Interface $entity
+     * @return boolean
+     */
+    protected function entityIsSaveable(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
+    {
         $unitOfWork = $entityManager->getUnitOfWork();
-        if($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN) {
-            return;
+        if($entity instanceof Zend_Entity_Mapper_LazyLoad_Entity && $entity->entityWasLoaded() == false) {
+            return false;
+        } elseif($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN) {
+            return false;
         }
-
-        $persister = $this->getPersister();
-        $persister->save($entity, $entityManager);
+        return true;
     }
 
     /**
@@ -161,15 +170,24 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager )
     {
-        $unitOfWork = $entityManager->getUnitOfWork();
-        if($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN) {
-            return;
-        } elseif($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_NEW) {
-            return;
+        if($this->unitOfWorkAllowsDelete($entity, $entityManager)) {
+            $this->getPersister()->delete($entity, $entityManager);
         }
+    }
 
-        $this->getPersister()->delete($entity, $entityManager);
-        return;
+    /**
+     * Is the Entity in a state that the unit of manages which does not necessitate executing the delete?
+     *
+     * @param  Zend_Entity_Interface $entity
+     * @return boolean
+     */
+    protected function unitOfWorkAllowsDelete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
+    {
+        $unitOfWork = $entityManager->getUnitOfWork();
+        if($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_NEW) {
+            return false;
+        }
+        return true;
     }
 
     /**

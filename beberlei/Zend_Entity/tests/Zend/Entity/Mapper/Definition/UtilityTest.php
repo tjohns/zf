@@ -2,6 +2,16 @@
 
 class Zend_Entity_Mapper_Definition_UtilityTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        Zend_Entity_Mapper_Definition_Utility::setDefinitionLoader(null);
+    }
+
+    public function tearDown()
+    {
+        Zend_Entity_Mapper_Definition_Utility::setDefinitionLoader(null);
+    }
+
     public function testSetGetLoader()
     {
         $loader = $this->createPluginLoader();

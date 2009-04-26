@@ -51,6 +51,39 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         return $loader;
     }
 
+    /**
+     * @return Zend_Entity_Mapper_Loader_Interface
+     */
+    public function createLoaderMockThatReturnsProccessedResultset($result)
+    {
+        $loader = $this->createLoaderMock();
+        $loader->expects($this->once())
+               ->method('processResultset')
+               ->will($this->returnValue($result));
+        return $loader;
+    }
+
+    public function createNonLoadedLazyLoadEntity()
+    {
+        $lazyEntity = $this->getMock(
+            'Zend_Entity_Mapper_LazyLoad_Entity',
+            array(),
+            array(),
+            'Zend_Entity_Mapper_LazyLoad_Entity_Mock'.md5(microtime(True)),
+            false
+        );
+        $lazyEntity->expects($this->once())->method('entityWasLoaded')->will($this->returnValue(false));
+        return $lazyEntity;
+    }
+
+    /**
+     * @return Zend_Entity_Mapper_Persister_Interface
+     */
+    public function createPersisterMock()
+    {
+        return $this->getMock('Zend_Entity_Mapper_Persister_Interface');
+    }
+
     public function createResourceMapMock()
     {
         return $this->getMock('Zend_Entity_Resource_Interface');
@@ -180,5 +213,20 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
                         ->will($this->returnValue(true));
         }
         return $identityMap;
+    }
+
+    public function assertLazyLoad($object)
+    {
+        $lazyLoad = false;
+        if($object instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
+            $lazyLoad = true;
+        }
+        if($object instanceof Zend_Entity_Mapper_LazyLoad_Collection) {
+            $lazyLoad = true;
+        }
+        if($object instanceof Zend_Entity_Mapper_LazyLoad_Field) {
+            $lazyLoad = true;
+        }
+        $this->assertTrue($lazyLoad, "Object of type <".get_class($object)."> is not a lazy load object.");
     }
 }

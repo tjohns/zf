@@ -2,9 +2,26 @@
 
 class Zend_Entity_DbAdapterMock extends Zend_Db_Adapter_Abstract
 {
+    protected $_statementStack = array();
+
     public function __construct()
     {
         
+    }
+
+    public function appendStatementToStack(Zend_Entity_DbStatementMock $stmt)
+    {
+        $this->_statementStack[] = $stmt;
+    }
+
+    /**
+     * Returns the symbol the adapter uses for delimited identifiers.
+     *
+     * @return string
+     */
+    public function getQuoteIdentifierSymbol()
+    {
+        return '';
     }
 
     /**
@@ -92,7 +109,11 @@ class Zend_Entity_DbAdapterMock extends Zend_Db_Adapter_Abstract
      */
     public function prepare($sql)
     {
-        return new Zend_Entity_DbStatementMock();
+        if(count($this->_statementStack)) {
+            return array_shift($this->_statementStack);
+        } else {
+            return new Zend_Entity_DbStatementMock();
+        }
     }
 
     /**

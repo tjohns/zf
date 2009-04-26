@@ -32,11 +32,10 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
     }
 
     /**
-     *
-     * @param <type> $stmt
-     * @param <type> $entityManager
-     * @param <type> $fetchMode
-     * @return <type> 
+     * @param  Zend_Db_Statement_Interface $stmt
+     * @param  Zend_Entity_Manager $entityManager
+     * @param  string $fetchMode
+     * @return array|Zend_Entity_Collection_Interface
      */
     public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
     {
@@ -44,23 +43,23 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
 
         $collection = array();
         while($row = $stmt->fetch(Zend_Db::FETCH_ASSOC)) {
-            $entity = $this->loadRow($row, $entityManager);
-            $collection[] = $entity;
+            if($fetchMode == Zend_Entity_Manager::FETCH_ARRAY) {
+                $entity = $this->renameColumnToPropertyKeys($row);
+            } else {
+                $entity = $this->createEntityFromRow($row, $entityManager);
 
-            if($unitOfWork->isManagingCurrentTransaction() == true) {
-                $unitOfWork->registerClean($entity);
+                if($unitOfWork->isManagingCurrentTransaction() == true) {
+                    $unitOfWork->registerClean($entity);
+                }
             }
+            $collection[] = $entity;
         }
         $stmt->closeCursor();
 
-        // TODO: Late Select Binding per Entity should be done here
-        $this->initializeLateBoundObjects($collection, $entityManager, $fetchMode);
-
         if($fetchMode == Zend_Entity_Manager::FETCH_ENTITIES) {
-            return new Zend_Entity_Collection($collection);
-        } else if($fetchMode == Zend_Entity_Manager::FETCH_ARRAY) {
-            return $collection;
+            $collection = new Zend_Entity_Collection($collection);
         }
+        return $collection;
     }
 
     protected function renameColumnToPropertyKeys($row)
@@ -68,19 +67,13 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
         $state = array();
         foreach($this->_columnsToPropertyNames AS $columnName => $propertyName) {
             if(!array_key_exists($columnName, $row)) {
-                throw new Exception("In rename column to property the column '".$columnName."' does not exist in resultset.");
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "In rename column to property the column '".$columnName."' does not exist in resultset."
+                );
             }
             $state[$propertyName] = $row[$columnName];
-            unset($row[$columnName]);
         }
         return $state;
-    }
-
-    protected function createEntity(array $row)
-    {
-        $entityClass = $this->_class;
-        $entity      = new $entityClass();
-        $entity->setState($row);
-        return $entity;
     }
 }

@@ -87,7 +87,10 @@ abstract class Zend_Entity_Mapper_Definition_Table
             $propertyType = substr($method, 3);
 
             if(!isset($args[0]) || !is_string($args[0])) {
-                throw new Exception("First argument of '".$propertyType."' has to be a Property Name of type string.");
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "First argument of '".$propertyType."' has to be a Property Name of type string."
+                );
             } else {
                 $propertyName = $args[0];
             }
@@ -137,7 +140,7 @@ abstract class Zend_Entity_Mapper_Definition_Table
      * Property Name
      *
      * @param  string $propertyName
-     * @return object
+     * @return Zend_Entity_Mapper_Definition_Property_Interface
      */
     public function getPropertyByName($propertyName)
     {

@@ -64,28 +64,6 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     }
 
     /**
-     * Add a Composite Key
-     *
-     * Ugly, but it works!
-     *
-     * @param array $key
-     * @param array $options
-     */
-    public function addCompositeKey($key, array $options=array())
-    {
-        if(!is_array($key)) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception("Cannot add invalid composite key, has to have array as first value.");
-        }
-        $this->_id = Zend_Entity_Mapper_Definition_Utility::loadDefinition('CompositeKey', $key, $options);
-        foreach($key as $field) {
-            $this->addProperty($field);
-            $this->_properties[$field] = $this->_id;
-        }
-        return $this->_id;
-    }
-
-    /**
      * Implementation of Abstract Property Add method.
      * 
      * @param  string $propertyType
@@ -226,12 +204,6 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
             $extension->compile($this, $map);
         }
 
-        if(count($this->getExtensions()) > 0) {
-            $this->setPersisterClass("Zend_Entity_Mapper_Persister_CollectionCascade");
-        } else if(count($this->getRelations()) > 0) {
-            $this->setPersisterClass("Zend_Entity_Mapper_Persister_EntityCascade");
-        } else {
-            $this->setPersisterClass("Zend_Entity_Mapper_Persister_Simple");
-        }
+        $this->setPersisterClass("Zend_Entity_Mapper_Persister_Simple");
     }
 }

@@ -82,4 +82,20 @@ abstract class Zend_Entity_Mapper_Definition_RelationTest extends Zend_Entity_Ma
 
         $relDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
     }
+
+    public function testSetGetColumnName()
+    {
+        $relDef = $this->createRelation();
+        $relDef->setColumnName(self::TEST_PROPERTY2);
+
+        $this->assertEquals(self::TEST_PROPERTY2, $relDef->getColumnName());
+    }
+
+    public function testSetGetForeignKey()
+    {
+        $relDef = $this->createRelation();
+        $relDef->setForeignKey(self::TEST_PROPERTY2);
+
+        $this->assertEquals(self::TEST_PROPERTY2, $relDef->getForeignKey());
+    }
 }

@@ -111,10 +111,10 @@ class Zend_Entity_Mapper_Loader_ForeignKey extends Zend_Entity_Mapper_Loader_Bas
             }
 
             foreach($objectFields AS $relationName => $relationState) {
-                $row[$relationName] = $this->relationLoader[$relationName]->loadRow($relationState, $map);
+                $row[$relationName] = $this->relationLoader[$relationName]->createEntityFromRow($relationState, $entityManager);
             }
 
-            $entity = $this->loadRow($row, $map);
+            $entity = $this->createEntityFromRow($row, $entityManager);
             $collection[] = $entity;
 
             if($unitOfWork->isManagingCurrentTransaction() == true) {

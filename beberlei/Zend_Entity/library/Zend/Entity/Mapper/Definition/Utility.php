@@ -53,7 +53,7 @@ class Zend_Entity_Mapper_Definition_Utility
      * @param Zend_Loader_PluginLoader
      * @return void
      */
-    public static function setDefinitionLoader(Zend_Loader_PluginLoader $loader)
+    public static function setDefinitionLoader(Zend_Loader_PluginLoader $loader=null)
     {
         self::$definitionLoader = $loader;
     }

@@ -41,5 +41,22 @@ interface Zend_Entity_Mapper_Loader_Interface
      */
     public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES);
 
-    public function loadRow(array $row, Zend_Entity_Manager $entityManager);
+    /**
+     * Load Row into Entitiy
+     *
+     * @param  Zend_Entity_Interface $entity
+     * @param  array $row
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @return void
+     */
+    public function loadRow(Zend_Entity_Interface $entity, array $row, Zend_Entity_Manager_Interface $entityManager);
+
+    /**
+     * Create Entity from Row
+     *
+     * @param  array $row
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @return Zend_Entity_Interface
+     */
+    public function createEntityFromRow(array $row, Zend_Entity_Manager_Interface $entityManager);
 }

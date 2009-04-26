@@ -60,4 +60,34 @@ class Zend_Entity_CollectionTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(array("foo"), $collection->getRemoved());
     }
+
+    public function testAddItemToCollectionRaisesCount()
+    {
+        $entity = $this->getMock('Zend_Entity_Interface');
+        $collection = new Zend_Entity_Collection();
+        $collection->add($entity);
+
+        $this->assertEquals(1, count($collection));
+    }
+
+    public function testAddedItemsAccessesAllNewItems()
+    {
+        $entity = $this->getMock('Zend_Entity_Interface');
+        $collection = new Zend_Entity_Collection();
+        $collection->add($entity);
+
+        $addedItems = $collection->getAdded();
+
+        $this->assertTrue(isset($addedItems[0]));
+        $this->assertEquals($entity, $addedItems[0]);
+    }
+
+    public function testRestrictedToClassCollectionThrowsExceptionOnForeignClassAdd()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $otherClassType = $this->getMock('Zend_Entity_Interface');
+        $collection = new Zend_Entity_Collection(array(), "someClassType");
+        $collection->add($otherClassType);
+    }
 }

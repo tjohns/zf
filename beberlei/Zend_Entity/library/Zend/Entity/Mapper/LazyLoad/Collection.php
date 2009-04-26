@@ -63,7 +63,8 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
     public function __construct($callback, array $arguments)
     {
         if(!is_callable($callback)) {
-            throw new Exception(sprintf(
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(sprintf(
                 "Invalid callback given '%s' for construcing lazy load collection.",
                 $this->_callbackToString($callback)
             ));
@@ -100,7 +101,10 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
             if($collection instanceof Zend_Entity_Collection) {
                 $this->_collection = $collection;
             } else {
-                throw new Exception("Inner collection has to be of type Zend_Entity_Collection.");
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "Inner collection has to be of type Zend_Entity_Collection."
+                );
             }
             unset($this->_callback);
             unset($this->_callbackArguments);
@@ -184,10 +188,5 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
             return false;
         }
         return true;
-    }
-
-    public function sortBy($callback)
-    {
-        $this->getInnerCollection()->sortBy($callback);
     }
 }

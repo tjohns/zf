@@ -58,4 +58,38 @@ class Zend_Entity_Mapper_Definition_JoinTest extends Zend_Entity_Mapper_Definiti
         $this->assertTrue(isset($properties[self::TEST_PROPERTY2]));
         $this->assertEquals(self::TEST_PROPERTY2, $properties[self::TEST_PROPERTY2]->getPropertyName());
     }
+
+    public function testAddPropertyAndGetByPropertyName()
+    {
+        $joinDef = $this->createJoinDefinition(self::TEST_PROPERTY);
+        $joinDef->addProperty(self::TEST_PROPERTY);
+
+        $property = $joinDef->getPropertyByName(self::TEST_PROPERTY);
+        $this->assertEquals(self::TEST_PROPERTY, $property->getPropertyName());
+    }
+
+    public function testGetPropertyByNameNonExistantThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $joinDef = $this->createJoinDefinition(self::TEST_PROPERTY);
+        $joinDef->getPropertyByName(self::TEST_PROPERTY2);
+    }
+
+    public function testAddPropertyCallInterceptFirstArgumentNonStringThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $joinDef = $this->createJoinDefinition(self::TEST_PROPERTY);
+        $joinDef->addProperty(array());
+    }
+
+    public function testAddPropertyCallInterceptSecondArgumentArrayIsPassedToNewProperty()
+    {
+        $joinDef = $this->createJoinDefinition(self::TEST_PROPERTY);
+        $joinDef->addProperty(self::TEST_PROPERTY2, array('columnName' => 'foo'));
+
+        $property = $joinDef->getPropertyByName(self::TEST_PROPERTY2);
+        $this->assertEquals('foo', $property->getColumnName());
+    }
 }

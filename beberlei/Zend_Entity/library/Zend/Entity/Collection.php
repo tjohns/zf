@@ -37,29 +37,56 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
      */
     protected $_removed = array();
 
-    protected $_currentPointer = 0;
-
+    /**
+     * @var array
+     */
     protected $_collection;
 
+    /**
+     * @var string
+     */
     protected $_entityClassType = null;
 
+    /**
+     * Create a new collection.
+     * 
+     * @param Zend_Entity_Interface[] $collection
+     * @param string $entityClassType
+     */
     public function __construct(array $collection=array(), $entityClassType=null)
     {
         $this->_collection      = $collection;
         $this->_entityClassType = $entityClassType;
     }
 
+    /**
+     * Add new entity to collection.
+     *
+     * @param Zend_Entity_Interface $entity
+     * @return void
+     */
     public function add($entity)
     {
+        $this->assertEntityIsOfCorrectType($entity);
+
+        $this->_added[]      = $entity;
+        $this->_collection[] = $entity;
+    }
+
+    /**
+     * Is this entity of the correct type?
+     * 
+     * @param mixed $entity
+     */
+    protected function assertEntityIsOfCorrectType($entity)
+    {
         if($this->_entityClassType !== null && !($entity instanceof $this->_entityClassType)) {
-            throw new Exception(
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
                 "Cannot add entity of type '".get_class($entity)."' to list that ".
                 "expects '".$this->_entityClassType."'"
             );
         }
-
-        $this->_added[]      = $entity;
-        $this->_collection[] = $entity;
     }
 
     public function remove($index)
@@ -92,7 +119,6 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
 
     public function next()
     {
-        $this->_currentPointer++;
         return next($this->_collection);
     }
 
@@ -103,7 +129,6 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
 
     public function rewind()
     {
-        $this->_currentPointer = 0;
         return reset($this->_collection);
     }
 

@@ -68,6 +68,61 @@ class Zend_Entity_Mapper_Definition_CollectionTest extends Zend_Entity_Mapper_De
         $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMockWithDefitionByClassNameExpectsGetTable());
     }
 
+    public function testSetGetOrderBy()
+    {
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setOrderBy("foo");
+
+        $this->assertEquals("foo", $colDef->getOrderBy());
+    }
+
+    public function testSetGetMapKey()
+    {
+        $key = new Zend_Entity_Mapper_Definition_Property(self::TEST_PROPERTY2);
+
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setMapKey($key);
+
+        $this->assertEquals($key, $colDef->getMapKey());
+    }
+
+    public function testSetGetElement()
+    {
+        $element = new Zend_Entity_Mapper_Definition_Property(self::TEST_PROPERTY2);
+
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setElement($element);
+
+        $this->assertEquals($element, $colDef->getElement());
+    }
+
+    public function testCompileElementCollection()
+    {
+        $colDef = $this->createCompileableElementsCollection();
+        $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
+
+    public function testCompileElementCollectionWithoutTableNameThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $colDef = $this->createCompileableElementsCollection();
+        $colDef->setTable(null);
+        $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
+
+    public function testCompileElementCollectionWithoutElementThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setTable(self::TEST_TABLE);
+        $colDef->setMapKey(new Zend_Entity_Mapper_Definition_Property(self::TEST_PROPERTY2));
+        $colDef->setKey(self::TEST_PROPERTY2);
+
+        $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
+
     /**
      * @return Zend_Entity_Mapper_Definition_Collection
      */
@@ -76,6 +131,20 @@ class Zend_Entity_Mapper_Definition_CollectionTest extends Zend_Entity_Mapper_De
         $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
         $relationMock = $this->getMock('Zend_Entity_Mapper_Definition_Relation');
         $colDef->setRelation($relationMock);
+        $colDef->setKey(self::TEST_PROPERTY2);
+
+        return $colDef;
+    }
+
+    /**
+     * @return Zend_Entity_Mapper_Definition_Collection
+     */
+    protected function createCompileableElementsCollection()
+    {
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setTable(self::TEST_TABLE);
+        $colDef->setMapKey(new Zend_Entity_Mapper_Definition_Property(self::TEST_PROPERTY2));
+        $colDef->setElement(new Zend_Entity_Mapper_Definition_Property(self::TEST_PROPERTY2));
         $colDef->setKey(self::TEST_PROPERTY2);
 
         return $colDef;

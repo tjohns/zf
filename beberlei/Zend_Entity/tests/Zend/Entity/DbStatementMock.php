@@ -2,7 +2,22 @@
 
 class Zend_Entity_DbStatementMock implements Zend_Db_Statement_Interface
 {
-/**
+    /**
+     * @var array
+     */
+    protected $_fetchStack = array();
+
+    /**
+     * Append a new row to the fetch stack.
+     *
+     * @param array $row
+     */
+    public function appendToFetchStack($row)
+    {
+        $this->_fetchStack[] = $row;
+    }
+
+    /**
      * Bind a column of the statement result set to a PHP variable.
      *
      * @param string $column Name the column in the result set, either by
@@ -117,7 +132,12 @@ class Zend_Entity_DbStatementMock implements Zend_Db_Statement_Interface
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
-
+        if(count($this->_fetchStack)) {
+            $row = array_shift($this->_fetchStack);
+            return $row;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -130,7 +150,9 @@ class Zend_Entity_DbStatementMock implements Zend_Db_Statement_Interface
      */
     public function fetchAll($style = null, $col = null)
     {
-
+        $rows = $this->_fetchStack;
+        $this->_fetchStack = array();
+        return $rows;
     }
 
     /**

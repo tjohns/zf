@@ -149,12 +149,13 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Get Resource Map
      *
-     * @return Zend_Entity_Mapper_DefinitionMap
+     * @return Zend_Entity_Resource_Interface
      */
     public function getResource()
     {
         if($this->_resource === null) {
-            throw new Zend_Entity_Exception("No definition was given to Entity Manager.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("No resource definition map was given to Entity Manager.");
         }
         return $this->_resource;
     }

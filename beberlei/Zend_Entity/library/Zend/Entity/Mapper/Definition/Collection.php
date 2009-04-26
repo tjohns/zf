@@ -20,6 +20,14 @@
 class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Definition_Table
     implements Zend_Entity_Mapper_Definition_Property_Interface
 {
+    const COLLECTION_RELATION = 'relation';
+    const COLLECTION_ELEMENTS = 'elements';
+
+    /**
+     * @var string
+     */
+    protected $_collectionType = self::COLLECTION_RELATION;
+
     /**
      * @var Zend_Entity_Mapper_Definition_Relation
      */
@@ -39,6 +47,21 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
      * @var string
      */
     protected $_additionalWhereCondition = null;
+
+    /**
+     * @var string
+     */
+    protected $_orderByCondition = null;
+
+    /**
+     * @var Zend_Entity_Mapper_Definition_Property
+     */
+    protected $_mapKey = null;
+
+    /**
+     * @var Zend_Entity_Mapper_Definition_Property
+     */
+    protected $_element = null;
 
     /**
      * Construct Collection Definition
@@ -137,7 +160,84 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
      */
     public function setRelation(Zend_Entity_Mapper_Definition_Relation $relation)
     {
+        $this->_collectionType = self::COLLECTION_RELATION;
         $this->relation = $relation;
+    }
+
+    /**
+     * Set Order By Clause options for selecting an order of the collection items.
+     *
+     * @param string $orderByCondition
+     * @return void
+     */
+    public function setOrderBy($orderByCondition)
+    {
+        $this->_orderByCondition = $orderByCondition;
+    }
+
+    /**
+     * Get Order By Clause
+     * 
+     * @return string
+     */
+    public function getOrderBy()
+    {
+        return $this->_orderByCondition;
+    }
+
+    /**
+     * Set the property Name of the Map Key
+     *
+     * This option is only relevant for collection maps, not for lists. It defaults to the primary key.
+     *
+     * @param Zend_Entity_Mapper_Definition_Property $mapKey
+     */
+    public function setMapKey(Zend_Entity_Mapper_Definition_Property $mapKey)
+    {
+        $this->_collectionType = self::COLLECTION_ELEMENTS;
+        $this->_mapKey = $mapKey;
+    }
+
+    /**
+     * Get the property name of the map key.
+     * 
+     * @return Zend_Entity_Mapper_Definition_Property
+     */
+    public function getMapKey()
+    {
+        return $this->_mapKey;
+    }
+
+    /**
+     * Set the element property for a map-element collection.
+     *
+     * @param Zend_Entity_Mapper_Definition_Property $element
+     * @return void
+     */
+    public function setElement(Zend_Entity_Mapper_Definition_Property $element)
+    {
+        $this->_collectionType = self::COLLECTION_ELEMENTS;
+        $this->_element = $element;
+    }
+
+    /**
+     * Get element property
+     *
+     * @return Zend_Entity_Mapper_Definition_Property
+     */
+    public function getElement()
+    {
+        return $this->_element;
+    }
+
+    /**
+     * Get the type of the collection.
+     * 
+     * @return string
+     */
+    public function getCollectionType()
+    {
+        return $this->_collectionType;
     }
 
     /**
@@ -149,28 +249,50 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
      */
     public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
     {
-        $relation = $this->getRelation();
-        if($relation == null) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "No relation option was set in collection '".$this->getPropertyName()."' ".
-                "of entity '".$entityDef->getClass()."'"
-            );
-        }
+        if($this->getCollectionType() == self::COLLECTION_RELATION) {
+            $relation = $this->getRelation();
+            if($relation == null) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "No relation option was set in collection '".$this->getPropertyName()."' ".
+                    "of entity '".$entityDef->getClass()."'"
+                );
+            }
 
-        $foreignDef = $map->getDefinitionByEntityName($relation->getClass());
-        if($this->getTable() == null) {
-            $this->setTable($foreignDef->getTable());
+            if($this->getTable() == null) {
+                $foreignDef = $map->getDefinitionByEntityName($relation->getClass());
+                $this->setTable($foreignDef->getTable());
+            }
+            
+            $relation->compile($entityDef, $map);
+        } else if($this->getCollectionType() == self::COLLECTION_ELEMENTS) {
+            if($this->getElement() == null) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "No element option was set in collection '".$this->getPropertyName()."' ".
+                    "of entity '".$entityDef->getClass()."'"
+                );
+            } elseif($this->getTable() == null) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "The table field is required in collections ".
+                    "definition of entity '".$entityDef->getClass()."'."
+                );
+            }
+
+            $mapKey = $this->getMapKey();
+            if($mapKey !== null) {
+                $mapKey->compile($entityDef, $map);
+            }
+            $this->getElement()->compile($entityDef, $map);
         }
 
         if($this->getKey() == null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
-                "The foreign-key field is a required column in collections ".
+                "The foreign-key field is required in collections ".
                 "definition of entity '".$entityDef->getClass()."'."
             );
         }
-
-        $relation->compile($entityDef, $map);
     }
 }
