@@ -409,6 +409,16 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     public function getDefaults() {
         return $this->_defaults;
     }
+    
+    /**
+     * Get all variables which are used by the route
+     *
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->_variables;
+    }
 
     /**
      * Set a default translator

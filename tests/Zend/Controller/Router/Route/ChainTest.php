@@ -181,7 +181,31 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $res['action']);
         $this->assertEquals('val', $res['var']);
     }
+    
+    public function testVariableUnsettingRoute()
+    {
+        $foo = new Zend_Controller_Router_Route(':foo');
+        $bar = new Zend_Controller_Router_Route_Module(array('controller' => 'ctrl', 'action' => 'act'));
 
+        $chain = $foo->chain($bar);
+
+        $path = $chain->assemble(array('foo' => 'bar', 'baz' => 'bat'));
+
+        $this->assertEquals('bar/ctrl/act/baz/bat', $path);
+    }
+    
+    public function testVariableUnsettingRegex()
+    {
+        $foo = new Zend_Controller_Router_Route_Regex('([^/]+)', array(), array(1 => 'foo'), '%s');
+        $bar = new Zend_Controller_Router_Route_Module(array('controller' => 'ctrl', 'action' => 'act'));
+
+        $chain = $foo->chain($bar);
+
+        $path = $chain->assemble(array('foo' => 'bar', 'baz' => 'bat'));
+
+        $this->assertEquals('bar/ctrl/act/baz/bat', $path);
+    }
+    
     public function testChainingSeparatorOverriding()
     {
         $foo = new Zend_Controller_Router_Route_Static('foo', array('foo' => 1));
