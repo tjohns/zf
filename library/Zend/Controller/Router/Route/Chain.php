@@ -55,8 +55,6 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
      */
     public function chain(Zend_Controller_Router_Route_Abstract $route, $separator = '/')
     {
-        $route->isPartial(true);    
-    
         $this->_routes[]     = $route;
         $this->_separators[] = $separator;
 
@@ -96,7 +94,7 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
                 $match = $request;                
             }
             
-            $res = $route->match($match);
+            $res = $route->match($match, true);
             if ($res === false) {
                 return false;
             }
@@ -135,7 +133,7 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
                 $value .= $this->_separators[$key];
             }
             
-            $value .= $route->assemble($data, $reset, $encode);
+            $value .= $route->assemble($data, $reset, $encode, true);
             
             if (method_exists($route, 'getVariables')) {
                 $variables = $route->getVariables();

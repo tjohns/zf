@@ -72,9 +72,9 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
-    public function match($path)
+    public function match($path, $partial = false)
     {
-        if ($this->isPartial()) {
+        if ($partial) {
             if (substr($path, 0, strlen($this->_route)) === $this->_route) {
                 $this->setMatchedPath($this->_route);
                 return $this->_defaults;

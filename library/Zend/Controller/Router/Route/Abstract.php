@@ -42,13 +42,6 @@ abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_
      * @var boolean
      */
     protected $_isAbstract = false;
-    
-    /**
-     * Wether this is a partial route or not
-     * 
-     * @var boolean
-     */
-    protected $_isPartial = false;
 
     /**
      * Path matched by this route
@@ -101,21 +94,6 @@ abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_
         }
     
         return $this->_isAbstract;
-    }
-    
-    /**
-     * Check or set wether this is a partial route or not
-     * 
-     * @param  boolean $flag
-     * @return boolean
-     */
-    public function isPartial($flag = null)
-    {
-        if ($flag !== null) {
-            $this->_isPartial = $flag;
-        }
-    
-        return $this->_isPartial;
     }
     
     /**
