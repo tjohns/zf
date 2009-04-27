@@ -109,7 +109,7 @@ class Zend_Tool_Project_Context_System_ProjectDirectory
             /*
             foreach (new DirectoryIterator($this->getPath()) as $item) {
                 if (!$item->isDot()) {
-                    if (Zend_Tool_Framework_Registry::getInstance()->getClient()->isInteractive()) {
+                    if ($registry->getClient()->isInteractive()) {
                         // @todo prompt for override
                     } else {
                         require_once 'Zend/Tool/Project/Context/Exception.php';

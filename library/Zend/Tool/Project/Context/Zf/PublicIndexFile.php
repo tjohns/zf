@@ -63,7 +63,6 @@ class Zend_Tool_Project_Context_Zf_PublicIndexFile extends Zend_Tool_Project_Con
     {
         $codeGenerator = new Zend_CodeGenerator_Php_File(array(
             'body' => <<<EOS
-<?php 
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));

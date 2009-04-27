@@ -9,6 +9,16 @@ class Zend_Tool_Framework_EmptyClient
     
     protected $_registry = null;
     
+    public function getName()
+    {
+        return 'emptyClient';
+    }
+    
+    protected function _predispatch()
+    {
+        return $this;
+    }
+    
     public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
     {
         $this->_registry = $registry;

@@ -1,8 +1,11 @@
 <?php
 
-require_once 'Zend/Tool/Framework/Manifest/Interface.php';
+require_once 'Zend/Tool/Framework/Manifest/ProviderManifestable.php';
+require_once 'Zend/Tool/Framework/Manifest/Indexable.php';
 
-class Zend_Tool_Framework_Manifest_ManifestBadProvider implements Zend_Tool_Framework_Manifest_Interface
+class Zend_Tool_Framework_Manifest_ManifestBadProvider 
+    implements Zend_Tool_Framework_Manifest_ProviderManifestable,
+        Zend_Tool_Framework_Manifest_Indexable
 {
     
     public function getIndex()

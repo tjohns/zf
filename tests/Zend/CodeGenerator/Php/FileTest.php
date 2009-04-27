@@ -84,6 +84,8 @@ abstract class SampleClass extends ExtendedClassName implements Iterator, Traver
 
 
 }
+
+
 EOS;
 
         $output = $codeGenFile->generate();
@@ -115,13 +117,59 @@ EOS;
     
     public function testFromReflectionFile()
     {
-        $this->markTestSkipped('skipme');
+        ///$this->markTestSkipped('skipme');
         $file = dirname(__FILE__) . '/_files/TestSampleSingleClass.php';
         
         require_once $file;
         $codeGenFileFromDisk = Zend_CodeGenerator_Php_File::fromReflection(new Zend_Reflection_File($file));
         
-        echo $codeGenFileFromDisk->generate();
+        $codeGenFileFromDisk->getClass()->setMethod(array('name' => 'foobar'));
+        
+        $expectedOutput = <<<EOS
+<?php
+/**
+ * File header here
+ * 
+ * @author Ralph Schindler <ralph.schindler@zend.com>
+ * 
+ */
+
+
+
+
+/**
+ * class docblock
+ * 
+ * @package Zend_Reflection_TestSampleSingleClass
+ * 
+ */
+class Zend_Reflection_TestSampleSingleClass
+{
+
+    /**
+     * Enter description here...
+     * 
+     * @return bool
+     * 
+     */
+    public function someMethod()
+    {
+        /* test test */
+    }
+
+    public function foobar()
+    {
+    }
+
+
+}
+
+
+
+
+EOS;
+        
+        $this->assertEquals($expectedOutput, $codeGenFileFromDisk->generate());
         
     }
 

@@ -84,12 +84,28 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
         
         $this->_controllerPath = $this->_controllerResource->getContext()->getPath();
         
+        /*
+         * This code block is now commented, its doing to much for init()
+         *
         if ($this->_controllerPath != '' && self::hasActionMethod($this->_controllerPath, $this->_actionName)) {
             require_once 'Zend/Tool/Project/Context/Exception.php';
             throw new Zend_Tool_Project_Context_Exception('An action named ' . $this->_actionName . 'Action already exists in this controller');
         }
+        */
         
         return $this;
+    }
+    
+    /**
+     * getPersistentAttributes
+     *
+     * @return array
+     */
+    public function getPersistentAttributes()
+    {
+        return array(
+            'actionName' => $this->getActionName()
+            );
     }
     
     /**
@@ -124,6 +140,16 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
     {
         $this->_actionName = $actionName;
         return $this;
+    }
+    
+    /**
+     * getActionName()
+     *
+     * @return string
+     */
+    public function getActionName()
+    {
+        return $this->_actionName;
     }
     
     /**
@@ -168,7 +194,7 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
             return false;
         }
         
-        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFilePath($controllerPath);
+        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFileName($controllerPath, true, true);
         $controllerCodeGenFile->getClass()->setMethod(array(
             'name' => $actionName . 'Action',
             'body' => $body
@@ -191,7 +217,7 @@ class Zend_Tool_Project_Context_Zf_ActionMethod implements Zend_Tool_Project_Con
             return false;
         }
             
-        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFilePath($controllerPath);
+        $controllerCodeGenFile = Zend_CodeGenerator_Php_File::fromReflectedFileName($controllerPath, true, true);
         return $controllerCodeGenFile->getClass()->hasMethod($actionName . 'Action');
     }
     

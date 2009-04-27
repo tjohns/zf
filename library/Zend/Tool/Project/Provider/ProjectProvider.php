@@ -18,15 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-
 /** Zend_Tool_Project_Provider_Abstract */
 require_once 'Zend/Tool/Project/Provider/Abstract.php';
 
 /** Zend_Tool_Project_Provider_Exception */
 require_once 'Zend/Tool/Project/Provider/Exception.php';
-
-
 
 /**
  * @category   Zend
@@ -37,6 +33,14 @@ require_once 'Zend/Tool/Project/Provider/Exception.php';
 class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provider_Abstract
 {
     
+    /**
+     * createResource()
+     *
+     * @param Zend_Tool_Project_Profile $profile
+     * @param string $projectProviderName
+     * @param string $actionNames
+     * @return Zend_Tool_Project_Profile_Resource
+     */
     public static function createResource(Zend_Tool_Project_Profile $profile, $projectProviderName, $actionNames = null)
     {
         
@@ -56,6 +60,11 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
         return $projectProvider;
     }
     
+    /**
+     * getName()
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'ProjectProvider';

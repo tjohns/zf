@@ -17,10 +17,7 @@ class Zend_Tool_Framework_Loader_IncludePathLoaderTest extends PHPUnit_Framework
     
     public function setUp()
     {
-        $this->_registry = Zend_Tool_Framework_Registry::getInstance();
-        $this->_registry->setActionRepository(new Zend_Tool_Framework_Action_Repository());
-        $this->_registry->setManifestRepository(new Zend_Tool_Framework_Manifest_Repository());
-        $this->_registry->setProviderRepository(new Zend_Tool_Framework_Provider_Repository());
+
     }
 
     public function tearDown()

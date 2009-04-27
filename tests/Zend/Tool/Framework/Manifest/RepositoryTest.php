@@ -149,9 +149,9 @@ class Zend_Tool_Framework_Manifest_RepositoryTest extends PHPUnit_Framework_Test
         $this->_repository->addManifest(new Zend_Tool_Framework_Manifest_ManifestGoodOne());
         $this->_repository->process();
         
-        $expected = 'Global' . PHP_EOL . '    Type: Global, Name: FooOne, Value: Bar' . PHP_EOL 
-            . '    Type: Global, Name: FooTwo, Value: Baz1' . PHP_EOL
-            . '    Type: Global, Name: FooThree, Value: Baz2' . PHP_EOL;
+        $expected = 'Basic' . PHP_EOL . '    Type: Basic, Name: FooOne, Value: Bar' . PHP_EOL 
+            . '    Type: Basic, Name: FooTwo, Value: Baz1' . PHP_EOL
+            . '    Type: Basic, Name: FooThree, Value: Baz2' . PHP_EOL;
         
         $this->assertEquals($expected, (string) $this->_repository);
     }
@@ -178,17 +178,17 @@ class Zend_Tool_Framework_Manifest_RepositoryTest extends PHPUnit_Framework_Test
     
     public function testManifestGetMetadatasCollectionSearchWorks()
     {
-        $metadata1 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata1 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Foo',
             'value' => 'Bar',
             ));
         
-        $metadata2 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata2 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Bar',
             'value' => 'Baz',
             ));
             
-        $metadata3 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata3 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Baz',
             'value' => 'Foo',
             ));
@@ -206,17 +206,17 @@ class Zend_Tool_Framework_Manifest_RepositoryTest extends PHPUnit_Framework_Test
     
     public function testManifestGetMetadataSingularSearchWorks()
     {
-        $metadata1 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata1 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Foo',
             'value' => 'Bar',
             ));
         
-        $metadata2 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata2 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Bar',
             'value' => 'Baz',
             ));
             
-        $metadata3 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata3 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Baz',
             'value' => 'Foo',
             ));
@@ -232,17 +232,17 @@ class Zend_Tool_Framework_Manifest_RepositoryTest extends PHPUnit_Framework_Test
     
     public function testManifestGetMetadatasCollectionSearchWorksWithNonExistentProperties()
     {
-        $metadata1 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata1 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Foo',
             'value' => 'Bar',
             ));
         
-        $metadata2 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata2 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Bar',
             'value' => 'Baz',
             ));
             
-        $metadata3 = new Zend_Tool_Framework_Manifest_Metadata(array(
+        $metadata3 = new Zend_Tool_Framework_Metadata_Basic(array(
             'name' => 'Baz',
             'value' => 'Foo',
             ));

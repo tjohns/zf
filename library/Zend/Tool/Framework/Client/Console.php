@@ -145,11 +145,18 @@ class Zend_Tool_Framework_Client_Console
      */
     protected function _postDispatch()
     {
-        if ($this->_registry->getResponse()->isException()) {
-            echo PHP_EOL 
-               . 'An error has occured:' 
-               . PHP_EOL
-               . $this->_registry->getResponse()->getException()->getMessage();
+        $request = $this->_registry->getRequest();
+        $response = $this->_registry->getResponse();
+        
+        if ($response->isException()) {
+            require_once 'Zend/Tool/Framework/Client/Console/HelpSystem.php';
+            $helpSystem = new Zend_Tool_Framework_Client_Console_HelpSystem();
+            $helpSystem->setRegistry($this->_registry)
+                ->respondWithErrorMessage($response->getException()->getMessage())
+                ->respondWithSpecialtyAndParamHelp(
+                    $request->getProviderName(),
+                    $request->getActionName()
+                    );
         }
         
         echo PHP_EOL;

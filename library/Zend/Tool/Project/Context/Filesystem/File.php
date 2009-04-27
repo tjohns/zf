@@ -80,11 +80,7 @@ abstract class Zend_Tool_Project_Context_Filesystem_File extends Zend_Tool_Proje
         
         
         if (file_exists($this->getPath())) {
-            //if (Zend_Tool_Framework_Registry::getInstance()->getClient()->isInteractive()) {
-                // @todo prompt user
-            //} else {
-                
-            //}
+            // @todo propt user to determine if its ok to overwrite file
         }
         
         file_put_contents($this->getPath(), $this->getContents());

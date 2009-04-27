@@ -54,11 +54,16 @@ require_once 'Zend/Tool/Framework/Registry.php';
 abstract class Zend_Tool_Project_Provider_Abstract extends Zend_Tool_Framework_Provider_Abstract
 {
 
+    const NO_PROFILE_THROW_EXCEPTION = true;
+    const NO_PROFILE_RETURN_FALSE    = false;
+
     /**
      * @var bool
      */
     protected static $_isInitialized = false;
 
+    protected $_projectPath = null;
+    
     /**
      * @var Zend_Tool_Project_Profile
      */
@@ -100,14 +105,16 @@ abstract class Zend_Tool_Project_Provider_Abstract extends Zend_Tool_Framework_P
      *    - if an enpoint variable has been registered in teh client registry - key=workingDirectory
      *    - if an ENV variable with the key ZFPROJECT_PATH is found
      *
+     * @
      * @return Zend_Tool_Project_Profile
      */
-    protected function _loadProfile() //$projectDirectory = null)
+    protected function _loadProfile($loadProfileFlag = self::NO_PROFILE_THROW_EXCEPTION, $projectDirectory = null)
     {
 
-        $projectDirectory = getcwd();
-        //if ($projectDirectory == null) {
-        //}
+        
+        if ($projectDirectory == null) {
+            $projectDirectory = getcwd();
+        }
 
         $profile = new Zend_Tool_Project_Profile();
         $profile->setAttribute('projectDirectory', $projectDirectory);
@@ -115,10 +122,17 @@ abstract class Zend_Tool_Project_Provider_Abstract extends Zend_Tool_Framework_P
         if ($profile->isLoadableFromFile()) {
             $profile->loadFromFile();
             $this->_loadedProfile = $profile;
-            return $profile;
         }
 
-        return false;
+        if ($this->_loadedProfile == null) {
+            if ($loadProfileFlag == self::NO_PROFILE_THROW_EXCEPTION) {
+                throw new Zend_Tool_Project_Provider_Exception('A project profile was not found.');
+            } elseif ($loadProfileFlag == self::NO_PROFILE_RETURN_FALSE) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -141,12 +155,14 @@ abstract class Zend_Tool_Project_Provider_Abstract extends Zend_Tool_Framework_P
      *
      * @return Zend_Tool_Project_Profile
      */
-    protected function _getProfile()
+    protected function _getProfile($loadProfileFlag = self::NO_PROFILE_THROW_EXCEPTION)
     {
         if (!$this->_loadedProfile) {
-            $this->_loadProfile();
+            if (($this->_loadProfile($loadProfileFlag) === false) && ($loadProfileFlag === self::NO_PROFILE_RETURN_FALSE)) {
+                return false;
+            }
         }
-
+        
         return $this->_loadedProfile;
     }
 

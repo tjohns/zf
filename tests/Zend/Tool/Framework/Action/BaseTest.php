@@ -51,7 +51,7 @@ class Zend_Tool_Framework_Action_BaseTest extends PHPUnit_Framework_TestCase
     public function testBaseActionCanGetAndSetName()
     {
         $baseAction = new Zend_Tool_Framework_Action_Base();
-        $this->assertEquals('', $baseAction->getName());
+        $this->assertEquals('Base', $baseAction->getName());
         $baseAction->setName('Foo');
         $this->assertEquals('Foo', $baseAction->getName());
     }
