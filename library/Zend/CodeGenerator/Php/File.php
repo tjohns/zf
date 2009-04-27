@@ -88,6 +88,10 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
             throw new Zend_CodeGenerator_Php_Exception('FileName does not exist.');
         }
         
+        // cannot use realpath since the file might not exist, but we do need to have the index
+        // in the same DIRECTORY_SEPARATOR that realpath would use:
+        $fileName = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $fileName);
+        
         self::$_fileCodeGenerators[$fileName] = $fileCodeGenerator;
         
     }
