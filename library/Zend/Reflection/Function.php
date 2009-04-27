@@ -109,4 +109,21 @@ class Zend_Reflection_Function extends ReflectionFunction
         unset($phpReflections);
         return $zendReflections;
     }
+    
+    /**
+     * Get return type tag
+     *
+     * @return Zend_Reflection_Docblock_Tag_Return
+     */
+    public function getReturn()
+    {
+        $docblock = $this->getDocblock();
+        if (!$docblock->hasTag('return')) {
+            require_once 'Zend/Reflection/Exception.php';
+            throw new Zend_Reflection_Exception('Function does not specify an @return annotation tag; cannot determine return type');
+        }
+        $tag    = $docblock->getTag('return');
+        $return = Zend_Reflection_Docblock_Tag::factory('@return ' . $tag->getDescription());
+        return $return;
+    }
 }
