@@ -17,6 +17,58 @@
         illustrate both use cases.
     </para>
 
+    <table id="zend.application.core-functionality.application.api.options">
+        <title>Zend_Application options</title>
+        <tgroup cols="2">
+            <row>
+                <entry>Option</entry>
+                <entry>Description</entry>
+            </row>
+        </tgroup>
+        <tbody>
+            <row>
+                <entry><code>phpSettings</code></entry>
+                <entry><para>
+                    Array of php.ini settings to use. Keys should be the php.ini
+                    keys.
+                </para></entry>
+            </row>
+
+            <row>
+                <entry><code>includePaths</code></entry>
+                <entry><para>
+                    Additional paths to prepend to the
+                    <code>include_path</code>. Should be an array of paths.
+                </para></entry>
+            </row>
+
+            <row>
+                <entry><code>autoloaderNamespaces</code></entry>
+                <entry><para>
+                    Array of additional namespaces to register with the
+                    <code>Zend_Loader_Autoloader</code> instance.
+                </para></entry>
+            </row>
+
+            <row>
+                <entry><code>bootstrap</code></entry>
+                <entry><para>
+                    Either the string path to the bootstrap class, or an array
+                    with elements for the 'path' and 'class' for the application
+                    bootstrap.
+                </para></entry>
+            </row>
+        </tbody>
+    </table>
+
+    <note>
+        <title>Option names</title>
+
+        <para>
+            Please note that option names are case insensitive.
+        </para>
+    </note>
+
     <table id="zend.application.core-functionality.application.api.table">
         <title>Zend_Application Methods</title>
         <tgroup cols="4">
