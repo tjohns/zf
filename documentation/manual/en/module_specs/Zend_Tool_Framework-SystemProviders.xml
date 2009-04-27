@@ -2,6 +2,45 @@
 <!-- Reviewed: no -->
 <sect1 id="zend.tool.framework.system-providers">
     <title>Shipped System Providers</title>
-    <para></para>
-    <!-- @todo -->
+    <para>
+        In addition to the more useful project based providers that come shipped with Zend_Tool_Project,
+        there are also some more basic, but interesting providers that come built into 
+        Zend_Tool_Framework.  Some of these exist for the purpose of providing a means via the command line
+        to extract information, such as the version... while others are intended to aid the developer
+        when creating additional providers.
+    </para>
+
+    <sect2 id="zend.tool.framework.system-providers.version">
+        <title>The Version Provider</title>
+        
+        <para>
+            The version provider is included so that you may determine which version of the framework
+            that the <code>zf</code> or Zend_Tool is currently set to work with.
+        </para>
+        
+        <para>
+            Through the command line, simply run <code>zf show version</code>.
+        </para>
+        
+    </sect2>
+    
+    <sect2 id="zend.tool.framework.system-providers.manifest">
+        <title>The Manifest Provider</title>
+        
+        <para>
+            The manifest provider is included so that you may determine what kind of "manifest"
+            information is available during the Zend_Tool runtime.  Manifest data is information that
+            is attached to specific objects during Zend_Tools runtime.  The most important (for the 
+            purposes of the zf command line tool) peice of information is setup by the CLI/Console client.
+            Inside the manifest you will find the console specific namings that you are expected to
+            use when calling certain commands.  Data found in the manfest can be used by any provider
+            or client on an as needed basis.
+        </para>
+        
+        <para>
+            Through the command line, simply run <code>zf show manifest</code>.
+        </para>
+        
+    </sect2>
+
 </sect1>
