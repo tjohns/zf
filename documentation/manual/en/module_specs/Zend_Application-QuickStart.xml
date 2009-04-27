@@ -81,7 +81,7 @@ newproject
         </para>
 
         <programlisting role="php"><![CDATA[
-class Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 }
 ]]></programlisting>
@@ -187,7 +187,7 @@ $application->bootstrap()
 
         <programlisting role="php"><![CDATA[
 <?php
-class Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 }
 ]]></programlisting>
@@ -377,7 +377,7 @@ phpSettings.display_errors = 1
 
         <programlisting role="php"><![CDATA[
 <?php
-class Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initView()
     {
