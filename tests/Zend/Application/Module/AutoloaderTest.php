@@ -147,15 +147,37 @@ class Zend_Application_Module_AutoloaderTest extends PHPUnit_Framework_TestCase
         $this->assertContains('plugins', $resources['plugin']['path']);
     }
 
-    public function testApiResourceTypeShouldBeLoadedByDefault()
+    public function testServiceResourceTypeShouldBeLoadedByDefault()
     {
-        $this->assertTrue($this->loader->hasResourceType('api'));
+        $this->assertTrue($this->loader->hasResourceType('service'));
     }
 
-    public function testApiResourceTypeShouldPointToApisSubdirectory()
+    public function testServiceResourceTypeShouldPointToServicesSubdirectory()
     {
         $resources = $this->loader->getResourceTypes();
-        $this->assertContains('apis', $resources['api']['path']);
+        $this->assertContains('services', $resources['service']['path']);
+    }
+
+    public function testViewHelperResourceTypeShouldBeLoadedByDefault()
+    {
+        $this->assertTrue($this->loader->hasResourceType('viewhelper'));
+    }
+
+    public function testViewHelperResourceTypeShouldPointToViewHelperSubdirectory()
+    {
+        $resources = $this->loader->getResourceTypes();
+        $this->assertContains('views/helpers', $resources['viewhelper']['path']);
+    }
+
+    public function testViewFilterResourceTypeShouldBeLoadedByDefault()
+    {
+        $this->assertTrue($this->loader->hasResourceType('viewfilter'));
+    }
+
+    public function testViewFilterResourceTypeShouldPointToViewFilterSubdirectory()
+    {
+        $resources = $this->loader->getResourceTypes();
+        $this->assertContains('views/filters', $resources['viewfilter']['path']);
     }
 
     public function testDefaultResourceShouldBeModel()

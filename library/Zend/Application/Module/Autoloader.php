@@ -71,9 +71,17 @@ class Zend_Application_Module_Autoloader extends Zend_Loader_Autoloader_Resource
                 'namespace' => 'Plugin',
                 'path'      => 'plugins',
             ),
-            'api' => array(
-                'namespace' => 'Api',
-                'path'      => 'apis',
+            'service' => array(
+                'namespace' => 'Service',
+                'path'      => 'services',
+            ),
+            'viewhelper' => array(
+                'namespace' => 'View_Helper',
+                'path'      => 'views/helpers',
+            ),
+            'viewfilter' => array(
+                'namespace' => 'View_Filter',
+                'path'      => 'views/filters',
             ),
         ));
         $this->setDefaultResourceType('model');
