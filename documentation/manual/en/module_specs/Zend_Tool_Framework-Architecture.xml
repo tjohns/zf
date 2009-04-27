@@ -216,7 +216,7 @@ interface Zend_Tool_Framework_Manifest_Interface
         <para>
             There are a few different metadata classes that can be used to
             describe metadata.  The
-            <code>Zend_Tool_Framework_Manifest_Metadata<code> is the base
+            <code>Zend_Tool_Framework_Manifest_Metadata</code> is the base
             metadata object.  As you can see by the following code
             snippet, the base metadata class is fairly lightweight and
             abstract in nature:
@@ -357,7 +357,7 @@ class Zend_Tool_Framework_Manifest_Repository
 
         <para>
             Clients are the interface which bridges a user or external tool into
-            the <code>Zend_Tool_Framework<code> system. Clients can come in all
+            the <code>Zend_Tool_Framework</code> system. Clients can come in all
             shapes and sizes: RPC endpoints, Command Line Interface, or
             even a web interface.  Zend_Tool has implemented the command
             line interface as the default interface for interacting with

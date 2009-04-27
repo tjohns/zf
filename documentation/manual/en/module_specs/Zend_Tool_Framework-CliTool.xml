@@ -109,10 +109,12 @@
             Once you have done those two things, you should be able to issue a
             command and get back the proper response like this:
         </para>
-        
-        <inlinegraphic scale="100" align="center" valign="middle"
-            fileref="figures/zend.tool.framework.cliversionunix.png" format="PNG" />
-            
+
+        <para>
+            <inlinegraphic scale="100" align="center" valign="middle"
+                fileref="figures/zend.tool.framework.cliversionunix.png" format="PNG" />
+        </para>
+
         <para>
             If you do not see this type of output, go back and check your setup
             to ensure you have all of the necessary peices in the proper place.
@@ -197,8 +199,10 @@ C:\WAMP\PHP\bin
             command and get back the proper response like this:
         </para>
         
-        <inlinegraphic scale="100" align="center" valign="middle"
-            fileref="figures/zend.tool.framework.cliversionwin32.png" format="PNG" />
+        <para>
+            <inlinegraphic scale="100" align="center" valign="middle"
+                fileref="figures/zend.tool.framework.cliversionwin32.png" format="PNG" />
+        </para>
         
         <para>    
             If you do not see this type of output, go back and check your setup
@@ -261,9 +265,10 @@ C:\WAMP\PHP\bin
                 --help</code> command to see what is available to you.
         </para>
         
-        <inlinegraphic scale="100" align="center" valign="middle"
-            fileref="figures/zend.tool.framework.clihelp.png" format="PNG" />
-
+        <para>
+            <inlinegraphic scale="100" align="center" valign="middle"
+                fileref="figures/zend.tool.framework.clihelp.png" format="PNG" />
+        </para>
         
         <para>
             Continue on to the <code>Zend_Tool_Project</code> "Create Project"
