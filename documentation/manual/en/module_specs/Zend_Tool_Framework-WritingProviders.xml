@@ -4,17 +4,14 @@
     <title>Creating Providers to use with Zend_Tool_Framework</title>
     
     <para>
-        In general, a provider, on its own, is nothing more than the shell for
-        a developer to bundle up some capabilities they wish to dispatch with 
-        the command line (or other) clients.  Think of it to what a "controller"
-        is inside of your MVC application.
-    </para>
-
-    <para>
-        That said, 
+        In general, a provider, on its own, is nothing more than the shell for a
+        developer to bundle up some capabilities they wish to dispatch with the
+        command line (or other) clients.  It is an analogue to what a
+        "controller" is inside of your MVC application.
     </para>
 
     <sect2 id="zend.tool.framework.writing-providers.basic">
+        <title>Basic Instructions for Creating Providers</title>
 
 	    <para>
 		    As an example, if a developer wants to add the capability of showing
@@ -49,78 +46,82 @@ class My_Component_HelloProvider
 % zf say hello
 Hello from my provider!
 ]]></programlisting>
-
     </sect2>
     
     <sect2 id="zend.tool.framework.writing-providers.advanced">
         <title>Advanced Development Information</title>
     
         <para>
-            The above "hello world" example is great for simple commands, but what about something more
-            advanced?  As your scripting and tooling needs grow, you might find that you need the ability
-            to accept variables.  Much like function signatures have parameters, your tooling requests
-            can also accept parameters.
+            The above "Hello World" example is great for simple commands, but
+            what about something more advanced?  As your scripting and tooling
+            needs grow, you might find that you need the ability to accept
+            variables.  Much like function signatures have parameters, your
+            tooling requests can also accept parameters.
         </para>
         
         <para>
-            Just as each tooling request can be isolated to a method within a class, the parameters of 
-            a tooling request can also be isolated a very well known place.  Parameters of the action
-            methods of a provider can include the same parameters you want your client to utilize when
-            calling that provider and action combination.  For example, if you wanted to accept a 
-            name in the above example, you would probably do this in OO code:
+            Just as each tooling request can be isolated to a method within a
+            class, the parameters of a tooling request can also be isolated in a
+            very well known place.  Parameters of the action methods of a
+            provider can include the same parameters you want your client to
+            utilize when calling that provider and action combination.  For
+            example, if you wanted to accept a name in the above example, you
+            would probably do this in OO code:
         </para>
     
         <programlisting role="php"><![CDATA[
 class My_Component_HelloProvider
     implements Zend_Tool_Framework_Provider_Interface
 {
-    public function say($name = 'ralph')
+    public function say($name = 'Ralph')
     {
-        echo 'Hello' . $name. ', from my provider!';
+        echo 'Hello' . $name . ', from my provider!';
     }
 }
 ]]></programlisting>
     
         <para>
-            The above example can then be called via the command line <code>zf say hello joe</code>.  "joe" will
-            be supplied to the provider as a parameter of the method call.  Also note, as you see that the parameter
-            is optional, that means it is also optional on the command line, so that <code>zf say hello</code>
-            will still work, and default to the name "ralph".
+            The above example can then be called via the command line <code>zf
+                say hello Joe</code>.  "Joe" will be supplied to the provider as
+            a parameter of the method call.  Also note, as you see that the
+            parameter is optional, that means it is also optional on the command
+            line, so that <code>zf say hello</code> will still work, and default
+            to the name "Ralph".
         </para>
 
         <para>
-            Another interesting feature you might wish to implement is <emphasis>pretendability</emphasis>.
-            Pretendabilty is the ability for your provider to "pretend" as if it is doing the requested 
-            action and provider combination and give the user as much information about what it <emphasis>would</emphasis>
-            do without actually doing it.  This might be an important notion when doing heavy database
-            or filesystem modifications that the user might not otherwise want to do. 
+            Another interesting feature you might wish to implement is
+            <emphasis>pretendability</emphasis>.  Pretendabilty is the ability
+            for your provider to "pretend" as if it is doing the requested
+            action and provider combination and give the user as much
+            information about what it <emphasis>would</emphasis> do without
+            actually doing it.  This might be an important notion when doing
+            heavy database or filesystem modifications that the user might not
+            otherwise want to do. 
         </para>
         
         <para>
-            Pretendability is easy to implement.  There are two parts to this feature: 1) marking the provider
-            as having the ability to "pretend", and 2) checking the request to ensure the current request was indeed
-            asked to be "pretended".  This feature is demonstrated in the code sample below.
+            Pretendability is easy to implement.  There are two parts to this
+            feature: 1) marking the provider as having the ability to "pretend",
+            and 2) checking the request to ensure the current request was indeed
+            asked to be "pretended".  This feature is demonstrated in the code
+            sample below.
         </para>
 
         <programlisting role="php"><![CDATA[
 class My_Component_HelloProvider
-    extends  Zend_Tool_Framework_Provider_Abstract
+    extends    Zend_Tool_Framework_Provider_Abstract
     implements Zend_Tool_Framework_Provider_Pretendable
 {
-    public function say($name = 'ralph')
+    public function say($name = 'Ralph')
     {
         if ($this->_registry->getRequest()->isPretend()) {
-            echo 'I would say hello to ' . $name. '.';
+            echo 'I would say hello to ' . $name . '.';
         } else {
-            echo 'Hello' . $name. ', from my provider!';
+            echo 'Hello' . $name . ', from my provider!';
         }
     }
 }
 ]]></programlisting>
-    
-    
     </sect2>
-
-
-
 </sect1>
