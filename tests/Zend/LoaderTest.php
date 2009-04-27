@@ -57,6 +57,30 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
+    public function setUp()
+    {
+        $this->error = null;
+        $this->errorHandler = null;
+    }
+
+    public function tearDown()
+    {
+        if ($this->errorHandler !== null) {
+            restore_error_handler();
+        }
+    }
+
+    public function setErrorHandler()
+    {
+        set_error_handler(array($this, 'handleErrors'), E_USER_NOTICE);
+        $this->errorHandler = true;
+    }
+
+    public function handleErrors($errno, $errstr)
+    {
+        $this->error = $errstr;
+    }
+
     /**
      * Tests that a class can be loaded from a well-formed PHP file
      */
@@ -202,8 +226,12 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoaderAutoloadLoadsValidClasses()
     {
+        $this->setErrorHandler();
         $this->assertEquals('Zend_Db_Profiler_Exception', Zend_Loader::autoload('Zend_Db_Profiler_Exception'));
+        $this->assertContains('deprecated', $this->error);
+        $this->error = null;
         $this->assertEquals('Zend_Auth_Storage_Interface', Zend_Loader::autoload('Zend_Auth_Storage_Interface'));
+        $this->assertContains('deprecated', $this->error);
     }
 
     /**
@@ -211,7 +239,9 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoaderAutoloadFailsOnInvalidClasses()
     {
+        $this->setErrorHandler();
         $this->assertFalse(Zend_Loader::autoload('Zend_FooBar_Magic_Abstract'));
+        $this->assertContains('deprecated', $this->error);
     }
 
     public function testLoaderRegisterAutoloadRegisters()
@@ -220,7 +250,10 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("spl_autoload not installed on this PHP installation");
         }
 
+        $this->setErrorHandler();
         Zend_Loader::registerAutoload();
+        $this->assertContains('deprecated', $this->error);
+
         $autoloaders = spl_autoload_functions();
         $expected    = array('Zend_Loader', 'autoload');
         $found       = false;
@@ -241,7 +274,10 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("spl_autoload not installed on this PHP installation");
         }
 
+        $this->setErrorHandler();
         Zend_Loader::registerAutoload('Zend_Loader_MyLoader');
+        $this->assertContains('deprecated', $this->error);
+
         $autoloaders = spl_autoload_functions();
         $expected    = array('Zend_Loader_MyLoader', 'autoload');
         $found       = false;
@@ -262,7 +298,10 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("spl_autoload not installed on this PHP installation");
         }
 
+        $this->setErrorHandler();
         Zend_Loader::registerAutoload('Zend_Loader_MyOverloader');
+        $this->assertContains('deprecated', $this->error);
+
         $autoloaders = spl_autoload_functions();
         $expected    = array('Zend_Loader_MyOverloader', 'autoload');
         $found       = false;
@@ -307,11 +346,13 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("spl_autoload() not installed on this PHP installation");
         }
 
+        $this->setErrorHandler();
         try {
             Zend_Loader::registerAutoload('stdClass');
             $this->fail('registerAutoload should fail without spl_autoload');
         } catch (Zend_Exception $e) {
             $this->assertEquals('The class "stdClass" does not have an autoload() method', $e->getMessage());
+            $this->assertContains('deprecated', $this->error);
         }
     }
 
@@ -321,7 +362,10 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped("spl_autoload() not installed on this PHP installation");
         }
 
+        $this->setErrorHandler();
         Zend_Loader::registerAutoload();
+        $this->assertContains('deprecated', $this->error);
+
         $autoloaders = spl_autoload_functions();
         $expected    = array('Zend_Loader', 'autoload');
         $found       = false;
@@ -355,11 +399,12 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
      * a fatal error *will* be raised in such situations, which is as 
      * appropriate or more appropriate than raising an exception.
      *
-     * @todo   Determine how to get the shell_exec to work on windows
+     * NOTE: Removed from test suite, as autoload functionality in Zend_Loader 
+     * is now deprecated.
+     *
      * @see    http://framework.zend.com/issues/browse/ZF-2463
      * @group  ZF-2923
      * @return void
-     */
     public function testLoaderAutoloadShouldHideParseError()
     {
         if (isset($_SERVER['OS'])  &&  strstr($_SERVER['OS'], 'Win')) {
@@ -371,6 +416,7 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $output = shell_exec($command);
         $this->assertTrue(empty($output));
     }
+     */
 }
 
 // Call Zend_LoaderTest::main() if this source file is executed directly.
