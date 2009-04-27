@@ -4,7 +4,7 @@
     <title>Dojo Form Examples</title>
 
     <example id="zend.dojo.form.examples.dojoform">
-        <title>Using <classname>Zend_Dojo_Form</classname></title>
+        <title>Using Zend_Dojo_Form</title>
 
         <para>
             The easiest way to utilize Dojo with <classname>Zend_Form</classname> is to

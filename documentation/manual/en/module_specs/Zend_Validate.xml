@@ -186,7 +186,7 @@ if (!validator->isValid('word')) {
 
     <sect2 id="zend.validate.introduction.static">
 
-        <title>Using the static <code>is()</code> method</title>
+        <title>Using the static is() method</title>
 
         <para>
             If it's inconvenient to load a given validation class and create an

@@ -4,7 +4,7 @@
     <title>Zend_Cache Frontends</title>
 
     <sect2 id="zend.cache.frontends.core">
-        <title><classname>Zend_Cache_Core</classname></title>
+        <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
             <para>
@@ -229,7 +229,7 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title><classname>Zend_Cache_Frontend_Output</classname></title>
+        <title>Zend_Cache_Frontend_Output</title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>Introduction</title>
             <para>
@@ -273,7 +273,7 @@ echo 'This is never cached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title><classname>Zend_Cache_Frontend_Function</classname></title>
+        <title>Zend_Cache_Frontend_Function</title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>
@@ -353,7 +353,7 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title><classname>Zend_Cache_Frontend_Class</classname></title>
+        <title>Zend_Cache_Frontend_Class</title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>Introduction</title>
             <para>
@@ -467,7 +467,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title><classname>Zend_Cache_Frontend_File</classname></title>
+        <title>Zend_Cache_Frontend_File</title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Introduction</title>
             <para>
@@ -548,7 +548,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title><classname>Zend_Cache_Frontend_Page</classname></title>
+        <title>Zend_Cache_Frontend_Page</title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>Introduction</title>
             <para>

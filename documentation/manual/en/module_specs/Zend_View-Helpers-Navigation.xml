@@ -1354,7 +1354,7 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example2">
-            <title>Calling <code>renderMenu()</code> directly</title>
+            <title>Calling renderMenu() directly</title>
 
             <para>
                 This example shows how to render a menu that is not

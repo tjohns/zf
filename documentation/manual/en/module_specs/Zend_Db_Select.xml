@@ -422,7 +422,7 @@ $select = $db->select()
 
             <example id="zend.db.select.building.columns-atomic.example">
 
-                <title>Examples of adding columns with the <code>columns()</code> method</title>
+                <title>Examples of adding columns with the columns() method</title>
 
                 <programlisting role="php"><![CDATA[
 // Build this query:

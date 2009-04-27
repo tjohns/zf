@@ -150,7 +150,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title>Using Validators with <classname>Zend_File_Transfer</classname></title>
+        <title>Using Validators with Zend_File_Transfer</title>
 
         <para>
             Putting validators to work is quite simple. There are several methods for adding and manipulating validators:

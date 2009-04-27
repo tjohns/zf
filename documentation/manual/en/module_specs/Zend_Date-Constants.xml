@@ -691,8 +691,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
         </example>
 
         <table id="zend.date.constants.selfdefinedformats.table">
-            <title>Constants for <emphasis role="strong">ISO 8601 Date Output</emphasis>
-            </title>
+            <title>Constants for ISO 8601 Date Output</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -1149,8 +1148,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
         </para>
 
         <table id="zend.date.constants.phpformats.table">
-            <title>Constants for <emphasis role="strong">PHP Date Output</emphasis>
-            </title>
+            <title>Constants for PHP Date Output</title>
             <tgroup cols="5">
                 <thead>
                     <row>

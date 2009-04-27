@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.advanced">
-    <title>Advanced <classname>Zend_Form</classname> Usage</title>
+    <title>Advanced Zend_Form Usage</title>
 
     <para>
         <classname>Zend_Form</classname> has a wealth of functionality, much of it aimed

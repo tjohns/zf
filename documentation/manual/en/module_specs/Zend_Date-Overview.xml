@@ -203,7 +203,7 @@ $date = new Zend_Date('31.Feb.2007');
 
     <sect2 id="id.date.basic">
 
-        <title>Basic <classname>Zend_Date</classname> Operations Common to Many Date Parts</title>
+        <title>Basic Zend_Date Operations Common to Many Date Parts</title>
 
         <para>
             The methods <code>add(), sub(), compare(), get(), and set()</code> operate generically on dates. In each

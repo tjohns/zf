@@ -126,7 +126,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
 
     <sect2 id="zend.db.statement.fetching">
 
-        <title>Fetching Results from a <code>SELECT</code> Statement</title>
+        <title>Fetching Results from a SELECT Statement</title>
 
         <para>
             You can call methods on the statement object to retrieve rows from

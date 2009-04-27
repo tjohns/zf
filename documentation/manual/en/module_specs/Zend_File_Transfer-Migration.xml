@@ -35,7 +35,7 @@
             </para>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.rename">
-                <title>Filter: <emphasis>Rename</emphasis></title>
+                <title>Filter: Rename</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -71,7 +71,7 @@ $upload->addFilter('Rename',
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.count">
-                <title>Validator: <emphasis>Count</emphasis></title>
+                <title>Validator: Count</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -106,7 +106,7 @@ $upload->addValidator('Count',
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.extension">
-                <title>Validator: <emphasis>Extension</emphasis></title>
+                <title>Validator:Extension</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -141,7 +141,7 @@ $upload->addValidator('Extension',
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.filessize">
-                <title>Validator: <emphasis>FilesSize</emphasis></title>
+                <title>Validator: FilesSize</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -192,7 +192,7 @@ $upload->setUseByteSting(true); // set flag
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.hash">
-                <title>Validator: <emphasis>Hash</emphasis></title>
+                <title>Validator: Hash</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -227,7 +227,7 @@ $upload->addValidator('Hash',
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.imagesize">
-                <title>Validator: <emphasis>ImageSize</emphasis></title>
+                <title>Validator: ImageSize</title>
 
                 <itemizedlist>
                     <listitem><para>
@@ -266,7 +266,7 @@ $upload->addValidator('ImageSize',
             </sect4>
 
             <sect4 id="zend.file.transfer.migration.fromonesixtooneseven.validators.size">
-                <title>Validator: <emphasis>Size</emphasis></title>
+                <title>Validator: Size</title>
 
                 <itemizedlist>
                     <listitem><para>

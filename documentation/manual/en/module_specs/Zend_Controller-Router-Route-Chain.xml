@@ -67,7 +67,7 @@ echo $chainedRoute->assemble();
 ]]></programlisting>
 
     <sect4 id="zend.controller.router.routes.chain.config">
-        <title>Chain Routes via <classname>Zend_Config</classname></title>
+        <title>Chain Routes via Zend_Config</title>
 
         <para>
             To chain routes together in a config file, there are  additional

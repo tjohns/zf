@@ -110,7 +110,7 @@
 
         <sect3 id="zend.db.adapter.connecting.constructor">
 
-            <title>Using a <classname>Zend_Db</classname> Adapter Constructor</title>
+            <title>Using a Zend_Db Adapter Constructor</title>
 
             <para>
                 You can create an instance of an adapter using its constructor.
@@ -134,7 +134,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
         <sect3 id="zend.db.adapter.connecting.factory">
 
-            <title>Using the <classname>Zend_Db</classname> Factory</title>
+            <title>Using the Zend_Db Factory</title>
 
             <para>
                 As an alternative to using an adapter constructor directly, you
@@ -203,7 +203,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
 
-            <title>Using Zend_Config with the <classname>Zend_Db</classname> Factory</title>
+            <title>Using Zend_Config with the Zend_Db Factory</title>
 
             <para>
                 Optionally, you may specify either argument of the
@@ -222,7 +222,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Using the Adapter Factory Method with a <classname>Zend_Config Object</classname></title>
+                <title>Using the Adapter Factory Method with a Zend_Config Object</title>
                 <para>
                     In the example below, a <classname>Zend_Config</classname> object is created from
                     an array. You can also load data from an external file using classes such as
@@ -1232,7 +1232,7 @@ echo $sql;
 
         <sect3 id="zend.db.adapter.quoting.quote">
 
-            <title>Using <code>quote()</code></title>
+            <title>Using quote()</title>
 
             <para>
                 The <code>quote()</code> method accepts a single argument, a
@@ -1244,7 +1244,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Using <code>quote()</code></title>
+                <title>Using quote()</title>
                 <programlisting role="php"><![CDATA[
 $name = $db->quote("O'Reilly");
 echo $name;
@@ -1286,7 +1286,7 @@ SELECT * FROM atable WHERE intColumn = '123'
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
-                <title>Using <code>quote()</code> with a SQL Type</title>
+                <title>Using quote() with a SQL Type</title>
                 <programlisting role="php"><![CDATA[
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
@@ -1313,7 +1313,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 
         <sect3 id="zend.db.adapter.quoting.quote-into">
 
-            <title>Using <code>quoteInto()</code></title>
+            <title>Using quoteInto()</title>
 
             <para>
                 The most typical usage of quoting is to interpolate a PHP
@@ -1337,7 +1337,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Using <code>quoteInto()</code></title>
+                <title>Using quoteInto()</title>
                 <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
@@ -1353,7 +1353,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
-                <title>Using <code>quoteInto()</code> with a SQL Type</title>
+                <title>Using quoteInto() with a SQL Type</title>
                 <programlisting role="php"><![CDATA[
 $sql = $db
     ->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
@@ -1366,7 +1366,7 @@ echo $sql;
         </sect3>
         <sect3 id="zend.db.adapter.quoting.quote-identifier">
 
-            <title>Using <code>quoteIdentifier()</code></title>
+            <title>Using quoteIdentifier()</title>
 
             <para>
                 Values are not the only part of SQL syntax that might need to
@@ -1696,7 +1696,7 @@ $db->closeConnection();
         </example>
 
         <note>
-            <title>Does <classname>Zend_Db</classname> Support Persistent Connections?</title>
+            <title>Does Zend_Db Support Persistent Connections?</title>
             <para>
                 The usage of persistent connections is not supported
                 or encouraged in <classname>Zend_Db</classname>.

@@ -91,7 +91,7 @@
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
-        <title><classname>Zend_Captcha_Dumb</classname></title>
+        <title>Zend_Captcha_Dumb</title>
 
         <para>
             The <classname>Zend_Captch_Dumb</classname> adapter is mostly self-descriptive. It provides a random
@@ -102,7 +102,7 @@
     </sect2>
 
     <sect2 id="zend.captcha.adapters.figlet">
-        <title><classname>Zend_Captcha_Figlet</classname></title>
+        <title>Zend_Captcha_Figlet</title>
 
         <para>
             The <classname>Zend_Captcha_Figlet</classname> adapter utilizes <link

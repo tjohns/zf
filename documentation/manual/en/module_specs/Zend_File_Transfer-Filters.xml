@@ -44,7 +44,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.filters.usage">
-        <title>Using filters with <classname>Zend_File_Transfer</classname></title>
+        <title>Using filters with Zend_File_Transfer</title>
 
         <para>
             The usage of filters is quite simple. There are several methods for adding and manipulating filters.

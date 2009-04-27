@@ -383,7 +383,7 @@ $router->setGlobalParam('lang', 'en');
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
-        <title>Using <classname>Zend_Config</classname> with the RewriteRouter</title>
+        <title>Using Zend_Config with the RewriteRouter</title>
 
         <para>
             Sometimes it is more convenient to update a configuration file with

@@ -13,7 +13,7 @@
 
     <sect2 id="zend.currency.introduction.list">
 
-        <title>Why use <classname>Zend_Currency</classname>?</title>
+        <title>Why use Zend_Currency?</title>
 
         <para>
             <classname>Zend_Currency</classname> offers the following functions for handling currency manipulations.

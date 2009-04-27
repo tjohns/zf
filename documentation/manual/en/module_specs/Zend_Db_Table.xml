@@ -1104,7 +1104,7 @@ $rows = $table->fetchAll($select);
 
             <example id="zend.db.table.qry.rows.set.integrity.example">
 
-                <title>Removing the integrity check on <classname>Zend_Db_Table_Select</classname> to allow JOINed rows</title>
+                <title>Removing the integrity check on Zend_Db_Table_Select to allow JOINed rows</title>
 
                 <programlisting><![CDATA[
 $table = new Bugs();
@@ -1615,7 +1615,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
         <sect3 id="zend.db.table.extending.finders">
 
-            <title>Define Custom Search Methods in <classname>Zend_Db_Table</classname></title>
+            <title>Define Custom Search Methods in Zend_Db_Table</title>
 
             <para>
                 You can implement custom query methods in your Table class, if you have frequent
@@ -1649,7 +1649,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
         <sect3 id="zend.db.table.extending.inflection">
 
-            <title>Define Inflection in <classname>Zend_Db_Table</classname></title>
+            <title>Define Inflection in Zend_Db_Table</title>
 
             <para>
                 Some people prefer that the table class name match a table name in the RDBMS by

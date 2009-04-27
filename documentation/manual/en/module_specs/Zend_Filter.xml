@@ -75,7 +75,7 @@ echo $htmlEntities->filter('"'); // &quot;
 
     <sect2 id="zend.filter.introduction.static">
 
-        <title>Using the static <code>get()</code> method</title>
+        <title>Using the static get() method</title>
 
         <para>
             If it is inconvenient to load a given filter class and create an

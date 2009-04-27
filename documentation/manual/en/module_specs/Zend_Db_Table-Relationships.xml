@@ -290,7 +290,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 
             <example id="zend.db.table.relationships.fetching.dependent.example-by-select">
 
-                <title>Fetching a Dependent Rowset using a <classname>Zend_Db_Table_Select</classname></title>
+                <title>Fetching a Dependent Rowset using a Zend_Db_Table_Select</title>
 
                 <para>
                     This example shows getting a Row object from the table <code>Accounts</code>,

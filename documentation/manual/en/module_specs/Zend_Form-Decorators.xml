@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.decorators">
-    <title>Creating Custom Form Markup Using <classname>Zend_Form_Decorator</classname></title>
+    <title>Creating Custom Form Markup Using Zend_Form_Decorator</title>
 
     <para>
         Rendering a form object is completely optional -- you do not need to use

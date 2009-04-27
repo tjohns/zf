@@ -507,7 +507,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
         <sect3 id="zend.filter.input.metacommands.fields">
 
-            <title>The <code>FIELDS</code> metacommand</title>
+            <title>The FIELDS metacommand</title>
 
             <para>
                 If the rule name for a filter or validator is different than
@@ -581,7 +581,7 @@ $validators = array(
 
         <sect3 id="zend.filter.input.metacommands.presence">
 
-            <title>The <code>PRESENCE</code> metacommand</title>
+            <title>The PRESENCE metacommand</title>
 
             <para>
                 Each entry in the validator array may have a metacommand called
@@ -613,7 +613,7 @@ $validators = array(
 
         <sect3 id="zend.filter.input.metacommands.default">
 
-            <title>The <code>DEFAULT_VALUE</code> metacommand</title>
+            <title>The DEFAULT_VALUE metacommand</title>
 
             <para>
                 If a field is not present in the input data, and you specify a
@@ -670,7 +670,7 @@ echo $input->month; // echoes 1
 
         <sect3 id="zend.filter.input.metacommands.allow-empty">
 
-            <title>The <code>ALLOW_EMPTY</code> metacommand</title>
+            <title>The ALLOW_EMPTY metacommand</title>
 
             <para>
                 By default, if a field exists in the input data, then
@@ -736,7 +736,7 @@ $input->setOptions($options);
 
         <sect3 id="zend.filter.input.metacommands.break-chain">
 
-            <title>The <code>BREAK_CHAIN</code> metacommand</title>
+            <title>The BREAK_CHAIN metacommand</title>
 
             <para>
                 By default if a rule has more than one validator, all
@@ -807,7 +807,7 @@ $input = new Zend_Filter_Input(null, $validators);
 
         <sect3 id="zend.filter.input.metacommands.messages">
 
-            <title>The <code>MESSAGES</code> metacommand</title>
+            <title>The MESSAGES metacommand</title>
 
             <para>
                 You can specify error messages for each validator in a rule

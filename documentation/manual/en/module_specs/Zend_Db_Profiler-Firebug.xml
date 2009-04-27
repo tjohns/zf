@@ -37,7 +37,7 @@
     </itemizedlist>
 
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
-        <title>DB Profiling with <classname>Zend_Controller_Front</classname></title>
+        <title>DB Profiling with Zend_Controller_Front</title>
 
         <programlisting role="php"><![CDATA[
 // In your bootstrap file
@@ -56,7 +56,7 @@ $db->setProfiler($profiler)
     </example>
 
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
-        <title>DB Profiling without <classname>Zend_Controller_Front</classname></title>
+        <title>DB Profiling without Zend_Controller_Front</title>
 
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');

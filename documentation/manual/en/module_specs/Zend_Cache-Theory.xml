@@ -24,7 +24,7 @@
         other hand, the backend automatically fetches the record from cache transparently.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>The <classname>Zend_Cache</classname> Factory Method</title>
+        <title>The Zend_Cache Factory Method</title>
         <para>
             A good way to build a usable instance of a <classname>Zend_Cache</classname> Frontend is given
             in the following example :

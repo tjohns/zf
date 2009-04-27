@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.elements">
-    <title>Creating Form Elements Using <classname>Zend_Form_Element</classname></title>
+    <title>Creating Form Elements Using Zend_Form_Element</title>
 
     <para>
         A form is made of elements that typically correspond to HTML form

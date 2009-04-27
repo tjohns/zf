@@ -68,7 +68,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Appending data to <classname>Zend_Dojo_Data</classname></title>
+            <title>Appending data to Zend_Dojo_Data</title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -131,7 +131,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Specifying a label field in <classname>Zend_Dojo_Data</classname></title>
+            <title>Specifying a label field in Zend_Dojo_Data</title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -144,7 +144,7 @@ $data->setLabel('name');
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>Populating <classname>Zend_Dojo_Data</classname> from JSON</title>
+            <title>Populating Zend_Dojo_Data from JSON</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);

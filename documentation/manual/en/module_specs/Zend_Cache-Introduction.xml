@@ -17,7 +17,7 @@
         for convenience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
     </para>
     <example id="zend.cache.introduction.example-1">
-        <title>Getting a Frontend with <classname>Zend_Cache::factory()</classname></title>
+        <title>Getting a Frontend with Zend_Cache::factory()</title>
         <para>
             <classname>Zend_Cache::factory()</classname> instantiates correct objects and ties them together.
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
@@ -87,7 +87,7 @@ print_r($result);
     </example>
 
     <example id="zend.cache.introduction.example-3">
-        <title>Caching Output with <classname>Zend_Cache</classname> Output Frontend</title>
+        <title>Caching Output with Zend_Cache Output Frontend</title>
         <para>
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
             encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
