@@ -89,6 +89,20 @@ RewriteRule ^.*$ index.php [NC,L]
 ]]>
             </programlisting>
 
+            <note>
+                <title>Learn about mod_rewrite</title>
+
+                <para>
+                    The above rewrite rules allow access to any file under your
+                    virtual host's document root. If there are files you do not
+                    want exposed in this way, you may want to be more
+                    restrictive in your rules. Go to the Apache website to
+                    <ulink
+                        url="http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html">learn
+                        more about mod_rewrite</ulink>.
+                </para>
+            </note>
+
             <para>
                 If using IIS 7.0, use the following as your rewrite
                 configuration:
