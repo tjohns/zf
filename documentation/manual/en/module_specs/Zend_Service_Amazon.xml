@@ -149,7 +149,7 @@ foreach ($results as $result) {
 ]]></programlisting>
         </example>
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
-            <title>Using the <code>ResponseGroup</code> Option</title>
+            <title>Using the ResponseGroup Option</title>
             <para>
                 The <code>ResponseGroup</code> option is used to control the specific information that will be returned
                 in the response.

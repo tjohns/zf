@@ -60,7 +60,7 @@ $log->error('unable to connect to database');
     </para>
 
     <sect3 id="zend.log.writers.mail.layoutusage">
-        <title><classname>Zend_Layout</classname> Usage</title>
+        <title>Zend_Layout Usage</title>
 
         <para>
             A <classname>Zend_Layout</classname> instance may be used to generate the HTML

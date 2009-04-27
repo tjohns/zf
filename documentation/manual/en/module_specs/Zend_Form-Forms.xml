@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.forms">
-    <title>Creating Forms Using <classname>Zend_Form</classname></title>
+    <title>Creating Forms Using Zend_Form</title>
 
     <para>
         The <classname>Zend_Form</classname> class is used to aggregate form elements,

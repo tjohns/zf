@@ -14,7 +14,7 @@
         </para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title>Adapters for <classname>Zend_Paginator</classname></title>
+            <title>Adapters for Zend_Paginator</title>
 
             <tgroup cols="2">
                 <thead>
@@ -247,7 +247,7 @@ $this->view->paginator = $paginator;
         </para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title>Scrolling styles for <classname>Zend_Paginator</classname></title>
+            <title>Scrolling styles for Zend_Paginator</title>
 
             <tgroup cols="2">
                 <thead>

@@ -30,7 +30,7 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title>Using <classname>Zend_Memory</classname> component</title>
+            <title>Using Zend_Memory component</title>
             <para>
                 <classname>Zend_Memory::factory()</classname> instantiates the memory
                 manager object with specified backend options.

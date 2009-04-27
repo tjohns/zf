@@ -2,7 +2,7 @@
 <!-- Reviewed: no -->
 <sect1 id="zend.locale.functions">
 
-    <title>Using <classname>Zend_Locale</classname></title>
+    <title>Using Zend_Locale</title>
 
     <para>
         <classname>Zend_Locale</classname> also provides localized information about locales for each locale,

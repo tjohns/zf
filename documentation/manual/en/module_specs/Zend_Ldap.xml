@@ -272,7 +272,7 @@ echo "$acctname\n";
                 <code>accountCanonicalForm</code> option. This option may one of the following values:
 
                 <table id="zend.ldap.using.theory-of-operation.account-name-canonicalization.table">
-                  <title><code>accountCanonicalForm</code></title>
+                  <title>accountCanonicalForm</title>
                   <tgroup cols="3">
                     <thead>
                       <row>

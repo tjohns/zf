@@ -16,7 +16,7 @@
     </sect2>
 
     <sect2 id="zend.progressbar.basic">
-        <title>Basic Usage of <classname>Zend_Progressbar</classname></title>
+        <title>Basic Usage of Zend_Progressbar</title>
         <para>
             <classname>Zend_ProgressBar</classname> is quite easy in its usage. You
             simply create a new instance of <classname>Zend_Progressbar</classname>, defining a

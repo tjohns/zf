@@ -96,7 +96,7 @@
     </note>
 
     <example id="zend.navigation.pages.mvc.example.getHref">
-        <title><code>getHref() generates the page URI</code></title>
+        <title>getHref() generates the page URI</title>
 
         <para>
             This example show that MVC pages use
@@ -129,7 +129,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     </example>
 
     <example id="zend.navigation.pages.mvc.example.isActive">
-        <title><code>isActive()</code> determines if page is active</title>
+        <title>isActive() determines if page is active</title>
 
         <para>
             This example show that MVC pages determine whether they are active

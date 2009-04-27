@@ -26,7 +26,7 @@
         </para>
 
         <example id="zend.registry.using.storing.example">
-            <title>Example of <code>set()</code> Method Usage</title>
+            <title>Example of set() Method Usage</title>
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
 ]]></programlisting>
@@ -55,7 +55,7 @@ Zend_Registry::set('index', $value);
         </para>
 
         <example id="zend.registry.using.retrieving.example">
-            <title>Example of <code>get()</code> Method Usage</title>
+            <title>Example of get() Method Usage</title>
             <programlisting role="php"><![CDATA[
 $value = Zend_Registry::get('index');
 ]]></programlisting>
@@ -174,7 +174,7 @@ var_dump( $registry['index'] );
             </note>
         </para>
             <warning>
-                <title>Known Issues with the <code>ArrayObject::ARRAY_AS_PROPS</code> Option</title>
+                <title>Known Issues with the ArrayObject::ARRAY_AS_PROPS Option</title>
 
                 <para>
                     Some versions of PHP have proven very buggy when using the registry with the <code>ArrayObject::ARRAY_AS_PROPS</code> option.
@@ -231,7 +231,7 @@ if (Zend_Registry::isRegistered($index)) {
         </para>
 
         <example id="zend.registry.using.isset.example-isset">
-            <title>Example of <code>isset()</code> Method Usage</title>
+            <title>Example of isset() Method Usage</title>
             <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
@@ -313,7 +313,7 @@ Zend_Registry::set('index', $value);
         </para>
 
         <example id="zend.registry.using.unsetting.example">
-            <title>Example of <code>_unsetInstance()</code> Method Usage</title>
+            <title>Example of _unsetInstance() Method Usage</title>
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
 

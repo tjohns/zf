@@ -103,9 +103,7 @@
 
     <sect2 id="zend.locale.whatis">
 
-        <title>
-            <ulink url="http://unicode.org/reports/tr35/#Locale">What is a Locale?</ulink>
-        </title>
+        <title>What is a Locale?</title>
 
         <para>
             Each computer user makes use of Locales, even when they don't know it. Applications lacking localization
@@ -517,7 +515,7 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title>Speed up <classname>Zend_Locale</classname> and its subclasses</title>
+        <title>Speed up Zend_Locale and its subclasses</title>
 
         <para>
             <classname>Zend_Locale</classname> and its subclasses can be speed up by the usage of <classname>Zend_Cache</classname>.

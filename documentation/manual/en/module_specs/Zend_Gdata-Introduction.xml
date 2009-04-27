@@ -107,7 +107,7 @@
     </note>
 
     <sect2 id="zend.gdata.introduction.structure">
-        <title>Structure of <classname>Zend_Gdata</classname></title>
+        <title>Structure of Zend_Gdata</title>
         <para>
             <classname>Zend_Gata</classname> is composed of several types of classes:
             <itemizedlist>
@@ -219,7 +219,7 @@
     </sect2>
 
     <sect2 id="zend.gdata.introdduction.magicfactory">
-        <title>Obtaining instances of <classname>Zend_Gdata</classname> classes</title>
+        <title>Obtaining instances of Zend_Gdata classes</title>
         <para>
             The Zend Framework naming standards require that all classes be
             named based upon the directory structure in which they are located.

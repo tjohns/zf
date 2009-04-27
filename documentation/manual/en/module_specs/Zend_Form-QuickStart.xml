@@ -556,7 +556,7 @@ class UserController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Using a <classname>Zend_Config</classname> Object</title>
+        <title>Using a Zend_Config Object</title>
 
         <para>
             All <classname>Zend_Form</classname> classes are configurable using

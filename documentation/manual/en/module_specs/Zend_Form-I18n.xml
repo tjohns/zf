@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.i18n">
-    <title>Internationalization of <classname>Zend_Form</classname></title>
+    <title>Internationalization of Zend_Form</title>
 
     <para>
         Increasingly, developers need to tailor their content for multiple

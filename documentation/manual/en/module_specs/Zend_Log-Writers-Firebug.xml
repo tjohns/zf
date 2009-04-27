@@ -39,7 +39,7 @@
     </itemizedlist>
 
     <example id="zend.log.writers.firebug.example.with_front_controller">
-      <title>Logging with <classname>Zend_Controller_Front</classname></title>
+      <title>Logging with Zend_Controller_Front</title>
 
       <programlisting role="php"><![CDATA[
 // Place this in your bootstrap file before dispatching your front controller
@@ -52,7 +52,7 @@ $logger->log('This is a log message!', Zend_Log::INFO);
     </example>
 
     <example id="zend.log.writers.firebug.example.without_front_controller">
-      <title>Logging without <classname>Zend_Controller_Front</classname></title>
+      <title>Logging without Zend_Controller_Front</title>
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Firebug();

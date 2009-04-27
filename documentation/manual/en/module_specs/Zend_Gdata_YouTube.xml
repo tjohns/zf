@@ -33,7 +33,7 @@
             and debugging purposes. Please visit <ulink url="http://code.google.com/apis/youtube/dashboard/">http://code.google.com/apis/youtube/dashboard/</ulink> to obtain a developer key and client ID. The example below demonstrates how to pass the developer key and client ID to the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink> service object.
         </para>
         <example id="zend.gdata.youtube.developer_key.example">
-          <title>Passing a Developer Key and ClientID to <classname>Zend_Gdata_YouTube</classname></title>
+          <title>Passing a Developer Key and ClientID to Zend_Gdata_YouTube</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
@@ -154,7 +154,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
                 For example, to retrieve the top rated videos for today:
             </para>
 <example id="zend.gdata.youtube.videos.standard.example-2">
-          <title>Using a <classname>Zend_Gdata_YouTube_VideoQuery</classname> to Retrieve Videos</title>
+          <title>Using a Zend_Gdata_YouTube_VideoQuery to Retrieve Videos</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -257,7 +257,7 @@ foreach ($commentFeed as $commentEntry) {
             a copy of the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> object:
         </para>
            <example id="zend.gdata.youtube.videos.comments.example-2">
-          <title>Retrieving a Feed of Video Comments from a <classname>Zend_Gdata_YouTube_VideoEntry</classname></title>
+          <title>Retrieving a Feed of Video Comments from a Zend_Gdata_YouTube_VideoEntry</title>
 
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();

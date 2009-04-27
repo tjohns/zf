@@ -9,7 +9,7 @@
     </para>
 
     <table id="zend.paginator.configuration.table">
-        <title>Configuration methods for <classname>Zend_Paginator</classname></title>
+        <title>Configuration methods for Zend_Paginator</title>
 
         <tgroup cols="2">
             <thead>
