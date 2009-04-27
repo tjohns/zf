@@ -280,7 +280,7 @@ class Foo
             example.
         </para>
 
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 $file = new Zend_CodeGenerator_Php_File(array(
     'classes'  => array($foo);
     'docblock' => new Zend_CodeGenerator_Php_Docblock(array(
@@ -371,19 +371,55 @@ define('APPLICATION_ENV', 'testing');
 
     <example id="zend.codegenerator.examples.reflection-file">
         <title>Seeding PHP file code generation via reflection</title>
-        <para></para>
-        <!-- @todo -->
+
+        <para>
+            You can add PHP code to an existing PHP file using the code
+            generator. To do so, you need to first do reflection on it. The
+            static method <code>fromReflectedFileName()</code> allows you to do
+            this.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$generator = Zend_CodeGenerator_Php_File::fromReflectedFileName($path);
+$body = $generator->getBody();
+$body .= "\n\$foo->bar();";
+file_put_contents($path, $generator->generate());
+]]></programlisting>
     </example>
 
     <example id="zend.codegenerator.examples.reflection-class">
         <title>Seeding PHP class generation via reflection</title>
-        <para></para>
-        <!-- @todo -->
-    </example>
+        <para>
+            You may add code to an existing class. To do so, first use the
+            static <code>fromReflection()</code> method to map the class into a
+            generator object. From there, you may add additional properties or
+            methods, and then regenerate the class.
+        </para>
 
-    <example id="zend.codegenerator.examples.reflection-method">
-        <title>Seeding PHP method generation via reflection</title>
-        <para></para>
-        <!-- @todo -->
+        <programlisting role="php"><![CDATA[
+$generator = Zend_CodeGenerator_Php_Class::fromReflection(
+    new Zend_Reflection_Class($class)
+);
+$generator->setMethod(array(
+    'name'       => 'setBaz',
+    'parameters' => array(
+        array('name' => 'baz'),
+    ),
+    'body'       => '$this->_baz = $baz;' . "\n" . 'return $this;',
+    'docblock'   => new Zend_CodeGenerator_Php_Docblock(array(
+        'shortDescription' => 'Set the baz property',
+        'tags'             => array(
+            new Zend_CodeGenerator_Php_Docblock_Tag_Param(array(
+                'paramName' => 'baz',
+                'datatype'  => 'string'
+            )),
+            new Zend_CodeGenerator_Php_Docblock_Tag_Return(array(
+                'datatype'  => 'string',
+            )),
+        ),
+    )),
+));
+$code = $generator->generate();
+]]></programlisting>
     </example>
 </sect1>
