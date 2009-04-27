@@ -1,13 +1,52 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Tool
+ * @subpackage Framework
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
 
+/**
+ * @see Zend_Tool_Project_Provider_Abstract
+ */
 require_once 'Zend/Tool/Project/Provider/Abstract.php';
+
+/**
+ * @see Zend_Tool_Project_Provider_Exception
+ */
 require_once 'Zend/Tool/Project/Provider/Exception.php';
 
+/**
+ * @category   Zend
+ * @package    Zend_Tool
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Tool_Project_Provider_Test extends Zend_Tool_Project_Provider_Abstract
 {
     
     protected $_specialties = array('Application', 'Library');
     
+    /**
+     * isTestingEnabled()
+     *
+     * @param Zend_Tool_Project_Profile $profile
+     * @return bool
+     */
     public static function isTestingEnabled(Zend_Tool_Project_Profile $profile)
     {
         $profileSearchParams = array('testsDirectory');
@@ -16,6 +55,15 @@ class Zend_Tool_Project_Provider_Test extends Zend_Tool_Project_Provider_Abstrac
         return $testsDirectory->isEnabled();
     }
     
+    /**
+     * createApplicationResource()
+     *
+     * @param Zend_Tool_Project_Profile $profile
+     * @param string $controllerName
+     * @param string $actionName
+     * @param string $moduleName
+     * @return Zend_Tool_Project_Profile_Resource
+     */
     public static function createApplicationResource(Zend_Tool_Project_Profile $profile, $controllerName, $actionName, $moduleName = null)
     {
         if (!is_string($controllerName)) {
@@ -46,6 +94,13 @@ class Zend_Tool_Project_Provider_Test extends Zend_Tool_Project_Provider_Abstrac
         return $testAppControllerFileResource;
     }
 
+    /**
+     * createLibraryResource()
+     *
+     * @param Zend_Tool_Project_Profile $profile
+     * @param string $libraryClassName
+     * @return Zend_Tool_Project_Profile_Resource
+     */
     public static function createLibraryResource(Zend_Tool_Project_Profile $profile, $libraryClassName)
     {
         $testLibraryDirectoryResource = $profile->search(array('TestsDirectory', 'TestLibraryDirectory'));
@@ -89,6 +144,11 @@ class Zend_Tool_Project_Provider_Test extends Zend_Tool_Project_Provider_Abstrac
         
     }
     
+    /**
+     * create()
+     *
+     * @param unknown_type $libraryClassName
+     */
     public function create($libraryClassName)
     {
         $profile = $this->_loadProfile();

@@ -1,11 +1,44 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Tool
+ * @subpackage Framework
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
 
+/**
+ * @see Zend_Tool_Project_Provider_Abstract
+ */
 require_once 'Zend/Tool/Project/Provider/Abstract.php';
-require_once 'Zend/Tool/Framework/Registry.php';
 
+/**
+ * @category   Zend
+ * @package    Zend_Tool
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abstract
 {
 
+    /**
+     * create()
+     *
+     * @param string $path
+     */
     public function create($path)
     {
         if ($path == null) {
@@ -22,12 +55,9 @@ class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abst
             $path = str_replace('\\', '/', realpath($path));
         }
 
-        /**
-         * @todo make sure a project doesnt alredy exist here
-         */
-        $profile = $this->_loadProfile($path);
+        $profile = $this->_loadProfile(self::NO_PROFILE_RETURN_FALSE, $path);
 
-        if ($profile) {
+        if ($profile !== false) {
             require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception('A project already exists here');
         }

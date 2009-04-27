@@ -202,32 +202,22 @@ class Zend_Tool_Framework_Client_Response
      * @param array $decoratorOptions
      * @return string
      */
-    protected function _applyDecorators($content, $decoratorOptions)
+    protected function _applyDecorators($content, Array $decoratorOptions)
     {
         $options = array_merge($this->_defaultDecoratorOptions, $decoratorOptions);
         
         $options = array_change_key_case($options, CASE_LOWER);
         
-        foreach ($this->_decorators as $decoratorName => $decorator) {
-            if (array_key_exists($decoratorName, $options)) {
-                $content = $decorator->decorate($content, $options[$decoratorName]);
+        if ($options) {
+            foreach ($this->_decorators as $decoratorName => $decorator) {
+                if (array_key_exists($decoratorName, $options)) {
+                    $content = $decorator->decorate($content, $options[$decoratorName]);
+                }
             }
         }
         
         return $content;
-        /*
-        foreach ($options as $optionName => $optionValue) {
-            if (!array_key_exists(strtolower($optionName), $this->_decorators)) {
-                // option is not supported by this response object
-                continue;
-            }
-            
-            $decorator = $this->_decorators[strtolower($optionName)];
-            $content = $decorator->decorate($content, $optionValue);
-        }
         
-        return $content;
-        */
     }
 
 }

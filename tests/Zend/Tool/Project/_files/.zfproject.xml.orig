@@ -4,7 +4,9 @@
     <projectProfileFile/>
     <applicationDirectory>
       <apisDirectory enabled="false"/>
-      <configsDirectory/>
+      <configsDirectory>
+          <applicationConfigFile type="ini" />
+      </configsDirectory>
       <controllersDirectory>
         <controllerFile controllerName="index"/>
         <controllerFile controllerName="error"/>

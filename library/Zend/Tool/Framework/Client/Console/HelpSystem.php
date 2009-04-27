@@ -71,6 +71,7 @@ class Zend_Tool_Framework_Client_Console_HelpSystem
         }
         
         $this->_response->appendContent(null, array('separator' => true));
+        return $this;
     }
     
     /**
@@ -98,7 +99,7 @@ class Zend_Tool_Framework_Client_Console_HelpSystem
             ->appendContent('Providers and their actions:', array('color' => 'green'));
 
         $this->_respondWithSystemInformation();
-            
+        return $this;
     }
     
     /**

@@ -1,11 +1,48 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Tool
+ * @subpackage Framework
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
 
+/**
+ * @see Zend_Tool_Project_Provider_Abstract
+ */
 require_once 'Zend/Tool/Project/Provider/Abstract.php';
 
-
+/**
+ * @category   Zend
+ * @package    Zend_Tool
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Tool_Project_Provider_View extends Zend_Tool_Project_Provider_Abstract
 {
     
+    /**
+     * createResource()
+     *
+     * @param Zend_Tool_Project_Profile $profile
+     * @param string $controllerName
+     * @param string $actionName
+     * @param string $moduleName
+     * @return Zend_Tool_Project_Profile_Resource
+     */
     public static function createResource(Zend_Tool_Project_Profile $profile, $controllerName, $actionName, $moduleName = null)
     {
         if (!is_string($controllerName)) {
@@ -44,6 +81,12 @@ class Zend_Tool_Project_Provider_View extends Zend_Tool_Project_Provider_Abstrac
         return $newViewScriptFile;
     }
 
+    /**
+     * create()
+     *
+     * @param string $controllerName
+     * @param string $actionNameOrSimpleName
+     */
     public function create($controllerName, $actionNameOrSimpleName)
     {
         
@@ -67,36 +110,6 @@ class Zend_Tool_Project_Provider_View extends Zend_Tool_Project_Provider_Abstrac
             $view->create();
             $this->_storeProfile();
         }
-        
-        /*
-        $profile = $this->_getExistingProfile();
-        $viewScriptsDirectoryNode = $profile->findNodeByContext(array(
-            'viewsDirectory', 'viewScriptsDirectory'
-        ));
 
-        $registry = Zend_Tool_Project_Context_Repository::getInstance();
-
-        $newViewControllerScriptsDirectoryContext = $registry->getContext('ViewControllerScriptsDirectory');
-        $newViewControllerScriptsDirectoryContext->setForControllerName($controllerName);
-
-        $newViewScriptFileContext = $registry->getContext('ViewScriptFile');
-        $newViewScriptFileContext->setScriptName($actionName);
-
-
-        $newViewControllerScriptsDirectoryNode = new Zend_Tool_Project_Resource($newViewControllerScriptsDirectoryContext);
-        $newViewScriptFileNode = new Zend_Tool_Project_Resource($newViewScriptFileContext);
-
-        $newViewControllerScriptsDirectoryNode->append($newViewScriptFileNode);
-        $newViewControllerScriptsDirectoryNode->recursivelySetBaseDirectory($viewScriptsDirectoryNode->getPath());
-        $newViewControllerScriptsDirectoryNode->recursivelyCreate();
-
-        $viewScriptsDirectoryNode->append($newViewControllerScriptsDirectoryNode);
-
-        Zend_Tool_Framework_Registry::getInstance()->response->appendContent(
-            'Creating a view script.'
-        );
-
-        $this->_storeLoadedProfile();
-        */
     }
 }

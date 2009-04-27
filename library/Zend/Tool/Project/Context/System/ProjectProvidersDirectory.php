@@ -85,8 +85,9 @@ class Zend_Tool_Project_Context_System_ProjectProvidersDirectory
             }
             
             if ($loadableFiles) {
-                $loader = Zend_Tool_Framework_Registry::getInstance()->getLoader();
-                $loader->loadFromFiles($loadableFiles);
+                
+                // @todo process and add the files to the system for usage.
+                
             }
         }
         

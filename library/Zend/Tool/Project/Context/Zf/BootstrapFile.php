@@ -25,6 +25,8 @@
  */
 require_once 'Zend/Tool/Project/Context/Filesystem/File.php';
 
+require_once 'Zend/Application.php';
+
 /**
  * This class is the front most class for utilizing Zend_Tool_Project
  *
@@ -44,6 +46,9 @@ class Zend_Tool_Project_Context_Zf_BootstrapFile extends Zend_Tool_Project_Conte
      */
     protected $_filesystemName = 'Bootstrap.php';
     
+    protected $_applicationInstance = null;
+    protected $_bootstrapInstance = null;
+    
     /**
      * getName()
      *
@@ -52,6 +57,29 @@ class Zend_Tool_Project_Context_Zf_BootstrapFile extends Zend_Tool_Project_Conte
     public function getName()
     {
         return 'BootstrapFile';
+    }
+    
+    public function init()
+    {
+        parent::init();
+        
+        $applicationConfigFile = $this->_resource->getProfile()->search('ApplicationConfigFile');
+        $applicationDirectory = $this->_resource->getProfile()->search('ApplicationDirectory');
+        
+        if (($applicationConfigFile === false) || ($applicationDirectory === false)) {
+            throw new Exception('To use the BootstrapFile context, your project requires the use of both the "ApplicationConfigFile" and "ApplicationDirectory" contexts.');
+        }
+        
+        if ($applicationConfigFile->getContext()->exists()) {
+            define('APPLICATION_PATH', $applicationDirectory->getPath());
+            $applicationOptions = array();
+            $applicationOptions['config'] = $applicationConfigFile->getPath();
+    
+            $this->_applicationInstance = new Zend_Application(
+                'development',
+                $applicationOptions
+                );
+        }
     }
     
     /**

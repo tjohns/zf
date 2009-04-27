@@ -381,9 +381,15 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
             return $this->_sourceContent;
         }
         
+        $output = '';
+        
         // start with the body (if there), or open tag
-        $output = '<?php' . PHP_EOL;
-        $body   = $this->getBody();
+        if (preg_match('#(?:\s*)<\?php#', $this->getBody()) == false) {
+            $output = '<?php' . PHP_EOL;
+        }
+        
+        // if there are markers, put the body into the output
+        $body = $this->getBody();
         if (preg_match('#/\* Zend_CodeGenerator_Php_File-(.*?)Marker:#', $body)) {
             $output .= $body;
             $body    = '';
@@ -393,7 +399,7 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
         if (null !== ($docblock = $this->getDocblock())) {
             $docblock->setIndentation('');
             $regex = preg_quote(self::$_markerDocblock, '#');
-            if (preg_match('#'.$regex.'#', $body)) {
+            if (preg_match('#'.$regex.'#', $output)) {
                 $output  = preg_replace('#'.$regex.'#', $docblock->generate(), $output, 1);
             } else {
                 $output .= $docblock->generate() . PHP_EOL;
