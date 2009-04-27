@@ -46,4 +46,48 @@ abstract class Zend_Db_Adapter_Pdo_TestCommon extends Zend_Db_Adapter_TestCommon
         $this->_testAdapterAlternateStatement('Test_PdoStatement');
     }
 
+    /**
+     * Ensures that exec() throws an exception when given a bogus query
+     * @group ZF-6185
+     * @return void
+     */
+    public function testAdapterExecBogus()
+    {
+        try {
+            $this->_db->exec('Bogus query');
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got ' . get_class($e));
+        }
+    }
+
+    /**
+     * Ensures that exec() throws an exception when given a bogus table
+     * @group ZF-6185
+     * @return void
+     */
+    public function testAdapterExecBogusTable()
+    {
+        try {
+            $this->_db->exec('DELETE FROM BogusTable');
+            $this->fail('Expected exception not thrown');
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got ' . get_class($e));
+        }
+    }
+
+    /**
+     * Ensures that exec() provides expected behavior when modifying no rows
+     * @group ZF-6185
+     * @return void
+     */
+    public function testAdapterExecModifiedNone()
+    {
+        $affected = $this->_db->exec('DELETE FROM ' . $this->_db->quoteIdentifier('zfbugs') . ' WHERE 1 = -1');
+
+        $this->assertEquals(0, $affected,
+            "Expected exec() to return zero affected rows; got $affected");
+    }
 }

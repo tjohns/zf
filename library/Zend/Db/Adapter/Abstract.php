@@ -434,23 +434,6 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Executes an SQL statement and return the number of affected rows
-     *
-     * @param  mixed  $sql  The SQL statement with placeholders.
-     *                      May be a string or Zend_Db_Select.
-     * @return Zend_Db_Statement_Interface
-     */
-    public function exec($sql)
-    {
-        // is the $sql a Zend_Db_Select object?
-        if ($sql instanceof Zend_Db_Select) {
-            $sql = $sql->assemble();
-        }
-
-        return $this->getConnection()->exec($sql);
-    }
-
-    /**
      * Prepares and executes an SQL statement with bound data.
      *
      * @param  mixed  $sql  The SQL statement with placeholders.
