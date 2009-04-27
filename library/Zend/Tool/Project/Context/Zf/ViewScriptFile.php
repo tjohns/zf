@@ -126,7 +126,7 @@ class Zend_Tool_Project_Context_Zf_ViewScriptFile extends Zend_Tool_Project_Cont
   <h1>An error occurred</h1> 
   <h2><?= \$this->message ?></h2> 
 
-  <? if ('development' == \$this->env): ?> 
+  <? if ('development' == APPLICATION_ENV): ?> 
   
   <h3>Exception information:</h3> 
   <p> 
