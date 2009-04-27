@@ -101,7 +101,7 @@ resources.frontController.env = APPLICATION_ENV
 ]]></programlisting>
     </example>
 
-    <example id="zend.application.available-resources.frontcontroller.frontControllerPropertyExample">
+    <example id="zend.application.available-resources.frontcontroller.propertyExample">
         <title>Retrieving the Front Controller in your bootstrap</title>
 
         <para>
