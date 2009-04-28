@@ -74,7 +74,7 @@
 
     <example id="zend.tag.cloud.example.using">
 
-        <title>Using <classname>Zend_Tag_Cloud</classname></title>
+        <title>Using Zend_Tag_Cloud</title>
 
         <para>
             This example illustrates a basic example of how to create a tag

@@ -30,7 +30,7 @@
     </para>
 
     <example id="zend.tag.example.using">
-        <title>Using <classname>Zend_Tag</classname></title>
+        <title>Using Zend_Tag</title>
         <para>
             This example illustrates how to create a list of tags and spread
             absolute weight values on them.

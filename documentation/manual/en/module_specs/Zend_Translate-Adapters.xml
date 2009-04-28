@@ -12,7 +12,7 @@
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Adapters for <classname>Zend_Translate</classname></title>
+        <title>Adapters for Zend_Translate</title>
         <tgroup cols="3">
             <thead>
                 <row>

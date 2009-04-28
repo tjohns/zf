@@ -27,13 +27,13 @@
     </para>
 
     <sect2 id="zend.soap.server.constructor">
-        <title><classname>Zend_Soap_Server</classname> constructor.</title>
+        <title>Zend_Soap_Server constructor.</title>
         <para>
             <classname>Zend_Soap_Server</classname> constructor should be used a bit differently for WSDL and non-WSDL modes.
         </para>
 
         <sect3 id="zend.soap.server.constructor.wsdl_mode">
-            <title><classname>Zend_Soap_Server</classname> constructor for the WSDL mode.</title>
+            <title>Zend_Soap_Server constructor for the WSDL mode.</title>
             <para>
                 <classname>Zend_Soap_Server</classname> constructor takes two optional parameters when it works in WSDL mode:
                 <orderedlist>
@@ -94,7 +94,7 @@
         </sect3>
 
         <sect3 id="zend.soap.server.wsdl_mode">
-            <title><classname>Zend_Soap_Server</classname> constructor for the non-WSDL mode.</title>
+            <title>Zend_Soap_Server constructor for the non-WSDL mode.</title>
             <para>
                 The first constructor parameter <emphasis role="strong">must</emphasis> be set to <code>null</code> if you
                 plan to use <classname>Zend_Soap_Server</classname> functionality in non-WSDL mode.

@@ -318,7 +318,7 @@ print_r($delicious->getUserTags('someUser'));
                 about the posts, including URL, title, notes, and tags.
             </para>
             <table id="zend.service.delicious.public_data.posts.SimplePost_methods">
-                <title>Methods of the <classname>Zend_Service_Delicious_SimplePost</classname> class</title>
+                <title>Methods of the Zend_Service_Delicious_SimplePost class</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -361,7 +361,7 @@ print_r($delicious->getUserTags('someUser'));
             uses, you need to change the HTTP client of <classname>Zend_Rest_Client</classname>.
         </para>
         <example id="zend.service.delicious.httpclient.changing">
-            <title>Changing the HTTP client of <classname>Zend_Rest_Client</classname></title>
+            <title>Changing the HTTP client of Zend_Rest_Client</title>
             <programlisting role="php"><![CDATA[
 $myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);

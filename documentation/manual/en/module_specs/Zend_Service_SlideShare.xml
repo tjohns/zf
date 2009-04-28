@@ -13,7 +13,7 @@
 
     <sect2 id="zend.service.slideshare.basicusage">
 
-        <title>Getting Started with <classname>Zend_Service_SlideShare</classname></title>
+        <title>Getting Started with Zend_Service_SlideShare</title>
 
         <para>
             In order to use the <classname>Zend_Service_SlideShare</classname> component you must first create an account
@@ -309,7 +309,7 @@ foreach($ss_user as $slideshow) {
 
     <sect2 id="zend.service.slideshare.caching">
 
-        <title><classname>Zend_Service_SlideShare</classname> Caching policies</title>
+        <title>Zend_Service_SlideShare Caching policies</title>
 
         <para>
             By default, <classname>Zend_Service_SlideShare</classname> will cache any request against the web

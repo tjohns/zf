@@ -31,7 +31,7 @@
 
     <sect2 id="zend.timesync.introduction.why">
 
-        <title>Why <classname>Zend_TimeSync</classname> ?</title>
+        <title>Why Zend_TimeSync ?</title>
 
         <para>
             So why would someone use <classname>Zend_TimeSync</classname> ?

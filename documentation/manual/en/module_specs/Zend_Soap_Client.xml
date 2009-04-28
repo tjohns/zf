@@ -23,7 +23,7 @@
     </para>
 
     <sect2 id="zend.soap.client.constructor">
-        <title><classname>Zend_Soap_Client</classname> Constructor</title>
+        <title>Zend_Soap_Client Constructor</title>
         <para>
             The <classname>Zend_Soap_Client</classname> constructor takes two parameters:
             <itemizedlist>

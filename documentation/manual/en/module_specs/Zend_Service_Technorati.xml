@@ -82,7 +82,7 @@ $resultSet = $technorati->search('PHP', $options);
             object as long as you need it.
         </para>
         <example id="zend.service.technorati.making-first-query.example-3">
-            <title>Sending multiple queries with the same <classname>Zend_Service_Technorati</classname> instance</title>
+            <title>Sending multiple queries with the same Zend_Service_Technorati instance</title>
             <programlisting role="php"><![CDATA[
 // create a new Zend_Service_Technorati
 // with a valid API_KEY

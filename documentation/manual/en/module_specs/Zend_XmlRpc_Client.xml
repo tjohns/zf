@@ -193,7 +193,7 @@ $result = $client->call('foo.bar', array(array()));
         </sect3>
 
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
-            <title><classname>Zend_XmlRpc_Value</classname> Objects as Parameters</title>
+            <title>Zend_XmlRpc_Value Objects as Parameters</title>
             <para>
                 Parameters may also be created as <classname>Zend_XmlRpc_Value</classname>
                 instances to specify an exact XML-RPC type. The primary reasons
@@ -236,7 +236,7 @@ $result = $client->call('foo.bar', array(array()));
             </para>
 
             <table id="zend.xmlrpc.value.parameters.xmlrpc-value.table-1">
-                <title><classname>Zend_XmlRpc_Value</classname> Objects for XML-RPC Types</title>
+                <title>Zend_XmlRpc_Value Objects for XML-RPC Types</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
