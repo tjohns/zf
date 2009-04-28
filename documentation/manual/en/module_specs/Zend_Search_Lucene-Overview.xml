@@ -281,14 +281,10 @@ $index->addDocument($doc);
             also have second optional argument. If it's set to true, then body content is also stored within index and can
             be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
         </para>
-<!--    <para>
-            The third parameter of <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods optionally specifies source HTML 
-            document encoding. If it's omitted, then encoding is automatically recognized from content type charset meta tag.
-        </para>
         <para>
-            Encoding may be retrieved/overridden lately with <code>getEncoding()</code>/<code>setEncoding($encoding)</code> methods.
+            The third parameter of <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods optionally specifies source HTML 
+            document encoding. It's used if encoding is not specified using Content-type HTTP-EQUIV meta tag.
         </para>
--->
 
         <para>
             Other document header meta tags produce additional document fields. The field 'name' is taken from 'name' attribute, and

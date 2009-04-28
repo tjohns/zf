@@ -61,8 +61,32 @@ class Zend_Search_Lucene_SearchHighlightTest extends PHPUnit_Framework_TestCase
         $highlightedHtmlFragment = $query->htmlFragmentHighlightMatches('Text highlighting using Zend_Search_Lucene is the right way to go!');
 
         $this->assertEquals($highlightedHtmlFragment,
-                            '<p>Text highlighting using Zend_Search_Lucene is <b style="color:black;background-color:#66ffff">the</b> <b style="color:black;background-color:#66ffff">right</b> <b style="color:black;background-color:#66ffff">way</b> to <b style="color:black;background-color:#ff66ff">go</b>!</p>');
+                            'Text highlighting using Zend_Search_Lucene is <b style="color:black;background-color:#66ffff">the</b> <b style="color:black;background-color:#66ffff">right</b> <b style="color:black;background-color:#66ffff">way</b> to <b style="color:black;background-color:#ff66ff">go</b>!');
     }
+
+//    public function testHtmlFragmentHighlightMatchesCyrillic()
+//    {
+//        $query = Zend_Search_Lucene_Search_QueryParser::parse('title:"некоторый текст" AND text:поехали');
+//
+//        $highlightedHtmlFragment = $query->htmlFragmentHighlightMatches('Подсвечиваем некоторый текст с использованием Zend_Search_Lucene. Поехали!');
+//
+//        $this->assertEquals($highlightedHtmlFragment,
+//                            'Text highlighting using Zend_Search_Lucene is <b style="color:black;background-color:#66ffff">the</b> <b style="color:black;background-color:#66ffff">right</b> <b style="color:black;background-color:#66ffff">way</b> to <b style="color:black;background-color:#ff66ff">go</b>!');
+//    }
+//
+//    public function testHtmlFragmentHighlightMatchesCyrillicWindows()
+//    {
+//        $query = Zend_Search_Lucene_Search_QueryParser::parse('title:"Некоторый текст" AND text:поехали');
+//
+//        $highlightedHtmlFragment =
+//                $query->htmlFragmentHighlightMatches(iconv('UTF-8',
+//                                                           'Windows-1251',
+//                                                           'Подсвечиваем некоторый текст с использованием Zend_Search_Lucene. Поехали!'),
+//                                                     'Windows-1251');
+//
+//        $this->assertEquals($highlightedHtmlFragment,
+//                            'Text highlighting using Zend_Search_Lucene is <b style="color:black;background-color:#66ffff">the</b> <b style="color:black;background-color:#66ffff">right</b> <b style="color:black;background-color:#66ffff">way</b> to <b style="color:black;background-color:#ff66ff">go</b>!');
+//    }
 
     public function testHighlightPhrasePlusTerm()
     {

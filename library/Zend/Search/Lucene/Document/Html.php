@@ -72,8 +72,9 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      * @param string  $data         HTML string (may be HTML fragment, )
      * @param boolean $isFile
      * @param boolean $storeContent
+     * @param string  $defaultEncoding   HTML encoding, is used if it's not specified using Content-type HTTP-EQUIV meta tag.
      */
-    private function __construct($data, $isFile, $storeContent/*, $encoding*/)
+    private function __construct($data, $isFile, $storeContent, $defaultEncoding = '')
     {
         $this->_doc = new DOMDocument();
         $this->_doc->substituteEntities = true;
@@ -85,10 +86,36 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         }
         @$this->_doc->loadHTML($htmlData);
 
-//        // Set encoding if it's specified
-//        if ($encoding !== null) {
-//        	$this->_doc->encoding = $encoding;
-//        }
+        if ($this->_doc->encoding === null) {
+        	// Document encoding is not recognized
+
+        	/** @todo improve HTML vs HTML fragment recognition */
+        	if (preg_match('/<html>/i', $htmlData, $matches, PREG_OFFSET_CAPTURE)) {
+        		// It's an HTML document
+        		// Add additional HEAD section and recognize document
+        		$htmlTagOffset = $matches[0][1] + strlen($matches[0][1]);
+
+        		@$this->_doc->loadHTML(iconv($defaultEncoding, 'UTF-8//IGNORE', substr($htmlData, 0, $htmlTagOffset))
+                                     . '<head><META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/></head>'
+                                     . iconv($defaultEncoding, 'UTF-8//IGNORE', substr($htmlData, $htmlTagOffset)));
+
+                // Remove additional HEAD section
+                $xpath = new DOMXPath($this->_doc);
+                $head  = $xpath->query('/html/head')->item(0);
+        		$head->parentNode->removeChild($head);
+        	} else {
+        		// It's an HTML fragment
+        		@$this->_doc->loadHTML('<html><head><META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/></head><body>'
+        		                     . iconv($defaultEncoding, 'UTF-8//IGNORE', $htmlData)
+        		                     . '</body></html>');
+        	}
+
+        }
+        /** @todo Add correction of wrong HTML encoding recognition processing
+         * The case is:
+         * Content-type HTTP-EQUIV meta tag is presented, but ISO-8859-5 encoding is actually used,
+         * even $this->_doc->encoding demonstrates another recognized encoding
+         */
 
         $xpath = new DOMXPath($this->_doc);
 
@@ -98,13 +125,13 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             // title should always have only one entry, but we process all nodeset entries
             $docTitle .= $titleNode->nodeValue . ' ';
         }
-        $this->addField(Zend_Search_Lucene_Field::Text('title', $docTitle, $this->_doc->encoding));
+        $this->addField(Zend_Search_Lucene_Field::Text('title', $docTitle, 'UTF-8'));
 
         $metaNodes = $xpath->query('/html/head/meta[@name]');
         foreach ($metaNodes as $metaNode) {
             $this->addField(Zend_Search_Lucene_Field::Text($metaNode->getAttribute('name'),
                                                            $metaNode->getAttribute('content'),
-                                                           $this->_doc->encoding));
+                                                           'UTF-8'));
         }
 
         $docBody = '';
@@ -114,9 +141,9 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             $this->_retrieveNodeText($bodyNode, $docBody);
         }
         if ($storeContent) {
-            $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, $this->_doc->encoding));
+            $this->addField(Zend_Search_Lucene_Field::Text('body', $docBody, 'UTF-8'));
         } else {
-            $this->addField(Zend_Search_Lucene_Field::UnStored('body', $docBody, $this->_doc->encoding));
+            $this->addField(Zend_Search_Lucene_Field::UnStored('body', $docBody, 'UTF-8'));
         }
 
         $linkNodes = $this->_doc->getElementsByTagName('a');
@@ -178,34 +205,6 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         }
     }
 
-//    /**
-//     * Get encoding
-//     *
-//     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
-//     * but it may be overriden overridden with setEncoding() method or additional
-//     * constructor parameter.
-//     *
-//     * @return string
-//     */
-//    public function getEncoding()
-//    {
-//        return $this->_doc->encoding;
-//    }
-//
-//    /**
-//     * Set encoding
-//     *
-//     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
-//     * but it may be overriden overridden with setEncoding() method or additional
-//     * constructor parameter.
-//     *
-//     * @param string $encoding
-//     */
-//    public function setEncoding($encoding)
-//    {
-//        $this->_doc->encoding = $encoding;
-//    }
-
     /**
      * Get document HREF links
      *
@@ -231,11 +230,12 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      *
      * @param string  $data
      * @param boolean $storeContent
+     * @param string  $defaultEncoding   HTML encoding, is used if it's not specified using Content-type HTTP-EQUIV meta tag.
      * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTML($data, $storeContent = false/*, $encoding = null*/)
+    public static function loadHTML($data, $storeContent = false, $defaultEncoding = '')
     {
-        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent/*, $encoding*/);
+        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent, $defaultEncoding);
     }
 
     /**
@@ -243,11 +243,12 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      *
      * @param string  $file
      * @param boolean $storeContent
+     * @param string  $defaultEncoding   HTML encoding, is used if it's not specified using Content-type HTTP-EQUIV meta tag.
      * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTMLFile($file, $storeContent = false/*, $encoding = null*/)
+    public static function loadHTMLFile($file, $storeContent = false, $defaultEncoding = '')
     {
-        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent/*, $encoding*/);
+        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent, $defaultEncoding);
     }
 
 
@@ -263,7 +264,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     protected function _highlightTextNode(DOMText $node, $wordsToHighlight, $callback, $params)
     {
         $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
-        $analyzer->setInput($node->nodeValue, $this->_doc->encoding);
+        $analyzer->setInput($node->nodeValue, 'UTF-8');
 
         $matchedTokens = array();
 
@@ -293,17 +294,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
 
             // Transform HTML string to a DOM representation and automatically transform retrieved string
             // into valid XHTML (It's automatically done by loadHTML() method)
-            $highlightedWordNodeSetDomDocument = new DOMDocument('1.0', $this->_doc->encoding);
-            if ($this->_doc->encoding !== null  && $this->_doc->encoding != '') {
-            	$charSetMetaEquiv = '<meta http-equiv="Content-type" content="text/html; charset=' . $this->_doc->encoding . '"/>';
-            } else {
-            	$charSetMetaEquiv = '';
-            }
+            $highlightedWordNodeSetDomDocument = new DOMDocument('1.0', 'UTF-8');
             $success = @$highlightedWordNodeSetDomDocument->
-                                loadHTML('<html>'
-                                       .   '<head>' . $charSetMetaEquiv . '</head>'
-                                       .   '<body>' . $highlightedWordNodeSetHtml . '</body>'
-                                       . '</html>');
+                                loadHTML('<html><head><meta http-equiv="Content-type" content="text/html; charset=UTF-8"/></head><body>'
+                                       . $highlightedWordNodeSetHtml
+                                       . '</body></html>');
             if (!$success) {
             	require_once 'Zend/Search/Lucene/Exception.php';
             	throw new Zend_Search_Lucene_Exception("Error occured while loading highlighted text fragment: '$highlightedNodeHtml'.");
