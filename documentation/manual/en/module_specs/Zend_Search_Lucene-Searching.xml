@@ -372,7 +372,7 @@ $doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
 ]]></programlisting>
         </para>
         <para>
-            The result of highlighting operation is retrieved by <classname>Zend_Search_Lucene_Document_Html->getHTML()</classname> method.
+            The result of highlighting operation is retrieved by <code>Zend_Search_Lucene_Document_Html->getHTML()</code> method.
         </para>
 
         <note>
@@ -396,7 +396,7 @@ $doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
 
         <para>
             The second option is to use
-            <classname>Zend_Search_Lucene_Search_Query->highlightMatches(string $inputHTML[, Zend_Search_Lucene_Search_Highlighter_Interface $highlighter])</classname>
+            <code>Zend_Search_Lucene_Search_Query->highlightMatches(string $inputHTML[, $defaultEncoding = 'UTF-8'[, Zend_Search_Lucene_Search_Highlighter_Interface $highlighter]])</code>
             method:
             <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
@@ -404,8 +404,12 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);
 ]]></programlisting>
         </para>
         <para>
-            Optional second parameter is a highlighter object which has to implement
-            <classname>Zend_Search_Lucene_Search_Highlighter_Interface</classname> interface:
+            Optional second parameter is a default HTML document encoding. It's used if encoding is not specified using
+            Content-type HTTP-EQUIV meta tag.
+        </para> 
+        <para>
+            Optional third parameter is a highlighter object which has to implement
+            <code>Zend_Search_Lucene_Search_Highlighter_Interface</code> interface:
             <programlisting role="php"><![CDATA[
 interface Zend_Search_Lucene_Search_Highlighter_Interface
 {
@@ -445,6 +449,11 @@ interface Zend_Search_Lucene_Search_Highlighter_Interface
         <para>
             Actually, default highlighter does this walking through predefined color table. So you can implement
             your own highlighter or just extend the default and redefine color table.
+        </para>
+        <para>
+            <code>Zend_Search_Lucene_Search_Query->htmlFragmentHighlightMatches()</code> has similar behavior. The only differenece 
+            is that it takes as an input and returns HTML fragment without &lt;>HTML>, &lt;HEAD>, &lt;BODY> tags. 
+            Nevertheless, fragment is automatically transformed to valid XHTML. 
         </para>
     </sect2>
 </sect1>
