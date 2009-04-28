@@ -243,6 +243,42 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Executes an SQL statement and return the number of affected rows
+     *
+     * @param  mixed  $sql  The SQL statement with placeholders.
+     *                      May be a string or Zend_Db_Select.
+     * @return integer      Number of rows that were modified
+     *                      or deleted by the SQL statement
+     */
+    public function exec($sql)
+    {
+        if ($sql instanceof Zend_Db_Select) {
+            $sql = $sql->assemble();
+        }
+        
+        try {
+            $affected = $this->getConnection()->exec($sql);
+            
+            if ($affected === false) {
+                $errorInfo = $this->getConnection()->errorInfo();
+                /**
+                 * @see Zend_Db_Adapter_Exception
+                 */
+                require_once 'Zend/Db/Adapter/Exception.php';
+                throw new Zend_Db_Adapter_Exception($errorInfo[2]);
+            }
+            
+            return $affected;
+        } catch (PDOException $e) {
+            /**
+             * @see Zend_Db_Adapter_Exception
+             */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception($e->getMessage());
+        }
+    }
+
+    /**
      * Quote a raw string.
      *
      * @param string $value     Raw string

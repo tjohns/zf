@@ -916,51 +916,6 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
-     * Ensures that exec() throws an exception when given a bogus query
-     *
-     * @return void
-     */
-    public function testAdapterExecBogus()
-    {
-        try {
-            $this->_db->exec('Bogus query');
-            $this->fail('Expected exception not thrown');
-        } catch (Zend_Exception $e) {
-            $this->assertType('integer', $e,
-                'Expecting integer, got '.get_class($e));
-        }
-    }
-
-    /**
-     * Ensures that exec() throws an exception when given a bogus table
-     *
-     * @return void
-     */
-    public function testAdapterExecBogusTable()
-    {
-        try {
-            $this->_db->exec('DELETE FROM BogusTable');
-            $this->fail('Expected exception not thrown');
-        } catch (Zend_Exception $e) {
-            $this->assertType('integer', $e,
-                'Expecting integer, got '.get_class($e));
-        }
-    }
-
-    /**
-     * Ensures that exec() provides expected behavior when modifying no rows
-     *
-     * @return void
-     */
-    public function testAdapterExecModifiedNone()
-    {
-        $affected = $this->_db->exec('DELETE FROM ' . $this->_db->quoteIdentifier('zfbugs') . ' WHERE 1 = -1');
-
-        $this->assertEquals(0, $affected,
-            "Expected exec() to return zero affected rows; got $count");
-    }
-
-    /**
      * Ensures that query() throws an exception when given a bogus query
      *
      * @return void
