@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        <emphasis role="strong">Basic usage</emphasis>
+        <emphasis>Basic usage</emphasis>
     </para>
 
     <para>
@@ -28,8 +28,7 @@ if ($validator->isValid($hostname)) {
         echo "$message\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         This will match the hostname <code>$hostname</code> and on failure populate
         <code>$validator->getMessages()</code> with useful error messages.
@@ -37,7 +36,7 @@ if ($validator->isValid($hostname)) {
     </para>
 
     <para>
-        <emphasis role="strong">Validating different types of hostnames</emphasis>
+        <emphasis>Validating different types of hostnames</emphasis>
     </para>
 
     <para>
@@ -62,8 +61,7 @@ if ($validator->isValid($hostname)) {
         echo "$message\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -73,13 +71,12 @@ if ($validator->isValid($hostname)) {
         <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
                                         Zend_Validate_Hostname::ALLOW_IP);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </para>
 
     <para>
-        <emphasis role="strong">Validating International Domains Names</emphasis>
+        <emphasis>Validating International Domains Names</emphasis>
     </para>
 
     <para>
@@ -135,8 +132,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
         <programlisting role="php"><![CDATA[
 $validator =
     new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
-]]>
-        </programlisting>
+]]></programlisting>
 
         Alternatively you can either pass TRUE or FALSE to
         <code>$validator->setValidateIdn()</code> to enable or disable IDN validation.
@@ -152,7 +148,7 @@ $validator =
     </para>
 
     <para>
-        <emphasis role="strong">Validating Top Level Domains</emphasis>
+        <emphasis>Validating Top Level Domains</emphasis>
     </para>
 
     <para>
@@ -166,8 +162,7 @@ $validator =
     new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS,
                                true,
                                false);
-]]>
-        </programlisting>
+]]></programlisting>
 
         Alternatively you can either pass TRUE or FALSE to
         <code>$validator->setValidateTld()</code> to enable or disable TLD validation.

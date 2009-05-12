@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15235 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
@@ -22,8 +22,7 @@
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
@@ -45,8 +44,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -54,11 +52,11 @@ $server->handle();
         <title>Aufruf eines Zend_Rest_Server Services</title>
 
         <para>
-            Um ein <code>Zend_Rest_Server</code> Service aufzurufen muß ein GET/POST <code>method</code> Argument
-            mit einem Wert angegeben werden der der Methode entspricht die aufgerufen werden soll. Es können
-            anschließend beliebig viele Argumente folgen die entweder den Namen des Arguments verwenden (z.B. "wer")
-            oder man kann <code>arg</code> verwenden gefolgt von der nummerischen Position des Arguments
-            (z.B. "arg1").
+            Um ein <classname>Zend_Rest_Server</classname> Service aufzurufen muß ein GET/POST
+            <code>method</code> Argument mit einem Wert angegeben werden der der Methode entspricht
+            die aufgerufen werden soll. Es können anschließend beliebig viele Argumente folgen die
+            entweder den Namen des Arguments verwenden (z.B. "wer") oder man kann <code>arg</code>
+            verwenden gefolgt von der nummerischen Position des Arguments (z.B. "arg1").
         </para>
 
         <note>
@@ -89,8 +87,8 @@ $server->handle();
         <title>Senden eines eigenen Status</title>
 
         <para>
-            Wenn Werte zurückgegeben werden, kann man, um einen eigenen Status zurückzugeben, ein Array mit einem
-            <code>status</code> Schlüssel zurückgeben.
+            Wenn Werte zurückgegeben werden, kann man, um einen eigenen Status zurückzugeben, ein
+            Array mit einem <code>status</code> Schlüssel zurückgeben.
         </para>
 
         <example id="zend.rest.server.customstatus.example-1">
@@ -111,8 +109,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -151,8 +148,7 @@ $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

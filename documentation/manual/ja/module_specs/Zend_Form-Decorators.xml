@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <sect1 id="zend.form.decorators">
-    <title><code>Zend_Form_Decorator</code> による独自のフォームマークアップの作成</title>
+    <title>Zend_Form_Decorator による独自のフォームマークアップの作成</title>
 
     <para>
         フォームオブジェクトのレンダリングは、完全に別の処理です。
-        <code>Zend_Form</code> の render() メソッドを使わなくてもかまいません。
+        <classname>Zend_Form</classname> の render() メソッドを使わなくてもかまいません。
         しかし、もし使う場合は
         フォームオブジェクトのレンダリングにはデコレータを使用します。
     </para>
@@ -44,9 +44,9 @@
 
         <para>
             デコレータを設定するには、オプションの配列あるいは
-            <code>Zend_Config</code> オブジェクトをコンストラクタに渡します。
+            <classname>Zend_Config</classname> オブジェクトをコンストラクタに渡します。
             あるいは、配列を <code>setOptions()</code> に渡したり
-            <code>Zend_Config</code> オブジェクトを <code>setConfig()</code>
+            <classname>Zend_Config</classname> オブジェクトを <code>setConfig()</code>
             に渡すことでも設定できます。
         </para>
 
@@ -104,9 +104,9 @@
 
         <para>
             デコレータは、
-            <code>Zend_Form</code> のさまざまなクラスで使用できるようになっています。
-            <code>Zend_Form</code> や
-            <code>Zend_Form_Element</code>、<code>Zend_Form_DisplayGroup</code>、
+            <classname>Zend_Form</classname> のさまざまなクラスで使用できるようになっています。
+            <classname>Zend_Form</classname> や
+            <classname>Zend_Form_Element</classname>、<classname>Zend_Form_DisplayGroup</classname>、
             そしてその派生クラスのすべてで使用することができます。
             <code>setElement()</code> メソッドを使用すると、
             デコレータが処理するオブジェクトを指定することができます。一方
@@ -128,7 +128,7 @@
         <title>標準のデコレータ</title>
 
         <para>
-            <code>Zend_Form</code> には、多くのデコレータが標準で組み込まれています。
+            <classname>Zend_Form</classname> には、多くのデコレータが標準で組み込まれています。
             詳細は <link linkend="zend.form.standardDecorators">標準のデコレータについての章</link>
             を参照ください。
         </para>
@@ -143,7 +143,7 @@
         </para>
 
         <para>
-            デコレータに必要なのは、<code>Zend_Decorator_Interface</code>
+            デコレータに必要なのは、<classname>Zend_Decorator_Interface</classname>
             を実装することだけです。このインターフェイスの定義は次のようになります。
         </para>
 
@@ -162,11 +162,10 @@ interface Zend_Decorator_Interface
     public function clearOptions();
     public function render($content);
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            よりお手軽に作成するには、<code>Zend_Decorator_Abstract</code>
+            よりお手軽に作成するには、<classname>Zend_Decorator_Abstract</classname>
             を継承したクラスを作成します。このクラスは、
             <code>render()</code> 以外のすべてのメソッドを実装しています。
         </para>
@@ -263,8 +262,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             そして、これをデコレータのパスに配置します。
@@ -280,8 +278,7 @@ $element->addPrefixPath('My_Decorator',
 $form->addElementPrefixPath('My_Decorator',
                             'My/Decorator/',
                             'decorator');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             そうすれば、このデコレータを 'Composite'
@@ -291,8 +288,7 @@ $form->addElementPrefixPath('My_Decorator',
         <programlisting role="php"><![CDATA[
 // 既存のデコレータをこのひとつで置き換えます
 $element->setDecorators(array('Composite'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             この例では複数の要素のプロパティをもとに複雑な出力を作成するデコレータの
@@ -330,12 +326,11 @@ class My_Decorator_Errors
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             この例では、デコレータ名の最後の部分である 'Errors' が
-            <code>Zend_Form_Decorator_Errors</code> と同じなので、このデコレータの
+            <classname>Zend_Form_Decorator_Errors</classname> と同じなので、このデコレータの
             <emphasis>かわりに</emphasis> レンダリングに用いられます。
             つまり、特にデコレータを変更しなくても出力が変わるということです
             既存のデコレータとあわせた名前のデコレータを作成すれば、

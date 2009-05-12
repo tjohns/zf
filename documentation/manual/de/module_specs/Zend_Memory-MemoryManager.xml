@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.memory.memory-manager">
     <title>Memory Manager</title>
@@ -9,15 +9,15 @@
         <title>Erstellen eines Memory Manager</title>
 
         <para>
-            Ein neuer Memory Manager (<code>Zend_Memory_Manager</code> object)
+            Ein neuer Memory Manager (<classname>Zend_Memory_Manager</classname> object)
             kann erstellt werden durch Verwendung der
-            <code>Zend_Memory::factory($backendName [, $backendOprions])</code>
+            <classname>Zend_Memory::factory($backendName [, $backendOprions])</classname>
             Methode.
         </para>
 
         <para>
             Das erste Argument <code>$backendName</code> ist eine Zeichenkette die
-            eine der Backend Implementationen benennt welche durch <code>Zend_Cache</code>
+            eine der Backend Implementationen benennt welche durch <classname>Zend_Cache</classname>
             unterstützt werden.
         </para>
 
@@ -33,22 +33,21 @@ $backendOptions = array(
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_Memory</code> verwendet <link linkend="zend.cache.backends"><code>Zend_Cache Backends</code></link>
+            <classname>Zend_Memory</classname> verwendet <link
+                linkend="zend.cache.backends"><classname>Zend_Cache Backends</classname></link>
             als Speicheranbieter.
         </para>
 
         <para>
             Der spezielle Name '<code>None</code>' kann als Backend Name verwendet werden,
-            zusätzlich zu den Standard <code>Zend_Cache</code> Backends.
+            zusätzlich zu den Standard <classname>Zend_Cache</classname> Backends.
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -81,11 +80,10 @@ $memoryManager = Zend_Memory::factory('None');
             <para>
                 Verschiebbare Objekte (Objekte, welche verschoben werden können)
                 können erstellt werden mit Hilfe der
-                <code>Zend_Memory_Manager::create([$data])</code> Methode:
+                <classname>Zend_Memory_Manager::create([$data])</classname> Methode:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </para>
 
@@ -104,11 +102,10 @@ $memObject = $memoryManager->create($data);
             <para>
                 Verschlüsselte Objekte (Objekte, welche niemals getauscht werden) können
                 erstellt werden mit Hilfe der
-                <code>Zend_Memory_Manager::createLocked([$data])</code> Methode:
+                <classname>Zend_Memory_Manager::createLocked([$data])</classname> Methode:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -151,8 +148,7 @@ function foo()
     // Aber das $memObject3 Objekt ist noch immer referenziert
     // durch $memList und ist nicht zerstört
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -189,8 +185,7 @@ function foo()
                 <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit(); // Memorylimit in Bytes empfangen
 $memoryManager->setMemoryLimit($newLimit);    // Memorylimit in Bytes setzen
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -223,8 +218,7 @@ $memoryManager->setMemoryLimit($newLimit);    // Memorylimit in Bytes setzen
                 <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // MinSize in Bytes empfangen
 $memoryManager->setMinSize($newSize);        // MinSize Limit in Bytes setzen
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>

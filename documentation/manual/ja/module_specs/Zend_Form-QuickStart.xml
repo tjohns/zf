@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
     <para>
-        このクイックスタートガイドでは、<code>Zend_Form</code>
+        このクイックスタートガイドでは、<classname>Zend_Form</classname>
         を用いたフォームの作成や検証、そしてレンダリングについての基本を扱います。
     </para>
 
@@ -14,18 +14,17 @@
 
         <para>
             フォームオブジェクトを作成するのは非常に簡単で、
-            単に <code>Zend_Form</code> のインスタンスを作成するだけです。
+            単に <classname>Zend_Form</classname> のインスタンスを作成するだけです。
         </para>
 
         <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            より高度に使いこなす際には <code>Zend_Form</code>
+            より高度に使いこなす際には <classname>Zend_Form</classname>
             のサブクラスを作成することになるかもしれません。
-            しかし、単純なフォームの場合は <code>Zend_Form</code>
+            しかし、単純なフォームの場合は <classname>Zend_Form</classname>
             オブジェクトをそのまま使えばプログラム上でフォームを作成できます。
         </para>
 
@@ -38,8 +37,7 @@ $form = new Zend_Form;
         <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             このコードは、フォームのアクションをパーシャル URL
@@ -56,8 +54,7 @@ $form->setAction('/resource/process')
 
         <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.elements">
@@ -65,8 +62,8 @@ $form->setAttrib('id', 'login');
 
         <para>
             要素がなければフォームには何の意味もありません。
-            <code>Zend_Form</code> にデフォルトで組み込まれている要素を使用すると、
-            <code>Zend_View</code> ヘルパーを用いて XHTML 形式でレンダリングすることができます。
+            <classname>Zend_Form</classname> にデフォルトで組み込まれている要素を使用すると、
+            <classname>Zend_View</classname> ヘルパーを用いて XHTML 形式でレンダリングすることができます。
             以下のような要素が組み込まれています。
         </para>
 
@@ -119,7 +116,7 @@ $form->setAttrib('id', 'login');
         <para>
             フォームに要素を追加するには、二通りの方法があります。
             フォーム要素のインスタンスを作成してそのオブジェクトを渡す方法と、
-            単に要素の型だけを渡して <code>Zend_Form</code>
+            単に要素の型だけを渡して <classname>Zend_Form</classname>
             にその型のオブジェクトを作成させる方法です。
         </para>
 
@@ -133,15 +130,14 @@ $form->addElement(new Zend_Form_Element_Text('username'));
 
 // フォーム要素の型をフォームオブジェクトに渡します
 $form->addElement('text', 'username');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             デフォルトでは、バリデータやフィルタは一切含まれません。
             つまり、追加した要素に対して最低でもバリデータを指定し、
             おそらくフィルタも指定しなければならないということです。
             これは、(a) 要素をフォームに追加する前に行う、
-            (b) <code>Zend_Form</code> で要素を作成する際のオプションで指定する、
+            (b) <classname>Zend_Form</classname> で要素を作成する際のオプションで指定する、
             あるいは (c) 要素を追加した後でフォームオブジェクトから要素を取り出し、
             それを設定する
             のいずれかの方法で行います。
@@ -149,7 +145,7 @@ $form->addElement('text', 'username');
 
         <para>
             まずは要素のインスタンスにバリデータを追加する例を見てみましょう。
-            <code>Zend_Validate_*</code> オブジェクトそのものを渡すか、
+            <classname>Zend_Validate_*</classname> オブジェクトそのものを渡すか、
             あるいは使用するバリデータの名前を渡すことになります。
         </para>
 
@@ -161,8 +157,7 @@ $username->addValidator(new Zend_Validate_Alnum());
 
 // バリデータ名を渡します
 $username->addValidator('alnum');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             2 番目の方法を使用する場合、
@@ -173,8 +168,7 @@ $username->addValidator('alnum');
         <programlisting role="php"><![CDATA[
 // 正規表現パターンを渡します
 $username->addValidator('regex', false, array('/^[a-z]/i'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             (2 番目のパラメータの意味は、
@@ -192,8 +186,7 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
         <programlisting role="php"><![CDATA[
 // この要素は必須です
 $username->setRequired(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             要素が必須な場合は、'NotEmpty' バリデータが
@@ -208,8 +201,7 @@ $username->setRequired(true);
 
         <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             これまでの内容をまとめると、要素の設定はこのようになります。
@@ -227,16 +219,14 @@ $username->addValidators(array('alnum',
     ))
     ->setRequired(true)
     ->addFilters(array('StringToLower'));
-]]>
-        </programlisting>
-
+]]></programlisting>
 
         <para>
             シンプルといえばシンプルですが、
             フォームのすべての要素についてこれを行うというのも
             ちょっと面白くありません。上で説明した (b)
             の方法を試してみましょう。
-            <code>Zend_Form::addElement()</code>
+            <classname>Zend_Form::addElement()</classname>
             をファクトリメソッドとして使用して新しい要素を作成する際に、
             設定オプションを渡すことができます。
             たとえば、使用するバリデータやフィルタをここで指定することが可能です。
@@ -252,12 +242,11 @@ $form->addElement('text', 'username', array(
     'required' => true,
     'filters'  => array('StringToLower'),
 ));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note><para>
             同じオプションを指定した要素をいろんな場所で使用するような場合は、
-            <code>Zend_Form_Element</code> のサブクラスを作成してそれを使用するといいでしょう。
+            <classname>Zend_Form_Element</classname> のサブクラスを作成してそれを使用するといいでしょう。
             長い目で見れば、そのほうがタイピング量を軽減できます。
         </para></note>
     </sect2>
@@ -267,7 +256,7 @@ $form->addElement('text', 'username', array(
 
         <para>
             フォームのレンダリングの方法は簡単です。
-            ほとんどの要素は <code>Zend_View</code>
+            ほとんどの要素は <classname>Zend_View</classname>
             ヘルパーを用いて自身のレンダリングを行うので、
             ビューオブジェクトが必要となります。
             それ以外の方法としては、フォームの render()
@@ -280,12 +269,11 @@ echo $form->render($view);
 
 // 事前に setView() でビューオブジェクトが設定されているものとします
 echo $form;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            デフォルトでは、<code>Zend_Form</code> と
-            <code>Zend_Form_Element</code> は
+            デフォルトでは、<classname>Zend_Form</classname> と
+            <classname>Zend_Form_Element</classname> は
             <code>ViewRenderer</code> が初期化したビューオブジェクトを使おうと試みます。
             つまり、Zend Framework の MVC
             を使用している場合は、自分でビューを設定する必要はないということです。
@@ -295,18 +283,17 @@ echo $form;
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->form ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            水面下では、<code>Zend_Form</code> は "デコレータ"
+            水面下では、<classname>Zend_Form</classname> は "デコレータ"
             を用いてレンダリングを行っています。
             このデコレータが、コンテンツの置換や
             先頭 (あるいは末尾) へのコンテンツの追加、
             その他コンテンツに対する操作を行うことになります。
             複数のデコレータを組み合わせることで、
             さまざまな効果を適用することができます。
-            デフォルトでは、<code>Zend_Form_Element</code>
+            デフォルトでは、<classname>Zend_Form_Element</classname>
             は 4 つのデコレータを組み合わせて出力を行います。
             その設定は、次のようになっています。
         </para>
@@ -318,8 +305,7 @@ $element->addDecorators(array(
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             (&lt;HELPERNAME&gt; は使用しているビューヘルパーの名前で、
@@ -339,8 +325,7 @@ $element->addDecorators(array(
         <li>'123-abc' does not match against pattern '/^[a-z]/i'</li>
     </ul>
 </dd>
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             (フォーマットは異なるかもしれません)
@@ -369,8 +354,7 @@ $element->addDecorators(array(
 
         <programlisting role="php"><![CDATA[
 $element->setOrder(10);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             あるいは、要素を作成する際にオプションとして指定します。
@@ -378,8 +362,7 @@ $element->setOrder(10);
 
         <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.validate">
@@ -406,8 +389,7 @@ if ($form->isValid($_POST)) {
 } else {
     // 失敗!
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             AJAX リクエストの場合は、特定の要素や要素群だけを検証することもあります。
@@ -422,8 +404,7 @@ if ($form->isValidPartial($_POST)) {
 } else {
     // いくつかの要素がバリデーションに失敗しました
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             さらに、<code>processAjax()</code>
@@ -440,8 +421,7 @@ if ($form->isValidPartial($_POST)) {
 
         <programlisting role="php"><![CDATA[
 $values = $form->getValues();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             フィルタリング前の値を取得したい場合は次のようにします。
@@ -449,8 +429,7 @@ $values = $form->getValues();
 
         <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.errorstatus">
@@ -471,8 +450,7 @@ if (!$form->isValid($_POST)) {
     $this->view->form = $form;
     return $this->render('form');
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             エラーの内容を調べるには二通りの方法があります。
@@ -510,7 +488,7 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <para>
-            <code>Zend_Form</code> のオプションを駆使して、
+            <classname>Zend_Form</classname> のオプションを駆使して、
             フォームを作成してみましょう。
         </para>
 
@@ -537,8 +515,7 @@ $form->addElement($username)
      ->addElement($password)
      // addElement() をファクトリとして使用して 'Login' ボタンを作成します
      ->addElement('submit', 'login', array('label' => 'Login'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             次に、これを処理するためのコントローラを作成します。
@@ -576,8 +553,7 @@ class UserController extends Zend_Controller_Action
         // ここで認証処理を行います
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             フォームを表示するためのビュースクリプトは次のようになります。
@@ -586,24 +562,23 @@ class UserController extends Zend_Controller_Action
 <programlisting role="php"><![CDATA[
 <h2>Please login:</h2>
 <?php echo $this->form ?>
-]]>
- </programlisting>
+]]></programlisting>
 
         <para>
             コントローラのコードをご覧になってお気づきの通り、
             やるべき作業がまだ残っています。
             入力された内容が妥当な形式であったとしても、
-            たとえば <code>Zend_Auth</code> などを用いた認証処理が必要です。
+            たとえば <classname>Zend_Auth</classname> などを用いた認証処理が必要です。
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title><code>Zend_Config</code> オブジェクトの使用法</title>
+        <title>Zend_Config オブジェクトの使用法</title>
 
         <para>
-            <code>Zend_Form</code> のすべてのクラスは
-            <code>Zend_Config</code> を用いて設定することができます。
-            コンストラクタに <code>Zend_Config</code>
+            <classname>Zend_Form</classname> のすべてのクラスは
+            <classname>Zend_Config</classname> を用いて設定することができます。
+            コンストラクタに <classname>Zend_Config</classname>
             オブジェクトを渡すか、あるいは <code>setConfig()</code>
             を使用して渡すことになります。先ほどのようなフォームを
             INI ファイルを用いて作成できないかどうかを検討してみましょう。
@@ -640,8 +615,7 @@ user.login.elements.password.options.required = true
 
 ; submit 要素
 user.login.elements.submit.type = "submit"
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             そしてこれをフォームのコンストラクタに渡します。
@@ -650,8 +624,7 @@ user.login.elements.submit.type = "submit"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             これでフォームの定義が完了しました。
@@ -663,7 +636,7 @@ $form   = new Zend_Form($config->user->login);
 
         <para>
             ここまで読み進めてこられたみなさんは、
-            <code>Zend_Form</code> のさまざまな機能を駆使するだけの準備ができたことでしょう。
+            <classname>Zend_Form</classname> のさまざまな機能を駆使するだけの準備ができたことでしょう。
             さらに詳細な情報に進んでいきましょう!
         </para>
     </sect2>

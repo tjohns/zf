@@ -25,10 +25,9 @@ if ($validatorChain->isValid($username)) {
         echo "$message\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
-        Validators are run in the order they were added to <code>Zend_Validate</code>. In the above example,
+        Validators are run in the order they were added to <classname>Zend_Validate</classname>. In the above example,
         the username is first checked to ensure that its length is between 6 and 12 characters, and then it is
         checked to ensure that it contains only alphanumeric characters. The second validation, for
         alphanumeric characters, is performed regardless of whether the first validation, for length between 6
@@ -38,7 +37,7 @@ if ($validatorChain->isValid($username)) {
 
     <para>
         In some cases it makes sense to have a validator break the chain if its validation process
-        fails. <code>Zend_Validate</code> supports such use cases with the second parameter to the
+        fails. <classname>Zend_Validate</classname> supports such use cases with the second parameter to the
         <code>addValidator()</code> method. By setting <code>$breakChainOnFailure</code> to <code>true</code>,
         the added validator will break the chain execution upon failure, which avoids running any other
         validations that are determined to be unnecessary or inappropriate for the situation. If the above
@@ -48,13 +47,12 @@ if ($validatorChain->isValid($username)) {
         <programlisting role="php"><![CDATA[
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
         ->addValidator(new Zend_Validate_Alnum());
-]]>
-        </programlisting>
+]]></programlisting>
 
     </para>
 
     <para>
-        Any object that implements <code>Zend_Validate_Interface</code> may be used in a validator chain.
+        Any object that implements <classname>Zend_Validate_Interface</classname> may be used in a validator chain.
     </para>
 
 </sect1>

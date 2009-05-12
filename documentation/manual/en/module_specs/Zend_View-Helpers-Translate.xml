@@ -12,12 +12,11 @@
         the <code>Translate</code> View Helper.
     </para>
 
-
     <para>
         In all following examples we are using the simple Array Translation
         Adapter. Of course you can also use any instance of
-        <code>Zend_Translate</code> and also any subclasses of
-        <code>Zend_Translate_Adapter</code>. There are several ways to initiate
+        <classname>Zend_Translate</classname> and also any subclasses of
+        <classname>Zend_Translate_Adapter</classname>. There are several ways to initiate
         the <code>Translate</code> View Helper:
     </para>
 
@@ -25,7 +24,7 @@
         <listitem>
             <para>
                 Registered, through a previously registered instance in
-                <code>Zend_Registry</code>
+                <classname>Zend_Registry</classname>
             </para>
         </listitem>
         <listitem>
@@ -41,7 +40,7 @@
     </itemizedlist>
 
     <para>
-        A registered instance of <code>Zend_Translate</code> is the preferred
+        A registered instance of <classname>Zend_Translate</classname> is the preferred
         usage for this helper. You can also select the locale to be used simply
         before you add the adapter to the registry.
     </para>
@@ -62,9 +61,9 @@
 
         <para>
             To use a registered instance just create an instance of
-            <code>Zend_Translate</code> or <code>Zend_Translate_Adapter</code>
-            and register it within <code>Zend_Registry</code> using
-            <code>Zend_Translate</code> as its key.
+            <classname>Zend_Translate</classname> or <classname>Zend_Translate_Adapter</classname>
+            and register it within <classname>Zend_Registry</classname> using
+            <classname>Zend_Translate</classname> as its key.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -75,8 +74,7 @@ Zend_Registry::set('Zend_Translate', $adapter);
 // within your view
 echo $this->translate('simple');
 // this returns 'einfach'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -91,7 +89,7 @@ echo $this->translate('simple');
 
         <para>
             To use the fluent interface, create an instance of
-            <code>Zend_Translate</code> or <code>Zend_Translate_Adapter</code>,
+            <classname>Zend_Translate</classname> or <classname>Zend_Translate_Adapter</classname>,
             call the helper without a parameter, and call the
             <code>setTranslator()</code> method.
         </para>
@@ -101,13 +99,12 @@ echo $this->translate('simple');
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 $this->translate()->setTranslator($adapter)->translate('simple');
 // this returns 'einfach'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
     <para>
-        If you are using the helper without <code>Zend_View</code> then you can
+        If you are using the helper without <classname>Zend_View</classname> then you can
         also use it directly.
     </para>
 
@@ -122,12 +119,11 @@ $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 // initiate the adapter
 $translate = new Zend_View_Helper_Translate($adapter);
 print $translate->translate('simple'); // this returns 'einfach'
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You would use this way if you are not working with
-            <code>Zend_View</code> and need to create translated output.
+            <classname>Zend_View</classname> and need to create translated output.
         </para>
 
     </example>
@@ -153,8 +149,7 @@ print $translate->translate('simple'); // this returns 'einfach'
 $date = "Monday";
 $this->translate("Today is %1\$s", $date);
 // could return 'Heute ist Monday'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -183,8 +178,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s",
                  $month,
                  $time);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -201,8 +195,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s",
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // Could return 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -222,8 +215,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // within your view
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -244,8 +236,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -275,8 +266,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
 // returns 'it' as new set default locale
 $this->translate()->getLocale();
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 

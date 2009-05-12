@@ -4,7 +4,7 @@
     <title>Zend_Layout Quick Start</title>
 
     <para>
-        There are two primary use cases for <code>Zend_Layout</code>: with the
+        There are two primary use cases for <classname>Zend_Layout</classname>: with the
         Zend Framework MVC, and without.
     </para>
 
@@ -15,7 +15,7 @@
             In both cases, however, you'll need to create a layout script.
             Layout scripts simply utilize Zend_View (or whatever view
             implementation you are using). Layout variables are registered with
-            a <code>Zend_Layout</code> <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>,
+            a <classname>Zend_Layout</classname> <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>,
             and may be accessed via the placeholder helper or by fetching them
             as object properties of the layout object via the layout helper.
         </para>
@@ -48,11 +48,10 @@
 ?>
 </body>
 </html>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Because <code>Zend_Layout</code> utilizes <code>Zend_View</code> for
+            Because <classname>Zend_Layout</classname> utilizes <classname>Zend_View</classname> for
             rendering, you can also use any view helpers registered, and also
             have access to any previously assigned view variables. Particularly
             useful are the various <link
@@ -83,27 +82,26 @@
     <?php echo $this->render('footer.phtml') ?>
 </body>
 </html>
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.mvc">
         <title>Using Zend_Layout with the Zend Framework MVC</title>
 
         <para>
-            <code>Zend_Controller</code> offers a rich set of functionality for
+            <classname>Zend_Controller</classname> offers a rich set of functionality for
             extension via its <link linkend="zend.controller.plugins">front
             controller plugins</link> and <link
             linkend="zend.controller.actionhelpers">action controller
-            helpers</link>. <code>Zend_View</code> also has <link
-            linkend="zend.view.helpers">helpers</link>. <code>Zend_Layout</code>
+            helpers</link>. <classname>Zend_View</classname> also has <link
+            linkend="zend.view.helpers">helpers</link>. <classname>Zend_Layout</classname>
             takes advantage of these various extension points when used with the
             MVC components.
         </para>
 
         <para>
-            <code>Zend_Layout::startMvc()</code> creates an instance of
-            <code>Zend_Layout</code> with any optional configuration you provide
+            <classname>Zend_Layout::startMvc()</classname> creates an instance of
+            <classname>Zend_Layout</classname> with any optional configuration you provide
             it. It then registers a front controller plugin that renders the
             layout with any application content once the dispatch loop is done,
             and registers an action helper to allow access to the layout object
@@ -120,12 +118,11 @@
         <programlisting role="php"><![CDATA[
 // In your bootstrap:
 Zend_Layout::startMvc();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <code>startMvc()</code> can take an optional array of options or
-            <code>Zend_Config</code> object to customize the instance; these
+            <classname>Zend_Config</classname> object to customize the instance; these
             options are detailed in <xref linkend="zend.layout.options" />.
         </para>
 
@@ -149,8 +146,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('foobaz');
     };
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In your view scripts, you can then access the layout object via the
@@ -162,11 +158,10 @@ class FooController extends Zend_Controller_Action
 
         <programlisting role="php"><![CDATA[
 <?php $this->layout()->setLayout('foo'); // set alternate layout ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            At any time, you can fetch the <code>Zend_Layout</code> instance
+            At any time, you can fetch the <classname>Zend_Layout</classname> instance
             registered with the MVC via the <code>getMvcInstance()</code> static
             method:
         </para>
@@ -174,11 +169,10 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // Returns null if startMvc() has not first been called
 $layout = Zend_Layout::getMvcInstance();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Finally, <code>Zend_Layout</code>'s front controller plugin has one
+            Finally, <classname>Zend_Layout</classname>'s front controller plugin has one
             important feature in addition to rendering the layout: it retrieves
             all named segments from the response object and assigns them as
             layout variables, assigning the 'default' segment to the variable
@@ -206,8 +200,7 @@ $layout = Zend_Layout::getMvcInstance();
     <!-- renders /foo/index + /comment/fetch -->
     <div id="content"><?php echo $this->layout()->content ?></div>
 </body>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This feature is particularly useful when used in conjunction with
@@ -259,8 +252,7 @@ $layout->setLayout('foo');
 
 // render final layout
 echo $layout->render();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.example">

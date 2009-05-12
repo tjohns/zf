@@ -4,10 +4,10 @@
     <title>Zend_Application_Resource_Db</title>
 
     <para>
-        <code>Zend_Application_Resource_Db</code> will initialize a
-        <code>Zend_Db</code> adapter based on the options passed to it. By
+        <classname>Zend_Application_Resource_Db</classname> will initialize a
+        <classname>Zend_Db</classname> adapter based on the options passed to it. By
         default, it also sets the adapter as the default adapter for use with
-        <code>Zend_Db_Table</code>.
+        <classname>Zend_Db_Table</classname>.
     </para>
 
     <para>
@@ -16,7 +16,7 @@
 
     <itemizedlist>
         <listitem><para>
-            <code>adapter</code>: <code>Zend_Db</code> adapter type.
+            <code>adapter</code>: <classname>Zend_Db</classname> adapter type.
         </para></listitem>
 
         <listitem><para>

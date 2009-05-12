@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>ベストプラクティス</title>
 
@@ -8,7 +8,7 @@
         <title>フィールド名</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> では、フィールド名に関する制限は特にありません。
+            <classname>Zend_Search_Lucene</classname> では、フィールド名に関する制限は特にありません。
         </para>
 
         <para>
@@ -19,7 +19,7 @@
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Search_QueryHit</code> のプロパティ
+            <classname>Zend_Search_Lucene_Search_QueryHit</classname> のプロパティ
             <code>id</code> と <code>score</code> はそれぞれ、Lucene
             ドキュメントが内部で使用する ID、検索結果の
             <link linkend="zend.search.lucene.searching.results-scoring">スコア</link>
@@ -37,13 +37,11 @@ foreach ($hits as $hit) {
     // 'contents' フィールドを取得します
     $contents = $hit->contents;
 
-
     // Lucene ドキュメントの内部 ID を取得します
     $id = $hit->id;
 
     // 検索結果のスコアを取得します
     $score = $hit->score;
-
 
     // 'id' フィールドを取得します
     $docId = $hit->getDocument()->id;
@@ -54,11 +52,9 @@ foreach ($hits as $hit) {
     // 'title' フィールドもこの方法で取得できます
     $title = $hit->getDocument()->title;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
-
 
     <sect2 id="zend.search.lucene.best-practice.indexing-performance">
         <title>インデックス作成のパフォーマンス</title>
@@ -91,8 +87,7 @@ foreach ($hits as $hit) {
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->optimize();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -138,10 +133,10 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    これらのオプションはすべて <code>Zend_Search_Lucene</code>
+                    これらのオプションはすべて <classname>Zend_Search_Lucene</classname>
                     オブジェクトのプロパティであり、インデックスのプロパティではありません。
                     したがって、この設定は現在使用中の
-                    <code>Zend_Search_Lucene</code> オブジェクトに対してのみ働くようになり、
+                    <classname>Zend_Search_Lucene</classname> オブジェクトに対してのみ働くようになり、
                     スクリプトによって設定は異なります。
                 </para>
             </note>
@@ -176,7 +171,6 @@ $index->optimize();
             使用可能なメモリのうち半分を超えない程度のメモリ消費量に抑えておくことをお勧めします。
         </para>
 
-
         <para>
             <emphasis>MaxMergeDocs</emphasis> はセグメントの大きさ
             (これはドキュメントの大きさによって決まります) を制限します。
@@ -204,7 +198,7 @@ $index->optimize();
             というエラーが発生するかもしれません
             <footnote>
               <para>
-                <code>Zend_Search_Lucene</code> は、セグメントファイルをずっとオープンしたままにしておきます。
+                <classname>Zend_Search_Lucene</classname> は、セグメントファイルをずっとオープンしたままにしておきます。
                 これによって検索の効率を上げています。
               </para>
             </footnote>。
@@ -215,7 +209,6 @@ $index->optimize();
             バッチ処理用の <emphasis>MaxMergeDocs</emphasis>
             はあまり小さくしすぎないようにしなければなりません。
         </para>
-
 
         <para>
             <emphasis>MergeFactor</emphasis> は自動最適化の頻度に影響を及ぼします。
@@ -265,7 +258,6 @@ $index->optimize();
             MergeFactor を適切に設定することで、セグメントの数を調整することができます。
         </para>
 
-
         <para>
             バッチ処理においては、<emphasis>MergeFactor</emphasis>
             パラメータを調整するほうが <emphasis>MaxMergeDocs</emphasis>
@@ -279,7 +271,7 @@ $index->optimize();
         <title>インデックスの終了時処理</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> オブジェクトは、
+            <classname>Zend_Search_Lucene</classname> オブジェクトは、
             終了時にちょっとした作業を行います。
             これは、インデックスにドキュメントが追加されたけれども
             新しいセグメントに書き込まれていないという場合に行われます。
@@ -325,8 +317,7 @@ $index = Zend_Search_Lucene::open($indexPath);
 
 ...
 
-unset($index);]]>
-            </programlisting>
+unset($index);]]></programlisting>
         </para>
 
         <para>
@@ -335,8 +326,7 @@ unset($index);]]>
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();
-]]>
-            </programlisting>
+]]></programlisting>
             これについては、このドキュメントの
             "<link linkend="zend.search.lucene.advanced.static">応用: 静的プロパティとしてのインデックスの使用</link>"
             でも説明しています。
@@ -352,7 +342,7 @@ $index->commit();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> には <code>termDocs()</code>
+            <classname>Zend_Search_Lucene</classname> には <code>termDocs()</code>
             というメソッドがあり、指定した単語を含むドキュメントを取得することができます。
         </para>
 
@@ -390,8 +380,7 @@ foreach ($docIds as $id) {
     $contents = $doc->contents;
     ...
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -399,7 +388,7 @@ foreach ($docIds as $id) {
         <title>メモリの使用法</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> は、比較的メモリを消費するモジュールです。
+            <classname>Zend_Search_Lucene</classname> は、比較的メモリを消費するモジュールです。
         </para>
 
         <para>
@@ -415,7 +404,7 @@ foreach ($docIds as $id) {
             これは、実際の辞書に登録されている単語が 128件
             <footnote><para>
                 Lucene のファイルフォーマットでは、この件数を変更することもできます。しかし
-                <code>Zend_Search_Lucene</code> の API ではそれをサポートしていません。
+                <classname>Zend_Search_Lucene</classname> の API ではそれをサポートしていません。
                 別の Lucene 実装を使用してインデックスをサポートすれば、
                 この値を変更することも可能です。
             </para></footnote>
@@ -454,7 +443,7 @@ foreach ($docIds as $id) {
         <title>エンコーディング</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> は、内部で UTF-8 文字列を使用しています。
+            <classname>Zend_Search_Lucene</classname> は、内部で UTF-8 文字列を使用しています。
             したがって、Zend_Search_Lucene が返す文字列は、すべて UTF-8
             でエンコードされています。
         </para>
@@ -470,7 +459,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> は、ドキュメントやクエリのエンコーディングとしてさまざまなものに対応しています。
+            <classname>Zend_Search_Lucene</classname> は、ドキュメントやクエリのエンコーディングとしてさまざまなものに対応しています。
         </para>
 
         <para>
@@ -483,8 +472,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('title',
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   $contents,
                                                   'utf-8'));
-]]>
-            </programlisting>
+]]></programlisting>
             エンコーディングの指定をはっきりさせるという意味で、これが最も良い方法です。
         </para>
 
@@ -500,8 +488,7 @@ setlocale(LC_ALL, 'de_DE.iso-8859-1');
 
 setlocale(LC_ALL, 'ja_JP.UTF-8');
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -521,8 +508,7 @@ $query =
     Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -532,8 +518,7 @@ $hits = $index->find($query);
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
             空の文字列は、'現在のロケール' を意味します。
         </para>
 
@@ -549,7 +534,7 @@ $hits = $index->find($queryStr);
         <title>インデックスの保守</title>
 
         <para>
-            まずはっきりさせておくべきなのは、<code>Zend_Search_Lucene</code> やその他の
+            まずはっきりさせておくべきなのは、<classname>Zend_Search_Lucene</classname> やその他の
             Lucene 実装は決して "データベース" ではないということです。
         </para>
 
@@ -560,7 +545,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            しかし、<code>Zend_Search_Lucene</code> はインデックスの一貫性を保持するための機能は持っています。
+            しかし、<classname>Zend_Search_Lucene</classname> はインデックスの一貫性を保持するための機能は持っています。
         </para>
 
         <para>

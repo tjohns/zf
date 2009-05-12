@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
 
     <para>
-        <code>Zend_File_Transfer</code> にはファイル関連のバリデータがいくつか同梱されています。
+        <classname>Zend_File_Transfer</classname> にはファイル関連のバリデータがいくつか同梱されています。
         これらを使用してセキュリティを向上させ、攻撃から身を守るようにしましょう。
         バリデータは、それを使ってこそ役に立つものなのですから。
-        <code>Zend_File_Transfer</code> が提供するバリデータは
-        <code>Zend_Validator</code> コンポーネントに含まれ、
-        <code>Zend_Validate_File_*</code> という名前がついています。
+        <classname>Zend_File_Transfer</classname> が提供するバリデータは
+        <classname>Zend_Validator</classname> コンポーネントに含まれ、
+        <classname>Zend_Validate_File_*</classname> という名前がついています。
         現在使用できるバリデータは次のとおりです。
     </para>
 
@@ -145,7 +145,7 @@
                 <code>Upload</code>: このバリデータは内部的に使用するもので、
                 アップロード時に何らかの問題が発生していないかどうかをチェックします。
                 自分でこれを設定してはいけません。これは、
-                <code>Zend_File_Transfer</code> 自身が自動的に設定します。
+                <classname>Zend_File_Transfer</classname> 自身が自動的に設定します。
                 ですので、このバリデータのことは忘れてしまってもかまいません。
                 ただ、そういうバリデータが存在することだけを覚えておきましょう。
             </para>
@@ -160,7 +160,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title><code>Zend_File_Transfer</code> でのバリデータの使用法</title>
+        <title>Zend_File_Transfer でのバリデータの使用法</title>
 
         <para>
             バリデータの使い方はきわめて簡単です。
@@ -262,8 +262,7 @@ $upload->setValidators(array(
     'Size'  => array('min' => 20, 'max' => 20000),
     'Count' => array('min' => 1, 'max' => 3),
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.file.transfer.validators.usage.exampletwo">
@@ -282,8 +281,7 @@ $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 20000 バイトとし、それを 'file2' にのみ適用します
 $upload->addValidator('Size', false, 20000, 'file2');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -310,8 +308,7 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 20000)
        ->addValidator('Count', false, 2)
        ->addValidator('Filessize', false, 25000);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -349,8 +346,7 @@ $upload->addValidator('Size', false, 20000)
 if ($upload->isValid()) {
     print "検証に失敗";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -429,8 +425,7 @@ $upload->addValidator('Count', false, 2);
 
 // 最大でも 5 個、少なくとも 1 つのファイルが返されるよう制限します
 $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -476,8 +471,7 @@ $upload->addValidator('Crc32', false, '3b3652f');
 
 // ふたつの異なるハッシュを指定します
 $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -540,8 +534,7 @@ $upload->addValidator('ExcludeExtension',
 $upload->addValidator('ExcludeExtension',
                       false,
                       array('php', 'exe', 'case' => true));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -595,8 +588,7 @@ $upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg')
 
 // すべてのファイルで画像を許可しません
 $upload->addValidator('ExcludeMimeType', false, 'image');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -655,8 +647,7 @@ $upload->addValidator('Exists', false, '\temp');
 $upload->addValidator('Exists',
                       false,
                       array('\home\images', '\home\uploads'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -724,8 +715,7 @@ $upload->addValidator('Extension', false, array('mo', 'png', 'case' => true));
 if (!$upload->isValid('C:\temp\myfile.MO')) {
     print 'Not valid because MO and mo do not match with case sensitivity;
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -790,8 +780,8 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
         <para>
             サイズの指定には SI 記法も使えます。
             これは多くのオペレーティングシステムでもサポートされているものです。
-            <emphasis role="strong">20000 bytes</emphasis>
-            と書くかわりに、<emphasis role="strong">20kB</emphasis>
+            <emphasis>20000 bytes</emphasis>
+            と書くかわりに、<emphasis>20kB</emphasis>
             とすることができるのです。すべての単位は、1024 単位に変換されます。
             使用できる単位は <code>kB</code>、<code>MB</code>、
             <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
@@ -818,8 +808,7 @@ $upload->addValidator('FilesSize',
                       array('min' => '10kB',
                             'max' => '4MB',
                             'bytestring' => false));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -899,8 +888,7 @@ $upload->addValidator('ImageSize', false,
 
 // 検証用の幅をリセットします
 $upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -930,8 +918,7 @@ $upload->addValidator('IsCompressed', false, array('application/zip'));
 
 // よりシンプルな記法で、zip ファイルのみを対象とするようこのバリデータを制限します
 $upload->addValidator('IsCompressed', false, 'zip');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -971,8 +958,7 @@ $upload->addValidator('IsImage', false, array('application/gif'));
 
 // よりシンプルな記法で、gif ファイルのみを対象とするようこのバリデータを制限します
 $upload->addValidator('IsImage', false, 'jpeg');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -1038,8 +1024,7 @@ $upload->addValidator('Hash',
                       false,
                       array('315b3cd8273d44912a7',
                             'algorithm' => 'md5'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -1091,8 +1076,7 @@ $upload->addValidator('Md5',
                       false,
                       array('3b3652f336522365223',
                             'eb3365f3365ddc65365'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1165,8 +1149,7 @@ $upload->addValidator('MimeType',
                       false,
                       array('image',
                             'magicfile' => '/path/to/magicfile.mgx'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1242,8 +1225,7 @@ $upload->addValidator('NotExists', false,
                       array('\home\images',
                             '\home\uploads')
                      );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -1290,8 +1272,7 @@ $upload->addValidator('sha1', false, '3b3652f336522365223');
 $upload->addValidator('Sha1',
                       false, array('3b3652f336522365223',
                                    'eb3365f3365ddc65365'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1350,8 +1331,8 @@ $upload->addValidator('Sha1',
         <para>
             サイズの指定には SI 記法も使えます。
             これは多くのオペレーティングシステムでもサポートされているものです。
-            <emphasis role="strong">20000 bytes</emphasis>
-            と書くかわりに、<emphasis role="strong">20kB</emphasis>
+            <emphasis>20000 bytes</emphasis>
+            と書くかわりに、<emphasis>20kB</emphasis>
             とすることができるのです。すべての単位は、1024 単位に変換されます。
             使用できる単位は <code>kB</code>、<code>MB</code>、
             <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
@@ -1375,8 +1356,7 @@ $upload->addValidator('Size',
                       array('min' => '10kB',
                             'max' => '4MB',
                             'bytestring' => false));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1422,8 +1402,7 @@ $upload->addValidator('WordCount', false, 2000);
 
 // ファイル内の単語数を最大 5000 語、最小 1000 語に制限します
 $upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>

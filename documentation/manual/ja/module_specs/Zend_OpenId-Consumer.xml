@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer の基本</title>
     <para>
-        <code>Zend_OpenId_Consumer</code> を使用して、
+        <classname>Zend_OpenId_Consumer</classname> を使用して、
         ウェブサイト上の OpenID 認証スキーマを実装します。
     </para>
 
@@ -37,7 +37,7 @@
 
         <para>
             実際のところ、OpenID 認証プロトコルはもう少し複雑な手順を踏んでいます。
-            しかしその大半は <code>Zend_OpenId_Consumer</code>
+            しかしその大半は <classname>Zend_OpenId_Consumer</classname>
             の中にカプセル化されており、開発者側が意識する必要はありません。
         </para>
 
@@ -57,8 +57,7 @@
 <input type="text" name="openid_identifier">
 <input type="submit" name="openid_action" value="login">
 </fieldset></form></body></html>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -66,7 +65,7 @@
             スクリプトに渡されます。このスクリプトが、
             認証の第二段階を処理します。
             この PHP スクリプトで必要なのは、
-            <code>Zend_OpenId_Consumer::login()</code>
+            <classname>Zend_OpenId_Consumer::login()</classname>
             メソッドをコールすることだけです。
             このメソッドの最初の引数は OpenID 識別子で、
             2 番目の引数はスクリプトの URL となります。
@@ -80,12 +79,11 @@ $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
     die("OpenID でのログインに失敗しました。");
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            <code>Zend_OpenId_Consumer::login()</code>
+            <classname>Zend_OpenId_Consumer::login()</classname>
             は指定された識別子を調べ、成功した場合には識別プロバイダのアドレスと
             そのローカル識別子を取得します。そして、
             そのプロバイダとの関連付けを行い、
@@ -107,7 +105,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         </para>
 
         <para>
-            成功した場合は <code>Zend_OpenId_Consumer::login()</code>
+            成功した場合は <classname>Zend_OpenId_Consumer::login()</classname>
             は何も返さずに HTTP リダイレクトを行います。
             エラーが発生した場合は false を返します。
             エラーが発生するのは、たとえば識別子が無効だったり
@@ -130,12 +128,11 @@ if ($consumer->verify($_GET, $id)) {
 } else {
     echo "無効 " . htmlspecialchars($id);
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            この検証は <code>Zend_OpenId_Consumer::verify</code>
+            この検証は <classname>Zend_OpenId_Consumer::verify</classname>
             メソッドで行います。このメソッドは、
             HTTP リクエストの引数の配列全体を受け取って、
             そのレスポンスが適切な OpenID プロバイダによって署名されたものかどうかを調べます。
@@ -192,8 +189,7 @@ if (isset($_POST['openid_action']) &&
 </fieldset>
 </form>
 </body></html>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -228,7 +224,7 @@ if (isset($_POST['openid_action']) &&
 
         <para>
             このような場合は、レルムの値を
-            <code>Zend_OpenId_Consumer::login</code> メソッドの 3 番目の引数として渡すことができます。
+            <classname>Zend_OpenId_Consumer::login</classname> メソッドの 3 番目の引数として渡すことができます。
             次の例は、すべての php.net サイトへの信頼済みアクセスを一度に確認するものです。
         </para>
 
@@ -241,8 +237,7 @@ if (!$consumer->login($_POST['openid_identifier'],
                       'http://*.php.net/')) {
     die("OpenID でのログインに失敗しました。");
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -257,8 +252,8 @@ if (!$consumer->login($_POST['openid_identifier'],
             場合によっては、信頼済み OpenID
             サーバにそのユーザがログインしているかどうかを
             ユーザとのやりとりなしに知りたいこともあります。
-            そのような場合に最適なメソッドが <code>Zend_OpenId_Consumer::check</code>
-            です。このメソッドの引数は <code>Zend_OpenId_Consumer::login</code>
+            そのような場合に最適なメソッドが <classname>Zend_OpenId_Consumer::check</classname>
+            です。このメソッドの引数は <classname>Zend_OpenId_Consumer::login</classname>
             とまったく同じですが、ユーザ側には OpenID サーバのページを一切見せません。
             したがって、ユーザ側から見れば処理は透過的に行われ、
             まるで他のサイトに一切移動していないように見えるようになります。
@@ -273,8 +268,7 @@ $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
     die("OpenID でのログインに失敗しました。");
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -289,26 +283,26 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
             OpenID の認証手続きは三段階に分かれており、
             それぞれで別々の HTTP リクエストを使用します。
             それらのリクエスト間で情報を保存するため、
-            <code>Zend_OpenId_Consumer</code> では内部ストレージを使用します。
+            <classname>Zend_OpenId_Consumer</classname> では内部ストレージを使用します。
         </para>
 
         <para>
             開発者は特にこのストレージを気にする必要はありません。
-            デフォルトで、<code>Zend_OpenId_Consumer</code>
+            デフォルトで、<classname>Zend_OpenId_Consumer</classname>
             は /tmp 配下のファイルベースのストレージを使用するからです。
             これは PHP のセッションと同じ挙動です。
             しかし、このストレージがあらゆる場合にうまく使えるというわけではありません。
             たとえばその手の情報はデータベースに保存したいという人もいるでしょうし、
             大規模なウェブファームで共通のストレージを使用したいこともあるでしょう。
             幸いなことに、このデフォルトのストレージは簡単に変更することができます。
-            そのために必要なのは、<code>Zend_OpenId_Consumer_Storage</code>
+            そのために必要なのは、<classname>Zend_OpenId_Consumer_Storage</classname>
             クラスを継承した独自のストレージクラスを実装して
-            それを <code>Zend_OpenId_Consumer</code>
+            それを <classname>Zend_OpenId_Consumer</classname>
             のコンストラクタへの最初の引数として渡すことだけです。
         </para>
 
         <para>
-            次の例は、バックエンドとして <code>Zend_Db</code>
+            次の例は、バックエンドとして <classname>Zend_Db</classname>
             を使用するシンプルなストレージです。三種類の機能を持っています。
             最初の機能は関連付けの情報、そして 2 番目が確認した内容のキャッシュ、
             そして 3 番目が応答の一意性の確認です。このクラスは、
@@ -501,8 +495,7 @@ $db = Zend_Db::factory('Pdo_Sqlite',
     array('dbname'=>'/tmp/openid_consumer.db'));
 $storage = new DbStorage($db);
 $consumer = new Zend_OpenId_Consumer($storage);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -596,7 +589,7 @@ $consumer = new Zend_OpenId_Consumer($storage);
             それ以外の情報については開示するかしないかをユーザに決めさせることもできます。
             次の例は、<emphasis>nickname</emphasis> およびオプションで
             <emphasis>email</emphasis> と <emphasis>fullname</emphasis>
-            を要求する <code>Zend_OpenId_Extension_Sreg</code>
+            を要求する <classname>Zend_OpenId_Extension_Sreg</classname>
             クラスのオブジェクトを作成するものです。
         </para>
 
@@ -614,25 +607,24 @@ if (!$consumer->login($_POST['openid_identifier'],
                       $sreg)) {
     die("OpenID でのログインに失敗しました。");
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            見てのとおり、<code>Zend_OpenId_Extension_Sreg</code>
+            見てのとおり、<classname>Zend_OpenId_Extension_Sreg</classname>
             のコンストラクタに渡すのは問い合わせたいフィールドの配列です。
             この配列のインデックスはフィールド名、値はフラグとなります。
             <emphasis>true</emphasis> はそのフィールドが必須であること、そして
             <emphasis>false</emphasis> はそのフィールドがオプションであることを表します。
-            <code>Zend_OpenId_Consumer::login</code> の 4 番目の引数には、
+            <classname>Zend_OpenId_Consumer::login</classname> の 4 番目の引数には、
             extension あるいは extension のリストを指定することができます。
         </para>
 
         <para>
-            認証の第三段階で、<code>Zend_OpenId_Extension_Sreg</code>
-            オブジェクトが <code>Zend_OpenId_Consumer::verify</code>
+            認証の第三段階で、<classname>Zend_OpenId_Extension_Sreg</classname>
+            オブジェクトが <classname>Zend_OpenId_Consumer::verify</classname>
             に渡されます。そして、認証に成功すると、
-            <code>Zend_OpenId_Extension_Sreg::getProperties</code>
+            <classname>Zend_OpenId_Extension_Sreg::getProperties</classname>
             は要求されたフィールドの配列を返します。
         </para>
 
@@ -659,33 +651,32 @@ if ($consumer->verify($_GET, $id, $sreg)) {
 } else {
     echo "無効 " . htmlspecialchars($id);
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            引数を渡さずに <code>Zend_OpenId_Extension_Sreg</code>
+            引数を渡さずに <classname>Zend_OpenId_Extension_Sreg</classname>
             を作成した場合は、必要なデータが存在するかどうかを
             ユーザ側のコードで調べなければなりません。
             しかし、第二段階で必要となるフィールドと同じ内容のリストでオブジェクトを作成した場合は、
             必要なデータの存在は自動的にチェックされます。
             この場合、必須フィールドのいずれかが存在しなければ
-            <code>Zend_OpenId_Consumer::verify</code> は
+            <classname>Zend_OpenId_Consumer::verify</classname> は
             <emphasis>false</emphasis> を返します。
         </para>
 
         <para>
-            デフォルトでは <code>Zend_OpenId_Extension_Sreg</code> はバージョン
+            デフォルトでは <classname>Zend_OpenId_Extension_Sreg</classname> はバージョン
             1.0 を使用します。バージョン 1.1 の仕様はまだ確定していないからです。
             しかし、中にはバージョン 1.0 の機能では完全にはサポートしきれないライブラリもあります。
             たとえば www.myopenid.com ではリクエストに SREG
             名前空間が必須となりますが、これは 1.1 にしか存在しません。
-            このサーバを使用する場合は、<code>Zend_OpenId_Extension_Sreg</code>
+            このサーバを使用する場合は、<classname>Zend_OpenId_Extension_Sreg</classname>
             のコンストラクタで明示的にバージョン 1.1 を指定する必要があります。
         </para>
 
         <para>
-            <code>Zend_OpenId_Extension_Sreg</code> のコンストラクタの 2 番目の引数は、
+            <classname>Zend_OpenId_Extension_Sreg</classname> のコンストラクタの 2 番目の引数は、
             ポリシーの URL です。これは、識別プロバイダがエンドユーザに提供する必要があります。
         </para>
     </sect2>
@@ -694,11 +685,11 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         <title>Zend_Auth との統合</title>
         <para>
             Zend Framework には、ユーザ認証用のクラスが用意されています。
-            そう、<code>Zend_Auth</code> のことです。
-            このクラスを <code>Zend_OpenId_Consumer</code>
+            そう、<classname>Zend_Auth</classname> のことです。
+            このクラスを <classname>Zend_OpenId_Consumer</classname>
             と組み合わせて使うこともできます。次の例は、
             <code>OpenIdAdapter</code> が
-            <code>Zend_Auth_Adapter_Interface</code> の
+            <classname>Zend_Auth_Adapter_Interface</classname> の
             <code>authenticate</code> メソッドを実装する方法を示すものです。
             これは、認証問い合わせと検証を行います。
         </para>
@@ -775,15 +766,14 @@ if ((isset($_POST['openid_action']) &&
 <input type="submit" name="openid_action" value="login">
 <input type="submit" name="openid_action" value="logout">
 </fieldset></form></body></html>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            <code>Zend_Auth</code> と組み合わせた場合、
+            <classname>Zend_Auth</classname> と組み合わせた場合、
             エンドユーザの識別子はセッションに保存されます。
-            これを取得するには <code>Zend_Auth::hasIdentity</code>
-            および <code>Zend_Auth::getIdentity</code>
+            これを取得するには <classname>Zend_Auth::hasIdentity</classname>
+            および <classname>Zend_Auth::getIdentity</classname>
             を使用します。
         </para>
     </sect2>
@@ -794,23 +784,23 @@ if ((isset($_POST['openid_action']) &&
             最後に、Model-View-Controller
             アプリケーションへの組み込みについて簡単に説明しておきます。
             Zend Framework のアプリケーションは
-            <code>Zend_Controller</code> クラスを使用して実装されており、
+            <classname>Zend_Controller</classname> クラスを使用して実装されており、
             エンドユーザのウェブブラウザに返す HTTP レスポンスは
-            <code>Zend_Controller_Response_Http</code>
+            <classname>Zend_Controller_Response_Http</classname>
             クラスのオブジェクトを使用して準備しています。
         </para>
 
         <para>
-            <code>Zend_OpenId_Consumer</code> には GUI 機能はありませんが、
-            <code>Zend_OpenId_Consumer::login</code> および
-            <code>Zend_OpenId_Consumer::check</code>
+            <classname>Zend_OpenId_Consumer</classname> には GUI 機能はありませんが、
+            <classname>Zend_OpenId_Consumer::login</classname> および
+            <classname>Zend_OpenId_Consumer::check</classname>
             に成功した場合に HTTP リダイレクトを行います。
             もしそれ以前に何らかの情報がウェブブラウザに送信されていると、
             このリダイレクトがうまく動作しません。
             MVC コードで HTTP リダイレクトを正しく機能させるため、
-            <code>Zend_OpenId_Consumer::login</code> あるいは
-            <code>Zend_OpenId_Consumer::check</code> の最後の引数に
-            <code>Zend_Controller_Response_Http</code> を渡す必要があります。
+            <classname>Zend_OpenId_Consumer::login</classname> あるいは
+            <classname>Zend_OpenId_Consumer::check</classname> の最後の引数に
+            <classname>Zend_Controller_Response_Http</classname> を渡す必要があります。
         </para>
     </sect2>
 </sect1>

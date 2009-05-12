@@ -203,8 +203,7 @@ $container = new Zend_Navigation(array(
         'route' => 'zf-route'
     )
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.navigation.containers.creating.example.config">
@@ -397,8 +396,7 @@ $container = new Zend_Navigation(array(
 
 $config = new Zend_Config_Xml('/path/to/navigation.xml', 'nav');
 $container = new Zend_Navigation($config);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -449,8 +447,7 @@ $container->addPages($pages);
 
 // remove existing pages and add the given pages
 $container->setPages($pages);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -459,7 +456,7 @@ $container->setPages($pages);
 
         <para>
             Removing pages can be done with <code>removePage()</code> or
-            <code>removePages()</code>.  The first method accepts a an instance
+            <code>removePages()</code>. The first method accepts a an instance
             of a page, or an integer. The integer corresponds to the
             <code>order</code> a page has. The latter method will remove all
             pages in the container.
@@ -497,8 +494,7 @@ $container->removePage(200);    // removes Page 2
 
 // remove all pages
 $container->removePages();      // removes all pages
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -614,8 +610,7 @@ $found = $container->findAllByfoo('bar');
 
 // Find all with controller = 'index'
 $found = $container->findAllByController('index'); // returns Page 2 and Page 3
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -676,8 +671,7 @@ $it = new RecursiveIteratorIterator(
 foreach ($it as $page) {
     echo $page->label;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -809,8 +803,7 @@ array(2) {
   }
 }
 */
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

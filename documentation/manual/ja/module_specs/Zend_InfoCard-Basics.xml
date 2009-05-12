@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.infocard.basics">
     <title>導入</title>
 
     <para>
-        <code>Zend_InfoCard</code> コンポーネントは、
+        <classname>Zend_InfoCard</classname> コンポーネントは、
         情報カード (Information Cards) の relying-party
         サポートを実装したものです。
         情報カードは、インターネット上でのユーザ識別情報の管理や
@@ -25,9 +25,9 @@
         <title>基本的な使用法</title>
 
         <para>
-            <code>Zend_InfoCard</code> の使用法は、
-            <code>Zend_Auth</code> コンポーネントの一部として
-            <code>Zend_InfoCard</code> 認証アダプタを使用するか、
+            <classname>Zend_InfoCard</classname> の使用法は、
+            <classname>Zend_Auth</classname> コンポーネントの一部として
+            <classname>Zend_InfoCard</classname> 認証アダプタを使用するか、
             あるいは単体のコンポーネントとして使用するかのいずれかです。
             どちらの場合についても、ユーザから情報カードを受け取るには
             HTML のログインフォームの中で次のような HTML ブロックを使用します。
@@ -47,8 +47,7 @@
          http://.../claims/surname" />
  </object>
 </form>
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             この例において、<code>requiredClaims</code>
@@ -65,7 +64,7 @@
             条件を満たす情報カードが複数存在する場合に好きなものを選択させることができます。
             この情報カードは、指定した URL に XML ドキュメントとして
             <code>POST</code> され、これを
-            <code>Zend_InfoCard</code> コンポーネントで処理することになります。
+            <classname>Zend_InfoCard</classname> コンポーネントで処理することになります。
         </para>
 
         <para>
@@ -80,10 +79,10 @@
         <title>Zend_Auth の部品としての使用法</title>
 
         <para>
-            このコンポーネントを <code>Zend_Auth</code>
+            このコンポーネントを <classname>Zend_Auth</classname>
             認証システムと組み合わせて使用するには、
-            <code>Zend_Auth_Adapter_InfoCard</code> を使用する必要があります
-            (これは、単体で配布されている <code>Zend_InfoCard</code>
+            <classname>Zend_Auth_Adapter_InfoCard</classname> を使用する必要があります
+            (これは、単体で配布されている <classname>Zend_InfoCard</classname>
             には存在しません)。
             この手法での使用例を以下に示します。
         </para>
@@ -143,12 +142,11 @@ if (isset($_POST['xmlToken'])) {
   </object>
  </form>
 </div>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             上の例では、まず最初に
-            <code>Zend_Auth_Adapter_InfoCard</code> のインスタンスを作成して、
+            <classname>Zend_Auth_Adapter_InfoCard</classname> のインスタンスを作成して、
             カードセレクタから送信された XML データをそこに渡しています。
             インスタンスを作成したら、次に SSL 証明書の秘密鍵/公開鍵
             ペアを指定する必要があります。
@@ -160,7 +158,7 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             アダプタの設定がすんだら、あとは
-            <code>Zend_Auth</code> の標準機能を使って情報カードトークンの検証を行い、
+            <classname>Zend_Auth</classname> の標準機能を使って情報カードトークンの検証を行い、
             <code>getIdentity()</code> で取得した識別情報をもとにユーザの認証を行います。
         </para>
     </sect2>
@@ -171,8 +169,8 @@ if (isset($_POST['xmlToken'])) {
         <para>
             Zend_InfoCard コンポーネントを、
             それ単体で使用することも可能です。その場合は
-            <code>Zend_InfoCard</code> クラスを直接操作します。
-            Zend_InfoCard クラスの使用法は、<code>Zend_Auth</code>
+            <classname>Zend_InfoCard</classname> クラスを直接操作します。
+            Zend_InfoCard クラスの使用法は、<classname>Zend_Auth</classname>
             コンポーネントと組み合わせて使用する場合とほぼ同じです。
             以下に使用例を示します。
         </para>
@@ -212,14 +210,13 @@ if (isset($_POST['xmlToken'])) {
    </object>
  </form>
 </div>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            上の例では、<code>Zend_InfoCard</code>
+            上の例では、<classname>Zend_InfoCard</classname>
             コンポーネントを単体で使用して、ユーザが送信したトークンを検証しています。
-            <code>Zend_Auth_Adapter_InfoCard</code> の場合と同様、
-            <code>Zend_InfoCard</code> のインスタンスを作成してから
+            <classname>Zend_Auth_Adapter_InfoCard</classname> の場合と同様、
+            <classname>Zend_InfoCard</classname> のインスタンスを作成してから
             ウェブサーバの SSL 証明書の公開キー/秘密キーペアを設定します。
             設定がすんだら、<code>process()</code>
             メソッドで情報カードの処理を行ってその結果を返します。
@@ -230,16 +227,16 @@ if (isset($_POST['xmlToken'])) {
         <title>Claims オブジェクトの使用法</title>
 
         <para>
-            <code>Zend_InfoCard</code> の使用方法
-            (単体で使用するか、あるいは <code>Zend_Auth</code> の一部として
-            <code>Zend_Auth_Adapter_InfoCard</code> 経由で使用するか)
+            <classname>Zend_InfoCard</classname> の使用方法
+            (単体で使用するか、あるいは <classname>Zend_Auth</classname> の一部として
+            <classname>Zend_Auth_Adapter_InfoCard</classname> 経由で使用するか)
             にかかわらず、情報カードを処理した結果は
-            <code>Zend_InfoCard_Claims</code> オブジェクトとして返されます。
+            <classname>Zend_InfoCard_Claims</classname> オブジェクトとして返されます。
             このオブジェクトには assertions (claims) が含まれます。
             これは、ユーザ認証の際にあなたのサイトが出した要求にもとづいて、
             ユーザが送信したデータから作成したものです。
             上の例で示したように、情報カードの妥当性を確認するには
-            <code>Zend_InfoCard_Claims::isValid()</code>
+            <classname>Zend_InfoCard_Claims::isValid()</classname>
             メソッドをコールします。claims そのものを取得するには、
             単純に識別子 (<code>givenname</code> など)
             をオブジェクトのプロパティとして指定してアクセスするか、
@@ -253,7 +250,7 @@ if (isset($_POST['xmlToken'])) {
             が複数の異なるソース/名前空間からの情報を要求している場合は、
             それをこのメソッドで明示的に取り出す必要があります
             (claim の完全な URI を私、情報カードの中からその値を取得します)。
-            一般論として、<code>Zend_InfoCard</code>
+            一般論として、<classname>Zend_InfoCard</classname>
             コンポーネントがデフォルトで設定する claim 用 URI
             は情報カードの中で最もよく用いられるものです。
             この場合は単純にプロパティを使用してアクセスすることができます。
@@ -263,7 +260,7 @@ if (isset($_POST['xmlToken'])) {
             検証処理の中で開発者が行わなければならない部分は、
             情報カード内の claim の発行元を調べて
             それが信頼できる情報元かどうかを判定するところです。
-            これを行うために、<code>Zend_InfoCard_Claims</code>
+            これを行うために、<classname>Zend_InfoCard_Claims</classname>
             オブジェクトには <code>getIssuer()</code> メソッドが用意されています。
             このメソッドは、情報カードの claim の発行元 URI を返します。
         </para>
@@ -280,7 +277,7 @@ if (isset($_POST['xmlToken'])) {
             <code>http://schemas.xmlsoap.org/ws/2005/05/identity/claims/privatepersonalidentifier</code>
             をリクエストの <code>requiredClaims</code>
             に指定します。この claim が要求されると、
-            <code>Zend_InfoCard_Claims</code>
+            <classname>Zend_InfoCard_Claims</classname>
             オブジェクトはそのカード用の一意な識別子を用意します。
             これは、<code>getCardID()</code> メソッドによって行います。
         </para>
@@ -334,24 +331,23 @@ public function submitinfocardAction()
             ZBlog_Exception("Infomation card failed security checks");
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.infocard.basics.adapters">
         <title>Zend_InfoCard アダプタの作成</title>
 
         <para>
-            <code>Zend_InfoCard</code> コンポーネントは、
+            <classname>Zend_InfoCard</classname> コンポーネントは、
             情報カードの標準規格の変化に対応するために
             モジュラー構造を採用しています。
             現時点では、拡張ポイントの多くは未使用ですので無視できますが、
             情報カードの実装においてひとつだけ実装すべき点があります。
-            それが <code>Zend_InfoCard_Adapter</code> です。
+            それが <classname>Zend_InfoCard_Adapter</classname> です。
         </para>
 
         <para>
-            <code>Zend_InfoCard</code> アダプタは、
+            <classname>Zend_InfoCard</classname> アダプタは、
             コンポーネント内でコールバックを使用してさまざまな処理を行います。
             たとえば、コンポーネントが情報カードを処理する際の
             Assertion ID の保存や取得などを行います。
@@ -361,13 +357,13 @@ public function submitinfocardAction()
 
         <para>
             これを避けるためには、
-            <code>Zend_InfoCard_Adapter_Interface</code>
+            <classname>Zend_InfoCard_Adapter_Interface</classname>
             を実装してそのインスタンスを設定してから
             <code>process()</code> メソッド (単体) あるいは <code>authenticate()</code>
-            メソッド (<code>Zend_Auth</code> アダプタ) をコールしなければなりません。
+            メソッド (<classname>Zend_Auth</classname> アダプタ) をコールしなければなりません。
             このインターフェイスを設定するためのメソッドが
             <code>setAdapter()</code> です。
-            以下の例では、<code>Zend_InfoCard</code>
+            以下の例では、<classname>Zend_InfoCard</classname>
             アダプタを設定してアプリケーション内で使用しています。
         </para>
 
@@ -399,8 +395,7 @@ $infoCard->addCertificatePair(SSL_PRIVATE, SSL_PUB);
 $infoCard->setAdapter($adapter);
 
 $claims = $infoCard->process($_POST['xmlToken']);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>
 <!--

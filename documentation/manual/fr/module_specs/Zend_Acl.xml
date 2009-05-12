@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15030 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -17,17 +16,17 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    une <emphasis role="strong">ressource</emphasis> est un objet dont l'accès
+                    une <emphasis>ressource</emphasis> est un objet dont l'accès
                     est contrôlé,
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    un <emphasis role="strong">rôle</emphasis> est un objet qui peut demander
+                    un <emphasis>rôle</emphasis> est un objet qui peut demander
                     l'accès à une ressource.
                 </para>
             </listitem>
-        </itemizedlist>Dit simplement, <emphasis role="strong"> les rôles demandent l'accès à des
+        </itemizedlist>Dit simplement, <emphasis> les rôles demandent l'accès à des
         ressources</emphasis>. Par exemple, si une personne demande l'accès à une voiture, alors la
         personne est le rôle demandeur et la voiture est la ressource, puisque l'accès à la voiture
         est soumis à un contrôle.
@@ -40,7 +39,6 @@
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-
         <title>A propos des ressources</title>
 
         <para>
@@ -77,11 +75,9 @@
             peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges
             d'une ressource.
         </para>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-
         <title>A propos des rôles</title>
 
         <para>
@@ -111,63 +107,62 @@
         </para>
 
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-
             <title>Héritages multiples entre rôles</title>
 
             <para>
-                Le code ci-dessous définit trois rôles de base - "invite", "membre", et
-                "admin" - desquels d'autres rôles peuvent hériter. Ensuite, un rôle identifié par
-                "unUser" est créé et hérite des trois autres rôles. L'ordre selon lequel ces rôles
-                apparaissent dans le tableau
-                <varname>$parents</varname> est important. Lorsque cela est nécessaire
+                Le code ci-dessous définit trois rôles de base - "<code>guest</code>",
+                "<code>member</code>", et "<code>admin</code>" - desquels d'autres rôles peuvent
+                hériter. Ensuite, un rôle identifié par "<code>someUser</code>" est créé et hérite
+                des trois autres rôles. L'ordre selon lequel ces rôles apparaissent dans le tableau
+                <code>$parents</code> est important. Lorsque cela est nécessaire
                 <classname>Zend_Acl</classname> recherche les règles d'accès définies non seulement
-                pour le rôle demandé (ici "unUser"), mais aussi pour les autres rôles desquels le
-                rôle recherché hérite (ici "invite", "membre", et "admin")&#160;:
+                pour le rôle demandé (ici "<code>someUser</code>"), mais aussi pour les autres rôles
+                desquels le rôle recherché hérite (ici "<code>guest</code>",
+                "<code>member</code>", et "<code>admin</code>")&#160;:
             </para>
 
             <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
 
-$acl->addRole(new Zend_Acl_Role('invite'))
-    ->addRole(new Zend_Acl_Role('membre'))
+$acl->addRole(new Zend_Acl_Role('guest'))
+    ->addRole(new Zend_Acl_Role('member'))
     ->addRole(new Zend_Acl_Role('admin'));
 
-$parents = array('invite', 'membre', 'admin');
-$acl->addRole(new Zend_Acl_Role('unUtilisateur'), $parents);
+$parents = array('guest', 'member', 'admin');
+$acl->addRole(new Zend_Acl_Role('someUser'), $parents);
 
-$acl->add(new Zend_Acl_Resource('uneResource'));
+$acl->add(new Zend_Acl_Resource('someResource'));
 
-$acl->deny('invite', 'uneResource');
-$acl->allow('membre', 'uneResource');
+$acl->deny('invite', 'someResource');
+$acl->allow('membre', 'someResource');
 
-echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
+echo $acl->isAllowed('unUtilisateur', 'someResource') ? 'autorisé' : 'refusé';
 ]]></programlisting>
 
             <para>
                 Puisqu'il n'y a pas de règle spécifiquement définie pour le rôle
                 "unUtilisateur" et "uneRessource", <classname>Zend_Acl</classname> doit rechercher
-                des règles qui pourraient être définies pour des rôles dont "unUtilisateur" hérite.
+                des règles qui pourraient être définies pour des rôles dont "someUser" hérite.
                 Premièrement, le rôle "admin" est contrôlé, et il n'y a pas de règle d'accès
                 définie pour lui. Ensuite, le rôle "membre" est visité, et
                 <classname>Zend_Acl</classname> trouve qu'il y a une règle qui spécifie que
-                "membre" a un accès autorisé à "uneRessource".
+                "member" a un accès autorisé à "someResource".
             </para>
 
             <para>
                 Si <classname>Zend_Acl</classname> continuait à examiner toutes les règles de
-                tous les rôles parents, il trouverait que "invite" est interdit d'accès à
-                "uneRessource". Ceci introduit une ambiguïté puisque maintenant "unUtilisateur" est
-                à la fois autorisé et interdit d'accès à "uneRessource", puisqu'il hérite de règles
+                tous les rôles parents, il trouverait que "someResource" est interdit d'accès à
+                "someResource". Ceci introduit une ambiguïté puisque maintenant "someUser" est
+                à la fois autorisé et interdit d'accès à "someResource", puisqu'il hérite de règles
                 opposées de ses différents parents.
             </para>
 
             <para>
                 <classname>Zend_Acl</classname> résout cette ambiguïté en arrêtant la
                 recherche de règles d'accès dès qu'une première règle est découverte. Dans notre
-                exemple, puisque le rôle "membre" est examiné avant le rôle "invite", le résultat
-                devrait afficher "autorisé".
+                exemple, puisque le rôle "member" est examiné avant le rôle "invite", le résultat
+                devrait afficher "<code>autorisé</code>".
             </para>
-
         </example>
 
         <note>
@@ -180,7 +175,6 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-
         <title>Créer la Liste de Contrôle d'Accès</title>
 
         <para>
@@ -202,11 +196,9 @@ $acl = new Zend_Acl();
                 ressource pour chaque rôle.
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.role_registry">
-
         <title>Registre des rôles</title>
 
         <para>
@@ -224,7 +216,6 @@ $acl = new Zend_Acl();
         </para>
 
         <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
-
             <title>Contrôles d'Accès pour un exemple de CMS</title>
 
             <tgroup cols="3">
@@ -257,9 +248,7 @@ $acl = new Zend_Acl();
                         <entry>N/A</entry>
                     </row>
                 </tbody>
-
             </tgroup>
-
         </table>
 
         <para>
@@ -289,11 +278,9 @@ $acl->addRole(new Zend_Acl_Role('editeur'), 'staff');
 // Administrateur n'hérite pas d'accès
 $acl->addRole(new Zend_Acl_Role('administrateur'));
 ]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-
         <title>Définir les Contrôles d'Accès</title>
 
         <para>
@@ -351,11 +338,9 @@ $acl->allow('administrateur');
             Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont
             utilisées pour indiquer que les règles s'appliquent à toutes les ressources.
         </para>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-
         <title>Interroger les ACL</title>
 
         <para>
@@ -398,7 +383,5 @@ echo $acl->isAllowed('administrateur', null, 'modifier') ?
      "autorisé" : "refusé";
 // autorisé car administrateur est autorisé pour tout
 ]]></programlisting>
-
     </sect2>
-
 </sect1>

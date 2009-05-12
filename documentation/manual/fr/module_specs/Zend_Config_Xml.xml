@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15397 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.xml">
-
     <title>Zend_Config_Xml</title>
 
     <para>
@@ -29,8 +28,7 @@
     </note>
 
     <example id="zend.config.adapters.xml.example.using">
-
-        <title>Utiliser <code>Zend_Config_Xml</code></title>
+        <title>Utiliser Zend_Config_Xml</title>
 
         <para>
             Cet exemple illustre une utilisation de base de <classname>Zend_Config_Xml</classname>
@@ -84,14 +82,10 @@ $config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 echo $config->database->params->host;   // affiche "dev.example.com"
 echo $config->database->params->dbname; // affiche "dbname"
 ]]></programlisting>
-
     </example>
 
     <example id="zend.config.adapters.xml.example.attributes">
-
-        <title>
-            Utilisation des attributs de balise avec <classname>Zend_Config_Xml</classname>
-        </title>
+        <title>Utilisation des attributs de balise avec Zend_Config_Xml</title>
 
         <para>
             <classname>Zend_Config_Xml</classname> supporte aussi 2 autres manières de définir des
@@ -156,7 +150,39 @@ echo $config->database->params->dbname; // affiche "dbname"
     </staging>
 </configdata>
 ]]></programlisting>
-
     </example>
 
+    <note>
+        <title>Chaînes de caractères XML</title>
+        <para>
+            <classname>Zend_Config_Xml</classname> est capable de charger une chaîne de caractères
+            XML directement, par exemple si elle est issue d'une base de données. La chaîne est
+            fournie en tant que premier paramètre du constructeur et doit commencer par les
+            caractères <code>'&lt;?xml'</code>&#160;:
+        </para>
+        <programlisting role="xml"><![CDATA[
+$string = <<<EOT
+<?xml version="1.0"?>
+<config>
+    <production>
+        <db>
+            <adapter value="pdo_mysql"/>
+            <params>
+                <host value="db.example.com"/>
+            </params>
+        </db>
+    </production>
+    <staging extends="production">
+        <db>
+            <params>
+                <host value="dev.example.com"/>
+            </params>
+        </db>
+    </staging>
+</config>
+EOT;
+
+$config = new Zend_Config_Xml($string, 'staging');
+]]></programlisting>
+    </note>
 </sect1>

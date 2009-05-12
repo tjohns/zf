@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15030 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.introduction">
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Acl</code> stellt eine Implementation von leichtgewichtigen und flexiblen
-        Zugriffskontrolllisten (englisch "access control list", ACL) für die Rechteverwaltung
-        bereit. Im Allgemeinen kann eine Anwendung derartige ACL's verwenden, um den Zugriff
-        auf bestimmte, geschützte Objekte durch andere anfordernde Objekte zu kontrollieren.
+        <classname>Zend_Acl</classname> stellt eine Implementation von leichtgewichtigen und
+        flexiblen Zugriffskontrolllisten (englisch "access control list", ACL) für die
+        Rechteverwaltung bereit. Im Allgemeinen kann eine Anwendung derartige ACL's verwenden, um
+        den Zugriff auf bestimmte, geschützte Objekte durch andere anfordernde Objekte zu
+        kontrollieren.
     </para>
 
     <para>
@@ -17,21 +18,22 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    ist eine <emphasis role="strong">Ressource</emphasis> ein Objekt, auf das der
+                    ist eine <emphasis>Ressource</emphasis> ein Objekt, auf das der
                     Zugriff kontrolliert wird.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    ist eine <emphasis role="strong">Rolle</emphasis> ein Objekt, dass den Zugriff
+                    ist eine <emphasis>Rolle</emphasis> ein Objekt, dass den Zugriff
                     auf eine Ressource anfordern kann.
                 </para>
             </listitem>
         </itemizedlist>
 
-        Einfach ausgedrückt, <emphasis role="strong">fordern Rollen den Zugriff auf Ressourcen an</emphasis>.
-        Wenn z.B. ein Parkplatzhalter den Zugriff auf ein Auto anfordert, ist der Parkplatzhalter die anfordernde
-        Rolle und das Auto die Ressource, weil der Zugriff auf das Auto nicht jedem erlaubt ist.
+        Einfach ausgedrückt, <emphasis>fordern Rollen den Zugriff auf Ressourcen
+        an</emphasis>. Wenn z.B. ein Parkplatzhalter den Zugriff auf ein Auto anfordert, ist der
+        Parkplatzhalter die anfordernde Rolle und das Auto die Ressource, weil der Zugriff auf das
+        Auto nicht jedem erlaubt ist.
     </para>
 
     <para>
@@ -42,58 +44,62 @@
     <sect2 id="zend.acl.introduction.resources">
         <title>Ressourcen</title>
         <para>
-            Das Erstellen einer Ressource ist in <code>Zend_Acl</code> sehr einfach.
-            <code>Zend_Acl</code> stellt die Ressource <code>Zend_Acl_Resource_Interface</code>
-            bereit, um das Erstellen von Ressourcen in Anwendungen zu ermöglichen. Eine Klasse
-            muss nur dieses Interface implementieren, das nur aus einer einzelnen Methode,
-            <code>getResourceId()</code>, besteht, damit <code>Zend_Acl</code> das Objekt als
-            Ressource erkennen kann. Zusätzlich ist <code>Zend_Acl_Resource</code> in
-            <code>Zend_Acl</code> als einfache Ressourcen Implementation enthalten, damit
+            Das Erstellen einer Ressource ist in <classname>Zend_Acl</classname> sehr einfach.
+            <classname>Zend_Acl</classname> stellt die Ressource
+            <classname>Zend_Acl_Resource_Interface</classname> bereit, um das Erstellen von
+            Ressourcen in Anwendungen zu ermöglichen. Eine Klasse muss nur dieses Interface
+            implementieren, das nur aus einer einzelnen Methode, <code>getResourceId()</code>,
+            besteht, damit <classname>Zend_Acl</classname> das Objekt als Ressource erkennen kann.
+            Zusätzlich ist <classname>Zend_Acl_Resource</classname> in
+            <classname>Zend_Acl</classname> als einfache Ressourcen Implementation enthalten, damit
             Entwickler sie wenn nötig erweitern können.
         </para>
         <para>
-            <code>Zend_Acl</code> stellt eine Baumstruktur bereit, in die mehrere Ressourcen
-            aufgenommen werden können. Weil Ressourcen in solch einer Baumstruktur abgelegt werden,
-            können sie vom Allgemeinen (von der Baumwurzel) bis zum Speziellen (zu den
-            Baumblättern) organisiert werden. Abfragen auf einer bestimmten Ressource durchsuchen
-            automatisch die Ressourcenhierarchie nach Regeln, die einer übergeordneten Ressource
-            zugeordnet wurden, um die einfache Vererbung von Regeln zu ermöglichen. Wenn zum
-            Beispiel eine Standardregel für jedes Gebäude einer Stadt gelten soll, würde man diese
-            Regel einfach der Stadt zuordnen, anstatt die selbe Regel jedem Gebäude zuzuordnen.
-            Einige Gebäude können dennoch Ausnahmen zu solch einer Regel erfordern, und dies kann
-            in <code>Zend_Acl</code> einfach durch die Zuordnung solcher Ausnahmeregeln zu jedem
-            der Gebäude erreicht werden, die eine Ausnahme erfordern. Eine Ressource kann nur von
-            einer einziger übergeordneten Ressource erben, obwohl diese übergeordnete Ressource
-            seine eigenen übergeordneten Ressourcen haben kann, und so weiter.
+            <classname>Zend_Acl</classname> stellt eine Baumstruktur bereit, in die mehrere
+            Ressourcen aufgenommen werden können. Weil Ressourcen in solch einer Baumstruktur
+            abgelegt werden, können sie vom Allgemeinen (von der Baumwurzel) bis zum Speziellen (zu
+            den Baumblättern) organisiert werden. Abfragen auf einer bestimmten Ressource
+            durchsuchen automatisch die Ressourcenhierarchie nach Regeln, die einer übergeordneten
+            Ressource zugeordnet wurden, um die einfache Vererbung von Regeln zu ermöglichen. Wenn
+            zum Beispiel eine Standardregel für jedes Gebäude einer Stadt gelten soll, würde man
+            diese Regel einfach der Stadt zuordnen, anstatt die selbe Regel jedem Gebäude
+            zuzuordnen. Einige Gebäude können dennoch Ausnahmen zu solch einer Regel erfordern, und
+            dies kann in <classname>Zend_Acl</classname> einfach durch die Zuordnung solcher
+            Ausnahmeregeln zu jedem der Gebäude erreicht werden, die eine Ausnahme erfordern. Eine
+            Ressource kann nur von einer einziger übergeordneten Ressource erben, obwohl diese
+            übergeordnete Ressource seine eigenen übergeordneten Ressourcen haben kann, und so
+            weiter.
         </para>
         <para>
-            <code>Zend_Acl</code> unterstützt außerdem Rechte auf Ressourcen (z.B. "erstellen", "lesen",
-            "aktualisieren", "löschen") damit der Entwickler Regeln zuordnen kann, die alle Rechte
-            oder bestimmte Rechte von einer oder mehreren Ressourcen beeinflussen.
+            <classname>Zend_Acl</classname> unterstützt außerdem Rechte auf Ressourcen (z.B.
+            "erstellen", "lesen", "aktualisieren", "löschen") damit der Entwickler Regeln zuordnen
+            kann, die alle Rechte oder bestimmte Rechte von einer oder mehreren Ressourcen
+            beeinflussen.
         </para>
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
         <title>Rollen</title>
         <para>
-            Wie bei den Ressourcen, ist auch das Erstellen einer Rolle sehr einfach. Alle Rollen müssen
-            <code>Zend_Acl_Role_Interface</code> implementieren. Dieses Interface besteht aus einer
-            einzelnen Methode, <code>getRoleId()</code>, zusätzlich wird <code>Zend_Acl_Role</code> von
-            <code>Zend_Acl</code> als einfache Rollen Implementation angeboten, damit Entwickler sie
-            bei Bedarf erweitern können.
+            Wie bei den Ressourcen, ist auch das Erstellen einer Rolle sehr einfach. Alle Rollen
+            müssen <classname>Zend_Acl_Role_Interface</classname> implementieren. Dieses Interface
+            besteht aus einer einzelnen Methode, <code>getRoleId()</code>, zusätzlich wird
+            <classname>Zend_Acl_Role</classname> von <classname>Zend_Acl</classname> als einfache
+            Rollen Implementation angeboten, damit Entwickler sie bei Bedarf erweitern können.
         </para>
         <para>
-            In <code>Zend_Acl</code> kann eine Rolle von einer oder mehreren Rollen erben. Dies soll
-            die Vererbung von Regeln zwischen den Rollen ermöglichen. Zum Beispiel kann eine
-            Benutzerrolle, wie "Sally" zu einer oder mehreren übergeordneten Rollen gehören, wie
-            "Editor" und "Administrator". Der Entwickler kann zu "Editor" und "Administrator"
-            getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass
-            "Sally" direkt Regeln zugeordnet werden müssen.
+            In <classname>Zend_Acl</classname> kann eine Rolle von einer oder mehreren Rollen
+            erben. Dies soll die Vererbung von Regeln zwischen den Rollen ermöglichen. Zum Beispiel
+            kann eine Benutzerrolle, wie "Sally" zu einer oder mehreren übergeordneten Rollen
+            gehören, wie "Editor" und "Administrator". Der Entwickler kann zu "Editor" und
+            "Administrator" getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden
+            erben, ohne dass "Sally" direkt Regeln zugeordnet werden müssen.
         </para>
         <para>
-            Auch wenn die Möglichkeit der Vererbung von verschiedenen Rollen sehr nützlich ist, führt
-            die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende
-            Beispiel illustriert die mehrdeutigen Bedingungen und wie <code>Zend_Acl</code> sie auflöst.
+            Auch wenn die Möglichkeit der Vererbung von verschiedenen Rollen sehr nützlich ist,
+            führt die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende
+            Beispiel illustriert die mehrdeutigen Bedingungen und wie
+            <classname>Zend_Acl</classname> sie auflöst.
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>Mehrfache Vererbung zwischen Rollen</title>
@@ -102,10 +108,11 @@
                 "<code>member</code>" und "<code>admin</code>" - von denen andere Rollen erben
                 können. Dann wird eine Rolle "<code>someUser</code>" eingerichtet, die von den drei
                 anderen Rollen erbt. Die Reihenfolge, in der diese Rollen im <code>$parents</code>
-                Array erscheinen, ist wichtig. Wenn notwendig, sucht <code>Zend_Acl</code> nach
-                Zugriffsregeln nicht nur für die abgefragte Rolle (hier "<code>someUser</code>"),
-                sondern auch für die Rollen, von denen die abgefragte Rolle erbt (hier
-                "<code>guest</code>", "<code>member</code>" und "<code>admin</code>"):
+                Array erscheinen, ist wichtig. Wenn notwendig, sucht <classname>Zend_Acl</classname>
+                nach Zugriffsregeln nicht nur für die abgefragte Rolle (hier
+                "<code>someUser</code>"), sondern auch für die Rollen, von denen die abgefragte
+                Rolle erbt (hier "<code>guest</code>", "<code>member</code>" und
+                "<code>admin</code>"):
             </para>
             <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
@@ -123,29 +130,28 @@ $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
 echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Da keine Regel speziell für die Rolle "someUser" und "someResource" definiert
-                wurde, muss <code>Zend_Acl</code> nach Regeln suchen, die für Rollen definiert
-                wurden, von denen "someUser" erbt. Zuerst wird die "admin" Rolle besucht, aber
-                dort ist keine Zugriffsregel definiert. Als nächste wird die "member" Rolle besucht
-                und <code>Zend_Acl</code> findet hier eine Regel, die angibt, dass "member" der
-                Zugriff auf "someResource" erlaubt ist.
+                wurde, muss <classname>Zend_Acl</classname> nach Regeln suchen, die für Rollen
+                definiert wurden, von denen "someUser" erbt. Zuerst wird die "admin" Rolle besucht,
+                aber dort ist keine Zugriffsregel definiert. Als nächste wird die "member" Rolle
+                besucht und <classname>Zend_Acl</classname> findet hier eine Regel, die angibt,
+                dass "member" der Zugriff auf "someResource" erlaubt ist.
             </para>
             <para>
-                Wenn <code>Zend_Acl</code> fortfahren würde, die für weitere übergeordnete Rollen
-                definierten Regeln zu untersuchen, würde heraus gefunden werden, dass "guest" der
-                Zugriff auf "<code>someResource</code>" verboten ist. Diese Tatsache führt eine
-                Mehrdeutigkeit ein, weil nun "someUser" der Zugriff auf "someResource" sowohl
-                verboten als auch erlaubt ist, aufgrund der vererbten Regeln von verschiedenen
-                übergeordnete Rollen, die miteinander im Konflikt stehen.
+                Wenn <classname>Zend_Acl</classname> fortfahren würde, die für weitere
+                übergeordnete Rollen definierten Regeln zu untersuchen, würde heraus gefunden
+                werden, dass "guest" der Zugriff auf "<code>someResource</code>" verboten ist.
+                Diese Tatsache führt eine Mehrdeutigkeit ein, weil nun "someUser" der Zugriff auf
+                "someResource" sowohl verboten als auch erlaubt ist, aufgrund der vererbten Regeln
+                von verschiedenen übergeordnete Rollen, die miteinander im Konflikt stehen.
             </para>
             <para>
-                <code>Zend_Acl</code> löst diese Mehrdeutigkeit dadurch auf, dass eine Abfrage
-                beendet wird, wenn die erste Regel gefunden wird, die direkt auf die Abfrage passt.
-                In diesem Fall würde der Beispiel Code "<code>allowed</code>" ausgeben, weil die
-                "member" Rolle vor der "guest" Rolle untersucht wird.
+                <classname>Zend_Acl</classname> löst diese Mehrdeutigkeit dadurch auf, dass eine
+                Abfrage beendet wird, wenn die erste Regel gefunden wird, die direkt auf die
+                Abfrage passt. In diesem Fall würde der Beispiel Code "<code>allowed</code>"
+                ausgeben, weil die "member" Rolle vor der "guest" Rolle untersucht wird.
             </para>
         </example>
         <note>
@@ -170,14 +176,13 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';
 
         <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
                 Solange der Entwickler keine "allow" Regel spezifiziert, verweigert
-                <code>Zend_Acl</code> den Zugriff auf jegliche Rechte für jede Ressource durch jede
-                Rolle.
+                <classname>Zend_Acl</classname> den Zugriff auf jegliche Rechte für jede Ressource
+                durch jede Rolle.
             </para>
         </note>
     </sect2>
@@ -236,9 +241,10 @@ $acl = new Zend_Acl();
         </table>
 
         <para>
-            Für dieses Beispiel wird <code>Zend_Acl_Role</code> verwendet, aber jedes Objekt wird
-            akzeptiert, das <code>Zend_Acl_Role_Interface</code> implementiert. Diese Gruppen
-            können zur Rollenregistrierung wie folgt hinzugefügt werden:
+            Für dieses Beispiel wird <classname>Zend_Acl_Role</classname> verwendet, aber jedes
+            Objekt wird akzeptiert, das <classname>Zend_Acl_Role_Interface</classname>
+            implementiert. Diese Gruppen können zur Rollenregistrierung wie folgt hinzugefügt
+            werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -262,8 +268,7 @@ $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator erbt keine Zugriffsrechte
 $acl->addRole(new Zend_Acl_Role('administrator'));
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -275,16 +280,16 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
             definieren, wie auf Ressourcen durch Rollen zugegriffen werden darf. Es ist zu beachten,
             dass wir keine bestimmten Ressourcen in diesem Beispiel definiert haben, das
             vereinfacht wurde, um zu illustrieren, dass die Regeln für alle Ressourcen gelten.
-            <code>Zend_Acl</code> stellt eine Implementation bereit, bei der Regeln nur vom
-            Allgemeinen zum Speziellen definiert werden müssen, um die Anzahl der benötigten Regeln
-            zu minimieren, weil Ressourcen und Rollen die Regeln erben, die in ihren Vorfahren
-            definiert worden sind.
+            <classname>Zend_Acl</classname> stellt eine Implementation bereit, bei der Regeln nur
+            vom Allgemeinen zum Speziellen definiert werden müssen, um die Anzahl der benötigten
+            Regeln zu minimieren, weil Ressourcen und Rollen die Regeln erben, die in ihren
+            Vorfahren definiert worden sind.
         </para>
 
         <note>
             <para>
-                Generell, wendet <code>Zend_Acl</code> eine angegebene Regel dann und nur dann an,
-                wenn eine speziellere Regel nicht passt.
+                Generell, wendet <classname>Zend_Acl</classname> eine angegebene Regel dann und nur
+                dann an, wenn eine speziellere Regel nicht passt.
             </para>
         </note>
 
@@ -319,8 +324,7 @@ $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator erbt gar nichts, aber erhält alle Rechte
 $acl->allow('administrator');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Die <code>null</code> Werte im obigen <code>allow()</code> Aufrufen werden verwendet,
@@ -370,8 +374,7 @@ echo $acl->isAllowed('administrator') ?
 echo $acl->isAllowed('administrator', null, 'update') ?
      "allowed" : "denied";
 // erlaubt, weil Administrator alle Rechte haben
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 </sect1>

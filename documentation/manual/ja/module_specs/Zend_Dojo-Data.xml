@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data エンベロープ</title>
 
@@ -31,11 +31,10 @@
         ...
     ]
 }
-]]>
-</programlisting>
+]]></programlisting>
 
     <para>
-        <code>Zend_Dojo_Data</code> は、
+        <classname>Zend_Dojo_Data</classname> は、
         このような構造をプログラムで作成したりそれを操作したり、
         配列や JSON にシリアライズしたりといった機能のシンプルなインターフェイスを提供します。
     </para>
@@ -54,8 +53,7 @@
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data('id', $items);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.dojo.data.usage.mutators">
@@ -65,8 +63,7 @@ $data = new Zend_Dojo_Data('id', $items);
 $data = new Zend_Dojo_Data();
 $data->setIdentifier('id')
      ->addItems($items);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -76,15 +73,14 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title><code>Zend_Dojo_Data</code> へのデータの追加</title>
+            <title>Zend_Dojo_Data へのデータの追加</title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
 $data->addItem($someItem);
 
 $data->addItems($someMoreItems);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -93,7 +89,7 @@ $data->addItems($someMoreItems);
             <para>
                 すべての dojo.data データストアは、identifier
                 カラムがメタデータに存在することを必須としています。
-                <code>Zend_Dojo_Data</code> でもそれは同じです。
+                <classname>Zend_Dojo_Data</classname> でもそれは同じです。
                 identifier のないアイテムを追加しようとすると、
                 例外が発生します。
             </para>
@@ -142,27 +138,25 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title><code>Zend_Dojo_Data</code> での label フィールドの指定</title>
+            <title>Zend_Dojo_Data での label フィールドの指定</title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            最後に、<code>Zend_Dojo_Data</code> のアイテムを
+            最後に、<classname>Zend_Dojo_Data</classname> のアイテムを
             dojo.data JSON 配列から読み込むには <code>fromJson()</code>
             メソッドを使用します。
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>JSON からの <code>Zend_Dojo_Data</code> の作成</title>
+            <title>JSON からの Zend_Dojo_Data の作成</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -184,7 +178,7 @@ $data->fromJson($json);
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> では、
+            <classname>Zend_Dojo_Data</classname> では、
             このようなプロパティをオブジェクトのメタデータとして設定することができます。
             以下の使用例をご覧ください。
         </para>
@@ -218,12 +212,12 @@ $data->clearMetadata();
 
         <para>
             シリアライズ可能なデータコンテナとしての働きだけではなく、
-            <code>Zend_Dojo_Data</code> にはデータを様々な方法で操作したり
+            <classname>Zend_Dojo_Data</classname> にはデータを様々な方法で操作したり
             読み込んだりする機能もあります。
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> は、インターフェイス
+            <classname>Zend_Dojo_Data</classname> は、インターフェイス
             <code>ArrayAccess</code>、<code>Iterator</code> および
             <code>Countable</code> を実装しています。
             そのため、データコレクションをまるで配列であるかのように使用することができます。
@@ -243,8 +237,7 @@ $item = $data->getItem('foo');
 
 // あるいは配列表記を使用します
 $item = $data['foo'];
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             identifier がわかれば、それを使用してアイテムを取得したり、
@@ -261,8 +254,7 @@ unset($data['foo']);
 // アイテムの確認
 if (isset($data[foo])) {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             すべてのアイテムをループ処理することもできます。
@@ -273,8 +265,7 @@ if (isset($data[foo])) {
 foreach ($data as $item) {
     echo $item['title'] . ': ' . $item['description'] . "\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             count で、アイテムの総数を調べることも可能です。
@@ -282,8 +273,7 @@ foreach ($data as $item) {
 
         <programlisting role="php"><![CDATA[
 echo count($data), " items found!";
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             また、このクラスは <code>__toString()</code> を実装しているので、
@@ -294,8 +284,7 @@ echo count($data), " items found!";
 echo $data; // JSON 文字列として echo
 
 $json = (string) $data; // 文字列へのキャスト == JSON へのキャスト
-]]>
-        </programlisting>
+]]></programlisting>
 
         <sect3 id="zend.dojo.data.advanced.methods">
             <title>使用可能なメソッド</title>

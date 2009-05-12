@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15029 -->
+<!-- EN-Revision: 15101 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.acl.refining">
 
@@ -13,8 +13,9 @@
             Die grundlegende ACL, wie sie im <link linkend="zend.acl.introduction">vorherigen
             Kapitel</link> definiert ist, zeigt wie verschiedene Rechte für die gesamte ACL (alle
             Ressourcen) vergeben werden können. In der Praxis tendieren Zugangsbeschränkungen jedoch
-            eher dahin, Ausnahmen und verschiedene Stufen von Komplexität zu haben. <code>Zend_Acl</code>
-            erlaubt einem, diese Verfeinerungen auf einfache und flexible Weise zu bewerkstelligen.
+            eher dahin, Ausnahmen und verschiedene Stufen von Komplexität zu haben.
+            <classname>Zend_Acl</classname> erlaubt einem, diese Verfeinerungen auf einfache und
+            flexible Weise zu bewerkstelligen.
         </para>
 
         <para>
@@ -26,10 +27,10 @@
         </para>
 
         <para>
-            Zusätzlich wurde angefordert, dass es der 'staff' Gruppe erlaubt sein soll, die Nachrichten
-            ansehen, aber nicht die neuesten Nachrichen überarbeiten zu können. Zuguterletzt soll
-            es für jeden (Administratoren eingeschlossen) unmöglich sein, irgend eine
-            Bekanntmachung zu archivieren, da diese sowieso nur eine Lebensdauer von 1 bis 2
+            Zusätzlich wurde angefordert, dass es der 'staff' Gruppe erlaubt sein soll, die
+            Nachrichten ansehen, aber nicht die neuesten Nachrichen überarbeiten zu können.
+            Letztendlich soll es für jeden (Administratoren eingeschlossen) unmöglich sein, irgend
+            eine Bekanntmachung zu archivieren, da diese sowieso nur eine Lebensdauer von 1 bis 2
             Tagen haben.
         </para>
 
@@ -43,8 +44,7 @@
         <programlisting role="php"><![CDATA[
 // Die neue Marketing Gruppe erbt Genehmigungen der Mitarbeiter
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Als nächstes ist zu beachten, dass sich die obige Zugangsbeschränkung auf bestimmte
@@ -66,8 +66,7 @@ $acl->add(new Zend_Acl_Resource('latest'), 'news');
 
 // Bekanntmachungen
 $acl->add(new Zend_Acl_Resource('announcement'), 'news');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Nun ist es nur eine Frage der Definition für diese spezifischeren Regeln auf die
@@ -88,8 +87,7 @@ $acl->deny('staff', 'latest', 'revise');
 // Jedem (inklusive der Administratoren) wird die Erlaubnis verweigert,
 // Bekanntmachungsnachricht zu archivieren
 $acl->deny(null, 'announcement', 'archive');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Wir können nun die ACL abfragen hinsichtlich der letzten Änderungen
@@ -127,8 +125,7 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
      "allowed" : "denied";
 // verweigert
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -165,8 +162,7 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
      "allowed" : "denied";
 // verweigert
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Rechte können schrittweise wie oben angezeigt verändert werden, aber ein
@@ -188,8 +184,7 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
      "allowed" : "denied";
 // erlaubt
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

@@ -36,7 +36,7 @@
             </para>
             <para>
                 <code>describe</code> will return an array containg information about which regions
-                are available.  Each array will contain regionName and regionUrl.
+                are available. Each array will contain regionName and regionUrl.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -46,8 +46,7 @@ $regions = $ec2_region->describe();
 foreach($regions as $region) {
     print $region['regionName'] . ' -- ' . $region['regionUrl'] . '<br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -73,7 +72,7 @@ foreach($regions as $region) {
             </para>
             <para>
                 <code>describe</code> will return an array containg information about which zones
-                are available.  Each array will contain zoneName and zoneState.
+                are available. Each array will contain zoneName and zoneState.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -84,8 +83,7 @@ $zones = $ec2_zones->describe();
 foreach($zones as $zone) {
     print $zone['zoneName'] . ' -- ' . $zone['zoneState'] . '<br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

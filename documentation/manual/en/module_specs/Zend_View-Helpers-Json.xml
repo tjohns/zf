@@ -38,7 +38,7 @@ Content-Type: application/json
             Each method in the JSON helper accepts a second, optional argument.
             This second argument can be a boolean flag to enable or disable
             layouts, or an array of options that will be passed to
-            <code>Zend_Json::encode()</code> and used internally to encode data.
+            <classname>Zend_Json::encode()</classname> and used internally to encode data.
         </para>
 
         <para>
@@ -56,18 +56,17 @@ echo $this->json($this->data, true);
 echo $this->json($this->data, array('keepLayouts' => true));
 ]]></programlisting>
 
-
         <para>
-            <code>Zend_Json::encode</code> allows the encoding of native JSON
-            expressions using <code>Zend_Json_Expr</code> objects. This option
-            is disabled by default.  To enable this option, pass a boolean
+            <classname>Zend_Json::encode</classname> allows the encoding of native JSON
+            expressions using <classname>Zend_Json_Expr</classname> objects. This option
+            is disabled by default. To enable this option, pass a boolean
             <code>true</code> to the <code>enableJsonExprFinder</code> key of
             the options array:
         </para>
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->json($this->data, array(
-    'enableJsonExprFinder' => true, 
+    'enableJsonExprFinder' => true,
     'keepLayouts'          => true,
 )) ?>
 ]]></programlisting>

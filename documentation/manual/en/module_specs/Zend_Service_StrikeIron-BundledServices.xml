@@ -4,14 +4,14 @@
     <title>Zend_Service_StrikeIron: Bundled Services</title>
 
     <para>
-      <code>Zend_Service_StrikeIron</code> comes with wrapper classes for three popular StrikeIron services.
+      <classname>Zend_Service_StrikeIron</classname> comes with wrapper classes for three popular StrikeIron services.
     </para>
 
     <sect2 id="zend.service.strikeiron.bundled-services.zip-code-information">
       <title>ZIP Code Information</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_ZipCodeInfo</code> provides a client for StrikeIron's
+        <classname>Zend_Service_StrikeIron_ZipCodeInfo</classname> provides a client for StrikeIron's
         Zip Code Information Service. For more information on this service, visit these
         StrikeIron resources:
 
@@ -67,8 +67,7 @@ if ($zips->count == 0) {
 // Detailed status information
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
 $status = $response->serviceStatus;
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -76,7 +75,7 @@ $status = $response->serviceStatus;
       <title>U.S. Address Verification</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_USAddressVerification</code> provides a client for
+        <classname>Zend_Service_StrikeIron_USAddressVerification</classname> provides a client for
         StrikeIron's U.S. Address Verification Service. For more information on this
         service, visit these StrikeIron resources:
 
@@ -129,8 +128,7 @@ if ($result->addressErrorNumber != 0) {
     // valid address?
     $valid = ($result->valid == 'VALID');
 }
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -138,7 +136,7 @@ if ($result->addressErrorNumber != 0) {
       <title>Sales &amp; Use Tax Basic</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code> provides a client for
+        <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname> provides a client for
         StrikeIron's Sales &amp; Use Tax Basic service. For more information on this
         service, visit these StrikeIron resources:
 
@@ -176,8 +174,7 @@ echo $rateInfo->GST;              // or just the GST (Goods & Services Tax)
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // show all properties
 echo $rateInfo->state_sales_tax;  // or just the state sales tax
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 </sect1>

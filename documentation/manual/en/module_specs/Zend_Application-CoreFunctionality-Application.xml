@@ -4,7 +4,7 @@
     <title>Zend_Application</title>
 
     <para>
-        <code>Zend_Application</code> provides the base functionality of the
+        <classname>Zend_Application</classname> provides the base functionality of the
         component, and the entry point to your Zend Framework application. It's
         purpose is two-fold: to setup the PHP environment (including
         autoloading), and to execute your application bootstrap.
@@ -12,7 +12,7 @@
 
     <para>
         Typically, you will pass all configuration to the
-        <code>Zend_Application</code> constructor, but you can also configure
+        <classname>Zend_Application</classname> constructor, but you can also configure
         the object entirely using its own methods. This reference is intended to
         illustrate both use cases.
     </para>
@@ -20,45 +20,47 @@
     <table id="zend.application.core-functionality.application.api.options">
         <title>Zend_Application options</title>
         <tgroup cols="2">
-            <row>
-                <entry>Option</entry>
-                <entry>Description</entry>
-            </row>
+            <thead>
+                <row>
+                    <entry>Option</entry>
+                    <entry>Description</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry><code>phpSettings</code></entry>
+                    <entry><para>
+                        Array of <filename>php.ini</filename> settings to use. Keys should be the
+                        <filename>php.ini</filename> keys.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>includePaths</code></entry>
+                    <entry><para>
+                        Additional paths to prepend to the
+                        <code>include_path</code>. Should be an array of paths.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>autoloaderNamespaces</code></entry>
+                    <entry><para>
+                        Array of additional namespaces to register with the
+                        <classname>Zend_Loader_Autoloader</classname> instance.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>bootstrap</code></entry>
+                    <entry><para>
+                        Either the string path to the bootstrap class, or an array
+                        with elements for the 'path' and 'class' for the application
+                        bootstrap.
+                    </para></entry>
+                </row>
+            </tbody>
         </tgroup>
-        <tbody>
-            <row>
-                <entry><code>phpSettings</code></entry>
-                <entry><para>
-                    Array of php.ini settings to use. Keys should be the php.ini
-                    keys.
-                </para></entry>
-            </row>
-
-            <row>
-                <entry><code>includePaths</code></entry>
-                <entry><para>
-                    Additional paths to prepend to the
-                    <code>include_path</code>. Should be an array of paths.
-                </para></entry>
-            </row>
-
-            <row>
-                <entry><code>autoloaderNamespaces</code></entry>
-                <entry><para>
-                    Array of additional namespaces to register with the
-                    <code>Zend_Loader_Autoloader</code> instance.
-                </para></entry>
-            </row>
-
-            <row>
-                <entry><code>bootstrap</code></entry>
-                <entry><para>
-                    Either the string path to the bootstrap class, or an array
-                    with elements for the 'path' and 'class' for the application
-                    bootstrap.
-                </para></entry>
-            </row>
-        </tbody>
     </table>
 
     <note>
@@ -102,7 +104,7 @@
                             <itemizedlist>
                                 <listitem><para>
                                     <emphasis>String</emphasis>: path to
-                                    a <code>Zend_Config</code> file to load
+                                    a <classname>Zend_Config</classname> file to load
                                     as configuration for your application.
                                     <code>$environment</code> will be used
                                     to determine what section of the
@@ -125,7 +127,7 @@
                     <entry><para>
                         Constructor. Arguments are as described, and will be
                         used to set initial object state. An instance of
-                        <code>Zend_Loader_Autoloader</code> is registered
+                        <classname>Zend_Loader_Autoloader</classname> is registered
                         during instantiation. Options passed to the
                         constructor are passed to <code>setOptions()</code>.
                     </para></entry>
@@ -143,17 +145,17 @@
 
                 <row>
                     <entry><code>getAutoloader()</code></entry>
-                    <entry><code>Zend_Loader_Autoloader</code></entry>
+                    <entry><classname>Zend_Loader_Autoloader</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Retrieve the <code>Zend_Loader_Autoloader</code>
+                        Retrieve the <classname>Zend_Loader_Autoloader</classname>
                         instance registered during instantiation.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -177,7 +179,7 @@
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve all options used to initialize the object;
-                        could be used to cache <code>Zend_Config</code>
+                        could be used to cache <classname>Zend_Config</classname>
                         options to a serialized format between requests.
                     </para></entry>
                 </row>
@@ -215,7 +217,7 @@
 
                 <row>
                     <entry><code>setPhpSettings(array $settings, $prefix = '')</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$settings</code>: <emphasis>required</emphasis>.
@@ -233,7 +235,7 @@
                     <entry><para>
                         Set run-time php.ini settings. Dot-separated
                         settings may be nested hierarchically (which may
-                        occur with INI <code>Zend_Config</code> files) via
+                        occur with INI <classname>Zend_Config</classname> files) via
                         an array-of-arrays, and will still resolve
                         correctly.
                     </para></entry>
@@ -241,29 +243,29 @@
 
                 <row>
                     <entry><code>setAutoloaderNamespaces(array $namespaces)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$namespaces</code>: <emphasis>required</emphasis>.
                             Array of strings representing the namespaces to
-                            register with the <code>Zend_Loader_Autoloader</code>
+                            register with the <classname>Zend_Loader_Autoloader</classname>
                             instance.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Register namespaces with the <code>Zend_Loader_Autoloader</code>
+                        Register namespaces with the <classname>Zend_Loader_Autoloader</classname>
                         instance.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setBootstrap($path, $class = null)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$path</code>: <emphasis>required</emphasis>.
-                            May be either a <code>Zend_Application_Bootstrap_Bootstrapper</code>
-                            instance, a string path to the bootstrap class,
+                            May be either a <classname>Zend_Application_Bootstrap_Bootstrapper
+                            </classname> instance, a string path to the bootstrap class,
                             an associative array of classname =&gt;
                             filename, or an associative array with the keys
                             'class' and 'path'.

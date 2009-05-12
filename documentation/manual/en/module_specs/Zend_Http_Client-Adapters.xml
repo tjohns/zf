@@ -21,22 +21,22 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Socket</code> (default)
+                        <classname>Zend_Http_Client_Adapter_Socket</classname> (default)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Proxy</code>
+                        <classname>Zend_Http_Client_Adapter_Proxy</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Test</code>
+                        <classname>Zend_Http_Client_Adapter_Test</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Curl</code>
+                        <classname>Zend_Http_Client_Adapter_Curl</classname>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -63,7 +63,7 @@
         </para>
         <para>
             The Socket adapter allows several extra configuration options that
-            can be set using <code>Zend_Http_Client->setConfig()</code> or
+            can be set using <classname>Zend_Http_Client->setConfig()</classname> or
             passed to the client constructor.
             <table id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket configuration parameters</title>
@@ -159,8 +159,7 @@ $client = new Zend_Http_Client('https://www.example.com', $config);
 
 // The following request will be sent over a TLS secure connection.
 $response = $client->request();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             The result of the example above will be similar to opening a TCP
@@ -264,8 +263,7 @@ $config = array(
 $client = new Zend_Http_Client('http://www.example.com', $config);
 
 // Continue working...
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             As mentioned, if proxy_host is not set or is set to a blank string,
@@ -323,8 +321,7 @@ $adapter->setResponse(
 
 $response = $client->request('GET');
 // .. continue parsing $response..
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             The above example shows how you can preset your HTTP client to
@@ -373,18 +370,17 @@ $adapter->addResponse(
 
 // inject the http client object ($client) into your object
 // being tested and then test your object's behavior below
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             The setResponse() method clears any responses in the
             Zend_Http_Client_Adapter_Test's buffer and sets the
-            first response that will be returned.  The addResponse()
+            first response that will be returned. The addResponse()
             method will add successive responses.
         </para>
         <para>
             The responses will be replayed in the order that they
-            were added.  If more requests are made than the number
+            were added. If more requests are made than the number
             of responses stored, the responses will cycle again
             in order.
         </para>
@@ -421,8 +417,7 @@ $config = array(
     'curloptions' => array(CURLOPT_FOLLOWLOCATION => true),
 );
 $client = new Zend_Http_Client($uri, $config);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -454,8 +449,7 @@ $adapter->setConfig(array(
     )
 ));
 $client->request("PUT");
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -547,8 +541,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

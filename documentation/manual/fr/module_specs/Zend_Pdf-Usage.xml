@@ -1,13 +1,23 @@
-<!-- EN-Revision: 13910 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 15341 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.pdf.usage">
     <title>Exemple d'utilisation du module Zend_Pdf</title>
 
-    <para>Cette section propose un exemple d'utilisation du module <code>Zend_Pdf</code>.</para>
+    <para>
+        Cette section propose un exemple d'utilisation du module
+        <classname>Zend_Pdf</classname>.
+    </para>
 
-    <para>Le code source de l'exemple est disponible dans le fichier
-    <filename>demos/Zend/Pdf/demo.php</filename>.</para>
+    <para>
+        Le code source de l'exemple est disponible dans le fichier
+        <filename>demos/Zend/Pdf/demo.php</filename>.
+    </para>
 
-    <para>Il y a aussi un fichier <filename>test.pdf</filename>, qui peut être utilisé pour réaliser des tests.</para>
+    <para>
+        Il y a aussi un fichier <filename>test.pdf</filename>, qui peut être utilisé pour
+        réaliser des tests.
+    </para>
 
     <example id="zend.pdf.usage.example-1">
         <title>Exemple d'utilisation du module Zend_Pdf</title>
@@ -196,7 +206,6 @@ for ($count = 0; $count < 8; $count++) {
 $page2->drawPolygon($x, $y,
                     Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
                     Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
-
 
 // Dessine une ligne
 $page2->setLineWidth(0.5)

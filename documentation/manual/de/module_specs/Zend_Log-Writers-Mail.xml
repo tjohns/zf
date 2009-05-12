@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.log.writers.mail">
     <title>In Emails schreiben</title>
 
     <para>
-        <code>Zend_Log_Writer_Mail</code> schreibt Logeinträge in eine Email Nachricht indem es
-        <code>Zend_Mail</code> verwendet. Der Konstruktor von <code>Zend_Log_Writer_Mail</code>
-        nimmt ein <code>Zend_Mail</code> Objekt und ein optionales <code>Zend_Layout</code>
-        Objekt entgegen.
+        <classname>Zend_Log_Writer_Mail</classname> schreibt Logeinträge in eine Email Nachricht
+        indem es <classname>Zend_Mail</classname> verwendet. Der Konstruktor von
+        <classname>Zend_Log_Writer_Mail</classname> nimmt ein <classname>Zend_Mail</classname>
+        Objekt und ein optionales <classname>Zend_Layout</classname> Objekt entgegen.
     </para>
 
     <para>
-        Der primäre Verwendungszweck für <code>Zend_Log_Writer_Mail</code> ist es Entwickler,
-        System Administratoren, oder jede benötigte Partei über Fehler zu benachrichtigen die
-        mit PHP-basierenden Skripten auftreten können. <code>Zend_Log_Writer_Mail</code> wurde
-        aus der Idee geboren das, wenn irgendetwas fehlschlägt, ein Mensch sofort darüber
-        alarmiert werden muß um korrigierende Maßnahmen durchzuführen.
+        Der primäre Verwendungszweck für <classname>Zend_Log_Writer_Mail</classname> ist es
+        Entwickler, System Administratoren, oder jede benötigte Partei über Fehler zu
+        benachrichtigen die mit PHP-basierenden Skripten auftreten können.
+        <classname>Zend_Log_Writer_Mail</classname> wurde aus der Idee geboren das, wenn irgendetwas
+        fehlschlägt, ein Mensch sofort darüber alarmiert werden muß um korrigierende Maßnahmen
+        durchzuführen.
     </para>
 
     <para>
@@ -49,7 +50,7 @@ $log->error('Kann nicht zur datenbank verbinden');
 ]]></programlisting>
 
     <para>
-        <code>Zend_Log_Writer_Mail</code> stellt den Email Body standardmäßig
+        <classname>Zend_Log_Writer_Mail</classname> stellt den Email Body standardmäßig
         als reinen Text dar.
     </para>
 
@@ -61,24 +62,24 @@ $log->error('Kann nicht zur datenbank verbinden');
     </para>
 
     <sect3 id="zend.log.writers.mail.layoutusage">
-        <title><code>Zend_Layout</code> Verwendung</title>
+        <title>Zend_Layout Verwendung</title>
 
         <para>
-            Eine <code>Zend_Layout</code> Instanz kann verwendet werden um den HTML
-            Anteil einer Multipart Email zu erstellen. Wenn eine <code>Zend_Layout</code>
-            Instanz in Verwendung ist, nimmt <code>Zend_Log_Writer_Mail</code> an das sie
+            Eine <classname>Zend_Layout</classname> Instanz kann verwendet werden um den HTML
+            Anteil einer Multipart Email zu erstellen. Wenn eine <classname>Zend_Layout</classname>
+            Instanz in Verwendung ist, nimmt <classname>Zend_Log_Writer_Mail</classname> an das sie
             verwendet wird um HTML darzustellen und setzt den Body HTML für die
-            Nachricht als den <code>Zend_Layout</code>-darstellenden Wert.
+            Nachricht als den <classname>Zend_Layout</classname>-darstellenden Wert.
         </para>
 
         <para>
-            Wenn <code>Zend_Log_Writer_Mail</code> mit einer <code>Zend_Layout</code>
-            Instanz verwendet wird, hat man die Option eine eigene Formatierung zu
-            setzen indem die <code>setLayoutFormatter()</code> Methode verwendet wird.
-            Wenn kein <code>Zend_Layout</code>-spezifischer formatierungs-Eintrag
-            spezifiziert wurde, wird der aktuell in Verwendung befindliche Formatierer
-            verwendet. Die vollständige Verwendung von <code>Zend_Layout</code> mit
-            einem eigenen Formatierer wird anbei gezeigt.
+            Wenn <classname>Zend_Log_Writer_Mail</classname> mit einer
+            <classname>Zend_Layout</classname> Instanz verwendet wird, hat man die Option eine
+            eigene Formatierung zu setzen indem die <code>setLayoutFormatter()</code> Methode
+            verwendet wird. Wenn kein <classname>Zend_Layout</classname>-spezifischer
+            formatierungs-Eintrag spezifiziert wurde, wird der aktuell in Verwendung befindliche
+            Formatierer verwendet. Die vollständige Verwendung von
+            <classname>Zend_Layout</classname> mit einem eigenen Formatierer wird anbei gezeigt.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -121,13 +122,13 @@ $log->error('unable to connect to database');
 
         <para>
             Die <code>setSubjectPrependText()</code> Methode kann statt
-            <code>Zend_Mail::setSubject()</code> verwendet werden um die Subjektzeile
+            <classname>Zend_Mail::setSubject()</classname> verwendet werden um die Subjektzeile
             dynamisch zu schreiben bevor die Email gesendet wird. Wenn, zum Beispiel,
-            der dem Subjekt vorangestellte Text "Fehler des Skriptes" heißt, würde das
-            Subjekt des Emails das von <code>Zend_Log_Writer_Mail</code> mit zwei Warnungen
+            der dem Subjekt vorangestellte Text "Fehler des Skriptes" heißt, würde das Subjekt
+            des Emails das von <classname>Zend_Log_Writer_Mail</classname> mit zwei Warnungen
             und fünf Fehlern erstellt wird "Fehler des Skriptes (warn = 2; error = 5)" sein.
-            Wenn kein Subjekttext mit <code>Zend_Log_Writer_Mail</code> vorangestellt wird,
-            wird die <code>Zend_Mail</code> Subjektzeile verwendet, wenn vorhanden.
+            Wenn kein Subjekttext mit <classname>Zend_Log_Writer_Mail</classname> vorangestellt
+            wird, wird die <classname>Zend_Mail</classname> Subjektzeile verwendet, wenn vorhanden.
         </para>
     </sect3>
 
@@ -142,15 +143,15 @@ $log->error('unable to connect to database');
         </para>
 
         <para>
-            Bis dato bietet <code>Zend_Log_Writer_Mail</code> keinen Mechanismus für die
+            Bis dato bietet <classname>Zend_Log_Writer_Mail</classname> keinen Mechanismus für die
             Limitierung oder andernfalls die Dosierung der Nachrichten. Solche Funktionalitäten,
             können vom Konsumenten, wenn benötigt, selbst implementiert werden.
         </para>
 
         <para>
-            Nochmals, <code>Zend_Log_Writer_Mail</code>'s primäres Ziel ist es proaktiv Menschen
-            über Fehlerzustände zu benachrichtigen. Wenn diese Fehler zeitgerecht behandelt werden,
-            und Sicherheitsmaßnahmen platziert werden um diese Vorbehalte in Zukunft zu
+            Nochmals, <classname>Zend_Log_Writer_Mail</classname>'s primäres Ziel ist es proaktiv
+            Menschen über Fehlerzustände zu benachrichtigen. Wenn diese Fehler zeitgerecht behandelt
+            werden, und Sicherheitsmaßnahmen platziert werden um diese Vorbehalte in Zukunft zu
             verhindern, dann kann die Email-basierende Benachtichtigung von Fehlern ein
             nützliches Tool sein.
         </para>

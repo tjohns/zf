@@ -5,7 +5,7 @@
 
     <para>
         All pages (also custom classes), can be created using the page
-        factory, <code>Zend_Navigation_Page::factory()</code>. The factory
+        factory, <classname>Zend_Navigation_Page::factory()</classname>. The factory
         can take an array with options, or a
         <classname>Zend_Config</classname> object. Each key in the
         array/config corresponds to a page option, as seen in the
@@ -50,8 +50,7 @@ $page = Zend_Navigation_Page::factory(array(
     'type'   => 'mvc',
     'label'  => 'My MVC page'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.factory.example.uri">
@@ -78,8 +77,7 @@ $page = Zend_Navigation_Page::factory(array(
     'type'   => 'uri',
     'label'  => 'My URI page'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.factory.example.custom">
@@ -106,7 +104,6 @@ $page = Zend_Navigation_Page::factory(array(
     'label'   => 'My custom page',
     'foo_bar' => 'foo bar'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

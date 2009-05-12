@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.mail.encoding">
     <title>エンコーディング</title>
     <para>
@@ -15,7 +15,7 @@
         現在はバイナリデータにのみ適用可能です。
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> は、行頭がドット 1 文字あるいはドット
+        <classname>Zend_Mail_Transport_Smtp</classname> は、行頭がドット 1 文字あるいはドット
         2 文字の場合にその行をエンコードします。これにより、
         SMTP プロトコルに違反するメールを作成しないようにします。
     </para>

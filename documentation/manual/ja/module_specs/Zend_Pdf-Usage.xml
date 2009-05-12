@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.pdf.usage">
     <title>Zend_Pdf モジュールの使用例</title>
     <para>
@@ -204,7 +204,6 @@ $page2->setLineWidth(0.5)
 
 $page2->restoreGS();
 
-
 // 座標系を移動し、傾け、倍率を変えます
 $page2->saveGS();
 $page2->translate(60, 150)     // 座標系を移動します
@@ -262,8 +261,7 @@ if (isset($argv[2])) {
 } else {
     $pdf->save($argv[1], true /* 更新 */);
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

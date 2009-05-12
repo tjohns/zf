@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.view.controllers">
     <title>コントローラスクリプト</title>
 
     <para>
-        <code>Zend_View</code> のインスタンスを作成して設定を行うのがコントローラの役目です。
+        <classname>Zend_View</classname> のインスタンスを作成して設定を行うのがコントローラの役目です。
         その後でビューに変数を代入し、
         適切なスクリプトを使用して出力をレンダリングするように指示します。
     </para>
@@ -25,8 +25,7 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             しかし、代入する値がすでに配列やオブジェクトの形式になっている場合は、
@@ -58,8 +57,7 @@ $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
 $view->assign((array) $obj);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             別の方法として、assign メソッドを使用してひとつひとつ代入することもできます。
@@ -71,8 +69,7 @@ $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
 $view->assign('c', "Sea");
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -81,7 +78,7 @@ $view->assign('c', "Sea");
         <title>ビュースクリプトのレンダリング</title>
 
         <para>
-            必要な変数にすべて値を代入したら、コントローラは <code>Zend_View</code> に、
+            必要な変数にすべて値を代入したら、コントローラは <classname>Zend_View</classname> に、
             適切なビュースクリプトをレンダリングするよう指示しなければなりません。
             そのためには render() メソッドをコールします。
             このメソッドは、ビューを表示するのではなく、
@@ -96,8 +93,7 @@ $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
 echo $view->render('someView.php');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -106,25 +102,24 @@ echo $view->render('someView.php');
         <title>ビュースクリプトのパス</title>
 
         <para>
-            デフォルトでは、<code>Zend_View</code> は、
+            デフォルトでは、<classname>Zend_View</classname> は、
             ビュースクリプトが呼び出し元スクリプトからの相対パス上にあることを想定しています。
             例えばコントローラスクリプトが "/path/to/app/controllers"
             にあった場合に、そこで $view->render('someView.php')
-            をコールすると、<code>Zend_View</code> は
+            をコールすると、<classname>Zend_View</classname> は
             "/path/to/app/controllers/someView.php" を探します。
         </para>
 
         <para>
             たいていの場合、ビュースクリプトはどこかほかの場所にあることは明らかでしょう。
-            <code>Zend_View</code> にビュースクリプトの場所を教えるには、
+            <classname>Zend_View</classname> にビュースクリプトの場所を教えるには、
             setScriptPath() メソッドを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->setScriptPath('/path/to/app/views');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             こうすると、$view->render('someView.php') がコールされた場合に
@@ -133,7 +128,7 @@ $view->setScriptPath('/path/to/app/views');
 
         <para>
             実は、addScriptPath() メソッドを使用すると、検索パスを
-            「積み重ねる」ことができます。これを使用すると、<code>Zend_View</code>
+            「積み重ねる」ことができます。これを使用すると、<classname>Zend_View</classname>
             は一番最後に追加されたパスからビュースクリプトを探し始めます。
             この仕組みを利用すると、デフォルトのビューを独自のビューで上書きできるようになります。
             いくつかのビューに対して独自の「テーマ」あるいは「スキン」
@@ -149,14 +144,13 @@ $view->addScriptPath('/path/to/custom/');
 // まず最初に "/path/to/custom/booklist.php" を探し、
 // 次に "/path/to/app/views/booklist.php"、そして最後に
 // カレントディレクトリから "booklist.php" を探します。
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>ユーザの入力内容をスクリプトパスに設定してはいけません</title>
 
             <para>
-                <code>Zend_View</code> は、
+                <classname>Zend_View</classname> は、
                 スクリプトパスを見てビュースクリプトを探したりレンダリングしたりします。
                 そのため、ここに何が設定されているのかを事前にきちんと把握し、
                 自分の管理下においておく必要があります。

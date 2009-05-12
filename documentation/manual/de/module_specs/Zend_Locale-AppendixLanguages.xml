@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.locale.appendix">
 
     <title>Unterstützte Gebietsschemata</title>
 
     <para>
-        <code>Zend_Locale</code> bietet Informationen über verschiedenste Gebietsschemata. Die folgende
-        Tabelle zeigt alle Sprachen und deren zugehörige Gebietsschemata, sortiert nach Sprache:
+        <classname>Zend_Locale</classname> bietet Informationen über verschiedenste Gebietsschemata.
+        Die folgende Tabelle zeigt alle Sprachen und deren zugehörige Gebietsschemata, sortiert nach
+        Sprache:
     </para>
 
     <table id="zend.locale.appendix.table">

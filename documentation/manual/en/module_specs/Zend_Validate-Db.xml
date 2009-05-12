@@ -4,8 +4,8 @@
     <title>Db_RecordExists and Db_NoRecordExists</title>
 
     <para>
-        <code>Zend_Validate_Db_RecordExists</code> and
-        <code>Zend_Validate_Db_NoRecordExists</code> provide a means to test
+        <classname>Zend_Validate_Db_RecordExists</classname> and
+        <classname>Zend_Validate_Db_NoRecordExists</classname> provide a means to test
         whether a record exists in a given table of a database, with a given
         value.
     </para>
@@ -63,8 +63,8 @@ if ($validator->isValid($username)) {
         <title>Excluding records</title>
 
         <para>
-            <code>Zend_Validate_Db_RecordExists</code> and
-            <code>Zend_Validate_Db_NoRecordExists</code>  also provide a means
+            <classname>Zend_Validate_Db_RecordExists</classname> and
+            <classname>Zend_Validate_Db_NoRecordExists</classname>  also provide a means
             to test the database, excluding a part of the table, either by
             providing a where clause as a string, or an array with the keys
             "field" and "value".

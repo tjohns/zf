@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>基本的な使用法</title>
 
     <para>
-        <code>Zend_Session_Namespace</code>
+        <classname>Zend_Session_Namespace</classname>
         のインスタンスが、Zend Framework
         のセッションデータを操作するための基本的な API を提供します。
         名前空間を使用するとセッションデータを個別に扱うことができますが、
         セッションデータ全体をひとつの名前空間で扱いたい人のためのデフォルト名前空間も用意されています。
-        <code>Zend_Session_Namespace</code> は、ext/session およびスーパーグローバル変数 <code>$_SESSION</code>
+        <classname>Zend_Session_Namespace</classname> は、ext/session およびスーパーグローバル変数 <code>$_SESSION</code>
         を使用して、セッション状態のデータを保存します。
         <code>$_SESSION</code> はグローバルにアクセス可能ですが、
         開発者はこれに対して直接アクセスするのはやめるべきです。
-        <code>Zend_Session</code> および <code>Zend_Session_Namespace</code> を用いることで、
+        <classname>Zend_Session</classname> および <classname>Zend_Session_Namespace</classname> を用いることで、
         セッション関連の機能をより効率的かつ安全に使用できるようになります。
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> の各インスタンスが、
+        <classname>Zend_Session_Namespace</classname> の各インスタンスが、
         スーパーグローバル配列 <code>$_SESSION</code> のエントリに対応します。
         名前空間をキーとして使用します。
 
@@ -28,12 +28,11 @@
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
 // $myNamespace は $_SESSION['myNamespace'] に対応します
-]]>
-        </programlisting>
+]]></programlisting>
 
         Zend_Session は、<code>$_SESSION</code> を直接使用するその他のコードと組み合わせて使用することもできます。
         しかし、問題が起こることをさけるために、<code>$_SESSION</code>
-        を直接使用するのは <code>Zend_Session_Namespace</code>
+        を直接使用するのは <classname>Zend_Session_Namespace</classname>
         のインスタンスに関連しないキーに限るようにしましょう。
     </para>
 
@@ -42,11 +41,11 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
         <title>チュートリアル</title>
 
         <para>
-            何も名前空間を指定せずに <code>Zend_Session_Namespace</code> のインスタンスを作成すると、
+            何も名前空間を指定せずに <classname>Zend_Session_Namespace</classname> のインスタンスを作成すると、
             すべてのデータは透過的に "<code>Default</code>" という名前の名前空間に保存されます。
-            <code>Zend_Session</code> は、セッション名前空間コンテナの内容を
+            <classname>Zend_Session</classname> は、セッション名前空間コンテナの内容を
             直接操作するためのものではあります。そのかわりとして
-            <code>Zend_Session_Namespace</code> を使用します。
+            <classname>Zend_Session_Namespace</classname> を使用します。
             以下の例は、このデフォルトの名前空間を使用して
             セッション内でのクライアントからのリクエストの回数を数えるものです。
         </para>
@@ -67,15 +66,14 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
 
 echo "このセッションでページがリクエストされた回数: ",
     $defaultNamespace->numberOfPageRequests;
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
         <para>
-            複数のモジュールが別々の名前空間で <code>Zend_Session_Namespace</code>
+            複数のモジュールが別々の名前空間で <classname>Zend_Session_Namespace</classname>
             のインスタンスを使用するようにすると、各モジュールのデータをセッション内でカプセル化できます。
-            <code>Zend_Session_Namespace</code> のコンストラクタでオプションの引数
+            <classname>Zend_Session_Namespace</classname> のコンストラクタでオプションの引数
             <code>$namespace</code> を指定すると、
             セッションデータを個別の名前空間に分割することができます。
             名前空間は、セッションデータで名前の衝突による事故を防ぐための方法として、
@@ -101,8 +99,7 @@ $authNamespace->user = "myusername";
 // ウェブサービスコンポーネント用
 $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
 $webServiceNamespace->user = "mywebusername";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -118,8 +115,7 @@ $webServiceNamespace->user = "mywebusername";
             <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "myusername";
 $_SESSION['Some_Web_Service']['user'] = "mywebusername";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -130,7 +126,7 @@ $_SESSION['Some_Web_Service']['user'] = "mywebusername";
         <title>セッション名前空間の順次処理</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> は
+            <classname>Zend_Session_Namespace</classname> は
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate インターフェイス</ulink>
             を完全に実装しており、<code>foreach</code> 文をサポートしています。
         </para>
@@ -146,8 +142,7 @@ $aNamespace =
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -158,7 +153,7 @@ foreach ($aNamespace as $index => $value) {
         <title>セッション名前空間へのアクセス方法</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> は <code>__get()</code>、<code>__set()</code>、
+            <classname>Zend_Session_Namespace</classname> は <code>__get()</code>、<code>__set()</code>、
             <code>__isset()</code> そして <code>__unset()</code> といった
             <ulink url="http://www.php.net/manual/ja/language.oop5.overloading.php">マジックメソッド</ulink>
             を実装しています。これらは、自分のサブクラス以外から直接コールされることはありません。
@@ -181,8 +176,7 @@ if (!isset($namespace->bar)) {
 }
 
 unset($namespace->foo);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 

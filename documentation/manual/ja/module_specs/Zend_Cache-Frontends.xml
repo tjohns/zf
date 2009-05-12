@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <sect1 id="zend.cache.frontends">
-    <title><code>Zend_Cache</code> のフロントエンド</title>
+    <title><classname>Zend_Cache</classname> のフロントエンド</title>
 
     <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Core</code> は特別なフロントエンドであり、
+                <classname>Zend_Cache_Core</classname> は特別なフロントエンドであり、
                 モジュールのコアに含まれています。これはキャッシュフロントエンドの
                 基本機能を実装したものであり、他のクラスによってオーバーライドされます。
             </para>
             <note><para>
-                その他のフロントエンドクラスは、すべて <code>Zend_Cache_Core</code>
+                その他のフロントエンドクラスは、すべて <classname>Zend_Cache_Core</classname>
                 を継承しており、以下で説明しているメソッドおよびオプションは
                 他のフロントエンドでも使用可能です。そのため、ここではこれらについての
                 詳しい説明は省略します。
@@ -75,7 +75,7 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                true を指定すると、<code>Zend_Log</code> によるロギングが有効になります
+                                true を指定すると、<classname>Zend_Log</classname> によるロギングが有効になります
                                 (しかし、処理速度は低下します)。
                               </entry>
                           </row>
@@ -158,8 +158,7 @@ if (!($data = $cache->load($id))) {
 }
 
 // [...] $data を用いて何かをします (echo したり、何かに渡したりなど)
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 複数のブロックやデータのインスタンスをキャッシュしたい場合も、考え方は同じです。
             </para>
@@ -198,8 +197,7 @@ if (!($data = $cache->load($id2))) {
 
 }
 echo($data);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 特殊な値 (boolean 値に "automatic_serialization" オプションを指定したものなど)
                 や空の文字列をキャッシュしたい場合は、
@@ -241,17 +239,16 @@ if (!($cache->test($id))) {
 }
 
 // $data に対して何らかの操作をします
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title><code>Zend_Cache_Frontend_Output</code></title>
+        <title>Zend_Cache_Frontend_Output</title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> は、出力を横取りするフロントエンドです。
+                <classname>Zend_Cache_Frontend_Output</classname> は、出力を横取りするフロントエンドです。
                 これは PHP の出力バッファリング処理を使いやすくしたもので、
                 <code>start()</code> メソッドと
                 <code>end()</code> メソッドの間の出力を横取りします。
@@ -260,7 +257,7 @@ if (!($cache->test($id))) {
         <sect3 id="zend.cache.frontends.output.options">
             <title>使用可能なオプション</title>
             <para>
-                <code>Zend_Cache_Core</code> のオプション以外に、
+                <classname>Zend_Cache_Core</classname> のオプション以外に、
                 このフロントエンドが独自に使用するオプションはありません。
             </para>
         </sect3>
@@ -283,8 +280,7 @@ if (!($cache->start('mypage'))) {
 }
 
 echo 'これはキャッシュされません ('.time().').';
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 この形式を使用すると、既存のプロジェクトに簡単に出力キャッシュ処理を追加することができます。
                 コードのリファクタリングもほとんど行わずにすませられるでしょう。
@@ -293,11 +289,11 @@ echo 'これはキャッシュされません ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title><code>Zend_Cache_Frontend_Function</code></title>
+        <title>Zend_Cache_Frontend_Function</title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> は、関数コールの結果をキャッシュします。
+                <classname>Zend_Cache_Frontend_Function</classname> は、関数コールの結果をキャッシュします。
                 <code>call()</code> というメソッドを保持しており、
                 関数名とパラメータを配列にしてこのメソッドに渡します。
             </para>
@@ -357,10 +353,9 @@ $cache->call('veryExpensiveFunc', $params);
 // $params は配列です。
 // 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
 // $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> は、
+                <classname>Zend_Cache_Frontend_Function</classname> は、
                 関数の返り値だけでなく関数内部での出力もキャッシュします。
             </para>
             <note><para>
@@ -373,11 +368,11 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title><code>Zend_Cache_Frontend_Class</code></title>
+        <title>Zend_Cache_Frontend_Class</title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Frontend_Class</code> は、<code>Zend_Cache_Frontend_Function</code>
+                <classname>Zend_Cache_Frontend_Class</classname> は、<classname>Zend_Cache_Frontend_Function</classname>
                 と異なり、オブジェクトおよびスタティックメソッドのコールをキャッシュします。
             </para>
         </sect3>
@@ -457,8 +452,7 @@ $frontendOptions = array(
 
 // これはキャッシュされます
 $result = $cache->foobar('1', '2');
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 通常のメソッドのコールをキャッシュするには次のようにします。
             </para>
@@ -483,25 +477,24 @@ $frontendOptions = array(
 
 // これはキャッシュされます
 $result = $cache->foobar2('1', '2');
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title><code>Zend_Cache_Frontend_File</code></title>
+        <title>Zend_Cache_Frontend_File</title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> は、マスタファイルの
+                <classname>Zend_Cache_Frontend_File</classname> は、マスタファイルの
                 「更新時刻」にもとづいて動作するフロントエンドです。
                 これは、例えば設定ファイルやテンプレートなどで有効に使えるでしょう。
                 複数のマスタファイルを使用することもできます。
             </para>
             <para>
                 例えば、XML の設定ファイルを使用しており、それが「設定オブジェクト」
-                (<code>Zend_Config</code> など) を返す関数でパースされるとしましょう。
-                <code>Zend_Cache_Frontend_File</code> を使用すると、その「設定オブジェクト」
+                (<classname>Zend_Config</classname> など) を返す関数でパースされるとしましょう。
+                <classname>Zend_Cache_Frontend_File</classname> を使用すると、その「設定オブジェクト」
                 をキャッシュすることができ (これにより、
                 XML ファイルを毎回パースする必要がなくなります)、さらに「マスタファイル」
                 との間で強力な依存性を保持することができます。そのため、XML
@@ -541,10 +534,10 @@ $result = $cache->foobar2('1', '2');
                          <row>
                               <entry><code>master_files_mode</code></entry>
                               <entry><code>string</code></entry>
-                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry><classname>Zend_Cache_Frontend_File::MODE_OR</classname></entry>
                               <entry>
-                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> あるいは
-                                  <code>Zend_Cache_Frontend_File::MODE_OR</code>。
+                                  <classname>Zend_Cache_Frontend_File::MODE_AND</classname> あるいは
+                                  <classname>Zend_Cache_Frontend_File::MODE_OR</classname>。
                                   <code>MODE_AND</code> の場合は、
                                   すべてのマスタファイルにアクセスがあるまでキャッシュが無効化されません。
                                   <code>MODE_OR</code> の場合は、
@@ -567,7 +560,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.examples">
             <title>例</title>
             <para>
-                このフロントエンドの使用法は <code>Zend_Cache_Core</code> と同じです。
+                このフロントエンドの使用法は <classname>Zend_Cache_Core</classname> と同じです。
                 そのため、特に例は用意していません。唯一しなければならないことは、
                 ファクトリを使用する際に、バックエンドのオプションとして
                 <code>master_file</code> を設定することだけです。
@@ -576,13 +569,13 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title><code>Zend_Cache_Frontend_Page</code></title>
+        <title>Zend_Cache_Frontend_Page</title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>導入</title>
             <para>
-                <code>Zend_Cache_Frontend_Page</code> は <code>Zend_Cache_Frontend_Output</code>
+                <classname>Zend_Cache_Frontend_Page</classname> は <classname>Zend_Cache_Frontend_Output</classname>
                 と似ていますが、ページ全体をキャッシュする目的で設計されています。
-                <code>Zend_Cache_Frontend_Page</code> を使用して、
+                <classname>Zend_Cache_Frontend_Page</classname> を使用して、
                 ページの一部だけをキャッシュすることはできません。
             </para>
             <para>
@@ -756,7 +749,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.examples">
             <title>例</title>
             <para>
-                <code>Zend_Cache_Frontend_Page</code> の使用法は、きわめて簡単です。
+                <classname>Zend_Cache_Frontend_Page</classname> の使用法は、きわめて簡単です。
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // require、設定そしてファクトリ
@@ -766,11 +759,10 @@ $cache->start();
 // 処理はここで停止します
 
 // ページの残りの部分 ...
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
-                (例えば <code>Zend_Controller</code> など) 内でキャッシュを集中管理する方法を示したものです。
+                (例えば <classname>Zend_Controller</classname> など) 内でキャッシュを集中管理する方法を示したものです。
             </para>
             <programlisting role="php"><![CDATA[
 /*
@@ -819,8 +811,7 @@ $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
 
 // [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
             <title>キャンセル用のメソッド</title>
@@ -842,8 +833,7 @@ if ($someTest) {
 }
 
 // [...]
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

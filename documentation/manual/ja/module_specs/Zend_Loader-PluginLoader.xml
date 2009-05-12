@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.loader.pluginloader">
     <title>プラグインのロード</title>
 
@@ -9,7 +9,7 @@
         クラスのプレフィックスとクラスファイルへのパスを指定して動的に機能を読み込むことができます。
         このファイルは <code>include_path</code> にある必要がなく、
         また標準の命名規約に従っている必要もありません。
-        <code>Zend_Loader_PluginLoader</code> は、この処理のための共通機能を提供します。
+        <classname>Zend_Loader_PluginLoader</classname> は、この処理のための共通機能を提供します。
     </para>
 
     <para>
@@ -52,8 +52,7 @@ library/
                 FormLabel.php
                 FormSubmit.php
                 FormText.php
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             では、プラグインローダーを作成してビューヘルパー群の場所を指定しましょう。
@@ -66,8 +65,7 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
                        'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper',
                        'application/modules/bar/views/helpers');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             こうしておけば、クラス名のプレフィックスを除いた部分を指定するだけで
@@ -83,8 +81,7 @@ $formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // 'FormSubmit' ヘルパーをロードします
 $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             クラスを読み込めたら、次はそのインスタンスを作成します。
@@ -93,7 +90,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         <note>
             <para>
                 時には、同じプレフィックスを複数のパスで使用することもあるかもしれません。
-                <code>Zend_Loader_PluginLoader</code>
+                <classname>Zend_Loader_PluginLoader</classname>
                 は、実際には各プレフィックスに対応するパスを配列で管理しています。
                 そして、最後に登録されたパスから順に検索を行います。
                 これは、incubator のコンポーネントを使用する場合などに便利です。
@@ -115,12 +112,11 @@ $loader = new Zend_Loader_PluginLoader(array(
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> には、
+            <classname>Zend_Loader_PluginLoader</classname> には、
             複数のプラグインの間でオブジェクトを共有する機能もあります。
             その際にシングルトンインスタンスを作成する必要はありません。
             この機能は、静的レジストリを用いて実現しています。
@@ -131,8 +127,7 @@ $loader = new Zend_Loader_PluginLoader(array(
         <programlisting role="php"><![CDATA[
 // プラグインを静的レジストリ 'foobar' に保存します
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <code>PluginLoader</code> がインスタンス化したその他のコンポーネントで
@@ -196,8 +191,7 @@ if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.loader.pluginloader.performance">
@@ -216,7 +210,7 @@ if ($loader->isLoaded('Adapter')) {
         </para>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code>
+            <classname>Zend_Loader_PluginLoader</classname>
             では、このような場合のためのオプトイン機能として
             ファイルインクルードキャッシュを提供しています。
             これを有効にすると、インクルードに成功したすべてのファイルを含む

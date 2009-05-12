@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <sect1 id="zend.form.i18n">
-    <title><code>Zend_Form</code> の国際化</title>
+    <title>Zend_Form の国際化</title>
 
     <para>
         作成したコンテンツを複数の言語や地域に対応させるという作業は、
         日増しに重要になってきています。
-        <code>Zend_Form</code> はそんな作業も簡単にできるように作られており、
+        <classname>Zend_Form</classname> はそんな作業も簡単にできるように作られており、
         <link
             linkend="zend.translate">Zend_Translate</link> と <link
             linkend="zend.validate">Zend_Validate</link>
@@ -16,9 +16,9 @@
 
     <para>
         デフォルトでは、国際化 (I18n) は行われません。
-        i18n 機能を <code>Zend_Form</code> で使うには、まず適切なアダプタを指定して
-        <code>Zend_Translate</code> のインスタンスを作成し、それを
-        <code>Zend_Form</code> や <code>Zend_Validate</code>
+        i18n 機能を <classname>Zend_Form</classname> で使うには、まず適切なアダプタを指定して
+        <classname>Zend_Translate</classname> のインスタンスを作成し、それを
+        <classname>Zend_Form</classname> や <classname>Zend_Validate</classname>
         にアタッチしなければなりません。翻訳オブジェクトや翻訳ファイルの作成方法についての詳細は
         <link linkend="zend.translate">Zend_Translate
         のドキュメント</link> を参照ください。
@@ -41,9 +41,9 @@
 
         <para>
             フォームの I18n 機能を初期化するには
-            <code>Zend_Translate</code> オブジェクトあるいは
-            <code>Zend_Translate_Adapter</code> オブジェクトが必要です。詳細は
-            <code>Zend_Translate</code> のドキュメントを参照ください。
+            <classname>Zend_Translate</classname> オブジェクトあるいは
+            <classname>Zend_Translate_Adapter</classname> オブジェクトが必要です。詳細は
+            <classname>Zend_Translate</classname> のドキュメントを参照ください。
             翻訳オブジェクトを作成したら、その後の手順にはいくつかの方法があります。
         </para>
 
@@ -59,32 +59,30 @@
                 <programlisting role="php"><![CDATA[
 // 'Zend_Translate' キーを使用します。$translate は Zend_Translate オブジェクトです
 Zend_Registry::set('Zend_Translate', $translate);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
-                    これは、<code>Zend_Form</code> や
-                    <code>Zend_Validate</code> そして
-                    <code>Zend_View_Helper_Translate</code> が使用します。
+                    これは、<classname>Zend_Form</classname> や
+                    <classname>Zend_Validate</classname> そして
+                    <classname>Zend_View_Helper_Translate</classname> が使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     検証エラーのメッセージだけを翻訳したいのなら、
-                    翻訳オブジェクトを <code>Zend_Validate_Abstract</code> に登録することもできます。
+                    翻訳オブジェクトを <classname>Zend_Validate_Abstract</classname> に登録することもできます。
                 </para>
 
                 <programlisting role="php"><![CDATA[
 // すべてのバリデーションクラスに、指定した翻訳アダプタを使用させます
 Zend_Validate_Abstract::setDefaultTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
                 <para>
-                    あるいは、<code>Zend_Form</code>
+                    あるいは、<classname>Zend_Form</classname>
                     オブジェクトにアタッチしてグローバルに使用することもできます。
                     その副作用として、検証エラーメッセージも翻訳されます。
                 </para>
@@ -93,8 +91,7 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
 // すべてのフォームクラスで特定の翻訳アダプタを使用させます。
 // このアダプタは、検証エラーメッセージの翻訳にも用いられます。
 Zend_Form::setDefaultTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -113,8 +110,7 @@ $form->setTranslator($translate);
 // 「この」要素のインスタンスで特定の翻訳アダプタを使用させます。
 // このアダプタは、この要素の検証エラーメッセージの翻訳にも用いられます。
 $element->setTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
     </sect2>
@@ -132,7 +128,7 @@ $element->setTranslator($translate);
                 <para>
                     <emphasis>検証エラーメッセージ。</emphasis>
                     検証エラーメッセージを翻訳させることができます。
-                    そのためには、<code>Zend_Validate</code>
+                    そのためには、<classname>Zend_Validate</classname>
                     のバリデーションクラスのエラーコード定数をメッセージ ID として使用します。
                     エラーコードについての詳細は <link
                         linkend="zend.validate">Zend_Validate</link>
@@ -176,7 +172,7 @@ $element->setTranslator($translate);
             <listitem>
                 <para>
                     <emphasis>選択肢の値。</emphasis>
-                    <code>Zend_Form_Element_Multi</code> を継承した項目
+                    <classname>Zend_Form_Element_Multi</classname> を継承した項目
                     (MultiCheckbox、Multiselect および Radio 要素)
                     で、もし翻訳がある場合に選択肢の値 (キーではありません)
                     が翻訳の対象となります。つまり、

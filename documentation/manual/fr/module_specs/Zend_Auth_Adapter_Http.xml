@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.http">
-
     <title>Adaptateur d'authentification HTTP</title>
 
     <sect2 id="zend.auth.adapter.http.introduction">
-
         <title>Introduction</title>
 
         <para>
@@ -22,7 +20,7 @@
         </para>
 
         <para>
-            <emphasis role="strong">Caractéristiques principales&#160;:</emphasis>
+            <emphasis>Caractéristiques principales&#160;:</emphasis>
             <itemizedlist>
                 <listitem>
                     <para>Support des méthodes Basic et Digest&#160;;</para>
@@ -63,11 +61,9 @@
                 </listitem>
             </itemizedlist>
         </para>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.design_overview">
-
         <title>Fonctionnement</title>
 
         <para>
@@ -78,11 +74,9 @@
             Ils sont alors comparés aux valeurs envoyées par le client pour déterminer une
             éventuelle correspondance.
         </para>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.configuration_options">
-
         <title>Options de configuration</title>
 
         <para>
@@ -90,7 +84,6 @@
             configuration lors de sa construction. Il y a plusieurs options de configuration
             disponibles, dont certaines requises&#160;:
             <table id="zend.auth.adapter.configuration_options.table">
-
                 <title>Liste des options de configuration</title>
 
                 <tgroup cols="3">
@@ -127,8 +120,8 @@
                                 <code>"digest"</code>
                             </entry>
                             <entry>
-                                Liste d'URI, séparées d'espace, pour lesquelles la même
-                                information d'authentification est valide. Elles peuvent pointer vers
+                                Liste d'URI, séparées d'espace, pour lesquelles la même information
+                                d'authentification est valide. Elles peuvent pointer vers
                                 différents serveurs.
                             </entry>
                         </row>
@@ -152,11 +145,8 @@
                             </entry>
                         </row>
                     </tbody>
-
                 </tgroup>
-
             </table>
-
         </para>
 
         <note>
@@ -172,7 +162,6 @@
     </sect2>
 
     <sect2 id="zend.auth.adapter.http.resolvers">
-
         <title>Résolveurs</title>
 
         <para>
@@ -193,7 +182,6 @@
         </para>
 
         <sect3 id="zend.auth.adapter.http.resolvers.file">
-
             <title>Résolveur fichiers</title>
 
             <para>
@@ -205,17 +193,16 @@
                 <programlisting><![CDATA[
     <username>:<realm>:<credentials>\n
 ]]></programlisting>
-                Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>, et
-                <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que
+                Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>,
+                et <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que
                 retourner la valeur de "<code>credentials</code>". Ainsi, avec Basic cette valeur
                 devra être le mot de passe en clair de l'utilisateur identifié par
                 <code>username</code>. En mode Digest, la valeur MD5 de toute la chaîne
                 <code>username:realm:password</code> (avec les deux-points).
             </para>
 
-
             <para>
-                Pour créer des résolveurs de fichiers séparés, utilisez :
+                Pour créer des résolveurs de fichiers séparés, utilisez&#160;:
                 <programlisting role="php"><![CDATA[
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);
@@ -228,17 +215,14 @@ $resolver->setFile($path);
 ]]></programlisting>
                 Si le chemin donné n'est pas lisible, une exception est envoyée.
             </para>
-
         </sect3>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.http.basic_usage">
-
         <title>Usage général&#160;:</title>
 
         <para>
-            Tout d'abord, créez un tableau de configuration avec les options requises :
+            Tout d'abord, créez un tableau de configuration avec les options requises&#160;:
             <programlisting role="php"><![CDATA[
 $config = array(
     'accept_schemes' => 'basic digest',
@@ -292,7 +276,5 @@ if (!$result->isValid()) {
 }
 ]]></programlisting>
         </para>
-
     </sect2>
-
 </sect1>

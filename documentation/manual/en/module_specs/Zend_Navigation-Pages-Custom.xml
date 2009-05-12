@@ -36,8 +36,7 @@ class My_Simple_Page extends Zend_Navigation_Page
         return 'something-completely-different';
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.custom.example.properties">
@@ -95,7 +94,6 @@ $page = Zend_Navigation_Page::factory(array(
     'foo'     => 'bar',
     'foo_bar' => 'baz'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

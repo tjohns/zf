@@ -5,7 +5,7 @@
 
     <para>
         Here you'll find API-like documentation about all resource plugins
-        available by default in <code>Zend_Application</code>.
+        available by default in <classname>Zend_Application</classname>.
     </para>
 
     <xi:include href="Zend_Application-AvailableResources-Db.xml" />

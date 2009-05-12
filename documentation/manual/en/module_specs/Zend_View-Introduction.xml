@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_View</code> is a class for working with the "view" portion of
+        <classname>Zend_View</classname> is a class for working with the "view" portion of
         the model-view-controller pattern. That is, it exists to
         help keep the view script separate from the model and
         controller scripts. It provides a system of helpers, output
@@ -12,19 +12,19 @@
     </para>
 
     <para>
-        <code>Zend_View</code> is template system agnostic; you may use PHP as
+        <classname>Zend_View</classname> is template system agnostic; you may use PHP as
         your template language, or create instances of other
         template systems and manipulate them within your view
         script.
     </para>
 
     <para>
-        Essentially, using <code>Zend_View</code> happens in two major steps:
+        Essentially, using <classname>Zend_View</classname> happens in two major steps:
 
         1. Your controller script creates an instance of
-        <code>Zend_View</code> and assigns variables to that instance.
+        <classname>Zend_View</classname> and assigns variables to that instance.
 
-        2. The controller tells the <code>Zend_View</code> to render a particular
+        2. The controller tells the <classname>Zend_View</classname> to render a particular
         view, thereby handing control over the view script, which
         generates the view output.
     </para>
@@ -62,8 +62,7 @@ $view->books = $data;
 
 // and render a view script called "booklist.php"
 echo $view->render('booklist.php');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -74,11 +73,11 @@ echo $view->render('booklist.php');
         <para>
             Now we need the associated view script, "booklist.php".
             This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the <code>Zend_View</code> instance, which
-            means that references to $this point to the <code>Zend_View</code>
+            executes inside the scope of the <classname>Zend_View</classname> instance, which
+            means that references to $this point to the <classname>Zend_View</classname>
             instance properties and methods. (Variables assigned to the
             instance by the controller are public properties of the
-            <code>Zend_View</code> instance.)  Thus, a very basic view script could
+            <classname>Zend_View</classname> instance.)  Thus, a very basic view script could
             look like this:
         </para>
 
@@ -106,8 +105,7 @@ echo $view->render('booklist.php');
     <p>There are no books to display.</p>
 
 <?php endif;?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Note how we use the "escape()" method to apply output
@@ -120,7 +118,7 @@ echo $view->render('booklist.php');
         <title>Options</title>
 
         <para>
-            <code>Zend_View</code> has several options that may be set to
+            <classname>Zend_View</classname> has several options that may be set to
             configure the behaviour of your view scripts.
         </para>
 
@@ -137,8 +135,7 @@ base/path/
     helpers/
     filters/
     scripts/
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     This may be set via <code>setBasePath()</code>,
@@ -170,7 +167,7 @@ base/path/
             </para></listitem>
 
             <listitem><para>
-                <code>strictVars:</code> force <code>Zend_View</code> to emit
+                <code>strictVars:</code> force <classname>Zend_View</classname> to emit
                 notices and warnings when uninitialized view variables are
                 accessed. This may be set by calling
                 <code>strictVars(true)</code> or passing the
@@ -219,8 +216,7 @@ base/path/
 
                 <programlisting role="apache"><![CDATA[
 php_value "short_open_tag" "on"
-]]>
-</programlisting>
+]]></programlisting>
 
                 <para>
                     This will only be possible if you are allowed to create and
@@ -237,11 +233,10 @@ php_value "short_open_tag" "on"
 
         <programlisting role="php"><![CDATA[
 $view->setUseStreamWrapper(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
                 <para>
-                    This registers <code>Zend_View_Stream</code> as a stream
+                    This registers <classname>Zend_View_Stream</classname> as a stream
                     wrapper for view scripts, and will ensure that your code
                     continues to work as if short tags were enabled.
                 </para>
@@ -269,7 +264,7 @@ $view->setUseStreamWrapper(true);
             Typically, you'll only ever need to call on <code>assign()</code>,
             <code>render()</code>, or one of the methods for setting/adding
             filter, helper, and script paths. However, if you wish to extend
-            <code>Zend_View</code> yourself, or need access to some of its
+            <classname>Zend_View</classname> yourself, or need access to some of its
             internals, a number of accessors exist:
         </para>
 

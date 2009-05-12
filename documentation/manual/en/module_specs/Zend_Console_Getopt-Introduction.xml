@@ -3,7 +3,7 @@
 <sect1 id="zend.console.getopt.introduction">
     <title>Introduction</title>
     <para>
-        The <code>Zend_Console_Getopt</code> class helps command-line
+        The <classname>Zend_Console_Getopt</classname> class helps command-line
         applications to parse their options and arguments.
     </para>
     <para>
@@ -66,7 +66,7 @@
                 For example,
                 <code>-u username</code>, <code>--user username</code>,
                 and <code>--user=username</code> are forms supported
-                by <code>Zend_Console_Getopt</code>.
+                by <classname>Zend_Console_Getopt</classname>.
             </para>
         </listitem>
         <listitem>
@@ -91,7 +91,7 @@
         by our definition.
     </para>
     <para>
-        <code>Zend_Console_Getopt</code> provides an interface to declare
+        <classname>Zend_Console_Getopt</classname> provides an interface to declare
         which flags are valid for your application, output an error and usage
         message if they use an invalid flag, and report to your application
         code which flags the user specified.
@@ -99,11 +99,11 @@
     <note>
         <title>Getopt is not an Application Framework</title>
         <para>
-            <code>Zend_Console_Getopt</code> does <emphasis>not</emphasis>
+            <classname>Zend_Console_Getopt</classname> does <emphasis>not</emphasis>
             interpret the meaning of flags and parameters, nor does this class
             implement application workflow or invoke application code.
             You must implement those actions in your own application code.
-            You can use the <code>Zend_Console_Getopt</code> class to parse
+            You can use the <classname>Zend_Console_Getopt</classname> class to parse
             the command-line and provide object-oriented methods for querying
             which options were given by a user, but code to use this
             information to invoke parts of your application should be in
@@ -111,6 +111,6 @@
         </para>
     </note>
     <para>
-        The following sections describe usage of <code>Zend_Console_Getopt</code>.
+        The following sections describe usage of <classname>Zend_Console_Getopt</classname>.
     </para>
 </sect1>

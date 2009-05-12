@@ -7,7 +7,7 @@
         <title>Field names</title>
 
         <para>
-            There are no limitations for field names in <code>Zend_Search_Lucene</code>.
+            There are no limitations for field names in <classname>Zend_Search_Lucene</classname>.
         </para>
 
         <para>
@@ -16,7 +16,7 @@
         </para>
 
         <para>
-            The <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> and <code>score</code> properties always refer
+            The <classname>Zend_Search_Lucene_Search_QueryHit</classname> <code>id</code> and <code>score</code> properties always refer
             to internal Lucene document id and hit <link linkend="zend.search.lucene.searching.results-scoring">score</link>.
             If the indexed document has the same stored fields, you have to use the <code>getDocument()</code> method to access them:
 
@@ -30,13 +30,11 @@ foreach ($hits as $hit) {
     // Get 'contents' document field
     $contents = $hit->contents;
 
-
     // Get internal Lucene document id
     $id = $hit->id;
 
     // Get query hit score
     $score = $hit->score;
-
 
     // Get 'id' document field
     $docId = $hit->getDocument()->id;
@@ -47,11 +45,9 @@ foreach ($hits as $hit) {
     // Another way to get 'title' document field
     $title = $hit->getDocument()->title;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
-
 
     <sect2 id="zend.search.lucene.best-practice.indexing-performance">
         <title>Indexing performance</title>
@@ -80,8 +76,7 @@ foreach ($hits as $hit) {
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->optimize();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -116,8 +111,8 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    All these options are <code>Zend_Search_Lucene</code> object properties- not index properties. They affect only current
-                    <code>Zend_Search_Lucene</code> object behavior and may vary for different scripts.
+                    All these options are <classname>Zend_Search_Lucene</classname> object properties- not index properties. They affect only current
+                    <classname>Zend_Search_Lucene</classname> object behavior and may vary for different scripts.
                 </para>
             </note>
         </para>
@@ -138,7 +133,6 @@ $index->optimize();
             memory usage.</para></footnote>. It's a best practice not to use more than a half of the allowed memory.
         </para>
 
-
         <para>
             <emphasis>MaxMergeDocs</emphasis> limits the segment size (in terms of documents). It therefore also limits auto-optimization time by guaranteeing
             that the <code>addDocument()</code> method is not executed more than a certain number of times. This is very important for interactive applications.
@@ -152,7 +146,7 @@ $index->optimize();
 
         <para>
             Small segments generally decrease index quality. Many small segments may also trigger
-            the "Too many open files" error determined by OS limitations <footnote><para><code>Zend_Search_Lucene</code> keeps each segment file opened
+            the "Too many open files" error determined by OS limitations <footnote><para><classname>Zend_Search_Lucene</classname> keeps each segment file opened
             to improve search performance.</para></footnote>.
         </para>
 
@@ -160,7 +154,6 @@ $index->optimize();
             in general, background index optimization should be performed for interactive indexing mode and <emphasis>MaxMergeDocs</emphasis> shouldn't be
             too low for batch indexing.
         </para>
-
 
         <para>
             <emphasis>MergeFactor</emphasis> affects auto-optimization frequency. Lower values increase the quality of unoptimized indexes. Larger values increase
@@ -180,7 +173,7 @@ $index->optimize();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
+            <classname>Zend_Search_Lucene</classname> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
             into the next group. If yes, then merging is performed.
         </para>
 
@@ -202,7 +195,6 @@ $index->optimize();
             number of segments.
         </para>
 
-
         <para>
             Tuning the <emphasis>MergeFactor</emphasis> parameter is more effective for batch indexing performance than <emphasis>MaxMergeDocs</emphasis>. But it's also more course-grained.
             So use the estimation above for tuning <emphasis>MergeFactor</emphasis>, then play with <emphasis>MaxMergeDocs</emphasis> to get best batch indexing performance.
@@ -213,7 +205,7 @@ $index->optimize();
         <title>Index during Shut Down</title>
 
         <para>
-            The <code>Zend_Search_Lucene</code> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
+            The <classname>Zend_Search_Lucene</classname> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
         </para>
 
         <para>
@@ -250,8 +242,7 @@ $index = Zend_Search_Lucene::open($indexPath);
 ...
 
 unset($index);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -260,8 +251,7 @@ unset($index);
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();
-]]>
-            </programlisting>
+]]></programlisting>
             This possibility is also described in the "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
             section.
         </para>
@@ -275,7 +265,7 @@ $index->commit();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
+            <classname>Zend_Search_Lucene</classname> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
         </para>
 
         <para>
@@ -312,8 +302,7 @@ foreach ($docIds as $id) {
     $contents = $doc->contents;
     ...
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -321,7 +310,7 @@ foreach ($docIds as $id) {
         <title>Memory Usage</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> is a relatively memory-intensive module.
+            <classname>Zend_Search_Lucene</classname> is a relatively memory-intensive module.
         </para>
 
         <para>
@@ -334,7 +323,7 @@ foreach ($docIds as $id) {
 
         <para>
             The terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
-            <footnote><para>The Lucene file format allows you to configure this number, but <code>Zend_Search_Lucene</code> doesn't expose this
+            <footnote><para>The Lucene file format allows you to configure this number, but <classname>Zend_Search_Lucene</classname> doesn't expose this
             in its API. Nevertheless you still have the ability to configure this value if the index is prepared with another
             Lucene implementation.</para></footnote> term of the full dictionary.
         </para>
@@ -364,7 +353,7 @@ foreach ($docIds as $id) {
         <title>Encoding</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> works with UTF-8 strings internally. So all strings returned by <code>Zend_Search_Lucene</code> are UTF-8 encoded.
+            <classname>Zend_Search_Lucene</classname> works with UTF-8 strings internally. So all strings returned by <classname>Zend_Search_Lucene</classname> are UTF-8 encoded.
         </para>
 
         <para>
@@ -376,7 +365,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> offers a wide range of encoding possibilities for indexed documents and parsed queries.
+            <classname>Zend_Search_Lucene</classname> offers a wide range of encoding possibilities for indexed documents and parsed queries.
         </para>
 
         <para>
@@ -389,8 +378,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('title',
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   $contents,
                                                   'utf-8'));
-]]>
-            </programlisting>
+]]></programlisting>
             This is the best way to avoid ambiguity in the encoding used.
         </para>
 
@@ -406,8 +394,7 @@ setlocale(LC_ALL, 'de_DE.iso-8859-1');
 
 setlocale(LC_ALL, 'ru_RU.UTF-8');
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -425,8 +412,7 @@ $query =
     Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -435,8 +421,7 @@ $hits = $index->find($query);
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...
-]]>
-            </programlisting>
+]]></programlisting>
             The empty string implies 'current locale'.
         </para>
 
@@ -450,7 +435,7 @@ $hits = $index->find($queryStr);
         <title>Index maintenance</title>
 
         <para>
-            It should be clear that <code>Zend_Search_Lucene</code> as well as any other Lucene implementation does not comprise a "database".
+            It should be clear that <classname>Zend_Search_Lucene</classname> as well as any other Lucene implementation does not comprise a "database".
         </para>
 
         <para>
@@ -459,7 +444,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            Nevertheless, <code>Zend_Search_Lucene</code> attempts to keep indexes in a consistent state at all times.
+            Nevertheless, <classname>Zend_Search_Lucene</classname> attempts to keep indexes in a consistent state at all times.
         </para>
 
         <para>

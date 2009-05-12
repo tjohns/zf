@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_Layout</code> implements a classic Two Step View pattern,
+        <classname>Zend_Layout</classname> implements a classic Two Step View pattern,
         allowing developers to wrap application content within another view,
         usually representing the site template. Such templates are often termed
         <emphasis>layouts</emphasis> by other projects, and Zend Framework has
@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        The main goals of <code>Zend_Layout</code> are as follows:
+        The main goals of <classname>Zend_Layout</classname> are as follows:
     </para>
 
     <itemizedlist>

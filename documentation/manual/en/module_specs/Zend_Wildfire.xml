@@ -5,7 +5,7 @@
   <title>Zend_Wildfire</title>
 
   <para>
-    <code>Zend_Wildfire</code> is a component that facilitates communication
+    <classname>Zend_Wildfire</classname> is a component that facilitates communication
     between PHP code and
     <ulink url="http://www.wildfirehq.org/">Wildfire</ulink> client components.
   </para>
@@ -19,7 +19,7 @@
   </para>
   <para>
     For the purpose of logging to Firebug the
-    <link linkend="zend.log.writers.firebug"><code>Zend_Log_Writer_Firebug</code></link>
+    <link linkend="zend.log.writers.firebug"><classname>Zend_Log_Writer_Firebug</classname></link>
     component is provided and a communication protocol has been developed
     that uses HTTP request and response headers to send data between the server and
     client components. It is great for logging intelligence data, generated during script
@@ -27,7 +27,7 @@
     AJAX requests that require clean JSON and XML responses is possible with this approach.
   </para>
   <para>
-    There is also a <link linkend="zend.db.profiler.profilers.firebug"><code>Zend_Db_Profiler_Firebug</code></link>
+    There is also a <link linkend="zend.db.profiler.profilers.firebug"><classname>Zend_Db_Profiler_Firebug</classname></link>
     component to log database profiling information to Firebug.
   </para>
 

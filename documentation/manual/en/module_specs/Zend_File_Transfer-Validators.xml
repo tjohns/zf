@@ -5,10 +5,10 @@
     <title>Validators for Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> is delivered with several file-related validators which can be
+        <classname>Zend_File_Transfer</classname> is delivered with several file-related validators which can be
         used to increase security and prevent possible attacks. Note that these validators are only as effective
-        as how effectively you apply them. All validators provided with <code>Zend_File_Transfer</code> can
-        be found in the <code>Zend_Validator</code> component and are named <code>Zend_Validate_File_*</code>.
+        as how effectively you apply them. All validators provided with <classname>Zend_File_Transfer</classname> can
+        be found in the <classname>Zend_Validator</classname> component and are named <classname>Zend_Validate_File_*</classname>.
         The following validators are available:
     </para>
 
@@ -135,7 +135,7 @@
             <para>
                 <code>Upload</code>: This validator is internal. It checks if an upload has
                 resulted in an error. You must not set it, as it's automatically set by
-                <code>Zend_File_Transfer</code> itself. So you do not use this validator directly. You should only
+                <classname>Zend_File_Transfer</classname> itself. So you do not use this validator directly. You should only
                 know that it exists.
             </para>
         </listitem>
@@ -150,7 +150,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title>Using Validators with <code>Zend_File_Transfer</code></title>
+        <title>Using Validators with Zend_File_Transfer</title>
 
         <para>
             Putting validators to work is quite simple. There are several methods for adding and manipulating validators:
@@ -251,8 +251,7 @@ $upload->setValidators(array(
     'Size'  => array('min' => 20, 'max' => 20000),
     'Count' => array('min' => 1, 'max' => 3),
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.file.transfer.validators.usage.exampletwo">
@@ -271,8 +270,7 @@ $upload = new Zend_File_Transfer();
 
 // Set a file size with 20000 bytes and limits it only to 'file2'
 $upload->addValidator('Size', false, 20000, 'file2');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -296,8 +294,7 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 20000)
        ->addValidator('Count', false, 2)
        ->addValidator('Filessize', false, 25000);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -333,8 +330,7 @@ $upload->addValidator('Size', false, 20000)
 if ($upload->isValid()) {
     print "Validation failure";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -410,8 +406,7 @@ $upload->addValidator('Count', false, 2);
 
 // Limit the amount of files to maximum 5 and minimum 1 file
 $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -456,8 +451,7 @@ $upload->addValidator('Crc32', false, '3b3652f');
 
 // Limits this validator to two different hashes
 $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -515,8 +509,7 @@ $upload->addValidator('ExcludeExtension',
 $upload->addValidator('ExcludeExtension',
                       false,
                       array('php', 'exe', 'case' => true));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -568,8 +561,7 @@ $upload->addValidator('ExcludeMimeType', false, array('image/gif',
 
 // Does not allow MIME type of the group images for all given files
 $upload->addValidator('ExcludeMimeType', false, 'image');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -624,8 +616,7 @@ $upload->addValidator('Exists', false, '\temp');
 $upload->addValidator('Exists',
                       false,
                       array('\home\images', '\home\uploads'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -688,8 +679,7 @@ $upload->addValidator('Extension', false, array('mo', 'png', 'case' => true));
 if (!$upload->isValid('C:\temp\myfile.MO')) {
     print 'Not valid because MO and mo do not match with case sensitivity;
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -748,7 +738,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
 
         <para>
             The size itself is also accepted in SI notation as handled by most operating systems. That is, instead of
-            specifying <emphasis role="strong">20000 bytes</emphasis>, <emphasis role="strong">20kB</emphasis> may be given. All file sizes are converted
+            specifying <emphasis>20000 bytes</emphasis>, <emphasis>20kB</emphasis> may be given. All file sizes are converted
             using 1024 as the base value. The following Units are accepted: <code>kB</code>, <code>MB</code>,
             <code>GB</code>, <code>TB</code>, <code>PB</code> and <code>EB</code>. Note that 1kB is equal to 1024 bytes, 1MB is equal to 1024kB, and so on.
         </para>
@@ -773,8 +763,7 @@ $upload->addValidator('FilesSize',
                       array('min' => '10kB',
                             'max' => '4MB',
                             'bytestring' => false));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -852,8 +841,7 @@ $upload->addValidator('ImageSize', false,
 
 // Reset the width for validation
 $upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -881,8 +869,7 @@ $upload->addValidator('IsCompressed', false, array('application/zip'));
 
 // Limits this validator to zip files only using simpler notation
 $upload->addValidator('IsCompressed', false, 'zip');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -918,8 +905,7 @@ $upload->addValidator('IsImage', false, array('application/gif'));
 
 // Limits this validator to jpeg files only using a simpler notation
 $upload->addValidator('IsImage', false, 'jpeg');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -978,8 +964,7 @@ $upload->addValidator('Hash',
                       false,
                       array('315b3cd8273d44912a7',
                             'algorithm' => 'md5'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -1026,8 +1011,7 @@ $upload->addValidator('Md5',
                       false,
                       array('3b3652f336522365223',
                             'eb3365f3365ddc65365'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1095,8 +1079,7 @@ $upload->addValidator('MimeType',
                       false,
                       array('image',
                             'magicfile' => '/path/to/magicfile.mgx'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -1166,8 +1149,7 @@ $upload->addValidator('NotExists', false,
                       array('\home\images',
                             '\home\uploads')
                      );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
         <note>
@@ -1212,8 +1194,7 @@ $upload->addValidator('sha1', false, '3b3652f336522365223');
 $upload->addValidator('Sha1',
                       false, array('3b3652f336522365223',
                                    'eb3365f3365ddc65365'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1260,7 +1241,7 @@ $upload->addValidator('Sha1',
 
         <para>
             The size itself is also accepted in SI notation as handled by most operating systems. That is, instead of
-            specifying <emphasis role="strong">20000 bytes</emphasis>, <emphasis role="strong">20kB</emphasis> may be given. All file sizes are converted
+            specifying <emphasis>20000 bytes</emphasis>, <emphasis>20kB</emphasis> may be given. All file sizes are converted
             using 1024 as the base value. The following Units are accepted: <code>kB</code>, <code>MB</code>,
             <code>GB</code>, <code>TB</code>, <code>PB</code> and <code>EB</code>. Note that 1kB is equal to 1024 bytes, 1MB is equal to 1024kB, and so on.
         </para>
@@ -1282,8 +1263,7 @@ $upload->addValidator('Size',
                       array('min' => '10kB',
                             'max' => '4MB',
                             'bytestring' => false));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -1327,8 +1307,7 @@ $upload->addValidator('WordCount', false, 2000);
 
 // Limit the amount of words within files to maximum 5000 and minimum 1000 words
 $upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>

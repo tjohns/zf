@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14995 -->
+<!-- EN-Revision: 15156 -->
 <sect3 id="zend.controller.router.routes.hostname">
     <title>Zend_Controller_Router_Route_Hostname</title>
 
     <para>
-        <code>Zend_Controller_Router_Route_Hostname</code>
+        <classname>Zend_Controller_Router_Route_Hostname</classname>
         はホスト名によるルートです。標準のルートと同じように動作しますが、
         パスではなくコールされた URL のホスト名に基づいて動作します。
     </para>
@@ -30,11 +30,10 @@ $hostnameRoute = new Zend_Controller_Router_Route_Hostname(
 $plainPathRoute = new Zend_Controller_Router_Route_Static('');
 
 $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
-        <code>Zend_Controller_Router_Route_Hostname</code>
+        <classname>Zend_Controller_Router_Route_Hostname</classname>
         のコンストラクタの最初のパラメータはルートの定義で、
         これがホスト名にマッチします。
         ルート定義には静的な部分と動的な部分があり、両者はドット
@@ -51,7 +50,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         例に示したように、<code>$hostnameRoute->chain($pathRoute);</code>
         のようにコールすることになります。こうすると、
         <code>$hostnameRoute</code> には何も変更は加えられませんが、新たなルート
-        (<code>Zend_Controller_Router_Route_Chain</code>) が返されます。
+        (<classname>Zend_Controller_Router_Route_Chain</classname>) が返されます。
         そして、これをルータに渡します。
     </para>
 </sect3>

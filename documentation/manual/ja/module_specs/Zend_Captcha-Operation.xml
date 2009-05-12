@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha の方法</title>
 
     <para>
         すべての CAPTCHA アダプタは
-        <code>Zend_Captcha_Adapter</code> を実装しています。
+        <classname>Zend_Captcha_Adapter</classname> を実装しています。
         これは次のようなインターフェイスです。
     </para>
 
@@ -30,12 +30,11 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 
     public function getErrors();
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         name アクセサを使用して、CAPTCHA の識別子を設定したり取得したりします。
-        <code>getDecorator()</code> を使用して <code>Zend_Form</code> のデコレータを指定します。
+        <code>getDecorator()</code> を使用して <classname>Zend_Form</classname> のデコレータを指定します。
         名前、あるいは実際のデコレータオブジェクトを返します。
         しかし、本当に大事なのは <code>generate()</code>
         と <code>render()</code> です。
@@ -69,8 +68,7 @@ echo $captcha->render($view);
 if ($captcha->isValid($_POST['foo'], $_POST)) {
     // 正解!
 }
-]]>
-        </programlisting>
+]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

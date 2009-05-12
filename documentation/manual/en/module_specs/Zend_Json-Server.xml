@@ -4,7 +4,7 @@
     <title>Zend_Json_Server - JSON-RPC server</title>
 
     <para>
-        <code>Zend_Json_Server</code> is a <ulink
+        <classname>Zend_Json_Server</classname> is a <ulink
             url="http://groups.google.com/group/json-rpc/">JSON-RPC</ulink>
         server implementation. It supports both the
         <ulink url="http://json-rpc.org/wiki/specification">JSON-RPC
@@ -32,7 +32,7 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Json_Server</code> utilizes <xref linkend="zend.server.reflection" /> to
+        <classname>Zend_Json_Server</classname> utilizes <xref linkend="zend.server.reflection" /> to
         perform reflection on any attached classes or functions, and uses that
         information to build both the SMD and enforce method call signatures. As
         such, it is imperative that any attached functions and/or class methods
@@ -45,7 +45,7 @@
     </itemizedlist>
 
     <para>
-        <code>Zend_Json_Server</code> listens for POST requests only at this
+        <classname>Zend_Json_Server</classname> listens for POST requests only at this
         time; fortunately, most JSON-RPC client implementations in the wild at
         the time of this writing will only POST requests as it is. This makes it
         simple to utilize the same server end point to both handle requests as
@@ -115,14 +115,13 @@ class Calculator
         return $x / $y;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Note that each method has a docblock with entries indicating each
             parameter and its type, as well as an entry for the return value.
             This is <emphasis>absolutely critical</emphasis> when utilizing
-            <code>Zend_Json_Server</code> -- or any other server component in
+            <classname>Zend_Json_Server</classname> -- or any other server component in
             Zend Framework, for that matter.
         </para>
 
@@ -138,8 +137,7 @@ $server->setClass('Calculator');
 
 // Handle the request:
 $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             However, this will not address the issue of returning an SMD so that
@@ -167,15 +165,13 @@ if ('GET' == $_SERVER['REQUEST_METHOD']) {
 }
 
 $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If utilizing the JSON-RPC server with Dojo toolkit, you will also
             need to set a special compatibility flag to ensure that the two
             interoperate properly:
         </para>
-
 
         <programlisting role="php"><![CDATA[
 $server = new Zend_Json_Server();
@@ -195,15 +191,14 @@ if ('GET' == $_SERVER['REQUEST_METHOD']) {
 }
 
 $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <sect2 id="zend.json.server.details">
         <title>Advanced Details</title>
 
         <para>
-            While most functionality for <code>Zend_Json_Server</code> is
+            While most functionality for <classname>Zend_Json_Server</classname> is
             spelled out in <xref linkend="zend.json.server.usage" />, more
             advanced functionality is available.
         </para>
@@ -212,7 +207,7 @@ $server->handle();
             <title>Zend_Json_Server</title>
 
             <para>
-                <code>Zend_Json_Server</code> is the core class in the JSON-RPC
+                <classname>Zend_Json_Server</classname> is the core class in the JSON-RPC
                 offering; it handles all requests and returns the response
                 payload. It has the following methods:
             </para>
@@ -225,10 +220,10 @@ $server->handle();
                         that item will be exposed as JSON-RPC methods.</para></listitem>
                 <listitem><para><code>fault($fault = null, $code = 404, $data =
                         null)</code>: Create and return a
-                        <code>Zend_Json_Server_Error</code> object.</para></listitem>
+                        <classname>Zend_Json_Server_Error</classname> object.</para></listitem>
                 <listitem><para><code>handle($request = false)</code>: Handle a
                         JSON-RPC request; optionally, pass a
-                        <code>Zend_Json_Server_Request</code> object to utilize
+                        <classname>Zend_Json_Server_Request</classname> object to utilize
                         (creates one by default).</para></listitem>
                 <listitem><para><code>getFunctions()</code>: Return a list of
                         all attached methods.</para></listitem>
@@ -250,7 +245,7 @@ $server->handle();
                         auto-emission of the response is enabled.</para></listitem>
                 <listitem><para><code>getServiceMap()</code>: Retrieve the
                         service map description in the form of a
-                        <code>Zend_Json_Server_Smd</code> object</para></listitem>
+                        <classname>Zend_Json_Server_Smd</classname> object</para></listitem>
             </itemizedlist>
         </sect3>
 
@@ -259,7 +254,7 @@ $server->handle();
 
             <para>
                 The JSON-RPC request environment is encapsulated in the
-                <code>Zend_Json_Server_Request</code> object. This object allows
+                <classname>Zend_Json_Server_Request</classname> object. This object allows
                 you to set necessary portions of the JSON-RPC request, including
                 the request ID, parameters, and JSON-RPC specification version.
                 It has the ability to load itself via JSON or a set of options,
@@ -318,7 +313,7 @@ $server->handle();
 
             <para>
                 An HTTP specific version is available via
-                <code>Zend_Json_Server_Request_Http</code>. This class will
+                <classname>Zend_Json_Server_Request_Http</classname>. This class will
                 retrieve the request via <code>php://input</code>, and allows
                 access to the raw JSON via the <code>getRawJson()</code> method.
             </para>
@@ -329,7 +324,7 @@ $server->handle();
 
             <para>
                 The JSON-RPC response payload is encapsulated in the
-                <code>Zend_Json_Server_Response</code> object. This object allows
+                <classname>Zend_Json_Server_Response</classname> object. This object allows
                 you to set the return value of the request, whether or not the
                 response is an error, the request identifier, the JSON-RPC
                 specification version the response conforms to, and optionally
@@ -372,7 +367,7 @@ $server->handle();
 
             <para>
                 An HTTP specific version is available via
-                <code>Zend_Json_Server_Response_Http</code>. This class will
+                <classname>Zend_Json_Server_Response_Http</classname>. This class will
                 send the appropriate HTTP headers as well as serialize the
                 response as JSON.
             </para>
@@ -391,13 +386,13 @@ $server->handle();
             <para>
                 Error codes are derived from those recommended by <ulink
                     url="http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php">the
-                    XML-RPC EPI project</ulink>. <code>Zend_Json_Server</code>
+                    XML-RPC EPI project</ulink>. <classname>Zend_Json_Server</classname>
                 appropriately assigns the code based on the error condition. For
                 application exceptions, the code '-32000' is used.
             </para>
 
             <para>
-                <code>Zend_Json_Server_Error</code> exposes the following
+                <classname>Zend_Json_Server_Error</classname> exposes the following
                 methods:
             </para>
 
@@ -448,7 +443,7 @@ $server->handle();
             </para>
 
             <para>
-                <code>Zend_Json_Server_Smd</code> provides an object oriented
+                <classname>Zend_Json_Server_Smd</classname> provides an object oriented
                 way to build service maps. At its most basic, you pass it
                 metadata describing the service using mutators, and specify
                 services (methods and functions).
@@ -456,9 +451,9 @@ $server->handle();
 
             <para>
                 The service descriptions themselves are typically instances of
-                <code>Zend_Json_Server_Smd_Service</code>; you can also pass all
+                <classname>Zend_Json_Server_Smd_Service</classname>; you can also pass all
                 information as an array to the various service mutators in
-                <code>Zend_Json_Server_Smd</code>, and it will instantiate a
+                <classname>Zend_Json_Server_Smd</classname>, and it will instantiate a
                 service object for you. The service objects contain information
                 such as the name of the service (typically the function or
                 method name), the parameters (names, types, and position), and
@@ -467,7 +462,7 @@ $server->handle();
             </para>
 
             <para>
-                <code>Zend_Json_Server</code> actually does all of this behind
+                <classname>Zend_Json_Server</classname> actually does all of this behind
                 the scenes for you, by using reflection on the attached classes
                 and functions; you should create your own service maps only if
                 you need to provide custom functionality that class and function
@@ -475,7 +470,7 @@ $server->handle();
             </para>
 
             <para>
-                Methods available in <code>Zend_Json_Server_Smd</code> include:
+                Methods available in <classname>Zend_Json_Server_Smd</classname> include:
             </para>
 
             <itemizedlist>
@@ -491,8 +486,8 @@ $server->handle();
                 <listitem><para><code>setEnvelope($envelopeType)</code>: Set the
                         request envelope that should be used to access the
                         service. Currently, supports the constants
-                        <code>Zend_Json_Server_Smd::ENV_JSONRPC_1</code> and
-                        <code>Zend_Json_Server_Smd::ENV_JSONRPC_1</code>.</para></listitem>
+                        <classname>Zend_Json_Server_Smd::ENV_JSONRPC_1</classname> and
+                        <classname>Zend_Json_Server_Smd::ENV_JSONRPC_1</classname>.</para></listitem>
                 <listitem><para><code>getEnvelope()</code>: Get the current
                         request envelope.</para></listitem>
                 <listitem><para><code>setContentType($type)</code>: Set the
@@ -526,7 +521,7 @@ $server->handle();
                 <listitem><para><code>addService($service)</code>: Add a service
                         to the map. May be an array of information to pass to
                         the constructor of
-                        <code>Zend_Json_Server_Smd_Service</code>, or an
+                        <classname>Zend_Json_Server_Smd_Service</classname>, or an
                         instance of that class.</para></listitem>
                 <listitem><para><code>addServices(array $services)</code>: Add
                         multiple services at once.</para></listitem>
@@ -548,7 +543,7 @@ $server->handle();
             </itemizedlist>
 
             <para>
-                <code>Zend_Json_Server_Smd_Service</code> has the following
+                <classname>Zend_Json_Server_Smd_Service</classname> has the following
                 methods:
             </para>
 
@@ -563,7 +558,7 @@ $server->handle();
                         name.</para></listitem>
                 <listitem><para><code>setTransport($transport)</code>: Set the
                         service transport (currently, only transports supported
-                        by <code>Zend_Json_Server_Smd</code> are allowed).</para></listitem>
+                        by <classname>Zend_Json_Server_Smd</classname> are allowed).</para></listitem>
                 <listitem><para><code>getTransport()</code>: Retrieve the
                         current transport.</para></listitem>
                 <listitem><para><code>setTarget($target)</code>: Set the URL
@@ -574,7 +569,7 @@ $server->handle();
                         of the service.</para></listitem>
                 <listitem><para><code>setEnvelope($envelopeType)</code>: Set the
                         service envelope (currently, only envelopes supported
-                        by <code>Zend_Json_Server_Smd</code> are allowed).</para></listitem>
+                        by <classname>Zend_Json_Server_Smd</classname> are allowed).</para></listitem>
                 <listitem><para><code>getEnvelope()</code>: Retrieve the service
                         envelope type.</para></listitem>
                 <listitem><para><code>addParam($type, array $options = array(),

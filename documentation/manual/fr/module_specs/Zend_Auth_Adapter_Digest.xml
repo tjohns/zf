@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.digest">
-
     <title>Authentification "Digest"</title>
 
     <sect2 id="zend.auth.adapter.digest.introduction">
-
         <title>Introduction</title>
 
         <para>
@@ -42,11 +40,9 @@
         <programlisting><![CDATA[
 unUtilisateur:Un domaine:3b17d7f3a9374666e892cbce58aa724f
 ]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.digest.specifics">
-
         <title>Spécifications</title>
 
         <para>
@@ -80,11 +76,9 @@ unUtilisateur:Un domaine:3b17d7f3a9374666e892cbce58aa724f
             </itemizedlist>
             Ces paramètres doivent être définis avant l'appel de <code>authenticate()</code>.
         </para>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.digest.identity">
-
         <title>Identité</title>
 
         <para>
@@ -115,7 +109,5 @@ Array
 )
 */
 ]]></programlisting>
-
     </sect2>
-
 </sect1>

@@ -3,7 +3,7 @@
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
-        <code>Zend_Config_Xml</code> enables developers to store configuration data in a simple XML format and read them
+        <classname>Zend_Config_Xml</classname> enables developers to store configuration data in a simple XML format and read them
         via nested object property syntax. The root element of the XML file or string is irrelevant and may be named arbitrarily.
         The first level of XML elements correspond with configuration data sections. The XML format supports
         hierarchical organization through nesting of XML elements below the section-level elements. The content of a
@@ -14,14 +14,14 @@
     <note>
         <title>Return Type</title>
         <para>
-            Configuration data read into <code>Zend_Config_Xml</code> are always returned as strings.
+            Configuration data read into <classname>Zend_Config_Xml</classname> are always returned as strings.
             Conversion of data from strings to other types is left to developers to suit their particular needs.
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title>Using <code>Zend_Config_Xml</code></title>
+        <title>Using Zend_Config_Xml</title>
         <para>
-            This example illustrates a basic use of <code>Zend_Config_Xml</code> for loading configuration data from an
+            This example illustrates a basic use of <classname>Zend_Config_Xml</classname> for loading configuration data from an
             XML file. In this example there are configuration data for both a production system and for a staging
             system. Because the staging system configuration data are very similar to those for production, the staging
             section inherits from the production section. In this case, the decision is arbitrary and could have been
@@ -54,8 +54,7 @@
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the XML file. It is a
             simple matter to load these data by specifying the XML file and the staging section:
@@ -65,13 +64,12 @@ $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // prints "dev.example.com"
 echo $config->database->params->dbname; // prints "dbname"
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Using Tag Attributes in <code>Zend_Config_Xml</code></title>
+        <title>Using Tag Attributes in Zend_Config_Xml</title>
         <para>
-            <code>Zend_Config_Xml</code> also supports two additional ways of defining nodes in the configuration. Both make use
+            <classname>Zend_Config_Xml</classname> also supports two additional ways of defining nodes in the configuration. Both make use
             of attributes. Since the <code>extends</code> and the <code>value</code> attributes are reserved keywords
             (the latter one by the the second way of using attributes), they may not be used. The first way of
             making usage of attributes is to add attributes in a parent node, which then will be translated into
@@ -91,8 +89,7 @@ echo $config->database->params->dbname; // prints "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             The other way does not really shorten the config, but keeps it easier to maintain since you don't have to write
             the tag name twice. You simply create an empty tag with the value in the <code>value</code>
@@ -123,16 +120,15 @@ echo $config->database->params->dbname; // prints "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
     </example>
 <note>
         <title>XML strings</title>
         <para>
-            <code>Zend_Config_Xml</code> is able to load an XML string directly,
+            <classname>Zend_Config_Xml</classname> is able to load an XML string directly,
             such as that retrieved from a database. The string is passed
             as the first parameter to the constructor and must start with the
-            characters <code>'&lt;?xml':</code>
+            characters <code>'&lt;?xml'</code>:
         </para>
         <programlisting role="xml"><![CDATA[
 $string = <<<EOT
@@ -157,8 +153,7 @@ $string = <<<EOT
 EOT;
 
 $config = new Zend_Config_Xml($string, 'staging');
-]]>
-        </programlisting>
+]]></programlisting>
     </note>
 </sect1>
 <!--

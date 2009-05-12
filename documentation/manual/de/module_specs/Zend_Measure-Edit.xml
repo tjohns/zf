@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.measure.edit">
 
     <title>Manipulation von Maßeinheiten</title>
 
     <para>
-        Analysieren und normalisieren von Eingaben kombiniert mit der Ausgabe in lokalisierter Schreibweise macht
-        die Daten für Benutzer in fremden Gebietsschemata benutzbar. Viele zusätzliche Methoden existieren in den
-        <code>Zend_Measure_*</code> Komponentenum diese Daten zu manipulieren und mit Ihnen zu arbeiten nachdem Sie
-        normalisiert wurden.
+        Analysieren und normalisieren von Eingaben kombiniert mit der Ausgabe in lokalisierter
+        Schreibweise macht die Daten für Benutzer in fremden Gebietsschemata benutzbar. Viele
+        zusätzliche Methoden existieren in den <classname>Zend_Measure_*</classname> Komponentenum
+        diese Daten zu manipulieren und mit Ihnen zu arbeiten nachdem Sie normalisiert wurden.
     </para>
 
     <itemizedlist>
@@ -35,7 +35,8 @@
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changevalue"><code>Werte per Hand ändern</code></link>
+                <link linkend="zend.measure.edit.changevalue"><code>Werte per Hand
+                    ändern</code></link>
             </para>
         </listitem>
         <listitem>
@@ -50,17 +51,18 @@
         <title>Konvertieren</title>
 
         <para>
-            Das warscheinlich wichtigste Feature ist die Konvertierung in verschiedene Maßeinheiten. Die
-            Konvertierung von Maßeinheiten kann durch verwendung der Methode <code>convertTo()</code> beliebig
-            oft durchgeführt werden. Maßeinheiten können nur in andere Einheiten des gleichen Typs (Klasse)
-            konvertiert werden. Deswegen ist es nicht möglich z.B. eine Länge in ein Gewicht zu konvertieren,
-            was ja schlechte Programmierpraxis und Fehler erlauben würde ohne das eine Ausnahme geworfen wird.
+            Das warscheinlich wichtigste Feature ist die Konvertierung in verschiedene Maßeinheiten.
+            Die Konvertierung von Maßeinheiten kann durch verwendung der Methode
+            <code>convertTo()</code> beliebig oft durchgeführt werden. Maßeinheiten können nur in
+            andere Einheiten des gleichen Typs (Klasse) konvertiert werden. Deswegen ist es nicht
+            möglich z.B. eine Länge in ein Gewicht zu konvertieren, was ja schlechte
+            Programmierpraxis und Fehler erlauben würde ohne das eine Ausnahme geworfen wird.
         </para>
 
         <para>
-            Die <code>convertTo</code> Methode akzeptiert einen optionalen Parameter. Mit diesem Parameter
-            kann eine Genauigkeit, für den zurückgegebenen Wert, definiert werden. Die Standardgenauigkeit ist
-            '<code>2</code>'.
+            Die <code>convertTo</code> Methode akzeptiert einen optionalen Parameter. Mit diesem
+            Parameter kann eine Genauigkeit, für den zurückgegebenen Wert, definiert werden. Die
+            Standardgenauigkeit ist '<code>2</code>'.
         </para>
 
         <example id="zend.measure.edit.convert.example-1">
@@ -77,8 +79,7 @@ print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON);
 
 // define a precision for the output
 print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON, 3);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -88,11 +89,12 @@ print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON, 3);
         <title>Addieren und Subtrahieren</title>
 
         <para>
-            Maßeinheiten können miteinander durch <code>add()</code> addiert und durch <code>sub()</code> subtrahiert
-            werden. Jede Addition erzeugt als Ergebnis ein neues Objekt. Das aktuelle Objekt wird durch die Klasse
-            nicht verändert. Das neue Objekt ist vom selben Typ die das originale Objekt. Dynamische Objekte
-            unterstützen einen flüssigen Programmierstil, bei dem komplexe Sequenzen von Operationen geschachtelt
-            werden können ohne das Risiko eines Nebeneffekts durch die Veränderung des Eingabe Objektes.
+            Maßeinheiten können miteinander durch <code>add()</code> addiert und durch
+            <code>sub()</code> subtrahiert werden. Jede Addition erzeugt als Ergebnis ein neues
+            Objekt. Das aktuelle Objekt wird durch die Klasse nicht verändert. Das neue Objekt ist
+            vom selben Typ die das originale Objekt. Dynamische Objekte unterstützen einen flüssigen
+            Programmierstil, bei dem komplexe Sequenzen von Operationen geschachtelt werden können
+            ohne das Risiko eines Nebeneffekts durch die Veränderung des Eingabe Objektes.
         </para>
 
         <para>
@@ -107,18 +109,17 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $sum = $unit->add($unit2);
 
 echo $sum; // Ausgabe "300 cm"
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
         <note>
             <title>Automatische Konvertierung</title>
             <para>
-                Beim Addieren eines Objektes zu einem anderen wird dieses automatisch in die richtige Einheit
-                konvertiert. Es ist nicht notwendig
-                <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> aufzurufen bevor
-                unterschiedliche Einheiten addiert werden.
+                Beim Addieren eines Objektes zu einem anderen wird dieses automatisch in die
+                richtige Einheit konvertiert. Es ist nicht notwendig
+                <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> aufzurufen
+                bevor unterschiedliche Einheiten addiert werden.
             </para>
         </note>
 
@@ -137,8 +138,7 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $sum = $unit->sub($unit2);
 
 echo $sum;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -149,9 +149,9 @@ echo $sum;
         <title>Identität Vergleichen</title>
 
         <para>
-            Maßeinheiten können genauso verglichen werden, aber ohne automatische Konvertierung. Das bedeutet das
-            <code>equals()</code> nur dann <code>TRUE</code> zurückgibt wenn beide, sowohl der Wert als auch
-            die Einheit identisch sind.
+            Maßeinheiten können genauso verglichen werden, aber ohne automatische Konvertierung. Das
+            bedeutet das <code>equals()</code> nur dann <code>TRUE</code> zurückgibt wenn beide,
+            sowohl der Wert als auch die Einheit identisch sind.
         </para>
 
         <para>
@@ -167,8 +167,7 @@ if ($unit->equals($unit2)) {
 } else {
     print "Das sind unterschiedliche Maßeinheiten";
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
             <example id="zend.measure.edit.equal.example-2">
                 <title>Identische Maßeinheiten</title>
@@ -184,8 +183,7 @@ if ($unit->equals($unit2)) {
 } else {
     print "Das sind unterschiedliche Maßeinheiten";
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -196,9 +194,10 @@ if ($unit->equals($unit2)) {
         <title>Werte Vergleichen</title>
 
         <para>
-            Um herauszufinden ob eine Maßeinheite kleiner oder größer als eine andere ist kann <code>compare()</code>
-            verwendet werden, was 0, -1 oder 1 zurückgibt, abhängig von der Differenz zwischen den zwei Objekten.
-            Identische Maßeinheiten geben 0 zurück, kleinere einen negativen, und größere einen positiven Wert.
+            Um herauszufinden ob eine Maßeinheite kleiner oder größer als eine andere ist kann
+            <code>compare()</code> verwendet werden, was 0, -1 oder 1 zurückgibt, abhängig von der
+            Differenz zwischen den zwei Objekten. Identische Maßeinheiten geben 0 zurück, kleinere
+            einen negativen, und größere einen positiven Wert.
         </para>
 
         <para>
@@ -212,8 +211,7 @@ $unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 print "Gleich:".$unit2->compare($unit);
 print "Kleiner:".$unit2->compare($unit3);
 print "Größer:".$unit3->compare($unit2);
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -224,8 +222,9 @@ print "Größer:".$unit3->compare($unit2);
         <title>Werte per Hand ändern</title>
 
         <para>
-            Um den Wert einer Maßeinheit explizit zu Ändern, kann <code>setValue()</code> verwendet werden um
-            den aktuellen Wert zu überschreiben. Die Parameter sind identisch mit denen des Konstruktors.
+            Um den Wert einer Maßeinheit explizit zu Ändern, kann <code>setValue()</code> verwendet
+            werden um den aktuellen Wert zu überschreiben. Die Parameter sind identisch mit denen
+            des Konstruktors.
         </para>
 
         <para>
@@ -243,8 +242,7 @@ echo $unit;
 
 $unit->setValue("1.234,56", Zend_Measure_Length::MILLIMETER,$locale);
 echo $unit;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -255,7 +253,8 @@ echo $unit;
         <title>Typ per Hand ändern</title>
 
         <para>
-            Um den Typ einer Maßeinheit ohne den Wert zu verändern kann <code>setType()</code> verwendet werden.
+            Um den Typ einer Maßeinheit ohne den Wert zu verändern kann <code>setType()</code>
+            verwendet werden.
         </para>
 
         <example id="zend.measure.edit.changetype.example-1">
@@ -266,8 +265,7 @@ echo $unit; // Ausgabe "1 m"
 
 $unit->setType(Zend_Measure_Length::KILOMETER);
 echo $unit; // Ausgabe "1000 km"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

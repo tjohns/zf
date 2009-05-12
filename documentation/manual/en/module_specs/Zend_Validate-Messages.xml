@@ -5,7 +5,7 @@
     <title>Validation Messages</title>
 
     <para>
-        Each validator which is based on <code>Zend_Validate</code> provides
+        Each validator which is based on <classname>Zend_Validate</classname> provides
         one or multiple messages in the case of a failed validation. You can use
         this information for setting own messages or when you have to translate
         the messages a validator can return. The following table lists all
@@ -505,8 +505,7 @@
     <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Alnum();
 $messages  = $validator->getMessageTemplates();
-]]>
-    </programlisting>
+]]></programlisting>
 
 </sect1>
 <!--

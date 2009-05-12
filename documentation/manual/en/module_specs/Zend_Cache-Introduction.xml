@@ -3,7 +3,7 @@
 <sect1 id="zend.cache.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Cache</code> provides a generic way to cache any data.
+        <classname>Zend_Cache</classname> provides a generic way to cache any data.
     </para>
     <para>
       Caching in Zend Framework is operated by frontends while cache records are stored through backend adapters
@@ -12,14 +12,14 @@
       (for example: "delete all cache records marked with a given tag").
     </para>
     <para>
-        The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
-        Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
+        The core of the module (<classname>Zend_Cache_Core</classname>) is generic, flexible and configurable.
+        Yet, for your specific needs there are cache frontends that extend <classname>Zend_Cache_Core</classname>
         for convenience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
     </para>
     <example id="zend.cache.introduction.example-1">
-        <title>Getting a Frontend with <code>Zend_Cache::factory()</code></title>
+        <title>Getting a Frontend with Zend_Cache::factory()</title>
         <para>
-            <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
+            <classname>Zend_Cache::factory()</classname> instantiates correct objects and ties them together.
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
             backend.
         </para>
@@ -39,8 +39,7 @@ $cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <note>
@@ -84,12 +83,11 @@ if(!$result = $cache->load('myresult')) {
 }
 
 print_r($result);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.cache.introduction.example-3">
-        <title>Caching Output with <code>Zend_Cache</code> Output Frontend</title>
+        <title>Caching Output with Zend_Cache Output Frontend</title>
         <para>
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
             encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
@@ -123,8 +121,7 @@ if(!$cache->start('mypage')) {
 }
 
 echo 'This is never cached ('.time().').';
-]]>
-        </programlisting>
+]]></programlisting>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
            for demonstration purposes. Try running this and then refreshing several times; you will notice
@@ -136,7 +133,7 @@ echo 'This is never cached ('.time().').';
        </para>
     </example>
     <note><para>
-        When using <code>Zend_Cache</code>, pay attention to the important cache identifier (passed to <code>save()</code>
+        When using <classname>Zend_Cache</classname>, pay attention to the important cache identifier (passed to <code>save()</code>
         and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
         cache records may wipe each other or, even worse, be displayed in place of the other.
     </para></note>

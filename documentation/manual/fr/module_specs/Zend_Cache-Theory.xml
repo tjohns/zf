@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.theory">
-
     <title>Aspect théorique</title>
 
     <para>
@@ -12,12 +11,12 @@
         définit combien de temps la ressource de cache est considérée comme à jour. Le troisième
         est l'exécution conditionnelle, ainsi chaque partie de votre code peut être évitée
         entièrement, pour améliorer les performances. La fonction principale du frontend
-        (<code>Zend_Cache_Core::get()</code>) est toujours faite pour retourner <code>false</code>
-        en cas de cache manquant, si cela donne du sens à la nature d'un frontend. Cela permet aux
-        utilisateurs d'entourer des parties de code qu'ils veulent mettre en cache (et éviter) dans
-        une instruction <code>if(){ ... }</code> où la condition est une méthode
-        <classname>Zend_Cache</classname>. A la fin de ces blocs, vous devez sauvegarder ce que
-        vous avez généré (par exemple <code>Zend_Cache_Core::save()</code>).
+        (<classname>Zend_Cache_Core::get()</classname>) est toujours faite pour retourner
+        <code>false</code> en cas de cache manquant, si cela donne du sens à la nature d'un
+        frontend. Cela permet aux utilisateurs d'entourer des parties de code qu'ils veulent mettre
+        en cache (et éviter) dans une instruction <code>if(){ ... }</code> où la condition est une
+        méthode <classname>Zend_Cache</classname>. A la fin de ces blocs, vous devez sauvegarder ce
+        que vous avez généré (par exemple <classname>Zend_Cache_Core::save()</classname>).
     </para>
 
     <note>
@@ -40,8 +39,7 @@
     </note>
 
     <sect2 id="zend.cache.factory">
-
-        <title>La méthode de fabrique de <classname>Zend_Cache</classname></title>
+        <title>La méthode de fabrique de Zend_Cache</title>
 
         <para>
             Une bonne manière de construire une instance utilisable d'un frontend
@@ -72,22 +70,20 @@ $cache = Zend_Cache::factory($frontendName,
 
         <para>
             Dans les exemples suivants, nous nous assurerons que la variable
-            <varname>$cache</varname> utilise une instance de frontend valide, et que vous
+            <code>$cache</code> utilise une instance de frontend valide, et que vous
             comprenez comment passer des paramètres à vos backends.
         </para>
 
         <note>
             <para>
-                Utilisez toujours <code>Zend_Cache::factory()</code> pour obtenir des
+                Utilisez toujours <classname>Zend_Cache::factory()</classname> pour obtenir des
                 instances de frontend. Instancier des frontends et des backends par vous-même ne
                 fonctionnera pas comme prévu.
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.cache.tags">
-
         <title>Baliser les enregistrements</title>
 
         <para>
@@ -107,16 +103,14 @@ $cache->save($grande_donnees,
         <note>
             <para>
                 Notez que la méthode <code>save()</code> accepte un quatrième paramètre
-                optionnel : <varname>$specificLifetime</varname> (si différent de <code>false</code>, il
+                optionnel : <code>$specificLifetime</code> (si différent de <code>false</code>, il
                 affecte un '<code>lifeTime</code>' spécifique pour cet enregistrement de cache
                 particulier).
             </para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.cache.clean">
-
         <title>Nettoyer le cache</title>
 
         <para>
@@ -178,7 +172,5 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG,
             sont à combiner avec un tableau de balises pour réaliser les opérations de
             nettoyage.
         </para>
-
     </sect2>
-
 </sect1>

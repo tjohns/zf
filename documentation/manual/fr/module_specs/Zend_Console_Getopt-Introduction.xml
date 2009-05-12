@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -35,12 +34,14 @@
                 ressources sur lesquelles la commande agit.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>option</code>" : un argument qui signifie que la commande va changer
                 son comportement par défaut d'une manière quelconque.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>flag</code>" (drapeau) : la première partie d'une option, identifie le
@@ -51,6 +52,7 @@
                 un drapeau long. Les drapeaux longs ne peuvent pas être groupés.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "<code>parameter</code>" (paramètre) : la seconde partie d'une option ; une
@@ -65,9 +67,10 @@
                 par le symbole égal ("<code>=</code>"). La dernière forme est autorisée seulement
                 avec des drapeaux longs. Par exemple, <code>-u username</code>, <code>--user
                 username</code>, et <code>--user=username</code> sont des formats supportés par
-                <code>Zend_Console_Getopt</code>.
+                <classname>Zend_Console_Getopt</classname>.
             </para>
         </listitem>
+
         <listitem>
             <para>
                 "cluster" (groupe) : les drapeaux courts peuvent être combinés dans une
@@ -89,14 +92,15 @@
     </para>
 
     <para>
-        <code>Zend_Console_Getopt</code> fournit une interface pour déclarer quels drapeaux
-        sont valides pour votre application, produit une erreur et un message s'ils emploient un
-        drapeau invalide, et transmet à votre application les drapeaux spécifiés par
-        l'utilisateur.
+        <classname>Zend_Console_Getopt</classname> fournit une interface pour déclarer quels
+        drapeaux sont valides pour votre application, produit une erreur et un message s'ils
+        emploient un drapeau invalide, et transmet à votre application les drapeaux spécifiés
+        par l'utilisateur.
     </para>
 
     <note>
-        <title><code>Getopt</code> n'est pas une application framework</title>
+        <title>Getopt n'est pas une application framework</title>
+
         <para>
             <classname>Zend_Console_Getopt</classname> <emphasis>n'</emphasis>interprète
             <emphasis>pas</emphasis> le sens des drapeaux ou des paramètres, cette classe n'exécute
@@ -113,5 +117,4 @@
         Les sections suivantes décrivent l'utilisation de
         <classname>Zend_Console_Getopt</classname>.
     </para>
-
 </sect1>

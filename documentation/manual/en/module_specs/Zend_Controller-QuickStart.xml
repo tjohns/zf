@@ -6,11 +6,11 @@
     <sect2 id="zend.controller.quickstart.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Controller</code> is the heart of Zend Framework's MVC
+            <classname>Zend_Controller</classname> is the heart of Zend Framework's MVC
             system. MVC stands for <ulink
                 url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink>
             and is a design pattern targeted at separating application logic
-            from display logic. <code>Zend_Controller_Front</code> implements a
+            from display logic. <classname>Zend_Controller_Front</classname> implements a
             <ulink
                 url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front
                 Controller</ulink> pattern, in which all requests are
@@ -18,7 +18,7 @@
             Action Controllers based on the URL requested.
         </para>
         <para>
-            The <code>Zend_Controller</code> system was built with extensibility
+            The <classname>Zend_Controller</classname> system was built with extensibility
             in mind, either by subclassing the existing classes, writing new
             classes that implement the various interfaces and abstract classes
             that form the foundation of the controller family of classes, or
@@ -57,8 +57,7 @@ application/
 html/
     .htaccess
     index.php
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -86,8 +85,7 @@ RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
-]]>
-            </programlisting>
+]]></programlisting>
 
             <note>
                 <title>Learn about mod_rewrite</title>
@@ -164,8 +162,7 @@ RewriteRule ^.*$ index.php [NC,L]
 
             <programlisting role="php"><![CDATA[
 Zend_Controller_Front::run('/path/to/app/controllers');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 This will instantiate and dispatch the front controller, which
@@ -192,7 +189,7 @@ Zend_Controller_Front::run('/path/to/app/controllers');
             </para>
 
             <para>
-                <code>Zend_Controller</code>'s dispatcher then takes the
+                <classname>Zend_Controller</classname>'s dispatcher then takes the
                 controller value and maps it to a class. By default, it
                 Title-cases the controller name and appends the word
                 <code>Controller</code>. Thus, in our example above, the
@@ -225,8 +222,7 @@ class IndexController extends Zend_Controller_Action
     {
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 By default, the <link
@@ -234,7 +230,7 @@ class IndexController extends Zend_Controller_Action
                 action helper is enabled. What this means is that by simply
                 defining an action method and a corresponding view script, you
                 will immediately get content rendered. By default,
-                <code>Zend_View</code> is used as the View layer in the MVC. The
+                <classname>Zend_View</classname> is used as the View layer in the MVC. The
                 <code>ViewRenderer</code> does some magic, and uses the
                 controller name (e.g., <code>index</code>) and the current
                 action name (e.g., <code>index</code>) to determine what
@@ -277,8 +273,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Hello, World!</h1>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
@@ -300,8 +295,7 @@ class ErrorController extends Zend_Controller_Action
     {
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Assuming the already discussed directory layout, this file will
@@ -325,8 +319,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <p>An error occurred; please try again later.</p>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

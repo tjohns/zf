@@ -4,13 +4,13 @@
     <title>Profiling with Firebug</title>
 
     <para>
-        <code>Zend_Db_Profiler_Firebug</code> sends profiling infomation to the
+        <classname>Zend_Db_Profiler_Firebug</classname> sends profiling infomation to the
         <ulink url="http://www.getfirebug.com/">Firebug</ulink> <ulink
             url="http://getfirebug.com/logging.html">Console</ulink>.
     </para>
 
     <para>
-        All data is sent via the <code>Zend_Wildfire_Channel_HttpHeaders</code>
+        All data is sent via the <classname>Zend_Wildfire_Channel_HttpHeaders</classname>
         component which uses HTTP headers to ensure the page content is not
         disturbed. Debugging AJAX requests that require clean JSON and XML
         responses is possible with this approach.
@@ -37,7 +37,7 @@
     </itemizedlist>
 
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
-        <title>DB Profiling with <code>Zend_Controller_Front</code></title>
+        <title>DB Profiling with Zend_Controller_Front</title>
 
         <programlisting role="php"><![CDATA[
 // In your bootstrap file
@@ -52,12 +52,11 @@ $db->setProfiler($profiler)
 
 // All DB queries in your model, view and controller
 // files will now be profiled and sent to Firebug
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
-        <title>DB Profiling without <code>Zend_Controller_Front</code></title>
+        <title>DB Profiling without Zend_Controller_Front</title>
 
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
@@ -80,8 +79,7 @@ ob_start();
 // Flush profiling data to browser
 $channel->flush();
 $response->sendHeaders();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

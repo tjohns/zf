@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect2 id="zend.test.phpunit.bootstrapping">
     <title>テストケースの起動</title>
 
@@ -8,7 +8,7 @@
         <link linkend="zend.test.phpunit.loginexample">Login
         サンプル</link> で説明したように、すべての MVC
         テストケースは
-        <code>Zend_Test_PHPUnit_ControllerTestCase</code>
+        <classname>Zend_Test_PHPUnit_ControllerTestCase</classname>
         を継承しなければなりません。このクラスは
         <code>PHPUnit_Framework_TestCase</code> を継承しており、
         PHPUnit が提供する仕組みやアサーションをすべて使用できます。
@@ -29,7 +29,6 @@
         を準備するだけの役割となります。
     </para>
 
-
     <programlisting role="php"><![CDATA[
 class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
@@ -37,8 +36,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         2 番目の方法として、アプリケーションを起動するための
@@ -56,8 +54,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         オブジェクトのインスタンスが必要な場合は、
@@ -75,12 +72,11 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         parent::setUp();
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         <code>parent::setUp()</code>; に注目しましょう。
-        これは必須です。とうのも、<code>Zend_Test_PHPUnit_Controller_TestCase</code>
+        これは必須です。とうのも、<classname>Zend_Test_PHPUnit_Controller_TestCase</classname>
         の <code>setUp()</code> メソッドが残りの起動処理
         (コールバックの呼び出しも含む) を実行するからです。
     </para>
@@ -105,10 +101,10 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         <listitem><para>
             リクエストオブジェクトやレスポンスオブジェクトに独自実装を用意しても、
             それが使われることはありません。
-            <code>Zend_Test_PHPUnit_Controller_TestCase</code> は、
+            <classname>Zend_Test_PHPUnit_Controller_TestCase</classname> は、
             独自のリクエストオブジェクトとレスポンスオブジェクト (それぞれ
-            <code>Zend_Controller_Request_HttpTestCase</code> および
-            <code>Zend_Controller_Response_HttpTestCase</code>)
+            <classname>Zend_Controller_Request_HttpTestCase</classname> および
+            <classname>Zend_Controller_Response_HttpTestCase</classname>)
             を持っています。これらのオブジェクトには、
             指定した方法でリクエスト環境を準備したり
             指定した方法で人工的なレスポンスを返したりするメソッドが用意されています。

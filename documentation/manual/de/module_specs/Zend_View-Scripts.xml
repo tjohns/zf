@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
 
     <para>
-        Sobald dein Controller die Variablen übergeben und die <code>render()</code> Methode aufgerufen hat,
-        inkludiert <code>Zend_View</code> das angeforderte View Skript und führt es "innerhalb" des
-        Gültigkeitsbereichs der <code>Zend_View</code> Instanz aus. Deshalb weisen Referenzen auf $this in
-        deinem View Skript auf die <code>Zend_View</code> Instanz selber.
+        Sobald dein Controller die Variablen übergeben und die <code>render()</code> Methode
+        aufgerufen hat, inkludiert <classname>Zend_View</classname> das angeforderte View Skript und
+        führt es "innerhalb" des Gültigkeitsbereichs der <classname>Zend_View</classname> Instanz
+        aus. Deshalb weisen Referenzen auf $this in deinem View Skript auf die
+        <classname>Zend_View</classname> Instanz selber.
     </para>
 
     <para>
@@ -21,7 +22,8 @@
     </para>
 
     <para>
-        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der <code>Zend_View</code> Einführung.
+        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der
+        <classname>Zend_View</classname> Einführung.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -48,8 +50,7 @@
     <p>Es gibt keine Bücher zum Anzeigen.</p>
 
 <?php endif; ?>
-]]>
-    </programlisting>
+]]></programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
 
@@ -64,7 +65,8 @@
         </para>
 
         <para>
-            <code>Zend_View</code> stellt eine Methode escape() bereit, die das Maskieren für dich übernimmt.
+            <classname>Zend_View</classname> stellt eine Methode escape() bereit, die das Maskieren
+            für dich übernimmt.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -73,14 +75,14 @@ echo $this->variable;
 
 // gute View Skript Praxis:
 echo $this->escape($this->variable);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Standardmäßig verwendet escape() die PHP htmlspecialchars() Funktion für die Maskierung.
             Allerdings könntest du abhängig von deiner Umgebung den Wunsch haben, die Maskierung
             anders durchzuführen. Verwende die setEscape() Methode auf der Controller Ebene, um
-            <code>Zend_View</code> mitzuteilen, welche Maskierungsmöglichkeit als Callback verwendet werden soll.
+            <classname>Zend_View</classname> mitzuteilen, welche Maskierungsmöglichkeit als Callback
+            verwendet werden soll.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -101,8 +103,7 @@ $view->setEscape(array($obj, 'methodName'));
 
 // und dann erstelle die Ausgabe
 echo $view->render(...);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Diese Callback Funktion oder Methode sollte den zu maskierenden Wert als ersten
@@ -118,9 +119,9 @@ echo $view->render(...);
         <para>
             Obwohl PHP selber eine mächtiges Templatesystem ist, haben viele Entwickler das Gefühl,
             dass es zu mächtig oder komplex für die Template Designer ist und möchten ein
-            alternatives Templatesystem verwenden. <code>Zend_View</code> stellt zwei Mechanismen bereit,
-            um dies zu realisieren, die erste durch Viewskripte und die zweite durch
-            Implementierung von <code>Zend_View_Interface</code>.
+            alternatives Templatesystem verwenden. <classname>Zend_View</classname> stellt zwei
+            Mechanismen bereit, um dies zu realisieren, die erste durch Viewskripte und die zweite
+            durch Implementierung von <classname>Zend_View_Interface</classname>.
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -152,8 +153,7 @@ if ($this->books) {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Dies wären die zugehörigen Template Dateien:
@@ -177,8 +177,7 @@ if ($this->books) {
 
 <!-- nobooks.tpl -->
 <p>Es gibt keine Bücher zum Anzeigen.</p>
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -186,9 +185,9 @@ if ($this->books) {
             <title>Ein Templatesystem mit Hilfe von Zend_View_Interface verwenden</title>
 
             <para>
-                Manche finden es einfacher, ein <code>Zend_View</code> kompatibles Templatesystem zu verwenden.
-                <code>Zend_View_Interface</code> definiert die minimale Schnittstelle, die zur
-                Kompatibilität benötigt wird.
+                Manche finden es einfacher, ein <classname>Zend_View</classname> kompatibles
+                Templatesystem zu verwenden. <classname>Zend_View_Interface</classname> definiert
+                die minimale Schnittstelle, die zur Kompatibilität benötigt wird.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -240,13 +239,12 @@ public function clearVars();
  * Rendern des Templates mit dem Namen $name
  */
 public function render($name);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Durch Verwendung dieses Interfaces ist es relativ einfach, das Templatesystem eines
-                Dritten in eine <code>Zend_View</code> kompatible Klasse zu umhüllen. Als Beispiel folgt ein
-                möglicher Wrapper für Smarty:
+                Dritten in eine <classname>Zend_View</classname> kompatible Klasse zu umhüllen. Als
+                Beispiel folgt ein möglicher Wrapper für Smarty:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -421,13 +419,12 @@ class Zend_View_Smarty implements Zend_View_Interface
         return $this->_smarty->fetch($name);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                In diesem Beispiel kannst du die <code>Zend_View_Smarty</code> anstelle von
-                <code>Zend_View</code> instanzieren und es dann ungefähr wie <code>Zend_View</code>
-                verwenden:
+                In diesem Beispiel kannst du die <classname>Zend_View_Smarty</classname> anstelle
+                von <classname>Zend_View</classname> instanzieren und es dann ungefähr wie
+                <classname>Zend_View</classname> verwenden:
             </para>
 
             <programlisting role="php"><![CDATA[

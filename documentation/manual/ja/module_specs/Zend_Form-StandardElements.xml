@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -17,7 +17,7 @@
 
         <para>
             HTML の button 要素を作成する際に使用します。
-            <code>Zend_Form_Element_Button</code> は <link
+            <classname>Zend_Form_Element_Button</classname> は <link
                 linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>
             を継承して独自の機能を追加したものです。
             'formButton' ビューヘルパーでデコレートを行います。
@@ -62,7 +62,7 @@
         </para>
 
         <para>
-            アダプタとしては <code>Zend_Captcha</code>
+            アダプタとしては <classname>Zend_Captcha</classname>
             の任意のアダプタを使用でき、また別途定義したその他のアダプタも使用できます。
             そのためには、プラグインローダのプレフィックスパスを指定する際に
             追加のキー 'CAPTCHA' あるいは 'captcha' を指定します。
@@ -70,8 +70,7 @@
 
         <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             CAPTCHA を登録するには <code>setCaptcha()</code>
@@ -85,8 +84,7 @@ $element->setCaptcha(new Zend_Captcha_Figlet());
 
 // 短い名前
 $element->setCaptcha('Dumb');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             設定経由で要素を読み込みたい場合は、キー 'captcha'
@@ -115,8 +113,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         'timeout' => 300,
     ),
 ));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             使用するデコレータは、captcha アダプタの設定によって決まります。
@@ -143,7 +140,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             しかし、基本的には boolean として扱います。
             チェックされている場合はその値が送信され、
             チェックされていない場合はなにも送信されません。
-            内部的に、<code>Zend_Form_Element_Checkbox</code> はこの状態を強制します。
+            内部的に、<classname>Zend_Form_Element_Checkbox</classname> はこの状態を強制します。
         </para>
 
         <para>
@@ -171,7 +168,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         </para>
 
         <para>
-            <code>Zend_Form_Element_Checkbox</code> は 'formCheckbox'
+            <classname>Zend_Form_Element_Checkbox</classname> は 'formCheckbox'
             ビューヘルパーを使用します。
             値としては常に checked 値を使用します。
         </para>
@@ -216,8 +213,7 @@ $element->addValidator('Size', false, 102400);
 // JPEG、PNG および GIF のみ
 $element->addValidator('Extension', false, 'jpg,png,gif');
 $form->addElement($element, 'foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 また、正しいエンコード形式をフォームに指定する必要があります。
@@ -227,8 +223,7 @@ $form->addElement($element, 'foo');
 
             <programlisting role="php"><![CDATA[
 $form->setAttrib('enctype', 'multipart/form-data');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 フォームの検証が成功したら、<code>receive()</code>
@@ -246,8 +241,7 @@ if (!$form->foo->receive()) {
 }
 
 $location = $form->foo->getFileName();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -280,14 +274,13 @@ $location = $form->foo->getFileName();
 
         <programlisting role="php"><![CDATA[
 $form->getValues();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
                 したがって、<code>getValues()</code> をコールした後に改めて
                 <code>receive()</code> をコールしても何も影響を及ぼしません。また、
-                <code>Zend_File_Transfer</code> のインスタンスを作成しても何も影響を及ぼしません。
+                <classname>Zend_File_Transfer</classname> のインスタンスを作成しても何も影響を及ぼしません。
                 受信すべきファイルはもうないからです。
             </para>
         </note>
@@ -310,8 +303,7 @@ $element = new Zend_Form_Element_File('foo');
 $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload')
         ->setValueDisabled(true);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 これで、 <code>getValues()</code> をコールしてもファイルは取得されなくなります。
@@ -327,8 +319,7 @@ if ($form->isValid($form->getPost())) {
         print "Upload error";
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -373,12 +364,11 @@ $form->addElement($element, 'foo');
 if ($form->foo->isUploaded()) {
     // foo がアップロードされたので、ここで何かをします
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            <code>Zend_Form_Element_File</code> は複数のファイルもサポートしています。
+            <classname>Zend_Form_Element_File</classname> は複数のファイルもサポートしています。
             <code>setMultiFile($count)</code> メソッドをコールすると、
             作成したい file 要素の数を設定することができます。
             これを使えば、同じ設定を何度も行う手間が省けます。
@@ -405,8 +395,7 @@ $element->addValidator('Extension', false, 'jpg,png,gif');
 // 3 つの file 要素を作成します
 $element->setMultiFile(3);
 $form->addElement($element, 'foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 ビューにおいて、同じ設定のファイルアップロード要素が 3 つ取得できます。
@@ -447,8 +436,7 @@ $element->setLabel('Upload an image:')
         ->addValidator('Size', false, 102400) // 100K までに制限します
         ->setMaxFileSize(102400); // ファイルサイズをクライアント側で制限します
 $form->addElement($element, 'foo');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>複数の file 要素がある場合の MaxFileSize</title>
@@ -471,7 +459,7 @@ $form->addElement($element, 'foo');
         <para>
             Hidden 要素はただ単にデータを送信するだけのもので、
             ユーザはその値を変更してはいけません。
-            <code>Zend_Form_Element_Hidden</code>
+            <classname>Zend_Form_Element_Hidden</classname>
             は、この機能を 'formHidden' ビューヘルパーで実現します。
         </para>
     </sect2>
@@ -495,8 +483,7 @@ $form->addElement($element, 'foo');
 
         <programlisting role="php"><![CDATA[
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             salt は、後から <code>setSalt($salt)</code>
@@ -505,7 +492,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             内部的には、この要素は一意な ID を
-            <code>Zend_Session_Namespace</code> を用いて保存しており、
+            <classname>Zend_Session_Namespace</classname> を用いて保存しており、
             送信されたときにその内容
             (TTL が期限切れになっていないかどうか) をチェックしています
             そして、'Identical' バリデータを使用して、
@@ -527,7 +514,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             この要素には、元となる画像が必要です。
-            <code>Zend_Form_Element_Image</code> では、それを
+            <classname>Zend_Form_Element_Image</classname> では、それを
             <code>setImage()</code> アクセサ
             (あるいは設定キー 'image') で設定します。
             また、画像を submit したときに使用する値は、
@@ -561,7 +548,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_MultiCheckbox</code> は
+            <classname>Zend_Form_Element_MultiCheckbox</classname> は
             それを行うためのものです。Multi 要素を継承したその他の要素を同様に、
             選択肢のリストを指定してそれらを同じ方法で検証することができます。
             'formMultiCheckbox' ビューヘルパーを使用して、
@@ -618,8 +605,7 @@ $element = new Zend_Form_Element_MultiCheckbox('foo', array(
 ));
 
 $element->setValue(array('bar', 'bat'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             値をひとつだけ指定する場合でも、配列形式でなければならないことに注意しましょう。
@@ -633,11 +619,11 @@ $element->setValue(array('bar', 'bat'));
             XHTML の <code>select</code> 要素には 'multiple'
             属性を指定することができます。
             これは、普通の要素ではなく複数項目を選択できる要素を表します。
-            <code>Zend_Form_Element_Multiselect</code> は、
+            <classname>Zend_Form_Element_Multiselect</classname> は、
             <link
                 linkend="zend.form.standardElements.select">Zend_Form_Element_Select</link>
             を継承して <code>multiple</code> 要素を 'multiple'
-            に設定したものです。基底クラス <code>Zend_Form_Element_Multi</code>
+            に設定したものです。基底クラス <classname>Zend_Form_Element_Multi</classname>
             を継承したその他のクラスと同様、以下のメソッドでオプションを操作することができます。
         </para>
 
@@ -685,7 +671,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Password</code> は、これを実現するために
+            <classname>Zend_Form_Element_Password</classname> は、これを実現するために
             各バリデータ上で <code>setObscureValue(true)</code>
             (検証エラーの際のメッセージでパスワードを表示させない)
             をコールし、'formPassword' ビューヘルパー (渡された値を表示しない)
@@ -699,8 +685,8 @@ $element->setValue(array('bar', 'bat'));
         <para>
             Radio 要素は、いくつかの選択肢を指定してその中から
             ひとつを選ばせるためのものです。
-            <code>Zend_Form_Element_Radio</code> は規定クラス
-            <code>Zend_Form_Element_Multi</code> を継承したもので、
+            <classname>Zend_Form_Element_Radio</classname> は規定クラス
+            <classname>Zend_Form_Element_Multi</classname> を継承したもので、
             複数のオプションを指定することができます。そして、それを表示するために
             <code>formRadio</code> ビューヘルパーを使用します。
         </para>
@@ -749,7 +735,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Reset</code> は <link
+            <classname>Zend_Form_Element_Reset</classname> は <link
                 linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>
             を継承しています。ボタンの表示時にはラベルを使用し、
             翻訳アダプタが存在する場合はそれが翻訳されます。
@@ -764,7 +750,7 @@ $element->setValue(array('bar', 'bat'));
 
         <para>
             セレクトボックスは、指定したデータの中から選択させたいときに使用するものです。
-            <code>Zend_Form_Element_Select</code> は、
+            <classname>Zend_Form_Element_Select</classname> は、
             セレクトボックスをお手軽に作成します。
         </para>
 
@@ -802,7 +788,7 @@ $element->setValue(array('bar', 'bat'));
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element_Select</code> は 'formSelect'
+            <classname>Zend_Form_Element_Select</classname> は 'formSelect'
             ビューヘルパーでデコレートを行います。
         </para>
     </sect2>
@@ -815,7 +801,7 @@ $element->setValue(array('bar', 'bat'));
             複数の submit ボタンを使用することもできます。
             どの submit ボタンでデータを送信したかによって、
             どのアクションを実行するのかを切り替えることができます。
-            <code>Zend_Form_Element_Submit</code> では、この判断をしやすくするために
+            <classname>Zend_Form_Element_Submit</classname> では、この判断をしやすくするために
             <code>isChecked()</code> メソッドを用意しています。
             フォームから送信される submit ボタンはひとつだけなので、
             各 submit 要素に対してこのメソッドをコールすることで
@@ -823,7 +809,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Submit</code> はラベルを submit ボタンの
+            <classname>Zend_Form_Element_Submit</classname> はラベルを submit ボタンの
             "値" として使用します。翻訳アダプタが存在する場合はこれを翻訳します。
             <code>isChecked()</code> は、送信された値をこのラベルと比較し、
             そのボタンが押されたのかどうかを判断します。
@@ -846,7 +832,7 @@ $element->setValue(array('bar', 'bat'));
         <para>
             最もよく用いられているフォーム要素は text 要素です。
             これはテキスト入力用の要素で、大半の入力項目に適しています。
-            <code>Zend_Form_Element_Text</code> は、単純に
+            <classname>Zend_Form_Element_Text</classname> は、単純に
             'formText' ビューヘルパーを使用して要素を表示します。
         </para>
     </sect2>
@@ -858,7 +844,7 @@ $element->setValue(array('bar', 'bat'));
             Textarea は大量のテキストを入力させるために使用します。
             テキストの量に制限を設けません (サーバや PHP
             の設定による制限は除きます)。
-            <code>Zend_Form_Element_Textarea</code> は
+            <classname>Zend_Form_Element_Textarea</classname> は
             'textArea' ビューヘルパーを使用して要素とその値を表示します。
         </para>
     </sect2>

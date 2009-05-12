@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout の高度な使用法</title>
 
     <para>
-        <code>Zend_Layout</code> には、高度な使用法がいろいろあります。
+        <classname>Zend_Layout</classname> には、高度な使用法がいろいろあります。
         たとえばさまざまなビューの実装やファイルシステム上のレイアウトに対応させたりといったことです。
     </para>
 
@@ -16,27 +16,27 @@
     <itemizedlist>
         <listitem><para>
                 <emphasis>ビューオブジェクトのカスタマイズ</emphasis>。
-                <code>Zend_Layout</code> は、
-                <code>Zend_View_Interface</code> を実装した任意のクラスを使用することができます。
+                <classname>Zend_Layout</classname> は、
+                <classname>Zend_View_Interface</classname> を実装した任意のクラスを使用することができます。
         </para></listitem>
 
         <listitem><para>
                 <emphasis>フロントコントローラプラグインのカスタマイズ</emphasis>。
-                <code>Zend_Layout</code> に標準で含まれているフロントコントローラプラグインは、
+                <classname>Zend_Layout</classname> に標準で含まれているフロントコントローラプラグインは、
                 レイアウトを自動的にレンダリングしてからレスポンスを返します。
                 これを独自のプラグインで置き換えることができます。
         </para></listitem>
 
         <listitem><para>
                 <emphasis>アクションヘルパーのカスタマイズ</emphasis>。
-                <code>Zend_Layout</code> に標準で含まれているアクションヘルパーは、
+                <classname>Zend_Layout</classname> に標準で含まれているアクションヘルパーは、
                 ほとんどの場合にそのまま使えるでしょう。
                 これは、レイアウトオブジェクト自信へのプロキシとなっています。
         </para></listitem>
 
         <listitem><para>
                 <emphasis>レイアウトスクリプトのパス解決方法のカスタマイズ</emphasis>。
-                <code>Zend_Layout</code> では、独自の <link
+                <classname>Zend_Layout</classname> では、独自の <link
                     linkend="zend.filter.inflector">インフレクタ</link>
                 を使用してレイアウトスクリプトのパス解決方法を行うことができます。
                 あるいは、標準のインフレクタを設定して独自のルールを指定することもできます。
@@ -47,9 +47,9 @@
         <title>ビューオブジェクトのカスタマイズ</title>
 
         <para>
-            <code>Zend_Layout</code> では、
-            <code>Zend_View_Interface</code> を実装した任意のクラスや
-            <code>Zend_View_Abstract</code> を継承した任意のクラスを用いて
+            <classname>Zend_Layout</classname> では、
+            <classname>Zend_View_Interface</classname> を実装した任意のクラスや
+            <classname>Zend_View_Abstract</classname> を継承した任意のクラスを用いて
             レイアウトスクリプトをレンダリングすることができます。
             独自のビューオブジェクトを単純に
             constructor/<code>startMvc()</code> のパラメータとして渡すか、
@@ -59,30 +59,29 @@
         <programlisting role="php"><![CDATA[
 $view = new My_Custom_View();
 $layout->setView($view);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>Zend_View の実装がすべて同じというわけではない</title>
 
             <para>
-                <code>Zend_Layout</code> では
-                <code>Zend_View_Interface</code> を実装した任意のクラスを使用できますが、
-                その中で様々な <code>Zend_View</code> ヘルパー
+                <classname>Zend_Layout</classname> では
+                <classname>Zend_View_Interface</classname> を実装した任意のクラスを使用できますが、
+                その中で様々な <classname>Zend_View</classname> ヘルパー
                 (特にレイアウトヘルパーや
                 <link linkend="zend.view.helpers.initial.placeholder">プレースホルダ</link>
                 ヘルパー)
                 が使用できなければ問題となることもあるでしょう。
-                これは、<code>Zend_Layout</code>
+                これは、<classname>Zend_Layout</classname>
                 がオブジェクトの中の変数を自分自身と
                 <link linkend="zend.view.helpers.initial.placeholder">プレースホルダ</link>
                 で使えるようにしているからです。
             </para>
 
             <para>
-                これらのヘルパーをサポートしていない <code>Zend_View</code>
+                これらのヘルパーをサポートしていない <classname>Zend_View</classname>
                 の実装を使用する場合は、レイアウト変数をビューに取り込む方法を見つける必要があります。
-                たとえば <code>Zend_Layout</code> オブジェクトを継承して
+                たとえば <classname>Zend_Layout</classname> オブジェクトを継承して
                 <code>render()</code> メソッドにビューへの変数を渡すようにするか、
                 あるいは独自のプラグインクラスを作成して
                 レイアウトのレンダリングの前に変数を渡すようにするといった方法があります。
@@ -99,8 +98,7 @@ $layout->setView($view);
             <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
 $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
     </sect2>
 
@@ -109,7 +107,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             MVC コンポーネントと組み合わせて使用するときに、
-            <code>Zend_Layout</code> はフロントコントローラプラグインを登録します。
+            <classname>Zend_Layout</classname> はフロントコントローラプラグインを登録します。
             このプラグインは、ディスパッチループを抜ける前の最後のアクションで
             レイアウトをレンダリングします。
             ほとんどの場合はデフォルトのプラグインで十分でしょうが、
@@ -121,7 +119,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             ここで使用するプラグインクラスは
-            <code>Zend_Controller_Plugin_Abstract</code>
+            <classname>Zend_Controller_Plugin_Abstract</classname>
             を継承したものでなければなりません。また、コンストラクタの引数で
             レイアウトオブジェクトのインスタンスを受け取れるようにする必要があります。
             それ以外の実装内容については自由に決めることができます。
@@ -129,7 +127,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             デフォルトのプラグインは
-            <code>Zend_Layout_Controller_Plugin_Layout</code>
+            <classname>Zend_Layout_Controller_Plugin_Layout</classname>
             です。
         </para>
     </sect2>
@@ -139,9 +137,9 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             MVC コンポーネントと組み合わせて使用するときに、
-            <code>Zend_Layout</code> はアクションコントローラヘルパーを
+            <classname>Zend_Layout</classname> はアクションコントローラヘルパーを
             ヘルパーブローカに登録します。デフォルトのヘルパーである
-            <code>Zend_Layout_Controller_Action_Helper_Layout</code>
+            <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>
             は、レイアウトオブジェクトのインスタンス自身に対する
             (何もしない) プロキシとしてはたらきます。
             たいていの場合はこれで十分でしょう。
@@ -149,7 +147,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
         <para>
             独自の機能を書きたい場合は、
-            <code>Zend_Controller_Action_Helper_Abstract</code>
+            <classname>Zend_Controller_Action_Helper_Abstract</classname>
             を継承したアクションヘルパークラスを作成します。
             そして、そのクラス名を
             <code>startMvc()</code> メソッドの
@@ -162,7 +160,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>レイアウトスクリプトのパス解決方法のカスタマイズ: インフレクタの使用法</title>
 
         <para>
-            <code>Zend_Layout</code> は、<code>Zend_Filter_Inflector</code>
+            <classname>Zend_Layout</classname> は、<classname>Zend_Filter_Inflector</classname>
             を使用して確立したフィルタチェインで
             レイアウト名からレイアウトスクリプトのパスへの変換を行います。
             デフォルトで使用するルールは、まず 'Word_CamelCaseToDash'、
@@ -183,18 +181,18 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <para>
             これを変更するには三通りの手段があります。
             インフレクションのターゲットやビューのサフィックスを
-            <code>Zend_Layout</code> のアクセサで変更すること、
-            <code>Zend_Layout</code> のインスタンスに関連づけられている
+            <classname>Zend_Layout</classname> のアクセサで変更すること、
+            <classname>Zend_Layout</classname> のインスタンスに関連づけられている
             インフレクタのルールを変更すること、
             あるいは独自のインフレクタのインスタンスを作成してそれを
-            <code>Zend_Layout::setInflector()</code> で渡すことです。
+            <classname>Zend_Layout::setInflector()</classname> で渡すことです。
         </para>
 
         <example id="zend.layout.advanced.inflector.accessors">
             <title>Zend_Layout のアクセサでインフレクタを変更する</title>
 
             <para>
-                デフォルトの <code>Zend_Layout</code> のインフレクタは、
+                デフォルトの <classname>Zend_Layout</classname> のインフレクタは、
                 ターゲットやビュースクリプトのサフィックスに静的な参照を用い、
                 それらの値を設定するためのアクセサを提供しています。
             </para>
@@ -205,8 +203,7 @@ $layout->setInflectorTarget('layouts/:script.:suffix');
 
 // レイアウトビュースクリプトのサフィックスを設定します
 $layout->setViewSuffix('php');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.layout.advanced.inflector.directmodification">
@@ -214,7 +211,7 @@ $layout->setViewSuffix('php');
 
             <para>
                 インフレクタは、ターゲットと (ひとつあるいは複数の)
-                ルールを持っています。<code>Zend_Layout</code>
+                ルールを持っています。<classname>Zend_Layout</classname>
                 が使用するデフォルトのターゲットは ':script.:suffix'
                 です。':script' には登録されているレイアウト名、そして
                 ':suffix' にはインフレクタの静的なルールが渡されます。
@@ -233,8 +230,7 @@ $layout->setViewSuffix('php');
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
                        ->setFilterRule(array('Word_CamelCaseToUnderscore'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.layout.advanced.inflector.custom">
@@ -243,7 +239,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
             <para>
                 ほとんどの場合は、既存のインフレクタを修正するだけで十分でしょう。
                 しかし、さまざまな場所で別の形式のオブジェクトを使い分けたいこともあります。
-                <code>Zend_Layout</code> はそんな場合にも対応しています。
+                <classname>Zend_Layout</classname> はそんな場合にも対応しています。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -253,8 +249,7 @@ $inflector->addRules(array(
     'suffix'  => 'html'
 ));
 $layout->setInflector($inflector);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -262,7 +257,7 @@ $layout->setInflector($inflector);
 
             <para>
                 インフレクションを無効にしたり有効にしたりするには、
-                <code>Zend_Layout</code> オブジェクトのアクセサを使用します。
+                <classname>Zend_Layout</classname> オブジェクトのアクセサを使用します。
                 これは、たとえばレイアウトビュースクリプトを絶対パスで指定したい場合などに便利です。
                 また、レイアウトスクリプトを指定するためのインフレクションが特に不要な場合にも便利です。
                 有効にしたり無効にしたりするには、単純に <code>enableInflection()</code> メソッドおよび

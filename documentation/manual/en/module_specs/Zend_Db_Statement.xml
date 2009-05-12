@@ -13,7 +13,7 @@
     </para>
 
     <para>
-        <code>Zend_Db_Statement</code> is based on the PDOStatement object in the
+        <classname>Zend_Db_Statement</classname> is based on the PDOStatement object in the
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
     </para>
 
@@ -37,8 +37,7 @@ $stmt = $db->query(
             'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
             array('goofy', 'FIXED')
         );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -63,8 +62,7 @@ $stmt = $db->query(
 $sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -95,8 +93,7 @@ $sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
 $stmt->execute(array('goofy', 'FIXED'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -115,14 +112,13 @@ $sql = 'SELECT * FROM bugs WHERE ' .
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
 $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
             PDO statements support both positional parameters and named
             parameters, but not both types in a single SQL statement. Some of
-            the <code>Zend_Db_Statement</code> classes for non-PDO extensions may support
+            the <classname>Zend_Db_Statement</classname> classes for non-PDO extensions may support
             only one type of parameter or the other.
         </para>
 
@@ -130,7 +126,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
 
     <sect2 id="zend.db.statement.fetching">
 
-        <title>Fetching Results from a <code>SELECT</code> Statement</title>
+        <title>Fetching Results from a SELECT Statement</title>
 
         <para>
             You can call methods on the statement object to retrieve rows from
@@ -138,7 +134,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             EXPLAIN are examples of statements that produce a result set.
             INSERT, UPDATE, and DELETE are examples of statements that don't
             produce a result set. You can execute the latter SQL statements
-            using <code>Zend_Db_Statement</code>, but you cannot call methods to fetch rows
+            using <classname>Zend_Db_Statement</classname>, but you cannot call methods to fetch rows
             of results from them.
         </para>
 
@@ -155,7 +151,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Fetch style</emphasis> is the
+                        <emphasis>Fetch style</emphasis> is the
                         first argument. This controls the structure in which
                         the row is returned.
                         See <xref linkend="zend.db.adapter.select.fetch-mode" />
@@ -165,7 +161,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Cursor orientation</emphasis>
+                        <emphasis>Cursor orientation</emphasis>
                         is the second argument. The default is
                         Zend_Db::FETCH_ORI_NEXT, which simply means that each
                         call to <code>fetch()</code> returns the next row in
@@ -174,7 +170,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Offset</emphasis> is the third
+                        <emphasis>Offset</emphasis> is the third
                         argument.
                         If the cursor orientation is Zend_Db::FETCH_ORI_ABS,
                         then the offset number is the ordinal number of the row
@@ -199,8 +195,7 @@ $stmt = $db->query('SELECT * FROM bugs');
 while ($row = $stmt->fetch()) {
     echo $row['bug_description'];
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -231,8 +226,7 @@ $stmt = $db->query('SELECT * FROM bugs');
 $rows = $stmt->fetchAll();
 
 echo $rows[0]['bug_description'];
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -270,8 +264,7 @@ $stmt->setFetchMode(Zend_Db::FETCH_NUM);
 $rows = $stmt->fetchAll();
 
 echo $rows[0][0];
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -308,8 +301,7 @@ echo $rows[0][0];
 $stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 
 $bug_status = $stmt->fetchColumn(2);
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -339,8 +331,7 @@ $stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
 $obj = $stmt->fetchObject();
 
 echo $obj->bug_description;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
             <para>
@@ -364,8 +355,7 @@ echo $obj->bug_description;
         <example id="zend.db.statement.binding-param.example">
             <title>Binding parameters from PHP variables</title>
             <programlisting role="php"><![CDATA[
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -387,8 +377,7 @@ echo $obj->bug_description;
         <example id="zend.db.statement.binding-column.example">
             <title>Binding results to PHP variables</title>
             <programlisting role="php"><![CDATA[
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

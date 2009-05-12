@@ -3,14 +3,14 @@
 <sect1 id="zend.json.xml2json">
     <title>XML to JSON conversion</title>
     <para>
-        <code>Zend_Json</code> provides a convenience method for transforming
+        <classname>Zend_Json</classname> provides a convenience method for transforming
         XML formatted data into JSON format. This feature was inspired from an
         <ulink url="http://www.ibm.com/developerworks/xml/library/x-xml2jsonphp/">
         IBM developerWorks article</ulink>.
     </para>
 
     <para>
-        <code>Zend_Json</code> includes a static function called <code>Zend_Json::fromXml()</code>.
+        <classname>Zend_Json</classname> includes a static function called <classname>Zend_Json::fromXml()</classname>.
         This function will generate JSON from a given XML input. This function takes any arbitrary
         XML string as an input parameter. It also takes an optional boolean input parameter to instruct the
         conversion logic to ignore or not ignore the XML attributes during the conversion process. If this
@@ -21,15 +21,14 @@
 // fromXml function simply takes a String containing XML contents
 // as input.
 $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
-        <code>Zend_Json::fromXml()</code> function does the conversion of the XML formatted string input
+        <classname>Zend_Json::fromXml()</classname> function does the conversion of the XML formatted string input
         parameter and returns the equivalent JSON formatted string output. In case of any XML input format
         error or conversion logic error, this function will throw an exception. The conversion logic also
         uses recursive techniques to traverse the XML tree. It supports recursion upto 25 levels deep.
-        Beyond that depth, it will throw a <code>Zend_Json_Exception</code>. There are several XML files with varying
+        Beyond that depth, it will throw a <classname>Zend_Json_Exception</classname>. There are several XML files with varying
         degree of complexity provided in the tests directory of Zend Framework. They can be used to
         test the functionality of the xml2json feature.
     </para>
@@ -37,13 +36,13 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
     <para>
         The following is a simple example that shows both the XML input string passed to
         and the JSON output string returned as a result from the
-        <code>Zend_Json::fromXml()</code> function. This example used the optional function parameter as
+        <classname>Zend_Json::fromXml()</classname> function. This example used the optional function parameter as
         not to ignore the XML attributes during the conversion. Hence, you can notice that the
         resulting JSON string includes a representation of the XML attributes present in the XML input string.
     </para>
 
     <para>
-        XML input string passed to <code>Zend_Json::fromXml()</code> function:
+        XML input string passed to <classname>Zend_Json::fromXml()</classname> function:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -67,11 +66,10 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
         <publisher>O'Reilly</publisher>
     </book>
 </books>
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
-        JSON output string returned from <code>Zend_Json::fromXml()</code> function:
+        JSON output string returned from <classname>Zend_Json::fromXml()</classname> function:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -105,8 +103,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
       }
    ]}
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         More details about this xml2json feature can be found in the original proposal itself.

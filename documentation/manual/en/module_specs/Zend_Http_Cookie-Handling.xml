@@ -102,8 +102,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; ' .
 // If the cookie's domain is not set, you have to manually specify it
 $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;',
                                        'http://www.example.com/path');
-]]>
-               </programlisting>
+]]></programlisting>
             </example>
             <note>
                 <para>
@@ -136,8 +135,7 @@ echo (string) $cookie;
 
 // In PHP 5.2 and higher, this also works:
 echo $cookie;
-]]>
-               </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -228,8 +226,7 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 
 echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
 // Will echo 'No'
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -310,8 +307,7 @@ $cookie->match('http://subdomain.example.com/');
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
 // Will return false, because we added a time offset of +3 hours to
 // current time
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -350,7 +346,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</code>: Add a
+                    <classname>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</classname>: Add a
                     single cookie to the jar. $cookie can be either a Zend_Http_Cookie
                     object or a string, which will be converted automatically into a
                     Cookie object. If a string is provided, you should also provide
@@ -360,7 +356,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>:
+                    <classname>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</classname>:
                     Add all cookies set in a single HTTP response to the jar. $response is
                     expected to be a Zend_Http_Response object with Set-Cookie headers. $ref_uri
                     is the request URI, either as a string or a Zend_Uri_Http object, according
@@ -390,14 +386,14 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_OBJECT</code>: Return
+                    <classname>Zend_Http_CookieJar::COOKIE_OBJECT</classname>: Return
                     a Zend_Http_Cookie object. If the method returns more than
                     one cookie, an array of objects will be returned.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</code>: Return
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</classname>: Return
                     cookies as strings, in a "foo=bar" format, suitable for sending
                     in a HTTP request "Cookie" header. If more than one cookie is
                     returned, an array of strings is returned.
@@ -405,7 +401,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</code>: Similar to
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</classname>: Similar to
                     COOKIE_STRING_ARRAY, but if more than one cookie is returned, this
                     method will concatenate all cookies into a single, long string
                     separated by semicolons (;), and return it. This is especially useful
@@ -420,7 +416,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
+                    <classname>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</classname>:
                     Get a single cookie from the jar, according to its URI (domain and path)
                     and name. $uri is either a string or a Zend_Uri_Http object representing the
                     URI. $cookie_name is a string identifying the cookie name. $ret_as
@@ -430,14 +426,14 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>: Get all
+                    <classname>Zend_Http_CookieJar->getAllCookies($ret_as)</classname>: Get all
                     cookies from the jar. $ret_as specifies the return type as described
                     above. If not specified, $ret_type defaults to COOKIE_OBJECT.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</code>:
+                    <classname>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</classname>:
                     Get all cookies from the jar that match a specified scenario, that is a URI and expiration time.
                     <itemizedlist>
                         <listitem>

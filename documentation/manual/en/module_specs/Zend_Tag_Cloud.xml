@@ -5,17 +5,17 @@
     <title>Zend_Tag_Cloud</title>
 
     <para>
-        <code>Zend_Tag_Cloud</code> is the rendering part of
-        <code>Zend_Tag</code>. By default it comes with with a set of HTML
+        <classname>Zend_Tag_Cloud</classname> is the rendering part of
+        <classname>Zend_Tag</classname>. By default it comes with with a set of HTML
         decorators, which allow you to create tag clouds for a website, but
         also supplies you with two abstract classes to create your own
         decorators, to create tag clouds in PDF documents for example.
     </para>
 
     <para>
-        You can instantiate and configure <code>Zend_Tag_Cloud</code> either
+        You can instantiate and configure <classname>Zend_Tag_Cloud</classname> either
         programatically or completly via an array or an instance of
-        <code>Zend_Config</code>. The available options are:
+        <classname>Zend_Config</classname>. The available options are:
     </para>
 
     <itemizedlist>
@@ -24,7 +24,7 @@
                 <code>cloudDecorator</code>: defines the decorator for the
                 cloud. Can either be the name of the class which should be
                 loaded by the pluginloader, an instance of
-                <code>Zend_Tag_Cloud_Decorator_Cloud</code> or an array
+                <classname>Zend_Tag_Cloud_Decorator_Cloud</classname> or an array
                 containing the string <code>decorator</code> and optionally
                 an array <code>options</code>, which will be passed to the
                 decorators constructor.
@@ -35,7 +35,7 @@
                 <code>tagDecorator</code>: defines the decorator for individual
                 tags. This can either be the name of the class which should be
                 loaded by the pluginloader, an instance of
-                <code>Zend_Tag_Cloud_Decorator_Tag</code> or an array
+                <classname>Zend_Tag_Cloud_Decorator_Tag</classname> or an array
                 containing the string <code>decorator</code> and optionally
                 an array <code>options</code>, which will be passed to the
                 decorators constructor.
@@ -59,22 +59,22 @@
         <listitem>
             <para>
                 <code>itemList</code>: a different item list to use. Must be an
-                instance of <code>Zend_Tag_ItemList</code>.
+                instance of <classname>Zend_Tag_ItemList</classname>.
             </para>
         </listitem>
         <listitem>
             <para>
                 <code>tags</code>: a list of tags to assign to the cloud. Each
-                tag must either implement <code>Zend_Tag_Taggable</code> or be
+                tag must either implement <classname>Zend_Tag_Taggable</classname> or be
                 an array which can be used to instantiate
-                <code>Zend_Tag_Item</code>.
+                <classname>Zend_Tag_Item</classname>.
             </para>
         </listitem>
     </itemizedlist>
 
     <example id="zend.tag.cloud.example.using">
 
-        <title>Using <code>Zend_Tag_Cloud</code></title>
+        <title>Using Zend_Tag_Cloud</title>
 
         <para>
             This example illustrates a basic example of how to create a tag
@@ -107,34 +107,34 @@ echo $cloud;
         <title>Decorators</title>
 
         <para>
-            <code>Zend_Tag_Cloud</code> requires two types of decorators to be
+            <classname>Zend_Tag_Cloud</classname> requires two types of decorators to be
             able to render a tag cloud. This includes a decorator which renders
             the single tags as well as a decorator which renders the surounding
-            cloud. <code>Zend_Tag_Cloud</code> ships a default decorator set for
+            cloud. <classname>Zend_Tag_Cloud</classname> ships a default decorator set for
             formatting a tag cloud in HTML. This set will by default create a
             tag cloud as ul/li-list, spread with different font-sizes according
-            to the weight values of the tags assigned to them. 
+            to the weight values of the tags assigned to them.
         </para>
 
         <sect3 id="zend.tag.cloud.decorators.htmltag">
 
             <title>HTML Tag decorator</title>
-            
+
             <para>
                 The HTML tag decorator will by default render every tag in an
                 anchor element, surounded by a li element. The anchor itself is
                 fixed and cannot be changed, but the surounding element(s) can.
             </para>
-            
+
             <note>
                 <title>URL parameter</title>
                 <para>
                     As the HTML tag decorator always surounds the tag title with
                     an anchor, you should define an URL parameter for every
-                    tag used in it.  
+                    tag used in it.
                 </para>
             </note>
-            
+
             <para>
                 The tag decorator can either spread different font-sizes over
                 the anchors or a defined list of classnames. When setting
@@ -142,7 +142,7 @@ echo $cloud;
                 will automatically be enabled. The following configuration
                 options are available:
             </para>
-            
+
             <itemizedlist>
                 <listitem>
                     <para>

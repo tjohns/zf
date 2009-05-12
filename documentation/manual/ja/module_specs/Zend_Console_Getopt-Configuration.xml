@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <sect1 id="zend.console.getopt.configuration">
-    <title><code>Zend_Console_Getopt</code> の設定</title>
+    <title>Zend_Console_Getopt の設定</title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>オプションの規則の追加</title>
         <para>
-            <code>Zend_Console_Getopt</code> のコンストラクタで指定するもの以外にも、
+            <classname>Zend_Console_Getopt</classname> のコンストラクタで指定するもの以外にも、
             追加でオプションの規則を指定することができます。その際には
             <code>addRules()</code> メソッドを使用します。
             <code>addRules()</code> に渡す引数は、コンストラクタの最初の引数と同じです。
@@ -26,14 +26,13 @@ $opts->addRules(
     'verbose|v' => '詳細な出力を表示する'
   )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             上の例は、"<code>--verbose</code>" というオプションと
             そのエイリアス "<code>-v</code>" を
             コンストラクタで定義したオプションに追加しています。
-            <code>Zend_Console_Getopt</code> のインスタンスには、
+            <classname>Zend_Console_Getopt</classname> のインスタンスには、
             短い形式のオプションと長い形式のオプションが共存可能であることに注意しましょう。
         </para>
     </sect2>
@@ -57,8 +56,7 @@ $opts->setHelp(
         'p' => '洋ナシです。オプションで文字列パラメータを指定します。'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             エイリアスつきでオプションを宣言した場合は、
@@ -81,7 +79,7 @@ $opts->setHelp(
         </para>
         <para>
             エイリアスは一度しか宣言できません。既存のエイリアスを再定義しようとすると
-            <code>Zend_Console_Getopt_Exception</code> がスローされます。
+            <classname>Zend_Console_Getopt_Exception</classname> がスローされます。
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title>setAliases() の使用法</title>
@@ -94,8 +92,7 @@ $opts->setAliases(
         'p' => 'pear'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             上の例では
@@ -113,7 +110,7 @@ $opts->setAliases(
     <sect2 id="zend.console.getopt.configuration.addargs">
         <title>引数リストの追加</title>
         <para>
-            デフォルトでは、<code>Zend_Console_Getopt</code> は
+            デフォルトでは、<classname>Zend_Console_Getopt</classname> は
             <code>$_SERVER['argv']</code> の配列を使用して
             コマンドライン引数をパースします。
             コンストラクタの二番目の引数として、引数を含む別の配列を指定することもできます。
@@ -136,15 +133,14 @@ $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // 新しい配列で既存の引数を置き換えます
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
         <title>設定の追加</title>
         <para>
-            <code>Zend_Console_Getopt</code> コンストラクタの
+            <classname>Zend_Console_Getopt</classname> コンストラクタの
             三番目の引数は、設定オプションの配列です。
             これは、返り値となるオブジェクトのインスタンスの挙動を設定するものです。
             設定オプションを指定するために <code>setOptions()</code>
@@ -156,10 +152,10 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>"オプション" という用語について</title>
             <para>
                 ここでいう "オプション" は、
-                <code>Zend_Console_Getopt</code> クラスの設定に使用するもののことを指しています。
+                <classname>Zend_Console_Getopt</classname> クラスの設定に使用するもののことを指しています。
                 オプションという言葉の意味自体は、Zend Framework
                 のその他の部分で使用している意味と同じです。
-                <code>Zend_Console_Getopt</code> がパースする
+                <classname>Zend_Console_Getopt</classname> がパースする
                 コマンドラインオプションのことではありません。
             </para>
         </note>
@@ -172,7 +168,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash")
+                    <classname>Zend_Console_Getopt::CONFIG_DASHDASH</classname> ("dashDash")
                     を true にすると、フラグの終了を表す特殊フラグ "<code>--</code>"
                     を有効にします。ダブルダッシュの後に続くコマンドライン引数は、
                     たとえダッシュで始まっていてもオプションとはみなされません。
@@ -181,7 +177,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase")
+                    <classname>Zend_Console_Getopt::CONFIG_IGNORECASE</classname> ("ignoreCase")
                     を true にすると、大文字小文字が違うだけのフラグをお互いエイリアスとして扱います。
                     つまり、"<code>-a</code>" と
                     "<code>-A</code>" は同じフラグとみなされます。
@@ -190,13 +186,13 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") には <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") あるいは <code>Zend_Console_Getopt::MODE_GNU</code>
+                    <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname>
+                    ("ruleMode") には <classname>Zend_Console_Getopt::MODE_ZEND</classname>
+                    ("zend") あるいは <classname>Zend_Console_Getopt::MODE_GNU</classname>
                     ("gnu")  のいずれかを指定します。
                     独自の構文を使用するためにクラスを拡張する場合を除き、
                     このオプションを使用する必要はありません。
-                    <code>Zend_Console_Getopt</code>
+                    <classname>Zend_Console_Getopt</classname>
                     でサポートされている二つのモードは明確です。
                     文字列を指定した場合は <code>MODE_GNU</code>、
                     それ以外の場合は <code>MODE_ZEND</code> とみなします。
@@ -217,8 +213,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             <code>setOptions()</code> メソッドに渡す引数は連想配列です。
@@ -237,8 +232,7 @@ $opts->setOptions(
         'dashDash'   => false
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 

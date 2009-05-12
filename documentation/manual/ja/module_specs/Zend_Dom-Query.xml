@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
     <para>
-        <code>Zend_Dom_Query</code> を使用すると、XML や (X)HTML ドキュメントに対して
+        <classname>Zend_Dom_Query</classname> を使用すると、XML や (X)HTML ドキュメントに対して
         XPath あるいは CSS セレクタを用いた問い合わせができるようになります。
         MVC アプリケーションの機能テストを支援するために作られたものですが、
         スクリーンスクレイパーを手早く作成するためにも使うことができます。
@@ -27,19 +27,19 @@
         <title>動作原理</title>
 
         <para>
-            <code>Zend_Dom_Query</code> を使用するには、
-            <code>Zend_Dom_Query</code> オブジェクトのインスタンスを作成します。
+            <classname>Zend_Dom_Query</classname> を使用するには、
+            <classname>Zend_Dom_Query</classname> オブジェクトのインスタンスを作成します。
             その際に、問い合わせたいドキュメント (文字列)
             をオプションで渡すことができます。
             ドキュメントを用意すれば、
             <code>query()</code> メソッドあるいは <code>queryXpath()</code>
             メソッドを使用することができます。どちらのメソッドも、
-            マッチしたノードを含む <code>Zend_Dom_Query_Result</code>
+            マッチしたノードを含む <classname>Zend_Dom_Query_Result</classname>
             オブジェクトを返します。
         </para>
 
         <para>
-            <code>Zend_Dom_Query</code> を使うことと
+            <classname>Zend_Dom_Query</classname> を使うことと
             DOMDocument + DOMXPath を使うことの最大の違いは、
             CSS セレクタによる選択が可能かどうかということです。
             以下の内容を、任意の組み合わせで使用することができます。
@@ -136,15 +136,14 @@
     </tr>
 </table>
 </div>
-]]>
-</programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
         <para>
             問い合わせを実行したら、その結果のオブジェクトを用いてノードの情報を取得したり、
             そのノード (あるいはノードの内容) を取り出して操作したりすることができます。
-            <code>Zend_Dom_Query_Result</code> は <code>Countable</code>
+            <classname>Zend_Dom_Query_Result</classname> は <code>Countable</code>
             と <code>Iterator</code> を実装しており、内部では結果を
             DOMNodes/DOMElements で保持しています。
             たとえば、次のようなコードを上の HTML に対して実行することを考えてみましょう。
@@ -158,15 +157,14 @@ $count = count($results); // マッチした数: 4
 foreach ($results as $result) {
     // $result は DOMElement です
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_Dom_Query</code> では、
+            <classname>Zend_Dom_Query</classname> では、
             <code>queryXpath()</code> メソッドで
             XPath クエリを直接使用することもできます。
             XPath クエリとして正しいものならなんでもこのメソッドに渡すことができ、
-            結果は <code>Zend_Dom_Query_Result</code> オブジェクトで返されます。
+            結果は <classname>Zend_Dom_Query_Result</classname> オブジェクトで返されます。
         </para>
     </sect2>
 
@@ -174,7 +172,7 @@ foreach ($results as $result) {
         <title>使用可能なメソッド</title>
 
         <para>
-            <code>Zend_Dom_Query</code> 系のクラスでは、次のメソッドが使用できます。
+            <classname>Zend_Dom_Query</classname> 系のクラスでは、次のメソッドが使用できます。
         </para>
 
         <sect3 id="zend.dom.query.methods.zenddomquery">
@@ -182,7 +180,7 @@ foreach ($results as $result) {
 
             <para>
                 次のメソッドが
-                <code>Zend_Dom_Query</code> で使用できます。
+                <classname>Zend_Dom_Query</classname> で使用できます。
             </para>
 
             <itemizedlist>
@@ -203,7 +201,7 @@ foreach ($results as $result) {
 
                 <listitem><para>
                     <code>setDocument($document)</code>:
-                    対象となる文字列を指定します。<code>Zend_Dom_Query</code>
+                    対象となる文字列を指定します。<classname>Zend_Dom_Query</classname>
                     がドキュメントの形式を自動判定します。
                 </para></listitem>
 
@@ -235,7 +233,7 @@ foreach ($results as $result) {
             <title>Zend_Dom_Query_Result</title>
 
             <para>
-                先ほど説明したように、<code>Zend_Dom_Query_Result</code>
+                先ほど説明したように、<classname>Zend_Dom_Query_Result</classname>
                 は <code>Iterator</code> と
                 <code>Countable</code> を実装しており、
                 <code>foreach</code> ループで使用したり
@@ -253,7 +251,7 @@ foreach ($results as $result) {
                 <listitem><para>
                     <code>getXpathQuery()</code>:
                     その結果を得る元となった XPath クエリを返します。
-                    内部的には、<code>Zend_Dom_Query</code> は
+                    内部的には、<classname>Zend_Dom_Query</classname> は
                     CSS セレクタクエリを XPath に変換しています。
                     そのため、このメソッドは常に結果を返します。
                 </para></listitem>

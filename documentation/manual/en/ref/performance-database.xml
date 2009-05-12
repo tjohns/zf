@@ -4,8 +4,8 @@
     <title>Zend_Db Performance</title>
 
     <para>
-        <code>Zend_Db</code> is a database abstraction layer, and is intended to
-        provide a common API for SQL operations. <code>Zend_Db_Table</code> is a
+        <classname>Zend_Db</classname> is a database abstraction layer, and is intended to
+        provide a common API for SQL operations. <classname>Zend_Db_Table</classname> is a
         Table Data Gateway, intended to abstract common table-level database
         operations. Due to their abstract nature and the "magic" they do under
         the hood to perform their operations, they can sometimes introduce
@@ -19,7 +19,7 @@
         <para>
             In order to keep usage as simple as possible, and also to support
             constantly changing schemas during development,
-            <code>Zend_Db_Table</code> does some magic under the hood: on
+            <classname>Zend_Db_Table</classname> does some magic under the hood: on
             first use, it fetches the table schema and stores it within object
             members. This operation is typically expensive, regardless of the
             database -- which can contribute to bottlenecks in production.
@@ -33,15 +33,15 @@
             <title>Use the metadata cache</title>
 
             <para>
-                <code>Zend_Db_Table</code> can optionally utilize
-                <code>Zend_Cache</code> to cache table metadata. This is
+                <classname>Zend_Db_Table</classname> can optionally utilize
+                <classname>Zend_Cache</classname> to cache table metadata. This is
                 typically faster to access and less expensive than fetching the
                 metadata from the database itself.
             </para>
 
             <para>
-                The <link linkend="zend.db.table.metadata.caching"><code>Zend_Db_Table</code>
-                documentation includes information on metadata caching</link>.
+                The <link linkend="zend.db.table.metadata.caching"><classname>Zend_Db_Table
+                </classname> documentation includes information on metadata caching</link>.
             </para>
         </sect3>
 
@@ -49,7 +49,7 @@
             <title>Hardcode your metadata in the table definition</title>
 
             <para>
-                As of 1.7.0, <code>Zend_Db_Table</code> also provides <link
+                As of 1.7.0, <classname>Zend_Db_Table</classname> also provides <link
                     linkend="zend.db.table.metadata.caching.hardcoding">support
                 for hardcoding metadata in the table definition</link>. This is
                 an advanced use case, and should only be used when you know the
@@ -64,7 +64,7 @@
             can I make it better?</title>
 
         <para>
-            <code>Zend_Db_Select</code> is relatively good at its job. However,
+            <classname>Zend_Db_Select</classname> is relatively good at its job. However,
             if you are performing complex queries requiring joins or
             sub-selects, it can often be fairly naive.
         </para>
@@ -74,8 +74,8 @@
 
             <para>
                 The only real answer is to write your own SQL;
-                <code>Zend_Db</code> does not require the usage of
-                <code>Zend_Db_Select</code>, so providing your own, tuned SQL
+                <classname>Zend_Db</classname> does not require the usage of
+                <classname>Zend_Db_Select</classname>, so providing your own, tuned SQL
                 select statements is a perfectly legitimate approach,
             </para>
             <para>

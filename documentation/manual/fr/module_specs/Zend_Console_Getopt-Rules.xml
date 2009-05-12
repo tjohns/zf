@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.rules">
-
-    <title>Déclarer les règles <code>Getopt</code></title>
+    <title>Déclarer les règles Getopt</title>
 
     <para>
         Le constructeur de la classe <classname>Zend_Console_Getopt</classname> prend un à trois
@@ -27,7 +26,6 @@
     </para>
 
     <sect2 id="zend.console.getopt.rules.short">
-
         <title>Déclarer des options avec la syntaxe courte</title>
 
         <para>
@@ -42,13 +40,11 @@
         </para>
 
         <example id="zend.console.getopt.rules.short.example">
-
             <title>Utiliser la syntaxe courte</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -62,11 +58,9 @@ $opts = new Zend_Console_Getopt('abp:');
             types des paramètres, et les messages d'aide ne sont pas supportés dans la syntaxe
             courte.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.rules.long">
-
         <title>Déclarer des options avec la syntaxe longue</title>
 
         <para>
@@ -112,7 +106,6 @@ $opts = new Zend_Console_Getopt('abp:');
         </para>
 
         <example id="zend.console.getopt.rules.long.example">
-
             <title>Utiliser la syntaxe longue</title>
 
             <programlisting role="php"><![CDATA[
@@ -120,11 +113,10 @@ $opts = new Zend_Console_Getopt(
   array(
     'abricot|a'  => 'option abricot, sans parametres',
     'banane|b=i' => 'option banane, avec un parametre entier obligatoire',
-    'pear|p-s'   => 'option pear, avec un parametre chaine de caracteres optionel'
+    'pear|p-s'   => 'option pear, avec un parametre chaîne optionel'
   )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -135,7 +127,5 @@ $opts = new Zend_Console_Getopt(
             "<code>--pear</code>" et "<code>-p</code>" sont des alias l'un pour l'autre et l'option
             prend un paramètre optionnel de type chaîne de caractère.
         </para>
-
     </sect2>
-
 </sect1>

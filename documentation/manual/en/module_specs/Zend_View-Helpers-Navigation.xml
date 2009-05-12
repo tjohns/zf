@@ -186,7 +186,7 @@
     <para>
         If a navigation container is not explicitly set in a helper using
         <code>$helper->setContainer($nav)</code>, the helper will look
-        for a container instance with the key <code>Zend_Navigation</code> in
+        for a container instance with the key <classname>Zend_Navigation</classname> in
         <link linkend="zend.registry">the registry</link>.
         If a container is not explicitly set or found in the registry, the
         helper will create an empty <classname>Zend_Navigation</classname>
@@ -206,8 +206,7 @@
 $this->navigation()->addPage(array(
     'type' => 'uri',
     'label' => 'New page'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The call above will add a page to the container in the
@@ -225,7 +224,7 @@ $this->navigation()->addPage(array(
             <code>$helper->setTranslator($translator)</code>, or like with other
             I18n-enabled components; by adding the translator to
             <link linkend="zend.registry">the registry</link> by using the key
-            <code>Zend_Translate</code>.
+            <classname>Zend_Translate</classname>.
         </para>
 
         <para>
@@ -493,8 +492,7 @@ $view->navigation($container);
 
 // ...or store it in the reigstry:
 Zend_Registry::set('Zend_Navigation', $container);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In addition to the container above, the following setup is assumed:
@@ -534,8 +532,7 @@ $view->navigation()->setAcl($acl)->setRole('member');
 // ...or set default ACL and role statically:
 Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
 Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole('member');
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.breadcrumbs">
@@ -639,8 +636,7 @@ and are equivalent to:
 
 Output:
 <a href="/products">Products</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example2">
@@ -657,8 +653,7 @@ Rendering with 8 spaces indentation:
 
 Output:
         <a href="/products">Products</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example3">
@@ -695,8 +690,7 @@ echo $this->navigation()->breadcrumbs();
 
 Output:
 Nothing, because the deepest active page is not at level 10 or deeper.
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example4">
@@ -721,8 +715,7 @@ Nothing, because the deepest active page is not at level 10 or deeper.
 $partial = ;
 echo $this->navigation()->breadcrumbs()
                         ->setPartial(array('breadcrumbs.phtml', 'default'));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Contents of
@@ -733,8 +726,7 @@ echo $this->navigation()->breadcrumbs()
 echo implode(', ', array_map(
         create_function('$a', 'return $a->getLabel();'),
         $this->pages));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Output:
@@ -742,8 +734,7 @@ echo implode(', ', array_map(
 
             <programlisting role="php"><![CDATA[
 Products, Foo Server, FAQ
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
 
@@ -897,55 +888,55 @@ Products, Foo Server, FAQ
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_ALTERNATE</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_ALTERNATE</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_STYLESHEET</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_STYLESHEET</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_START</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_START</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_NEXT</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_NEXT</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_PREV</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_PREV</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CONTENTS</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CONTENTS</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_INDEX</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_INDEX</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_GLOSSARY</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_GLOSSARY</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_COPYRIGHT</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_COPYRIGHT</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CHAPTER</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CHAPTER</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_SECTION</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_SECTION</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_SUBSECTION</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_SUBSECTION</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_APPENDIX</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_APPENDIX</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_HELP</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_HELP</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_BOOKMARK</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_BOOKMARK</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CUSTOM</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CUSTOM</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_ALL</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_ALL</classname></para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -1051,8 +1042,7 @@ $container = new Zend_Navigation(array(
         )
     )
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.links.example2">
@@ -1077,8 +1067,7 @@ Output:
 <link rel="chapter" href="/community" title="Community">
 <link rel="canonical" href="http://www.example.com/?page=server-faq">
 <link rev="subsection" href="/products/server" title="Foo Server">
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.links.example3">
@@ -1099,8 +1088,7 @@ Output:
 <link rel="start" href="/" title="Home">
 <link rel="next" href="/products/server/editions" title="Editions">
 <link rel="prev" href="/products/server" title="Foo Server">
-]]>
-            </programlisting>
+]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 Render only native link types:
@@ -1116,8 +1104,7 @@ Output:
 <link rel="chapter" href="/company/about" title="Company">
 <link rel="chapter" href="/community" title="Community">
 <link rev="subsection" href="/products/server" title="Foo Server">
-]]>
-            </programlisting>
+]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 Render all but chapter:
@@ -1131,8 +1118,7 @@ Output:
 <link rel="prev" href="/products/server" title="Foo Server">
 <link rel="canonical" href="http://www.example.com/?page=server-faq">
 <link rev="subsection" href="/products/server" title="Foo Server">
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
 
@@ -1364,12 +1350,11 @@ Output:
         </ul>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example2">
-            <title>Calling <code>renderMenu()</code> directly</title>
+            <title>Calling renderMenu() directly</title>
 
             <para>
                 This example shows how to render a menu that is not
@@ -1399,8 +1384,7 @@ Output:
                         <a class="external" href="http://forums.example.com/">Forums</a>
                     </li>
                 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example3">
@@ -1444,8 +1428,7 @@ The output will be the same if 'FAQ' or 'Foo Server' is active:
             <a href="/products/server/requirements">System Requirements</a>
         </li>
     </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example4">
@@ -1497,8 +1480,7 @@ Output:
         </ul>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example5">
@@ -1559,8 +1541,7 @@ Output:
         <a class="external" href="http://forums.example.com/">Forums</a>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example6">
@@ -1595,8 +1576,7 @@ Output:
         </ul>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example7">
@@ -1629,8 +1609,7 @@ Output:
         </ul>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example8">
@@ -1660,8 +1639,7 @@ Output:
         </ul>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example9">
@@ -1691,8 +1669,7 @@ Output:
         <a href="/products/studio">Foo Studio</a>
     </li>
 </ul>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example10">
@@ -1714,8 +1691,7 @@ Output:
 $partial = array('menu.phtml', 'default');
 $this->navigation()->menu()->setPartial($partial);
 echo $this->navigation()->menu()->render();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>In application/modules/default/views/menu.phtml:</para>
 
@@ -1723,8 +1699,7 @@ echo $this->navigation()->menu()->render();
 foreach ($this->container as $page) {
     echo $this->menu()->htmlify($page), PHP_EOL;
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>Output:</para>
 
@@ -1733,8 +1708,7 @@ foreach ($this->container as $page) {
 <a href="/products">Products</a>
 <a title="About us" href="/company/about">Company</a>
 <a href="/community">Community</a>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
 
@@ -1938,8 +1912,7 @@ $this->navigation()
 
 // print sitemap
 echo $this->navigation()->sitemap();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Notice how pages that are invisible or pages with
@@ -2002,8 +1975,7 @@ echo $this->navigation()->sitemap();
     <loc>http://forums.example.com/</loc>
   </url>
 </urlset>
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Render the sitemap using no ACL role (should filter out
@@ -2015,8 +1987,7 @@ echo $this->navigation()
           ->sitemap()
           ->setFormatOutput(true)
           ->setRole();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
@@ -2070,8 +2041,7 @@ echo $this->navigation()
     <loc>http://forums.example.com/</loc>
   </url>
 </urlset>
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Render the sitemap using a maximum depth of 1.
@@ -2082,8 +2052,7 @@ echo $this->navigation()
           ->sitemap()
           ->setFormatOutput(true)
           ->setMaxDepth(1);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
@@ -2119,8 +2088,7 @@ echo $this->navigation()
     <loc>http://forums.example.com/</loc>
   </url>
 </urlset>
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect4>
@@ -2133,10 +2101,10 @@ echo $this->navigation()
             that relays calls to other navigational helpers. It can be
             considered an entry point to all navigation-related view tasks.
             The aforementioned navigational helpers are in the namespace
-            <code>Zend_View_Helper_Navigation</code>, and would thus require
+            <classname>Zend_View_Helper_Navigation</classname>, and would thus require
             the path <code>Zend/View/Helper/Navigation</code> to be added as
             a helper path to the view. With the proxy helper residing in the
-            <code>Zend_View_Helper</code> namespace, it will always be
+            <classname>Zend_View_Helper</classname> namespace, it will always be
             available, without the need to add any helper paths to the view.
         </para>
 

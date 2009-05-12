@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.http.response">
     <title>Zend_Http_Response</title>
@@ -31,8 +31,7 @@ while ($buff = fread($sock, 1024))
     $str .= $sock;
 
 $response = Zend_Http_Response::factory($str);
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
         <para>
@@ -41,7 +40,8 @@ $response = Zend_Http_Response::factory($str);
         </para>
         <para>
             <code>
-                public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
+                public function __construct($code, $headers, $body = null, $version = '1.1',
+                $message = null)
             </code>
         </para>
         <itemizedlist>
@@ -52,7 +52,8 @@ $response = Zend_Http_Response::factory($str);
             </listitem>
             <listitem>
                 <para>
-                    <code>$headers</code>: Ein assoziatives Array mit HTTP Antwort Headers (z.B. 'Host' => 'example.com')
+                    <code>$headers</code>: Ein assoziatives Array mit HTTP Antwort Headers (z.B.
+                    'Host' => 'example.com')
                 </para>
             </listitem>
             <listitem>
@@ -67,8 +68,9 @@ $response = Zend_Http_Response::factory($str);
             </listitem>
             <listitem>
                 <para>
-                    <code>$message</code>: Die HTTP Rückantwort (z.B. 'OK', 'Internal Server Error').
-                    Falls nicht angegeben, wird die Rückantwort anhand des Antwortcode gesetzt.
+                    <code>$message</code>: Die HTTP Rückantwort (z.B. 'OK', 'Internal Server
+                    Error'). Falls nicht angegeben, wird die Rückantwort anhand des Antwortcode
+                    gesetzt.
                 </para>
             </listitem>
         </itemizedlist>
@@ -109,8 +111,7 @@ if ($response->isError()) {
        " " . $response->getMessage() . "\n";
 }
 // .. verarbeite die Antwort hier...
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -184,8 +185,7 @@ if ($response->getStatus() == 200) {
   echo "An error occurred while fetching data:<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
             <note>
                 <title>Immer die Rückgabewerte prüfen</title>
@@ -208,8 +208,7 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
 }
 
 echo $body;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -259,13 +258,13 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>:
-                        Erhalte die Standard HTTP Rückantwort für einen Antwortcode code. Zum
-                        Beispiel wird "Internal Server Error" zurückgegeben, wenn $code gleich 500
-                        ist. Wenn $http11 gleich true ist (Standard), werden die HTTP/1.1
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 =
+                        true)</code>: Erhalte die Standard HTTP Rückantwort für einen Antwortcode
+                        $code. Zum Beispiel wird "Internal Server Error" zurückgegeben, wenn $code
+                        gleich 500 ist. Wenn $http11 gleich true ist (Standard), werden die HTTP/1.1
                         Standardantworten zurück gegeben, andernfalls die HTTP/1.0 Antworten.
-                        Wird $code nicht angegeben, wird diese Methode alle bekannten HTTP Antwortcodes
-                        als assoziatives Array (code => message) zurückgeben.
+                        Wird $code nicht angegeben, wird diese Methode alle bekannten HTTP
+                        Antwortcodes als assoziatives Array (code => message) zurückgeben.
                     </para>
                 </listitem>
             </itemizedlist>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
 
@@ -11,18 +11,18 @@
       実際のメッセージの内容に加え、エンコーディングや Content Type、
       そして元のファイル名などの情報も含まれます。
       保存されたデータから文字列を生成するためのメソッドが用意されています。
-      <code>Zend_Mime_Part</code> オブジェクトを <link
-      linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>
+      <classname>Zend_Mime_Part</classname> オブジェクトを <link
+      linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link>
       に追加することで、完全なマルチパートメッセージを作成することができます。</para>
     </sect2>
 
   <sect2 id="zend.mime.part.instantiation">
     <title>インスタンスの作成</title>
 
-    <para><code>Zend_Mime_Part</code> のインスタンスを作成する際には、
+    <para><classname>Zend_Mime_Part</classname> のインスタンスを作成する際には、
     新しいパートの内容を表す文字列を使用します。新しいパートの型は
     OCTET-STREAM、エンコーディングは 8Bit であるとして作成されます。
-    <code>Zend_Mime_Part</code> のインスタンスを作成した後で、
+    <classname>Zend_Mime_Part</classname> のインスタンスを作成した後で、
     その属性に直接アクセスすることでメタ情報を設定することができます。</para>
 
     <programlisting role="php"><![CDATA[
@@ -36,8 +36,7 @@ public $charset;
 public $boundary;
 public $location;
 public $language;
-]]>
-    </programlisting>
+]]></programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">

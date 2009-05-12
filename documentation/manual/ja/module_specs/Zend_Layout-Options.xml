@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.layout.options">
     <title>Zend_Layout の設定オプション</title>
 
     <para>
-        <code>Zend_Layout</code> にはさまざまな設定オプションがあります。
+        <classname>Zend_Layout</classname> にはさまざまな設定オプションがあります。
         オプションを設定する方法には次のようなものがあります。
         まずアクセサメソッドをコールすること、
-        次に配列や <code>Zend_Config</code> オブジェクトをコンストラクタあるいは
+        次に配列や <classname>Zend_Config</classname> オブジェクトをコンストラクタあるいは
         <code>startMvc()</code> に渡すこと、
         オプションの配列を <code>setOptions()</code> に渡すこと、
-        そして <code>Zend_Config</code> オブジェクトを <code>setConfig()</code>
+        そして <classname>Zend_Config</classname> オブジェクトを <code>setConfig()</code>
         に渡すことです。
     </para>
 
@@ -56,7 +56,7 @@
                 <emphasis>view</emphasis>:
                 レンダリングの際に使用するビューオブジェクト。
                 MVC と組み合わせて使用した場合、
-                ビューオブジェクトを明示しなければ <code>Zend_Layout</code> は
+                ビューオブジェクトを明示しなければ <classname>Zend_Layout</classname> は
                 <link linkend="zend.controller.actionhelpers.viewrenderer">
                 ViewRenderer</link>
                 で登録されたビューオブジェクトを使用します。
@@ -66,20 +66,20 @@
 
         <listitem><para>
                 <emphasis>helperClass</emphasis>:
-                <code>Zend_Layout</code> を MVC
+                <classname>Zend_Layout</classname> を MVC
                 コンポーネントを組み合わせて使用する際のアクションヘルパークラス。
                 デフォルトでは、これは
-                <code>Zend_Layout_Controller_Action_Helper_Layout</code> です。
+                <classname>Zend_Layout_Controller_Action_Helper_Layout</classname> です。
                 アクセサは <code>setHelperClass()</code> と
                 <code>getHelperClass()</code> です。
         </para></listitem>
 
         <listitem><para>
                 <emphasis>pluginClass</emphasis>:
-                <code>Zend_Layout</code> を MVC
+                <classname>Zend_Layout</classname> を MVC
                 コンポーネントを組み合わせて使用する際のフロントコントローラプラグインクラス。
                 デフォルトでは、これは
-                <code>Zend_Layout_Controller_Plugin_Layout</code> です。
+                <classname>Zend_Layout_Controller_Plugin_Layout</classname> です。
                 アクセサは <code>setPluginClass()</code> と
                 <code>getPluginClass()</code> です。
         </para></listitem>
@@ -89,7 +89,7 @@
                 レイアウト名をレイアウトビュースクリプトのパスに解決する際に使用するインフレクタ。
                 詳細は <link
                     linkend="zend.layout.advanced.inflector">
-                    <code>Zend_Layout</code> インフレクタのドキュメント
+                    <classname>Zend_Layout</classname> インフレクタのドキュメント
                     </link> を参照ください。
                 アクセサは <code>setInflector()</code> と
                 <code>getInflector()</code> です。
@@ -121,8 +121,7 @@ $options = array(
     'layoutPath' => '/path/to/layouts',
     'contentKey' => 'CONTENT',           // MVC を使わない場合は無視されます
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 /**
@@ -132,8 +131,7 @@ layoutPath = "/path/to/layouts"
 contentKey = "CONTENT"
 */
 $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <example id="zend.layout.options.examples.constructor">
             <title>オプションをコンストラクタあるいは startMvc() で渡す</title>
@@ -141,9 +139,9 @@ $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
             <para>
                 コンストラクタおよび静的メソッド <code>startMvc()</code>
                 は、どちらもオプションの配列か
-                <code>Zend_Config</code> オブジェクトを受け取ることができます。
+                <classname>Zend_Config</classname> オブジェクトを受け取ることができます。
                 受け取った内容をもとに
-                <code>Zend_Layout</code> インスタンスの設定を行います。
+                <classname>Zend_Layout</classname> インスタンスの設定を行います。
             </para>
 
             <para>
@@ -156,8 +154,7 @@ $layout = new Zend_Layout($options);
 
 // startMvc() を使用します
 $layout = Zend_Layout::startMvc($options);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 次に config オブジェクトを使用する方法です。
@@ -172,11 +169,10 @@ $layout = new Zend_Layout($config);
 
 // startMvc() を使用します
 $layout = Zend_Layout::startMvc($config);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                基本的に、これは <code>Zend_Layout</code>
+                基本的に、これは <classname>Zend_Layout</classname>
                 インスタンスをカスタマイズするためのもっとも簡単な方法となります。
             </para>
         </example>
@@ -185,7 +181,7 @@ $layout = Zend_Layout::startMvc($config);
             <title>setOption() および setConfig() の使用</title>
 
             <para>
-                時には、インスタンスを作成した後で <code>Zend_Layout</code>
+                時には、インスタンスを作成した後で <classname>Zend_Layout</classname>
                 を設定したくなることもあるでしょう。そんな場合は
                 <code>setOptions()</code> や <code>setConfig()</code>
                 を使用します。
@@ -197,8 +193,7 @@ $layout->setOptions($options);
 
 // Zend_Config オブジェクトを使用します
 $layout->setConfig($options);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 しかし、ここで注意すべき点があります。
@@ -213,7 +208,7 @@ $layout->setConfig($options);
             <title>アクセサの使用</title>
 
             <para>
-                最後に、<code>Zend_Layout</code>
+                最後に、<classname>Zend_Layout</classname>
                 のインスタンスをアクセサで設定することもできます。
                 すべてのアクセサは流れるようなインターフェイスを実装しており、
                 メソッドコールを連結して行えます。
@@ -223,8 +218,7 @@ $layout->setConfig($options);
 $layout->setLayout('foo')
        ->setLayoutPath('/path/to/layouts')
        ->setContentKey('CONTENT');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

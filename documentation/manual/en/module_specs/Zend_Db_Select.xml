@@ -9,7 +9,7 @@
         <title>Introduction</title>
 
         <para>
-            The <code>Zend_Db_Select</code> object represents a SQL <code>SELECT</code> query statement. The
+            The <classname>Zend_Db_Select</classname> object represents a SQL <code>SELECT</code> query statement. The
             class has methods for adding individual parts to the query. You can specify some
             parts of the query using PHP methods and data structures, and the class forms the
             correct SQL syntax for you. After you build a query, you can execute the query as if
@@ -17,7 +17,7 @@
         </para>
 
         <para>
-            The value offered by <code>Zend_Db_Select</code> includes:
+            The value offered by <classname>Zend_Db_Select</classname> includes:
         </para>
 
         <itemizedlist>
@@ -48,9 +48,9 @@
         </itemizedlist>
 
         <para>
-            Using <code>Zend_Db_Select</code> is not mandatory. For very simple SELECT queries, it is usually
+            Using <classname>Zend_Db_Select</classname> is not mandatory. For very simple SELECT queries, it is usually
             simpler to specify the entire SQL query as a string and execute it using Adapter
-            methods like <code>query()</code> or <code>fetchAll()</code>. Using <code>Zend_Db_Select</code> is
+            methods like <code>query()</code> or <code>fetchAll()</code>. Using <classname>Zend_Db_Select</classname> is
             helpful if you need to assemble a SELECT query procedurally, or based on conditional
             logic in your application.
         </para>
@@ -62,8 +62,8 @@
         <title>Creating a Select Object</title>
 
         <para>
-            You can create an instance of a <code>Zend_Db_Select</code> object using the <code>select()</code>
-            method of a <code>Zend_Db_Adapter_Abstract</code> object.
+            You can create an instance of a <classname>Zend_Db_Select</classname> object using the <code>select()</code>
+            method of a <classname>Zend_Db_Adapter_Abstract</classname> object.
         </para>
 
         <example id="zend.db.select.creating.example-db">
@@ -73,13 +73,12 @@
             <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory( ...options... );
 $select = $db->select();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
         <para>
-            Another way to create a <code>Zend_Db_Select</code> object is with its constructor, specifying the
+            Another way to create a <classname>Zend_Db_Select</classname> object is with its constructor, specifying the
             database adapter as an argument.
         </para>
 
@@ -90,8 +89,7 @@ $select = $db->select();
             <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory( ...options... );
 $select = new Zend_Db_Select($db);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -103,7 +101,7 @@ $select = new Zend_Db_Select($db);
 
         <para>
             When building the query, you can add clauses of the query one by one. There is a
-            separate method to add each clause to the <code>Zend_Db_Select</code> object.
+            separate method to add each clause to the <classname>Zend_Db_Select</classname> object.
         </para>
 
         <example id="zend.db.select.building.example">
@@ -122,13 +120,12 @@ $select->where( ...specify search criteria... )
 
 // Add an ORDER BY clause
 $select->order( ...specify sorting criteria... );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
         <para>
-            You also can use most methods of the <code>Zend_Db_Select</code> object with a convenient fluent
+            You also can use most methods of the <classname>Zend_Db_Select</classname> object with a convenient fluent
             interface. A fluent interface means that each method returns a reference to the object
             on which it was called, so you can immediately call another method.
         </para>
@@ -142,8 +139,7 @@ $select = $db->select()
     ->from( ...specify table and columns... )
     ->where( ...specify search criteria... )
     ->order( ...specify sorting criteria... );
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -160,7 +156,7 @@ $select = $db->select()
 
             <para>
                 Specify the table for this query using the <code>from()</code> method. You can
-                specify the table name as a simple string. <code>Zend_Db_Select</code> applies identifier
+                specify the table name as a simple string. <classname>Zend_Db_Select</classname> applies identifier
                 quoting around the table name, so you can use special characters.
             </para>
 
@@ -175,8 +171,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from( 'products' );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -184,7 +179,7 @@ $select = $db->select()
                 You can also specify the correlation name (sometimes called the "table alias") for
                 a table. Instead of a simple string, use an associative array mapping the
                 correlation name to the table name. In other clauses of the SQL query, use this
-                correlation name. If your query joins more than one table, <code>Zend_Db_Select</code> generates
+                correlation name. If your query joins more than one table, <classname>Zend_Db_Select</classname> generates
                 unique correlation names based on the table names, for any tables for which you
                 don't specify the correlation name.
             </para>
@@ -200,14 +195,13 @@ $select = $db->select()
 
 $select = $db->select()
              ->from( array('p' => 'products') );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
                 Some RDBMS brands support a leading schema specifier for a table. You can specify
-                the table name as "<code>schemaName.tableName</code>", where <code>Zend_Db_Select</code> quotes
+                the table name as "<code>schemaName.tableName</code>", where <classname>Zend_Db_Select</classname> quotes
                 each part individually, or you may specify the schema name separately. A schema
                 name specified in the table name takes precedence over a schema provided separately
                 in the event that both are provided.
@@ -229,8 +223,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from('products', '*', 'myschema');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -262,7 +255,7 @@ $select = $db->select()
 
             <para>
                 You can specify the column name as "<code>correlationName.columnName</code>".
-                <code>Zend_Db_Select</code> quotes each part individually. If you don't specify a correlation
+                <classname>Zend_Db_Select</classname> quotes each part individually. If you don't specify a correlation
                 name for a column, it uses the correlation name for the table named in the current
                 <code>from()</code> method.
             </para>
@@ -295,8 +288,7 @@ $select = $db->select()
 $select = $db->select()
              ->from(array('p' => 'products'),
                     array('prodno' => 'product_id', 'product_name'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -309,13 +301,13 @@ $select = $db->select()
             <para>
                 Columns in SQL queries are sometimes expressions, not simply column names from a
                 table. Expressions should not have correlation names or quoting applied. If your
-                column string contains parentheses, <code>Zend_Db_Select</code> recognizes it as an expression.
+                column string contains parentheses, <classname>Zend_Db_Select</classname> recognizes it as an expression.
             </para>
 
             <para>
-                You also can create an object of type <code>Zend_Db_Expr</code> explicitly, to prevent a string
-                from being treated as a column name. <code>Zend_Db_Expr</code> is a minimal class that contains
-                a single string. <code>Zend_Db_Select</code> recognizes objects of type <code>Zend_Db_Expr</code> and
+                You also can create an object of type <classname>Zend_Db_Expr</classname> explicitly, to prevent a string
+                from being treated as a column name. <classname>Zend_Db_Expr</classname> is a minimal class that contains
+                a single string. <classname>Zend_Db_Select</classname> recognizes objects of type <classname>Zend_Db_Expr</classname> and
                 converts them back to string, but does not apply any alterations, such as quoting
                 or correlation names.
             </para>
@@ -323,8 +315,8 @@ $select = $db->select()
             <note>
 
                 <para>
-                    Using <code>Zend_Db_Expr</code> for column names is not necessary if your column expression
-                    contains parentheses; <code>Zend_Db_Select</code> recognizes parentheses and treats the
+                    Using <classname>Zend_Db_Expr</classname> for column names is not necessary if your column expression
+                    contains parentheses; <classname>Zend_Db_Select</classname> recognizes parentheses and treats the
                     string as an expression, skipping quoting and correlation names.
                 </para>
 
@@ -365,13 +357,12 @@ $select = $db->select()
                           'cost_plus_tax' =>
                               new Zend_Db_Expr('p.cost * 1.08'))
                     );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
-                In the cases above, <code>Zend_Db_Select</code> does not alter the string to apply correlation
+                In the cases above, <classname>Zend_Db_Select</classname> does not alter the string to apply correlation
                 names or identifier quoting. If those changes are necessary to resolve ambiguity,
                 you must make the changes manually in the string.
             </para>
@@ -409,8 +400,7 @@ $select = $db->select()
                     array('origin' =>
                               '(p.' . $db->quoteIdentifier('from') . ' + 10)')
                    );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -424,7 +414,7 @@ $select = $db->select()
                 There may be cases where you wish to add columns to an existing FROM or JOIN table
                 after those methods have been called. The <code>columns()</code> method allows you
                 to add specific columns at any point before the query is executed. You can supply
-                the columns as either a string or <code>Zend_Db_Expr</code> or as an array of these
+                the columns as either a string or <classname>Zend_Db_Expr</classname> or as an array of these
                 elements. The second argument to this method can be omitted, implying that the
                 columns are to be added to the FROM table, otherwise an existing correlation name
                 must be used.
@@ -432,7 +422,7 @@ $select = $db->select()
 
             <example id="zend.db.select.building.columns-atomic.example">
 
-                <title>Examples of adding columns with the <code>columns()</code> method</title>
+                <title>Examples of adding columns with the columns() method</title>
 
                 <programlisting role="php"><![CDATA[
 // Build this query:
@@ -450,8 +440,7 @@ $select = $db->select()
 $select = $db->select()
              ->from(array('p' => 'products'), 'p.product_id')
              ->columns('product_name', 'p');
-             // Alternatively use columns('p.product_name')]]>
-                </programlisting>
+             // Alternatively use columns('p.product_name')]]></programlisting>
 
             </example>
 
@@ -463,7 +452,7 @@ $select = $db->select()
 
             <para>
                 Many useful queries involve using a <code>JOIN</code> to combine rows from multiple
-                tables. You can add tables to a <code>Zend_Db_Select</code> query using the <code>join()</code>
+                tables. You can add tables to a <classname>Zend_Db_Select</classname> query using the <code>join()</code>
                 method. Using this method is similar to the <code>from()</code> method, except you
                 can also specify a join condition in most cases.
             </para>
@@ -483,8 +472,7 @@ $select = $db->select()
                     array('product_id', 'product_name'))
              ->join(array('l' => 'line_items'),
                     'p.product_id = l.product_id');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -507,7 +495,7 @@ $select = $db->select()
             <para>
                 The third argument to <code>join()</code> is an array of column names, like that
                 used in the <code>from()</code> method. It defaults to "<code>*</code>", supports
-                correlation names, expressions, and <code>Zend_Db_Expr</code> in the same way as the array of
+                correlation names, expressions, and <classname>Zend_Db_Expr</classname> in the same way as the array of
                 column names in the <code>from()</code> method.
             </para>
 
@@ -534,8 +522,7 @@ $select = $db->select()
              ->join(array('l' => 'line_items'),
                     'p.product_id = l.product_id',
                     array() ); // empty list of columns
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     Note the empty <code>array()</code> in the above example in place of a list of
@@ -546,7 +533,7 @@ $select = $db->select()
 
             <para>
                 SQL has several types of joins. See the list below for the methods to support
-                different join types in <code>Zend_Db_Select</code>.
+                different join types in <classname>Zend_Db_Select</classname>.
             </para>
 
             <itemizedlist>
@@ -668,7 +655,7 @@ $select = $db->select()
             <para>
                 In addition to these join methods, you can simplify your queries by using the
                 JoinUsing methods. Instead of supplying a full condition to your join, you simply
-                pass the column name on which to join and the <code>Zend_Db_Select</code> object completes the
+                pass the column name on which to join and the <classname>Zend_Db_Select</classname> object completes the
                 condition for you.
             </para>
 
@@ -687,13 +674,13 @@ $select = $db->select()
 $select = $db->select()
              ->from('table1')
              ->joinUsing('table2', 'column1')
-             ->where('column2 = ?', 'foo');]]>
-                </programlisting>
+             ->where('column2 = ?', 'foo');
+]]></programlisting>
 
             </example>
 
             <para>
-                Each of the applicable join methods in the <code>Zend_Db_Select</code> component has a
+                Each of the applicable join methods in the <classname>Zend_Db_Select</classname> component has a
                 corresponding 'using' method.
             </para>
 
@@ -749,8 +736,8 @@ $select = $db->select()
 $select = $db->select()
              ->from('products',
                     array('product_id', 'product_name', 'price'))
-             ->where('price > 100.00');]]>
-                </programlisting>
+             ->where('price > 100.00');
+]]></programlisting>
 
             </example>
 
@@ -767,7 +754,7 @@ $select = $db->select()
 
             <para>
                 The second argument to the <code>where()</code> method is optional. It is a value
-                to substitute into the expression. <code>Zend_Db_Select</code> quotes the value and substitutes
+                to substitute into the expression. <classname>Zend_Db_Select</classname> quotes the value and substitutes
                 it for a question-mark ("<code>?</code>") symbol in the expression.
             </para>
 
@@ -793,14 +780,13 @@ $select = $db->select()
              ->from('products',
                     array('product_id', 'product_name', 'price'))
              ->where('price > ?', $minimumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
                 You can invoke the <code>where()</code> method multiple times on the same
-                <code>Zend_Db_Select</code> object. The resulting query combines the multiple terms together
+                <classname>Zend_Db_Select</classname> object. The resulting query combines the multiple terms together
                 using <code>AND</code> between them.
             </para>
 
@@ -823,8 +809,7 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where('price > ?', $minimumPrice)
              ->where('price < ?', $maximumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -854,13 +839,12 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where('price < ?', $minimumPrice)
              ->orWhere('price > ?', $maximumPrice);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
-                <code>Zend_Db_Select</code> automatically puts parentheses around each expression you specify
+                <classname>Zend_Db_Select</classname> automatically puts parentheses around each expression you specify
                 using the <code>where()</code> or <code>orWhere()</code> methods. This helps to
                 ensure that Boolean operator precedence does not cause unexpected results.
             </para>
@@ -885,14 +869,13 @@ $select = $db->select()
                     array('product_id', 'product_name', 'price'))
              ->where("price < $minimumPrice OR price > $maximumPrice")
              ->where('product_name = ?', $prod);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
                 In the example above, the results would be quite different without the parentheses,
-                because <code>AND</code> has higher precedence than <code>OR</code>. <code>Zend_Db_Select</code>
+                because <code>AND</code> has higher precedence than <code>OR</code>. <classname>Zend_Db_Select</classname>
                 applies the parentheses so the effect is that each expression in successive calls
                 to the <code>where()</code> bind more tightly than the <code>AND</code> that
                 combines the expressions.
@@ -911,7 +894,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code>, you can specify the column(s) to use for calculating the groups
+                In <classname>Zend_Db_Select</classname>, you can specify the column(s) to use for calculating the groups
                 of rows using the <code>group()</code> method. The argument to this method is a
                 column or an array of columns to use in the <code>GROUP BY</code> clause.
             </para>
@@ -934,15 +917,14 @@ $select = $db->select()
                     'p.product_id = l.product_id',
                     array('line_items_per_product' => 'COUNT(*)'))
              ->group('p.product_id');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
             <para>
                 Like the columns array in the <code>from()</code> method, you can use correlation
                 names in the column name strings, and the column is quoted as an identifier unless
-                the string contains parentheses or is an object of type <code>Zend_Db_Expr</code>.
+                the string contains parentheses or is an object of type <classname>Zend_Db_Expr</classname>.
             </para>
 
         </sect3>
@@ -960,7 +942,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code>, you can specify conditions for restricting groups using the
+                In <classname>Zend_Db_Select</classname>, you can specify conditions for restricting groups using the
                 <code>having()</code> method. Its usage is similar to that of the
                 <code>where()</code> method. The first argument is a string containing a SQL
                 expression. The optional second argument is a value that is used to replace a
@@ -990,8 +972,7 @@ $select = $db->select()
                     array('line_items_per_product' => 'COUNT(*)'))
              ->group('p.product_id')
              ->having('line_items_per_product > 10');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1023,7 +1004,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code>, you can use the <code>order()</code> method to specify a column
+                In <classname>Zend_Db_Select</classname>, you can use the <code>order()</code> method to specify a column
                 or an array of columns by which to sort. Each element of the array is a string
                 naming a column. Optionally with the <code>ASC</code> <code>DESC</code> keyword
                 following it, separated by a space.
@@ -1032,7 +1013,7 @@ $select = $db->select()
             <para>
                 Like in the <code>from()</code> and <code>group()</code> methods, column names are
                 quoted as identifiers, unless they contain contain parentheses or are an object of
-                type <code>Zend_Db_Expr</code>.
+                type <classname>Zend_Db_Expr</classname>.
             </para>
 
             <example id="zend.db.select.building.order.example">
@@ -1056,8 +1037,7 @@ $select = $db->select()
              ->group('p.product_id')
              ->order(array('line_items_per_product DESC',
                            'product_id'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1076,7 +1056,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code>, you can use the <code>limit()</code> method to specify the count
+                In <classname>Zend_Db_Select</classname>, you can use the <code>limit()</code> method to specify the count
                 of rows and the number of rows to skip. The first argument to this method is the
                 desired count of rows. The second argument is the number of rows to skip.
             </para>
@@ -1095,8 +1075,7 @@ $select = $db->select()
              ->from(array('p' => 'products'),
                     array('product_id', 'product_name'))
              ->limit(10, 20);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1105,7 +1084,7 @@ $select = $db->select()
                 <para>
                     The <code>LIMIT</code> syntax is not supported by all RDBMS brands. Some RDBMS
                     require different syntax to support similar functionality. Each
-                    <code>Zend_Db_Adapter_Abstract</code> class includes a method to produce SQL appropriate for
+                    <classname>Zend_Db_Adapter_Abstract</classname> class includes a method to produce SQL appropriate for
                     that RDBMS.
                 </para>
 
@@ -1135,8 +1114,7 @@ $select = $db->select()
              ->from(array('p' => 'products'),
                     array('product_id', 'product_name'))
              ->limitPage(2, 10);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1163,8 +1141,7 @@ $select = $db->select()
 $select = $db->select()
              ->distinct()
              ->from(array('p' => 'products'), 'product_name');
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1191,8 +1168,7 @@ $select = $db->select()
 $select = $db->select()
              ->forUpdate()
              ->from(array('p' => 'products'));
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1205,7 +1181,7 @@ $select = $db->select()
         <title>Executing Select Queries</title>
 
         <para>
-            This section describes how to execute the query represented by a <code>Zend_Db_Select</code> object.
+            This section describes how to execute the query represented by a <classname>Zend_Db_Select</classname> object.
         </para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
@@ -1213,13 +1189,13 @@ $select = $db->select()
             <title>Executing Select Queries from the Db Adapter</title>
 
             <para>
-                You can execute the query represented by the <code>Zend_Db_Select</code> object by passing it as
-                the first argument to the <code>query()</code> method of a <code>Zend_Db_Adapter_Abstract</code>
-                object. Use the <code>Zend_Db_Select</code> objects instead of a string query.
+                You can execute the query represented by the <classname>Zend_Db_Select</classname> object by passing it as
+                the first argument to the <code>query()</code> method of a <classname>Zend_Db_Adapter_Abstract</classname>
+                object. Use the <classname>Zend_Db_Select</classname> objects instead of a string query.
             </para>
 
             <para>
-                The <code>query()</code> method returns an object of type <code>Zend_Db_Statement</code> or
+                The <code>query()</code> method returns an object of type <classname>Zend_Db_Statement</classname> or
                 PDOStatement, depending on the adapter type.
             </para>
 
@@ -1233,8 +1209,7 @@ $select = $db->select()
 
 $stmt = $db->query($select);
 $result = $stmt->fetchAll();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1246,8 +1221,8 @@ $result = $stmt->fetchAll();
 
             <para>
                 As an alternative to using the <code>query()</code> method of the adapter object,
-                you can use the <code>query()</code> method of the <code>Zend_Db_Select</code> object. Both
-                methods return an object of type <code>Zend_Db_Statement</code> or PDOStatement, depending on
+                you can use the <code>query()</code> method of the <classname>Zend_Db_Select</classname> object. Both
+                methods return an object of type <classname>Zend_Db_Statement</classname> or PDOStatement, depending on
                 the adapter type.
             </para>
 
@@ -1261,8 +1236,7 @@ $select = $db->select()
 
 $stmt = $select->query();
 $result = $stmt->fetchAll();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1274,7 +1248,7 @@ $result = $stmt->fetchAll();
 
             <para>
                 If you need access to a string representation of the SQL query corresponding to the
-                <code>Zend_Db_Select</code> object, use the <code>__toString()</code> method.
+                <classname>Zend_Db_Select</classname> object, use the <code>__toString()</code> method.
             </para>
 
             <example id="zend.db.select.execute.tostring.example">
@@ -1290,8 +1264,7 @@ echo "$sql\n";
 
 // The output is the string:
 //   SELECT * FROM "products"
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1304,7 +1277,7 @@ echo "$sql\n";
         <title>Other methods</title>
 
         <para>
-            This section describes other methods of the <code>Zend_Db_Select</code> class that are not covered
+            This section describes other methods of the <classname>Zend_Db_Select</classname> class that are not covered
             above: <code>getPart()</code> and <code>reset()</code>.
         </para>
 
@@ -1336,7 +1309,7 @@ echo "$sql\n";
             </para>
 
             <para>
-                The <code>Zend_Db_Select</code> class defines constants you can use for parts of the SQL query.
+                The <classname>Zend_Db_Select</classname> class defines constants you can use for parts of the SQL query.
                 You can use these constant definitions, or you can the literal strings.
             </para>
 
@@ -1354,52 +1327,52 @@ echo "$sql\n";
 
                     <tbody>
                         <row>
-                            <entry><code>Zend_Db_Select::DISTINCT</code></entry>
+                            <entry><classname>Zend_Db_Select::DISTINCT</classname></entry>
                             <entry><code>'distinct'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FOR_UPDATE</code></entry>
+                            <entry><classname>Zend_Db_Select::FOR_UPDATE</classname></entry>
                             <entry><code>'forupdate'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::COLUMNS</code></entry>
+                            <entry><classname>Zend_Db_Select::COLUMNS</classname></entry>
                             <entry><code>'columns'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FROM</code></entry>
+                            <entry><classname>Zend_Db_Select::FROM</classname></entry>
                             <entry><code>'from'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::WHERE</code></entry>
+                            <entry><classname>Zend_Db_Select::WHERE</classname></entry>
                             <entry><code>'where'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::GROUP</code></entry>
+                            <entry><classname>Zend_Db_Select::GROUP</classname></entry>
                             <entry><code>'group'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::HAVING</code></entry>
+                            <entry><classname>Zend_Db_Select::HAVING</classname></entry>
                             <entry><code>'having'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::ORDER</code></entry>
+                            <entry><classname>Zend_Db_Select::ORDER</classname></entry>
                             <entry><code>'order'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_COUNT</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_COUNT</classname></entry>
                             <entry><code>'limitcount'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_OFFSET</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_OFFSET</classname></entry>
                             <entry><code>'limitoffset'</code></entry>
                         </row>
                     </tbody>
@@ -1424,8 +1397,7 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 // The return value may be an array structure, not a string.
 // Each part has a different structure.
 print_r( $orderData );
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -1448,7 +1420,7 @@ print_r( $orderData );
 
             <para>
                 If you omit the parameter, <code>reset()</code> changes all parts of the query to
-                their default state. This makes the <code>Zend_Db_Select</code> object equivalent to a new
+                their default state. This makes the <classname>Zend_Db_Select</classname> object equivalent to a new
                 object, as though you had just instantiated it.
             </para>
 
@@ -1479,8 +1451,7 @@ $select->order('product_id');
 
 // Clear all parts of the query
 $select->reset();
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 

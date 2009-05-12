@@ -4,12 +4,12 @@
     <title>Configuration</title>
 
     <para>
-        <code>Zend_Paginator</code> has several configuration methods that can
+        <classname>Zend_Paginator</classname> has several configuration methods that can
         be called:
     </para>
 
     <table id="zend.paginator.configuration.table">
-        <title>Configuration methods for <code>Zend_Paginator</code></title>
+        <title>Configuration methods for Zend_Paginator</title>
 
         <tgroup cols="2">
             <thead>

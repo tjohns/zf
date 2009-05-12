@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
 
     <para>
-        <code>Zend_Translate</code> は、さまざまなアダプタを使用して翻訳を行えます。
+        <classname>Zend_Translate</classname> は、さまざまなアダプタを使用して翻訳を行えます。
         それぞれのアダプタによって利点や欠点があります。
         以下に、翻訳の入力ファイルとしてサポートしているすべてのアダプタについてまとめます。
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title><code>Zend_Translate</code> のアダプタ</title>
+        <title><classname>Zend_Translate</classname> のアダプタ</title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -81,7 +81,7 @@
         <title>使用するアダプタを決める方法</title>
 
         <para>
-            <code>Zend_Translate</code> でどのアダプタを使用するのかを決める必要があります。
+            <classname>Zend_Translate</classname> でどのアダプタを使用するのかを決める必要があります。
             プロジェクトの制約や顧客からの要望などの外的要因でアダプタが決まることもよくありますが、
             もしあなたに決定権があるのなら、以下のヒントを参考にしてください。
         </para>
@@ -92,7 +92,7 @@
                 使用するエンコーディングを考慮しなければなりません。
                 Zend Framework では UTF-8 をデフォルトのエンコーディングとしていますが、
                 時には他のエンコーディングを使わなければならないこともあるでしょう。
-                <code>Zend_Translate</code> は、
+                <classname>Zend_Translate</classname> は、
                 ソースファイル内で定義されているエンコーディングを変更しません。
                 つまり、もし Gettext のソースが ISO-8859-1 で作られている場合は、
                 それをそのままのエンコーディングで返します。
@@ -167,7 +167,7 @@
                 可読形式ではありませんが、便利なフリーウェア
                 (<ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink> など)
                 が公開されています。
-                <code>Zend_Translate</code> の Gettext アダプタは、PHP の gettext
+                <classname>Zend_Translate</classname> の Gettext アダプタは、PHP の gettext
                 拡張モジュールを使わずに実装しています。
                 PHP の gettext 拡張モジュールをインストールしていなくても
                 Gettext アダプタを使用することが可能です。
@@ -302,20 +302,20 @@
         <title>自作のアダプタの組み込み</title>
 
         <para>
-            <code>Zend_Translate</code> に、自作のアダプタクラスを組み込むこともできます。
-            これは、<code>Zend_Translate</code> に組み込まれている標準のアダプタクラスと同様に使うことができます。
+            <classname>Zend_Translate</classname> に、自作のアダプタクラスを組み込むこともできます。
+            これは、<classname>Zend_Translate</classname> に組み込まれている標準のアダプタクラスと同様に使うことができます。
         </para>
 
         <para>
-            <code>Zend_Translate</code> で使用するアダプタクラスは、
-            <code>Zend_Translate_Adapter</code> のサブクラスでなければなりません。
-            <code>Zend_Translate_Adapter</code> は抽象クラスであり、翻訳に必要なものをすべて定義しています。
+            <classname>Zend_Translate</classname> で使用するアダプタクラスは、
+            <classname>Zend_Translate_Adapter</classname> のサブクラスでなければなりません。
+            <classname>Zend_Translate_Adapter</classname> は抽象クラスであり、翻訳に必要なものをすべて定義しています。
             あなたがすべきことは、翻訳データの読み込み方法を定義することだけです。
         </para>
 
         <para>
             名前の先頭に "Zend" をつけることができるのは Zend_Framework
-            内のパッケージだけです。<code>Zend_Translate</code> で使うためのアダプタを自作する場合は、
+            内のパッケージだけです。<classname>Zend_Translate</classname> で使うためのアダプタを自作する場合は、
             その名前はたとえば "Company_Translate_Adapter_MyFormat" のようにする必要があります。
             次のコードは、独自のアダプタクラスを実装する例を示すものです。
         </para>
@@ -330,8 +330,7 @@ try {
     // ファイルが見つからない、アダプタクラスが存在しない、……
     // などの一般的なエラー
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -340,7 +339,7 @@ try {
         <title>全アダプタの高速化</title>
 
         <para>
-            <code>Zend_Translate</code> では、内部的に <code>Zend_Cache</code>
+            <classname>Zend_Translate</classname> では、内部的に <classname>Zend_Cache</classname>
             を使用して翻訳ソースの読み込みを高速化することができます。
             これは、多数の翻訳ソースを使用していたり
             XML ベースの複雑なソース形式を使用していたりする場合に非常に便利です。
@@ -348,9 +347,9 @@ try {
 
         <para>
             キャッシュ機能を使用するには、キャッシュオブジェクトを
-            <code>Zend_Translate::setCache()</code> メソッドで渡します。
+            <classname>Zend_Translate::setCache()</classname> メソッドで渡します。
             このメソッドの唯一のパラメータには
-            <code>Zend_Cache</code> のインスタンスを指定します。
+            <classname>Zend_Cache</classname> のインスタンスを指定します。
             また、任意のアダプタを直接使用するには
             <code>setCache()</code> メソッドを使用します。
             利便性を考慮して、静的メソッド
@@ -367,14 +366,13 @@ Zend_Translate::setCache($cache);
 $translate = new Zend_Translate('gettext',
                                 '/path/to/translate.mo',
                                 'en');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
                 キャッシュの設定は、アダプタや
-                <code>Zend_Translate</code> のインスタンスを使用したり初期化したりする
-                <emphasis role="strong">前</emphasis> に行わなければなりません。
+                <classname>Zend_Translate</classname> のインスタンスを使用したり初期化したりする
+                <emphasis>前</emphasis> に行わなければなりません。
                 さもないと、新たなソースを
                 <code>addTranslation()</code> メソッドで追加するまで
                 翻訳ソースのキャッシュは行われません。

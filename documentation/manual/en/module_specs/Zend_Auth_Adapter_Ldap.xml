@@ -9,7 +9,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Ldap</code> supports web application authentication with LDAP services. Its
+            <classname>Zend_Auth_Adapter_Ldap</classname> supports web application authentication with LDAP services. Its
             features include username and domain name canonicalization, multi-domain authentication, and failover
             capabilities. It has been tested to work with
             <ulink url="http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/">Microsoft
@@ -18,7 +18,7 @@
         </para>
 
         <para>
-            This documentation includes a guide on using <code>Zend_Auth_Adapter_Ldap</code>, an exploration of its
+            This documentation includes a guide on using <classname>Zend_Auth_Adapter_Ldap</classname>, an exploration of its
             API, an outline of the various available options, diagnostic information for troubleshooting authentication
             problems, and example options for both Active Directory and OpenLDAP servers.
         </para>
@@ -30,8 +30,8 @@
         <title>Usage</title>
 
         <para>
-            To incorporate <code>Zend_Auth_Adapter_Ldap</code> authentication into your application quickly, even if
-            you're not using <code>Zend_Controller</code>, the meat of your code should look something like the
+            To incorporate <classname>Zend_Auth_Adapter_Ldap</classname> authentication into your application quickly, even if
+            you're not using <classname>Zend_Controller</classname>, the meat of your code should look something like the
             following:
             <programlisting role="php"><![CDATA[
 $username = $this->_request->getParam('username');
@@ -65,22 +65,21 @@ if ($log_path) {
         }
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
             Of course, the logging code is optional, but it is highly recommended that you use a logger.
-            <code>Zend_Auth_Adapter_Ldap</code> will record just about every bit of information anyone could want in
+            <classname>Zend_Auth_Adapter_Ldap</classname> will record just about every bit of information anyone could want in
             <code>$messages</code> (more below), which is a nice feature in itself for something that has a history of
             being notoriously difficult to debug.
         </para>
 
         <para>
-            The <code>Zend_Config_Ini</code> code is used above to load the adapter options. It is also optional. A
+            The <classname>Zend_Config_Ini</classname> code is used above to load the adapter options. It is also optional. A
             regular array would work equally well. The following is an example
             <code>application/config/config.ini</code> file that has options for two separate servers. With multiple
             sets of server options the adapter will try each, in order, until the credentials are successfully
             authenticated. The names of the servers (e.g., <code>server1</code> and <code>server2</code>) are largely
             arbitrary. For details regarding the options array, see the <emphasis>Server Options</emphasis> section
-            below. Note that <code>Zend_Config_Ini</code> requires that any values with "equals" characters
+            below. Note that <classname>Zend_Config_Ini</classname> requires that any values with "equals" characters
             (<code>=</code>) will need to be quoted (like the DNs shown below).
             <programlisting role="ini"><![CDATA[
 [production]
@@ -104,9 +103,8 @@ ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
-]]>
-</programlisting>
-            The above configuration will instruct <code>Zend_Auth_Adapter_Ldap</code> to attempt to authenticate users
+]]></programlisting>
+            The above configuration will instruct <classname>Zend_Auth_Adapter_Ldap</classname> to attempt to authenticate users
             with the OpenLDAP server <code>s0.foo.net</code> first. If the authentication fails for any reason, the AD
             server <code>dc1.w.net</code> will be tried.
         </para>
@@ -129,13 +127,13 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
         <title>The API</title>
 
         <para>
-            The <code>Zend_Auth_Adapter_Ldap</code> constructor accepts three parameters.
+            The <classname>Zend_Auth_Adapter_Ldap</classname> constructor accepts three parameters.
         </para>
 
         <para>
             The <code>$options</code> parameter is required and must be an array containing one or more sets of
             options. Note that it is <emphasis>an array of arrays</emphasis> of
-            <link linkend="zend.ldap"><code>Zend_Ldap</code></link> options. Even if you will be using only one LDAP server, the
+            <link linkend="zend.ldap"><classname>Zend_Ldap</classname></link> options. Even if you will be using only one LDAP server, the
             options must still be within another array.
         </para>
 
@@ -169,8 +167,7 @@ Array
         )
 
 )
-]]>
-</programlisting>
+]]></programlisting>
             The information provided in each set of options above is different mainly because AD does not require a
             username be in DN form when binding (see the <code>bindRequiresDn</code> option in the
             <emphasis>Server Options</emphasis> section below), which means we can omit a number of options
@@ -191,7 +188,7 @@ Array
 
         <para>
             The names of servers (e.g. '<code>server1</code>' and '<code>server2</code>' shown above) are largely
-            arbitrary, but for the sake of using <code>Zend_Config</code>, the identifiers should be present (as
+            arbitrary, but for the sake of using <classname>Zend_Config</classname>, the identifiers should be present (as
             opposed to being numeric indexes) and should not contain any special characters used by the associated file
             formats (e.g. the '<code>.</code>' INI property separator, '<code>&amp;</code>' for XML entity references,
             etc).
@@ -206,17 +203,17 @@ Array
             <title>The Gory Details: What Happens in the Authenticate Method?</title>
             <para>
                 When the <code>authenticate()</code> method is called, the adapter iterates over each set of server
-                options, sets them on the internal <code>Zend_Ldap</code> instance, and calls the
-                <code>Zend_Ldap::bind()</code> method with the username and password being authenticated. The
-                <code>Zend_Ldap</code> class checks to see if the username is qualified with a domain (e.g., has a
+                options, sets them on the internal <classname>Zend_Ldap</classname> instance, and calls the
+                <classname>Zend_Ldap::bind()</classname> method with the username and password being authenticated. The
+                <classname>Zend_Ldap</classname> class checks to see if the username is qualified with a domain (e.g., has a
                 domain component like <emphasis>alice@foo.net</emphasis> or <emphasis>FOO\alice</emphasis>). If a
                 domain is present, but does not match either of the server's domain names
                 (<emphasis>foo.net</emphasis> or <emphasis>FOO</emphasis>), a special exception is thrown and caught by
-                <code>Zend_Auth_Adapter_Ldap</code> that causes that server to be ignored and the next set of server
+                <classname>Zend_Auth_Adapter_Ldap</classname> that causes that server to be ignored and the next set of server
                 options is selected. If a domain <emphasis>does</emphasis> match, or if the user did not supply a
-                qualified username, <code>Zend_Ldap</code> proceeds to try to bind with the supplied credentials. If
-                the bind is not successful, <code>Zend_Ldap</code> throws a <code>Zend_Ldap_Exception</code> which is
-                caught by <code>Zend_Auth_Adapter_Ldap</code> and the next set of server options is tried. If the bind
+                qualified username, <classname>Zend_Ldap</classname> proceeds to try to bind with the supplied credentials. If
+                the bind is not successful, <classname>Zend_Ldap</classname> throws a <classname>Zend_Ldap_Exception</classname> which is
+                caught by <classname>Zend_Auth_Adapter_Ldap</classname> and the next set of server options is tried. If the bind
                 is successful, the iteration stops, and the adapter's <code>authenticate()</code> method returns a
                 successful result. If all server options have been tried without success, the authentication fails, and
                 <code>authenticate()</code> returns a failure result with error messages from the last iteration.
@@ -224,7 +221,7 @@ Array
         </note>
 
         <para>
-            The username and password parameters of the <code>Zend_Auth_Adapter_Ldap</code> constructor represent the
+            The username and password parameters of the <classname>Zend_Auth_Adapter_Ldap</classname> constructor represent the
             credentials being authenticated (i.e., the credentials supplied by the user through your HTML login form).
             Alternatively, they may also be set with the <code>setUsername()</code> and <code>setPassword()</code>
             methods.
@@ -237,8 +234,8 @@ Array
         <title>Server Options</title>
 
         <para>
-            Each set of server options <emphasis>in the context of <code>Zend_Auth_Adapter_Ldap</code></emphasis> consists of the
-            following options, which are passed, largely unmodified, to <code>Zend_Ldap::setOptions()</code>:
+            Each set of server options <emphasis>in the context of <classname>Zend_Auth_Adapter_Ldap</classname></emphasis> consists of the
+            following options, which are passed, largely unmodified, to <classname>Zend_Ldap::setOptions()</classname>:
 
             <table id="zend.auth.adapter.ldap.server-options.table">
               <title>Server Options</title>
@@ -251,18 +248,18 @@ Array
                 </thead>
                 <tbody>
                   <row>
-                    <entry><emphasis role="strong">host</emphasis></entry>
+                    <entry><emphasis>host</emphasis></entry>
                     <entry>
                         The hostname of LDAP server that these options represent. This option is required.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">port</emphasis></entry>
+                    <entry><emphasis>port</emphasis></entry>
                     <entry>
-                        The port on which the LDAP server is listening. If <emphasis role="strong">useSsl</emphasis> is
-                        <code>true</code>, the default <emphasis role="strong">port</emphasis> value is 636. If
-                        <emphasis role="strong">useSsl</emphasis> is <code>false</code>, the default
-                        <emphasis role="strong">port</emphasis> value is 389.
+                        The port on which the LDAP server is listening. If <emphasis>useSsl</emphasis> is
+                        <code>true</code>, the default <emphasis>port</emphasis> value is 636. If
+                        <emphasis>useSsl</emphasis> is <code>false</code>, the default
+                        <emphasis>port</emphasis> value is 389.
                     </entry>
                   </row>
                   <row>
@@ -283,74 +280,74 @@ Array
                         Whether or not the LDAP client should use SSL encrypted transport. The <code>useSsl</code>
                         and <code>useStartTls</code> options are mutually exclusive, but <code>useStartTls</code>
                         should be favored if the server and LDAP client library support it.
-                        This value also changes the default <emphasis role="strong">port</emphasis> value (see
-                        <emphasis role="strong">port</emphasis> description above).
+                        This value also changes the default <emphasis>port</emphasis> value (see
+                        <emphasis>port</emphasis> description above).
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">username</emphasis></entry>
+                    <entry><emphasis>username</emphasis></entry>
                     <entry>
                         The DN of the account used to perform account DN lookups. LDAP servers that require the
                         username to be in DN form when performing the "bind" require this option. Meaning, if
-                        <emphasis role="strong">bindRequiresDn</emphasis> is <code>true</code>, this option is
+                        <emphasis>bindRequiresDn</emphasis> is <code>true</code>, this option is
                         required. This account does not need to be a privileged account; an account with read-only
-                        access to objects under the <emphasis role="strong">baseDn</emphasis> is all that is necessary
+                        access to objects under the <emphasis>baseDn</emphasis> is all that is necessary
                         (and preferred based on the <emphasis>Principle of Least Privilege</emphasis>).
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">password</emphasis></entry>
+                    <entry><emphasis>password</emphasis></entry>
                     <entry>
                         The password of the account used to perform account DN lookups. If this option is not supplied,
                         the LDAP client will attempt an "anonymous bind" when performing account DN lookups.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">bindRequiresDn</emphasis></entry>
+                    <entry><emphasis>bindRequiresDn</emphasis></entry>
                     <entry>
                         Some LDAP servers require that the username used to bind be in DN form like
                         <emphasis>CN=Alice Baker,OU=Sales,DC=foo,DC=net</emphasis> (basically all servers
                         <emphasis>except</emphasis> AD). If this option is <code>true</code>, this instructs
-                        <code>Zend_Ldap</code> to automatically retrieve the DN corresponding to the username being
+                        <classname>Zend_Ldap</classname> to automatically retrieve the DN corresponding to the username being
                         authenticated, if it is not already in DN form, and then re-bind with the proper DN. The
                         default value is <code>false</code>. Currently only Microsoft Active Directory Server (ADS) is
                         known <emphasis>not</emphasis> to require usernames to be in DN form when binding, and
                         therefore this option may be <code>false</code> with AD (and it should be, as retrieving the DN
                         requires an extra round trip to the server). Otherwise, this option must be set to
                         <code>true</code> (e.g. for OpenLDAP). This option also controls the default
-                        <emphasis role="strong">acountFilterFormat</emphasis> used when searching for accounts. See the
-                        <emphasis role="strong">accountFilterFormat</emphasis> option.
+                        <emphasis>acountFilterFormat</emphasis> used when searching for accounts. See the
+                        <emphasis>accountFilterFormat</emphasis> option.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">baseDn</emphasis></entry>
+                    <entry><emphasis>baseDn</emphasis></entry>
                     <entry>
                         The DN under which all accounts being authenticated are located. This option is required. If
-                        you are uncertain about the correct <emphasis role="strong">baseDn</emphasis> value, it should
+                        you are uncertain about the correct <emphasis>baseDn</emphasis> value, it should
                         be sufficient to derive it from the user's DNS domain using <emphasis>DC=</emphasis>
                         components. For example, if the user's principal name is <emphasis>alice@foo.net</emphasis>, a
-                        <emphasis role="strong">baseDn</emphasis> of <emphasis>DC=foo,DC=net</emphasis> should work. A
+                        <emphasis>baseDn</emphasis> of <emphasis>DC=foo,DC=net</emphasis> should work. A
                         more precise location (e.g., <emphasis>OU=Sales,DC=foo,DC=net</emphasis>) will be more
                         efficient, however.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">accountCanonicalForm</emphasis></entry>
+                    <entry><emphasis>accountCanonicalForm</emphasis></entry>
                     <entry>
                         A value of 2, 3 or 4 indicating the form to which account names should be canonicalized after
                         successful authentication. Values are as follows: 2 for traditional username style names (e.g.,
                         <emphasis>alice</emphasis>), 3 for backslash-style names (e.g., <emphasis>FOO\alice</emphasis>)
                         or 4 for principal style usernames (e.g., <emphasis>alice@foo.net</emphasis>). The default
                         value is 4 (e.g., <emphasis>alice@foo.net</emphasis>). For example, with a value of 3, the
-                        identity returned by <code>Zend_Auth_Result::getIdentity()</code> (and
-                        <code>Zend_Auth::getIdentity()</code>, if <code>Zend_Auth</code> was used) will always be
+                        identity returned by <classname>Zend_Auth_Result::getIdentity()</classname> (and
+                        <classname>Zend_Auth::getIdentity()</classname>, if <classname>Zend_Auth</classname> was used) will always be
                         <emphasis>FOO\alice</emphasis>, regardless of what form Alice supplied, whether it be
                         <emphasis>alice</emphasis>, <emphasis>alice@foo.net</emphasis>, <emphasis>FOO\alice</emphasis>,
                         <emphasis>FoO\aLicE</emphasis>, <emphasis>foo.net\alice</emphasis>, etc. See the
-                        <emphasis>Account Name Canonicalization</emphasis> section in the <code>Zend_Ldap</code>
+                        <emphasis>Account Name Canonicalization</emphasis> section in the <classname>Zend_Ldap</classname>
                         documentation for details. Note that when using multiple sets of server options it is
                         recommended, but not required, that the same
-                        <emphasis role="strong">accountCanonicalForm</emphasis> be used with all server options so that
+                        <emphasis>accountCanonicalForm</emphasis> be used with all server options so that
                         the resulting usernames are always canonicalized to the same form (e.g., if you canonicalize to
                         <emphasis>EXAMPLE\username</emphasis> with an AD server but to
                         <emphasis>username@example.com</emphasis> with an OpenLDAP server, that may be awkward for the
@@ -358,13 +355,13 @@ Array
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">accountDomainName</emphasis></entry>
+                    <entry><emphasis>accountDomainName</emphasis></entry>
                     <entry>
                         The FQDN domain name for which the target LDAP server is an authority (e.g.,
                         <code>example.com</code>). This option is used to canonicalize names so that the username
                         supplied by the user can be converted as necessary for binding. It is also used to determine if
                         the server is an authority for the supplied username (e.g., if
-                        <emphasis role="strong">accountDomainName</emphasis> is <emphasis>foo.net</emphasis> and the
+                        <emphasis>accountDomainName</emphasis> is <emphasis>foo.net</emphasis> and the
                         user supplies <emphasis>bob@bar.net</emphasis>, the server will not be queried, and a failure
                         will result). This option is not required, but if it is not supplied, usernames in principal
                         name form (e.g., <emphasis>alice@foo.net</emphasis>) are not supported. It is strongly
@@ -373,34 +370,34 @@ Array
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
+                    <entry><emphasis>accountDomainNameShort</emphasis></entry>
                     <entry>
                         The 'short' domain for which the target LDAP server is an authority (e.g.,
                         <emphasis>FOO</emphasis>). Note that there is a 1:1 mapping between the
-                        <emphasis role="strong">accountDomainName</emphasis> and
-                        <emphasis role="strong">accountDomainNameShort</emphasis>. This option should be used to
+                        <emphasis>accountDomainName</emphasis> and
+                        <emphasis>accountDomainNameShort</emphasis>. This option should be used to
                         specify the NetBIOS domain name for Windows networks, but may also be used by non-AD servers
                         (e.g., for consistency when multiple sets of server options with the backslash style
-                        <emphasis role="strong">accountCanonicalForm</emphasis>). This option is not required but if it
+                        <emphasis>accountCanonicalForm</emphasis>). This option is not required but if it
                         is not supplied, usernames in backslash form (e.g., <emphasis>FOO\alice</emphasis>) are not
                         supported.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">accountFilterFormat</emphasis></entry>
+                    <entry><emphasis>accountFilterFormat</emphasis></entry>
                     <entry>
                         The LDAP search filter used to search for accounts. This string is a
                         <ulink url="http://php.net/printf"><code>printf()</code></ulink>-style expression that must
                         contain one '<code>%s</code>' to accomodate the username. The default value is
                         '<code>(&amp;(objectClass=user)(sAMAccountName=%s))</code>', unless
-                        <emphasis role="strong">bindRequiresDn</emphasis> is set to <code>true</code>, in which case
+                        <emphasis>bindRequiresDn</emphasis> is set to <code>true</code>, in which case
                         the default is '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'. For example, if for
                         some reason you wanted to use <code>bindRequiresDn = true</code> with AD you would need to set
                         <code>accountFilterFormat = '(&amp;(objectClass=user)(sAMAccountName=%s))</code>'.
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">optReferrals</emphasis></entry>
+                    <entry><emphasis>optReferrals</emphasis></entry>
                     <entry>
                         If set to <code>true</code>, this option indicates to the LDAP client that referrals should
                         be followed. The default value is <code>false</code>.
@@ -431,9 +428,9 @@ Array
         <title>Collecting Debugging Messages</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Ldap</code> collects debugging information within its <code>authenticate()</code>
-            method. This information is stored in the <code>Zend_Auth_Result</code> object as messages. The array
-            returned by <code>Zend_Auth_Result::getMessages()</code> is described as follows:
+            <classname>Zend_Auth_Adapter_Ldap</classname> collects debugging information within its <code>authenticate()</code>
+            method. This information is stored in the <classname>Zend_Auth_Result</classname> object as messages. The array
+            returned by <classname>Zend_Auth_Result::getMessages()</classname> is described as follows:
 
             <table id="zend.auth.adapter.ldap.debugging.table">
               <title>Debugging Messages</title>
@@ -499,26 +496,26 @@ Array
                     </thead>
                     <tbody>
                       <row>
-                        <entry><emphasis role="strong">host</emphasis></entry>
+                        <entry><emphasis>host</emphasis></entry>
                         <entry>
                             As with all servers, this option is required.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
+                        <entry><emphasis>useStartTls</emphasis></entry>
                         <entry>
                             For the sake of security, this should be <code>true</code> if the server has the necessary
                             certificate installed.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis>useSsl</emphasis></entry>
                         <entry>
                             Possibly used as an alternative to <code>useStartTls</code> (see above).
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">baseDn</emphasis></entry>
+                        <entry><emphasis>baseDn</emphasis></entry>
                         <entry>
                             As with all servers, this option is required. By default AD places all user accounts under
                             the <emphasis>Users</emphasis> container (e.g.,
@@ -528,7 +525,7 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountCanonicalForm</emphasis></entry>
+                        <entry><emphasis>accountCanonicalForm</emphasis></entry>
                         <entry>
                             You almost certainly want this to be 3 for backslash style names (e.g.,
                             <emphasis>FOO\alice</emphasis>), which are most familiar to Windows users. You should
@@ -539,18 +536,18 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountDomainName</emphasis></entry>
+                        <entry><emphasis>accountDomainName</emphasis></entry>
                         <entry>
-                            This is required with AD unless <emphasis role="strong">accountCanonicalForm</emphasis> 2
+                            This is required with AD unless <emphasis>accountCanonicalForm</emphasis> 2
                             is used, which, again, is discouraged.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
+                        <entry><emphasis>accountDomainNameShort</emphasis></entry>
                         <entry>
                             The NetBIOS name of the domain that users are in and for which the AD server is an authority.
                             This is required if the backslash style
-                            <emphasis role="strong">accountCanonicalForm</emphasis> is used.
+                            <emphasis>accountCanonicalForm</emphasis> is used.
                         </entry>
                       </row>
                     </tbody>
@@ -561,7 +558,7 @@ Array
             <note>
                 <para>
                     Technically there should be no danger of accidental cross-domain authentication with the current
-                    <code>Zend_Auth_Adapter_Ldap</code> implementation, since server domains are explicitly checked,
+                    <classname>Zend_Auth_Adapter_Ldap</classname> implementation, since server domains are explicitly checked,
                     but this may not be true of a future implementation that discovers the domain at runtime, or if an
                     alternative adapter is used (e.g., Kerberos). In general, account name ambiguity is known to be the
                     source of security issues, so always try to use qualified account names.
@@ -589,54 +586,54 @@ Array
                     </thead>
                     <tbody>
                       <row>
-                        <entry><emphasis role="strong">host</emphasis></entry>
+                        <entry><emphasis>host</emphasis></entry>
                         <entry>
                             As with all servers, this option is required.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
+                        <entry><emphasis>useStartTls</emphasis></entry>
                         <entry>
                             For the sake of security, this should be <code>true</code> if the server has the necessary
                             certificate installed.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis>useSsl</emphasis></entry>
                         <entry>
                             Possibly used as an alternative to <code>useStartTls</code> (see above).
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">username</emphasis></entry>
+                        <entry><emphasis>username</emphasis></entry>
                         <entry>
                             Required and must be a DN, as OpenLDAP requires that usernames be in DN form when
                             performing a bind. Try to use an unprivileged account.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">password</emphasis></entry>
+                        <entry><emphasis>password</emphasis></entry>
                         <entry>
                             The password corresponding to the username above, but this may be omitted if the LDAP
                             server permits an anonymous binding to query user accounts.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">bindRequiresDn</emphasis></entry>
+                        <entry><emphasis>bindRequiresDn</emphasis></entry>
                         <entry>
                             Required and must be <code>true</code>, as OpenLDAP requires that usernames be in DN form
                             when performing a bind.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">baseDn</emphasis></entry>
+                        <entry><emphasis>baseDn</emphasis></entry>
                         <entry>
                             As with all servers, this option is required and indicates the DN under which all accounts
                             being authenticated are located.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountCanonicalForm</emphasis></entry>
+                        <entry><emphasis>accountCanonicalForm</emphasis></entry>
                         <entry>
                             Optional, but the default value is 4 (principal style names like
                             <emphasis>alice@foo.net</emphasis>), which may not be ideal if your users are used to
@@ -645,22 +642,22 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountDomainName</emphasis></entry>
+                        <entry><emphasis>accountDomainName</emphasis></entry>
                         <entry>
-                            Required unless you're using <emphasis role="strong">accountCanonicalForm</emphasis> 2,
+                            Required unless you're using <emphasis>accountCanonicalForm</emphasis> 2,
                             which is not recommended.
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
+                        <entry><emphasis>accountDomainNameShort</emphasis></entry>
                         <entry>
                             If AD is not also being used, this value is not required. Otherwise, if
-                            <emphasis role="strong">accountCanonicalForm</emphasis> 3 is used, this option is required
+                            <emphasis>accountCanonicalForm</emphasis> 3 is used, this option is required
                             and should be a short name that corresponds adequately to the
-                            <emphasis role="strong">accountDomainName</emphasis> (e.g., if your
-                            <emphasis role="strong">accountDomainName</emphasis> is
-                            <emphasis role="strong">foo.net</emphasis>, a good
-                            <emphasis role="strong">accountDomainNameShort</emphasis> value might be
+                            <emphasis>accountDomainName</emphasis> (e.g., if your
+                            <emphasis>accountDomainName</emphasis> is
+                            <emphasis>foo.net</emphasis>, a good
+                            <emphasis>accountDomainNameShort</emphasis> value might be
                             <emphasis>FOO</emphasis>).
                         </entry>
                       </row>

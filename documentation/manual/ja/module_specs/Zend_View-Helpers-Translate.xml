@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect3 id="zend.view.helpers.initial.translate">
 
     <title>翻訳ヘルパー</title>
@@ -13,18 +13,17 @@
         <code>Translate</code> ビューヘルパーです。
     </para>
 
-
     <para>
         これ以降のすべての例では、単純は配列翻訳アダプタを使用します。
-        もちろん <code>Zend_Translate</code> の任意のインスタンスやお好みの
-        <code>Zend_Translate_Adapter</code> のサブクラスを使うことも可能です。
+        もちろん <classname>Zend_Translate</classname> の任意のインスタンスやお好みの
+        <classname>Zend_Translate_Adapter</classname> のサブクラスを使うことも可能です。
         <code>Translate</code> ビューヘルパーのインスタンスを作成するにはいくつかの方法があります。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                事前に <code>Zend_Registry</code> に登録済みのインスタンスを使用する
+                事前に <classname>Zend_Registry</classname> に登録済みのインスタンスを使用する
             </para>
         </listitem>
         <listitem>
@@ -40,7 +39,7 @@
     </itemizedlist>
 
     <para>
-        登録済みの <code>Zend_Translate</code> のインスタンスを使用する方法をおすすめします。
+        登録済みの <classname>Zend_Translate</classname> のインスタンスを使用する方法をおすすめします。
         アダプタをレジストリに追加する際に、使用するロケールを選択することができます。
     </para>
 
@@ -59,10 +58,10 @@
         <title>登録済みのインスタンス</title>
 
         <para>
-            登録済みのインスタンスを使用するには、まず <code>Zend_Translate</code> あるいは
-            <code>Zend_Translate_Adapter</code> のインスタンスを作成し、
-            それを <code>Zend_Registry</code> に登録します。登録する際のキーとして
-            <code>Zend_Translate</code> を使用します。
+            登録済みのインスタンスを使用するには、まず <classname>Zend_Translate</classname> あるいは
+            <classname>Zend_Translate_Adapter</classname> のインスタンスを作成し、
+            それを <classname>Zend_Registry</classname> に登録します。登録する際のキーとして
+            <classname>Zend_Translate</classname> を使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -73,8 +72,7 @@ Zend_Registry::set('Zend_Translate', $adapter);
 // ビューの中で
 echo $this->translate('simple');
 // これは 'einfach' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -88,8 +86,8 @@ echo $this->translate('simple');
         <title>ビューの中で</title>
 
         <para>
-            流れるようなインターフェイスで <code>Zend_Translate</code> あるいは
-            <code>Zend_Translate_Adapter</code> のインスタンスを作成するには、
+            流れるようなインターフェイスで <classname>Zend_Translate</classname> あるいは
+            <classname>Zend_Translate_Adapter</classname> のインスタンスを作成するには、
             パラメータを指定せずにヘルパーをコールし、それから
             <code>setTranslator()</code> メソッドをコールします。
         </para>
@@ -99,13 +97,12 @@ echo $this->translate('simple');
 $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 $this->translate()->setTranslator($adapter)->translate('simple');
 // これは 'einfach' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
     <para>
-        ヘルパーを <code>Zend_View</code> なしで使用すると、
+        ヘルパーを <classname>Zend_View</classname> なしで使用すると、
         ヘルパーを直接使用することもできます。
     </para>
 
@@ -120,11 +117,10 @@ $adapter = new Zend_Translate('array', array('simple' => 'einfach'), 'de');
 // アダプタを初期化します
 $translate = new Zend_View_Helper_Translate($adapter);
 print $translate->translate('simple'); // これは 'einfach' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_View</code> は使わないけれど、
+            <classname>Zend_View</classname> は使わないけれど、
             翻訳した結果がほしいという場合にこの方式を使用します。
         </para>
 
@@ -152,8 +148,7 @@ print $translate->translate('simple'); // これは 'einfach' を返します
 $date = "Monday";
 $this->translate("Today is %1\$s", $date);
 // これは 'Heute ist Monday' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -182,8 +177,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s",
                  $month,
                  $time);
 // これは 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -200,8 +194,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s",
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // これは 'Heute ist Monday in April. Aktuelle Zeit: 11:20:55' を返します
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -221,8 +214,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // ビューの中で
 $date = array("Monday", "April", "11:20:55");
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -243,8 +235,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date, 'it');
 $date = array("Monday", "April", "11:20:55");
 $this->translate()->setLocale('it');
 $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -274,8 +265,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
 // 新たに設定されたデフォルトロケールである 'it' を返します
 $this->translate()->getLocale();
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 

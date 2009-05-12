@@ -4,19 +4,18 @@
     <title>Retrieving Feeds from Web Pages</title>
     <para>
         Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
-        the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
+        the particular page. <classname>Zend_Feed</classname> enables you to retrieve all feeds referenced by a web
         page with one simple method call:
     </para>
     <programlisting role="php"><![CDATA[
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
-]]>
-    </programlisting>
+]]></programlisting>
     <para>
-        Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
+        Here the <code>findFeeds()</code> method returns an array of <classname>Zend_Feed_Abstract</classname>
         objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
         the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
-        <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
-        <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+        <classname>Zend_Feed_Rss</classname> or <classname>Zend_Feed_Atom</classname> instance. <classname>Zend_Feed</classname> will throw a
+        <classname>Zend_Feed_Exception</classname> upon failure, such as an HTTP 404 response code or a malformed feed.
     </para>
 </sect1>
 <!--

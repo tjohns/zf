@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.navigation.pages.factory">
     <title>Erstellen von Seiten durch Verwendung der Page Factory</title>
 
     <para>
         Alle Seiten (also auch eigene Klassen), können durch Verwendung der Page Factory
-        <code>Zend_Navigation_Page::factory()</code> erstellt werden. Die Factory kann ein Array
-        mit Optionen oder ein <classname>Zend_Config</classname> Objekt annehmen. Jeder Schlüssel
-        im Array/Config entspricht einer Seiten Option, wie im Kapitel
+        <classname>Zend_Navigation_Page::factory()</classname> erstellt werden. Die Factory kann ein
+        Array mit Optionen oder ein <classname>Zend_Config</classname> Objekt annehmen. Jeder
+        Schlüssel im Array/Config entspricht einer Seiten Option, wie im Kapitel
         <link linkend="zend.navigation.pages">Seiten</link> gezeigt. Wenn die Option
         <code>uri</code> angegeben wird und keine MVC Optionen angegeben werden (<code>action,
         controller, module, route</code>) wird eine URI Seite erstellt. Wenn eine der MVC Optionen
@@ -49,8 +49,7 @@ $page = Zend_Navigation_Page::factory(array(
     'type'   => 'mvc',
     'label'  => 'My MVC page'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.factory.example.uri">
@@ -77,8 +76,7 @@ $page = Zend_Navigation_Page::factory(array(
     'type'   => 'uri',
     'label'  => 'My URI page'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.factory.example.custom">
@@ -106,7 +104,6 @@ $page = Zend_Navigation_Page::factory(array(
     'label'   => 'My custom page',
     'foo_bar' => 'foo bar'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

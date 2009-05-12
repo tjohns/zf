@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -9,7 +9,7 @@
         <title>最小限の機能</title>
         <para>
             現在このクラスは、
-            <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
+            <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link>
             認証アダプタが必要とする機能のみを満たすように作られています。
             ディレクトリ内のエントリを検索したり、
             エントリの作成や修正、名前の変更を行ったりといった機能は現時点ではサポートしていません。
@@ -18,7 +18,7 @@
     </note>
 
     <para>
-        <code>Zend_Ldap</code> は LDAP の操作を行うクラスです。バインドだけが可能で、
+        <classname>Zend_Ldap</classname> は LDAP の操作を行うクラスです。バインドだけが可能で、
         LDAP ディレクトリ内のエントリの検索や変更には対応していません。
     </para>
 
@@ -27,14 +27,14 @@
         <title>動作原理</title>
 
         <para>
-            このコンポーネントは、現在 <code>Zend_Ldap</code> と
-            <code>Zend_Ldap_Exception</code> のふたつのクラスで構成されています。
-            <code>Zend_Ldap</code> クラスは、単一の LDAP サーバへのバインドを表します。
+            このコンポーネントは、現在 <classname>Zend_Ldap</classname> と
+            <classname>Zend_Ldap_Exception</classname> のふたつのクラスで構成されています。
+            <classname>Zend_Ldap</classname> クラスは、単一の LDAP サーバへのバインドを表します。
             バインド用のパラメータは、明示的に指定するか、あるいはオプションの配列形式で指定します。
         </para>
 
         <para>
-            <code>Zend_Ldap</code> クラスの使用法は LDAP サーバの形式によって異なり、
+            <classname>Zend_Ldap</classname> クラスの使用法は LDAP サーバの形式によって異なり、
             以下のいずれかのパターンとなります。
         </para>
 
@@ -56,8 +56,7 @@ $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('abaker',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </para>
 
@@ -78,8 +77,7 @@ $ldap = new Zend_Ldap($options);
 $acctname = $ldap->getCanonicalAccountName('bcarter',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             ここでは、<code>getCanonicalAccountName()</code> メソッドでアカウントの DN
             を取得していることに注意しましょう。
@@ -94,14 +92,14 @@ echo "$acctname\n";
                 <code>bindRequiresDN</code> が <code>true</code>
                 かつ DN 形式のユーザ名がオプションで設定されていない場合、
                 <code>bind()</code> を DN でないユーザ名でコールするとバインドに失敗します。
-                しかし、DN 形式のユーザ名がオプションで設定されていれば、<code>Zend_Ldap</code>
+                しかし、DN 形式のユーザ名がオプションで設定されていれば、<classname>Zend_Ldap</classname>
                 はまずそのユーザ名でバインドを行い、<code>bind()</code>
                 で指定したユーザ名に対応するアカウントの DN を取得した上で
                 改めてその DN でバインドしなおします。
             </para>
 
             <para>
-                この振る舞いは <code>Zend_Auth_Adapter_Ldap</code> にとっては重要です。
+                この振る舞いは <classname>Zend_Auth_Adapter_Ldap</classname> にとっては重要です。
                 これは、ユーザが指定したユーザ名を直接 <code>bind()</code> に渡します。
             </para>
 
@@ -123,8 +121,7 @@ $ldap->bind('abaker', 'moonbike55');
 $acctname = $ldap->getCanonicalAccountName('abaker',
                                            Zend_Ldap::ACCTNAME_FORM_DN);
 echo "$acctname\n";
-]]>
-                </programlisting>
+]]></programlisting>
 
                 この例において <code>bind()</code> をコールすると、
                 ユーザ名 '<code>abaker</code>' が DN 形式でないことと
@@ -143,7 +140,7 @@ echo "$acctname\n";
             <title>Zend_Ldap のオプション</title>
 
             <para>
-                <code>Zend_Ldap</code> コンポーネント用のオプションの配列は、
+                <classname>Zend_Ldap</classname> コンポーネント用のオプションの配列は、
                 コンストラクタあるいは <code>setOptions()</code> メソッドで指定することができます。
                 次のようなオプションが使用可能です。
 
@@ -208,7 +205,7 @@ echo "$acctname\n";
                         <entry>bindRequiresDn</entry>
                         <entry>
                             <code>true</code> を指定すると、ユーザ名が DN 形式でない場合に
-                            <code>Zend_Ldap</code> はバインド時に使用してアカウントの DN を取得します。
+                            <classname>Zend_Ldap</classname> はバインド時に使用してアカウントの DN を取得します。
                             デフォルト値は <code>false</code> です。
                         </entry>
                       </row>
@@ -298,7 +295,7 @@ echo "$acctname\n";
                 このオプションの値は、次のいずれかとなります。
 
                 <table id="zend.ldap.using.theory-of-operation.account-name-canonicalization.table">
-                  <title><code>accountCanonicalForm</code></title>
+                  <title>accountCanonicalForm</title>
                   <tgroup cols="3">
                     <thead>
                       <row>
@@ -362,9 +359,9 @@ echo "$acctname\n";
             <title>複数ドメインの認証とフェイルオーバー</title>
 
             <para>
-                <code>Zend_Ldap</code> コンポーネント自身は、
+                <classname>Zend_Ldap</classname> コンポーネント自身は、
                 複数サーバでの認証を試みません。
-                しかし、<code>Zend_Ldap</code> はこのような場合に対応するようにも設計されています。
+                しかし、<classname>Zend_Ldap</classname> はこのような場合に対応するようにも設計されています。
                 サーバのオプションを指定した配列の配列を順にたどり、
                 個々のサーバへのバインドを試みるのです。上で説明したように、
                 <code>bind()</code> は自動的に名前を正規化します。したがって、ユーザが
@@ -424,8 +421,7 @@ foreach ($multiOptions as $name => $options) {
         }
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
                 何らかの理由でバインドに失敗すると、その次のオプションでのバインドを試みます。
             </para>
@@ -454,7 +450,7 @@ foreach ($multiOptions as $name => $options) {
 
             <para>
                 上のコードは、
-                <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
+                <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link>
                 の中で使用するコードと非常によく似ています。実際のところ、
                 複数ドメインとファイルオーバー機能をもつ LDAP 基本印象を行うのなら、
                 この認証アダプタを使用する (あるいはコードをコピーする) ことをおすすめします。

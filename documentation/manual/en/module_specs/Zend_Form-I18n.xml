@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
 <sect1 id="zend.form.i18n">
-    <title>Internationalization of <code>Zend_Form</code></title>
+    <title>Internationalization of Zend_Form</title>
 
     <para>
         Increasingly, developers need to tailor their content for multiple
-        languages and regions. <code>Zend_Form</code> aims to make such a task trivial, and
+        languages and regions. <classname>Zend_Form</classname> aims to make such a task trivial, and
         leverages functionality in both <link
             linkend="zend.translate">Zend_Translate</link> and <link
             linkend="zend.validate">Zend_Validate</link> to do so.
@@ -13,9 +13,9 @@
 
     <para>
         By default, no internationalisation (I18n) is performed. To turn on I18n
-        features in <code>Zend_Form</code>, you will need to instantiate a
-        <code>Zend_Translate</code> object with an appropriate adapter, and
-        attach it to <code>Zend_Form</code> and/or <code>Zend_Validate</code>.
+        features in <classname>Zend_Form</classname>, you will need to instantiate a
+        <classname>Zend_Translate</classname> object with an appropriate adapter, and
+        attach it to <classname>Zend_Form</classname> and/or <classname>Zend_Validate</classname>.
         See the <link linkend="zend.translate">Zend_Translate
             documentation</link> for more information on creating the translate
         object and translation files
@@ -38,9 +38,9 @@
 
         <para>
             In order to initialize I18n in forms, you will need either a
-            <code>Zend_Translate</code> object or a
-            <code>Zend_Translate_Adapter</code> object, as detailed in the
-            <code>Zend_Translate</code> documentation. Once you have a
+            <classname>Zend_Translate</classname> object or a
+            <classname>Zend_Translate_Adapter</classname> object, as detailed in the
+            <classname>Zend_Translate</classname> documentation. Once you have a
             translation object, you have several options:
         </para>
 
@@ -56,13 +56,12 @@
                 <programlisting role="php"><![CDATA[
 // use the 'Zend_Translate' key; $translate is a Zend_Translate object:
 Zend_Registry::set('Zend_Translate', $translate);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
-                    This will be picked up by <code>Zend_Form</code>,
-                    <code>Zend_Validate</code>, and
-                    <code>Zend_View_Helper_Translate</code>.
+                    This will be picked up by <classname>Zend_Form</classname>,
+                    <classname>Zend_Validate</classname>, and
+                    <classname>Zend_View_Helper_Translate</classname>.
                 </para>
             </listitem>
 
@@ -70,19 +69,18 @@ Zend_Registry::set('Zend_Translate', $translate);
                 <para>
                     If all you are worried about is translating validation error
                     messages, you can register the translation object with
-                    <code>Zend_Validate_Abstract</code>:
+                    <classname>Zend_Validate_Abstract</classname>:
                 </para>
 
                 <programlisting role="php"><![CDATA[
 // Tell all validation classes to use a specific translate adapter:
 Zend_Validate_Abstract::setDefaultTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
                 <para>
-                    Alternatively, you can attach to the <code>Zend_Form</code>
+                    Alternatively, you can attach to the <classname>Zend_Form</classname>
                     object as a global translator. This has the side effect of also
                     translating validation error messages:
                 </para>
@@ -91,8 +89,7 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
 // Tell all form classes to use a specific translate adapter, as well
 // as use this adapter to translate validation error messages:
 Zend_Form::setDefaultTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -112,8 +109,7 @@ $form->setTranslator($translate);
 // also be used to translate validation error messages for this
 // particular element:
 $element->setTranslator($translate);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
     </sect2>
@@ -131,7 +127,7 @@ $element->setTranslator($translate);
                 <para>
                     <emphasis>Validation error messages.</emphasis> Validation
                     error messages may be translated. To do so, use the various
-                    error code constants from the <code>Zend_Validate</code>
+                    error code constants from the <classname>Zend_Validate</classname>
                     validation classes as the message IDs. For more information
                     on these codes, see the <link
                         linkend="zend.validate">Zend_Validate</link>
@@ -175,8 +171,8 @@ $element->setTranslator($translate);
 
             <listitem>
                 <para>
-                    <emphasis>Multi-option Values.</emphasis> For the various
-                    items inheriting from <code>Zend_Form_Element_Multi</code>
+                    <emphasis>Multi-option Values.</emphasis> for the various
+                    items inheriting from <classname>Zend_Form_Element_Multi</classname>
                     (including the MultiCheckbox, Multiselect, and Radio
                     elements), the option values (not keys) will be translated
                     if a translation is available; this means that the option

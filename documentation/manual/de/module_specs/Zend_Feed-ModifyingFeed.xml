@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.feed.modifying-feed">
     <title>Verändern der Feed- und Eintragsstruktur</title>
 
     <para>
-        Die natürliche Syntax von <code>Zend_Feed</code> wurde für das Erstellen und Verändern von
-        Feeds und Einträgen sowie das Lesen dieser erweitert. Du kannst die neuen oder veränderten
-        Objekte einfach in wohlgeformtes XML umsetzen, um es als Datei zu speichern oder an einen
-        Server zu senden.
+        Die natürliche Syntax von <classname>Zend_Feed</classname> wurde für das Erstellen und
+        Verändern von Feeds und Einträgen sowie das Lesen dieser erweitert. Du kannst die neuen oder
+        veränderten Objekte einfach in wohlgeformtes XML umsetzen, um es als Datei zu speichern oder
+        an einen Server zu senden.
     </para>
 
     <example id="zend.feed.modifying-feed.example.modifying">
@@ -21,8 +21,7 @@ $entry->title = 'Dies ist ein neuer Titel';
 $entry->author->email = 'my_email@example.com';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Dies gibt eine vollständige (enthält den <code>&lt;?xml ... &gt;</code> Prolog) XML
             Darstellung des neuen Eintrags aus, inklusive jedes notwendige XML Namensraumes.
@@ -38,10 +37,11 @@ echo $entry->saveXML();
     <para>
         Wenn du einen anderen Namensraum als <code>atom:</code>, <code>rss:</code>, oder
         <code>osrss:</code> in deinem Eintrag verwenden möchtest, musst du den Namensraum mit
-        <code>Zend_Feed</code> durch die Verwendung von <code>Zend_Feed::registerNamespace()</code>
-        registrieren. Wenn du ein bestehendes Element veränderst, wird es immer den ursprünglichen
-        Namensraum beibehalten. Wenn du ein neues Element hinzufügst, wird es den standardmäßigen
-        Namensraum verwenden, wenn du nicht explizit einen anderen Namensraum festgelegt hast.
+        <classname>Zend_Feed</classname> durch die Verwendung von
+        <classname>Zend_Feed::registerNamespace()</classname> registrieren. Wenn du ein bestehendes
+        Element veränderst, wird es immer den ursprünglichen Namensraum beibehalten. Wenn du ein
+        neues Element hinzufügst, wird es den standardmäßigen Namensraum verwenden, wenn du nicht
+        explizit einen anderen Namensraum festgelegt hast.
     </para>
 
     <example id="zend.feed.modifying-feed.example.creating">
@@ -61,8 +61,7 @@ $entry->{'myns:container_elt'}->part1 = 'Erster verschachtelter Teil';
 $entry->{'myns:container_elt'}->part2 = 'Zweiter verschachtelter Teil';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

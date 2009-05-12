@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.fetching">
-
     <title>Extraire les options et les arguments</title>
 
     <para>
@@ -22,8 +21,7 @@
     </para>
 
     <sect2 id="zend.console.getopt.fetching.exceptions">
-
-        <title>Manipuler les exceptions <code>Getopt</code></title>
+        <title>Manipuler les exceptions Getopt</title>
 
         <para>
             Si l'utilisateur a donné des options invalides sur la ligne de commande, la
@@ -39,8 +37,7 @@
         </para>
 
         <example id="zend.console.getopt.fetching.exceptions.example">
-
-            <title>Récupérer une exception <code>Getopt</code></title>
+            <title>Récupérer une exception Getopt</title>
 
             <programlisting role="php"><![CDATA[
 try {
@@ -51,7 +48,6 @@ try {
     exit;
 }
 ]]></programlisting>
-
         </example>
 
         <para>Les cas, où l'analyse syntaxique lève une exception, incluent&#160;:</para>
@@ -70,11 +66,9 @@ try {
                 </para>
             </listitem>
         </itemizedlist>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.byname">
-
         <title>Extraire les options par nom</title>
 
         <para>
@@ -86,15 +80,13 @@ try {
         </para>
 
         <example id="zend.console.getopt.fetching.byname.example.setoption">
-
-            <title>Utiliser <code>getOption()</code></title>
+            <title>Utiliser getOption()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -105,11 +97,7 @@ $p_parameter = $opts->getOption('p');
         </para>
 
         <example id="zend.console.getopt.fetching.byname.example.magic">
-
-            <title>
-                Utiliser les méthodes magiques <code>__get()</code> and
-                <code>__isset()</code>
-            </title>
+            <title>Utiliser les méthodes magiques __get() et __isset()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -118,18 +106,15 @@ if (isset($opts->b)) {
 }
 $p_parameter = $opts->p; // null si non fourni
 ]]></programlisting>
-
         </example>
 
         <para>
             Si vos options sont déclarées avec des alias, vous pouvez employer n'importe quel
             alias de l'option dans les méthodes ci-dessus.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.reporting">
-
         <title>Extraire les options</title>
 
         <para>
@@ -175,11 +160,9 @@ $p_parameter = $opts->p; // null si non fourni
             chaîne, "<code>verbose</code>", est employé comme nom de l'option. Le nom du drapeau
             d'option n'inclut pas le tiret précédent.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.fetching.remainingargs">
-
         <title>Extraction des arguments sans option</title>
 
         <para>
@@ -191,15 +174,13 @@ $p_parameter = $opts->p; // null si non fourni
         </para>
 
         <example id="zend.console.getopt.fetching.remainingargs.example">
-
-            <title>Utiliser <code>getRemainingArgs()</code></title>
+            <title>Utiliser getRemainingArgs()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'nomdefichier'));
 $args = $opts->getRemainingArgs(); // retourne array('nomdefichier')
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -209,7 +190,5 @@ $args = $opts->getRemainingArgs(); // retourne array('nomdefichier')
             vous avez un argument sans options qui commence par un tiret. Par exemple : "
             <command>rm -- -nomdefichier-avec-tiret</command>".
         </para>
-
     </sect2>
-
 </sect1>

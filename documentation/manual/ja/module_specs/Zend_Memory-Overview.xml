@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <sect1 id="zend.memory.overview">
     <title>概要</title>
 
     <sect2 id="zend.memory.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Memory</code> コンポーネントは、
+            <classname>Zend_Memory</classname> コンポーネントは、
             限られたメモリ環境でデータを管理するためのものです。
         </para>
 
@@ -33,9 +33,9 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title><code>Zend_Memory</code> コンポーネントの使用法</title>
+            <title>Zend_Memory コンポーネントの使用法</title>
             <para>
-                <code>Zend_Memory::factory()</code> は、
+                <classname>Zend_Memory::factory()</classname> は、
                 指定したバックエンドオプションでメモリマネージャオブジェクトの
                 インスタンスを作成します。
             </para>
@@ -61,8 +61,7 @@ echo $loadedFiles[$index1]->value;
 $loadedFiles[$index2]->value = $newValue;
 
 $loadedFiles[$index3]->value[$charIndex] = '_';
-]]>
-                </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -71,7 +70,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         <title>動作原理</title>
 
         <para>
-            <code>Zend_Memory</code> コンポーネントは、以下の概念で構成されています。
+            <classname>Zend_Memory</classname> コンポーネントは、以下の概念で構成されています。
             <itemizedlist>
                 <listitem>
                     <para>メモリマネージャ</para>
@@ -125,8 +124,7 @@ $memObject->value[$index] = '_';
 echo ord($memObject->value[$index1]);
 
 $memObject->value = substr($memObject->value, $start, $length);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <note>
@@ -158,7 +156,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <para>
                 移動可能なメモリオブジェクトは、
-                必要に応じて <code>Zend_Memory</code> がキャッシュにスワップしたり
+                必要に応じて <classname>Zend_Memory</classname> がキャッシュにスワップしたり
                 キャッシュから読み戻したりします。この処理は透過的に行われます。
             </para>
 

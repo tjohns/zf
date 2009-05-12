@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.auth.adapter.digest">
 
     <title>ダイジェスト認証</title>
@@ -43,8 +43,7 @@
 
         <programlisting><![CDATA[
 someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
-]]>
-</programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -53,7 +52,7 @@ someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>使用</title>
 
         <para>
-            ダイジェスト認証アダプタ <code>Zend_Auth_Adapter_Digest</code>
+            ダイジェスト認証アダプタ <classname>Zend_Auth_Adapter_Digest</classname>
             には、以下の入力パラメータが必要です。
             <itemizedlist>
                 <listitem>
@@ -88,7 +87,7 @@ someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>ID</title>
 
         <para>
-            ダイジェスト認証アダプタは <code>Zend_Auth_Result</code>
+            ダイジェスト認証アダプタは <classname>Zend_Auth_Result</classname>
             オブジェクトを返します。ここに、認証された ID の情報が
             配列として含まれます。配列のキーは
             <code>realm</code> および <code>username</code> です。
@@ -115,8 +114,7 @@ Array
     [username] => someUser
 )
 */
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

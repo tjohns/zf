@@ -30,8 +30,7 @@ while ($buff = fread($sock, 1024))
     $str .= $sock;
 
 $response = Zend_Http_Response::factory($str);
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
         <para>
@@ -107,8 +106,7 @@ if ($response->isError()) {
        " " . $response->getMessage() . "\n";
 }
 // .. process the response here...
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -177,8 +175,7 @@ if ($response->getStatus() == 200) {
   echo "An error occurred while fetching data:<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
             <note>
                 <title>Always check return value</title>
@@ -201,8 +198,7 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
 }
 
 echo $body;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>

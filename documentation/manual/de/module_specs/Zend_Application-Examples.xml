@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15014 -->
+<!-- EN-Revision: 15304 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.application.examples">
     <title>Beispiele</title>
@@ -13,8 +13,7 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Mit einer entsprechenden Konfigurationsdatei:
@@ -35,9 +34,9 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
         Sollten trotzdem, eigene Initialisierungen notwendig sein, hat man zwei Möglichkeiten.
         Erstens, kann man Methoden schreiben die mit <code>_init</code> anfangen um eigenen Code
         zu spezifizieren der für das Bootstrapping verwendet werden soll. Diese Methoden werden
-        durch bootstrap( aufgerufen, und können genauso aufgerufen werden wie wenn Sie öffentliche
-        Methoden wären: <code>bootstrap&lt;resource&gt;()</code>. Sie sollten ein optionales
-        Array an Optionen akzeptieren.
+        durch <code>bootstrap()</code> aufgerufen, und können genauso aufgerufen werden wie wenn
+        Sie öffentliche Methoden wären: <code>bootstrap&lt;resource&gt;()</code>. Sie sollten ein
+        optionales Array an Optionen akzeptieren.
     </para>
 
     <para>
@@ -76,8 +75,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $request;
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Beachte in diesem Beispiel den Aufruf von <code>bootstrap()</code>; dieser stellt sicher
@@ -94,7 +92,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     <itemizedlist>
         <listitem>
             <para>
-                Wärend der Instanzierung des Zend_Application Objekts
+                Wärend der Instanzierung des <classname>Zend_Application</classname> Objekts
             </para>
         </listitem>
         <listitem>
@@ -110,9 +108,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     </itemizedlist>
 
     <para>
-        Ressource Plugins implementieren <code>Zend_Application_Bootstrap_Resource</code>, welche
-        einfach definieren das Sie Injektion des Aufrufers und von Optionen erlauben, und die eine
-        <code>init()</code> Methode haben. Als Beispiel, könnte eine eigene "View" Bootstrap
+        Ressource Plugins implementieren <classname>Zend_Application_Bootstrap_Resource</classname>,
+        welche einfach definieren das Sie Injektion des Aufrufers und von Optionen erlauben, und die
+        eine <code>init()</code> Methode haben. Als Beispiel, könnte eine eigene "View" Bootstrap
         Ressource wie folgt aussehen:
     </para>
 
@@ -145,8 +143,7 @@ class My_Bootstrap_Resource_View
         return $view;
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Um der Bootstrap zu sagen das sie das verwenden soll, würde man entweder den Klassennamen
@@ -159,22 +156,21 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     array(
         'resources' => array(
-            'My_Bootstrap_Resource_View', // kompletter Klassenname; ODER
-            'view',                       // Kurzname
+            'My_Bootstrap_Resource_View' => array(), // kompletter Klassenname; ODER
+            'view',                                  // Kurzname
 
             'FrontController' => array(
                 'controllerDirectory' => APPLICATION_PATH . '/controllers',
             ),
         ),
 
-        // Für Kurznamen, definiere die Ressourcen Pfade:
-        'resourcePaths = array(
+        // Für Kurznamen, definiere die Plugin Pfade:
+        'pluginPaths = array(
             'My_Bootstrap_Resource' => 'My/Bootstrap/Resource',
         )
     )
 );
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Ressourcen können andere Ressourcen und Initialisierungen aufrufen indem Sie auf den
@@ -196,8 +192,7 @@ class My_Bootstrap_Resource_Layout
         // ...
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Bei normaler Verwendung würde man die Anwendung instanziieren, sie bootstrappen, und
@@ -208,8 +203,7 @@ class My_Bootstrap_Resource_Layout
 $application = new Zend_Application(...);
 $application->bootstrap()
             ->run();
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Für ein eigenes Skript müsste man einfach spezifische Ressourcen initialisieren:
@@ -222,8 +216,7 @@ $application->getBootstrap('db');
 $service = new Zend_XmlRpc_Server();
 $service->setClass('Foo');  // Verwende die Datenbank...
 echo $service->handle();
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Statt der Verwendung der <code>bootstrap()</code> Methode um interne Methode oder
@@ -233,6 +226,5 @@ echo $service->handle();
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
 $application->getBootstrapDb();
-]]>
-    </programlisting>
+]]></programlisting>
 </sect1>

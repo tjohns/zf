@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writer</title>
   <para>
-    Ein Writer ist ein Objekt das von <code>Zend_Log_Writer_Abstract</code> abstammt. Die Aufgabe eines Writer's
-    ist es Log Daten in ein Speicher-Backend aufzunehmen.
+    Ein Writer ist ein Objekt das von <classname>Zend_Log_Writer_Abstract</classname> abstammt. Die
+    Aufgabe eines Writer's ist es Log Daten in ein Speicher-Backend aufzunehmen.
   </para>
 
   <sect2 id="zend.log.writers.stream">
     <title>In Streams schreiben</title>
     <para>
-      <code>Zend_Log_Writer_Stream</code> sendet Log Daten in einen
+      <classname>Zend_Log_Writer_Stream</classname> sendet Log Daten in einen
       <ulink url="http://www.php.net/stream">PHP Stream</ulink>.
     </para>
 
     <para>
-      Um Log Daten in den PHP Ausgabebuffer zu schreiben, muß die URL <code>php://output</code> verwendet werden.
-      Alternativ können Log Daten direkt an einen Stream wie z.B. <code>STDERR</code>
-      (<code>php://stderr</code>) gesendet werden.
+      Um Log Daten in den PHP Ausgabebuffer zu schreiben, muß die URL <code>php://output</code>
+      verwendet werden. Alternativ können Log Daten direkt an einen Stream wie z.B.
+      <code>STDERR</code> (<code>php://stderr</code>) gesendet werden.
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -39,16 +38,16 @@ $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informative Nachricht');
-]]>
-      </programlisting>
+]]></programlisting>
 
-      Standardmäßig wird der Stream im Anhänge-Modus geöffnet (<code>"a"</code>). Um Ihn in einem anderen Modus
-      zu öffnen, akzeptiert der <code>Zend_Log_Writer_Stream</code> Konstruktor einen optionalen zweiten Parameter für den
-      Modus.
+      Standardmäßig wird der Stream im Anhänge-Modus geöffnet (<code>"a"</code>). Um Ihn in einem
+      anderen Modus zu öffnen, akzeptiert der <classname>Zend_Log_Writer_Stream</classname>
+      Konstruktor einen optionalen zweiten Parameter für den Modus.
     </para>
 
     <para>
-      Der Konstruktor von <code>Zend_Log_Writer_Stream</code> akzeptiert auch eine existierende Stream Ressource:
+      Der Konstruktor von <classname>Zend_Log_Writer_Stream</classname> akzeptiert auch eine
+      existierende Stream Ressource:
 
       <programlisting role="php"><![CDATA[
 $stream = @fopen('/path/to/logfile', 'a', false);
@@ -60,20 +59,21 @@ $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
 $logger->info('Informative Nachricht');
-]]>
-      </programlisting>
+]]></programlisting>
 
-      Der Modus kann für existierende Stream Ressourcen nicht definiert werden. Wenn das gemacht versucht wird, wird
-      eine <code>Zend_Log_Exception</code> geworfen.
+      Der Modus kann für existierende Stream Ressourcen nicht definiert werden. Wenn das gemacht
+      versucht wird, wird eine <classname>Zend_Log_Exception</classname> geworfen.
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.database">
     <title>In Datenbanken schreiben</title>
     <para>
-      <code>Zend_Log_Writer_Db</code> schreibt Log Informationen in eine Datenbank Tabelle wobei <code>Zend_Db</code>
-      verwendet wird. Der Konstrukor von <code>Zend_Log_Writer_Db</code> benötigt eine <code>Zend_Db_Adapter</code>
-      Instanz, einen Tabellennamen, und ein Abbild der Datenbankspalten zu den Elementen der Eventdaten:
+      <classname>Zend_Log_Writer_Db</classname> schreibt Log Informationen in eine Datenbank Tabelle
+      wobei <classname>Zend_Db</classname> verwendet wird. Der Konstrukor von
+      <classname>Zend_Log_Writer_Db</classname> benötigt eine <classname>Zend_Db_Adapter</classname>
+      Instanz, einen Tabellennamen, und ein Abbild der Datenbankspalten zu den Elementen der
+      Eventdaten:
 
       <programlisting role="php"><![CDATA[
 $params = array ('host'     => '127.0.0.1',
@@ -88,12 +88,12 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 $logger = new Zend_Log($writer);
 
 $logger->info('Informative Nachricht');
-]]>
-      </programlisting>
+]]></programlisting>
 
       Das obige Beispiel schreibt eine einzelne Zeile von Log Daten in einem Datenbanktabelle welche
-      <code>log_table_name</code> Tabelle benannt wird. Die Datenbankspalte welche <code>lvl</code> benannt ist
-      empfängt die Nummer der Priorität und die Spalte welche <code>msg</code> benannt ist empfängt die Log Nachricht.
+      <code>log_table_name</code> Tabelle benannt wird. Die Datenbankspalte welche <code>lvl</code>
+      benannt ist empfängt die Nummer der Priorität und die Spalte welche <code>msg</code> benannt
+      ist empfängt die Log Nachricht.
     </para>
 
   </sect2>
@@ -104,8 +104,8 @@ $logger->info('Informative Nachricht');
   <sect2 id="zend.log.writers.null">
     <title>Einen Writer abstumpfen</title>
     <para>
-      <code>Zend_Log_Writer_Null</code> ist ein Stumpf der keine Log Daten irgendwohin schreibt. Er ist nützlich um
-      die Protokollierung auszuschalten oder wärend Tests abzustumpfen:
+      <classname>Zend_Log_Writer_Null</classname> ist ein Stumpf der keine Log Daten irgendwohin
+      schreibt. Er ist nützlich um die Protokollierung auszuschalten oder wärend Tests abzustumpfen:
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Null;
@@ -113,16 +113,15 @@ $logger = new Zend_Log($writer);
 
 // geht nirgendwohin
 $logger->info('Informative Nachricht');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.mock">
     <title>Mit der Attrappe testen</title>
     <para>
-      <code>Zend_Log_Writer_Mock</code> ist ein sehr einfacher Writer der die rohen Daten die er empfängt aufnimmt
-      und in einem Array als öffentliche Eigenschaft zur Verfügung stellt.
+      <classname>Zend_Log_Writer_Mock</classname> ist ein sehr einfacher Writer der die rohen Daten
+      die er empfängt aufnimmt und in einem Array als öffentliche Eigenschaft zur Verfügung stellt.
 
       <programlisting role="php"><![CDATA[
 $mock = new Zend_Log_Writer_Mock;
@@ -139,8 +138,7 @@ var_dump($mock->events[0]);
 //    [priority] => 6
 //    [priorityName] => INFO
 // )
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -153,8 +151,9 @@ var_dump($mock->events[0]);
     <title>Gemischte Writer</title>
 
     <para>
-      Es gibt kein gemischtes Writer Objekt. Trotzdem kann eine Log Instanz in jede beliebige Anzahl von Writern
-      schreiben. Um das zu tun, muß die <code>addWriter()</code> Methode verwendet werden:
+      Es gibt kein gemischtes Writer Objekt. Trotzdem kann eine Log Instanz in jede beliebige Anzahl
+      von Writern schreiben. Um das zu tun, muß die <code>addWriter()</code> Methode verwendet
+      werden:
 
       <programlisting role="php"><![CDATA[
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
@@ -166,8 +165,7 @@ $logger->addWriter($writer2);
 
 // Geht zu beiden Writern
 $logger->info('Informative Nachricht');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 </sect1>

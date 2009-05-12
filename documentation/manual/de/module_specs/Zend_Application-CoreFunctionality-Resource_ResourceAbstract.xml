@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.application.core-functionality.resource-resourceabstract">
     <title>Zend_Application_Resource_ResourceAbstract</title>
 
     <para>
-        <code>Zend_Application_Resource_ResourceAbstract</code> ist eine abstrakte Klasse die
-        <link linkend="zend.application.core-functionality.resource-resource">Zend_Application_Resource_Resource</link>
+        <classname>Zend_Application_Resource_ResourceAbstract</classname> ist eine abstrakte Klasse
+        die <link
+            linkend="zend.application.core-functionality.resource-resource">Zend_Application_Resource_Resource</link>
         implementiert, und ist ein guter Startpunkt für die Erstellung eigener Plugin Ressourcen.
     </para>
 
@@ -43,8 +44,12 @@
                 </row>
 
                 <row>
-                    <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_Resource</code></entry>
+                    <entry>
+                        <code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper
+                        $bootstrap)
+                    </code>
+                    </entry>
+                    <entry><classname>Zend_Application_Resource_Resource</classname></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>required</emphasis>.
@@ -58,7 +63,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfange die registrierte Bootstrap Instanz.
@@ -67,7 +72,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_Resource</code></entry>
+                    <entry><classname>Zend_Application_Resource_Resource</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.

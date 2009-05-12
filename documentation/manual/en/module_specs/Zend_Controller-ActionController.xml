@@ -6,19 +6,19 @@
     <sect2 id="zend.controller.action.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Controller_Action</code> is an abstract class you may use
+            <classname>Zend_Controller_Action</classname> is an abstract class you may use
             for implementing Action Controllers for use with the Front
             Controller when building a website based on the
             Model-View-Controller (MVC) pattern.
         </para>
 
         <para>
-            To use <code>Zend_Controller_Action</code>, you will need to
+            To use <classname>Zend_Controller_Action</classname>, you will need to
             subclass it in your actual action controller classes (or subclass it
             to create your own base class for action controllers). The most
             basic operation is to subclass it, and create action methods that
             correspond to the various actions you wish the controller to handle
-            for your site. <code>Zend_Controller</code>'s routing and dispatch handling will
+            for your site. <classname>Zend_Controller</classname>'s routing and dispatch handling will
             autodiscover any methods ending in 'Action' in your class as
             potential controller actions.
         </para>
@@ -40,8 +40,7 @@ class FooController extends Zend_Controller_Action
         // do something
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The above <code>FooController</code> class (controller
@@ -88,8 +87,7 @@ class FooController extends Zend_Controller_Action
             ->setParam('noViewRenderer', true);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 <code>initView()</code>, <code>getViewScript()</code>,
@@ -114,8 +112,7 @@ class FooController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 The primary reasons to disable the <code>ViewRenderer</code> are
@@ -134,7 +131,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             While you can always override the action controller's constructor,
-            we do not recommend this. <code>Zend_Controller_Action::__construct()</code>
+            we do not recommend this. <classname>Zend_Controller_Action::__construct()</classname>
             performs some important tasks, such as registering the request and
             response objects, as well as any custom invocation arguments passed
             in from the front controller. If you must override the constructor,
@@ -162,15 +159,14 @@ class FooController extends Zend_Controller_Action
         ));
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
         <title>Pre- and Post-Dispatch Hooks</title>
 
         <para>
-            <code>Zend_Controller_Action</code> specifies two methods that may
+            <classname>Zend_Controller_Action</classname> specifies two methods that may
             be called to bookend a requested action, <code>preDispatch()</code>
             and <code>postDispatch()</code>. These can be useful in a variety of
             ways: verifying authentication and ACLs prior to running an action
@@ -206,8 +202,7 @@ class FooController extends Zend_Controller_Action
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
 $this->getResponse()->appendBody($content);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -256,8 +251,7 @@ if ($this->_hasParam('id') {
 } else {
     $id = 1;
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </note>
             </listitem>
         </itemizedlist>
@@ -277,7 +271,7 @@ if ($this->_hasParam('id') {
         </note>
 
         <para>
-            <code>Zend_Controller_Action</code> provides a rudimentary and
+            <classname>Zend_Controller_Action</classname> provides a rudimentary and
             flexible mechanism for view integration. Two methods accomplish
             this, <code>initView()</code> and <code>render()</code>; the former
             method lazy-loads the <code>$view</code> public property, and the
@@ -293,8 +287,8 @@ if ($this->_hasParam('id') {
                 <code>render()</code> calls <code>initView()</code> in order to
                 retrieve the view object, but it may be initialized at any time;
                 by default it populates the <code>$view</code> property with a
-                <code>Zend_View</code> object, but any class implementing
-                <code>Zend_View_Interface</code> may be used. If
+                <classname>Zend_View</classname> object, but any class implementing
+                <classname>Zend_View_Interface</classname> may be used. If
                 <code>$view</code> is already initialized, it simply returns
                 that property.
             </para>
@@ -314,8 +308,7 @@ applicationOrModule/
                 index.phtml
         helpers/
         filters/
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 In other words, view scripts are assumed to be in the
@@ -339,8 +332,7 @@ applicationOrModule/
 string render(string $action = null,
               string $name = null,
               bool $noController = false);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 <code>render()</code> renders a view script. If no arguments are
@@ -404,8 +396,7 @@ class MyController extends Zend_Controller_Action
         $this->render();
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 
@@ -414,7 +405,7 @@ class MyController extends Zend_Controller_Action
 
         <para>
             Besides the accessors and view integration methods,
-            <code>Zend_Controller_Action</code> has several utility methods for
+            <classname>Zend_Controller_Action</classname> has several utility methods for
             performing common tasks from within your action methods (or from
             pre-/post-dispatch).
         </para>
@@ -494,7 +485,7 @@ class MyController extends Zend_Controller_Action
         <title>Subclassing the Action Controller</title>
 
         <para>
-            By design, <code>Zend_Controller_Action</code> must be subclassed
+            By design, <classname>Zend_Controller_Action</classname> must be subclassed
             in order to create an action controller. At the minimum, you will
             need to define action methods that the controller may call.
         </para>
@@ -504,7 +495,7 @@ class MyController extends Zend_Controller_Action
             may also find that you're repeating much of the same setup or
             utility methods in your various controllers; if so, creating a
             common base controller class that extends
-            <code>Zend_Controller_Action</code> could solve such redundancy.
+            <classname>Zend_Controller_Action</classname> could solve such redundancy.
         </para>
 
         <example id="zend.controller.action.subclassing.example-call">
@@ -512,14 +503,14 @@ class MyController extends Zend_Controller_Action
 
             <para>
                 If a request to a controller is made that includes an undefined
-                action method, <code>Zend_Controller_Action::__call()</code>
+                action method, <classname>Zend_Controller_Action::__call()</classname>
                 will be invoked. <code>__call()</code> is, of course, PHP's
                 magic method for method overloading.
             </para>
 
             <para>
                 By default, this method throws a
-                <code>Zend_Controller_Action_Exception</code> indicating the
+                <classname>Zend_Controller_Action_Exception</classname> indicating the
                 requested method was not found in the controller. If the method
                 requested ends in 'Action', the assumption is that an action was
                 requested and does not exist; such errors result in an exception
@@ -553,8 +544,7 @@ class MyController extends Zend_Controller_Action
                             500);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Another possibility is that you may want to forward on to a
@@ -584,8 +574,7 @@ class MyController extends Zend_Controller_Action
                             500);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -614,8 +603,7 @@ abstract class My_Base_Controller extends Zend_Controller_Action
         return $this->view;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Hopefully, from the information in this chapter, you can see the

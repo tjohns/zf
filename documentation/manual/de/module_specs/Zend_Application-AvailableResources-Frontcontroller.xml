@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15289 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.application.available-resources.frontcontroller">
     <title>Zend_Application_Resource_Frontcontroller</title>
 
     <para>
-        Die warscheinlich am meisten verwendete Ressource die man mit <code>Zend_Application</code>
-        verwenden wird, ist die Front Controller Ressource, die eine Möglichkeit bietet den
-        <code>Zend_Controller_Front</code> zu konfigurieren. Diese Ressource bietet die Möglichkeit
-        verschiedenste Front Controller Parameter zu setzen, Plugins zu spezifizieren die
-        initialisiert werden sollen, und vieles mehr.
+        Die warscheinlich am meisten verwendete Ressource die man mit
+        <classname>Zend_Application</classname> verwenden wird, ist die Front Controller Ressource,
+        die eine Möglichkeit bietet den <classname>Zend_Controller_Front</classname> zu
+        konfigurieren. Diese Ressource bietet die Möglichkeit verschiedenste Front Controller
+        Parameter zu setzen, Plugins zu spezifizieren die initialisiert werden sollen, und vieles
+        mehr.
     </para>
 
     <para>
         Sobald Sie initialisiert wurde, fügt die Ressource die <code>frontController</code>
-        Eigenschaft vom Bootstrap in die <code>Zend_Controller_Front</code> Instanz hinzu.
+        Eigenschaft vom Bootstrap in die <classname>Zend_Controller_Front</classname> Instanz hinzu.
     </para>
 
     <para>
@@ -82,9 +83,9 @@
 
         <programlisting role="ini"><![CDATA[
 [production]
-resources.frontController.controllerDirectory = APPLICATION_PATH . "/controllers"
+resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 resources.frontController.moduleControllerDirectoryName = "actions"
-resources.frontController.moduleController = APPLICATION_PATH .  "/modules"
+resources.frontController.moduleDirectory = APPLICATION_PATH "/modules"
 resources.frontController.defaultControllerName = "site"
 resources.frontController.defaultAction = "home"
 resources.frontController.defaultModule = "static"
@@ -95,7 +96,7 @@ resources.frontController.env = APPLICATION_ENV
 ]]></programlisting>
     </example>
 
-    <example id="zend.application.available-resources.frontcontroller.frontControllerPropertyExample">
+    <example id="zend.application.available-resources.frontcontroller.propertyExample">
         <title>Empfangen des Front Controllers im eigenen Bootstrap</title>
 
         <para>

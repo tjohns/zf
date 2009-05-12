@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -12,7 +12,7 @@
             アプリケーション内で必要となるリダイレクト処理用のオブジェクトとして使用します。
             <code>_redirect()</code> メソッドと比べた場合の利点としては、
             サイト全体で使用する設定を事前に組み込んでおけることがあります。また、
-            <code>Zend_Controller_Action::_forward()</code>
+            <classname>Zend_Controller_Action::_forward()</classname>
             の場合と同様に、組み込みのインターフェイス
             <code>gotoSimple($action, $controller, $module, $params)</code>
             が使用できることも利点となります。
@@ -43,7 +43,7 @@
                 <para>
                     <code>setGotoSimple()</code> を使用して、<code>gotoSimple()</code>
                     に何も渡されなかったときのデフォルトの URL を設定します。
-                    <code>Zend_Controller_Action::_forward()</code> の API である
+                    <classname>Zend_Controller_Action::_forward()</classname> の API である
                     setGotoSimple($action, $controller = null, $module = null, array
                     $params = array()); を使用します。
                 </para>
@@ -174,8 +174,7 @@ class SomeController extends Zend_Controller_Action
         return; // 決してここには到達しません
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
@@ -212,8 +211,7 @@ class AlternativeController extends Zend_Controller_Action
         return; // リダイレクト後に自動的に exit() されるので、決してここには到達しません
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
@@ -221,7 +219,7 @@ class AlternativeController extends Zend_Controller_Action
 
             <para>
                 <code>gotoSimple()</code> の API は、
-                <code>Zend_Controller_Action::_forward()</code>
+                <classname>Zend_Controller_Action::_forward()</classname>
                 と同じ形式です。違う点は、このメソッドは渡されたパラメータから URL
                 を作成し、デフォルトルータのデフォルトフォーマットである
                 <code>:module/:controller/:action/*</code> を使用するということです。
@@ -259,8 +257,7 @@ class ForwardController extends Zend_Controller_Action
                                        );
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
@@ -282,8 +279,7 @@ $route = new Zend_Controller_Router_Route(
           'action' => 'view')
 );
 $router->addRoute('blogArchive', $route);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 year を 2006、month を 4、day を 24、そして ID を 42
@@ -321,8 +317,7 @@ class BlogAdminController extends Zend_Controller_Action
         );
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
 </sect3>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <sect1 id="zend.paginator.usage">
     <title>使用法</title>
 
@@ -8,14 +8,14 @@
         <title>データコレクションのページ処理</title>
 
         <para>
-            ページ処理を行うには、<code>Zend_Paginator</code>
+            ページ処理を行うには、<classname>Zend_Paginator</classname>
             がデータにアクセスするための汎用的な方法が必要です。
             そのため、データへのアクセスはすべてデータソースアダプタを用いて行います。
             Zend Framework には、いくつかのアダプタが標準で同梱されています。
         </para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title><code>Zend_Paginator</code> 用のアダプタ</title>
+            <title>Zend_Paginator 用のアダプタ</title>
 
             <tgroup cols="2">
                 <thead>
@@ -32,16 +32,16 @@
                     <row>
                         <entry>DbSelect</entry>
                         <entry>
-                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
+                            <link linkend="zend.db.select"><classname>Zend_Db_Select</classname></link>
                             のインスタンスを使用し、配列を返します。
                         </entry>
                     </row>
                     <row>
                         <entry>DbTableSelect</entry>
                         <entry>
-                            <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>
+                            <link linkend="zend.db.table.fetch-all"><classname>Zend_Db_Table_Select</classname></link>
                             のインスタンスを使用し、
-                            <code>Zend_Db_Table_Rowset_Abstract</code>
+                            <classname>Zend_Db_Table_Rowset_Abstract</classname>
                             のインスタンスを返します。
                             これは、結果セットについての追加情報
                             (カラム名など) を提供します。
@@ -57,7 +57,7 @@
                     <row>
                         <entry>Null</entry>
                         <entry>
-                            データのページ処理を管理する際に <code>Zend_Paginator</code>
+                            データのページ処理を管理する際に <classname>Zend_Paginator</classname>
                             を使用しません。その場合でもページ処理コントロールの機能を使うことはできます。
                         </entry>
                     </row>
@@ -81,15 +81,14 @@
         </note>
 
         <para>
-            <code>Zend_Paginator</code> のインスタンスを作成するには、
+            <classname>Zend_Paginator</classname> のインスタンスを作成するには、
             コンストラクタでアダプタを指定しなければなりません。
         </para>
 
         <para>
             <programlisting role="php"><![CDATA[
 $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -100,8 +99,7 @@ $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($array));
         <para>
             <programlisting role="php"><![CDATA[
 $paginator = Zend_Paginator::factory($array);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <note>
@@ -120,13 +118,12 @@ $paginator = Zend_Paginator::factory($array);
         <para>
             <programlisting role="php"><![CDATA[
 $paginator->setCurrentPageNumber($page);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
             ページ番号は URL で指定するのがもっともシンプルな方法でしょう。
-            <code>Zend_Controller_Router_Interface</code>
+            <classname>Zend_Controller_Router_Interface</classname>
             互換のルータを使うことを推奨しますが、
             それが必須というわけではありません。
         </para>
@@ -143,8 +140,7 @@ routes.example.defaults.action = view
 routes.example.defaults.page = 1
 routes.example.reqs.articleName = \w+
 routes.example.reqs.page = \d+
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -155,8 +151,7 @@ routes.example.reqs.page = \d+
         <para>
             <programlisting role="php"><![CDATA[
 $paginator->setCurrentPageNumber($this->_getParam('page'));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -167,15 +162,14 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
 
         <para>
             最後に、paginator のインスタンスをビューに割り当てます。
-            <code>Zend_View</code> と ViewRenderer アクションヘルパーを使っている場合は、
+            <classname>Zend_View</classname> と ViewRenderer アクションヘルパーを使っている場合は、
             次のようになります。
         </para>
 
         <para>
             <programlisting role="php"><![CDATA[
 $this->view->paginator = $paginator;
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -184,12 +178,12 @@ $this->view->paginator = $paginator;
 
         <para>
             ビュースクリプトを使用してページ項目のレンダリング
-            (<code>Zend_Paginator</code> を使うよう設定している場合)
+            (<classname>Zend_Paginator</classname> を使うよう設定している場合)
             とページ処理コントロールの表示を行います。
         </para>
 
         <para>
-            <code>Zend_Paginator</code> は SPL の
+            <classname>Zend_Paginator</classname> は SPL の
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html"><code>IteratorAggregate</code></ulink>
             インターフェイスを実装しているので、
             項目を順次処理したり表示したりするのは簡単です。
@@ -213,8 +207,7 @@ $this->view->paginator = $paginator;
                              'my_pagination_control.phtml'); ?>
 </body>
 </html>
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -255,7 +248,7 @@ $this->view->paginator = $paginator;
         </para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title><code>Zend_Paginator</code> のスクロール形式</title>
+            <title>Zend_Paginator のスクロール形式</title>
 
             <tgroup cols="2">
                 <thead>
@@ -324,8 +317,7 @@ Zend_View_Helper_PaginationControl::setDefaultViewPartial(
     'my_pagination_control.phtml'
 );
 $paginator->setView($view);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -337,13 +329,12 @@ $paginator->setView($view);
         <para>
             <programlisting role="php"><![CDATA[
 <?php echo $this->paginator; ?>
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <note>
             <para>
-                もちろん、<code>Zend_Paginator</code>
+                もちろん、<classname>Zend_Paginator</classname>
                 を別のテンプレートエンジンで使用することもできます。
                 たとえば、Smarty を使用する場合は次のようになります。
             </para>
@@ -351,8 +342,7 @@ $paginator->setView($view);
             <para>
                 <programlisting role="php"><![CDATA[
 $smarty->assign('pages', $paginator->getPages());
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -362,8 +352,7 @@ $smarty->assign('pages', $paginator->getPages());
             <para>
                 <programlisting role="php"><![CDATA[
 {$pages.pageCount}
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
         </note>
 
@@ -415,8 +404,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <?php endif; ?>
 </div>
 <?php endif; ?>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -470,8 +458,7 @@ of <?php echo $this->totalItemCount; ?>
 
 </div>
 <?php endif; ?>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -498,8 +485,7 @@ $('paginationControl').observe('change', function() {
     window.location = this.options[this.selectedIndex].value;
 })
 </script>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
         </sect3>
 

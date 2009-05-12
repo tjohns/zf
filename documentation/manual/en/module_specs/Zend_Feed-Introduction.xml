@@ -3,16 +3,16 @@
 <sect1 id="zend.feed.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
+        <classname>Zend_Feed</classname> provides functionality for consuming RSS and Atom feeds. It provides a
         natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
+        <classname>Zend_Feed</classname> also has extensive support for modifying feed and entry structure with the
         same natural syntax, and turning the result back into XML. In the future, this modification support
         could provide support for the Atom Publishing Protocol.
     </para>
 
     <para>
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_Entry_Abstract</code> base classes for
+        Programmatically, <classname>Zend_Feed</classname> consists of a base <classname>Zend_Feed</classname> class, abstract
+        <classname>Zend_Feed_Abstract</classname> and <classname>Zend_Feed_Entry_Abstract</classname> base classes for
         representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
         a behind-the-scenes helper for making the natural syntax magic work.
     </para>
@@ -32,7 +32,7 @@
     </note>
 
     <example id="zend.feed.introduction.example.rss">
-        <title>Putting <code>Zend_Feed</code> to Work on RSS Feed Data</title>
+        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
         <programlisting role="php"><![CDATA[
 // Fetch the latest Slashdot headlines
 try {
@@ -60,8 +60,7 @@ foreach ($slashdotRss as $item) {
         'description' => $item->description()
         );
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

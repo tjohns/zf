@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -16,7 +16,7 @@
         がつきます (ヘルパーのパスを設定する際に、これは独自のものに変更できます)。
         そしてクラス名の最後の部分がヘルパーの名前となります。
         このとき、単語の先頭は大文字にしなければなりません。つまり、
-        ヘルパーのクラス名は <code>Zend_View_Helper_FooBar</code>
+        ヘルパーのクラス名は <classname>Zend_View_Helper_FooBar</classname>
         となります。このクラスには、最低限ヘルパー名と同じ名前 (camelCase 形式にしたもの)
         のメソッド <code>fooBar()</code> が含まれていなければなりません。
     </para>
@@ -43,13 +43,12 @@
         </para>
     </note>
 
-
     <para>
         ビュースクリプト内でヘルパーを使用するには、
         <code>$this->helperName()</code> をコールします。これをコールすると、裏側では
-        <code>Zend_View</code> が <code>Zend_View_Helper_HelperName</code> クラスを読み込み、
+        <classname>Zend_View</classname> が <classname>Zend_View_Helper_HelperName</classname> クラスを読み込み、
         そのクラスのインスタンスを作成して <code>helperName()</code> メソッドをコールします。
-        オブジェクトのインスタンスは <code>Zend_View</code> インスタンスの中に残り続け、
+        オブジェクトのインスタンスは <classname>Zend_View</classname> インスタンスの中に残り続け、
         後で <code>$this->helperName()</code> がコールされたときには再利用されます。
     </para>
 
@@ -57,7 +56,7 @@
         <title>付属のヘルパー</title>
 
         <para>
-            <code>Zend_View</code> には、はじめからいくつかのヘルパークラスが付属しています。
+            <classname>Zend_View</classname> には、はじめからいくつかのヘルパークラスが付属しています。
             これらのほとんどはフォーム要素の生成に関するもので、
             適切なエスケープ処理を自動的に行います。
             さらに、ルートにもとづいた URL と HTML の一覧を作成したり、
@@ -168,8 +167,7 @@ echo $this->formCheckbox('foo',
                          null,
                          array('checked' => false),
                          array('bar', 'baz');
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     どの場合についても、マークアップの先頭に hidden
@@ -330,8 +328,7 @@ echo $this->formCheckbox('foo',
 <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             ビュースクリプトの出力結果は、次のようになります。
@@ -354,8 +351,7 @@ echo $this->formCheckbox('foo',
         <input type="checkbox" name="opt_in" value="yes" checked="checked" />
     </label></p>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
         <xi:include href="Zend_View-Helpers-Cycle.xml">
@@ -383,9 +379,9 @@ echo $this->formCheckbox('foo',
 
         <para>
             ビュースクリプトと同様、
-            <code>Zend_View</code> がヘルパークラスを探すパスをコントローラから積み重ねて指定することができます。
-            デフォルトでは、<code>Zend_View</code> は "Zend/View/Helper/*" からヘルパークラスを探します。
-            <code>Zend_View</code> に別の場所を探すように指定するには
+            <classname>Zend_View</classname> がヘルパークラスを探すパスをコントローラから積み重ねて指定することができます。
+            デフォルトでは、<classname>Zend_View</classname> は "Zend/View/Helper/*" からヘルパークラスを探します。
+            <classname>Zend_View</classname> に別の場所を探すように指定するには
             <code>setHelperPath()</code> および <code>addHelperPath()</code> メソッドを使用します。
             さらに、クラスプレフィックスを指定することもできます。
             これにより、ヘルパークラスに名前空間を設定できるようになります。
@@ -398,13 +394,11 @@ $view = new Zend_View();
 
 // パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' と設定します
 $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
-]]>
-        </programlisting>
-
+]]></programlisting>
 
         <para>
             <code>addHelperPath()</code> メソッドを使用すると、検索パスを「積み重ねる」
-            ことができます。これを使用すると、<code>Zend_View</code>
+            ことができます。これを使用すると、<classname>Zend_View</classname>
             は一番最後に追加されたパスからヘルパークラスを探し始めます。
             これにより、付属しているヘルパーの内容を上書きしたり、
             新しいヘルパーを追加したりすることができるようになります。
@@ -424,8 +418,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // "My_View_Helper_HelperName" という名前のクラスを探し、
 // そして最後に "Zend/View/Helpers/HelperName.php" で
 // "Zend_View_Helper_HelperName" という名前のクラスを探します。
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -440,8 +433,8 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 絶対条件というわけではありませんが、ヘルパーを作成する際には
-                <code>Zend_View_Helper_Interface</code> を実装するか
-                <code>Zend_View_Helper_Abstract</code> を継承することを推奨します。
+                <classname>Zend_View_Helper_Interface</classname> を実装するか
+                <classname>Zend_View_Helper_Abstract</classname> を継承することを推奨します。
                 1.6.0 以降、これらには <code>setView()</code> メソッドが定義されています。
                 しかし、将来のリリースでは Strategy パターンを実装することを検討しており、
                 以下に示す命名規約の多くを単純化する予定です。
@@ -484,7 +477,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
         <para>
             指定したヘルパーパスのどこかにヘルパークラスのファイルを配置すると、
-            <code>Zend_View</code> は自動的にそれを読み込んでインスタンスを作成し、
+            <classname>Zend_View</classname> は自動的にそれを読み込んでインスタンスを作成し、
             必要に応じて実行します。
         </para>
 
@@ -503,13 +496,12 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
         return htmlspecialchars($output);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             そして、ビュースクリプト内で <code>SpecialPurpose</code>
             ヘルパーを必要なだけコールします。いちどインスタンスが作成された後は、
-            <code>Zend_View</code> インスタンスの中でそれが持続します。
+            <classname>Zend_View</classname> インスタンスの中でそれが持続します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -517,8 +509,7 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 echo $this->specialPurpose();
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             出力結果は、次のようになります。
@@ -527,11 +518,10 @@ echo $this->specialPurpose();
 'The Jerk' を 1 回見ました。
 'The Jerk' を 2 回見ました。
 'The Jerk' を 3 回見ました。
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            時には <code>Zend_View</code> オブジェクトを使用したくなることもあるでしょう。
+            時には <classname>Zend_View</classname> オブジェクトを使用したくなることもあるでしょう。
             たとえば登録されているエンコーディングを使用する必要があったり、
             ヘルパー内で別のビュースクリプトをレンダリングしたくなったりといった場合です。
             ビューオブジェクトにアクセスするには、ヘルパークラス内で次のような
@@ -553,8 +543,7 @@ class My_View_Helper_ScriptPath
         return $this->view->getScriptPath($script);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             ヘルパークラスで <code>setView()</code> メソッドを定義しておくと、
@@ -565,7 +554,7 @@ class My_View_Helper_ScriptPath
         </para>
 
         <para>
-            <code>Zend_View_Helper_Abstract</code> を継承する場合は、
+            <classname>Zend_View_Helper_Abstract</classname> を継承する場合は、
             このメソッドはすでに定義済みであるため定義する必要はありません。
         </para>
     </sect2>

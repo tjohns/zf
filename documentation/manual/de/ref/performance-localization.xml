@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15099 -->
 <!-- Reviewed: no -->
 <sect1 id="performance.localization">
     <title>Internationalisierung (I18n) und Lokalisierung (L10n)</title>
@@ -81,11 +81,11 @@
             <title>Verwenden von Übersetzungs und Lokalisierungs Caches</title>
 
             <para>
-                Beide, <code>Zend_Translate</code> und <code>Zend_Locale</code> implementieren eine
-                Caching Funktionalität die die Geschwindigkeit großartig verbessern kann. In jedem
-                der Fälle ist das das Nadelöhr typischerweise das Lesen der Dateien, nicht das
-                effektive Nachschauen; die Verwendung eines Caches eliminiert die Notwendigkeit die
-                Übersetzungsdateien und/oder Lokalisierungsdateien zu lesen.
+                Beide, <classname>Zend_Translate</classname> und <classname>Zend_Locale</classname>
+                implementieren eine Caching Funktionalität die die Geschwindigkeit großartig
+                verbessern kann. In jedem der Fälle ist das das Nadelöhr typischerweise das Lesen
+                der Dateien, nicht das effektive Nachschauen; die Verwendung eines Caches eliminiert
+                die Notwendigkeit die Übersetzungsdateien und/oder Lokalisierungsdateien zu lesen.
             </para>
 
             <para>
@@ -96,14 +96,15 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <link linkend="zend.translate.adapter.caching"><code>Zend_Translate</code>
+                        <link linkend="zend.translate.adapter.caching"><classname>Zend_Translate</classname>
                         Adapter Caching</link>
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <link linkend="zend.locale.cache"><code>Zend_Locale</code> Caching</link>
+                        <link linkend="zend.locale.cache"><classname>Zend_Locale</classname>
+                        Caching</link>
                     </para>
                 </listitem>
             </itemizedlist>

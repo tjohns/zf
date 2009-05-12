@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
@@ -9,13 +9,14 @@
 
         <para>
             Die Funktionen für das Erstellen und Aktualisieren eines Index wurden innerhalb der
-            <code>Zend_Search_Lucene</code> Komponente implementiert genau wie im Java Lucene Projekt. Man kann beide dieser
-            Optionen verwenden um einen Index zu erstellen der mit <code>Zend_Search_Lucene</code> durchsucht werden kann.
+            <classname>Zend_Search_Lucene</classname> Komponente implementiert genau wie im Java
+            Lucene Projekt. Man kann beide dieser Optionen verwenden um einen Index zu erstellen der
+            mit <classname>Zend_Search_Lucene</classname> durchsucht werden kann.
         </para>
 
         <para>
             Der PHP Quellcode unten zeigt ein Beispiel, wie eine Datei durch Verwendung der
-            <code>Zend_Search_Lucene</code> API indiziert werden kann:
+            <classname>Zend_Search_Lucene</classname> API indiziert werden kann:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -33,8 +34,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
 $index->addDocument($doc);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Neu hinzugefügte Dokumente können sofort im Index gesucht werden.
@@ -65,8 +65,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 
 // Füge das Dokument dem Index hinzu
 $index->addDocument($doc);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
     <sect2 id="zend.search.lucene.index-creation.document-updating">
         <title>Dokumente aktualisieren</title>
@@ -77,9 +76,9 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            Die <code>Zend_Search_Lucene::delete()</code> Methode arbeitet mit einer internen
-            Index Dokumentennummer. Sie kann aus dem Ergebnistreffer über die 'id' Eigenschaft
-            erhalten werden:
+            Die <classname>Zend_Search_Lucene::delete()</classname> Methode arbeitet mit einer
+            internen Index Dokumentennummer. Sie kann aus dem Ergebnistreffer über die 'id'
+            Eigenschaft erhalten werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -88,36 +87,37 @@ $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
         <title>Die Größe des Index erhalten</title>
 
         <para>
-            Es gibt zwei Methoden um die Größe eines Index in <code>Zend_Search_Lucene</code> zu erhalten.
+            Es gibt zwei Methoden um die Größe eines Index in
+            <classname>Zend_Search_Lucene</classname> zu erhalten.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::maxDoc()</code> gibt einen Mehr als die größte Anzahl an Dokumenten zurück.
-             Das ist die Gesamtanzahl der Dokumente im Index inklusive gelöschter Dokumente. Deswegen hat
-             es das Synonym: <code>Zend_Search_Lucene::count()</code>.
+             <classname>Zend_Search_Lucene::maxDoc()</classname> gibt einen Mehr als die größte
+             Anzahl an Dokumenten zurück. Das ist die Gesamtanzahl der Dokumente im Index inklusive
+             gelöschter Dokumente. Deswegen hat es das Synonym:
+             <classname>Zend_Search_Lucene::count()</classname>.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::numDocs()</code> gibt die Gesamtanzahl an nicht gelöschten Dokumenten zurück.
+             <classname>Zend_Search_Lucene::numDocs()</classname> gibt die Gesamtanzahl an nicht
+             gelöschten Dokumenten zurück.
         </para>
 
         <programlisting role="php"><![CDATA[
 $indexSize = $index->count();
 $documents = $index->numDocs();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Die Methode <code>Zend_Search_Lucene::isDeleted($id)</code> kann verwendet werden um zu Prüfen ob ein
-            Dokument gelöscht ist.
+            Die Methode <classname>Zend_Search_Lucene::isDeleted($id)</classname> kann verwendet
+            werden um zu Prüfen ob ein Dokument gelöscht ist.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -126,12 +126,12 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         echo "Dokument #$id ist gelöscht.\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Index Optimierung entfernt gelöschte Dokumente und quetscht die Dokument Ids in einen kleineren
-            Bereich. Die interne Id des Dokuments könnte also wärend der Indexoptinierung verändert werden.
+            Index Optimierung entfernt gelöschte Dokumente und quetscht die Dokument Ids in einen
+            kleineren Bereich. Die interne Id des Dokuments könnte also wärend der Indexoptinierung
+            verändert werden.
         </para>
     </sect2>
 
@@ -139,31 +139,33 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         <title>Indexoptimierung</title>
 
         <para>
-            Ein Lucene Index besteht aus Segmenten. Jedes Segment ist ein komplett unabhängiges Set von Daten.
+            Ein Lucene Index besteht aus Segmenten. Jedes Segment ist ein komplett unabhängiges Set
+            von Daten.
         </para>
         <para>
-            Lucene Indexsegmentdateien können aufgrund ihres Designs nicht aktualisiert werden. Eine Segmentaktualisierung
-            benötigt eine komplette Reorganisation der Segmente. Siehe auch die Lucene Indexdateiformate für weitere
-            Details
-            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+            Lucene Indexsegmentdateien können aufgrund ihres Designs nicht aktualisiert werden. Eine
+            Segmentaktualisierung benötigt eine komplette Reorganisation der Segmente. Siehe auch
+            die Lucene Indexdateiformate für weitere Details (<ulink
+                url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
             <footnote>
                 <para>
-                    Die aktuell unterstützte Version des Lucene Index File Formats ist 2.3 (beginnend mit
-                    ZF 1.6).
+                    Die aktuell unterstützte Version des Lucene Index File Formats ist 2.3
+                    (beginnend mit ZF 1.6).
                 </para>
             </footnote>.
             Neue Dokumente werden durch Erstellen neuer Segmente zum Index hinzugefügt.
         </para>
         <para>
-            Eine steigende Anzahl an Segmente verringert die Qualität des Index, aber die Indexoptimierung stellt
-            diese wieder her. Die Optimierung verschiebt verschiedene Segmente in ein neues. Dieser Prozess
-            aktualisiert die Segmente auch nicht. Es erzeugt ein neues großes Segment und aktualisiert die
-            Segmentliste (die 'sements' Datei).
+            Eine steigende Anzahl an Segmente verringert die Qualität des Index, aber die
+            Indexoptimierung stellt diese wieder her. Die Optimierung verschiebt verschiedene
+            Segmente in ein neues. Dieser Prozess aktualisiert die Segmente auch nicht. Es erzeugt
+            ein neues großes Segment und aktualisiert die Segmentliste (die 'sements' Datei).
         </para>
 
         <para>
-            Eine komplette Indexoptimierung kann durch einen Aufruf von <code>Zend_Search_Lucene::optimize()</code>
-            getriggert werden. Sie fügt alle Segmente in ein größeres zusammen.
+            Eine komplette Indexoptimierung kann durch einen Aufruf von
+            <classname>Zend_Search_Lucene::optimize()</classname> getriggert werden. Sie fügt alle
+            Segmente in ein größeres zusammen.
         </para>
         <programlisting role="php"><![CDATA[
 // Öffne bestehenden Index
@@ -171,28 +173,29 @@ $index = new Zend_Search_Lucene('/data/my-index');
 
 // Optimiere Index
 $index->optimize();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Die automatische Indexoptimierung wird durchgeführt, um einen Index in einem konsistenten Status
-            zu halten.
+            Die automatische Indexoptimierung wird durchgeführt, um einen Index in einem
+            konsistenten Status zu halten.
         </para>
         <para>
-            Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene Indexoptionen gesteuert
-            wird. Sie fasst sehr kleine Segmente in größere zusammen und fasst die größeren Segmente dann in noch größere
-            zusammen und so weiter.
+            Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene
+            Indexoptionen gesteuert wird. Sie fasst sehr kleine Segmente in größere zusammen und
+            fasst die größeren Segmente dann in noch größere zusammen und so weiter.
         </para>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.maxbuffereddocs">
-            <title><emphasis>MaxBufferedDocs</emphasis> Option für automatische Optimierung</title>
+            <title>MaxBufferedDocs Option für automatische Optimierung</title>
             <para>
-                <emphasis>MaxBufferedDocs</emphasis> ist die minimale Anzahl an Dokumenten, die erforderlich ist, damit
-                die im Hauptspeicher zwischen gespeicherten Dokumente in ein neues Segment geschrieben werden.
+                <emphasis>MaxBufferedDocs</emphasis> ist die minimale Anzahl an Dokumenten, die
+                erforderlich ist, damit die im Hauptspeicher zwischen gespeicherten Dokumente in ein
+                neues Segment geschrieben werden.
             </para>
             <para>
-                <emphasis>MaxBufferedDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
-                <code>$index->getMaxBufferedDocs()</code> oder <code>$index->setMaxBufferedDocs($maxBufferedDocs)</code>.
+                <emphasis>MaxBufferedDocs</emphasis> kann abgefragt bzw. gesetzt werden durch
+                Aufrufe von <code>$index->getMaxBufferedDocs()</code> oder
+                <code>$index->setMaxBufferedDocs($maxBufferedDocs)</code>.
             </para>
             <para>
                 Standardwert is 10.
@@ -200,16 +203,19 @@ $index->optimize();
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.maxmergedocs">
-            <title><emphasis>MaxMergeDocs</emphasis> Option für automatische Optimierung</title>
+            <title>MaxMergeDocs Option für automatische Optimierung</title>
             <para>
-                <emphasis>MaxMergeDocs</emphasis> ist die höchste Anzahl an Dokumenten, die jemals mit addDocument()
-                zusammengefasst werden kann. Kleine Werte (z.B. unter 10.000) sind für die interaktive Indizierung am
-                besten, da dies die Pausen für das Indizieren auf wenige Sekunden begrenzen. Größere Werte sind am besten
-                für Stapelverarbeitung oder schnellere Suchabfragen.
+                <emphasis>MaxMergeDocs</emphasis> ist die höchste Anzahl an Dokumenten, die jemals
+                mit addDocument() zusammengefasst werden kann. Kleine Werte (z.B. unter 10.000) sind
+                für die interaktive Indizierung am besten, da dies die Pausen für das Indizieren auf
+                wenige Sekunden begrenzen. Größere Werte sind am besten für Stapelverarbeitung oder
+                schnellere Suchabfragen.
             </para>
             <para>
-                <emphasis>MaxMergeDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
-                 <code>$index->getMaxMergeDocs()</code> oder <code>$index->setMaxMergeDocs($maxMergeDocs)</code>.
+                <emphasis>MaxMergeDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe
+                von
+                <code>$index->getMaxMergeDocs()</code> oder
+                <code>$index->setMaxMergeDocs($maxMergeDocs)</code>.
             </para>
             <para>
                 Standardwert ist PHP_INT_MAX.
@@ -217,41 +223,52 @@ $index->optimize();
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.mergefactor">
-            <title><emphasis>MergeFactor</emphasis> Option für automatische Optimierung</title>
+            <title>MergeFactor Option für automatische Optimierung</title>
             <para>
-                <emphasis>MergeFactor</emphasis> legt fest, wie oft Segmentenindixes durch addDocument() zusammengefasst
-                werden sollen. Bei kleineren Werten wird beim Indizieren weniger RAM verbraucht und Suchabfragen auf
-                nicht optimierte Indizes sind schneller, aber die Indizierungsgeschwindigkeit ist langsamer. Bei größeren
-                Werten, wird mehr beim Indizieren RAM verbraucht und während Suchabfragen auf nicht optimierte Indizes langsamer
-                sind, ist das Indizieren schneller. Deshalb sind größere Werte (&gt; 10)  am besten für Stapelverarbeitung
-                und kleinere Werte (&lt; 10)  sind besser für Indizes, die interaktiv gepflegt werden.
+                <emphasis>MergeFactor</emphasis> legt fest, wie oft Segmentenindixes durch
+                addDocument() zusammengefasst werden sollen. Bei kleineren Werten wird beim
+                Indizieren weniger RAM verbraucht und Suchabfragen auf nicht optimierte Indizes sind
+                schneller, aber die Indizierungsgeschwindigkeit ist langsamer. Bei größeren Werten,
+                wird mehr beim Indizieren RAM verbraucht und während Suchabfragen auf nicht
+                optimierte Indizes langsamer sind, ist das Indizieren schneller. Deshalb sind
+                größere Werte (&gt; 10)  am besten für Stapelverarbeitung und kleinere Werte (&lt;
+                10)  sind besser für Indizes, die interaktiv gepflegt werden.
             </para>
             <para>
-                <emphasis>MergeFactor</emphasis> ist eine gute Annahme für die durchschnittliche Anzahl an Segmenten
-                die durch einen Auto-Optimierungs Durchgang zusammengeführt werden. Zu große Werte produzieren
-                eine große Anzahl an Segmenten wärend diese nicht in einen neuen zusammengeführt werden. Das kann
-                eine "failed to open stream: Too many open files" Fehlernachricht sein. Diese Begrenzung ist
-                Sytemabhängig.
+                <emphasis>MergeFactor</emphasis> ist eine gute Annahme für die durchschnittliche
+                Anzahl an Segmenten die durch einen Auto-Optimierungs Durchgang zusammengeführt
+                werden. Zu große Werte produzieren eine große Anzahl an Segmenten wärend diese nicht
+                in einen neuen zusammengeführt werden. Das kann eine "failed to open stream: Too
+                many open files" Fehlernachricht sein. Diese Begrenzung ist Sytemabhängig.
             </para>
             <para>
-                <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
-                <code>$index->getMergeFactor()</code> oder <code>$index->setMergeFactor($mergeFactor)</code>.
+                <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe
+                von <code>$index->getMergeFactor()</code> oder
+                <code>$index->setMergeFactor($mergeFactor)</code>.
             </para>
             <para>
                 Standardwert ist 10.
             </para>
             <para>
-                Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-                können auch für die Optimierung eines Index verwendet werden. Das letzte Luke Relese (v0.8)
+                Lucene Java und Luke (Lucene Index Toolbox - <ulink
+                    url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>) können
+                auch für die Optimierung eines Index verwendet werden. Das letzte Luke Relese (v0.8)
                 basiert auf Lucene v2.3 und ist kompatibel mit den aktuellen Implementation der
-                <code>Zend_Search_Lucene</code> Komponente (ZF 1.6). Frühere Versionen der <code>Zend_Search_Lucene</code>
-                Implementation benötigen andere Versionen des Java Lucene Tools um kompatibel zu sein:
+                <classname>Zend_Search_Lucene</classname> Komponente (ZF 1.6). Frühere Versionen der
+                <classname>Zend_Search_Lucene</classname> Implementation benötigen andere Versionen
+                des Java Lucene Tools um kompatibel zu sein:
                 <itemizedlist>
                     <listitem>
-                        <para>ZF 1.5 - Java Lucene 2.1 (Luke Tool v0.7.1 - <ulink url="http://www.getopt.org/luke/luke-0.7.1/"/>)</para>
+                        <para>
+                            ZF 1.5 - Java Lucene 2.1 (Luke Tool v0.7.1 - <ulink
+                                url="http://www.getopt.org/luke/luke-0.7.1/"/>)
+                        </para>
                     </listitem>
                     <listitem>
-                        <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke Tool v0.6 - <ulink url="http://www.getopt.org/luke/luke-0.6/"/>)</para>
+                        <para>
+                            ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke Tool v0.6 - <ulink
+                                url="http://www.getopt.org/luke/luke-0.6/"/>)
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -267,10 +284,9 @@ $index->optimize();
 
         <para>
             Es ist möglich das mit der
-            <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
+            <classname>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</classname>
             Methode zu überschreiben.
         </para>
-
 
         <programlisting role="php"><![CDATA[
 // Die aktuelle Datei Berechtigung erhalten
@@ -279,8 +295,7 @@ $currentPermissions =
 
 // Nur für aktuellen Benutzer und Gruppe die Lese-Schreib Berechtigung setzen
 Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.limitations">
@@ -300,17 +315,19 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Unterstützte Dateisysteme</title>
             <para>
-                <code>Zend_Search_Lucene</code> verwendet <code>flock()</code> um gleichzeitiges Suchen, Updaten und
-                Optimierung des Index zu unterstützen.
+                <classname>Zend_Search_Lucene</classname> verwendet <code>flock()</code> um
+                gleichzeitiges Suchen, Updaten und Optimierung des Index zu unterstützen.
             </para>
 
             <para>
-                Entsprechend der PHP <ulink url="http://www.php.net/manual/de/function.flock.php">Dokumentation</ulink>,
-                "funktioniert <code>flock()</code> nicht auf NFS und vielen anderen Netzwerk Dateisystemen".
+                Entsprechend der PHP <ulink
+                    url="http://www.php.net/manual/de/function.flock.php">Dokumentation</ulink>,
+                "funktioniert <code>flock()</code> nicht auf NFS und vielen anderen Netzwerk
+                Dateisystemen".
             </para>
 
             <para>
-                Verwende keine Netzwerk Dateisysteme mit <code>Zend_Search_Lucene</code>.
+                Verwende keine Netzwerk Dateisysteme mit <classname>Zend_Search_Lucene</classname>.
             </para>
         </sect3>
     </sect2>

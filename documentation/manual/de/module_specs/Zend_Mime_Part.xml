@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
@@ -11,8 +11,8 @@
       Sie enthält den aktuellen Inhalt des Abschnitts der Nachricht und zusätzlich
       Informationen über Ihre Verschlüsselung, den Typ und den originalen Dateinamen.
       Sie stellt ausserdem eine Methode, für die Erzeugung eines Strings aus den
-      in Ihr gespeicherten Daten, zur Verfügung. <code>Zend_Mime_Part</code> Objekte
-      können zu <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>
+      in Ihr gespeicherten Daten, zur Verfügung. <classname>Zend_Mime_Part</classname> Objekte
+      können zu <link linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link>
       hinzugefügt werden, um zu einer kompletten mehrteiligen Nachricht verknüpft
       zu werden.</para>
     </sect2>
@@ -20,10 +20,10 @@
   <sect2 id="zend.mime.part.instantiation">
     <title>Instanziierung</title>
 
-    <para><code>Zend_Mime_Part</code> wird instanziiert mit einem String welcher den
+    <para><classname>Zend_Mime_Part</classname> wird instanziiert mit einem String welcher den
     Inhalt des neuen Abschnitts repräsentiert. Der Typ wird angenommen mit OCTET-STREAM,
     die Verschlüsselung mit 8Bit. Nach der Instanziierung einer
-    <code>Zend_Mime_Part</code> kann die Meta Informationen gesetzt werden durch
+    <classname>Zend_Mime_Part</classname> kann die Meta Informationen gesetzt werden durch
     direkten Zugriff auf die Attribute:</para>
 
     <programlisting role="php"><![CDATA[
@@ -37,8 +37,7 @@ public $charset;
 public $boundary;
 public $location;
 public $language;
-]]>
-    </programlisting>
+]]></programlisting>
   </sect2>
 
   <sect2 id="zend.mime.part.methods">
@@ -57,14 +56,14 @@ public $language;
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$charset</code>
-                    muß auf den aktuellen Charset des Inhaltes gesetzt werden, wenn dieser ein Texttyp ist (Text oder HTML).
+                    <code>$charset</code> muß auf den aktuellen Charset des Inhaltes gesetzt werden,
+                    wenn dieser ein Texttyp ist (Text oder HTML).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>$id</code>
-                    kann gesetzt werden für die Erkennung einer Content-ID für Inline Grafiken in einer HTML Nachricht.
+                    <code>$id</code> kann gesetzt werden für die Erkennung einer Content-ID für
+                    Inline Grafiken in einer HTML Nachricht.
                 </para>
             </listitem>
             <listitem>
@@ -75,9 +74,8 @@ public $language;
             </listitem>
             <listitem>
                 <para>
-                    <code>$disposition</code>
-                    definiert ob die Datei als Anhang behandelt werden soll, oder ob sie in einer (HTML-) Nachricht
-                    verwendet wird (Inline).
+                    <code>$disposition</code> definiert ob die Datei als Anhang behandelt werden
+                    soll, oder ob sie in einer (HTML-) Nachricht verwendet wird (Inline).
                 </para>
             </listitem>
             <listitem>

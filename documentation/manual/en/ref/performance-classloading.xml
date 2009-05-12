@@ -271,37 +271,37 @@ Zend_Loader_Autoloader::getInstance();
 
         <itemizedlist>
             <listitem><para>
-                <code>Zend_Controller_Action_HelperBroker</code>: helpers
+                <classname>Zend_Controller_Action_HelperBroker</classname>: helpers
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Dojo</code>: view helpers, form elements and decorators
+                <classname>Zend_Dojo</classname>: view helpers, form elements and decorators
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_File_Transfer</code>: adapters
+                <classname>Zend_File_Transfer</classname>: adapters
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Inflector</code>: filters (used by the
+                <classname>Zend_Filter_Inflector</classname>: filters (used by the
                 ViewRenderer action helper and Zend_Layout)
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Input</code>: filters and validators
+                <classname>Zend_Filter_Input</classname>: filters and validators
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Form</code>: elements, validators, filters,
+                <classname>Zend_Form</classname>: elements, validators, filters,
                 decorators, captcha and file transfer adapters
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Paginator</code>: adapters
+                <classname>Zend_Paginator</classname>: adapters
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_View</code>: helpers, filters
+                <classname>Zend_View</classname>: helpers, filters
             </para></listitem>
         </itemizedlist>
 

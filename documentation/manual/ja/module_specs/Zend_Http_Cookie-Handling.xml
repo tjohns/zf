@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie および Zend_Http_CookieJar</title>
 
@@ -104,8 +104,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; ' .
 // クッキーのドメインが設定されていない場合は、手動で設定する必要があります。
 $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;',
                                        'http://www.example.com/path');
-]]>
-               </programlisting>
+]]></programlisting>
             </example>
             <note>
                 <para>
@@ -139,8 +138,7 @@ echo (string) $cookie;
 
 // PHP 5.2 以降では、これでもかまいません。
 echo $cookie;
-]]>
-               </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -232,8 +230,7 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 
 echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
 // これは 'No' を表示します
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -317,8 +314,7 @@ $cookie->match('http://subdomain.example.com/');
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
 // これは false を返します。今から三時間後の時刻を指定したからです。
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -356,7 +352,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</code>:
+                    <classname>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</classname>:
                     単一のクッキーをジャーに追加します。$cookie には Zend_Http_Cookie
                     オブジェクトあるいは文字列を指定します。文字列は自動的に
                     Cookie オブジェクトに変換されます。文字列を指定する場合は、同時に
@@ -367,7 +363,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>:
+                    <classname>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</classname>:
                     HTTP レスポンス内のすべてのクッキーをジャーに追加します。
                     $response は Set-Cookie ヘッダつきの Zend_Http_Response オブジェクトです。
                     $ref_uri は参照先 URI で、文字列あるいは Zend_Uri_Http オブジェクトとなります。
@@ -398,14 +394,14 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_OBJECT</code>:
+                    <classname>Zend_Http_CookieJar::COOKIE_OBJECT</classname>:
                     Zend_Http_Cookie オブジェクトを返します。
                     返されるクッキーが複数の場合は、オブジェクトの配列を返します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</code>:
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</classname>:
                     "foo=bar" 形式の文字列を返します。これは、HTTP リクエストの "Cookie"
                     ヘッダで使用できる形式です。
                     返されるクッキーが複数の場合は、文字列の配列を返します。
@@ -413,7 +409,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</code>:
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</classname>:
                     COOKIE_STRING_ARRAY と似ていますが、返されるクッキーが複数の場合には
                     それらをひとつの長い文字列に連結して返します。
                     区切り文字はセミコロン (;) となります。
@@ -428,7 +424,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
+                    <classname>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</classname>:
                     その URI (ドメインおよびパス) と名前にもとづいて、
                     ジャーから単一のクッキーを取得します。
                     $uri は文字列か Zend_Uri_Http オブジェクトで、URI を表します。
@@ -439,7 +435,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>:
+                    <classname>Zend_Http_CookieJar->getAllCookies($ret_as)</classname>:
                     ジャーからすべてのクッキーを取得します。
                     $ret_as は先ほど説明したように返り値の型を指定します。
                     指定しなかった場合の $ret_type のデフォルトは、COOKIE_OBJECT となります。
@@ -447,7 +443,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</code>:
+                    <classname>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</classname>:
                     指定した条件を満たす全てのクッキーをジャーから取得します。
                     条件として指定するのは、URI および有効期限です。
                     <itemizedlist>

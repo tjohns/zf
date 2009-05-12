@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.cache.introduction">
-
     <title>Introduction</title>
 
     <para>
@@ -27,11 +26,10 @@
     </para>
 
     <example id="zend.cache.introduction.example-1">
-
-        <title>Créer un frontend avec <code>Zend_Cache::factory()</code></title>
+        <title>Créer un frontend avec Zend_Cache::factory()</title>
 
         <para>
-            <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie
+            <classname>Zend_Cache::factory()</classname> instancie les objets corrects et les lie
             ensemble. Dans le premier exemple, nous allons utiliser le frontend <code>Core</code>
             avec le backend <code>File</code>.
         </para>
@@ -53,7 +51,6 @@ $cache = Zend_Cache::factory('Core',
                              $frontendOptions,
                              $backendOptions);
 ]]></programlisting>
-
     </example>
 
     <note>
@@ -66,7 +63,6 @@ $cache = Zend_Cache::factory('Core',
     </note>
 
     <example id="zend.cache.introduction.example-2">
-
         <title>Mettre en cache un résultat de requête sur une base de données</title>
 
         <para>
@@ -99,12 +95,10 @@ if(!$result = $cache->load('myresult')) {
 
 print_r($result);
 ]]></programlisting>
-
     </example>
 
     <example id="zend.cache.introduction.example-3">
-
-        <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
+        <title>Cache de sortie avec le frontend de sortie Zend_Cache</title>
 
         <para>
             Nous marquons les sections dans lesquelles nous voulons un cache de sortie en
@@ -118,6 +112,8 @@ print_r($result);
             misent en cache quand la méthode <code>end()</code> est appelée. A la prochaine
             exécution, la section complète sera évitée, au profit de la récupération de son cache
             (si le cache est encore valide).
+        </para>
+
         <programlisting role="php"><![CDATA[
 $frontendOptions = array(
     // temps de vue du cache de 30 secondes
@@ -146,7 +142,6 @@ if(!$cache->start('mypage')) {
 
 echo "Ceci n' jamais mis en cache (" . time() . ").";
 ]]></programlisting>
-        </para>
 
         <para>
             Notez que nous affichons le résultat de <code>time()</code> deux fois&#160;; c'est
@@ -169,5 +164,4 @@ echo "Ceci n' jamais mis en cache (" . time() . ").";
             des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.
         </para>
     </note>
-
 </sect1>

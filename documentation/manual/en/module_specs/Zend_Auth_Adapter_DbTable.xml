@@ -5,10 +5,10 @@
     <sect2 id="zend.auth.adapter.dbtable.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> provides the ability to
+            <classname>Zend_Auth_Adapter_DbTable</classname> provides the ability to
             authenticate against credentials stored in a database table. Because
-            <code>Zend_Auth_Adapter_DbTable</code> requires an instance of
-            <code>Zend_Db_Adapter_Abstract</code> to be passed to its
+            <classname>Zend_Auth_Adapter_DbTable</classname> requires an instance of
+            <classname>Zend_Db_Adapter_Abstract</classname> to be passed to its
             constructor, each instance is bound to a particular database
             connection. Other configuration options may be set through the
             constructor and through instance methods, one for each option.
@@ -62,8 +62,8 @@
             <title>Basic Usage</title>
             <para>
                 As explained in the introduction, the
-                <code>Zend_Auth_Adapter_DbTable</code> constructor requires an
-                instance of <code>Zend_Db_Adapter_Abstract</code> that serves as
+                <classname>Zend_Auth_Adapter_DbTable</classname> constructor requires an
+                instance of <classname>Zend_Db_Adapter_Abstract</classname> that serves as
                  the database connection to which the authentication adapter
                 instance is bound. First, the database connection should be
                 created.
@@ -94,11 +94,11 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Insert the data
-$dbAdapter->query($sqlInsert);]]>
-            </programlisting>
+$dbAdapter->query($sqlInsert);
+]]></programlisting>
             <para>
                 With the database connection and table data available, an
-                instance of <code>Zend_Auth_Adapter_DbTable</code> may be
+                instance of <classname>Zend_Auth_Adapter_DbTable</classname> may be
                 created. Configuration option values may be passed to the
                 constructor or deferred as parameters to setter methods after
                 instantiation:
@@ -119,8 +119,8 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;]]>
-            </programlisting>
+;
+]]></programlisting>
             <para>
                 At this point, the authentication adapter instance is ready to
                 accept authentication queries. In order to formulate an
@@ -136,12 +136,11 @@ $authAdapter
 ;
 
 // Perform the authentication query, saving the result
-$result = $authAdapter->authenticate();]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 In addition to the availability of the
                 <code>getIdentity()</code> method upon the authentication result
-                object, <code>Zend_Auth_Adapter_DbTable</code> also supports
+                object, <classname>Zend_Auth_Adapter_DbTable</classname> also supports
                 retrieving the table row upon authentication success:
             </para>
             <programlisting role="php"><![CDATA[
@@ -161,8 +160,7 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Since the table row contains the credential value, it is
                 important to secure the values against unintended access.
@@ -172,10 +170,10 @@ Array
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
         <title>Advanced Usage: Persisting a DbTable Result Object</title>
         <para>
-            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the
+            By default, <classname>Zend_Auth_Adapter_DbTable</classname> returns the
             identity supplied back to the auth object upon successful
             authentication. Another use case scenario, where developers want to
-            store to the persistent storage mechanism of <code>Zend_Auth</code>
+            store to the persistent storage mechanism of <classname>Zend_Auth</classname>
             an identity object containing other useful information, is solved by
              using the <code>getResultRowObject()</code> method to return a
             <code>stdClass</code> object. The following code snippet illustrates
@@ -207,16 +205,16 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]>
-        </programlisting>
+}
+]]></programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
         <para>
-            While the primary purpose of <code>Zend_Auth</code> (and consequently
-            <code>Zend_Auth_Adapter_DbTable</code>) is primarily
-            <emphasis role="strong">authentication</emphasis> and not
-            <emphasis role="strong">authorization</emphasis>, there are a few
+            While the primary purpose of <classname>Zend_Auth</classname> (and consequently
+            <classname>Zend_Auth_Adapter_DbTable</classname>) is primarily
+            <emphasis>authentication</emphasis> and not
+            <emphasis>authorization</emphasis>, there are a few
             instances and problems that toe the line between which domain they fit
             within. Depending on how you’ve decided to explain your problem, it
              sometimes makes sense to solve what could look like an
@@ -224,7 +222,7 @@ if ($result->isValid()) {
         </para>
         <para>
             With that disclaimer out of the way,
-            <code>Zend_Auth_Adapter_DbTable</code> has some built in mechanisms that can be
+            <classname>Zend_Auth_Adapter_DbTable</classname> has some built in mechanisms that can be
             leveraged for additional checks at authentication time to solve
             some common user problems.
         </para>
@@ -245,8 +243,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Another scenario can be the implementation of a salting mechanism.
             Salting is a term referring to a technique which can highly improve
@@ -262,9 +259,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
 $sqlAlter = "ALTER TABLE [users] "
           . "ADD COLUMN [password_salt] "
           . "AFTER [password]";
-
-$dbAdapter->query($sqlAlter);]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Here’s a simple way to generate a salt string for every user at
             registration:
@@ -272,8 +267,7 @@ $dbAdapter->query($sqlAlter);]]>
         <programlisting role="php"><![CDATA[
 for ($i = 0; $i < 50; $i++) {
     $dynamicSalt .= chr(rand(33, 126));
-}]]>
-        </programlisting>
+]]></programlisting>
         <para>
             And now let’s build the adapter:
         </para>
@@ -286,8 +280,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     "MD5(CONCAT('"
     . Zend_Registry::get('staticSalt')
     . "', ?, password_salt))"
-);]]>
-        </programlisting>
+);
+]]></programlisting>
         <note>
             <para>
                 You can improve security even more by using a static salt value
@@ -300,9 +294,9 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             Another alternative is to use the <code>getDbSelect()</code> method
             of the Zend_Auth_Adapter_DbTable after the adapter has been constructed.
             This method will return the Zend_Db_Select object instance it will use
-            to complete the authenticate() routine.  It is important to note that
+            to complete the authenticate() routine. It is important to note that
             this method will always return the same object regardless if authenticate()
-            has been called or not.  This object <emphasis>will not</emphasis> have any of the
+            has been called or not. This object <emphasis>will not</emphasis> have any of the
             identity or credential information in it as those values are placed
             into the select object at authenticate() time.
         </para>
@@ -327,8 +321,6 @@ $select->where('active = "TRUE"');
 
 // authenticate, this ensures that users.active = TRUE
 $adapter->authenticate();
-
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>

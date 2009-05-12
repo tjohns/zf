@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.exception.using">
 
     <title>例外の使用法</title>
 
     <para>
-        <code>Zend_Exception</code> は、
+        <classname>Zend_Exception</classname> は、
         Zend Framework のクラスがスローするすべての例外の基底クラスとなります。
     </para>
 
@@ -25,11 +25,10 @@ try {
     echo "メッセージ: " . $e->getMessage() . "\n";
     // その他、エラーから復帰するためのコード
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <para>
-        <code>Zend_Exception</code> を使用すると、
+        <classname>Zend_Exception</classname> を使用すると、
         Zend Framework のクラスがスローするすべての例外を catch
         ブロックで捕捉できるようになります。
         個々の例外をすべて個別に捕捉できないような場合に便利です。

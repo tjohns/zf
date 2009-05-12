@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Service_Akismet</code> provides a client for the <ulink
+            <classname>Zend_Service_Akismet</classname> provides a client for the <ulink
                 url="http://akismet.com/development/api/">Akismet API</ulink>.
             The Akismet service is used to determine if incoming data is
             potentially spam; it also exposes methods for submitting data as
@@ -38,7 +38,7 @@
         <title>Verify an API key</title>
 
         <para>
-            <code>Zend_Service_Akismet::verifyKey($key)</code> is used to
+            <classname>Zend_Service_Akismet::verifyKey($key)</classname> is used to
             verify that an Akismet API key is valid. In most cases, you
             will not need to check, but if you need a sanity check, or
             to determine if a newly acquired key is active, you may do
@@ -55,8 +55,7 @@ if ($akismet->verifyKey($apiKey) {
 } else {
     echo "Key is not valid\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If called with no arguments, <code>verifyKey()</code> uses
@@ -73,7 +72,7 @@ if ($akismet->verifyKey($apiKey) {
         <title>Check for spam</title>
 
         <para>
-            <code>Zend_Service_Akismet::isSpam($data)</code> is used to
+            <classname>Zend_Service_Akismet::isSpam($data)</classname> is used to
             determine if the data provided is considered spam by
             Akismet. It accepts an associative array as the sole
             argument. That array requires the following keys be set:
@@ -194,8 +193,7 @@ if ($akismet->isSpam($data)) {
 } else {
     echo "Welcome to our site!";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -215,7 +213,7 @@ if ($akismet->isSpam($data)) {
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitSpam()</code> takes the same data
+            <classname>Zend_Service_Akismet::submitSpam()</classname> takes the same data
             array as passed to <code>isSpam()</code>, but does not return a
             value. An exception will be raised if the API key used is invalid.
         </para>
@@ -234,8 +232,7 @@ $data = array(
     'comment_content'      => "I'm not a spammer, honest!"
 );
 $akismet->submitSpam($data));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -256,7 +253,7 @@ $akismet->submitSpam($data));
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitHam()</code> takes the same data
+            <classname>Zend_Service_Akismet::submitHam()</classname> takes the same data
             array as passed to <code>isSpam()</code> or
             <code>submitSpam()</code>, and, like <code>submitSpam()</code>, does
             not return a value. An exception will be raised if the API key used
@@ -277,8 +274,7 @@ $data = array(
     'comment_content'      => "I'm not a spammer, honest!"
 );
 $akismet->submitHam($data));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -292,7 +288,7 @@ $akismet->submitHam($data));
 
         <para>
             While the Akismet API only specifies four methods,
-            <code>Zend_Service_Akismet</code> has several additional accessors
+            <classname>Zend_Service_Akismet</classname> has several additional accessors
             that may be used for modifying internal properties.
         </para>
 
@@ -342,7 +338,7 @@ $akismet->submitHam($data));
                 <para>
                     The value used to set the user agent should be of the form
                     <code>some user agent/version | Akismet/version</code>. The
-                    default is <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>, where <code>ZF-VERSION</code> is the current Zend Framework version as stored in the <code>Zend_Framework::VERSION</code> constant.
+                    default is <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>, where <code>ZF-VERSION</code> is the current Zend Framework version as stored in the <classname>Zend_Framework::VERSION</classname> constant.
                 </para>
             </listitem>
         </itemizedlist>

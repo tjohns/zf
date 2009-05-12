@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15397 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
-        <code>Zend_Config_Xml</code> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen
-        XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die
-        Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der XML-Datei
-        oder des Strings ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der
-        XML-Struktur stellt die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen können
-        im XLM-Format durch Verschachteln von XML-Elementen unterhalb der Sektions-Ebene umgesetzt
-        werden. Der Inhalt eines XML-Blatt-Elementes (Leaf) ist der Wert eines
+        <classname>Zend_Config_Xml</classname> ermöglicht es Entwicklern, Konfigurations-Daten in
+        einfachen XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf
+        die Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der
+        XML-Datei oder des Strings ist unwichtig und kann beliebig gewählt werden. Die erste Ebene
+        der XML-Struktur stellt die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen
+        können im XLM-Format durch Verschachteln von XML-Elementen unterhalb der Sektions-Ebene
+        umgesetzt werden. Der Inhalt eines XML-Blatt-Elementes (Leaf) ist der Wert eines
         Konfigurations-Eintrages. Die Sektions-Vererbung wird durch ein spezielles Attribut namens
         <code>extends</code> unterstützt, der Wert des Attributs entspricht dabei dem Namen der
         Sektion, von der Daten geerbt werden sollen.
@@ -18,23 +18,23 @@
     <note>
         <title>Rückgabe Typen</title>
         <para>
-            Konfigurations-Daten, die in <code>Zend_Config_Xml</code> eingelesen wurden, werden
-            immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in andere
-            Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
+            Konfigurations-Daten, die in <classname>Zend_Config_Xml</classname> eingelesen wurden,
+            werden immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in
+            andere Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title><code>Zend_Config_Xml</code> benutzen</title>
+        <title>Zend_Config_Xml benutzen</title>
         <para>
-            Dieses Beispiel zeigt die grundlegende Nutzung von <code>Zend_Config_Xml</code> um
-            Konfigurations-Daten aus einem XML-File zu laden. In diesem Beispiel gibt es
-            Konfigurations-Daten für ein Produktiv- und ein Staging-System. Da sich die Daten für
-            das Staging-System nur unwesentlich von denen für das Produktiv-System unterscheiden,
-            erbt das Staging-System vom Produktiv-System. In diesem Fall ist die Entscheidung
-            darüber, welche Sektion von welcher erben soll, willkürlich und es könnte auch anders
-            herum gemacht werden. In komplexeren Fällen ist das möglicherweise nicht der Fall.
-            Nehmen wir also an, dass sich die folgenden Konfigurations-Daten in der Datei
-            <code>/path/to/config.xml</code> befinden:
+            Dieses Beispiel zeigt die grundlegende Nutzung von
+            <classname>Zend_Config_Xml</classname> um Konfigurations-Daten aus einem XML-File zu
+            laden. In diesem Beispiel gibt es Konfigurations-Daten für ein Produktiv- und ein
+            Staging-System. Da sich die Daten für das Staging-System nur unwesentlich von denen für
+            das Produktiv-System unterscheiden, erbt das Staging-System vom Produktiv-System. In
+            diesem Fall ist die Entscheidung darüber, welche Sektion von welcher erben soll,
+            willkürlich und es könnte auch anders herum gemacht werden. In komplexeren Fällen ist
+            das möglicherweise nicht der Fall. Nehmen wir also an, dass sich die folgenden
+            Konfigurations-Daten in der Datei <code>/path/to/config.xml</code> befinden:
         </para>
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0"?>
@@ -61,8 +61,7 @@
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             Nehmen wir weiterhin an, dass der Anwendungs-Entwickler die Staging-Konfiguration aus
             diesem XML-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das
@@ -73,18 +72,17 @@ $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->params->host;   // ausgabe "dev.example.com"
 echo $config->database->params->dbname; // ausgabe "dbname"
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Tag Attribute in <code>Zend_Config_Xml</code> verwenden</title>
+        <title>Tag Attribute in Zend_Config_Xml verwenden</title>
         <para>
-            <code>Zend_Config_Xml</code> unterstützt auch zwei zusätzliche Wege der Definition von Knoten in der
-            Konfiguration. Beide verwenden Attribute. Da die <code>extends</code> und
-            <code>value</code> Attribute reservierte Schlüsselwörter sind (das letztere durch den zweiten
-            Weg der Verwendung von Attributen), können sie nicht verwendet werden. Der erste Weg
-            Attribute zu verwenden ist das hinzufügen von Attributen zum Elternknoten, welcher dann in einen
-            Kindknoten dieses Knotens übersetzt wird:
+            <classname>Zend_Config_Xml</classname> unterstützt auch zwei zusätzliche Wege der
+            Definition von Knoten in der Konfiguration. Beide verwenden Attribute. Da die
+            <code>extends</code> und <code>value</code> Attribute reservierte Schlüsselwörter sind
+            (das letztere durch den zweiten Weg der Verwendung von Attributen), können sie nicht
+            verwendet werden. Der erste Weg Attribute zu verwenden ist das hinzufügen von Attributen
+            zum Elternknoten, welcher dann in einen Kindknoten dieses Knotens übersetzt wird:
         </para>
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0"?>
@@ -100,12 +98,11 @@ echo $config->database->params->dbname; // ausgabe "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
         <para>
             Der andere Weg verkürzt die Konfiguration nicht wirklich, macht es aber einfacher in der
-            Handhabung das der Tag-Name nicht zweimal geschrieben werden muß. Man erstellt einfach einen
-            leeren Tag, welcher seinen Wert im <code>value</code> Attribut enthält:
+            Handhabung das der Tag-Name nicht zweimal geschrieben werden muß. Man erstellt einfach
+            einen leeren Tag, welcher seinen Wert im <code>value</code> Attribut enthält:
         </para>
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0"?>
@@ -132,15 +129,14 @@ echo $config->database->params->dbname; // ausgabe "dbname"
         </database>
     </staging>
 </configdata>
-]]>
-</programlisting>
+]]></programlisting>
     </example>
     <note>
         <title>XML Strings</title>
         <para>
-            <code>Zend_Config_Xml</code> ist dazu in der Lage XML Strings direkt zu laden, wie z.B.
-            deren Empfang von einer Datenbank. Der String wird als erster Parameter an den
-            Konstruktor übergeben und muß mit den Zeichen <code>'&lt;?xml':</code> beginnen
+            <classname>Zend_Config_Xml</classname> ist dazu in der Lage XML Strings direkt zu laden,
+            wie z.B. deren Empfang von einer Datenbank. Der String wird als erster Parameter an den
+            Konstruktor übergeben und muß mit den Zeichen <code>'&lt;?xml'</code> beginnen:
         </para>
         <programlisting role="xml"><![CDATA[
 $string = <<<EOT
@@ -165,8 +161,7 @@ $string = <<<EOT
 EOT;
 
 $config = new Zend_Config_Xml($string, 'staging');
-]]>
-        </programlisting>
+]]></programlisting>
     </note>
 </sect1>
 <!--

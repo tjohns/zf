@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.db.table.relationships">
 
     <title>導入</title>
@@ -18,7 +18,7 @@
         </para>
 
         <para>
-            <code>Zend_Db_Table_Row</code> クラスは、他のテーブルの
+            <classname>Zend_Db_Table_Row</classname> クラスは、他のテーブルの
             関連する行を問い合わせるためのメソッドを持っています。
         </para>
 
@@ -29,7 +29,7 @@
         <title>リレーションの定義</title>
 
         <para>
-            抽象クラス <code>Zend_Db_Table_Abstract</code> を継承して、各テーブル用のクラスを作成します。
+            抽象クラス <classname>Zend_Db_Table_Abstract</classname> を継承して、各テーブル用のクラスを作成します。
             詳細は <xref linkend="zend.db.table.defining" /> を参照ください。
             また、以下のコードで使用しているデータベースの構成については
             <xref linkend="zend.db.adapter.example-database" /> を参照ください。
@@ -95,11 +95,10 @@ class BugsProducts extends Zend_Db_Table_Abstract
     );
 
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_Db_Table</code> で UPDATE や DELETE の連鎖操作をエミュレートする場合は、
+            <classname>Zend_Db_Table</classname> で UPDATE や DELETE の連鎖操作をエミュレートする場合は、
             配列 <code>$_dependentTables</code> を親テーブルで宣言し、
             従属しているテーブルをそこで指定します。
             SQL でのテーブル名ではなく、クラス名を使用するようにしましょう。
@@ -148,7 +147,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis role="strong">columns</emphasis> =>
+                    <emphasis>columns</emphasis> =>
                     文字列あるいは文字列の配列で、従属テーブル内での外部キー列の名前を指定します。
                 </para>
 
@@ -160,7 +159,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
             <listitem>
                 <para>
-                    <emphasis role="strong">refTableClass</emphasis> =>
+                    <emphasis>refTableClass</emphasis> =>
                     親テーブルのクラス名を指定します。
                     SQL テーブルの物理的な名前ではなく、クラス名を使用します。
                 </para>
@@ -179,7 +178,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
             <listitem>
                 <para>
-                    <emphasis role="strong">refColumns</emphasis> =>
+                    <emphasis>refColumns</emphasis> =>
                     文字列あるいは文字列の配列で、親テーブルの主キーのカラム名を指定します。
                 </para>
 
@@ -200,7 +199,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
             <listitem>
                 <para>
-                    <emphasis role="strong">onDelete</emphasis> =>
+                    <emphasis>onDelete</emphasis> =>
                     親テーブルの行が削除されたときに実行する動作を指定します。詳細は
                     <xref linkend="zend.db.table.relationships.cascading" />
                     を参照ください。
@@ -209,7 +208,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
             <listitem>
                 <para>
-                    <emphasis role="strong">onUpdate</emphasis> =>
+                    <emphasis>onUpdate</emphasis> =>
                     親テーブルで主キーカラムの値が更新されたときに実行する動作を指定します。詳細は
                     <xref linkend="zend.db.table.relationships.cascading" />
                     を参照ください。
@@ -231,11 +230,10 @@ class BugsProducts extends Zend_Db_Table_Abstract
 
         <programlisting role="php"><![CDATA[
 $row->findDependentRowset($table, [$rule]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            このメソッドは <code>Zend_Db_Table_Rowset_Abstract</code> オブジェクトを返します。
+            このメソッドは <classname>Zend_Db_Table_Rowset_Abstract</classname> オブジェクトを返します。
             その中には、従属テーブル <code>$table</code>
             の行のうち、<code>$row</code> が指す行を参照しているものが含まれます。
         </para>
@@ -262,8 +260,7 @@ $accountsRowset = $accountsTable->find(1234);
 $user1234 = $accountsRowset->current();
 
 $bugsReportedByUser = $user1234->findDependentRowset('Bugs');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -301,8 +298,7 @@ $accountsRowset = $accountsTable->find(1234);
 $user1234 = $accountsRowset->current();
 
 $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -315,7 +311,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
 
             <example id="zend.db.table.relationships.fetching.dependent.example-by-select">
 
-                <title><code>Zend_Db_Table_Select</code> による従属行セットの取得</title>
+                <title>Zend_Db_Table_Select による従属行セットの取得</title>
 
                 <para>
                     この例では <code>Accounts</code> テーブルから行オブジェクトを取得し、
@@ -333,8 +329,7 @@ $select = $accountsTable->select()->order('name ASC')
 $bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
                                                      'Engineer',
                                                      $select);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </example>
 
@@ -342,7 +337,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
             を使用して従属テーブルの行を問い合わせることもできます。
             以下のパターンのいずれかに該当するメソッドを
             Row オブジェクトでコールすると、
-            <code>Zend_Db_Table_Row_Abstract</code> は
+            <classname>Zend_Db_Table_Row_Abstract</classname> は
             <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
             メソッドを実行します。
         </para>
@@ -376,7 +371,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
                 (語尾変化)" という仕組みを採用しているものもあります。
                 これにより、使用する状況に応じて識別子のスペルを変更できるようになります。
                 あまり複雑にならないようにするため、
-                <code>Zend_Db_Table_Row</code> ではこの仕組みを提供していません。
+                <classname>Zend_Db_Table_Row</classname> ではこの仕組みを提供していません。
                 メソッドのコール時に指定するテーブルの ID やルールのキーは、
                 クラス名やキー名と正確に一致しなければなりません。
             </para>
@@ -403,8 +398,7 @@ $bugsReportedBy = $user1234->findBugs();
 
 // 参照ルールを指定します
 $bugsAssignedTo = $user1234->findBugsByEngineer();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -422,8 +416,7 @@ $bugsAssignedTo = $user1234->findBugsByEngineer();
 
         <programlisting role="php"><![CDATA[
 $row->findParentRow($table, [$rule]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             従属テーブルに対応する親テーブルの行は、常にひとつだけです。
@@ -454,8 +447,7 @@ $bugsRowset = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
 $bug1 = $bugsRowset->current();
 
 $reporter = $bug1->findParentRow('Accounts');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -492,8 +484,7 @@ $bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
 $bug1 = $bugsRowset->current();
 
 $engineer = $bug1->findParentRow('Accounts', 'Engineer');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -502,7 +493,7 @@ $engineer = $bug1->findParentRow('Accounts', 'Engineer');
             を使用して親テーブルの行を問い合わせることもできます。
             以下のパターンのいずれかに該当するメソッドを
             Row オブジェクトでコールすると、
-            <code>Zend_Db_Table_Row_Abstract</code> は
+            <classname>Zend_Db_Table_Row_Abstract</classname> は
             <code>findParentRow('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
             メソッドを実行します。
         </para>
@@ -558,8 +549,7 @@ $reporter = $bug1->findParentAccounts();
 
 // 参照ルールを指定します
 $engineer = $bug1->findParentAccountsByEngineer();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -585,11 +575,10 @@ $row->findManyToManyRowset($table,
                                    [Zend_Db_Table_Select $select]
                                ]
                            ]);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            このメソッドは <code>Zend_Db_Table_Rowset_Abstract</code> オブジェクトを返します。
+            このメソッドは <classname>Zend_Db_Table_Rowset_Abstract</classname> オブジェクトを返します。
             その中には、テーブル <code>$table</code>
             の行のうち、多対多のリレーションを満たすものが含まれます。
             元テーブルの行 <code>$row</code> を使用して中間テーブルの行を探し、
@@ -626,8 +615,7 @@ $bug1234 = $bugsRowset->current();
 
 $productsRowset = $bug1234->findManyToManyRowset('Products',
                                                  'BugsProducts');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -684,8 +672,7 @@ $bug1234 = $bugsRowset->current();
 $productsRowset = $bug1234->findManyToManyRowset('Products',
                                                  'BugsProducts',
                                                  'Bug');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -693,7 +680,7 @@ $productsRowset = $bug1234->findManyToManyRowset('Products',
             別の方法として、"マジックメソッド"
             を使用して多対多のリレーションの対象テーブルの行を問い合わせることもできます。
             以下のパターンのいずれかに該当するメソッドをコールすると、
-            <code>Zend_Db_Table_Row_Abstract</code> は
+            <classname>Zend_Db_Table_Row_Abstract</classname> は
             <code>findManyToManyRowset('&lt;TableClass&gt;', '&lt;IntersectionTableClass&gt;', '&lt;Rule1&gt;', '&lt;Rule2&gt;')</code>
             メソッドを実行します。
         </para>
@@ -759,8 +746,7 @@ $products = $bug1234->findProductsViaBugsProducts();
 
 // 参照ルールを指定します
 $products = $bug1234->findProductsViaBugsProductsByBug();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -775,29 +761,29 @@ $products = $bug1234->findProductsViaBugsProductsByBug();
             <title>データベースでの DRI の宣言</title>
 
             <para>
-                <code>Zend_Db_Table</code> の連鎖操作を宣言するのは、
+                <classname>Zend_Db_Table</classname> の連鎖操作を宣言するのは、
                 RDBMS が宣言参照整合性 (DRI)
                 をサポートしていない場合
-                <emphasis role="strong">のみ</emphasis> を想定しています。
+                <emphasis>のみ</emphasis> を想定しています。
             </para>
 
             <para>
                 たとえば、MySQL の MyISAM ストレージエンジンや
                 SQLite では DRI をサポートしていません。
-                このような場合は、<code>Zend_Db_Table</code> での連鎖操作の宣言が有用となるでしょう。
+                このような場合は、<classname>Zend_Db_Table</classname> での連鎖操作の宣言が有用となるでしょう。
             </para>
 
             <para>
                 もし RDBMS が DRI の <code>ON DELETE</code> 句
                 および <code>ON UPDATE</code> 句を実装しているのなら、
                 データベーススキーマでそれを宣言すべきです。
-                <code>Zend_Db_Table</code> の連鎖機能を使ってはいけません。
+                <classname>Zend_Db_Table</classname> の連鎖機能を使ってはいけません。
                 RDBMS が実装する連鎖 DRI を使用したほうが、
                 データベースのパフォーマンスや一貫性、整合性の面で有利です。
             </para>
 
             <para>
-                もっとも重要なのは、RDBMS と <code>Zend_Db_Table</code>
+                もっとも重要なのは、RDBMS と <classname>Zend_Db_Table</classname>
                 クラスの両方で同時に連鎖操作を宣言してはいけないということです。
             </para>
 
@@ -827,8 +813,7 @@ $product1234 = $productsRowset->current();
 $product1234->delete();
 // 自動的に Bugs テーブルにも連鎖し、
 // 従属する行が削除されます
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -847,7 +832,7 @@ $product1234->delete();
         </para>
 
         <para>
-            <code>Zend_Db_Table</code> で連鎖リレーションを宣言するには、
+            <classname>Zend_Db_Table</classname> で連鎖リレーションを宣言するには、
             <code>$_referenceMap</code> の中でのルールを編集し、
             連想配列のキー <code>'onDelete'</code> および
             <code>'onUpdate'</code> に文字列 'cascade'
@@ -893,8 +878,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
         ...
     );
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -903,14 +887,14 @@ class BugsProducts extends Zend_Db_Table_Abstract
             <title>連鎖操作に関する注意点</title>
 
             <para>
-                <emphasis role="strong"><code>Zend_Db_Table</code> が実行する連鎖操作はアトミックではありません。</emphasis>
+                <emphasis><classname>Zend_Db_Table</classname> が実行する連鎖操作はアトミックではありません。</emphasis>
             </para>
 
             <para>
                 つまり、もしデータベース自身が参照整合性制約を実装している場合、
-                <code>Zend_Db_Table</code> クラスが実行した連鎖 <code>UPDATE</code>
+                <classname>Zend_Db_Table</classname> クラスが実行した連鎖 <code>UPDATE</code>
                 がその制約と競合し、参照整合性に違反してしまうことになるということです。
-                <code>Zend_Db_Table</code> の連鎖 <code>UPDATE</code> を使用できるのは、
+                <classname>Zend_Db_Table</classname> の連鎖 <code>UPDATE</code> を使用できるのは、
                 データベース側で参照整合性制約を設定していない場合
                 <emphasis>のみ</emphasis> です。
             </para>
@@ -943,24 +927,24 @@ class BugsProducts extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                <emphasis role="strong"><code>Zend_Db_Table</code> の連鎖処理は
-                <code>Zend_Db_Table</code> からのみ実行できます。</emphasis>
+                <emphasis><classname>Zend_Db_Table</classname> の連鎖処理は
+                <classname>Zend_Db_Table</classname> からのみ実行できます。</emphasis>
             </para>
 
             <para>
-                <code>Zend_Db_Table</code> クラスで定義した連鎖削除や更新は、Row クラスで
+                <classname>Zend_Db_Table</classname> クラスで定義した連鎖削除や更新は、Row クラスで
                 <code>save()</code> メソッドあるいは
                 <code>delete()</code> メソッドを実行した際に適用されます。
                 しかし、クエリツールや別のアプリケーションなどの
                 別ルートでデータを更新あるいは削除した場合は、
-                連鎖操作は発生しません。<code>Zend_Db_Adapter</code> クラスの
+                連鎖操作は発生しません。<classname>Zend_Db_Adapter</classname> クラスの
                 <code>update()</code> メソッドや <code>delete()</code>
-                メソッドを実行したとしても、<code>Zend_Db_Table</code>
+                メソッドを実行したとしても、<classname>Zend_Db_Table</classname>
                 で定義した連鎖操作は実行されません。
             </para>
 
             <para>
-                <emphasis role="strong">連鎖 <code>INSERT</code> はありません。</emphasis>
+                <emphasis>連鎖 <code>INSERT</code> はありません。</emphasis>
             </para>
 
             <para>

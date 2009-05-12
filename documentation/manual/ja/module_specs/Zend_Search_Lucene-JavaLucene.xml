@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Java Lucene との相互運用</title>
 
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>ファイルフォーマット</title>
         <para>
-          <code>Zend_Search_Lucene</code> のインデックスファイルのフォーマットは、
+          <classname>Zend_Search_Lucene</classname> のインデックスファイルのフォーマットは、
           Lucene バージョン 1.4 以降のフォーマットとバイナリ互換性があります。
         </para>
 
@@ -84,8 +84,7 @@ Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
 indexWriter.addDocument(doc);
-]]>
-</programlisting>
+]]></programlisting>
     </sect2>
 </sect1>
 

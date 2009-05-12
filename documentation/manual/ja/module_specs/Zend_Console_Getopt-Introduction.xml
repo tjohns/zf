@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.console.getopt.introduction">
     <title>導入</title>
     <para>
-        <code>Zend_Console_Getopt</code> クラスは、
+        <classname>Zend_Console_Getopt</classname> クラスは、
         コマンドラインアプリケーションでのオプションや引数の処理を助けるものです。
     </para>
     <para>
@@ -72,7 +72,7 @@
                 たとえば、
                 <code>-u username</code>、<code>--user username</code>
                 あるいは <code>--user=username</code> といった形式を
-                <code>Zend_Console_Getopt</code> でサポートしています。
+                <classname>Zend_Console_Getopt</classname> でサポートしています。
             </para>
         </listitem>
         <listitem>
@@ -97,7 +97,7 @@
         この定義によると引数ですがオプションではありません。
     </para>
     <para>
-        <code>Zend_Console_Getopt</code> が提供するインターフェイスには、
+        <classname>Zend_Console_Getopt</classname> が提供するインターフェイスには、
         「アプリケーションで使用可能なフラグの宣言」
         「無効なフラグが指定された場合のエラー表示および使用法の表示」
         「ユーザが指定したフラグのアプリケーションへの通知」
@@ -106,11 +106,11 @@
     <note>
         <title>Getopt はアプリケーションフレームワークではありません</title>
         <para>
-            <code>Zend_Console_Getopt</code> はdoes
+            <classname>Zend_Console_Getopt</classname> はdoes
             フラグやパラメータの意味を解釈するわけ <emphasis>ではなく</emphasis>、
             またアプリケーションのワークフローを実装したりコードを起動したりするものでもありません。
             それらの処理については、アプリケーション内で自分で実装しなければなりません。
-            <code>Zend_Console_Getopt</code> クラスを使用すると、
+            <classname>Zend_Console_Getopt</classname> クラスを使用すると、
             コマンドラインをパースし、ユーザが指定したオプションを
             オブジェクト指向のメソッドで取得できるようになります。
             しかし、その情報をもとにアプリケーションで何らかの処理を行うのは別の
@@ -118,6 +118,6 @@
         </para>
     </note>
     <para>
-        これ以降の節で、<code>Zend_Console_Getopt</code> の使用法を説明します。
+        これ以降の節で、<classname>Zend_Console_Getopt</classname> の使用法を説明します。
     </para>
 </sect1>

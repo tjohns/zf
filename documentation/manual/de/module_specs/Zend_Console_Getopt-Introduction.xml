@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.introduction">
     <title>Einführung</title>
     <para>
-        Die <code>Zend_Console_Getopt</code> Klasse hilft Kommandozeilen Anwendungen
+        Die <classname>Zend_Console_Getopt</classname> Klasse hilft Kommandozeilen Anwendungen
         Ihre Optionen und Argumente zu Analysieren.
     </para>
     <para>
@@ -43,7 +43,7 @@
                 "Flag": Der erste Teil einer Option, identifiziert den Zweck
                 der Option. Einem Flag werden normalerweise ein oder zwei Bindestriche
                 vorangestellt ("<code>-</code>" oder "<code>--</code>").
-                Ein einzelner  wird einem Einzel-Zeichen Flag vorangestellt oder einem
+                Ein einzelner wird einem Einzel-Zeichen Flag vorangestellt oder einem
                 Verbund von Einzel-Zeichen Flags. Ein doppelter Bindestrich wird einem
                 Mehr-Zeichen Flag vorangestellt. Lange Flags können nicht gebündelt werden.
             </para>
@@ -63,7 +63,7 @@
                 ("<code>=</code>"). Die zweite Form wird nur bei langen Flags
                 unterstützt. Zum Beispiel, <code>-u username</code>,
                 <code>--user username</code>, und <code>--user=username</code>
-                sind Formen welche durch <code>Zend_Console_Getopt</code>
+                sind Formen welche durch <classname>Zend_Console_Getopt</classname>
                 unterstützt werden.
             </para>
         </listitem>
@@ -89,7 +89,7 @@
         unserer Definition.
     </para>
     <para>
-        <code>Zend_Console_Getopt</code> bietet ein Interface um zu definieren welche
+        <classname>Zend_Console_Getopt</classname> bietet ein Interface um zu definieren welche
         Flags für die Anwendung gültig sind, das einen Fehler und Benutzungshinweise ausgibt
         wenn ein ungültiges Flag verwendet wird, und dem Code der Anwendung bekanntgibt
         welche Flags der Benutzer definiert hat.
@@ -97,11 +97,11 @@
     <note>
         <title>Getopt ist kein Framework für eine Anwendung</title>
         <para>
-            <code>Zend_Console_Getopt</code> kann <emphasis>NICHT</emphasis>
+            <classname>Zend_Console_Getopt</classname> kann <emphasis>NICHT</emphasis>
             die Bedeutung der Flags und Parameter interpretieren, noch implementiert
             diese Klasse einen Anwendungsworkflow oder ruft Anwendungscode auf.
             Diese Aktionen müssen im eigenen Anwendungscode integriert werden.
-            Die <code>Zend_Console_Getopt</code> Klasse kann dazu verwendet werden um
+            Die <classname>Zend_Console_Getopt</classname> Klasse kann dazu verwendet werden um
             die Kommandozeile zu analysieren und bietet Objekt-Orientierte Methoden
             für die Abfrage welche Optionen durch den Benutzer angegeben wurden.
             Aber der Code um diese Informationen zu Verwenden und Teile der eigenen
@@ -109,6 +109,7 @@
         </para>
     </note>
     <para>
-        Die folgende Sektion beschreibt die Verwendung von <code>Zend_Console_Getopt</code>.
+        Die folgende Sektion beschreibt die Verwendung von
+        <classname>Zend_Console_Getopt</classname>.
     </para>
 </sect1>

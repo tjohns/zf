@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Getopt の規則の宣言</title>
     <para>
-        <code>Zend_Console_Getopt</code> クラスのコンストラクタは、
+        <classname>Zend_Console_Getopt</classname> クラスのコンストラクタは、
         ひとつから三つの引数を指定します。最初の引数では、
         このアプリケーションでサポートするオプションを宣言します。
         このクラスは、オプションを宣言するためのもうひとつの構文もサポートしています。
@@ -18,7 +18,7 @@
     </para>
     <para>
         コンストラクタの三番目の引数には、設定オプションを指定します。
-        これで <code>Zend_Console_Getopt</code> の振る舞いを変更します。
+        これで <classname>Zend_Console_Getopt</classname> の振る舞いを変更します。
         使用可能なオプションについては
         <link linkend="zend.console.getopt.configuration.config">設定の追加</link>
         を参照ください。
@@ -27,7 +27,7 @@
     <sect2 id="zend.console.getopt.rules.short">
         <title>短い形式のオプションの宣言</title>
         <para>
-            <code>Zend_Console_Getopt</code> は、GNU Getopt
+            <classname>Zend_Console_Getopt</classname> は、GNU Getopt
             と似た形式のコンパクトな構文をサポートしています
             (<ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>
             を参照ください)。
@@ -41,11 +41,10 @@
             <title>短い形式の構文の使用</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
-            上の例は、<code>Zend_Console_Getopt</code> を用いて、
+            上の例は、<classname>Zend_Console_Getopt</classname> を用いて、
             使用するオプションを "<code>-a</code>" や
             "<code>-b</code>" あるいは "<code>-p</code>" と宣言するものです。
             最後のフラグにはパラメータが必要となります。
@@ -109,8 +108,7 @@ $opts = new Zend_Console_Getopt(
     'pear|p-s'   => '洋ナシです。オプションで文字列パラメータを指定します。'
   )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             上の例では、三種類のオプションを宣言しています。

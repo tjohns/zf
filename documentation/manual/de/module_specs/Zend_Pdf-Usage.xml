@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
@@ -206,7 +206,6 @@ $page2->setLineWidth(0.5)
 
 $page2->restoreGS();
 
-
 // Wechsel des Koordinationssystems, drehen und skalieren
 $page2->saveGS();
 $page2->translate(60, 150)     // Wechseln des Koordinationssystems
@@ -264,8 +263,7 @@ if (isset($argv[2])) {
 } else {
     $pdf->save($argv[1], true /* Aktualisierung */);
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

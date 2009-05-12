@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.captcha.adapters">
-
     <title>Adaptateurs CAPTCHA</title>
 
     <para>Les adaptateurs suivants sont fournis dans Zend Framework par défaut.</para>
 
     <sect2 id="zend.captcha.adapters.word">
-
         <title>Zend_Captcha_Word</title>
 
         <para>
@@ -22,7 +20,7 @@
             Par défaut la taille du mot est de 8 caractères, le timeout de session est de 5
             minutes et l'objet d'espace de nom de session utilisé est
             <classname>Zend_Session_Namespace</classname> (avec l'espace de nom
-            ("<code>Zend_Form_Captcha_&lt;captcha ID&gt;</code>").
+            ("<classname>Zend_Form_Captcha_&lt;captcha ID&gt;</classname>").
         </para>
 
         <para>
@@ -49,8 +47,8 @@
                 <para>
                     <code>setSessionClass($class)</code> et <code>getSessionClass()</code>
                     vous permettent de piloter la classe de session, si vous désirez utiliser une
-                    alternative à <code>Zend_Session_Namespace</code>, ceci dans le but de faire
-                    persister le jeton captcha en session.
+                    alternative à <classname>Zend_Session_Namespace</classname>, ceci dans le but
+                    de faire persister le jeton captcha en session.
                 </para>
             </listitem>
             <listitem>
@@ -74,19 +72,18 @@
 
         <para>
             Tous les captcha Word vous autorisent à passer un tableau d'options au
-            constructeur, ou à <code>setOptions()</code> (un objet <code>Zend_Config</code> peut
-            être utilisé avec <code>setConfig()</code>). Par défaut, les clés <code>timeout</code>
-            <code>wordLen</code> et <code>sessionClass</code> seront utilisées.
+            constructeur, ou à <code>setOptions()</code> (un objet
+            <classname>Zend_Config</classname> peut être utilisé avec <code>setConfig()</code>).
+            Par défaut, les clés <code>timeout</code> <code>wordLen</code> et
+            <code>sessionClass</code> seront utilisées.
         </para>
 
         <note>
             <para>Word est une classe abstraite et ne peut être utilisée directement.</para>
         </note>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
-
         <title>Zend_Captcha_Dumb</title>
 
         <para>
@@ -95,11 +92,9 @@
             devrait être utilisé comme solution de remplacement extrême, ou pour les tests. Il
             étend <classname>Zend_Captcha_Word</classname>.
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.figlet">
-
         <title>Zend_Captcha_Figlet</title>
 
         <para>
@@ -113,11 +108,9 @@
             <link linkend="zend.text.figlet">Zend_Text_Figlet</link> que l'adaptateur va utiliser.
             Voyez sa documentation pour plus d'informations.
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.image">
-
         <title>Zend_Captcha_Image</title>
 
         <para>
@@ -213,11 +206,9 @@
             pour avoir les clés du tableau d'options que le constructeur utilise. ("suffix",
             "height", "imgUrl", etc...).
         </para>
-
     </sect2>
 
     <sect2 id="zend.captcha.adapters.recaptcha">
-
         <title>Zend_Captcha_ReCaptcha</title>
 
         <para>
@@ -249,7 +240,5 @@
                 </para>
             </listitem>
         </itemizedlist>
-
     </sect2>
-
 </sect1>

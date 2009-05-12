@@ -5,12 +5,12 @@
     <title>Filters for Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> is delivered with several file related filters which can be
+        <classname>Zend_File_Transfer</classname> is delivered with several file related filters which can be
         used to automate several tasks which are often done on files. Note that file filters are
         applied after validation. Also file filters behave slightly different that other filters.
         They will always return the file name and not the changed content (which would be a bad idea
-        when working on 1GB files). All filters which are provided with <code>Zend_File_Transfer</code> can
-        be found in the <code>Zend_Filter</code> component and are named <code>Zend_Filter_File_*</code>.
+        when working on 1GB files). All filters which are provided with <classname>Zend_File_Transfer</classname> can
+        be found in the <classname>Zend_Filter</classname> component and are named <classname>Zend_Filter_File_*</classname>.
         The following filters are actually available:
     </para>
 
@@ -44,7 +44,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.filters.usage">
-        <title>Using filters with <code>Zend_File_Transfer</code></title>
+        <title>Using filters with Zend_File_Transfer</title>
 
         <para>
             The usage of filters is quite simple. There are several methods for adding and manipulating filters.
@@ -133,8 +133,7 @@ $upload->addFilter('Rename', 'C:\picture\uploads');
 $upload->addFilter('Rename',
                    array('target' => 'C:\picture\uploads',
                          'overwrite' => true));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.file.transfer.filters.usage.exampletwo">
@@ -153,8 +152,7 @@ $upload = new Zend_File_Transfer();
 
 // Set a new destination path and limits it only to 'file2'
 $upload->addFilter('Rename', 'C:\picture\uploads', 'file2');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -177,8 +175,7 @@ $upload = new Zend_File_Transfer();
 // Set a filesize with 20000 bytes
 $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
        ->addFilter('Rename', 'C:\picture\newgif', 'file2');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -200,7 +197,7 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
         </para>
 
         <para>
-            This filter makes use of <code>Zend_Filter_Decrypt</code>. It supports the <code>Mcrypt</code>
+            This filter makes use of <classname>Zend_Filter_Decrypt</classname>. It supports the <code>Mcrypt</code>
             and <code>OpenSSL</code> extensions from PHP. Please read the related section for
             details about how to set the options for decryption and which options are supported.
         </para>
@@ -221,8 +218,7 @@ $upload = new Zend_File_Transfer_Adapter_Http();
 // with mcrypt and the key mykey
 $upload->addFilter('Decrypt',
     array('adapter' => 'mcrypt', 'key' => 'mykey'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -238,8 +234,7 @@ $upload->addFilter('Decrypt',
     array('adapter' => 'openssl',
           'private' => '/path/to/privatekey.pem',
           'envelope' => '/path/to/envelopekey.pem'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>
@@ -252,7 +247,7 @@ $upload->addFilter('Decrypt',
         </para>
 
         <para>
-            This filter makes use of <code>Zend_Filter_Encrypt</code>. It supports the <code>Mcrypt</code>
+            This filter makes use of <classname>Zend_Filter_Encrypt</classname>. It supports the <code>Mcrypt</code>
             and <code>OpenSSL</code> extensions from PHP. Please read the related section for
             details about how to set the options for encryption and which options are supported.
         </para>
@@ -273,8 +268,7 @@ $upload = new Zend_File_Transfer_Adapter_Http();
 // with mcrypt and the key mykey
 $upload->addFilter('Encrypt',
     array('adapter' => 'mcrypt', 'key' => 'mykey'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -289,8 +283,7 @@ $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addFilter('Encrypt',
     array('adapter' => 'openssl',
           'public' => '/path/to/publickey.pem'));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>
@@ -323,8 +316,7 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
 
 // Adds a filter to lowercase with encoding set to ISO-8859-1
 $upload->addFilter('LowerCase', 'ISO-8859-1');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -384,8 +376,7 @@ $upload->addFilter('Rename', 'C:\mypics\new');
 
 // Set a new destination path only for uploadfile1
 $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -496,8 +487,7 @@ $upload->addFilter('UpperCase', null, 'uploadfile1');
 
 // Adds a filter to uppercase with encoding set to ISO-8859-1
 $upload->addFilter('UpperCase', 'ISO-8859-1');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 

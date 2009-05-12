@@ -8,7 +8,7 @@
         <para>
             Action Helpers allow developers to inject runtime and/or on-demand
             functionality into any Action Controllers that extend
-            <code>Zend_Controller_Action</code>. Action Helpers aim to minimize the
+            <classname>Zend_Controller_Action</classname>. Action Helpers aim to minimize the
             necessity to extend the abstract Action Controller in order to
             inject common Action Controller functionality.
         </para>
@@ -20,7 +20,7 @@
                 linkend="zend.view.helpers">Zend_View_Helper</link>, and that
             of <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
-            Action Helpers (like <code>Zend_View_Helper</code>) may be
+            Action Helpers (like <classname>Zend_View_Helper</classname>) may be
             loaded and called on demand, or they may be instantiated at
             request time (bootstrap) or action controller creation time
             (init()). To understand this more fully, please see the usage
@@ -38,7 +38,7 @@
 
         <para>
             The helper broker is stored as the <code>$_helper</code> member of
-            <code>Zend_Controller_Action</code>; use the broker to retrieve or
+            <classname>Zend_Controller_Action</classname>; use the broker to retrieve or
             call on helpers. Some methods for doing so include:
         </para>
 
@@ -52,8 +52,7 @@
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('We did something in the last request');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -66,8 +65,7 @@ $flashMessenger->addMessage('We did something in the last request');
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('We did something in the last request');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -81,8 +79,7 @@ $flashMessenger->addMessage('We did something in the last request');
 
                 <programlisting role="php"><![CDATA[
 $this->_helper->FlashMessenger('We did something in the last request');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -102,7 +99,7 @@ $this->_helper->FlashMessenger('We did something in the last request');
         <title>The Helper Broker</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code> handles the details
+            <classname>Zend_Controller_Action_HelperBroker</classname> handles the details
             of registering helper objects and helper paths, as well as
             retrieving helpers on-demand.
         </para>
@@ -113,8 +110,7 @@ $this->_helper->FlashMessenger('We did something in the last request');
 
         <programlisting role="php"><![CDATA[
 Zend_Controller_Action_HelperBroker::addHelper($helper);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Of course, instantiating and passing helpers to the broker is a bit
@@ -135,8 +131,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);
                 <programlisting role="php"><![CDATA[
 // Add helpers prefixed with My_Action_Helpers in My/Action/Helpers/
 Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -151,8 +146,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
 // Add helpers prefixed with Helper in Plugins/Helpers/
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
                                              'Helper');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -181,8 +175,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Redirector helper registered';
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             There are also two static methods for retrieving helpers from the helper
@@ -214,8 +207,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 $redirector =
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Finally, to delete a registered helper from the broker, use
@@ -228,8 +220,7 @@ $redirector =
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.stockhelpers">
@@ -263,7 +254,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Action helpers extend
-            <code>Zend_Controller_Action_Helper_Abstract</code>, an abstract
+            <classname>Zend_Controller_Action_Helper_Abstract</classname>, an abstract
             class that provides the basic interface and functionality required
             by the helper broker. These include the following methods:
         </para>
@@ -320,7 +311,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
                     retrieves the portion of the class name following the last
                     underscore character, or the full class name otherwise. As
                     an example, if the class is named
-                    <code>Zend_Controller_Action_Helper_Redirector</code>, it
+                    <classname>Zend_Controller_Action_Helper_Redirector</classname>, it
                     will return <code>Redirector</code>; a class named
                     <code>FooMessage</code> will simply return itself.
                 </para>
@@ -340,8 +331,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <programlisting role="php"><![CDATA[
 // Redirect to /blog/view/item/id/42
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Internally, the helper broker's <code>__call()</code> method looks

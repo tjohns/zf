@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.tool.framework.architecture">
     <title>Architecture</title>
@@ -53,7 +53,7 @@ interface Zend_Tool_Framework_Registry_Interface
 
         <para>
             Classes that should be registry-aware should implement
-            <code>Zend_Tool_Framework_Registry_EnabledInterface</code>. This
+            <classname>Zend_Tool_Framework_Registry_EnabledInterface</classname>. This
             interface merely allows initialization of the registry in the target
             class.
         </para>
@@ -72,15 +72,15 @@ interface Zend_Tool_Framework_Registry_EnabledInterface
         <title>Providers</title>
 
         <para>
-            <code>Zend_Tool_Framework_Provider</code> represents the functional
-            or "capability" aspect of the framework.  Fundamentally,
-            <code>Zend_Tool_Framework_Provider</code> will provide the
+            <classname>Zend_Tool_Framework_Provider</classname> represents the functional
+            or "capability" aspect of the framework. Fundamentally,
+            <classname>Zend_Tool_Framework_Provider</classname> will provide the
             interfaces necessary to produce "providers", or bits of tooling
             functionality that can be called and used inside the
-            <code>Zend_Tool_Framework</code> toolchain. The simplistic nature of
+            <classname>Zend_Tool_Framework</classname> toolchain. The simplistic nature of
             implementing this provider interface allows the developer a
             "one-stop-shop" of adding functionality/capabilities to
-            <code>Zend_Tool_Framework</code>.
+            <classname>Zend_Tool_Framework</classname>.
         </para>
 
         <para>
@@ -96,7 +96,7 @@ interface Zend_Tool_Framework_Provider_Interface
         <para>
             Or, if you wish, you can implement the base (or abstract) Provider
             which will give you access to the
-            <code>Zend_Tool_Framework_Registry</code>:
+            <classname>Zend_Tool_Framework_Registry</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -111,39 +111,6 @@ abstract class Zend_Tool_Framework_Provider_Abstract
 }
 ]]></programlisting>
 
-        <para>
-            As an example, if a developer wants to add the capability of showing
-            the version of a datafile that his 3rd party component is working
-            from, there is only one class the developer would need to implement.
-            Assuming the component is called <code>My_Component</code>, he would
-            create a class named <code>My_Component_HelloProvider</code> in a
-            file named <code>HelloProvider.php</code> somewhere on the
-            <code>include_path</code>.  This class would implement
-            <code>Zend_Tool_Framework_Provider_Interface</code>, and the body of
-            this file would only have to look like the following:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-class My_Component_HelloProvider
-    implements Zend_Tool_Framework_Provider_Interface
-{
-    public function say()
-    {
-        echo 'Hello from my provider!';
-    }
-}
-]]></programlisting>
-
-        <para>
-            Given that code above, and assuming the developer wishes to access
-            this functionality through the console client, the call would look
-            like this:
-        </para>
-
-        <programlisting role="sh"><![CDATA[
-% zf say hello
-Hello from my provider!
-]]></programlisting>
     </sect2>
 
     <sect2 id="zend.tool.framework.architecture.loaders">
@@ -157,7 +124,6 @@ Hello from my provider!
             by a loader, providers are loaded into the Provider Repository and
             manifest metadata is loaded into the Manifest Repository.
         </para>
-
 
         <para>
             To implement a loader, one must extend the following abstract class:
@@ -178,7 +144,7 @@ abstract class Zend_Tool_Framework_Loader_Abstract
 
         <para>
             The _getFiles() method should return an array of files (absolute
-            paths).  The built-in loader supplied with ZF is called the
+            paths). The built-in loader supplied with ZF is called the
             IncludePath loader. By default, the Tooling framework will use an
             include path based loader to find files that might include Providers
             or Manifest Metadata objects.
@@ -248,14 +214,14 @@ interface Zend_Tool_Framework_Manifest_Interface
 
         <para>
             There are a few different metadata classes that can be used to
-            describe metadata.  The Zend_Tool_Framework_Manifest_Metadata is the
-            base metadata object.  As you can see by the following code snippet,
+            describe metadata. The Zend_Tool_Framework_Manifest_Metadata is the
+            base metadata object. As you can see by the following code snippet,
             the base metadata class is fairly lightweight and abstract in
             nature:
         </para>
 
         <programlisting role="php"><![CDATA[
-class Zend_Tool_Framework_Manifest_Metadata
+class Zend_Tool_Framework_Manifest_Basic
 {
 
     protected $_type        = 'Global';
@@ -310,9 +276,9 @@ class Zend_Tool_Framework_Manifest_ProviderMetadata
 
         <para>
             'Type' in these classes is used to describe the type of metadata the
-            object is responsible for.  In the cases of the ActionMetadata, the
+            object is responsible for. In the cases of the ActionMetadata, the
             type would be 'Action', and conversely in the case of the
-            ProviderMetadata the type is 'Provider'.  These metadata types will
+            ProviderMetadata the type is 'Provider'. These metadata types will
             also include additional structured information about both the
             "thing" they are describing as well as the object (the
             ->getReference()) they are referencing with this new metadata.
@@ -321,7 +287,7 @@ class Zend_Tool_Framework_Manifest_ProviderMetadata
         <para>
             In order to create your own metadata type, all one must do is extend
             the base Zend_Tool_Framework_Manifest_Metadata class and return
-            these new metadata objects via a local Manifest class/object.  These
+            these new metadata objects via a local Manifest class/object. These
             user based classes will live in the Manifest Repository
         </para>
 
@@ -357,7 +323,7 @@ class Zend_Tool_Framework_Manifest_Repository
 
     /**
      * The following will return exactly one of the matching search criteria,
-     * regardless of how many have been returned.  First one in the manifest is
+     * regardless of how many have been returned. First one in the manifest is
      * what will be returned.
      */
     public function findMetadata(Array $searchProperties = array(),
@@ -372,8 +338,8 @@ class Zend_Tool_Framework_Manifest_Repository
 
         <para>
             Looking at the search methods above, the signatures allow for
-            extremely flexible searching.  In order to find a metadata object,
-            simply pass in an array of matching constraints via an array.  If
+            extremely flexible searching. In order to find a metadata object,
+            simply pass in an array of matching constraints via an array. If
             the data is accessible through the Property accessor (the
             getSomething() methods implemented on the metadata object), then it
             will be passed back to the user as a "found" metadata object.
@@ -387,7 +353,7 @@ class Zend_Tool_Framework_Manifest_Repository
             Clients are the interface which bridges a user or external tool into
             the Zend_Tool_Framework system. Clients can come in all shapes and
             sizes: RPC endpoints, Command Line Interface, or even a web
-            interface.  Zend_Tool has implemented the command line interface as
+            interface. Zend_Tool has implemented the command line interface as
             the default interface for interacting with the Zend_Tool_Framework
             system.
         </para>
@@ -403,28 +369,32 @@ abstract class Zend_Tool_Framework_Client_Abstract
     /**
      * This method should be implemented by the client implementation to
      * construct and set custom loaders, request and response objects.
+     *
+     * (not required, but suggested)
      */
-    abstract protected function _init();
+    protected function _preInit();
 
     /**
      * This method should be implemented by the client implementation to parse
      * out and setup the request objects action, provider and parameter
      * information.
      */
-    abstract protected function _preHandle();
+    abstract protected function _preDispatch();
 
     /**
      * This method should be implemented by the client implementation to take
      * the output of the response object and return it (in an client specific
      * way) back to the Tooling Client.
+     *
+     * (not required, but suggested)
      */
-    abstract protected function _postHandle();
+    abstract protected function _postDispatch();
 }
 ]]></programlisting>
 
         <para>
-            As you can see, there are 3 methods needed to fulfill the needs of a
-            client, the initialization, prehandling and post handling.  For a
+            As you can see, there is 1 method required to fulfill the needs of a
+            client (two othres suggested), the initialization, prehandling and post handling. For a
             more in depth study of how the command line client works, please see
             <ulink url="http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Tool/Framework/Client/Console.php">source code</ulink>.
         </para>

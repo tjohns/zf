@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.pdf.create">
     <title>PDF ドキュメントの作成および読み込み</title>
     <para>
-    <code>Zend_Pdf</code> クラスは PDF ドキュメントを表すもので、
+    <classname>Zend_Pdf</classname> クラスは PDF ドキュメントを表すもので、
     ドキュメントレベルの機能を提供します。
     </para>
 
     <para>
-    新しいドキュメントを作成するには、新しい <code>Zend_Pdf</code>
+    新しいドキュメントを作成するには、新しい <classname>Zend_Pdf</classname>
     オブジェクトを作成しなければなりません。
     </para>
 
     <para>
-    <code>Zend_Pdf</code> クラスでは、既存の PDF を読み込むための
+    <classname>Zend_Pdf</classname> クラスでは、既存の PDF を読み込むための
     2 つの静的メソッドも提供しています。
-    <code>Zend_Pdf::load()</code> および <code>Zend_Pdf::parse()</code> です。
-    これらは両方とも <code>Zend_Pdf</code> オブジェクトを返します。
+    <classname>Zend_Pdf::load()</classname> および <classname>Zend_Pdf::parse()</classname> です。
+    これらは両方とも <classname>Zend_Pdf</classname> オブジェクトを返します。
     エラーが発生した場合には例外がスローされます。
     </para>
 
@@ -34,22 +34,21 @@ $pdf2 = Zend_Pdf::load($fileName);
 // 文字列から PDF ドキュメントを読み込みます。
 $pdf3 = Zend_Pdf::parse($pdfString);
 ...
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <para>
     PDF ファイルでは、ドキュメントのインクリメンタルな更新がサポートされています。
     つまり、ドキュメントを更新するたびに、そのドキュメントの新しい版が作成されます。
-    <code>Zend_Pdf</code> モジュールには、指定した版を取得する機能も含まれています。
+    <classname>Zend_Pdf</classname> モジュールには、指定した版を取得する機能も含まれています。
     </para>
     <para>
-    版を指定するには <code>Zend_Pdf::load()</code> および
-    <code>Zend_Pdf::parse()</code> メソッドの第 2 引数を使用するか、
-    <code>Zend_Pdf::rollback()</code> を使用します。
+    版を指定するには <classname>Zend_Pdf::load()</classname> および
+    <classname>Zend_Pdf::parse()</classname> メソッドの第 2 引数を使用するか、
+    <classname>Zend_Pdf::rollback()</classname> を使用します。
         <footnote>
             <para>
-            <code>Zend_Pdf::rollback()</code> メソッドは、
+            <classname>Zend_Pdf::rollback()</classname> メソッドは、
             変更がドキュメントに適用される前に起動しなければなりません。
             それ以外の場合の挙動は未定義です。
             </para>
@@ -72,10 +71,8 @@ $pdf3 = Zend_Pdf::load($fileName);
 $revisions = $pdf3->revisions();
 $pdf3->rollback($revisions - 1);
 ...
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
-
 
 </sect1>
 <!--

@@ -25,8 +25,7 @@ class IndexControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
         // ...
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         There will be times, however, that you need to provide extra
@@ -73,8 +72,7 @@ class FooControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
         // ...
     }
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Now that the request is made, it's time to start making assertions

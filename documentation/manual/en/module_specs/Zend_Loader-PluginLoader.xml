@@ -8,7 +8,7 @@
         of dynamic functionality by specifying a class prefix and path to class
         files that are not necessarily on the <code>include_path</code> or do
         not necessarily follow traditional naming conventions.
-        <code>Zend_Loader_PluginLoader</code> provides common functionality for
+        <classname>Zend_Loader_PluginLoader</classname> provides common functionality for
         this process.
     </para>
 
@@ -50,8 +50,7 @@ library/
                 FormLabel.php
                 FormSubmit.php
                 FormText.php
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
             Now, let's create a plugin loader to address the various view
@@ -65,8 +64,7 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
                        'application/modules/foo/views/helpers')
        ->addPrefixPath('Bar_View_Helper',
                        'application/modules/bar/views/helpers');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             We can then load a given view helper using just the portion of the
@@ -82,8 +80,7 @@ $formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // load 'FormSubmit' helper:
 $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Once the class is loaded, we can now instantiate it.
@@ -92,7 +89,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         <note>
             <para>
                 In some cases, you may use the same prefix for multiple paths.
-                <code>Zend_Loader_PluginLoader</code> actually registers an
+                <classname>Zend_Loader_PluginLoader</classname> actually registers an
                 array of paths for each given prefix; the last one registered
                 will be the first one checked. This is particularly useful if
                 you are utilizing incubator components.
@@ -114,12 +111,11 @@ $loader = new Zend_Loader_PluginLoader(array(
     'Foo_View_Helper'  => 'application/modules/foo/views/helpers',
     'Bar_View_Helper'  => 'application/modules/bar/views/helpers'
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> also optionally allows you to
+            <classname>Zend_Loader_PluginLoader</classname> also optionally allows you to
             share plugins across plugin-aware objects, without needing to
             utilize a singleton instance. It does so via a static registry.
             Indicate the registry name at instantiation as the second parameter
@@ -129,8 +125,7 @@ $loader = new Zend_Loader_PluginLoader(array(
         <programlisting role="php"><![CDATA[
 // Store plugins in static registry 'foobar':
 $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Other components that instantiate the <code>PluginLoader</code>
@@ -186,7 +181,7 @@ $loader = new Zend_Loader_PluginLoader(array(), 'foobar');
         <para>
             Another common use case for the <code>PluginLoader</code> is to
             determine fully qualified plugin class names of loaded classes;
-            <code>getClassName()</code> provides this functionality.  Typically,
+            <code>getClassName()</code> provides this functionality. Typically,
             this would be used in conjunction with <code>isLoaded()</code>:
         </para>
 
@@ -195,8 +190,7 @@ if ($loader->isLoaded('Adapter')) {
     $class   = $loader->getClassName('Adapter');
     $adapter = call_user_func(array($class, 'getInstance'));
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.loader.pluginloader.performance">
@@ -213,7 +207,7 @@ if ($loader->isLoaded('Adapter')) {
         </para>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> offers an opt-in feature for
+            <classname>Zend_Loader_PluginLoader</classname> offers an opt-in feature for
             just this situation, a class file include cache. When enabled, it
             will create a file that contains all successful includes which you
             can then call from your bootstrap. Using this strategy, you can
@@ -229,7 +223,7 @@ if ($loader->isLoaded('Adapter')) {
             </para>
 
             <programlisting role="php"><![CDATA[
-$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+$classFileIncCache = APPLICATION_PATH . '/../data/pluginLoaderCache.php';
 if (file_exists($classFileIncCache)) {
     include_once $classFileIncCache;
 }
@@ -249,7 +243,7 @@ Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
             </para>
 
             <programlisting role="php"><![CDATA[
-$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+$classFileIncCache = APPLICATION_PATH . '/../data/pluginLoaderCache.php';
 if (file_exists($classFileIncCache)) {
     include_once $classFileIncCache;
 }

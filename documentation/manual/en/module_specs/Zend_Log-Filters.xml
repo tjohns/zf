@@ -28,8 +28,7 @@ $logger->info('Informational message');
 
 // logged
 $logger->emerg('Emergency message');
-]]>
-        </programlisting>
+]]></programlisting>
 
         When you add one or more Filters to the Log object, the message must pass
         through all of the Filters before any Writers receives it.
@@ -61,8 +60,7 @@ $logger->info('Informational message');
 
 // logged by both writers
 $logger->emerg('Emergency message');
-]]>
-        </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 </sect1>

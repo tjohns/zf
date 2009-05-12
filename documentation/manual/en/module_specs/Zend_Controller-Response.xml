@@ -14,13 +14,12 @@
             caught exceptions to the response object, allowing the developer to
             gracefully handle exceptions. This functionality may be overridden
             by setting
-            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+            <classname>Zend_Controller_Front::throwExceptions(true)</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To send the response output, including headers, use
@@ -29,8 +28,7 @@ $front->throwExceptions(true);
 
         <programlisting role="php"><![CDATA[
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -39,7 +37,7 @@ $response->sendResponse();
                 never need to call it. However, if you wish to manipulate the
                 response or use it in testing, you can override this
                 behaviour by setting the <code>returnResponse</code> flag with
-                <code>Zend_Controller_Front::returnResponse(true)</code>:
+                <classname>Zend_Controller_Front::returnResponse(true)</classname>:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -49,8 +47,7 @@ $response = $front->dispatch();
 // do some more processing, such as logging...
 // and then send the output:
 $response->sendResponse();
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
 
         <para>
@@ -65,8 +62,7 @@ $response->sendResponse();
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             By doing this, all headers get sent at once, just prior to
@@ -79,7 +75,7 @@ $this->getResponse()
                     linkend="zend.controller.action.viewintegration">view
                     integration</link>, you do not need to set the rendered view
                 script content in the response object, as
-                <code>Zend_Controller_Action::render()</code> does this by default.
+                <classname>Zend_Controller_Action::render()</classname> does this by default.
             </para>
         </note>
 
@@ -114,8 +110,7 @@ $response = $front->dispatch();
 
 // finally, echo the response
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             By default, exception messages are not displayed. This behaviour may be
@@ -136,8 +131,7 @@ $response->sendResponse();
 // or:
 $front->throwExceptions(true);
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -293,8 +287,7 @@ class MyController extends Zend_Controller_Action
         $this->render();
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
@@ -308,8 +301,7 @@ array(
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When this is rendered, it will render in the order in which elements
@@ -495,7 +487,7 @@ array(
 
         <para>
             The base response class is
-            <code>Zend_Controller_Response_Abstract</code>, and any subclass you
+            <classname>Zend_Controller_Response_Abstract</classname>, and any subclass you
             create should extend that class or one of its derivatives. The
             various methods available have been listed in the previous sections.
         </para>

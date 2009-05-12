@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -10,14 +10,14 @@
         <title>導入</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、Audioscrobbler REST ウェブサービス
+            <classname>Zend_Service_Audioscrobbler</classname> は、Audioscrobbler REST ウェブサービス
             を使用するためのシンプルな API です。Audioscrobbler Web Service
             は、ユーザ (Users) やアーティスト (Artists)、アルバム (Albums)、曲 (Tracks)、
             タグ (Tags)、グループ (Groups) そしてフォーラム (Forums) といったデータへの
             アクセス機能を提供します。
-            <code>Zend_Service_Audioscrobbler</code> クラスのメソッドは、
+            <classname>Zend_Service_Audioscrobbler</classname> クラスのメソッドは、
             これらの単語のいずれかで始まります。Audioscrobbler Web Service
-            の文法および名前空間が、<code>Zend_Service_Audioscrobbler</code>
+            の文法および名前空間が、<classname>Zend_Service_Audioscrobbler</classname>
             にまとめられています。Audioscrobbler REST ウェブサービスについての詳細は
             <ulink url="http://www.audioscrobbler.net/data/webservices/">Audioscrobbler Web Service
             のサイト</ulink> を参照ください。
@@ -33,7 +33,7 @@
             特定のユーザについての情報を取得するには、
             まず <code>setUser()</code> メソッドを使用して
             データを取得したいユーザを選択します。
-            <code>Zend_Service_Audioscrobbler</code> では、
+            <classname>Zend_Service_Audioscrobbler</classname> では、
             指定したユーザについての情報を取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -198,8 +198,7 @@ $profileInfo = $as->userGetProfileInformation();
 // その一部を表示します
 print "$profileInfo->realname の情報は "
     . "$profileInfo->url にあります";
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -231,8 +230,7 @@ foreach ($previousWeeklyArtists as $artist) {
     // アーティスト名と、プロファイルへのリンクを表示します
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -243,7 +241,7 @@ foreach ($previousWeeklyArtists as $artist) {
         <title>アーティスト (Artists)</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、<code>setArtist()</code>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setArtist()</code>
             で指定した特定のアーティストに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -298,8 +296,7 @@ foreach ($relatedArtists as $artist) {
     // 関連アーティストを表示します
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -310,7 +307,7 @@ foreach ($relatedArtists as $artist) {
         <title>曲 (Tracks)</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、<code>setTrack()</code>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setTrack()</code>
             メソッドで指定した曲についてのデータを取得する、ふたつのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -337,7 +334,7 @@ foreach ($relatedArtists as $artist) {
         <title>タグ (Tags)</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、<code>setTag()</code>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setTag()</code>
             メソッドで指定したタグに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -378,7 +375,7 @@ foreach ($relatedArtists as $artist) {
         <title>グループ (Groups)</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、<code>setGroup()</code>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setGroup()</code>
             メソッドで指定したグループに関するデータを取得するためのいくつかのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
@@ -452,7 +449,7 @@ foreach ($relatedArtists as $artist) {
         <title>フォーラム (Forums)</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> は、<code>setForum()</code>
+            <classname>Zend_Service_Audioscrobbler</classname> は、<code>setForum()</code>
             メソッドで指定した特定のフォーラムの情報を取得するメソッドを提供しています。
             <itemizedlist>
                 <listitem>

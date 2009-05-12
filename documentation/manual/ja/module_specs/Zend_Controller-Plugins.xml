@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>プラグイン</title>
 
@@ -17,14 +17,14 @@
 
         <para>
             イベントメソッドは、抽象クラス
-            <code>Zend_Controller_Plugin_Abstract</code> で定義されています。
+            <classname>Zend_Controller_Plugin_Abstract</classname> で定義されています。
             ユーザが作成するプラグインクラスは、これを継承させます。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>routeStartup()</code> は、<code>Zend_Controller_Front</code>
+                    <code>routeStartup()</code> は、<classname>Zend_Controller_Front</classname>
                     が <link linkend="zend.controller.router">ルータ</link>
                     をコールしてルートに対するリクエストの評価を始める前にコールされます。
                 </para>
@@ -40,7 +40,7 @@
 
             <listitem>
                 <para>
-                    <code>dispatchLoopStartup()</code> は、<code>Zend_Controller_Front</code>
+                    <code>dispatchLoopStartup()</code> は、<classname>Zend_Controller_Front</classname>
                     がディスパッチループに入る前にコールされます。
                 </para>
             </listitem>
@@ -51,7 +51,7 @@
                     <link linkend="zend.controller.dispatcher">ディスパッチャ</link> でディスパッチされる前にコールされます。
                     このコールバックは、プロキシやフィルタ的な動作をさせることができます。
                     リクエストの内容を変更してディスパッチフラグをリセット
-                    (<code>Zend_Controller_Request_Abstract::setDispatched(false)</code> を使用します)
+                    (<classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname> を使用します)
                     することで、現在のアクションをスキップさせたり置き換えたりすることができます。
                 </para>
             </listitem>
@@ -62,14 +62,14 @@
                     でディスパッチされた後にコールされます。
                     このコールバックは、プロキシやフィルタ的な動作をさせることができます。
                     リクエストの内容を変更してディスパッチフラグをリセット
-                    (<code>Zend_Controller_Request_Abstract::setDispatched(false)</code> を使用します)
+                    (<classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname> を使用します)
                     することで、新しいディスパッチ先アクションを指定することができます。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>dispatchLoopShutdown()</code> は、<code>Zend_Controller_Front</code>
+                    <code>dispatchLoopShutdown()</code> は、<classname>Zend_Controller_Front</classname>
                     がディスパッチループを抜けた後にコールされます。
                 </para>
             </listitem>
@@ -81,7 +81,7 @@
 
         <para>
             プラグインクラスを書くには、単に抽象クラス
-            <code>Zend_Controller_Plugin_Abstract</code>
+            <classname>Zend_Controller_Plugin_Abstract</classname>
             をインクルードしてそれを継承するだけです。
         </para>
 
@@ -90,18 +90,17 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_Controller_Plugin_Abstract</code> には抽象メソッドはありません。
+            <classname>Zend_Controller_Plugin_Abstract</classname> には抽象メソッドはありません。
             つまり、上に示したイベントメソッドを、
             プラグインクラスでかならず実装しなければならないわけではありません。
             プラグインの作者が、必要なものだけを選んで実装することができます。
         </para>
 
         <para>
-            <code>Zend_Controller_Plugin_Abstract</code> では、
+            <classname>Zend_Controller_Plugin_Abstract</classname> では、
             リクエストオブジェクトやレスポンスオブジェクトをプラグインから操作することができます。
             それぞれ、<code>getRequest()</code> メソッドおよび
             <code>getResponse()</code> メソッドを使用します。
@@ -112,7 +111,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         <title>プラグインの使用法</title>
         <para>
             プラグインクラスを登録するには、
-            <code>Zend_Controller_Front::registerPlugin()</code> をコールします。
+            <classname>Zend_Controller_Front::registerPlugin()</classname> をコールします。
             これは、いつでも行うことができます。
             次の例は、コントローラチェインでプラグインを使用する方法を示すものです。
         </para>
@@ -163,8 +162,7 @@ $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             他に何かの出力を行うアクションがなく、ひとつのアクションのみがコールされたとしましょう。
@@ -178,8 +176,7 @@ $front->dispatch();
 <p>preDispatch() がコールされました</p>
 <p>postDispatch() がコールされました</p>
 <p>dispatchLoopShutdown() がコールされました</p>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>

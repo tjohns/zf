@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.controller.plugins.standard.actionstack">
     <title>ActionStack</title>
 
@@ -16,7 +16,7 @@
 
     <para>
         このプラグインをフロントコントローラから取得するには、
-        <code>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</code>
+        <classname>Zend_Controller_Front::getPlugin('Zend_Controller_Plugin_ActionStack')</classname>
         とします。プラグインオブジェクトを取得したら、
         さまざまな仕組みを利用できるようになります。
     </para>
@@ -25,7 +25,7 @@
         <listitem><para>
                 <code>getRegistry()</code> および <code>setRegistry()</code>。
                 <code>ActionStack</code> は、内部的に
-                <code>Zend_Registry</code> のインスタンスを使ってスタックを管理しています。
+                <classname>Zend_Registry</classname> のインスタンスを使ってスタックを管理しています。
                 別のレジストリインスタンスでこれを置き換えたり、
                 インスタンスを取得したりする際にこれらのアクセサを使用します。
         </para></listitem>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.slideshare">
 
     <title>Einführung</title>
 
     <para>
-        Die <code>Zend_Service_SlideShare</code> wird verwendet um mit dem
+        Die <classname>Zend_Service_SlideShare</classname> wird verwendet um mit dem
         <ulink url="http://www.slideshare.net/">slideshare.net</ulink> Web Service für das
         Online-Hosten von Slideshows zu interagieren. Mit dieser Komponente kann eine Slideshow
         die in dieser Website gehostet wird in einer Website eingebettet und sogar neue
@@ -15,22 +15,22 @@
 
     <sect2 id="zend.service.slideshare.basicusage">
 
-        <title>Mit <code>Zend_Service_SlideShare</code> beginnen</title>
+        <title>Mit Zend_Service_SlideShare beginnen</title>
 
         <para>
-            Um die <code>Zend_Service_SlideShare</code> Komponente zu verwenden muß zuerst ein Account auf
-            den slideshare.net Servern erstellt werden (mehr Informationen können
+            Um die <classname>Zend_Service_SlideShare</classname> Komponente zu verwenden muß zuerst
+            ein Account auf den slideshare.net Servern erstellt werden (mehr Informationen können
             <ulink url="http://www.slideshare.net/developers/">hier</ulink> gefunden werden) um
             einen API Schlüssel, Benutzername, Passwort und einen geteilten geheimen Wert zu
-            erhalten -- diese werden alle benötigt um die <code>Zend_Service_SlideShare</code>
-            Komponente zu verwenden.
+            erhalten -- diese werden alle benötigt um die
+            <classname>Zend_Service_SlideShare</classname> Komponente zu verwenden.
         </para>
 
         <para>
-            Sobald ein Account erstellt wurde, kann die <code>Zend_Service_SlideShare</code>
-            Komponente verwendet werden durch die Erstellung eines
-            <code>Zend_Service_SlideShare</code> Objektes und dem anbieten dieser Werte wie
-            anbei gezeigt:
+            Sobald ein Account erstellt wurde, kann die
+            <classname>Zend_Service_SlideShare</classname> Komponente verwendet werden durch die
+            Erstellung eines <classname>Zend_Service_SlideShare</classname> Objektes und dem
+            anbieten dieser Werte wie anbei gezeigt:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -39,8 +39,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
                                   'SHAREDSECRET',
                                   'USERNAME',
                                   'PASSWORD');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -49,10 +48,11 @@ $ss = new Zend_Service_SlideShare('APIKEY',
         <title>Das SlideShow Objekt</title>
 
         <para>
-            Alle Slideshows in der <code>Zend_Service_SlideShare</code> werden repräsentiert durch
-            die Verwendung des <code>Zend_Service_SlideShare_SlideShow</code> Objektes (sowohl beim
-            Empfangen als auch beim Hochladen neuer Slideshows). Zur Referenz ist eine Pseudo-Code
-            Version dieser Klasse anbei zu sehen.
+            Alle Slideshows in der <classname>Zend_Service_SlideShare</classname> werden
+            repräsentiert durch die Verwendung des
+            <classname>Zend_Service_SlideShare_SlideShow</classname> Objektes (sowohl beim Empfangen
+            als auch beim Hochladen neuer Slideshows). Zur Referenz ist eine Pseudo-Code Version
+            dieser Klasse anbei zu sehen.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -192,8 +192,7 @@ class Zend_Service_SlideShare_SlideShow {
         return $this->_numViews;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
 
@@ -206,7 +205,7 @@ class Zend_Service_SlideShare_SlideShow {
         </note>
 
         <para>
-            Wenn die <code>Zend_Service_SlideShare</code> Komponente verwendet wird, wird
+            Wenn die <classname>Zend_Service_SlideShare</classname> Komponente verwendet wird, wird
             diese Daten Klasse sehr oft verwendet um nachzusehen oder neue Slideshows zu oder
             von einem Webservice hinzuzufügen.
         </para>
@@ -218,12 +217,13 @@ class Zend_Service_SlideShare_SlideShow {
         <title>Empfangen einer einzelnen Slideshow</title>
 
         <para>
-            Die einfachste Verwendung der <code>Zend_Service_SlideShare</code> Komponente ist
-            der Empfang einer einzelnen Slideshow durch die Slideshow ID die von der
+            Die einfachste Verwendung der <classname>Zend_Service_SlideShare</classname> Komponente
+            ist der Empfang einer einzelnen Slideshow durch die Slideshow ID die von der
             slideshare.net Anwendung angeboten wird und kann durch den Aufruf der
-            <code>getSlideShow()</code> auf einem <code>Zend_Service_SlideShare</code> Objekt
-            und der Verwendung des resultierenden <code>Zend_Service_SlideShare_SlideShow</code>
-            Objektes wie gezeigt durchgeführt werden.
+            <code>getSlideShow()</code> auf einem <classname>Zend_Service_SlideShare</classname>
+            Objekt und der Verwendung des resultierenden
+            <classname>Zend_Service_SlideShare_SlideShow</classname> Objektes wie gezeigt
+            durchgeführt werden.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -237,9 +237,7 @@ $slideshow = $ss->getSlideShow(123456);
 
 print "Slide Show Titel: {$slideshow->getTitle()}<br/>\n";
 print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
-
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -256,7 +254,7 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
         <itemizedlist mark="opencircle">
             <listitem>
                 <para>
-                    <emphasis role="strong">Slideshows von einem speziellen Account</emphasis>
+                    <emphasis>Slideshows von einem speziellen Account</emphasis>
                 </para>
 
                 <para>
@@ -268,7 +266,7 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
 
             <listitem>
                 <para>
-                    <emphasis role="strong">Slideshows mit einem speziellen Tag</emphasis>
+                    <emphasis>Slideshows mit einem speziellen Tag</emphasis>
                 </para>
 
                 <para>
@@ -281,7 +279,7 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
 
             <listitem>
                 <para>
-                    <emphasis role="strong">Slideshows durch Gruppen</emphasis>
+                    <emphasis>Slideshows durch Gruppen</emphasis>
                 </para>
 
                 <para>
@@ -294,7 +292,7 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
         </itemizedlist>
 
         <para>
-            Jede der obigen Methoden des empfangens mehrerer Slideshows zeigt das ein ähnlicher
+            Jede der obigen Methoden des Empfangens mehrerer Slideshows zeigt das ein ähnlicher
             Ansatz verwendet wird. Ein Beispiel der Verwendung jeder Methode wird anbei gezeigt:
         </para>
 
@@ -317,18 +315,16 @@ $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 foreach($ss_user as $slideshow) {
    print "Slide Show Titel: {$slideshow->getTitle}<br/>\n";
 }
-
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
     <sect2 id="zend.service.slideshare.caching">
 
-        <title><code>Zend_Service_SlideShare</code> Caching Policy</title>
+        <title>Zend_Service_SlideShare Caching Policy</title>
 
         <para>
-            Standardmäßig cached <code>Zend_Service_SlideShare</code> jede Anfrage an den
+            Standardmäßig cached <classname>Zend_Service_SlideShare</classname> jede Anfrage an den
             Webservice automatisch in das Dateisystem (Standardpfad <code>/tmp</code>) für
             12 Stunden. Wenn man das Verhalten ändern will, muß eine eigenes
             <xref linkend="zend.cache" /> Objekt durch Verwendung der <code>setCacheObject</code>
@@ -354,9 +350,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -367,8 +361,8 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
         <para>
             Wenn das Verhalten des HTTP Clients, aus welchen Gründen auch immer, geändert werden
             soll wenn eine Anfrage an den Webservice durchgeführt wird, kann das durch die
-            Erstellung einer eigenen Instanz eines <code>Zend_Http_Client</code> Objektes
-            durchgeführt werden (siehe  <xref linkend="zend.http" />). Das ist zum Beispiel
+            Erstellung einer eigenen Instanz eines <classname>Zend_Http_Client</classname> Objektes
+            durchgeführt werden (siehe <xref linkend="zend.http" />). Das ist zum Beispiel
             nützlich wenn es gewünscht ist das Timeout für die Verbindung auf etwas anderes als
             den Standardwert zu setzen wie anbei gezeigt:
         </para>
@@ -383,9 +377,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
                                   'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

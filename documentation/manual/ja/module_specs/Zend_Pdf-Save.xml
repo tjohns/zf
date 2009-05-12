@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.pdf.save">
     <title>PDF ドキュメントへの変更内容の保存</title>
     <para>
     PDF ドキュメントの変更内容を保存するには 2 種類の方法があります。
-    <code>Zend_Pdf::save()</code> および <code>Zend_Pdf::render()</code> メソッドです。
+    <classname>Zend_Pdf::save()</classname> および <classname>Zend_Pdf::render()</classname> メソッドです。
     </para>
 
     <para>
-    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> は、
+    <classname>Zend_Pdf::save($filename, $updateOnly = false)</classname> は、
     ドキュメントをファイルに保存します。$updateOnly が true の場合は、
     新しい PDF ファイルセグメントがファイルに追記されます。
     それ以外の場合はファイルが上書きされます。
     </para>
 
     <para>
-    <code>Zend_Pdf::render($newSegmentOnly = false)</code> は、
+    <classname>Zend_Pdf::render($newSegmentOnly = false)</classname> は、
     PDF ドキュメントを文字列として返します。$newSegmentOnly が true の場合は、
     新しい PDF ファイルセグメントのみが返されます。
     </para>
@@ -37,8 +37,7 @@ $pdf->save($newFileName);
 $pdfString = $pdf->render();
 
 ...
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

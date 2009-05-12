@@ -3,7 +3,7 @@
 <sect1 id="zend.service.amazon.ec2.keypairs">
     <title>Zend_Service_Amazon_Ec2: Keypairs</title>
     <para>
-        Keypairs allow access to Unix Ec2 Instances via ssh.
+        Keypairs are used to access instances.
     </para>
 
     <example id="zend.service.amazon.ec2.keypairs.create">
@@ -20,15 +20,14 @@
         <programlisting role="php"><![CDATA[
 $ec2_kp = new Zend_Service_Amazon_Ec2_Keypair('aws_key','aws_secret_key');
 $return = $ec2_kp->create('my-new-key');
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.service.amazon.ec2.keypairs.delete">
         <title>Deleting an Amazon Keypair</title>
         <para>
-            <code>delete</code>, will delete the key pair.  This will only
-            prevent it from being use on new instances.  Instances currently
+            <code>delete</code>, will delete the key pair. This will only
+            prevent it from being used with new instances. Instances currently
             running with the keypair will still allow you to access them.
         </para>
         <para>
@@ -37,8 +36,7 @@ $return = $ec2_kp->create('my-new-key');
         <programlisting role="php"><![CDATA[
 $ec2_kp = new Zend_Service_Amazon_Ec2_Keypair('aws_key','aws_secret_key');
 $return = $ec2_kp->delete('my-new-key');
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.service.amazon.ec2.describe">
@@ -54,7 +52,6 @@ $return = $ec2_kp->delete('my-new-key');
         <programlisting role="php"><![CDATA[
 $ec2_kp = new Zend_Service_Amazon_Ec2_Keypair('aws_key','aws_secret_key');
 $return = $ec2_kp->describe('my-new-key');
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>

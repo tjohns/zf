@@ -21,9 +21,9 @@
         <listitem>
             <para>
                 Optionally, an array of options to pass as the second argument
-                to <code>Zend_Json::encode()</code>. This array of options
+                to <classname>Zend_Json::encode()</classname>. This array of options
                 allows enabling layouts and encoding using
-                <code>Zend_Json_Expr</code>.
+                <classname>Zend_Json_Expr</classname>.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -99,9 +99,9 @@ $this->_helper->json($data, array('keepLayouts' => true);
         <title>Enabling encoding using Zend_Json_Expr</title>
 
         <para>
-            <code>Zend_Json::encode()</code> allows the encoding of native JSON
-            expressions <code>using Zend_Json_Expr</code> objects. This option
-            is disabled by default.  To enable this option, pass a boolean
+            <classname>Zend_Json::encode()</classname> allows the encoding of native JSON
+            expressions using <code>Zend_Json_Expr</code> objects. This option
+            is disabled by default. To enable this option, pass a boolean
             <code>true</code> value to the <code>enableJsonExprFinder</code>
             option:
         </para>
@@ -114,12 +114,12 @@ $this->_helper->json($data, array('enableJsonExprFinder' => true);
             If you desire to do this, you <emphasis>must</emphasis> pass an
             array as the second argument. This also allows you to combine other
             options, such as the <code>keepLayouts</code> option. All such
-            options are then passed to <code>Zend_Json::encode()</code>.
+            options are then passed to <classname>Zend_Json::encode()</classname>.
         </para>
 
         <programlisting role="php"><![CDATA[
 $this->_helper->json($data, array(
-    'enableJsonExprFinder' => true, 
+    'enableJsonExprFinder' => true,
     'keepLayouts'          => true,
 ));
 ]]></programlisting>

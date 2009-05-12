@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15031 -->
+<!-- EN-Revision: 15103 -->
 <sect2 id="zend.application.available-resources.view">
     <title>Zend_Application_Resource_View</title>
 
     <para>
-        <code>Zend_Application_Resource_View</code>は<code>Zend_View</code>の
+        <classname>Zend_Application_Resource_View</classname>は<classname>Zend_View</classname>の
         インスタンスを設定するために使用できます。設定オプションは
         <link linkend="zend.view.introduction.options">Zend_Viewオプション</link>に
         従います。
@@ -13,8 +13,8 @@
 
     <para>
         一旦ビューのインスタンスを設定したら、
-        <code>Zend_Controller_Action_Helper_ViewRenderer</code>のインスタンスを
-        作成して、<code>Zend_Controller_Action_HelperBroker</code>
+        <classname>Zend_Controller_Action_Helper_ViewRenderer</classname>のインスタンスを
+        作成して、<classname>Zend_Controller_Action_HelperBroker</classname>
         （後ほどそこから取得できるでしょう）でViewRendererを登録します。
     </para>
 

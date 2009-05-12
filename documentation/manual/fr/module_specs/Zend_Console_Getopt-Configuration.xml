@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.configuration">
-
-    <title>Configurer <classname>Zend_Console_Getopt</classname></title>
+    <title>Configurer Zend_Console_Getopt</title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
-
         <title>Ajouter des règles d'options</title>
 
         <para>
@@ -20,9 +18,8 @@
             détails sur la syntaxe de déclaration des options.
         </para>
 
-        <example>
-
-            <title>Utilisation d'<code>addRules()</code></title>
+        <example id="zend.console.getopt.configuration.addrules.example">
+            <title>Utilisation d'addRules()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -32,7 +29,6 @@ $opts->addRules(
   )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -41,11 +37,9 @@ $opts->addRules(
             constructeur. Notez que vous pouvez mélanger des options de syntaxe courte et de
             syntaxe longue dans la même instance de <classname>Zend_Console_Getopt</classname>.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addhelp">
-
         <title>Ajouter des messages d'aide</title>
 
         <para>
@@ -56,9 +50,8 @@ $opts->addRules(
             d'aide correspondant.
         </para>
 
-        <example>
-
-            <title>Utiliser <code>setHelp()</code></title>
+        <example id="zend.console.getopt.configuration.addhelp.example">
+            <title>Utiliser setHelp()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -70,7 +63,6 @@ $opts->setHelp(
     )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -82,11 +74,9 @@ $opts->setHelp(
             La méthode <code>setHelp()</code> est la seule manière de définir des messages
             d'aide si vous déclarez les options en utilisant la syntaxe courte.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addaliases">
-
         <title>Ajouter des alias aux options</title>
 
         <para>
@@ -102,9 +92,8 @@ $opts->setHelp(
             alias, une <classname>Zend_Console_Getopt_Exception</classname> est levée.
         </para>
 
-        <example>
-
-            <title>Utiliser <code>setAliases()</code></title>
+        <example id="zend.console.getopt.configuration.addaliases.example">
+            <title>Utiliser setAliases()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -116,7 +105,6 @@ $opts->setAliases(
     )
 );
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -130,11 +118,9 @@ $opts->setAliases(
             La méthode <code>setAliases()</code> est la seule manière de définir des alias si
             vous déclarez les options en utilisant la syntaxe courte.
         </para>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.addargs">
-
         <title>Ajouter des listes d'arguments</title>
 
         <para>
@@ -149,11 +135,8 @@ $opts->setAliases(
             courants, et la nouvelle méthode substitue le tableau aux arguments courants.
         </para>
 
-        <example>
-
-            <title>
-                Utilisation de <code>addArguments()</code> et <code>setArguments()</code>
-            </title>
+        <example id="zend.console.getopt.configuration.addargs.example">
+            <title>Utilisation de addArguments() et setArguments()</title>
 
             <programlisting role="php"><![CDATA[
 // Par défaut, le constructeur utilise $_SERVER['argv']
@@ -165,13 +148,10 @@ $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 // Remplace les arguments existants par un nouveau tableau
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 ]]></programlisting>
-
         </example>
-
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
-
         <title>Ajouter une configuration</title>
 
         <para>
@@ -202,7 +182,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code>
+                    <classname>Zend_Console_Getopt::CONFIG_DASHDASH</classname>
                     ("<code>dashDash</code>"), si "<code>true</code>", utilise le drapeau spécial
                     "<code>--</code>" pour signifier la fin des drapeaux. Les arguments de la ligne
                     de commande suivant le double-tiret ne sont pas interprétées comme options,
@@ -212,7 +192,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code>
+                    <classname>Zend_Console_Getopt::CONFIG_IGNORECASE</classname>
                     ("<code>ignoreCase</code>"), si "<code>true</code>", fait correspondre des
                     alias même s'ils différent en terme de casse. C'est-à-dire,"<code>-a</code>" et
                     "<code>-A</code>" seront considérés commes des synonymes. Cette option de
@@ -221,17 +201,17 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
+                    <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname>
                     ("<code>ruleMode</code>") peut avoir les valeurs
-                    <code>Zend_Console_Getopt::MODE_ZEND</code> ("zend") ou
-                    <code>Zend_Console_Getopt::MODE_GNU</code> ("<code>gnu</code>"). Il ne devrait
-                    pas être nécessaire d'employer cette option à moins que vous n'étendiez la
-                    classe avec les formes additionnelles de syntaxe. Les deux modes supportés dans
-                    la classe <code>Zend_Console_Getopt</code> de base sont sans équivoque. Si le
-                    spécificateur est une chaîne de caractère, la classe passe en
-                    <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>. Mais si
-                    vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous pouvez
-                    avoir à indiquer le mode en utilisant cette option.
+                    <classname>Zend_Console_Getopt::MODE_ZEND</classname> ("zend") ou
+                    <classname>Zend_Console_Getopt::MODE_GNU</classname> ("<code>gnu</code>"). Il
+                    ne devrait pas être nécessaire d'employer cette option à moins que vous
+                    n'étendiez la classe avec les formes additionnelles de syntaxe. Les deux modes
+                    supportés dans la classe <classname>Zend_Console_Getopt</classname> de base
+                    sont sans équivoque. Si le spécificateur est une chaîne de caractère, la classe
+                    passe en <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>.
+                    Mais si vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous
+                    pouvez avoir à indiquer le mode en utilisant cette option.
                 </para>
             </listitem>
         </itemizedlist>
@@ -246,15 +226,13 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             configuration et une valeur d'option.
         </para>
 
-        <example>
-
-            <title>Utilisation de <code>setOption()</code></title>
+        <example id="zend.console.getopt.configuration.config.example.setoption">
+            <title>Utilisation de setOption()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
 ]]></programlisting>
-
         </example>
 
         <para>
@@ -265,9 +243,8 @@ $opts->setOption('ignoreCase', true);
             avec la configuration courante ; vous n'avez pas à énumérer toutes les options.
         </para>
 
-        <example>
-
-            <title>Utilisation de <code>setOptions()</code></title>
+        <example id="zend.console.getopt.configuration.config.example.setoptions">
+            <title>Utilisation de setOptions()</title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -278,9 +255,6 @@ $opts->setOptions(
     )
 );
 ]]></programlisting>
-
         </example>
-
     </sect2>
-
 </sect1>

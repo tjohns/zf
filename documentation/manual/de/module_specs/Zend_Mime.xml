@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.mime.mime">
     <title>Zend_Mime</title>
@@ -7,85 +7,91 @@
     <sect2 id="zend.mime.mime.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Mime</code> ist eine Hilfsklasse für die Verarbeitung von mehrteiligen MIME
-            Nachrichten. Es wird von <link linkend="zend.mail"><code>Zend_Mail</code></link> und
-            <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> verwendet
-            und kann von anderen Anwendungen verwendet werden, die MIME Unterstützung benötigen.
+            <classname>Zend_Mime</classname> ist eine Hilfsklasse für die Verarbeitung von
+            mehrteiligen MIME Nachrichten. Es wird von <link
+                linkend="zend.mail"><classname>Zend_Mail</classname></link> und <link
+                linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link>
+            verwendet und kann von anderen Anwendungen verwendet werden, die MIME Unterstützung
+            benötigen.
         </para>
     </sect2>
 
     <sect2 id="zend.mime.mime.static">
     <title>Statische Methoden und Konstanten</title>
         <para>
-            <code>Zend_Mime</code> stellt einige einfache statische Hilfsmethoden für die MIME
-            Verarbeitung bereit:
+            <classname>Zend_Mime</classname> stellt einige einfache statische Hilfsmethoden für die
+            MIME Verarbeitung bereit:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::isPrintable()</code>: Gibt TRUE zurück, wenn der String keine
-                        nicht druckbaren Zeichen enthält, ansonsten wird FALSE zurückgegeben.
+                        <classname>Zend_Mime::isPrintable()</classname>: Gibt TRUE zurück, wenn der
+                        String keine nicht druckbaren Zeichen enthält, ansonsten wird FALSE
+                        zurückgegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::encodeBase64()</code>: Codiert einen String in die base64 Codierung.
+                        <classname>Zend_Mime::encodeBase64()</classname>: Codiert einen String in
+                        die base64 Codierung.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::encodeQuotedPrintable()</code>: Codiert einen String mit dem
-                        "quoted-printable" Mechanismus.
+                        <classname>Zend_Mime::encodeQuotedPrintable()</classname>: Codiert einen
+                        String mit dem "quoted-printable" Mechanismus.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            <code>Zend_Mime</code> definiert einen Satz Konstanten, die üblicherweise von
+            <classname>Zend_Mime</classname> definiert einen Satz Konstanten, die üblicherweise von
             MIME Nachrichten verwendet werden:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+                        <classname>Zend_Mime::TYPE_OCTETSTREAM</classname>:
+                        'application/octet-stream'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+                        <classname>Zend_Mime::TYPE_TEXT</classname>: 'text/plain'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+                        <classname>Zend_Mime::TYPE_HTML</classname>: 'text/html'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+                        <classname>Zend_Mime::ENCODING_7BIT</classname>: '7bit'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::ENCODING_8BIT</code>: '8bit';
+                        <classname>Zend_Mime::ENCODING_8BIT</classname>: '8bit';
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+                        <classname>Zend_Mime::ENCODING_QUOTEDPRINTABLE</classname>:
+                        'quoted-printable'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+                        <classname>Zend_Mime::ENCODING_BASE64</classname>: 'base64'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+                        <classname>Zend_Mime::DISPOSITION_ATTACHMENT</classname>: 'attachment'
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                        <classname>Zend_Mime::DISPOSITION_INLINE</classname>: 'inline'
                     </para>
                 </listitem>
             </itemizedlist>
@@ -95,14 +101,14 @@
         <sect2 id="zend.mime.mime.instantiation">
         <title>Zend_Mime instanziieren</title>
         <para>
-            Wenn ein <code>Zend_Mime</code> instanziiert wird, wird eine MIME Abgrenzung
+            Wenn ein <classname>Zend_Mime</classname> instanziiert wird, wird eine MIME Abgrenzung
             gespeichert, die von allen nachfolgenden nicht statischen Methodenaufrufen für dieses
             Objekt verwendet wird. Wenn der Konstruktur mit einem String Parameter aufgerufen wird,
-            wird dieser Wert als MIME Abgrenzung  verwendet. Anderfalls wird eine zufällige MIME
+            wird dieser Wert als MIME Abgrenzung verwendet. Anderfalls wird eine zufällige MIME
             Abgrenzung während der Konstruktionsphase generiert.
         </para>
         <para>
-            Ein <code>Zend_Mime</code> Objekt hat die folgenden Methoden:
+            Ein <classname>Zend_Mime</classname> Objekt hat die folgenden Methoden:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -111,12 +117,14 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>boundaryLine()</code>: Gibt die komplette Zeile der MIME Abgrenzung zurück.
+                        <code>boundaryLine()</code>: Gibt die komplette Zeile der MIME Abgrenzung
+                        zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>mimeEnd()</code>: Gibt die komplette Endzeile der MIME Abgrenzung zurück.
+                        <code>mimeEnd()</code>: Gibt die komplette Endzeile der MIME Abgrenzung
+                        zurück.
                     </para>
                 </listitem>
             </itemizedlist>

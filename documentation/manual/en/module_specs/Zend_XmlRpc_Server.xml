@@ -6,7 +6,7 @@
     <sect2 id="zend.xmlrpc.server.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_XmlRpc_Server</code> is intended as a fully-featured XML-RPC server,
+        <para><classname>Zend_XmlRpc_Server</classname> is intended as a fully-featured XML-RPC server,
             following <ulink url="http://www.xmlrpc.com/spec">the specifications
             outlined at www.xmlrpc.com</ulink>. Additionally, it implements the
             system.multicall() method, allowing boxcarring of requests.
@@ -24,38 +24,37 @@
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
 echo $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
         <title>Server Structure</title>
 
         <para>
-            <code>Zend_XmlRpc_Server</code> is composed of a variety of components, ranging
+            <classname>Zend_XmlRpc_Server</classname> is composed of a variety of components, ranging
             from the server itself to request, response, and fault objects.
         </para>
 
         <para>
-            To bootstrap <code>Zend_XmlRpc_Server</code>, the developer must attach one or
+            To bootstrap <classname>Zend_XmlRpc_Server</classname>, the developer must attach one or
             more classes or functions to the server, via the
             <code>setClass()</code> and <code>addFunction()</code> methods.
         </para>
 
         <para>
-            Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
-            object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
-            instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
+            Once done, you may either pass a <classname>Zend_XmlRpc_Request</classname>
+            object to <classname>Zend_XmlRpc_Server::handle()</classname>, or it will
+            instantiate a <classname>Zend_XmlRpc_Request_Http</classname> object if none
             is provided -- thus grabbing the request from
             <code>php://input</code>.
         </para>
 
         <para>
-            <code>Zend_XmlRpc_Server::handle()</code> then attempts to
+            <classname>Zend_XmlRpc_Server::handle()</classname> then attempts to
             dispatch to the appropriate handler based on the method
             requested. It then returns either a
-            <code>Zend_XmlRpc_Response</code>-based object or a
-            <code>Zend_XmlRpc_Server_Fault</code>object. These objects both have
+            <classname>Zend_XmlRpc_Response</classname>-based object or a
+            <classname>Zend_XmlRpc_Server_Fault</classname>object. These objects both have
             <code>__toString()</code> methods that create valid XML-RPC XML
             responses, allowing them to be directly echoed.
         </para>
@@ -64,9 +63,9 @@ echo $server->handle();
     <sect2 id="zend.xmlrpc.server.conventions">
         <title>Conventions</title>
         <para>
-            <code>Zend_XmlRpc_Server</code> allows the developer to attach functions and
+            <classname>Zend_XmlRpc_Server</classname> allows the developer to attach functions and
             class method calls as dispatchable XML-RPC methods. Via
-            <code>Zend_Server_Reflection</code>, it does introspection on all attached
+            <classname>Zend_Server_Reflection</classname>, it does introspection on all attached
             methods, using the function and method docblocks to determine the
             method help text and method signatures.
         </para>
@@ -102,8 +101,7 @@ echo $server->handle();
 function myFunc($val1, $val2, $val3)
 {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             PhpDocumentor does no validation of the types specified for params
@@ -133,8 +131,7 @@ function myFunc($val1, $val2, $val3)
 function myFunc($val1, $val2, $val3)
 {
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             One note, however: allowing multiple signatures can lead to
@@ -162,7 +159,7 @@ function myFunc($val1, $val2, $val3)
 
         <para>
             Internally, these map to the methods of the same name in
-            <code>Zend_XmlRpc_Server</code>.
+            <classname>Zend_XmlRpc_Server</classname>.
         </para>
 
         <para>
@@ -178,8 +175,7 @@ $server->setClass('My_Service_Class', 'myservice');
 
 // Function 'somefunc' will be accessible as funcs.somefunc
 $server->addFunction('somefunc', 'funcs');
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -187,11 +183,11 @@ $server->addFunction('somefunc', 'funcs');
 
         <para>
             Most of the time, you'll simply use the default request type
-            included with <code>Zend_XmlRpc_Server</code>, <code>Zend_XmlRpc_Request_Http</code>. However,
+            included with <classname>Zend_XmlRpc_Server</classname>, <classname>Zend_XmlRpc_Request_Http</classname>. However,
             there may be times when you need XML-RPC to be available via the CLI,
             a GUI, or other environment, or want to log incoming requests. To do
             so, you may create a custom request object that extends
-            <code>Zend_XmlRpc_Request</code>. The most important thing to remember is to
+            <classname>Zend_XmlRpc_Request</classname>. The most important thing to remember is to
             ensure that the getMethod() and getParams() methods are implemented
             so that the XML-RPC server can retrieve that information in order to
             dispatch the request.
@@ -202,8 +198,8 @@ $server->addFunction('somefunc', 'funcs');
         <title>Custom Responses</title>
 
         <para>
-            Similar to request objects, <code>Zend_XmlRpc_Server</code> can return custom
-            response objects; by default, a <code>Zend_XmlRpc_Response_Http</code> object is
+            Similar to request objects, <classname>Zend_XmlRpc_Server</classname> can return custom
+            response objects; by default, a <classname>Zend_XmlRpc_Response_Http</classname> object is
             returned, which sends an appropriate Content-Type HTTP header for
             use with XML-RPC. Possible uses of a custom object would be to log
             responses, or to send responses back to STDOUT.
@@ -211,7 +207,7 @@ $server->addFunction('somefunc', 'funcs');
 
         <para>
             To use a custom response class, use
-            <code>Zend_XmlRpc_Server::setResponseClass()</code> prior to calling <code>handle()</code>.
+            <classname>Zend_XmlRpc_Server::setResponseClass()</classname> prior to calling <code>handle()</code>.
         </para>
     </sect2>
 
@@ -219,7 +215,7 @@ $server->addFunction('somefunc', 'funcs');
         <title>Handling Exceptions via Faults</title>
 
         <para>
-            <code>Zend_XmlRpc_Server</code> catches Exceptions generated by a dispatched
+            <classname>Zend_XmlRpc_Server</classname> catches Exceptions generated by a dispatched
             method, and generates an XML-RPC fault response when such an
             exception is caught. By default, however, the exception messages and
             codes are not used in a fault response. This is an intentional
@@ -232,19 +228,18 @@ $server->addFunction('somefunc', 'funcs');
         <para>
             Exception classes can be whitelisted to be used as fault responses,
             however. To do so, simply utilize
-            <code>Zend_XmlRpc_Server_Fault::attachFaultException()</code> to pass an
+            <classname>Zend_XmlRpc_Server_Fault::attachFaultException()</classname> to pass an
             exception class to whitelist:
         </para>
 
         <programlisting role="php"><![CDATA[
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             If you utilize an exception class that your other project exceptions
             inherit, you can then whitelist a whole family of exceptions at a
-            time. <code>Zend_XmlRpc_Server_Exception</code>s are always whitelisted, to
+            time. <classname>Zend_XmlRpc_Server_Exception</classname>s are always whitelisted, to
             allow reporting specific internal errors (undefined methods, etc.).
         </para>
 
@@ -259,11 +254,11 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
         <para>
             Attaching many classes to an XML-RPC server instance can utilize a
             lot of resources; each class must introspect using the Reflection
-            API (via <code>Zend_Server_Reflection</code>), which in turn generates a list of
+            API (via <classname>Zend_Server_Reflection</classname>), which in turn generates a list of
             all possible method signatures to provide to the server class.
         </para>
         <para>
-            To reduce this performance hit somewhat, <code>Zend_XmlRpc_Server_Cache</code>
+            To reduce this performance hit somewhat, <classname>Zend_XmlRpc_Server_Cache</classname>
             can be used to cache the server definition between requests. When
             combined with __autoload(), this can greatly increase performance.
         </para>
@@ -292,8 +287,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
 }
 
 echo $server->handle();
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             The above example attempts to retrieve a server definition from
             xmlrpc.cache in the same directory as the script. If unsuccessful,
@@ -333,8 +327,7 @@ function md5Value($value)
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -351,8 +344,7 @@ require_once 'Services/Comb.php';
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -373,8 +365,7 @@ $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -399,8 +390,7 @@ $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 echo $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -430,8 +420,7 @@ $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 $request = new Services_Request();
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -465,8 +454,7 @@ $request = new Services_Request();
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -503,8 +491,7 @@ $request = new Services_Request();
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

@@ -49,7 +49,6 @@ echo $foo->generate();
 class Foo
 {
 
-
 }
 ]]></programlisting>
     </example>
@@ -123,7 +122,6 @@ class Foo
 
     const bat = 'foobarbazbat';
 
-
 }
 ]]></programlisting>
     </example>
@@ -132,10 +130,10 @@ class Foo
         <title>Generating PHP classes with class methods</title>
 
         <para>
-            <code>Zend_CodeGenerator_Php_Class</code> allows you to attach
+            <classname>Zend_CodeGenerator_Php_Class</classname> allows you to attach
             methods with optional content to your classes. Methods may be
             attached as either arrays or concrete
-            <code>Zend_CodeGenerator_Php_Method</code> instances.
+            <classname>Zend_CodeGenerator_Php_Method</classname> instances.
         </para>
 
             <programlisting role="php"><![CDATA[
@@ -246,7 +244,6 @@ class Foo
         return $this;
     }
 
-
     /**
      * Retrieve the bar property
      *
@@ -257,8 +254,6 @@ class Foo
         return $this->_bar;
     }
 
-
-
 }
 ]]></programlisting>
     </example>
@@ -267,10 +262,10 @@ class Foo
         <title>Generating PHP files</title>
 
         <para>
-            <code>Zend_CodeGenerator_Php_File</code> can be used to generate the
+            <classname>Zend_CodeGenerator_Php_File</classname> can be used to generate the
             contents of a PHP file. You can include classes as well as arbitrary
             content body. When attaching classes, you should attach either
-            concrete <code>Zend_CodeGenerator_Php_Class</code> instances or an
+            concrete <classname>Zend_CodeGenerator_Php_Class</classname> instances or an
             array defining the class.
         </para>
 
@@ -319,7 +314,6 @@ file_put_contents('Foo.php', $code);
  * @license New BSD
  */
 
-
 /**
  * Sample generated class
  *
@@ -349,7 +343,6 @@ class Foo
         return $this;
     }
 
-
     /**
      * Retrieve the bar property
      *
@@ -360,10 +353,7 @@ class Foo
         return $this->_bar;
     }
 
-
-
 }
-
 
 define('APPLICATION_ENV', 'testing');
 ]]></programlisting>

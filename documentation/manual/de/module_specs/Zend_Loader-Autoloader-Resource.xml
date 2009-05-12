@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.loader.autoloader-resource">
     <title>Ressource Autoloader</title>
@@ -62,12 +62,12 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
             <title>Basis Namespace</title>
 
             <para>
-                In <code>Zend_Loader_Autoloader</code> wird erwartet das man den endenden
+                In <classname>Zend_Loader_Autoloader</classname> wird erwartet das man den endenden
                 Unterstrich ("_") im Namespace angibt wenn der eigene Autoloader verwendet wird
-                um den Namespace zu suchen. <code>Zend_Loader_Autoloader_Resource</code> nimmt an
-                das alle Codes die man automatisch laden will ein Unterstrich Trennzeichen zwischen
-                Namespace, Komponente und Klasse verwenden. Als Ergebnis, muß man den endenen
-                Unterstrich nicht verwenden wenn ein Ressource Autoloader registriert wird.
+                um den Namespace zu suchen. <classname>Zend_Loader_Autoloader_Resource</classname>
+                nimmt an das alle Codes die man automatisch laden will ein Unterstrich Trennzeichen
+                zwischen Namespace, Komponente und Klasse verwenden. Als Ergebnis, muß man den
+                endenen Unterstrich nicht verwenden wenn ein Ressource Autoloader registriert wird.
             </para>
         </note>
 
@@ -140,10 +140,11 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
 
         <para>
             Zend Framework wird mit einer konkreten Implementation von
-            <code>Zend_Loader_Autoloader_Resource</code> ausgeliefert die Ressourcen Typen enthält
-            welche den notwendigen Standard Verzeichnisstrukturen für Zend Framework MVC
-            Anwendungen entsprechen. Diese Lader, <code>Zend_Application_Module_Autoloader</code>,
-            kommt mit den folgenden Mappings:
+            <classname>Zend_Loader_Autoloader_Resource</classname> ausgeliefert die Ressourcen Typen
+            enthält welche den notwendigen Standard Verzeichnisstrukturen für Zend Framework MVC
+            Anwendungen entsprechen. Diese Lader,
+            <classname>Zend_Application_Module_Autoloader</classname>, kommt mit den folgenden
+            Mappings:
         </para>
 
         <programlisting role="text"><![CDATA[
@@ -161,8 +162,8 @@ plugins/     => Plugin
         </para>
 
         <para>
-            Wenn Modul Bootstraps mit <code>Zend_Application</code> verwendet werden, wird
-            standardmäßig eine Instanz von <code>Zend_Application_Module_Autoloader</code>
+            Wenn Modul Bootstraps mit <classname>Zend_Application</classname> verwendet werden, wird
+            standardmäßig eine Instanz von <classname>Zend_Application_Module_Autoloader</classname>
             für jede eigene Modul erstellt, was es erlaubt Modul Ressource automatisch zu laden.
         </para>
     </sect2>

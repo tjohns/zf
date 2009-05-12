@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.measure.output">
 
     <title>計測値の出力</title>
@@ -34,7 +34,7 @@
         <title>自動的な出力</title>
 
         <para>
-            <code>Zend_Measure</code> は、文字列の自動的な出力をサポートしています。
+            <classname>Zend_Measure</classname> は、文字列の自動的な出力をサポートしています。
             <example id="zend.measure.output.auto.example-1">
                 <title>自動的な出力</title>
                 <programlisting role="php"><![CDATA[
@@ -45,8 +45,7 @@ $unit = new Zend_Measure_Length($mystring,
                                 $locale);
 
 echo $unit;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -81,8 +80,7 @@ $unit = new Zend_Measure_Length($mystring,
                                 $locale);
 
 echo $unit->getValue();
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -110,8 +108,7 @@ $unit = new Zend_Measure_Weight($mystring,
                                 $locale);
 
 echo $unit->getType();
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 

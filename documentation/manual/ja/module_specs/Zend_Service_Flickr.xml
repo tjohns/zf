@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.service.flickr">
     <title>Zend_Service_Flickr</title>
     <sect2 id="zend.service.flickr.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Service_Flickr</code> は、Flickr の REST Web Service
+            <classname>Zend_Service_Flickr</classname> は、Flickr の REST Web Service
             を使用するためのシンプルな API です。
             Flickr ウェブサービスを使用するには API キーが必要です。
             キーを取得したり Flickr REST Web Service の詳細情報を取得したりするには
@@ -27,8 +27,7 @@ $results = $flickr->tagSearch("php");
 foreach ($results as $result) {
     echo $result->title . '<br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <title>オプションのパラメータ</title>
@@ -41,7 +40,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.finding-users">
         <title>Flickr ユーザの写真や情報の検索</title>
         <para>
-            <code>Zend_Service_Flickr</code> では、いくつかの方法で
+            <classname>Zend_Service_Flickr</classname> では、いくつかの方法で
             Flickr ユーザについての情報を取得することができます。
         </para>
         <itemizedlist>
@@ -50,7 +49,7 @@ foreach ($results as $result) {
                     <code>userSearch()</code>:
                     タグをスペースで区切ったクエリ文字列、
                     そしてオプションの二番目のパラメータで検索オプションの配列を指定して検索し、
-                    結果の写真を <code>Zend_Service_Flickr_ResultSet</code> オブジェクトで返します。
+                    結果の写真を <classname>Zend_Service_Flickr_ResultSet</classname> オブジェクトで返します。
                 </para>
             </listitem>
             <listitem>
@@ -80,14 +79,13 @@ $results = $flickr->userSearch($userEmail);
 foreach ($results as $result) {
     echo $result->title . '<br />';
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.grouppoolgetphotos">
         <title>グループプールからの写真の検索</title>
         <para>
-            <code>Zend_Service_Flickr</code> は、
+            <classname>Zend_Service_Flickr</classname> は、
             グループにプールされている写真をグループ ID を指定して取得することができます。
             <code>groupPoolGetPhotos()</code> メソッドを使用します。
         </para>
@@ -101,8 +99,7 @@ $flickr = new Zend_Service_Flickr('MY_API_KEY');
     foreach ($results as $result) {
         echo $result->title . '<br />';
     }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <title>オプションのパラメータ</title>
@@ -115,7 +112,7 @@ $flickr = new Zend_Service_Flickr('MY_API_KEY');
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Flickr 画像の詳細の取得</title>
         <para>
-            <code>Zend_Service_Flickr</code> を使用すると、指定した画像 ID
+            <classname>Zend_Service_Flickr</classname> を使用すると、指定した画像 ID
             の画像についての詳細情報をすばやく簡単に取得できます。
             そのためには、以下の例のように単純に
             <code>getImageDetails()</code> メソッドを使用します。
@@ -132,8 +129,7 @@ $image = $flickr->getImageDetails($imageId);
 
 echo "画像 ID $imageId は $image->width x $image->height ピクセルです。<br />\n";
 echo "<a href=\"$image->clickUri\">クリックすると画像を表示します</a>\n";
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
@@ -142,9 +138,9 @@ echo "<a href=\"$image->clickUri\">クリックすると画像を表示します
             <code>tagSearch()</code> あるいは <code>userSearch()</code>
             から返されるのは、以下のクラスのいずれかです。
             <itemizedlist>
-                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><classname>Zend_Service_Flickr_ResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.result"><classname>Zend_Service_Flickr_Result</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.image"><classname>Zend_Service_Flickr_Image</classname></link></para></listitem>
             </itemizedlist>
         </para>
         <sect3 id="zend.service.flickr.classes.resultset">

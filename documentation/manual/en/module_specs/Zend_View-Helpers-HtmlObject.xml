@@ -57,8 +57,7 @@
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->htmlFlash('/path/to/flash.swf'); ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This outputs the following HTML:
@@ -70,8 +69,7 @@
         classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
         codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
-]]>
-</programlisting>
+]]></programlisting>
 
     </example>
 
@@ -125,8 +123,7 @@ This would output:
     some content
 </object>
 */
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

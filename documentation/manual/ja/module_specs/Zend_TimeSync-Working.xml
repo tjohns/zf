@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.timesync.working">
 
     <title>Zend_TimeSync の動作</title>
 
     <para>
-        <code>Zend_TimeSync</code> は、指定した任意の
-        <emphasis role="strong">NTP</emphasis> タイムサーバあるいは
-        <emphasis role="strong">SNTP</emphasis> タイムサーバから実際の時刻を返します。
+        <classname>Zend_TimeSync</classname> は、指定した任意の
+        <emphasis>NTP</emphasis> タイムサーバあるいは
+        <emphasis>SNTP</emphasis> タイムサーバから実際の時刻を返します。
         自動的に複数のサーバを処理することができ、シンプルなインターフェイスを提供します。
     </para>
 
     <note>
         <para>
             この章のすべてのサンプルでは、一般に公開されているタイムサーバのひとつを使用します。
-            私たちは <emphasis role="strong">0.europe.pool.ntp.org</emphasis>
+            私たちは <emphasis>0.europe.pool.ntp.org</emphasis>
             を使用しますが、あなたの環境にあわせて最も近いタイムサーバを使うことをお勧めします。
             詳細は <ulink url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink>
             を参照ください。
@@ -35,22 +35,21 @@
 $server = new Zend_TimeSync('0.pool.ntp.org');
 
 print $server->getDate()->getIso();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            このとき <code>Zend_TimeSync</code> の裏側では何が起こっているのでしょうか?
+            このとき <classname>Zend_TimeSync</classname> の裏側では何が起こっているのでしょうか?
             まず、指定したサーバの構文をチェックします。つまり今回の例では、
             '<code>0.pool.ntp.org</code>' がタイムサーバのアドレスとして正しい形式かどうかを確認します。
             それから、<code>getDate()</code> をコールする際に実際にタイムサーバを設定し、
-            そのサーバの時刻を返します。<code>Zend_TimeSync</code>
+            そのサーバの時刻を返します。<classname>Zend_TimeSync</classname>
             は、スクリプトが動作しているサーバの時刻と返された時刻とを比較し、
-            修正済みの時刻を表す <code>Zend_Date</code> オブジェクトを返します。
+            修正済みの時刻を表す <classname>Zend_Date</classname> オブジェクトを返します。
         </para>
 
         <para>
-            <code>Zend_Date</code> やそのメソッドについての詳細は
-            <link linkend="zend.date.introduction"><code>Zend_Date</code></link>
+            <classname>Zend_Date</classname> やそのメソッドについての詳細は
+            <link linkend="zend.date.introduction"><classname>Zend_Date</classname></link>
             を参照ください。
         </para>
 
@@ -67,7 +66,7 @@ print $server->getDate()->getIso();
         </para>
 
         <para>
-            この問題への対策として、<code>Zend_TimeSync</code>
+            この問題への対策として、<classname>Zend_TimeSync</classname>
             では複数のタイムサーバを処理できるようになっており、
             ひとつのタイムサーバが使用できなくても代替サーバを使用できるようになっています。
             これを利用するには二通りの方法があります。
@@ -82,13 +81,12 @@ $server = new Zend_TimeSync(array('0.pool.ntp.org',
 $server->addServer('3.pool.ntp.org');
 
 print $server->getDate()->getIso();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             追加できるタイムサーバの数には制限はありません。
             あるタイムサーバへの接続に失敗すると、
-            <code>Zend_TimeSync</code> はその次に指定されたタイムサーバへの接続を試みます。
+            <classname>Zend_TimeSync</classname> はその次に指定されたタイムサーバへの接続を試みます。
         </para>
 
         <para>
@@ -105,8 +103,7 @@ $server = new Zend_TimeSync(array('generic'  => '0.pool.ntp.org',
 $server->addServer('3.pool.ntp.org', 'additional');
 
 print $server->getDate()->getIso();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             タイムサーバの名前を設定することで、
@@ -123,14 +120,14 @@ print $server->getDate()->getIso();
         <para>
             タイムサーバにはさまざまな形式があります。
             公開されているタイムサーバのほとんどは、
-            <emphasis role="strong">NTP</emphasis> プロトコルを使用するものです。
+            <emphasis>NTP</emphasis> プロトコルを使用するものです。
             しかし、それ以外のプロトコルを使用しているサーバもあります。
         </para>
 
         <para>
             タイムサーバのアドレスに、適切なプロトコルを指定することができます。
-            <code>Zend_TimeSync</code> がサポートしているプロトコルは 2 種類で、
-            デフォルトのプロトコルは <emphasis role="strong">NTP</emphasis> です。
+            <classname>Zend_TimeSync</classname> がサポートしているプロトコルは 2 種類で、
+            デフォルトのプロトコルは <emphasis>NTP</emphasis> です。
             NTP しか使用しないのなら、先ほどまでの例のようにプロトコル指定を省略しても構いません。
         </para>
 
@@ -141,11 +138,10 @@ $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
 $server->addServer('sntp:\\internal.myserver.com', 'additional');
 
 print $server->getDate()->getIso();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_TimeSync</code> は複数のタイムサーバを使用することができます。
+            <classname>Zend_TimeSync</classname> は複数のタイムサーバを使用することができます。
             特定のプロトコルだけでなく、個々のサーバに対して別のプロトコルも指定できるようになっています。
         </para>
 
@@ -156,17 +152,17 @@ print $server->getDate()->getIso();
         <title>タイムサーバのポートの指定</title>
 
         <para>
-            ウェブにおけるさまざまな他のプロトコルと同様、<emphasis role="strong">NTP</emphasis> や
-            <emphasis role="strong">SNTP</emphasis> にも標準のポート番号があります。
-            NTP が使用するポートは <emphasis role="strong">123</emphasis> で、
-            SNTP は <emphasis role="strong">37</emphasis> を使用します。
+            ウェブにおけるさまざまな他のプロトコルと同様、<emphasis>NTP</emphasis> や
+            <emphasis>SNTP</emphasis> にも標準のポート番号があります。
+            NTP が使用するポートは <emphasis>123</emphasis> で、
+            SNTP は <emphasis>37</emphasis> を使用します。
         </para>
 
         <para>
             しかし、実際には使われているポートが違うこともあります。
             使用するポートは、サーバごとにアドレス内に指定することができます。
             ポートを指定するには、アドレスに続けてその数字を指定します。
-            ポートを指定しなかった場合は、<code>Zend_TimeSync</code> は標準のポートを使用します。
+            ポートを指定しなかった場合は、<classname>Zend_TimeSync</classname> は標準のポートを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -175,8 +171,7 @@ $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org:200',
 $server->addServer('sntp:\\internal.myserver.com:399', 'additional');
 
 print $server->getDate()->getIso();
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -185,17 +180,17 @@ print $server->getDate()->getIso();
         <title>タイムサーバ用のオプション</title>
 
         <para>
-            実際のところ <code>Zend_TimeSync</code> で使用するオプションはひとつだけで、
+            実際のところ <classname>Zend_TimeSync</classname> で使用するオプションはひとつだけで、
             それも内部的に使用するものです。しかし、必要に応じて任意のオプションを指定して
             リクエストを送信することができます。
         </para>
 
         <para>
-            <emphasis role="strong">timeout</emphasis> オプションは、
+            <emphasis>timeout</emphasis> オプションは、
             応答がない状態が何秒続けば接続に失敗したとみなすのかを表します。
-            デフォルトの値は <emphasis role="strong">1</emphasis> で、
+            デフォルトの値は <emphasis>1</emphasis> で、
             タイムサーバからの応答が 1 秒以内に返ってこなかった場合に
-            <code>Zend_TimeSync</code> は別のタイムサーバに処理を移します。
+            <classname>Zend_TimeSync</classname> は別のタイムサーバに処理を移します。
         </para>
 
         <para>
@@ -217,12 +212,11 @@ $server->addServer('sntp:\\internal.myserver.com', 'additional');
 print $server->getDate()->getIso();
 print_r(Zend_TimeSync::getOptions();
 print "Timeout = " . Zend_TimeSync::getOptions('timeout');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            ご覧のとおり、<code>Zend_TimeSync</code> のオプションは静的なものです。
-            つまり、すべての <code>Zend_TimeSync</code> のインスタンスで同じ設定が共用されます。
+            ご覧のとおり、<classname>Zend_TimeSync</classname> のオプションは静的なものです。
+            つまり、すべての <classname>Zend_TimeSync</classname> のインスタンスで同じ設定が共用されます。
         </para>
 
     </sect2>
@@ -250,8 +244,7 @@ $server->addServer('sntp:\\internal.myserver.com', 'additional');
 
 $actual = $server->getServer();
 $server = $server->setServer('additional');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -269,8 +262,7 @@ $server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
                                   'fallback' => 'ntp:\\1.pool.ntp.org'));
 
 print_r ($server->getInfo());
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             どのような情報が得られるのかは、
@@ -309,7 +301,6 @@ try {
         echo '<br />';
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>

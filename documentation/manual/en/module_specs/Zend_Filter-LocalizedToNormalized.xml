@@ -6,7 +6,7 @@
 
     <para>
         This filter will change any given localized input to it's normalized representation. It
-        uses in Background <code>Zend_Locale</code> to do this transformation for you.
+        uses in Background <classname>Zend_Locale</classname> to do this transformation for you.
     </para>
 
     <para>
@@ -90,19 +90,18 @@
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('123.456,78');
 // returns the value '123456.78'
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Let's expect you have set the locale 'de' as application wide locale.
-            <code>Zend_Filter_LocalizedToNormalized</code> will take the set locale and use it to
+            <classname>Zend_Filter_LocalizedToNormalized</classname> will take the set locale and use it to
             detect which sort of input you gave. In our example it was a value with precision. Now
             the filter will return you the normalized representation for this value as string.
         </para>
 
         <para>
             You can also control how your normalized number has to look like. Therefor you can give
-            all options which are also used by <code>Zend_Locale_Format</code>. The most common are:
+            all options which are also used by <classname>Zend_Locale_Format</classname>. The most common are:
         </para>
 
         <itemizedlist>
@@ -144,8 +143,7 @@ $filter->filter('123.456');
 
 $filter->filter('123.456,78901');
 // returns the value '123456.79'
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect3>
 
@@ -163,8 +161,7 @@ $filter->filter('123.456,78901');
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('12.April.2009');
 // returns array('day' => '12', 'month' => '04', 'year' => '2009')
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Let's expect you have set the locale 'de' again. Now the input is automatically detected
@@ -184,8 +181,7 @@ $filter = new Zend_Filter_LocalizedToNormalized(
 
 $filter->filter('11:22:33');
 // returns array('hour' => '33', 'minute' => '22', 'second' => '11')
-]]>
-        </programlisting>
+]]></programlisting>
     </sect3>
 
 </sect2>

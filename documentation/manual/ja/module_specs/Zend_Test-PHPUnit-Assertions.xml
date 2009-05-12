@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect2 id="zend.test.phpunit.assertions">
     <title>アサーション</title>
 
     <para>
         アサーションは、ユニットテストの肝となるものです。
         この機能を使うことで、期待する結果と実際の結果が一致することを確かめるのです。
-        <code>Zend_Test_PHPUnit_ControllerTestCase</code>
+        <classname>Zend_Test_PHPUnit_ControllerTestCase</classname>
         では数多くのアサーションを用意しており、
         MVC アプリケーションやコントローラのテストをよりシンプルにできるようにしています。
     </para>
@@ -163,7 +163,7 @@
         <para>
             アクションがリダイレクトを行うこともよくあります。
             リダイレクト先をたどらなくても、
-            <code>Zend_Test_PHPUnit_ControllerTestCase</code>
+            <classname>Zend_Test_PHPUnit_ControllerTestCase</classname>
             のさまざまなアサーションでそれをテストすることができます。
         </para>
 

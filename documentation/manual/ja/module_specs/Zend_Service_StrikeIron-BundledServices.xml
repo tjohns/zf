@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.service.strikeiron.bundled-services">
     <title>Zend_Service_StrikeIron: バンドルされているサービス</title>
 
     <para>
-      <code>Zend_Service_StrikeIron</code> には、StrikeIron
+      <classname>Zend_Service_StrikeIron</classname> には、StrikeIron
       のサービスのうち人気のある 3 つについてのラッパークラスが含まれています。
     </para>
 
@@ -13,7 +13,7 @@
       <title>ZIP Code Information</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_ZipCodeInfo</code> は、StrikeIron の
+        <classname>Zend_Service_StrikeIron_ZipCodeInfo</classname> は、StrikeIron の
         Zip Code Information Service 用のクライアントです。
         このサービスについての詳細は、以下の StrikeIron のリソースを参照ください。
 
@@ -69,8 +69,7 @@ if ($zips->count == 0) {
 // 詳細なステータス情報
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
 $status = $response->serviceStatus;
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -78,7 +77,7 @@ $status = $response->serviceStatus;
       <title>U.S. Address Verification</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_USAddressVerification</code>
+        <classname>Zend_Service_StrikeIron_USAddressVerification</classname>
         は StrikeIron の U.S. Address Verification Service 用のクライアントです。
         このサービスについての詳細は、以下の StrikeIron のリソースを参照ください。
 
@@ -131,8 +130,7 @@ if ($result->addressErrorNumber != 0) {
     // 正しい住所ですか?
     $valid = ($result->valid == 'VALID');
 }
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 
@@ -140,7 +138,7 @@ if ($result->addressErrorNumber != 0) {
       <title>Sales &amp; Use Tax Basic</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code> は、
+        <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname> は、
         StrikeIron の Sales &amp; Use Tax Basic サービス用のクライアントです。
         このサービスについての詳細は、以下の StrikeIron のリソースを参照ください。
 
@@ -179,8 +177,7 @@ echo $rateInfo->GST;              // あるいは GST (Goods & Services Tax) の
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // すべてのプロパティを表示します
 echo $rateInfo->state_sales_tax;  // あるいは州の消費税のみを表示します
-]]>
-        </programlisting>
+]]></programlisting>
       </para>
     </sect2>
 </sect1>

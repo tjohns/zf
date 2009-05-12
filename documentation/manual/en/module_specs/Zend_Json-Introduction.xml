@@ -3,7 +3,7 @@
 <sect1 id="zend.json.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Json</code> provides convenience methods for serializing
+        <classname>Zend_Json</classname> provides convenience methods for serializing
         native PHP to JSON and decoding JSON to native PHP. For more information
         on JSON, <ulink url="http://www.json.org/">visit the JSON project
         site</ulink>.
@@ -16,7 +16,7 @@
     </para>
 
     <para>
-        In addition, <code>Zend_Json</code> provides a useful way to convert any
+        In addition, <classname>Zend_Json</classname> provides a useful way to convert any
         arbitrary XML formatted string into a JSON formatted string. This built-in
         feature will enable PHP developers to transform the enterprise data
         encoded in XML format into JSON format before sending it to browser-based

@@ -40,7 +40,7 @@ path/to/some/directory/
             Within this directory, all code is prefixed with the namespace
             "My_". Within the "acls" subdirectory, the component prefix "Acl_"
             is added, giving a final class name of "My_Acl_Site". Similarly, the
-            "forms" subdirectory maps to "Form_", giving "My_Form_Login".  The
+            "forms" subdirectory maps to "Form_", giving "My_Form_Login". The
             "models" subdirectory has no component namespace, giving "My_User".
         </para>
 
@@ -62,10 +62,10 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
             <title>Base namespace</title>
 
             <para>
-                In <code>Zend_Loader_Autoloader</code>, you are expected to
+                In <classname>Zend_Loader_Autoloader</classname>, you are expected to
                 provide the trailing underscore ("_") in your namespace if your
                 autoloader will use it to match the namespace.
-                <code>Zend_Loader_Autoloader_Resource</code> makes the
+                <classname>Zend_Loader_Autoloader_Resource</classname> makes the
                 assumption that all code you are autoloading will use an
                 underscore separator between namespaces, components, and
                 classes. As a result, you do not need to use the trailing
@@ -143,10 +143,10 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
 
         <para>
             Zend Framework ships with a concrete implementation of
-            <code>Zend_Loader_Autoloader_Resource</code> that contains resource
+            <classname>Zend_Loader_Autoloader_Resource</classname> that contains resource
             type mappings that cover the default recommended directory structure
             for Zend Framework MVC applications. This loader,
-            <code>Zend_Application_Module_Autoloader</code>, comes with the
+            <classname>Zend_Application_Module_Autoloader</classname>, comes with the
             following mappings:
         </para>
 
@@ -166,8 +166,8 @@ plugins/     => Plugin
         </para>
 
         <para>
-            When using module bootstraps with <code>Zend_Application</code>, an
-            instance of <code>Zend_Application_Module_Autoloader</code> will be
+            When using module bootstraps with <classname>Zend_Application</classname>, an
+            instance of <classname>Zend_Application_Module_Autoloader</classname> will be
             created by default for each discrete module, allowing you to
             autoload module resources.
         </para>

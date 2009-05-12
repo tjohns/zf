@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.search.lucene.charset">
     <title>文字セット</title>
 
@@ -8,14 +8,14 @@
         <title>UTF-8 およびシングルバイト文字セットのサポート</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> は、内部的には UTF-8 文字セットで動作します。
+            <classname>Zend_Search_Lucene</classname> は、内部的には UTF-8 文字セットで動作します。
             インデックスファイルには、unicode のデータが Java の
             "modified UTF-8 encoding" で保存されます。
-            <code>Zend_Search_Lucene</code> はこの文字セットを完全にサポートしていますが、
+            <classname>Zend_Search_Lucene</classname> はこの文字セットを完全にサポートしていますが、
             ひとつだけ例外があります。
             <footnote>
                <para>
-                   <code>Zend_Search_Lucene</code> では Basic Multilingual Plane
+                   <classname>Zend_Search_Lucene</classname> では Basic Multilingual Plane
                    (BMP) 文字 (0x0000 から 0xFFFF まで) のみをサポートしており、
                    "supplementary characters" (コードポイントが
                    0xFFFF より大きい文字) はサポートしていません。
@@ -33,7 +33,7 @@
 
         <para>
             実際の入力データのエンコーディングを指定するには
-            <code>Zend_Search_Lucene</code> の API を使用します。
+            <classname>Zend_Search_Lucene</classname> の API を使用します。
             データは、自動的に UTF-8 エンコーディングに変換されます。
         </para>
     </sect2>
@@ -74,11 +74,11 @@
         <title>UTF-8 互換のテキスト解析器</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> には、
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>、
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>、
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>、
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>
+            <classname>Zend_Search_Lucene</classname> には、
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</classname>、
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</classname>、
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</classname>、
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</classname>
             といった UTF-8 解析器も含まれています。
         </para>
 
@@ -88,8 +88,7 @@
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <warning>
@@ -125,8 +124,7 @@ if (@preg_match('/\pL/u', 'a') == 1) {
 } else {
     echo "PCRE は unicode をサポートしていません。\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -164,8 +162,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('title',
 
 // 取得用の Title フィールド (インデックス化せず、保存します)
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <programlisting role="php"><![CDATA[
 // 検索
@@ -179,8 +176,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 ...
 
 $hits = $index->find(strtolower($query));
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

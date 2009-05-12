@@ -61,7 +61,7 @@
             <title>General</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
+                For files that contain only PHP code, the closing tag ("?>") is never permitted. It is
                 not required by PHP, and omitting it prevents the accidental injection of trailing white space into the response.
             </para>
 
@@ -126,7 +126,7 @@
 
             <para>
                 If a class name is comprised of more than one word, the first letter of each new
-                word must be capitalized.  Successive capitalized letters are not allowed, e.g.
+                word must be capitalized. Successive capitalized letters are not allowed, e.g.
                 a class "Zend_PDF" is not allowed while "Zend_Pdf" is acceptable.
             </para>
 
@@ -162,8 +162,7 @@ Zend/Db.php
 Zend/Controller/Front.php
 
 Zend/View/Helper/FormRadio.php
-]]>
-                </programlisting>
+]]></programlisting>
 
                 File names must map to class names as described above.
             </para>
@@ -196,8 +195,7 @@ filterInput()
 getElementById()
 
 widgetFactory()
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -283,12 +281,11 @@ widgetFactory()
 <?php
 
 ?>
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
-                Short tags are never allowed.  For files containing only PHP code, the
+                Short tags are never allowed. For files containing only PHP code, the
                 closing tag must always be omitted (See <xref linkend="coding-standard.php-file-formatting.general" />).
             </para>
         </sect2>
@@ -305,8 +302,7 @@ widgetFactory()
 
                     <programlisting role="php"><![CDATA[
 $a = 'Example String';
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -321,8 +317,7 @@ $a = 'Example String';
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` "
      . "WHERE `name`='Fred' OR `name`='Susan'";
-]]>
-                    </programlisting>
+]]></programlisting>
 
                     This syntax is preferred over escaping apostrophes as it is much easier to read.
                 </para>
@@ -338,8 +333,7 @@ $sql = "SELECT `id`, `name` from `people` "
 $greeting = "Hello $name, welcome back!";
 
 $greeting = "Hello {$name}, welcome back!";
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -347,8 +341,7 @@ $greeting = "Hello {$name}, welcome back!";
 
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello ${name}, welcome back!";
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -361,8 +354,7 @@ $greeting = "Hello ${name}, welcome back!";
 
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . ' ' . 'Technologies';
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -375,8 +367,7 @@ $company = 'Zend' . ' ' . 'Technologies';
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
      . "ORDER BY `name` ASC ";
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
         </sect2>
@@ -400,8 +391,7 @@ $sql = "SELECT `id`, `name` FROM `people` "
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -413,8 +403,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
                      56.44, $d, 500);
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -428,8 +417,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
                      'secondKey' => 'secondValue');
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
         </sect2>
@@ -465,8 +453,7 @@ class SampleClass
     // all contents of class
     // must be indented four spaces
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -481,7 +468,7 @@ class SampleClass
                     declaration of any methods.
                 </para>
                 <para>
-                    The <code>var</code> construct is not permitted.  Member variables always declare
+                    The <code>var</code> construct is not permitted. Member variables always declare
                     their visibility by using one of the <code>private</code>, <code>protected</code>,
                     or <code>public</code> modifiers. Giving access to member variables directly by declaring them
                     as public is permitted but discouraged in favor of accessor methods (set/get).
@@ -530,8 +517,7 @@ class Foo
         // must be indented four spaces
     }
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -549,17 +535,15 @@ class Foo
     public function bar(&$baz)
     {}
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
                     Call-time pass-by-reference is strictly prohibited.
                 </para>
 
-
                 <para>
-                    The return value must not be enclosed in parentheses.  This can hinder readability, in additional to breaking code
+                    The return value must not be enclosed in parentheses. This can hinder readability, in additional to breaking code
                     if a method is later changed to return by reference.
 
                     <programlisting role="php"><![CDATA[
@@ -584,8 +568,7 @@ class Foo
         return $this->bar;
     }
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
             </sect3>
@@ -599,8 +582,7 @@ class Foo
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -609,7 +591,7 @@ threeArguments(1, 2, 3);
                 </para>
                 <para>
                     In passing arrays as arguments to a function, the function call may include the
-                    "array" hint and may be split into multiple lines to improve readability.  In
+                    "array" hint and may be split into multiple lines to improve readability. In
                     such cases, the normal guidelines for writing arrays still apply:
 
                     <programlisting role="php"><![CDATA[
@@ -618,8 +600,7 @@ threeArguments(array(1, 2, 3), 2, 3);
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
                      56.44, $d, 500), 2, 3);
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
         </sect2>
@@ -651,8 +632,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
 if ($a != 2) {
     $a = 2;
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
 
                 <para>
@@ -673,8 +653,7 @@ if ($a != 2) {
 } else {
     $a = 7;
 }
-]]>
-                    </programlisting>
+]]></programlisting>
                     PHP allows statements to be written without braces in some circumstances.
                     This coding standard makes no differentiation- all "if", "elseif" or "else" statements
                     must use braces.
@@ -710,8 +689,7 @@ switch ($numPeople) {
     default:
         break;
 }
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     The construct <code>default</code> should never be omitted from a <code>switch</code> statement.
@@ -765,8 +743,7 @@ switch ($numPeople) {
  * @link       http://framework.zend.com/package/PackageName
  * @since      File available since Release 1.5.0
 */
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -789,8 +766,7 @@ switch ($numPeople) {
  * @since      Class available since Release 1.5.0
  * @deprecated Class deprecated in Release 2.0.0
  */
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
 
@@ -817,8 +793,7 @@ switch ($numPeople) {
 
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [description]
-]]>
-                    </programlisting>
+]]></programlisting>
                 </para>
             </sect3>
         </sect2>

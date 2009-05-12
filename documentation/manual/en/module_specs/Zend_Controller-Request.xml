@@ -6,7 +6,7 @@
         <title>Introduction</title>
         <para>
             The request object is a simple value object that is passed between
-            <code>Zend_Controller_Front</code> and the router, dispatcher, and
+            <classname>Zend_Controller_Front</classname> and the router, dispatcher, and
             controller classes. It packages the names of the requested module,
             controller, action, and optional parameters, as well as the rest of
             the request environment, be it HTTP, the CLI, or PHP-GTK.
@@ -41,7 +41,7 @@
 
         <para>
             Based on the type of request, there may be more methods available.
-            The default request used, <code>Zend_Controller_Request_Http</code>,
+            The default request used, <classname>Zend_Controller_Request_Http</classname>,
             for instance, has methods for retrieving the request URI, path
             information, <code>$_GET</code> and <code>$_POST</code> parameters,
             etc.
@@ -72,7 +72,7 @@
             <title>Accessing Request Data</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> encapsulates access to
+                <classname>Zend_Controller_Request_Http</classname> encapsulates access to
                 relevant values such as the key name and value for the
                 controller and action router variables, and all additional
                 parameters parsed from the URI. It additionally allows access to
@@ -86,7 +86,7 @@
                 <title>Superglobal Data</title>
                 <para>
                     When accessing superglobal data through
-                    <code>Zend_Controller_Request_Http</code> as public member
+                    <classname>Zend_Controller_Request_Http</classname> as public member
                     properties, it is necessary to keep in mind that the
                     property name (superglobal array key) is matched to a
                     superglobal in a specific order of precedence: 1. GET, 2.
@@ -175,19 +175,18 @@
                     contains the URI you need, not
                     <code>$_SERVER['REQUEST_URI']</code>. If you are using such
                     a setup and getting invalid routing, you should use the
-                    <code>Zend_Controller_Request_Apache404</code> class instead
+                    <classname>Zend_Controller_Request_Apache404</classname> class instead
                     of the default Http class for your request object:
                 </para>
 
                 <programlisting role="php"><![CDATA[
 $request = new Zend_Controller_Request_Apache404();
 $front->setRequest($request);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     This class extends the
-                    <code>Zend_Controller_Request_Http</code> class and simply
+                    <classname>Zend_Controller_Request_Http</classname> class and simply
                     modifies the autodiscovery of the request URI. It can be
                     used as a drop-in replacement.
                 </para>
@@ -198,9 +197,9 @@ $front->setRequest($request);
             <title>Base Url and Subdirectories</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> allows
-                <code>Zend_Controller_Router_Rewrite</code> to be used in subdirectories.
-                <code>Zend_Controller_Request_Http</code> will attempt to automatically
+                <classname>Zend_Controller_Request_Http</classname> allows
+                <classname>Zend_Controller_Router_Rewrite</classname> to be used in subdirectories.
+                <classname>Zend_Controller_Request_Http</classname> will attempt to automatically
                 detect your base URL and set it accordingly.
             </para>
 
@@ -230,9 +229,9 @@ $front->setRequest($request);
                 Should base URL be detected incorrectly you can override it
                 with your own base path with the help of the
                 <code>setBaseUrl()</code> method of either the
-                <code>Zend_Controller_Request_Http</code> class, or the
-                <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>,
+                <classname>Zend_Controller_Request_Http</classname> class, or the
+                <classname>Zend_Controller_Front</classname> class. The easiest
+                method is to set it in <classname>Zend_Controller_Front</classname>,
                 which will proxy it into the request object. Example usage to
                 set a custom base URL:
             </para>
@@ -247,8 +246,7 @@ $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // set the base url!
 $response   = $controller->dispatch();
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -282,7 +280,7 @@ $response   = $controller->dispatch();
             <title>Detecting AJAX Requests</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> has a rudimentary
+                <classname>Zend_Controller_Request_Http</classname> has a rudimentary
                 method for detecting AJAX requests:
                 <code>isXmlHttpRequest()</code>. This method looks for an
                 HTTP request header <code>X-Requested-With</code> with the value
@@ -316,7 +314,7 @@ $response   = $controller->dispatch();
 
         <para>
             The base request class used for all request objects is the abstract
-            class <code>Zend_Controller_Request_Abstract</code>. At its most
+            class <classname>Zend_Controller_Request_Abstract</classname>. At its most
             basic, it defines the following methods:
         </para>
 
@@ -402,8 +400,7 @@ abstract class Zend_Controller_Request_Abstract
      */
     public function isDispatched();
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The request object is a container for the request environment. The

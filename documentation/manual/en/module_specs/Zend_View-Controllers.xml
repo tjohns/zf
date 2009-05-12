@@ -4,7 +4,7 @@
     <title>Controller Scripts</title>
 
     <para>
-        The controller is where you instantiate and configure <code>Zend_View</code>.
+        The controller is where you instantiate and configure <classname>Zend_View</classname>.
         You then assign variables to the view, and tell the view to
         render output using a particular script.
     </para>
@@ -25,8 +25,7 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             However, this can be tedious when you have already collected the
@@ -59,8 +58,7 @@ $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
 $view->assign((array) $obj);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternatively, you can use the assign method to assign
@@ -73,8 +71,7 @@ $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
 $view->assign('c', "Sea");
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -84,7 +81,7 @@ $view->assign('c', "Sea");
 
         <para>
             Once you have assigned all needed variables, the controller
-            should tell <code>Zend_View</code> to render a particular view script.
+            should tell <classname>Zend_View</classname> to render a particular view script.
             Do so by calling the render() method. Note that the method will
             return the rendered view, not print it, so you need to print or
             echo it yourself at the appropriate time.
@@ -96,8 +93,7 @@ $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
 echo $view->render('someView.php');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -106,24 +102,23 @@ echo $view->render('someView.php');
         <title>View Script Paths</title>
 
         <para>
-            By default, <code>Zend_View</code> expects your view scripts to be relative to
+            By default, <classname>Zend_View</classname> expects your view scripts to be relative to
             your calling script. For example, if your controller script is at
             "/path/to/app/controllers" and it calls
-            $view->render('someView.php'), <code>Zend_View</code> will look for
+            $view->render('someView.php'), <classname>Zend_View</classname> will look for
             "/path/to/app/controllers/someView.php".
         </para>
 
         <para>
             Obviously, your view scripts are probably located elsewhere. To
-            tell <code>Zend_View</code> where it should look for view scripts, use the
+            tell <classname>Zend_View</classname> where it should look for view scripts, use the
             setScriptPath() method.
         </para>
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 $view->setScriptPath('/path/to/app/views');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Now when you call $view->render('someView.php'), it will look
@@ -132,7 +127,7 @@ $view->setScriptPath('/path/to/app/views');
 
         <para>
             In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, <code>Zend_View</code> will look
+            method. As you add paths to the stack, <classname>Zend_View</classname> will look
             at the most-recently-added path for the requested view
             script. This allows you override default views with custom
             views so that you may create custom "themes" or "skins" for
@@ -148,14 +143,13 @@ $view->addScriptPath('/path/to/custom/');
 // look first for "/path/to/custom/booklist.php", then for
 // "/path/to/app/views/booklist.php", and finally in the current
 // directory for "booklist.php".
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>Never use user input to set script paths</title>
 
             <para>
-                <code>Zend_View</code> uses script paths to lookup and render
+                <classname>Zend_View</classname> uses script paths to lookup and render
                 view scripts. As such, these directories should be known
                 before-hand, and under your control. <emphasis>Never</emphasis>
                 set view script paths based on user input, as you can

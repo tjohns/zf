@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.dojo.view" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Dojo View Helfer</title>
@@ -10,9 +10,9 @@
 
     <itemizedlist>
         <listitem><para>
-            <emphasis>dojo():</emphasis> Erstellt die Dojo Umgebung für die eigene Seite, inklusive der
-            Werte für die Dojo Konfiguration, eigene Modulpfade, benötigte Modulstatements, Themenstylesheets,
-            CDN Verwendung, und vieles mehr.
+            <emphasis>dojo():</emphasis> Erstellt die Dojo Umgebung für die eigene Seite, inklusive
+            der Werte für die Dojo Konfiguration, eigene Modulpfade, benötigte Modulstatements,
+            Themenstylesheets, CDN Verwendung, und vieles mehr.
         </para></listitem>
     </itemizedlist>
 
@@ -20,24 +20,22 @@
         <title>Dojo View Helfer verwenden</title>
 
         <para>
-            Um die Dojo View Helfer zu verwenden muß man dem View Objekt mitteilen wo Sie zu finden sind. Das
-            kann durch den Aufruf von <code>addHelperPath()</code> getan werden:
+            Um die Dojo View Helfer zu verwenden muß man dem View Objekt mitteilen wo Sie zu finden
+            sind. Das kann durch den Aufruf von <code>addHelperPath()</code> getan werden:
         </para>
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Alternativ kann <code>Zend_Dojo</code>'s <code>enableView()</code> Methode verwendet werden um einem
-            die Arbeit abzunehmen:
+            Alternativ kann <classname>Zend_Dojo</classname>'s <code>enableView()</code> Methode
+            verwendet werden um einem die Arbeit abzunehmen:
         </para>
 
         <programlisting role="php"><![CDATA[
 Zend_Dojo::enableView($view);
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <xi:include href="Zend_Dojo-View-Dojo.xml" />

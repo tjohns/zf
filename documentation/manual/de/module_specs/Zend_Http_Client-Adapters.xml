@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
@@ -9,8 +9,8 @@
         <para>
             Zend_Http_Client basiert auf einem Design mit Verbindungsadaptern. Der
             Verbindungsadapter ist das Objekt, welches für die Ausführung der aktuellen Verbindung
-            zum Server sowie für das Schreiben der Anfragen und Lesen von Antworten verantwortlich ist.
-            Dieser Verbindungsadapter kann ersetzt werden und man kann den Standard
+            zum Server sowie für das Schreiben der Anfragen und Lesen von Antworten verantwortlich
+            ist. Dieser Verbindungsadapter kann ersetzt werden und man kann den Standard
             Verbindungsadapter durch seinen eigenen Adapter erweitern, um ihn mit dem selben
             Interface auf seine eigenen Bedürfnisse anzupassen, ohne dass man die gesamte HTTP
             Client Klasse erweitern oder ersetzen muss.
@@ -20,22 +20,22 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Socket</code> (Standard)
+                        <classname>Zend_Http_Client_Adapter_Socket</classname> (Standard)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Proxy</code>
+                        <classname>Zend_Http_Client_Adapter_Proxy</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Test</code>
+                        <classname>Zend_Http_Client_Adapter_Test</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Http_Client_Adapter_Curl</code>
+                        <classname>Zend_Http_Client_Adapter_Curl</classname>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -54,15 +54,15 @@
     <sect2 id="zend.http.client.adapters.socket">
         <title>Der Socket Adapter</title>
         <para>
-            Der Standard-Adapter von Zend_Http_Client ist der Zend_Http_Client_Adapter_Socket. Dieser
-            wird benutzt, wenn kein anderer angegeben wird. Der Socket Adapter benutzt die native
-            PHP Funktion fsockopen(), um die Verbindung aufzubauen, dafür werden keine besonderen
-            PHP-Extensions oder Einstellungen benötigt.
+            Der Standard-Adapter von Zend_Http_Client ist der Zend_Http_Client_Adapter_Socket.
+            Dieser wird benutzt, wenn kein anderer angegeben wird. Der Socket Adapter benutzt die
+            native PHP Funktion fsockopen(), um die Verbindung aufzubauen, dafür werden keine
+            besonderen PHP-Extensions oder Einstellungen benötigt.
         </para>
         <para>
-            Der Socket Adapter erlaubt verschiedene zusätzliche Konfigurations Optionen die gesetzt werden
-            können durch Verwendung von <code>Zend_Http_Client->setConfig()</code> oder deren Übergabe an
-            den Konstruktor des Clients.
+            Der Socket Adapter erlaubt verschiedene zusätzliche Konfigurations Optionen die gesetzt
+            werden können durch Verwendung von <classname>Zend_Http_Client->setConfig()</classname>
+            oder deren Übergabe an den Konstruktor des Clients.
             <table id="zend.http.client.adapter.socket.configuration.table">
                 <title>Zend_Http_Client_Adapter_Socket Konfigurations Parameter</title>
                 <tgroup cols="4">
@@ -77,7 +77,9 @@
                     <tbody>
                         <row>
                             <entry>persistent</entry>
-                            <entry>Ob eine persistente TCP Verbindung verwendet werden soll oder nicht</entry>
+                            <entry>
+                                Ob eine persistente TCP Verbindung verwendet werden soll oder nicht
+                            </entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
                         </row>
@@ -106,37 +108,39 @@
             <note>
                 <title>Persistente TCP Verbindungen</title>
                 <para>
-                    Die Verwendung persistenter TCP Verbindungen kann HTTP Anfragen potentiell schneller
-                    machen - aber in den meisten Fällen, wird es nur einen kleinen positiven Effekt haben
-                    und könnte den HTTP Server überladen zu dem man sich verbindet.
+                    Die Verwendung persistenter TCP Verbindungen kann HTTP Anfragen potentiell
+                    schneller machen - aber in den meisten Fällen, wird es nur einen kleinen
+                    positiven Effekt haben und könnte den HTTP Server überladen zu dem man sich
+                    verbindet.
                 </para>
                 <para>
-                    Es wird empfohlen persistente TCP Verbindungen nur dann zu verwenden wenn man sich
-                    zu dem gleichen Server sehr oft verbindet, und man sicher ist das der Server eine
-                    große Anzahl an gleichzeitigen Verbindungen behandeln kann. In jedem Fall wird
-                    empfohlen das der Effekt von persistenten Verbindungen auf beiden, der Geschwindigkeit
-                    des Clients und dem Serverload gemessen wird bevor diese Option verwendet wird.
+                    Es wird empfohlen persistente TCP Verbindungen nur dann zu verwenden wenn man
+                    sich zu dem gleichen Server sehr oft verbindet, und man sicher ist das der
+                    Server eine große Anzahl an gleichzeitigen Verbindungen behandeln kann. In jedem
+                    Fall wird empfohlen das der Effekt von persistenten Verbindungen auf beiden, der
+                    Geschwindigkeit des Clients und dem Serverload gemessen wird bevor diese Option
+                    verwendet wird.
                 </para>
                 <para>
-                    Zusätzlich, wenn persistente Verbindungen verwendet werden, sollte man Keep-Alive
-                    HTTP Anfragen aktivieren wie in <xref linkend="zend.http.client.configuration" />
-                    beschrieben - andernfalls werden persistente Verbindungen nur wenig oder gar keinen
-                    Effekt haben.
+                    Zusätzlich, wenn persistente Verbindungen verwendet werden, sollte man
+                    Keep-Alive HTTP Anfragen aktivieren wie in <xref
+                        linkend="zend.http.client.configuration" /> beschrieben - andernfalls werden
+                    persistente Verbindungen nur wenig oder gar keinen Effekt haben.
                 </para>
             </note>
 
             <note>
                 <title>HTTPS SSL Stream Parameter</title>
                 <para>
-                    <code>ssltransport, sslcert</code> und <code>sslpassphrase</code> sind nur relevant
-                    wenn HTTPS für die Verbindung verwendet wird.
+                    <code>ssltransport, sslcert</code> und <code>sslpassphrase</code> sind nur
+                    relevant wenn HTTPS für die Verbindung verwendet wird.
                 </para>
                 <para>
-                    Wärend die Standard SSL Einstellungen für die meisten Anwendungen funktionieren, kann
-                    es notwendig sein diese zu Ändern wenn der Server zu dem man sich verbindet ein
-                    spezielles Client Setup benötigt. Wenn dem so ist, sollte man das Kapitel über SSL
-                    Transport Layer und Optionen lesen das
-                    <ulink url="http://www.php.net/manual/en/transports.php#transports.inet">hier</ulink>
+                    Wärend die Standard SSL Einstellungen für die meisten Anwendungen funktionieren,
+                    kann es notwendig sein diese zu Ändern wenn der Server zu dem man sich verbindet
+                    ein spezielles Client Setup benötigt. Wenn dem so ist, sollte man das Kapitel
+                    über SSL Transport Layer und Optionen lesen das <ulink
+                        url="http://www.php.net/manual/en/transports.php#transports.inet">hier</ulink>
                     zu finden ist.
                 </para>
             </note>
@@ -155,8 +159,7 @@ $client = new Zend_Http_Client('https://www.example.com', $config);
 
 // Jetzt wird der Request über eine verschlüsselte Verbindung verschickt
 $response = $client->request();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Ein ähnliches Ergebnis erzielt man mit folgendem Code:
@@ -234,15 +237,15 @@ $response = $client->request();
                         proxy_user und proxy_pass werden nur dann benötigt, wenn der Proxy-Server
                         tatsächlich eine Authentifizierung erwartet. Werden diese Parameter mit
                         übergeben, setzt der Proxy-Adapter zusätzlich den 'Proxy-Authentication'
-                        Header bei Anfragen.
-                        Wird keine Authentifizierung benötigt, sollten die beiden Parameter weggelassen werden.
+                        Header bei Anfragen. Wird keine Authentifizierung benötigt, sollten die
+                        beiden Parameter weggelassen werden.
         </para>
         <para>
                         proxy_auth setzt den Authentifizierungs-Typ. Dies ist nur nötig, wenn der
                         Proxy-Server eine Authentifizierung erwartet.
                         Mögliche Werte entsprechen denen der Zend_Http_Client::setAuth() Methode.
-                        Zur Zeit wird nur die BASIC-Authentifizierung ((Zend_Http_Client::AUTH_BASIC)
-                        unterstützt.
+                        Zur Zeit wird nur die BASIC-Authentifizierung
+                        ((Zend_Http_Client::AUTH_BASIC) unterstützt.
         </para>
         <example id="zend.http.client.adapters.proxy.example-1">
             <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
@@ -260,8 +263,7 @@ $config = array(
 $client = new Zend_Http_Client('http://www.example.com', $config);
 
 // $client kann jetzt wie gewohnt benutzt werden
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
                         Wie vorher erwähnt, nutzt der Proxy-Adapter eine einfache Socket-Verbindung,
@@ -317,8 +319,7 @@ $adapter->setResponse(
 
 $response = $client->request('GET');
 // .. setze die Verarbeitung von $response fort...
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Das obere Beispiel zeigt, wie man einen HTTP Client voreinstellen kann, damit er die
@@ -358,14 +359,13 @@ $adapter->addResponse(
     "Content-Type: text/html" . "\r\n" .
                                     "\r\n" .
     '<html>' .
-    '  <head><title>Meine Haustierseite...</title></head>' .
+    '  <head><title>Meine Haustierseite</title></head>' .
     '  <body><p>...</p></body>' .
     '</html>');
 
 // Das $client Objekt kann jetzt zu testzwecken herangezogen werden,
 // indem es wie ein normales Client-Objekt benutzt wird.
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -376,7 +376,7 @@ $adapter->addResponse(
         <para>
             Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
             der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
-            Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
+            Abhängig von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
             dass dem Redirect gefolgt wird.
         </para>
     </sect2>
@@ -401,8 +401,7 @@ $config = array(
     'curloptions' => array(CURLOPT_FOLLOWLOCATION => true),
 );
 $client = new Zend_Http_Client($uri, $config);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -435,8 +434,7 @@ $adapter->setConfig(array(
     )
 ));
 $client->request("PUT");
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -527,8 +525,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
 ));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

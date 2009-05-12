@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.json.xml2json">
     <title>XML から JSON への変換</title>
     <para>
-        <code>Zend_Json</code> には、XML 形式のデータを
+        <classname>Zend_Json</classname> には、XML 形式のデータを
         JSON 形式に変換するための便利なメソッドがあります。
         この機能は
         <ulink url="http://www.ibm.com/developerworks/xml/library/x-xml2jsonphp/">
@@ -13,7 +13,7 @@
     </para>
 
     <para>
-        <code>Zend_Json</code> には、静的関数 <code>Zend_Json::fromXml()</code>
+        <classname>Zend_Json</classname> には、静的関数 <code>Zend_Json::fromXml()</code>
         が搭載されています。この関数は、XML を受け取って JSON を作成します。
         入力パラメータには、任意の XML 文字列を渡すことができます。
         また、オプションのパラメータで論理値を渡し、
@@ -24,25 +24,24 @@
     <programlisting role="php"><![CDATA[
 // fromXml 関数の入力には、XML を含む文字列を渡します
 $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
-        <code>Zend_Json::fromXml()</code> 関数は、
+        <classname>Zend_Json::fromXml()</classname> 関数は、
         入力として渡された XML 形式の文字列を、
         それと同等な JSON 形式の文字列に変換して返します。
         XML の書式にエラーがあったり変換中にエラーが発生した場合は、
         この関数は例外をスローします。
         変換ロジックは、XML ツリーを再帰的に走査します。
         最大で 25 段階までの再帰を行います。
-        それ以上の深さに達した場合は <code>Zend_Json_Exception</code>
+        それ以上の深さに達した場合は <classname>Zend_Json_Exception</classname>
         をスローします。Zend Framework の
         tests ディレクトリ内には XML ファイルがいくつか入っているので、
         それらを用いると xml2json の機能を確かめることができます。
     </para>
 
     <para>
-        XML 入力文字列の例と、<code>Zend_Json::fromXml()</code>
+        XML 入力文字列の例と、<classname>Zend_Json::fromXml()</classname>
         関数が返す JSON 文字列の例を次に示します。
         この例では、オプションのパラメータで
         XML の属性を無視しないように設定しています。
@@ -51,7 +50,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
     </para>
 
     <para>
-        <code>Zend_Json::fromXml()</code> 関数に渡す XML 入力文字列です。
+        <classname>Zend_Json::fromXml()</classname> 関数に渡す XML 入力文字列です。
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -75,11 +74,10 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
         <publisher>O'Reilly</publisher>
     </book>
 </books>
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
-        <code>Zend_Json::fromXml()</code> 関数が返す JSON 文字列です。
+        <classname>Zend_Json::fromXml()</classname> 関数が返す JSON 文字列です。
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -113,8 +111,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
       }
    ]}
 }
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         xml2json の機能についての詳細は、

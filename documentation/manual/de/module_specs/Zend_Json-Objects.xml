@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.json.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Json</title>
@@ -15,8 +15,8 @@
         <para>
             JSON erlaubt keine Objektreferenzen, deshalb sollte dafür Sorge getragen werden, dass
             keine Objekte mit rekursiver Referenz kodiert werden. Wenn man Probleme mit Rekursion
-            hat, erlauben <code>Zend_Json::encode()</code> und
-            <code>Zend_Json_Encoder::encode()</code> die Angabe eines optionalen, zweiten
+            hat, erlauben <classname>Zend_Json::encode()</classname> und
+            <classname>Zend_Json_Encoder::encode()</classname> die Angabe eines optionalen, zweiten
             Parameters, um auf Rekursion zu prüfen; wenn ein Objekt doppelt serialisiert wird, wird
             eine Ausnahme geworfen.
         </para>
@@ -30,16 +30,15 @@
         </para>
 
         <para>
-            Standardmäßig wird <code>Zend_Json</code> die JSON Objekte als assoziative Arrays
-            dekodieren. Wenn du allerdings wünscht, dass ein Objekt zurück gegeben wird, kannst du
-            dies angeben:
+            Standardmäßig wird <classname>Zend_Json</classname> die JSON Objekte als assoziative
+            Arrays dekodieren. Wenn du allerdings wünscht, dass ein Objekt zurück gegeben wird,
+            kannst du dies angeben:
         </para>
 
         <programlisting role="php"><![CDATA[
 // Dekodiere JSON Objekte als PHP Objekte
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Jedes dekodierte Objekte wird als <code>StdClass</code> Objekt mit Eigenschaften
@@ -48,9 +47,9 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 
         <para>
             Die Empfehlung des Zend Framework ist, dass der einzelne Entwickler selber entscheiden
-            sollte, wie er JSON Objekte dekodiert. Wenn ein Objekt eines bestimmten Typs erstellt werden
-            soll, kann es im Code des Entwicklers erstellt werden und mit den dekodierten Werten unter
-            Verwendung von <code>Zend_Json</code> bestückt werden.
+            sollte, wie er JSON Objekte dekodiert. Wenn ein Objekt eines bestimmten Typs erstellt
+            werden soll, kann es im Code des Entwicklers erstellt werden und mit den dekodierten
+            Werten unter Verwendung von <classname>Zend_Json</classname> bestückt werden.
         </para>
     </sect2>
 
@@ -60,9 +59,9 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
         <para>
             Wenn man PHP Objekte kodiert, kann der Kodierungsmechanismus standardmäßig nur auf
             public Eigenschaften dieser Objekte zugreifen. Wenn eine Methode <code>toJson()</code>
-            an einem Objekte für die Kodierung implementiert ist, ruft <code>Zend_Json</code> diese
-            Methode auf und erwartet dass das Objekt eine JSON Repräsentation seines internen
-            Status zurückgibt.
+            an einem Objekte für die Kodierung implementiert ist, ruft
+            <classname>Zend_Json</classname> diese Methode auf und erwartet dass das Objekt eine
+            JSON Repräsentation seines internen Status zurückgibt.
         </para>
     </sect2>
 
@@ -86,8 +85,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 
         <programlisting role="php"><![CDATA[
 Zend_Json::$useBuiltinEncoderDecoder = true:
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.json.advanced.expr">
@@ -96,20 +94,21 @@ Zend_Json::$useBuiltinEncoderDecoder = true:
         <para>
             Javascript macht häufige Verwendung von anonymen Funktions-Callbacks, welche in
             JSON Objektvariablen gespeichert werden können. Trotzdem funktionieren Sie nur wenn
-            Sie nicht in doppelten Anführungszeichen gesetzt werden, was <code>Zend_Json</code>
-            natürlich macht. Mit der Unterstützung von Ausdrücken für Zend_Json können JSON Objekte
-            mit gültigen Javascript Callbacks kodiert werden. Das funktioniert sowohl für
-            <code>json_encode()</code> als auch den internen Kodierer.
+            Sie nicht in doppelten Anführungszeichen gesetzt werden, was
+            <classname>Zend_Json</classname> natürlich macht. Mit der Unterstützung von Ausdrücken
+            für Zend_Json können JSON Objekte mit gültigen Javascript Callbacks kodiert werden. Das
+            funktioniert sowohl für <code>json_encode()</code> als auch den internen Kodierer.
         </para>
 
         <para>
-            Ein Javascript Callback wird repräsentiert indem das <code>Zend_Json_Expr</code> Objekt
-            verwendet wird. Es implementiert das Wert-Objekt Pattern und ist nicht änderbar. Man
-            kann den Javascript Ausdruck als erstes Argument des Konstruktors setzen. Standardmäßig
-            kodiert <code>Zend_Json::encode</code> keine Javascript Callbacks, wenn man die Option
-            <code>'enableJsonExprFinder' = true</code> in der <code>encode</code> Funktion
-            übergibt. Aktiviert, unterstützt arbeiten Ausdrücke für alle enthaltenen Ausdrücke in
-            großen Objektstrukturen. Ein Verwendungsbeispiel würde wie folgt aussehen:
+            Ein Javascript Callback wird repräsentiert indem das
+            <classname>Zend_Json_Expr</classname> Objekt verwendet wird. Es implementiert das
+            Wert-Objekt Pattern und ist nicht änderbar. Man kann den Javascript Ausdruck als erstes
+            Argument des Konstruktors setzen. Standardmäßig kodiert
+            <classname>Zend_Json::encode</classname> keine Javascript Callbacks, wenn man die Option
+            <code>'enableJsonExprFinder' = true</code> in der <code>encode</code> Funktion übergibt.
+            Aktiviert, unterstützt arbeiten Ausdrücke für alle enthaltenen Ausdrücke in großen
+            Objektstrukturen. Ein Verwendungsbeispiel würde wie folgt aussehen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -124,8 +123,7 @@ $jsonObjectWithExpression = Zend_Json::encode(
     false,
     array('enableJsonExprFinder' => true)
 );
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
 </sect1>

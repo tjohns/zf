@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.layout.introduction">
     <title>導入</title>
 
     <para>
-        <code>Zend_Layout</code> は、
+        <classname>Zend_Layout</classname> は、
         有名な「ツーステップビューパターン」を実装したものです。
         開発者は、アプリケーションのコンテンツを別のビューの中に埋め込むことができます。
         この「別のビュー」は、通常はサイトのテンプレートとなります。
@@ -15,7 +15,7 @@
     </para>
 
     <para>
-        <code>Zend_Layout</code> の目標を以下にまとめます。
+        <classname>Zend_Layout</classname> の目標を以下にまとめます。
     </para>
 
     <itemizedlist>

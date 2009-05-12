@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.simpy">
     <title>Zend_Service_Simpy</title>
     <sect2 id="zend.service.simpy.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Service_Simpy</code> ist ein schlanker Wrapper für das freie REST API des
-            Simpy Lesezeichen-Services.
+            <classname>Zend_Service_Simpy</classname> ist ein schlanker Wrapper für das freie REST
+            API des Simpy Lesezeichen-Services.
         </para>
         <para>
-            Um <code>Zend_Service_Simpy</code> zu nutzen, solltest du bereits ein Simpy-Konto besitzen.
-            Falls dies nicht der Fall ist, kannst du dies auf der
-            <ulink url="http://simpy.com">Simpy Webseite</ulink> tun. Für weitere Informationen über das
-            Simpy REST API, kannst du in der
-            <ulink url="http://www.simpy.com/doc/api/rest">Simpy REST API Dokumentation</ulink> nachlesen.
+            Um <classname>Zend_Service_Simpy</classname> zu nutzen, solltest du bereits ein
+            Simpy-Konto besitzen. Falls dies nicht der Fall ist, kannst du dies auf der
+            <ulink url="http://simpy.com">Simpy Webseite</ulink> tun. Für weitere Informationen über
+            das Simpy REST API, kannst du in der
+            <ulink url="http://www.simpy.com/doc/api/rest">Simpy REST API Dokumentation</ulink>
+            nachlesen.
         </para>
         <para>
-            Das Simpy REST API erlaubt es dem Entwickler, mit verschiedenen Aspekten des Services, welche die
-            Simpy Webseite bietet, zu interagieren. Diese Sektionen zeigen dir, wie man
-            <code>Zend_Service_Simpy</code> in jedem dieser Bereiche nutzen kann.
+            Das Simpy REST API erlaubt es dem Entwickler, mit verschiedenen Aspekten des Services,
+            welche die Simpy Webseite bietet, zu interagieren. Diese Sektionen zeigen dir, wie man
+            <classname>Zend_Service_Simpy</classname> in jedem dieser Bereiche nutzen kann.
             <itemizedlist>
                 <listitem>
                     <para>
@@ -103,8 +104,7 @@ $linkQuery->setBeforeDate('2006-12-09');
 hinzugefügt wurden (die beiden Daten sind dabei ausgeschlossen) */
 $linkQuery->setBeforeDate('2006-12-01');
 $linkQuery->setAfterDate('2006-12-09');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Links werden eindeutig durch ihren URL angezeigt. In anderen Worten, falls ein Versuch
@@ -149,8 +149,7 @@ $linkSet = $this->_simpy->getLinks();
 foreach ($linkSet as $link) {
     $this->_simpy->deleteLink($link->getUrl());
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.tags">
@@ -200,8 +199,7 @@ $simpy->splitTag('frameworks', 'framework', 'development');
 /* Fasse 'framework' und 'development' wieder zu 'frameworks'
 zusammen; vereinfacht ist es das Gegenteil, ein Tag zu splitten */
 $simpy->mergeTags('framework', 'development', 'frameworks');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.notes">
@@ -253,8 +251,7 @@ $noteSet = $simpy->getNotes('+title:PHP -description:framework');
 
 /* Löschen einer Notiz */
 $simpy->deleteNote($note->getId());
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.simpy.watchlists">
@@ -302,8 +299,7 @@ foreach ($watchlistSet as $watchlist) {
 /* Hole eine spezielle Watchlist anhand einer ID */
 $watchlist = $simpy->getWatchlist($watchlist->getId());
 $watchlist = $simpy->getWatchlist(1);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

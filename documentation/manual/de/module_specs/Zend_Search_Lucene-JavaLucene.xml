@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Zusammenarbeit Mit Java Lucene</title>
@@ -8,7 +8,8 @@
         <title>Dateiformate</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> Indexdateiformate sind binär kompatibel mit der Java Lucene Version 1.4 und größer.
+            <classname>Zend_Search_Lucene</classname> Indexdateiformate sind binär kompatibel mit
+            der Java Lucene Version 1.4 und größer.
         </para>
 
         <para>
@@ -16,7 +17,8 @@
             <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
             <footnote>
                 <para>
-                    Die aktuell unterstützte Version des Lucene Index Dateiformats ist 2.3 (beginnend mit ZF 1.6).
+                    Die aktuell unterstützte Version des Lucene Index Dateiformats ist 2.3
+                    (beginnend mit ZF 1.6).
                 </para>
             </footnote>.
         </para>
@@ -85,8 +87,7 @@ Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
 indexWriter.addDocument(doc);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
 </sect1>

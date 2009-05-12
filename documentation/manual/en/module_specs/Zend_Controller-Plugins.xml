@@ -17,7 +17,7 @@
 
         <para>
             The event methods are defined in the abstract class
-            <code>Zend_Controller_Plugin_Abstract</code>, from which user plugin
+            <classname>Zend_Controller_Plugin_Abstract</classname>, from which user plugin
             classes inherit:
         </para>
 
@@ -25,7 +25,7 @@
             <listitem>
                 <para>
                     <code>routeStartup()</code> is called before
-                    <code>Zend_Controller_Front</code> calls on <link
+                    <classname>Zend_Controller_Front</classname> calls on <link
                         linkend="zend.controller.router">the router</link>
                     to evaluate the request against the registered routes.
                 </para>
@@ -42,7 +42,7 @@
             <listitem>
                 <para>
                     <code>dispatchLoopStartup()</code> is called before
-                    <code>Zend_Controller_Front</code> enters its dispatch loop.
+                    <classname>Zend_Controller_Front</classname> enters its dispatch loop.
                 </para>
             </listitem>
 
@@ -53,7 +53,7 @@
                         dispatcher</link>. This callback allows for proxy or
                     filter behavior. By altering the request and resetting its
                     dispatched flag (via
-                    <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
+                    <classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname>),
                     the current action may be skipped and/or replaced.
                 </para>
             </listitem>
@@ -65,7 +65,7 @@
                         dispatcher</link>. This callback allows for proxy or
                     filter behavior. By altering the request and resetting its
                     dispatched flag (via
-                    <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
+                    <classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname>),
                     a new action may be specified for dispatching.
                 </para>
             </listitem>
@@ -73,7 +73,7 @@
             <listitem>
                 <para>
                     <code>dispatchLoopShutdown()</code> is called after
-                    <code>Zend_Controller_Front</code> exits its dispatch loop.
+                    <classname>Zend_Controller_Front</classname> exits its dispatch loop.
                 </para>
             </listitem>
         </itemizedlist>
@@ -84,7 +84,7 @@
 
         <para>
             In order to write a plugin class, simply include and extend the
-            abstract class <code>Zend_Controller_Plugin_Abstract</code>:
+            abstract class <classname>Zend_Controller_Plugin_Abstract</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -92,11 +92,10 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            None of the methods of <code>Zend_Controller_Plugin_Abstract</code>
+            None of the methods of <classname>Zend_Controller_Plugin_Abstract</classname>
             are abstract, and this means that plugin classes are not forced to
             implement any of the available event methods listed above. Plugin
             writers may implement only those methods required by their
@@ -104,7 +103,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         </para>
 
         <para>
-            <code>Zend_Controller_Plugin_Abstract</code> also makes the request
+            <classname>Zend_Controller_Plugin_Abstract</classname> also makes the request
             and response objects available to controller plugins via the
             <code>getRequest()</code> and <code>getResponse()</code> methods,
             respectively.
@@ -116,7 +115,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 
         <para>
             Plugin classes are registered with
-            <code>Zend_Controller_Front::registerPlugin()</code>, and may be
+            <classname>Zend_Controller_Front::registerPlugin()</classname>, and may be
             registered at any time. The following snippet illustrates how a
             plugin may be used in the controller chain:
         </para>
@@ -167,8 +166,7 @@ $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Assuming that no actions called emit any output, and only one action
@@ -183,8 +181,7 @@ $front->dispatch();
 <p>preDispatch() called</p>
 <p>postDispatch() called</p>
 <p>dispatchLoopShutdown() called</p>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>

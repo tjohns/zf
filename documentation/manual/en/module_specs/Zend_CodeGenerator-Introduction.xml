@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_CodeGenerator</code> provides facilities to generate
+        <classname>Zend_CodeGenerator</classname> provides facilities to generate
         arbitrary code using an object oriented interface, both to create new
         code as well as to update existing code. While the current
         implementation is limited to generating PHP code, you can easily extend
@@ -72,8 +72,6 @@ class World
         echo 'Hello world!';
     }
 
-
-
 }
 ]]></programlisting>
 
@@ -81,7 +79,7 @@ class World
             Another common use case is to update existing code -- for instance,
             to add a method to a class. In such a case, you must first inspect
             the existing code using reflection, and then add your new method.
-            <code>Zend_CodeGenerator</code> makes this trivially simple, by
+            <classname>Zend_CodeGenerator</classname> makes this trivially simple, by
             leveraging <link linkend="zend.reflection">Zend_Reflection</link>.
         </para>
 
@@ -125,7 +123,6 @@ class World
     {
         echo 'Hello world!';
     }
-
 
     public function mrMcFeeley()
     {

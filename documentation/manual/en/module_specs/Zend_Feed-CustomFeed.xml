@@ -4,7 +4,7 @@
     <title>Custom Feed and Entry Classes</title>
 
     <para>
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
+        Finally, you can extend the <classname>Zend_Feed</classname> classes if you'd like to provide your own format or
         niceties like automatic handling of elements that should go into a custom namespace.
     </para>
 
@@ -70,8 +70,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
             property:
@@ -84,8 +83,7 @@ $entry->myUpdated = '2005-04-19T15:30';
 $entry->myUpdated();
 // property-style call is handled by __get function
 $entry->myUpdated;
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
 </sect1>

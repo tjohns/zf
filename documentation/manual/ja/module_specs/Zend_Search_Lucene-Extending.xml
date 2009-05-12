@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.search.lucene.extending">
     <title>拡張性</title>
 
     <sect2 id="zend.search.lucene.extending.analysis">
         <title>テキスト解析</title>
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer</code> クラスは、
+            <classname>Zend_Search_Lucene_Analysis_Analyzer</classname> クラスは、
             ドキュメントのテキストフィールドをトークン化 (単語に分解)
             する際にインデクサが使用します。
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> および
-            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code>
+            <classname>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</classname> および
+            <classname>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</classname>
             メソッドで、デフォルトの解析器を取得あるいは設定します。
         </para>
 
         <para>
             したがって、独自のテキスト解析器を指定したり、
             定義済みの解析器である
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> および
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> (デフォルト)
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</classname> および
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</classname> (デフォルト)
             の中から選んだものを指定したりできることになります。
             これらの解析器はどちらもトークンを文字列として解釈しますが、
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</classname>
             はトークンを小文字に変換します。
         </para>
 
@@ -38,12 +38,11 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
 $index->addDocument($doc);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             ユーザ定義の解析器のための共通の親クラスとして設計されているのが
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> です。
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common</classname> です。
             ユーザが定義しなければならないのは <code>reset()</code> および
             <code>nextToken()</code> メソッドのみで、
             これは文字列を $_input から受け取って順に返します
@@ -133,8 +132,7 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new My_Analyzer());
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
     </sect2>
@@ -142,13 +140,13 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     <sect2 id="zend.search.lucene.extending.filters">
         <title>トークンのフィルタリング</title>
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common</classname>
             解析器には、トークンをフィルタリングする仕組みもあります。
             mechanism.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_TokenFilter</code>
+            <classname>Zend_Search_Lucene_Analysis_TokenFilter</classname>
             クラスは、このフィルタリングの仕組みを抽象化したものです。
             自分でフィルタを作成する際には、これを継承します。
         </para>
@@ -165,17 +163,17 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code>
+                        <classname>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
+                        <classname>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</classname>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
+                        <classname>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</classname>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -183,7 +181,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             <code>LowerCase</code> フィルタは、既に
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</classname>
             解析器で使用されています。これはデフォルトの解析器です。
         </para>
 
@@ -200,8 +198,7 @@ $analyzer =
 $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-]]>
-            </programlisting>
+]]></programlisting>
             <programlisting role="php"><![CDATA[
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
@@ -210,12 +207,11 @@ $analyzer =
 $analyzer->addFilter($shortWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
+            <classname>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</classname>
             のコンストラクタには、禁止単語の配列を入力として渡します。
             この禁止単語はファイルから読み込ませることもできます。
             <programlisting role="php"><![CDATA[
@@ -227,20 +223,18 @@ $analyzer =
 $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-]]>
-            </programlisting>
+]]></programlisting>
             ファイル形式は一般的なテキストファイルで、各文字列にひとつの単語が含まれるものとなります。
             '#' を指定すると、その文字列はコメントであるとみなします。
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
+            <classname>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</classname>
             のコンストラクタには、オプションの引数をひとつ指定することができます。
             これは単語長の制限を表し、デフォルト値は 2 です。
         </para>
 
     </sect2>
-
 
     <sect2 id="zend.search.lucene.extending.scoring">
         <title>重み付けのアルゴリズム</title>
@@ -255,12 +249,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
         </para>
 
         <para>
-            tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code> -
+            tf(t in d) - <classname>Zend_Search_Lucene_Search_Similarity::tf($freq)</classname> -
             ドキュメント内での単語あるいは熟語の出現頻度に基づく重み要素。
         </para>
 
         <para>
-            idf(t) - <code>Zend_Search_Lucene_Search_Similarity::tf($term, $reader)</code> -
+            idf(t) - <classname>Zend_Search_Lucene_Search_Similarity::tf($term, $reader)</classname> -
             指定したインデックスに対する単純な単語の重み要素。
         </para>
 
@@ -282,7 +276,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
         </para>
 
         <para>
-            coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> -
+            coord(q,d) - <classname>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</classname> -
             ドキュメントに含まれる、検索対象の全単語の部分一致に基づく重み要素。
         </para>
 
@@ -306,8 +300,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
         <para>
             重み付けのアルゴリズムを変更するには、独自の Similatity
             クラスを定義します。そのためには以下のように
-            <code>Zend_Search_Lucene_Search_Similarity</code> クラスを継承し、
-            <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code>
+            <classname>Zend_Search_Lucene_Search_Similarity</classname> クラスを継承し、
+            <classname>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</classname>
             メソッドでそれをデフォルトとして設定します。
         </para>
 
@@ -343,8 +337,7 @@ class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
 
 $mySimilarity = new MySimilarity();
 Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.extending.storage">
@@ -388,7 +381,6 @@ abstract class Zend_Search_Lucene_Storage_Directory {
  */
 abstract function close();
 
-
 /**
  * $filename という名前の新しい空のファイルを、ディレクトリ内に作成します
  *
@@ -396,7 +388,6 @@ abstract function close();
  * @return void
  */
 abstract function createFile($filename);
-
 
 /**
  * 既存の $filename をディレクトリから削除します
@@ -406,7 +397,6 @@ abstract function createFile($filename);
  */
 abstract function deleteFile($filename);
 
-
 /**
  * $filename で指定したファイルが存在する場合に true を返します
  *
@@ -414,7 +404,6 @@ abstract function deleteFile($filename);
  * @return boolean
  */
 abstract function fileExists($filename);
-
 
 /**
  * ディレクトリ内の $filename の長さを返します
@@ -424,7 +413,6 @@ abstract function fileExists($filename);
  */
 abstract function fileLength($filename);
 
-
 /**
  * $filename の最終更新日時を UNIX タイムスタンプで返します
  *
@@ -432,7 +420,6 @@ abstract function fileLength($filename);
  * @return integer
  */
 abstract function fileModified($filename);
-
 
 /**
  * ディレクトリ内の既存のファイルの名前を変更します
@@ -443,7 +430,6 @@ abstract function fileModified($filename);
  */
 abstract function renameFile($from, $to);
 
-
 /**
  * $filename の更新時刻を現在の時刻にします
  *
@@ -451,7 +437,6 @@ abstract function renameFile($from, $to);
  * @return void
  */
 abstract function touchFile($filename);
-
 
 /**
  * ディレクトリ内の $filename についての
@@ -463,8 +448,7 @@ abstract function touchFile($filename);
 abstract function getFileObject($filename);
 
 }
-]]>
-</programlisting>
+]]></programlisting>
 
         <para>
         Zend_Search_Lucene_Storage_Directory クラスの
@@ -514,8 +498,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
         ...
     }
 }
-]]>
-</programlisting>
+]]></programlisting>
 
     </sect2>
 </sect1>

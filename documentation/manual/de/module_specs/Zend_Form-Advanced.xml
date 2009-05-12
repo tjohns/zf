@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.advanced">
-    <title>Fortgeschrittene Verwendung von <code>Zend_Form</code></title>
+    <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
     <para>
-        <code>Zend_Form</code> hat eine Vielzahl an Funktionalitäten, von denen viele auf
+        <classname>Zend_Form</classname> hat eine Vielzahl an Funktionalitäten, von denen viele auf
         fortgeschrittene Entwickler zugeschnitten sind. Dieses Kapitel beschreibt einige dieser
         Funktionalitäten mit Beispielen und Usecases.
     </para>
@@ -72,8 +72,7 @@
         <dd><input name="save" type="submit" value="Speichern" /></dd>
     </dl>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In diesem Beispiel enthalten die Rechnungs- und Versanadresse einige identische
@@ -141,8 +140,7 @@
         <dd><input name="save" type="submit" value="Speichern" /></dd>
     </dl>
 </form>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In dem obigen Beispiel erhalten wir jetzt separate Adressen. In der übermittelten Form
@@ -151,17 +149,18 @@
         </para>
 
         <para>
-            <code>Zend_Form</code> versucht diesen Prozess mit seinen
+            <classname>Zend_Form</classname> versucht diesen Prozess mit seinen
             <link linkend="zend.form.forms.subforms">Unterformularen</link> zu automatisieren.
             Standardmäßig werden Unterformulare dargestellt, indem die Array Schreibweise, wie im
             vorherigen HTML Form Code gezeigt, komplett mit Ids, verwendet wird. Der Arrayname
             basiert auf dem Namen des Unterformulars, mit den Schlüsseln basierend auf den
             Elementen, die im Unterformualr enthalten sind. Unterformulare können beliebig tief
             verschachtelt sein, und das erzeugt verschachtelte Arrays um die Struktur zu
-            reflektieren. Zusätzlich beachten die verschiedenen Prüfroutinen in <code>Zend_Form</code>
-            die Arraystruktur, und stellen sicher, dass die Form korrekt überprüft wird, egal wie
-            tief verschachtelt die Unterformulare sind. Es muss nichts getan werden, um davon zu
-            profitieren; dieses Verhalten ist standardmäßig aktiviert.
+            reflektieren. Zusätzlich beachten die verschiedenen Prüfroutinen in
+            <classname>Zend_Form</classname> die Arraystruktur, und stellen sicher, dass die form
+            korrekt überprüft wird, egal wie tief verschachtelt die Unterformulare sind. Es muss
+            nichts getan werden, um davon zu profitieren; dieses Verhalten ist standardmäßig
+            aktiviert.
         </para>
 
         <para>
@@ -173,13 +172,13 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Form::setIsArray($flag)</code>: Durch das Setzen dieses Flags auf
-                    <code>true</code>, kann angezeigt werden, dass das komplette Formular als Array
-                    behandelt werden soll. Standardmäßig wird der Name des Formulars als Name des
-                    Arrays verwendet, solange <code>setElementsBelongTo()</code> aufgerufen wurde.
-                    Wenn das Formular keinen Namen spezifiziert hat, oder <code>setElementsBelongTo()</code>
-                    nicht gesetzt wurde, wird dieses Flag ignoriert (da es kein Arraynamen gibt zu dem
-                    die Elemente gehören).
+                    <classname>Zend_Form::setIsArray($flag)</classname>: Durch das Setzen dieses
+                    Flags auf <code>true</code>, kann angezeigt werden, dass das komplette Formular
+                    als Array behandelt werden soll. Standardmäßig wird der Name des Formulars als
+                    Name des Arrays verwendet, solange <code>setElementsBelongTo()</code> aufgerufen
+                    wurde. Wenn das Formular keinen Namen spezifiziert hat, oder
+                    <code>setElementsBelongTo()</code> nicht gesetzt wurde, wird dieses Flag
+                    ignoriert (da es kein Arraynamen gibt zu dem die Elemente gehören).
                 </para>
 
                 <para>
@@ -189,19 +188,20 @@
             </listitem>
 
             <listitem><para>
-                    <code>Zend_Form::setElementsBelongTo($array)</code>: Durch Verwendung dieser
-                    Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente des
-                    Formulars angehören. Der Name kann durch Verwendung der Zugriffsmethode
+                    <classname>Zend_Form::setElementsBelongTo($array)</classname>: Durch Verwendung
+                    dieser Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente
+                    des Formulars angehören. Der Name kann durch Verwendung der Zugriffsmethode
                     <code>getElementsBelongTo()</code> eruiert werden.
             </para></listitem>
         </itemizedlist>
 
         <para>
             Zusätzlich können auf dem Element Level, individuelle Elemente spezifiziert werden die
-            bestimmten Arrays angehören indem die <code>Zend_Form_Element::setBelongsTo()</code>
-            Methode verwendet wird. Um herauszufinden welcher Wert gesetzt ist -- egal ob dieser
-            explizit gesetzt wurde oder implzit über das Formular -- kann die Zugriffsmethode
-            <code>getBelongsTo()</code> verwendet werden.
+            bestimmten Arrays angehören indem die
+            <classname>Zend_Form_Element::setBelongsTo()</classname> Methode verwendet wird. Um
+            herauszufinden welcher Wert gesetzt ist -- egal ob dieser explizit gesetzt wurde oder
+            implzit über das Formular -- kann die Zugriffsmethode <code>getBelongsTo()</code>
+            verwendet werden.
         </para>
     </sect2>
 
@@ -209,7 +209,7 @@
         <title>Mehrseitige Formulare</title>
 
         <para>
-            Aktuell werden mehrseitige Formulare nicht offiziell in <code>Zend_Form</code>
+            Aktuell werden mehrseitige Formulare nicht offiziell in <classname>Zend_Form</classname>
             unterstützt; trotzdem ist die meiste Unterstützung für deren Implementierung bereits
             vorhanden und kann mit etwas extra Code angepasst werden.
         </para>
@@ -336,8 +336,7 @@ class My_Form_Registration extends Zend_Form
         ));
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Es ist zu beachten, dass es keinen 'Abschicken' Button gibt, und, dass wir
@@ -425,8 +424,7 @@ class My_Form_Registration extends Zend_Form
         return $this;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Als nächstes benötigen wir das Grundgerüst für unseren Action Controller, und wir
@@ -435,8 +433,8 @@ class My_Form_Registration extends Zend_Form
                 können wann abgebrochen wird. Zweitens wird etwas Logik benötigt, um festzustellen
                 welche Formularteile bereits übermittelt wurden und welches Unterformular, basierend
                 auf dieser Information, angezeigt werden soll. Wir verwenden
-                <code>Zend_Session_Namespace</code> um Daten zu fixieren, was uns auch hilft die
-                Frage zu beantworten welches Formular zu übertragen ist.
+                <classname>Zend_Session_Namespace</classname> um Daten zu fixieren, was uns auch
+                hilft die Frage zu beantworten welches Formular zu übertragen ist.
             </para>
 
             <para>
@@ -457,8 +455,7 @@ class RegistrationController extends Zend_Controller_Action
         return $this->_form;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Füllen wir unseren Controller nun um die Funktionalität, zu erkennen, welches
@@ -561,8 +558,7 @@ class RegistrationController extends Zend_Controller_Action
         return false;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Die obigen Methoden erlauben uns eine Schreibweise wie
@@ -574,19 +570,19 @@ class RegistrationController extends Zend_Controller_Action
             <para>
                 Sehen wir uns nun an, wie die verschiedenen Unterformulare bearbeitet und angezeigt
                 werden können. Wir können <code>getCurrentSubForm()</code> verwenden um
-                herauszufinden ob ein Unterformular übertragen wurde (<code>false</code> Rückgabewerte
-                zeigen an, dass keine angezeigt oder übertragen wurden) und <code>getNextSubForm()</code>
-                empfängt die Form die angezeigt werden soll. Wir können die <code>prepareSubForm()</code>
-                Methode des Formulars verwenden, um sicherzustellen, dass das Formular bereit zur Anzeige
-                ist.
+                herauszufinden ob ein Unterformular übertragen wurde (<code>false</code>
+                Rückgabewerte zeigen an, dass keine angezeigt oder übertragen wurden) und
+                <code>getNextSubForm()</code> empfängt die Form die angezeigt werden soll. Wir
+                können die <code>prepareSubForm()</code> Methode des Formulars verwenden, um
+                sicherzustellen, dass das Formular bereit zur Anzeige ist.
             </para>
 
             <para>
-                Wenn ein Formular übertragen wird, kann das Unterformular bestätigt werden, und dann kann
-                geprüft werden, ob das komplette Formular gültig ist. Um diese Arbeiten durchzuführen
-                werden zusätzliche Methoden benötigt die sicherstellen, dass die übermittelten Daten der
-                Session hinzugefügt werden, und, dass, wenn das komplette Formular geprüft wird, die
-                Prüfung gegen alle Teile der Session durchgeführt wird:
+                Wenn ein Formular übertragen wird, kann das Unterformular bestätigt werden, und dann
+                kann geprüft werden, ob das komplette Formular gültig ist. Um diese Arbeiten
+                durchzuführen werden zusätzliche Methoden benötigt die sicherstellen, dass die
+                übermittelten Daten der Session hinzugefügt werden, und, dass, wenn das komplette
+                Formular geprüft wird, die Prüfung gegen alle Teile der Session durchgeführt wird:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -628,8 +624,7 @@ class RegistrationController extends Zend_Form
         return $this->getForm()->isValid($data);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Jetzt, da die Kleinarbeiten aus dem Weg sind, können die Aktionen für diesen
@@ -676,17 +671,16 @@ class RegistrationController extends Zend_Controller_Action
         $this->render('verification');
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Wie festzustellen ist, ist der aktuelle Code für die Bearbeitung des Formulars
                 relativ einfach. Wir prüfen, um zu sehen ob wir eine aktuelle Übertragung eines
                 Unterformulars haben, oder nicht, und wir versuchen sie zu prüfen, und sie nochmals
-                darzustellen wenn es fehlschlägt. Wenn das Unterformular gültig ist, muss anschließend
-                geprüft werden, ob das Formular gültig ist, was dann bedeuten würde, dass wir fertig
-                sind; wen nicht muss das nächste Formularsegment angezeigt werden. Letztendlich wird
-                eine Prüfseite mit dem Inhalt der Session angezeigt.
+                darzustellen wenn es fehlschlägt. Wenn das Unterformular gültig ist, muss
+                anschließend geprüft werden, ob das Formular gültig ist, was dann bedeuten würde,
+                dass wir fertig sind; wen nicht muss das nächste Formularsegment angezeigt werden.
+                Letztendlich wird eine Prüfseite mit dem Inhalt der Session angezeigt.
             </para>
 
             <para>
@@ -724,8 +718,7 @@ foreach ($this->info as $info):
 </dl>
 <?php endforeach;
 endforeach ?>
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Kommende Releases des Zend Frameworks werden Komponenten enthalten die

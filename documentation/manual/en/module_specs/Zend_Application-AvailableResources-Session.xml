@@ -4,8 +4,8 @@
     <title>Zend_Application_Resource_Session</title>
 
     <para>
-        <code>Zend_Application_Resource_Session</code> allows you to configure
-        <code>Zend_Session</code> as well as optionally initialize a session
+        <classname>Zend_Application_Resource_Session</classname> allows you to configure
+        <classname>Zend_Session</classname> as well as optionally initialize a session
         SaveHandler.
     </para>
 
@@ -18,27 +18,27 @@
     <itemizedlist>
         <listitem><para>
             <code>string</code>: A string indicating a class implementing
-            <code>Zend_Session_SaveHandler_Interface</code> that should be
+            <classname>Zend_Session_SaveHandler_Interface</classname> that should be
             instantiated.
         </para></listitem>
 
         <listitem><para>
             <code>array</code>: An array with the keys "class" and, optionally,
             "options", indicating a class implementing
-            <code>Zend_Session_SaveHandler_Interface</code> that should be
+            <classname>Zend_Session_SaveHandler_Interface</classname> that should be
             instantiated and an array of options to provide to its constructor.
         </para></listitem>
 
         <listitem><para>
-            <code>Zend_Session_SaveHandler_Interface</code>: an object
+            <classname>Zend_Session_SaveHandler_Interface</classname>: an object
             implementing this interface.
         </para></listitem>
     </itemizedlist>
 
     <para>
         Any other option keys passed will be passed to
-        <code>Zend_Session::setOptions()</code> to configure
-        <code>Zend_Session</code>.
+        <classname>Zend_Session::setOptions()</classname> to configure
+        <classname>Zend_Session</classname>.
     </para>
 
     <example id="zend.application.available-resources.session.configExample">
@@ -46,8 +46,8 @@
 
         <para>
             Below is a sample INI snippet showing how to configure the session
-            resource. It sets several <code>Zend_Session</code> options, as well
-            as configures a <code>Zend_Session_SaveHandler_DbTable</code> instance.
+            resource. It sets several <classname>Zend_Session</classname> options, as well
+            as configures a <classname>Zend_Session_SaveHandler_DbTable</classname> instance.
         </para>
 
         <programlisting role="ini"><![CDATA[

@@ -4,7 +4,7 @@
     <title>Zend_Test_PHPUnit</title>
 
     <para>
-        <code>Zend_Test_PHPUnit</code> provides a TestCase for MVC applications
+        <classname>Zend_Test_PHPUnit</classname> provides a TestCase for MVC applications
         that contains assertions for testing against a variety of
         responsibilities. Probably the easiest way to understand what it can do
         is to see an example.
@@ -93,8 +93,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'User: foobar');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This example could be written somewhat simpler -- not all the

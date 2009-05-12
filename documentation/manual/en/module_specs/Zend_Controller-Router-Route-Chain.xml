@@ -4,13 +4,13 @@
     <title>Zend_Controller_Router_Route_Chain</title>
 
     <para>
-        <code>Zend_Controller_Router_Route_Chain</code> is a route which allows
+        <classname>Zend_Controller_Router_Route_Chain</classname> is a route which allows
         to chain multiple routes together. This allows you to chain
         hostname-routes and path routes, or multiple path routes for example.
         Chaining can be done either programatically or within a configuration
         file.
     </para>
-    
+
     <note>
         <title>Parameter Priority</title>
         <para>
@@ -24,13 +24,13 @@
     <para>
         When chaining programatically, there are two ways to archive this. The
         first one is to create a new
-        <code>Zend_Controller_Router_Route_Chain</code> instance and then
+        <classname>Zend_Controller_Router_Route_Chain</classname> instance and then
         calling the <code>chain</code> method multiple times with all routes
         which should be chained together. The other way is to take the first
         route, e.g. a hostname route, and calling the <code>chain</code>
         method on it with the route which should be appended to it. This
         will not modify the hostname route, but return a new instance of
-        <code>Zend_Controller_Router_Route_Chain</code>, which then has both
+        <classname>Zend_Controller_Router_Route_Chain</classname>, which then has both
         routes chained together:
     </para>
 
@@ -46,8 +46,7 @@ $chainedRoute->chain($hostnameRoute)
 
 // Second way, chain them directly
 $chainedRoute = $hostnameRoute->chain($pathRoute);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         When chaining routes together, their default separator is a slash
@@ -65,11 +64,10 @@ $chainedRoute = $firstRoute->chain($secondRoute, '-');
 
 // Assemble the route: "foo-bar"
 echo $chainedRoute->assemble();
-]]>
-    </programlisting>
+]]></programlisting>
 
     <sect4 id="zend.controller.router.routes.chain.config">
-        <title>Chain Routes via <code>Zend_Config</code></title>
+        <title>Chain Routes via Zend_Config</title>
 
         <para>
             To chain routes together in a config file, there are  additional
@@ -91,7 +89,7 @@ echo $chainedRoute->assemble();
             <language type="Zend_Controller_Router_Route">
                 <route>:language</route>
                 <reqs language="[a-z]{2}">
-                <chains>       
+                <chains>
                     <index type="Zend_Controller_Router_Route_Static">
                         <route></route>
                         <defaults module="default" controller="index" action="index" />
@@ -117,8 +115,7 @@ echo $chainedRoute->assemble();
         <route>misc</route>
     </misc>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             This will result in the three routes <code>www-language-index</code>,
@@ -127,7 +124,7 @@ echo $chainedRoute->assemble();
             the hostname and the route <code>misc</code>, which will match with
             any hostname.
         </para>
-        
+
         <para>
             The alternative way of creating a chained route is via the
             <code>chain</code> parameter, which can only be used with the
@@ -151,7 +148,7 @@ echo $chainedRoute->assemble();
         <route>imprint</route>
         <defaults module="default" controller="index" action="index" />
     </imprint>
-    
+
     <www-index type="Zend_Controller_Router_Route_Chain">
         <chain>www, language, index</chain>
     </www-index>
@@ -159,8 +156,7 @@ echo $chainedRoute->assemble();
         <chain>www, language, imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You can also give the <code>chain</code> parameter as array instead
@@ -180,8 +176,7 @@ echo $chainedRoute->assemble();
         <chain>imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 </sect3>
 <!--

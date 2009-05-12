@@ -4,12 +4,12 @@
     <title>Dojo Form Examples</title>
 
     <example id="zend.dojo.form.examples.dojoform">
-        <title>Using <code>Zend_Dojo_Form</code></title>
+        <title>Using Zend_Dojo_Form</title>
 
         <para>
-            The easiest way to utilize Dojo with <code>Zend_Form</code> is to
-            utilize <code>Zend_Dojo_Form</code>, either through direct usage or
-            by extending it. This example shows extending <code>Zend_Dojo_Form</code>, and
+            The easiest way to utilize Dojo with <classname>Zend_Form</classname> is to
+            utilize <classname>Zend_Dojo_Form</classname>, either through direct usage or
+            by extending it. This example shows extending <classname>Zend_Dojo_Form</classname>, and
             shows usage of all dijit elements. It creates four sub forms, and
             decorates the form to utilize a TabContainer, showing each sub form
             in its own tab.
@@ -348,8 +348,7 @@ class My_Form_Test extends Zend_Dojo_Form
              ->addSubForm($sliderForm, 'slidertab');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.dojo.form.examples.decorating">
@@ -357,7 +356,7 @@ class My_Form_Test extends Zend_Dojo_Form
 
         <para>
             Existing forms can be modified to utilize Dojo as well, by use of
-            the <code>Zend_Dojo::enableForm()</code> static method.
+            the <classname>Zend_Dojo::enableForm()</classname> static method.
         </para>
 
         <para>
@@ -384,8 +383,7 @@ array(
     ),
 )
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternately, you can make a slight tweak to your form
@@ -402,13 +400,12 @@ class My_Custom_Form extends Zend_Form
         // ...
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Of course, if you can do that... you could and should simply alter
-            the class to inherit from <code>Zend_Dojo_Form</code>, which is a drop-in
-            replacement of <code>Zend_Form</code> that's already Dojo-enabled...
+            the class to inherit from <classname>Zend_Dojo_Form</classname>, which is a drop-in
+            replacement of <classname>Zend_Form</classname> that's already Dojo-enabled...
         </para>
     </example>
 </sect2>

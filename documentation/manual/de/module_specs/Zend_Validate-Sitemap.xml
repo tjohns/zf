@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.validate.sitemap">
     <title>Sitemap Prüfungen</title>
@@ -51,8 +51,8 @@ $validator->isValid('1999-11-11t22:23:52-02:00'); // false
 $validator->isValid('2008-05-12T00:42:60+02:00'); // false
 $validator->isValid('1999-13-11'); // false
 $validator->isValid('2008-05-32'); // false
-$validator->isValid('yesterday'); // false]]>
-            </programlisting>
+$validator->isValid('yesterday'); // false
+]]></programlisting>
         </example>
     </sect3>
 
@@ -61,8 +61,8 @@ $validator->isValid('yesterday'); // false]]>
 
         <para>
             Prüft ob ein String für die Verwendung als 'loc' Element in einem Sitemap XML Dokument
-            gültig ist. Er verwendet intern <code>Zend_Form::check()</code>. Mehr darüber kann man
-            unter <link linkend="zend.uri.validation">URI Prüfung</link> lesen.
+            gültig ist. Er verwendet intern <classname>Zend_Form::check()</classname>. Mehr darüber
+            kann man unter <link linkend="zend.uri.validation">URI Prüfung</link> lesen.
         </para>
     </sect3>
 
@@ -91,8 +91,7 @@ $validator->isValid('-0.4'); // false
 $validator->isValid(1.00001); // false
 $validator->isValid(0xFF); // false
 $validator->isValid('foo'); // false
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect3>
 </sect2>

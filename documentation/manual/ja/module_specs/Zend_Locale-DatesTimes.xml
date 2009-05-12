@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>日付および時刻の扱い</title>
 
     <para>
-        <code>Zend_Locale_Format</code> では、日付や時刻を扱うためのメソッドを提供しています。
+        <classname>Zend_Locale_Format</classname> では、日付や時刻を扱うためのメソッドを提供しています。
         これらを使用して、さまざまなロケールのさまざまな書式間での変換や正規化を行います。
         日付データや
         <link linkend="zend.date.constants">
-          <code>Zend_Date</code> がサポートする、さまざまな標準書式や地域化された日付書式
+          <classname>Zend_Date</classname> がサポートする、さまざまな標準書式や地域化された日付書式
         </link>
-        を満たす日付文字列の操作には <code>Zend_Date</code> を使用します。
+        を満たす日付文字列の操作には <classname>Zend_Date</classname> を使用します。
         既存の定義済み書式を使用すると、「十分にテストされたコードが使用できる」
         「(一般的な使用法に従う限り) 可搬性や相互運用性を保証できる」といった利点があります。
         以下の例は、ここで推奨した内容に従っていません。しかし、
@@ -79,12 +79,12 @@
 
         <para>
             日付文字列の書式を明示的に指定したい場合のために、次のような書式トークン指定子をサポートしています。
-            <code>Zend_Locale_Format</code> のメソッドでユーザ定義書式に対応しているものの中で無効な書式指定子を使用した場合、
+            <classname>Zend_Locale_Format</classname> のメソッドでユーザ定義書式に対応しているものの中で無効な書式指定子を使用した場合、
             たとえば ISO モードで PHP の 'i' 指定子を使用した場合などには例外がスローされます。
         </para>
 
         <para>
-            これらの (以下の) 指定子は、<code>Zend_Date</code> の <code>toString()</code> がサポートしている完全な "ISO"
+            これらの (以下の) 指定子は、<classname>Zend_Date</classname> の <code>toString()</code> がサポートしている完全な "ISO"
             セットの一部です。PHP の <code>date()</code> 関数と同じ形式の指定子を使用したい場合は、
             まず最初に <code>setOptions(array('format_type' => 'php'))</code> をコールしてください。
             特定のひとつの書式文字列だけを PHP の <code>date()</code> 互換形式から
@@ -190,8 +190,7 @@ Array
     [year] => 2006
     [fixed] => 4
 )
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -201,7 +200,7 @@ Array
             オプション '<code>fix_date</code>' は、簡単なテストを行って
             日付や月の妥当性を確認します。問題が見つかったら、
             経験則によってそれを何とか修正しようとします。
-            '<code>Zend_Locale_Format::STANDARD</code>' を '<code>date_format</code>'
+            '<classname>Zend_Locale_Format::STANDARD</classname>' を '<code>date_format</code>'
             の値として指定すると、<code>setOptions()</code>
             で設定されているクラス全体のデフォルト日付書式を使用しないようにできます。
             これにより、getDate は <code>$locale</code>
@@ -219,8 +218,7 @@ $date = Zend_Locale_Format::getDate('13.04.2006',
                                    );
 
 print_r ($date);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -239,8 +237,7 @@ $date = Zend_Locale_Format::getDate('13.04.2005 22:14:55',
                                     );
 
 print_r ($date);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -259,8 +256,7 @@ $date = Zend_Locale_Format::getDate('13200504T551422',
                                    );
 
 print_r ($date);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -349,7 +345,7 @@ print_r ($date);
             <title>データベースの日付書式</title>
             <para>
                 データベース (たとえば MySql や MsSql など) の日付値をパースするには、
-                getDate() のかわりに <code>Zend_Date</code> の ISO_8601 書式を使用します。
+                getDate() のかわりに <classname>Zend_Date</classname> の ISO_8601 書式を使用します。
             </para>
         </note>
 
@@ -372,8 +368,7 @@ $date = Zend_Locale_Format::getDate('41.10.20',
 
 // 41 は、日付ではなく年として返されます
 print_r ($date);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -406,8 +401,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006',
 } else {
     print "日付ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -436,8 +430,7 @@ if (Zend_Locale_Format::getTime('13:44:42',
 } else {
     print "時刻ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -464,8 +457,7 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42',
 } else {
     print "時刻ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

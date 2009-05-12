@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API の概要</title>
 
     <para>
-        <code>Zend_Date</code> の API はシンプルで統一性がありますが、
+        <classname>Zend_Date</classname> の API はシンプルで統一性がありますが、
         非常に柔軟で強力な設計になっており、
         さまざまな操作や演算ができます。
     </para>
@@ -22,10 +22,10 @@
             <para>
                 いくつかのメソッドでは、PHP の <code>date()</code> 関数と似た形式の日付書式文字列を使用します。
                 PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるという場合は、
-                <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>
+                <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname>
                 とすることができます。こうすると、<code>$format</code>
                 パラメータを持つすべての関数で PHP の日付書式指定子が使用できるようになります。
-                <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code>
+                <classname>Zend_Date::setOptions(array('format_type' => 'iso'))</classname>
                 とすると、デフォルトのモードに戻ります。このモードは、
                 ISO 日付書式トークンのみをサポートするものです。
                 サポートする書式コードの一覧は、
@@ -55,12 +55,12 @@
                 これを避けるためにはオプション <code>fix_dst</code> を使用します。
                 このオプションのデフォルトは true で、この場合は夏時間が
                 "月" の計算 (<code>addMOnth()、subMonth()</code>) に影響を与えなくなります。
-                <code>Zend_Date::setOptions(array('fix_dst' => false))</code> とすると、
+                <classname>Zend_Date::setOptions(array('fix_dst' => false))</classname> とすると、
                 夏時間にあわせた時間の加減算を "月" の計算時にも適用します。
             </para>
 
             <para>
-                <emphasis role="strong"><code>Zend_Date</code>
+                <emphasis><classname>Zend_Date</classname>
                 インスタンスの実際のタイムゾーンが UTC あるいは GMT の場合、
                 オプション <code>'fix_dst'</code> は用いられません</emphasis>。
                 これらのタイムゾーンには DST は適用されないからです。
@@ -86,11 +86,11 @@
                 <code>extend_month</code> オプションを false にすると
                 SQL 風の挙動になり、true にすると表計算ソフト風の挙動になります。
                 <code>extend_month</code> のデフォルトは false なので、
-                <code>Zend_Date</code> は SQL 互換の計算をします。
-                デフォルトでは、<code>Zend_Date</code> は月の計算をする際に
+                <classname>Zend_Date</classname> は SQL 互換の計算をします。
+                デフォルトでは、<classname>Zend_Date</classname> は月の計算をする際に
                 (必要に応じて) 日を切り詰めます。計算した結果に該当する日がその月に存在しなかった場合に、
                 翌月にまたがることはありません。
-                <code>Zend_Date::setOptions(array('extend_month' => true));</code>
+                <classname>Zend_Date::setOptions(array('extend_month' => true));</classname>
                 とすると、表計算ソフトと同様の方式で計算することになります。
             </para>
 
@@ -101,13 +101,13 @@
             <title>日付の地域化や正規化の、Zend_Cache による高速化</title>
 
             <para>
-                <code>Zend_Date</code> を高速に動作させるには <code>Zend_Cache</code>
+                <classname>Zend_Date</classname> を高速に動作させるには <classname>Zend_Cache</classname>
                 アダプタを使用します。これを使用すると、地域化したデータを扱う際の
-                <code>Zend_Date</code> のすべてのメソッドが高速化します。
-                たとえば、定数 <code>Zend_Date::DATE</code> や
-                <code>Zend_Date::TIME</code> を扱うメソッドは、すべてこの影響を受けます。
-                <code>Zend_Cache</code> アダプタを <code>Zend_Date</code> に設定するには、
-                <code>Zend_Date::setOptions(array('cache' => $adapter));</code>
+                <classname>Zend_Date</classname> のすべてのメソッドが高速化します。
+                たとえば、定数 <classname>Zend_Date::DATE</classname> や
+                <classname>Zend_Date::TIME</classname> を扱うメソッドは、すべてこの影響を受けます。
+                <classname>Zend_Cache</classname> アダプタを <classname>Zend_Date</classname> に設定するには、
+                <classname>Zend_Date::setOptions(array('cache' => $adapter));</classname>
                 とするだけです。
             </para>
 
@@ -119,9 +119,9 @@
 
             <para>
                 通常は、サーバやコンピュータの時刻はそれぞれ異なります。
-                <code>Zend_Date</code> は、この問題を
-                <code>Zend_TimeSync</code> で解決することができます。
-                タイムサーバを <code>Zend_Date::setOptions(array('timesync' => $timeserver));</code>
+                <classname>Zend_Date</classname> は、この問題を
+                <classname>Zend_TimeSync</classname> で解決することができます。
+                タイムサーバを <classname>Zend_Date::setOptions(array('timesync' => $timeserver));</classname>
                 で設定すると、すべての Zend_Date インスタンスについて、
                 そのタイムスタンプと実際のタイムスタンプを間のオフセットを設定します。
                 このオプションを使用しても、既存のインスタンスのタイムスタンプは変わりません。
@@ -137,7 +137,7 @@
         <title>日付の値の操作</title>
 
         <para>
-            <code>Zend_Date</code> オブジェクトの作成によって入力が正規化されると、
+            <classname>Zend_Date</classname> オブジェクトの作成によって入力が正規化されると、
             このオブジェクトはタイムゾーンに関連付けられます。しかし、内部的な形式としては通常の
             <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX タイムスタンプ</ulink>を使用します。
             各地域固有の方式で日付を表示するには、まずタイムゾーンを知る必要があります。
@@ -151,26 +151,26 @@
             異なるタイムゾーンの日付オブジェクトを混在させないよう注意しましょう。
             タイムスタンプにのみかかわる操作しかしないのならよいのですが、
             それ以外の場合には期待通りの結果が得られなくなるでしょう。
-            異なるタイムゾーンの <code>Zend_Date</code> に対する操作は、
-            たいていの場合はうまく動作します。というのも <code>Zend_Date</code>
+            異なるタイムゾーンの <classname>Zend_Date</classname> に対する操作は、
+            たいていの場合はうまく動作します。というのも <classname>Zend_Date</classname>
             のインスタンスを作成する際に、値が UNIX タイムスタンプに正規化されるからです。
         </para>
 
         <para>
             ほとんどのメソッドで、引数 <code>$part</code> に定数を指定できます。
             これにより、日付のどの部分を選択するかを指定します。この定数は、
-            たとえば <code>Zend_Date::HOUR</code> のようになります。
+            たとえば <classname>Zend_Date::HOUR</classname> のようになります。
             これらの定数は、以下のすべての関数で使用できます。使用可能なすべての定数の一覧は
             <xref linkend="zend.date.constants.list" /> にあります。
-            <code>$part</code> を省略した場合は、<code>Zend_Date::TIMESTAMP</code>
+            <code>$part</code> を省略した場合は、<classname>Zend_Date::TIMESTAMP</classname>
             が指定されたものとみなします。また、ユーザ定義の書式を
             <code>$part</code> で使用することもできます。ここには、
-            <link linkend="zend.locale.date.normalize"><code>Zend_Locale_Format::getDate()</code>
+            <link linkend="zend.locale.date.normalize"><classname>Zend_Locale_Format::getDate()</classname>
             </link>
             と同様のコードを使用します。
             日付オブジェクトが明らかに無効な値を用いて作成された場合 (たとえば月が 12 より大きいなど) は、
-            <code>Zend_Date</code> は例外をスローします。ただし、特定の日付フォーマットが指定されている場合、
-            つまり <code>$part</code> が <code>null</code> あるいは <code>Zend_Date::DATES</code> ("あいまいな" フォーマット)
+            <classname>Zend_Date</classname> は例外をスローします。ただし、特定の日付フォーマットが指定されている場合、
+            つまり <code>$part</code> が <code>null</code> あるいは <classname>Zend_Date::DATES</classname> ("あいまいな" フォーマット)
             のいずれかである場合は別です。
         </para>
 
@@ -186,8 +186,7 @@ echo $date2, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 // 指定したフォーマットで解釈するように強制します
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy');
 echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -199,7 +198,7 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
             </code> を参照ください)。
             各地域固有の形式の文字列で <code>$date</code> オペランドが指定された際に
             自動で正規化が行われるのは、<code>$part</code> が
-            定数 <code>Zend_Date::DATE*</code> あるいは <code>Zend_Date::TIME*</code> のいずれかであるときです。
+            定数 <classname>Zend_Date::DATE*</classname> あるいは <classname>Zend_Date::TIME*</classname> のいずれかであるときです。
             <code>$date</code> が日付を含む文字列の場合は、
             月名や曜日名をパースする際に使用する言語はロケールをもとに決定します。
             入力パラメータ <code>$date</code> が指定されなかった場合は、
@@ -207,7 +206,7 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
             (日付書式を文字列で表したもの) を出力します。
             入力パラメータ <code>$date</code> に具体的な型が指定されている場合もあります
             (たとえば <code>addHour()</code> では <code>$hour</code> です)。
-            このような場合でも、引数として <code>Zend_Date</code>
+            このような場合でも、引数として <classname>Zend_Date</classname>
             オブジェクトを使用できることに注意しましょう。
             <code>$locale</code> を指定しなかった場合は、
             現在のオブジェクトのロケールを使用して
@@ -215,9 +214,9 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
         </para>
 
         <para>
-            Zend Framework 1.7.0 以降では、<code>Zend_Date</code>
+            Zend Framework 1.7.0 以降では、<classname>Zend_Date</classname>
             はアプリケーション単位でのロケールの使用にも対応します。
-            そのためには、<code>Zend_Locale</code>
+            そのためには、<classname>Zend_Locale</classname>
             のインスタンスを以下のようにレジストリに登録します。
             このようにすれば、同じロケールを何度も使用したいときに
             各インスタンスで毎回ロケールを設定する手間を省けます。
@@ -230,14 +229,13 @@ Zend_Registry::set('Zend_Locale', $locale);
 
 // アプリケーションのどこかで
 $date = new Zend_Date('31.Feb.2007');
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
     <sect2 id="id.date.basic">
 
-        <title>多くの日付要素で共通に使用できる、<code>Zend_Date</code> の基本操作</title>
+        <title>多くの日付要素で共通に使用できる、Zend_Date の基本操作</title>
 
         <para>
             メソッド <code>add(), sub(), compare(), get(), and set()</code>
@@ -245,7 +243,7 @@ $date = new Zend_Date('31.Feb.2007');
             そのインスタンスが保持する日付の値を操作します。
             これらのメソッドのうち、<code>get()</code>
             以外ではすべて <code>$date</code> オペランドが必要となります。
-            ここには <code>Zend_Date</code> のインスタンスか
+            ここには <classname>Zend_Date</classname> のインスタンスか
             数値文字列、あるいは整数値を指定します。
             これらのメソッドで <code>$date</code> にオブジェクト以外を指定した場合、
             それはタイムスタンプであるとみなされます。
@@ -266,8 +264,7 @@ $date = new Zend_Date(); // $date のタイムスタンプは time() の返す�
 // $date に 12 時間足します
 $date->add('12', Zend_Date::HOUR);
 print $date;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -354,13 +351,13 @@ print $date;
                             </entry>
                             <entry>
                              ミリ秒 (0-999)。これは、千分の一秒を表します。
-                             <code>Zend_Date</code> では、秒未満の単位を扱うために
+                             <classname>Zend_Date</classname> では、秒未満の単位を扱うために
                              二つのメソッドを用意しています。デフォルトでは、
-                             <code>Zend_Date</code> のインスタンスはミリ秒単位の精度を使用します。
+                             <classname>Zend_Date</classname> のインスタンスはミリ秒単位の精度を使用します。
                              これは <code>getFractionalPrecision()</code> を使用して取得します。
                              精度を変更するには <code>setFractionalPrecision($precision)</code>
                              を使用します。しかし、精度は事実上ミリ秒までに制限されます。
-                             というのも、<code>Zend_Date</code> は <code>
+                             というのも、<classname>Zend_Date</classname> は <code>
                              <ulink url="http://php.net/microtime">microtime()</ulink></code>
                              を使用しているからです。
                             </entry>
@@ -370,14 +367,14 @@ print $date;
                                 <ulink url="http://ja.wikipedia.org/wiki/%E6%97%A5">Day (日)</ulink>
                             </entry>
                             <entry>
-                             <code>Zend_Date::DAY_SHORT</code> は <code>$date</code>
+                             <classname>Zend_Date::DAY_SHORT</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
-                             <code>Zend_Date</code> のインスタンスであるか、
+                             <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
                              それ以外の場合は、以下の定数によって指定した規約に基づいて抽出します。
-                             <code>Zend_Date::WEEKDAY_NARROW</code>、<code>Zend_Date::WEEKDAY_NAME</code>、
-                             <code>Zend_Date::WEEKDAY_SHORT</code>、
-                             <code>Zend_Date::WEEKDAY</code> (グレゴリオ暦とみなして処理します)。
+                             <classname>Zend_Date::WEEKDAY_NARROW</classname>、<classname>Zend_Date::WEEKDAY_NAME</classname>、
+                             <classname>Zend_Date::WEEKDAY_SHORT</classname>、
+                             <classname>Zend_Date::WEEKDAY</classname> (グレゴリオ暦とみなして処理します)。
                             </entry>
                         </row>
                         <row>
@@ -385,9 +382,9 @@ print $date;
                                 <ulink url="http://ja.wikipedia.org/wiki/%E9%80%B1">Week (週)</ulink>
                             </entry>
                             <entry>
-                             <code>Zend_Date::WEEK</code> は <code>$date</code>
+                             <classname>Zend_Date::WEEK</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
-                             <code>Zend_Date</code> のインスタンスであるか、
+                             <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
                              それ以外の場合は例外が発生します (グレゴリオ暦とみなして処理します)。
                             </entry>
@@ -395,12 +392,12 @@ print $date;
                         <row>
                             <entry>Date (日)</entry>
                             <entry>
-                             <code>Zend_Date::DAY_MEDIUM</code> は <code>$date</code>
+                             <classname>Zend_Date::DAY_MEDIUM</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
-                             <code>Zend_Date</code> のインスタンスである場合に行われます。
+                             <classname>Zend_Date</classname> のインスタンスである場合に行われます。
                              それ以外の場合は、文字列 <code>$date</code>
                              を正規化して Zend_Date::DATE_MEDIUM 形式の日付にしようとします。
-                             <code>Zend_Date::DAY_MEDIUM</code> の書式は、
+                             <classname>Zend_Date::DAY_MEDIUM</classname> の書式は、
                              そのオブジェクトのロケールに依存します。
                             </entry>
                         </row>
@@ -408,20 +405,20 @@ print $date;
                             <entry>Weekday (曜日)</entry>
                             <entry>
                              曜日は、0 (日曜日) から 6 (土曜日) までの数字で表されます。
-                             <code>Zend_Date::WEEKDAY_DIGIT</code> は <code>$date</code>
+                             <classname>Zend_Date::WEEKDAY_DIGIT</classname> は <code>$date</code>
                              から抽出します。これは、<code>$date</code> オペランドが
-                             <code>Zend_Date</code> のインスタンスであるか、
+                             <classname>Zend_Date</classname> のインスタンスであるか、
                              あるいは数値文字列である場合に行われます。
                              それ以外の場合は、以下の定数によって指定した規約に基づいて抽出します。
-                             <code>Zend_Date::WEEKDAY_NARROW</code>、<code>Zend_Date::WEEKDAY_NAME</code>、
-                             <code>Zend_Date::WEEKDAY_SHORT</code>、
-                             <code>Zend_Date::WEEKDAY</code> (グレゴリオ暦とみなして処理します)。
+                             <classname>Zend_Date::WEEKDAY_NARROW</classname>、<classname>Zend_Date::WEEKDAY_NAME</classname>、
+                             <classname>Zend_Date::WEEKDAY_SHORT</classname>、
+                             <classname>Zend_Date::WEEKDAY</classname> (グレゴリオ暦とみなして処理します)。
                             </entry>
                         </row>
                         <row>
                             <entry>DayOfYear (年内の日数)</entry>
                             <entry>
-                             <code>Zend_Date</code> では、これは年初からの経過日数
+                             <classname>Zend_Date</classname> では、これは年初からの経過日数
                              (0-365) を表します。これまでの他の単位と同様、
                              端数は切り捨てられます (グレゴリオ暦とみなして処理します)。
                         </entry>
@@ -480,7 +477,7 @@ print $date;
                             <entry>get()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                                    <emphasis>get($part = null, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     <code>get($part)</code> を使用して、このオブジェクトの日付の
@@ -489,9 +486,9 @@ print $date;
                                     にもとづいて地域化された書式の文字列か整数値となります。
                                     BCMath 拡張モジュールを使用している場合は、
                                     大きな値の場合に整数ではなく数値文字列が返されるかもしれません。
-                                    <emphasis role="strong">注意:</emphasis> <code>get()</code>
+                                    <emphasis>注意:</emphasis> <code>get()</code>
                                     とは異なり、その他の get*() 系のメソッドは
-                                    <code>Zend_Date</code> のインスタンスのみを返します。
+                                    <classname>Zend_Date</classname> のインスタンスのみを返します。
                                     その中身は、選択された時刻/日付となります。
                                 </para>
                             </entry>
@@ -500,7 +497,7 @@ print $date;
                             <entry>set()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">set($date, $part = null, $locale = null)</emphasis>
+                                    <emphasis>set($date, $part = null, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     ロケール <code>$locale</code> の入力データ <code>$date</code>
@@ -513,7 +510,7 @@ print $date;
                             <entry>add()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">add($date, $part = null, $locale = null)</emphasis>
+                                    <emphasis>add($date, $part = null, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     ロケール <code>$locale</code> の入力データ <code>$date</code>
@@ -526,7 +523,7 @@ print $date;
                             <entry>sub()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">sub($date, $part = null, $locale = null)</emphasis>
+                                    <emphasis>sub($date, $part = null, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     ロケール <code>$locale</code> の入力データ <code>$date</code>
@@ -539,7 +536,7 @@ print $date;
                             <entry>copyPart()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">copyPart($part, $locale = null)</emphasis>
+                                    <emphasis>copyPart($part, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     オブジェクトの複製を返します。もとのオブジェクトの日付のうち
@@ -552,7 +549,7 @@ print $date;
                             <entry>compare()</entry>
                             <entry>
                                 <para>
-                                    <emphasis role="strong">compare($date, $part = null, $locale = null)</emphasis>
+                                    <emphasis>compare($date, $part = null, $locale = null)</emphasis>
                                 </para>
                                 <para>
                                     <code>$date</code> の <code>$part</code> 部分を
@@ -594,7 +591,7 @@ print $date;
                         <entry>equals()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">equals($date, $part = null, $locale = null)</emphasis>
+                                <emphasis>equals($date, $part = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 ロケール <code>$locale</code> で格納されている日付 <code>$date</code>
@@ -607,7 +604,7 @@ print $date;
                         <entry>isEarlier()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isEarlier($date, $part = null, $locale = null)</emphasis>
+                                <emphasis>isEarlier($date, $part = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 このオブジェクトの日付要素 <code>$part</code> が、
@@ -620,7 +617,7 @@ print $date;
                         <entry>isLater()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isLater($date, $part = null, $locale = null)</emphasis>
+                                <emphasis>isLater($date, $part = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 このオブジェクトの日付要素 <code>$part</code> が、
@@ -633,7 +630,7 @@ print $date;
                         <entry>isToday()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isToday()</emphasis>
+                                <emphasis>isToday()</emphasis>
                             </para>
                             <para>
                                 今日の年月日が、このオブジェクトの日付と一致するかどうかを調べます
@@ -645,7 +642,7 @@ print $date;
                         <entry>isTomorrow()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isTomorrow()</emphasis>
+                                <emphasis>isTomorrow()</emphasis>
                             </para>
                             <para>
                                 明日の年月日が、このオブジェクトの日付と一致するかどうかを調べます
@@ -657,7 +654,7 @@ print $date;
                         <entry>isYesterday()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isYesterday()</emphasis>
+                                <emphasis>isYesterday()</emphasis>
                             </para>
                             <para>
                                 昨日の年月日が、このオブジェクトの日付と一致するかどうかを調べます
@@ -669,13 +666,13 @@ print $date;
                         <entry>isLeapYear()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isLeapYear()</emphasis>
+                                <emphasis>isLeapYear()</emphasis>
                             </para>
                             <para>
                                 <code>isLeapYear()</code> を使用して、
                                 そのオブジェクトが閏年であるかどうかを調べます。あるいは
                                 Zend_Date::checkLeapYear($year) を使用すると、$year
-                                (文字列、整数値 あるいは <code>Zend_Date</code> のインスタンス)
+                                (文字列、整数値 あるいは <classname>Zend_Date</classname> のインスタンス)
                                 が閏年かどうかを知ることができます。
                             </para>
                         </entry>
@@ -684,7 +681,7 @@ print $date;
                         <entry>isDate()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">isDate($date, $format = null, $locale = null)</emphasis>
+                                <emphasis>isDate($date, $format = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 このメソッドは、指定した日付が本当に日付であるかどうかを調べ、
@@ -705,7 +702,7 @@ print $date;
         <title>日付および日付要素の取得</title>
 
         <para>
-            <code>Zend_Date</code> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
+            <classname>Zend_Date</classname> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
         </para>
 
         <table id="zend.date.others.gettingparts.table">
@@ -722,7 +719,7 @@ print $date;
                         <entry>toString()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">toString($format = null, $locale = null)</emphasis>
+                                <emphasis>toString($format = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 直接実行することもできますし、マジックメソッド <code>__toString()</code>
@@ -740,7 +737,7 @@ print $date;
                         <entry>toArray()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">toArray()</emphasis>
+                                <emphasis>toArray()</emphasis>
                             </para>
                             <para>
                                 選択した日付を、そのオブジェクトのロケールにもとづいて配列形式で返します。
@@ -752,62 +749,62 @@ print $date;
                                 <itemizedlist>
                                     <listitem>
                                         <para>
-                                            日を表す '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                            日を表す '<emphasis>day</emphasis>' (<classname>Zend_Date::DAY_SHORT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            月を表す '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                            月を表す '<emphasis>month</emphasis>' (<classname>Zend_Date::MONTH_SHORT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            年を表す '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                            年を表す '<emphasis>year</emphasis>' (<classname>Zend_Date::YEAR</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            時間を表す '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                            時間を表す '<emphasis>hour</emphasis>' (<classname>Zend_Date::HOUR_SHORT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            分を表す '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                            分を表す '<emphasis>minute</emphasis>' (<classname>Zend_Date::MINUTE_SHORT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            秒を表す '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                            秒を表す '<emphasis>second</emphasis>' (<classname>Zend_Date::SECOND_SHORT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            タイムゾーンの略称を表す '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                            タイムゾーンの略称を表す '<emphasis>timezone</emphasis>' (<classname>Zend_Date::TIMEZONE</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            Unix タイムスタンプを表す '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                            Unix タイムスタンプを表す '<emphasis>timestamp</emphasis>' (<classname>Zend_Date::TIMESTAMP</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            曜日番号を表す '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                            曜日番号を表す '<emphasis>weekday</emphasis>' (<classname>Zend_Date::WEEKDAY_DIGIT</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            年初からの日数を表す '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                            年初からの日数を表す '<emphasis>dayofyear</emphasis>' (<classname>Zend_Date::DAY_OF_YEAR</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            週を表す '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                            週を表す '<emphasis>week</emphasis>' (<classname>Zend_Date::WEEK</classname>)
                                         </para>
                                     </listitem>
                                     <listitem>
                                         <para>
-                                            GMT からの時差を表す '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                            GMT からの時差を表す '<emphasis>gmtsecs</emphasis>' (<classname>Zend_Date::GMT_SECS</classname>)
                                         </para>
                                     </listitem>
                                 </itemizedlist>
@@ -818,15 +815,15 @@ print $date;
                         <entry>toValue()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">toValue($part = null)</emphasis>
+                                <emphasis>toValue($part = null)</emphasis>
                             </para>
                             <para>
                                 指定した日付要素 <code>$part</code> の、
                                 そのオブジェクトのロケールにもとづいた整数表現を返します。
-                                <code>$part</code> で <code>Zend_Date::MONTH_NAME_SHORT</code>
+                                <code>$part</code> で <classname>Zend_Date::MONTH_NAME_SHORT</classname>
                                 のような非数値要素を選択した場合は、
                                 <code>false</code> を返します。
-                                <emphasis role="strong">注意:</emphasis> このメソッドは
+                                <emphasis>注意:</emphasis> このメソッドは
                                 <link linkend="id.date.basic.operations"><code>get()</code></link>
                                 をコールし、結果を PHP の integer 型にキャストします。つまり、
                                 <code>get()</code> の返す結果が非常に大きな数値を表す数値表現となり、
@@ -841,7 +838,7 @@ print $date;
                         </entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">get($part = null, $locale = null)</emphasis>
+                                <emphasis>get($part = null, $locale = null)</emphasis>
                             </para>
                             <para>
                                 このメソッドは、オブジェクトの日付要素 <code>$part</code>
@@ -856,11 +853,11 @@ print $date;
                         <entry>now()</entry>
                         <entry>
                             <para>
-                                <emphasis role="strong">now($locale = null)</emphasis>
+                                <emphasis>now($locale = null)</emphasis>
                             </para>
                             <para>
                                 この関数は、<code>new Zend_Date()</code> と同等です。
-                                これは、現在の日付を表す <code>Zend_Date</code>
+                                これは、現在の日付を表す <classname>Zend_Date</classname>
                                 オブジェクトに、ロケール <code>$locale</code>
                                 を指定して返します。
                             </para>
@@ -877,7 +874,7 @@ print $date;
         <title>一秒未満の単位の扱い</title>
 
         <para>
-            <code>Zend_Date</code> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
+            <classname>Zend_Date</classname> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
         </para>
 
         <table id="zend.date.others.fractions.table">
@@ -893,7 +890,7 @@ print $date;
                     <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">getFractionalPrecision()</emphasis>
+                                <emphasis>getFractionalPrecision()</emphasis>
                             </para>
                         </entry>
                         <entry>一秒未満の値の精度を返します。</entry>
@@ -901,7 +898,7 @@ print $date;
                     <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">setFractionalPrecision()</emphasis>
+                                <emphasis>setFractionalPrecision()</emphasis>
                             </para>
                         </entry>
                         <entry>一秒未満の値の精度を設定します。</entry>
@@ -934,7 +931,7 @@ print $date;
                     <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">getSunrise($location)</emphasis>
+                                <emphasis>getSunrise($location)</emphasis>
                             </para>
                         </entry>
                         <entry>日の出時刻を返します。</entry>
@@ -942,7 +939,7 @@ print $date;
                     <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">getSunset($location)</emphasis>
+                                <emphasis>getSunset($location)</emphasis>
                             </para>
                         </entry>
                         <entry>日の入り時刻を返します。</entry>
@@ -950,7 +947,7 @@ print $date;
                     <row>
                         <entry>
                             <para>
-                                <emphasis role="strong">getSunInfo($location)</emphasis>
+                                <emphasis>getSunInfo($location)</emphasis>
                             </para>
                         </entry>
                         <entry>日の出/日の入り情報を含む配列を返します。</entry>

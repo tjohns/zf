@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.fetching">
     <title>Holen von Optionen und Argumenten</title>
     <para>
-        Nach dem Erstellen der Optionen welche das <code>Zend_Console_Getopt</code>
+        Nach dem Erstellen der Optionen welche das <classname>Zend_Console_Getopt</classname>
         Objekt erkennen sollte, und der Übergabe von Argumenten von der
         Kommandozeile oder einem Array, kann das Objekt abgefragt werden um
         herauszufinden welche Optionen durch den Benutzer mit einem gegebenen
@@ -14,7 +14,7 @@
     </para>
     <para>
         Das Analysieren der Daten wird verzögert, bis zur ersten Abfrage die am
-        <code>Zend_Console_Getopt</code> Objekt durchgeführt wird um herauszufinden
+        <classname>Zend_Console_Getopt</classname> Objekt durchgeführt wird um herauszufinden
         ob eine Option angegeben wurde. Das erlaubt die Anwendung einiger
         Methodenaufrufe zur Konfiguration der Optionen, Argumente, Hilfstexte und
         Konfigurationsoptionen bevor das Analysieren durchgeführt wird.
@@ -25,7 +25,7 @@
         <para>
             Wenn ein Benutzer irgendeine ungültige Option auf der Kommandozeile
             angibt, wirft die analysierende Funktion eine
-            <code>Zend_Console_Getopt_Exception</code>. Diese Ausnahme kann im
+            <classname>Zend_Console_Getopt_Exception</classname>. Diese Ausnahme kann im
             Code der Anwendung abgefangen werden. Die <code>parse()</code> Methode
             kann verwendet werden um das Objekt dazu zu zwingen die Argumente zu
             analysieren. Das ist deswegen nützlich weil <code>parse()</code> in
@@ -45,8 +45,7 @@ try {
     echo $e->getUsageMessage();
     exit;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Die Fälle in denen die Analyse eine Ausnahme werden sind unter anderem:
@@ -88,8 +87,7 @@ try {
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Alternativ kann die magische <code>__get()</code> Funktion verwendet
@@ -105,8 +103,7 @@ if (isset($opts->b)) {
     echo "Die Option b ist da.\n";
 }
 $p_parameter = $opts->p; // Null wenn nicht gesetzt
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Wenn die Optionen mit Aliasen definiert wurden, kann jeder der Aliase für
@@ -140,21 +137,23 @@ $p_parameter = $opts->p; // Null wenn nicht gesetzt
             </listitem>
             <listitem>
                 <para>
-                    Als Zeichenkette welche JSON Daten enthält: verwenden der <code>toJson()</code> Methode.
+                    Als Zeichenkette welche JSON Daten enthält: verwenden der <code>toJson()</code>
+                    Methode.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Als Zeichenkette welche XML Daten enthält: verwenden der <code>toXml()</code> Methode.
+                    Als Zeichenkette welche XML Daten enthält: verwenden der <code>toXml()</code>
+                    Methode.
                 </para>
             </listitem>
         </itemizedlist>
         <para>
             In allen obigen Auflistungsmethoden, ist die Flag-Zeichenkette die erste Zeichenkette
             in der entsprechenden Liste von Aliasen. Wenn zum Beispiel die Aliase der Option als
-            "<code>verbose|v</code>" definiert sind, wird die erste Zeichenkette "<code>verbose</code>"
-            als kanonischer Name der Option verwendet. Der Name des Optionsflags enthält nicht die
-            vorangestellten Bindestriche.
+            "<code>verbose|v</code>" definiert sind, wird die erste Zeichenkette
+            "<code>verbose</code>" als kanonischer Name der Option verwendet. Der Name des
+            Optionsflags enthält nicht die vorangestellten Bindestriche.
         </para>
     </sect2>
 
@@ -162,9 +161,9 @@ $p_parameter = $opts->p; // Null wenn nicht gesetzt
         <title>Nicht-Options Argumente erhalten</title>
         <para>
             Nachdem die Argumente der Option und deren Parameter von der Kommandozeile analysiert
-            wurden, können zusätzliche Argumente zurück bleiben. Diese Argumente können abgefragt werden
-            durch Verwendung der <code>getRemainingArgs()</code> Methode. Diese Methode gibt ein Array
-            von Zeichenketten zurück welche nicht Teil irgendeiner Option waren.
+            wurden, können zusätzliche Argumente zurück bleiben. Diese Argumente können abgefragt
+            werden durch Verwendung der <code>getRemainingArgs()</code> Methode. Diese Methode gibt
+            ein Array von Zeichenketten zurück welche nicht Teil irgendeiner Option waren.
         </para>
         <example id="zend.console.getopt.fetching.remainingargs.example">
             <title>Verwenden von getRemainingArgs()</title>
@@ -172,15 +171,15 @@ $p_parameter = $opts->p; // Null wenn nicht gesetzt
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
 $args = $opts->getRemainingArgs(); // Rückgabe array('filename')
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> unterstützt die GNU Konvention das ein Argument welches auf einem
-            Doppelten Bindestrich besteht das Ende der Optionen bezeichnet. Jedes Argument welches diesem
-            Bezeichner folgt, muß als Nicht-Options-Argument behandelt werden. Das ist nützlich wenn ein
-            Nicht-Options-Argument vorhanden ist welches mit einem Bindestrich anfängt.
-            Zum Beispiel: "<command>rm -- -filename-with-dash</command>".
+            <classname>Zend_Console_Getopt</classname> unterstützt die GNU Konvention das ein
+            Argument welches auf einem Doppelten Bindestrich besteht das Ende der Optionen
+            bezeichnet. Jedes Argument welches diesem Bezeichner folgt, muß als
+            Nicht-Options-Argument behandelt werden. Das ist nützlich wenn ein
+            Nicht-Options-Argument vorhanden ist welches mit einem Bindestrich anfängt. Zum
+            Beispiel: "<command>rm -- -filename-with-dash</command>".
         </para>
     </sect2>
 

@@ -5,7 +5,7 @@
 
     <para>
         Building on the <link linkend="zend.dojo.view.dijit">dijit view
-        helpers</link>, the <code>Zend_Dojo_Form</code> family of classes
+        helpers</link>, the <classname>Zend_Dojo_Form</classname> family of classes
         provides the ability to utilize Dijits natively within your forms.
     </para>
 
@@ -17,22 +17,22 @@
     <itemizedlist>
         <listitem>
             <para>
-                Use <code>Zend_Dojo::enableForm()</code>. This will add plugin
+                Use <classname>Zend_Dojo::enableForm()</classname>. This will add plugin
                 paths for decorators and elements to all attached form items,
                 recursively. Additionally, it will dojo-enable the view object.
                 Note, however, that any sub forms you attach
                 <emphasis>after</emphasis> this call will also need to be
-                passed through <code>Zend_Dojo::enableForm()</code>.
+                passed through <classname>Zend_Dojo::enableForm()</classname>.
             </para>
         </listitem>
 
         <listitem>
             <para>
                 Use the Dojo-specific form and subform implementations,
-                <code>Zend_Dojo_Form</code> and
-                <code>Zend_Dojo_Form_SubForm</code> respectively. These can be
-                used as drop-in replacements for <code>Zend_Form</code> and
-                <code>Zend_Form_SubForm</code>, contain all the appropriate
+                <classname>Zend_Dojo_Form</classname> and
+                <classname>Zend_Dojo_Form_SubForm</classname> respectively. These can be
+                used as drop-in replacements for <classname>Zend_Form</classname> and
+                <classname>Zend_Form_SubForm</classname>, contain all the appropriate
                 decorator and element paths, set a Dojo-specific default
                 DisplayGroup class, and dojo-enable the view.
             </para>
@@ -43,7 +43,7 @@
                 Last, and most tedious, you can set the appropriate decorator
                 and element paths yourself, set the default DisplayGroup class,
                 and dojo-enable the view. Since
-                <code>Zend_Dojo::enableForm()</code> does this already, there's
+                <classname>Zend_Dojo::enableForm()</classname> does this already, there's
                 little reason to go this route.
             </para>
         </listitem>
@@ -53,20 +53,20 @@
         <title>Enabling Dojo in your existing forms</title>
 
         <para>
-            "But wait," you say; "I'm already extending <code>Zend_Form</code> with my own
+            "But wait," you say; "I'm already extending <classname>Zend_Form</classname> with my own
             custom form class! How can I Dojo-enable it?'"
         </para>
 
         <para>
             First, and easiest, simply change from extending
-            <code>Zend_Form</code> to extending <code>Zend_Dojo_Form</code>,
+            <classname>Zend_Form</classname> to extending <classname>Zend_Dojo_Form</classname>,
             and update any places where you instantiate
-            <code>Zend_Form_SubForm</code> to instantiate
-            <code>Zend_Dojo_Form_SubForm</code>.
+            <classname>Zend_Form_SubForm</classname> to instantiate
+            <classname>Zend_Dojo_Form_SubForm</classname>.
         </para>
 
         <para>
-            A second approach is to call <code>Zend_Dojo::enableForm()</code>
+            A second approach is to call <classname>Zend_Dojo::enableForm()</classname>
             within your custom form's <code>init()</code> method; when the form
             definition is complete, loop through all SubForms to dojo-enable
             them:
@@ -88,8 +88,7 @@ class My_Form_Custom extends Zend_Form
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <para>

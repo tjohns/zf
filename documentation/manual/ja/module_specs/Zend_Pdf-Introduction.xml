@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>導入</title>
     <para>
-    <code>Zend_Pdf</code> コンポーネントは、PDF (Portable Document Format)
+    <classname>Zend_Pdf</classname> コンポーネントは、PDF (Portable Document Format)
     操作エンジンです。既存のドキュメントの読み込みや新しいドキュメントの作成、
     ドキュメントの変更および変更内容の保存が可能です。PHP アプリケーションから
     既存のテンプレートを使用した PDF を作成したり、新しい
     PDF ドキュメントを作成したりする際の助けになるでしょう。
 
-    <code>Zend_Pdf</code> は、以下の機能をサポートしています。
+    <classname>Zend_Pdf</classname> は、以下の機能をサポートしています。
     <itemizedlist>
         <listitem>
             <para>

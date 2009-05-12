@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype Helfer</title>
 
     <para>
-        Gültige HTML und XHTML Dokumente sollten eine <code>DOCTYPE</code> Deklaration enthalten. Neben der
-        Schwierigkeit sich diese zu merken, können Sie auch beeinflussen wie bestimmte Elemente im Dokument
-        dargestellt werden sollen (zum Beispiel, CDATA Kommentierung in <code>&lt;script&gt;</code> und
-        <code>&lt;style&gt;</code> Elementen.
+        Gültige HTML und XHTML Dokumente sollten eine <code>DOCTYPE</code> Deklaration enthalten.
+        Neben der Schwierigkeit sich diese zu merken, können Sie auch beeinflussen wie bestimmte
+        Elemente im Dokument dargestellt werden sollen (zum Beispiel, CDATA Kommentierung in
+        <code>&lt;script&gt;</code> und <code>&lt;style&gt;</code> Elementen.
     </para>
 
     <para>
@@ -48,8 +48,7 @@
         <programlisting role="php"><![CDATA[
 $doctypeHelper = new Zend_View_Helper_Doctype();
 $doctypeHelper->doctype('XHTML1_STRICT');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Und Ihn dann am Beginn des Layout Scripts ausgeben:
@@ -57,8 +56,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->doctype() ?>
-]]>
-        </programlisting>
+]]></programlisting>
 
     </example>
 
@@ -72,20 +70,18 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <programlisting role="php"><![CDATA[
 $doctype = $view->doctype()->getDoctype();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Typischerweise wird man einfach wissen wollen, ob der Doctype XHTML ist oder nicht; hierfür ist
-            die <code>isXhtml()</code> Methode ausreichend:
+            Typischerweise wird man einfach wissen wollen, ob der Doctype XHTML ist oder nicht;
+            hierfür ist die <code>isXhtml()</code> Methode ausreichend:
         </para>
 
         <programlisting role="php"><![CDATA[
 if ($view->doctype()->isXhtml()) {
     // etwas anderes machen
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

@@ -9,14 +9,14 @@
 
         <para>
             You can create new a memory manager
-            (<code>Zend_Memory_Manager</code> object) using the
-            <code>Zend_Memory::factory($backendName [, $backendOprions])</code>
+            (<classname>Zend_Memory_Manager</classname> object) using the
+            <classname>Zend_Memory::factory($backendName [, $backendOprions])</classname>
             method.
         </para>
 
         <para>
             The first argument <code>$backendName</code> is a string that
-            names one of the backend implementations supported by <code>Zend_Cache</code>.
+            names one of the backend implementations supported by <classname>Zend_Cache</classname>.
         </para>
 
         <para>
@@ -30,22 +30,20 @@ $backendOptions = array(
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            <code>Zend_Memory</code> uses <link linkend="zend.cache.backends"><code>Zend_Cache backends</code></link>
+            <classname>Zend_Memory</classname> uses <link linkend="zend.cache.backends"><classname>Zend_Cache backends</classname></link>
             as storage providers.
         </para>
 
         <para>
             You may use the special name '<code>None</code>' as a backend name,
-            in addition to standard <code>Zend_Cache</code> backends.
+            in addition to standard <classname>Zend_Cache</classname> backends.
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -76,11 +74,10 @@ $memoryManager = Zend_Memory::factory('None');
 
             <para>
                 Create movable objects (objects, which may be swapped) using
-                the <code>Zend_Memory_Manager::create([$data])</code> method:
+                the <classname>Zend_Memory_Manager::create([$data])</classname> method:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
-]]>
-                </programlisting>
+]]></programlisting>
 
             </para>
 
@@ -98,11 +95,10 @@ $memObject = $memoryManager->create($data);
 
             <para>
                 Create locked objects (objects, which are not swapped) using
-                the <code>Zend_Memory_Manager::createLocked([$data])</code> method:
+                the <classname>Zend_Memory_Manager::createLocked([$data])</classname> method:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -145,8 +141,7 @@ function foo()
     // but $memObject3 object is still referenced by $memList
     // and is not destroyed
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -183,8 +178,7 @@ function foo()
                 <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
 $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>
@@ -217,8 +211,7 @@ $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
                 <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
 $memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <para>

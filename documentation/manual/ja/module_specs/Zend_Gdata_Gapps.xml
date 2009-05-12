@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisioning の使用法</title>
 
@@ -61,8 +61,7 @@
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -80,8 +79,7 @@ $gdata = new Zend_Gdata_Gapps($client, $domain);
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 サービスクラスのファクトリメソッドでクエリを作成する際は、
@@ -94,8 +92,7 @@ $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -106,7 +103,7 @@ $query = $gdata->newUserQuery($arg);
 
         <para>
             Google Apps がホストするドメイン上のユーザアカウントは、
-            <code>Zend_Gdata_Gapps_UserEntry</code> のインスタンスで表されます。
+            <classname>Zend_Gdata_Gapps_UserEntry</classname> のインスタンスで表されます。
             このクラスを使用すると、
             アカウント名やユーザ名、パスワード、アクセス権限、
             そして容量制限などすべての情報にアクセスできるようになります。
@@ -122,8 +119,7 @@ $query = $gdata->newUserQuery($arg);
 
             <programlisting role="php"><![CDATA[
 $gdata->createUser('foo', 'Random', 'User', '••••••••');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 あるいは UserEntry のインスタンスから作成することもできます。
@@ -141,8 +137,7 @@ $user->name = $gdata->newName();
 $user->name->givenName = 'Random';
 $user->name->familyName = 'User';
 $user = $gdata->insertUser($user);
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 ユーザのパスワードは、通常はプレーンテキストで指定しなければなりません。
@@ -174,12 +169,11 @@ echo 'パスワードの変更が必要？: ' .
      ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo '規約に同意した？: ' .
      ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 もうひとつの方法は、まず
-                <code>Zend_Gdata_Gapps_UserQuery</code> のインスタンスを作成して
+                <classname>Zend_Gdata_Gapps_UserQuery</classname> のインスタンスを作成して
                 username プロパティを (取得したいユーザのユーザ名に)
                 設定し、サービスオブジェクトの
                 <code>getUserEntry()</code> をコールするものです。
@@ -198,13 +192,12 @@ echo 'パスワードの変更が必要？: ' .
      ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 echo '規約に同意した？: ' .
      ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 指定したユーザが発見できない場合は ServiceException
                 がスローされ、エラーコード
-                <code>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</code>
+                <classname>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</classname>
                 を返します。ServiceExceptions については <xref
                 linkend="zend.gdata.gapps.exceptions" />
                 を参照ください。
@@ -227,11 +220,10 @@ foreach ($feed as $user) {
     echo "  * " . $user->login->username . ' (' . $user->name->givenName .
         ' ' . $user->name->familyName . ")\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_UserFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_UserFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、ドメイン上の各ユーザの情報を保持しています。
             </para>
 
@@ -253,8 +245,7 @@ foreach ($feed as $user) {
         ' ' . $user->name->familyName . ")\n";
 }
 
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -274,8 +265,7 @@ $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
 $user = $user->save();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <sect4 id="zend.gdata.gapps.users.updating.resettingPassword">
                 <title>ユーザのパスワードのリセット</title>
@@ -289,8 +279,7 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->password = '••••••••';
 $user = $user->save();
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     現在のパスワードをこの方式で取得することはできません。
@@ -313,8 +302,7 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->changePasswordAtNextLogin = true;
 $user = $user->save();
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     同様に、強制しないようにするなら
@@ -338,8 +326,7 @@ $user = $user->save();
                 <programlisting role="php"><![CDATA[
 $gdata->suspendUser('foo');
 $gdata->restoreUser('foo');
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     あるいは、UserEntry のプロパティ
@@ -351,8 +338,7 @@ $gdata->restoreUser('foo');
 $user = $gdata->retrieveUser('foo');
 $user->login->suspended = true;
 $user = $user->save();
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     アクセス制限を解除するには、同様に
@@ -375,8 +361,7 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->admin = true;
 $user = $user->save();
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     だいたい予想はつくでしょうが、
@@ -399,8 +384,7 @@ $user = $user->save();
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 そのアカウントの UserEntry オブジェクトが手元にないのなら、
@@ -409,8 +393,7 @@ $user->delete();
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -428,7 +411,7 @@ $gdata->deleteUser('foo');
 
         <para>
             ニックネームは
-            <code>Zend_Gdata_Gapps_NicknameEntry</code>
+            <classname>Zend_Gdata_Gapps_NicknameEntry</classname>
             のインスタンスで表されます。
         </para>
 
@@ -442,8 +425,7 @@ $gdata->deleteUser('foo');
 
             <programlisting role="php"><![CDATA[
 $gdata->createNickname('foo', 'bar');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 あるいは NicknameEntry のインスタンスから作成することもできます。
@@ -457,8 +439,7 @@ $nickname = $gdata->newNicknameEntry();
 $nickname->login = $gdata->newLogin('foo');
 $nickname->nickname = $gdata->newNickname('bar');
 $nickname = $gdata->insertNickname($nickname);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -477,12 +458,11 @@ $nickname = $gdata->retrieveNickname('bar');
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
 echo '所有者: ' . $nickname->login->username . "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 もうひとつの方法は、まず
-                <code>Zend_Gdata_Gapps_NicknameQuery</code> のインスタンスを作成して
+                <classname>Zend_Gdata_Gapps_NicknameQuery</classname> のインスタンスを作成して
                 nickname プロパティを (取得したいニックネームに)
                 設定し、サービスオブジェクトの
                 <code>getNicknameEntry()</code> をコールするものです。
@@ -494,13 +474,12 @@ $nickname = $gdata->getNicknameEntry($query);
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
 echo '所有者: ' . $nickname->login->username . "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 ユーザの場合と同様、指定したニックネームが発見できない場合は
                 ServiceException がスローされ、エラーコード
-                <code>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</code>
+                <classname>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</classname>
                 を返します。ServiceExceptions については <xref
                 linkend="zend.gdata.gapps.exceptions" />
                 を参照ください。
@@ -522,16 +501,15 @@ $feed = $gdata->retrieveNicknames('foo');
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_NicknameFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_NicknameFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、指定したユーザのニックネームに関する情報を保持します。
             </para>
 
             <para>
-                あるいは、新しい <code>Zend_Gdata_Gapps_NicknameQuery</code>
+                あるいは、新しい <classname>Zend_Gdata_Gapps_NicknameQuery</classname>
                 を作成して username プロパティをそのユーザに設定し、
                 サービスオブジェクトの <code>getNicknameFeed()</code>
                 をコールすることもできます。
@@ -545,8 +523,7 @@ $feed = $gdata->getNicknameFeed($query);
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -564,11 +541,10 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_NicknameFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_NicknameFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、ドメイン上の各ニックネームの情報を保持しています。
             </para>
 
@@ -584,8 +560,7 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -600,8 +575,7 @@ foreach ($feed as $nickname) {
             <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 $nickname->delete();
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 そのニックネームの NicknameEntry オブジェクトが手元にないのなら、
@@ -610,8 +584,7 @@ $nickname->delete();
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteNickname('bar');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -629,7 +602,7 @@ $gdata->deleteNickname('bar');
 
         <para>
             ドメイン上のメーリングリストの情報は、
-            <code>Zend_Gdata_Gapps_EmailListEntry</code> のインスタンスとして表されます。
+            <classname>Zend_Gdata_Gapps_EmailListEntry</classname> のインスタンスとして表されます。
         </para>
 
         <sect3 id="zend.gdata.gapps.emailLists.creating">
@@ -642,8 +615,7 @@ $gdata->deleteNickname('bar');
 
             <programlisting role="php"><![CDATA[
 $gdata->createEmailList('friends');
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 あるいは EmailListEntry のインスタンスから作成することもできます。
@@ -656,8 +628,7 @@ $gdata->createEmailList('friends');
 $list = $gdata->newEmailListEntry();
 $list->emailList = $gdata->newEmailList('friends');
 $list = $gdata->insertEmailList($list);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -675,16 +646,15 @@ $feed = $gdata->retrieveEmailLists('baz@somewhere.com');
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_EmailListFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_EmailListFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、指定した参加者に関連するメーリングリストの情報を保持します。
             </para>
 
             <para>
-                あるいは、新しい <code>Zend_Gdata_Gapps_EmailListQuery</code>
+                あるいは、新しい <classname>Zend_Gdata_Gapps_EmailListQuery</classname>
                 を作成して recipient プロパティをそのメールアドレスに設定し、
                 サービスオブジェクトの <code>getEmailListFeed()</code>
                 をコールすることもできます。
@@ -698,8 +668,7 @@ $feed = $gdata->getEmailListFeed($query);
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -717,11 +686,10 @@ $feed = $gdata->retrieveAllEmailLists();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_EmailListFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_EmailListFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、ドメイン上の各メーリングリストに関する情報を保持します。
             </para>
 
@@ -736,8 +704,7 @@ $feed = $gdata->getEmailListFeed();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -751,8 +718,7 @@ foreach ($feed as $list) {
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteEmailList('friends');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -763,7 +729,7 @@ $gdata->deleteEmailList('friends');
 
         <para>
             メーリングリストの各参加者は、
-            <code>Zend_Gdata_Gapps_EmailListRecipient</code> のインスタンスとして表されます。
+            <classname>Zend_Gdata_Gapps_EmailListRecipient</classname> のインスタンスとして表されます。
             このクラスを使用すると、メーリングリストにメンバーを追加したり、
             そこからメンバーを削除したりすることができます。
         </para>
@@ -778,8 +744,7 @@ $gdata->deleteEmailList('friends');
 
             <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -797,8 +762,7 @@ $feed = $gdata->retrieveAllRecipients('friends');
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 あるいは、新しい EmailListRecipientQuery
@@ -815,11 +779,10 @@ $feed = $gdata->getEmailListRecipientFeed($query);
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
-                これは <code>Zend_Gdata_Gapps_EmailListRecipientFeed</code> オブジェクトを作成します。
+                これは <classname>Zend_Gdata_Gapps_EmailListRecipientFeed</classname> オブジェクトを作成します。
                 このオブジェクトは、指定したメーリングリストの各参加者に関する情報を保持します。
             </para>
 
@@ -835,8 +798,7 @@ foreach ($feed as $recipient) {
 
             <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
 
@@ -846,9 +808,9 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
         <title>エラー処理</title>
 
         <para>
-            <code>Zend_Gdata</code> が標準でスローする例外に加えて、
+            <classname>Zend_Gdata</classname> が標準でスローする例外に加えて、
             Provisioning API によるリクエストでは
-            <code>Zend_Gdata_Gapps_ServiceException</code>
+            <classname>Zend_Gdata_Gapps_ServiceException</classname>
             がスローされる可能性があります。これらの例外は、
             API 固有のエラーが原因でリクエストが失敗したことを表します。
         </para>
@@ -859,7 +821,7 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
             これらのオブジェクトにはエラーコードとエラーの原因、そして
             (オプションで) その例外を引き起こした入力が含まれます。
             エラーコードの完全な一覧は、Zend Framework API
-            ドキュメントで <code>Zend_Gdata_Gapps_Error</code> の部分を参照ください。
+            ドキュメントで <classname>Zend_Gdata_Gapps_Error</classname> の部分を参照ください。
             さらに、正式なエラーの一覧は <ulink
             url="http://code.google.com/apis/apps/gdata_provisioning_api_v2.0_reference.html#appendix_d">Google
             Apps Provisioning API V2.0 Reference: Appendix D</ulink>
@@ -894,8 +856,7 @@ function retrieveUser ($username) {
     }
     return $user;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

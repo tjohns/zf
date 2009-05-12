@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.view.helpers.initial.headmeta">
     <title>HeadMeta Helfer</title>
 
     <para>
-        Das HTML Element <code>&lt;meta&gt;</code> wird verwendet um Meta Informationen über das HTML Dokument
-        anzubieten -- typischerweise Schlüsselwörter. Dokument Zeichensätze, Cache Pragmas, usw. Meta Tags
-        können entweder 'http-equiv' oder 'name' Typen sein, müssen ein 'content' Attribut enthalten, und
-        können auch eines der 'lang' oder 'scheme' Modifikator Attributen enthalten.
+        Das HTML Element <code>&lt;meta&gt;</code> wird verwendet um Meta Informationen über das
+        HTML Dokument anzubieten -- typischerweise Schlüsselwörter. Dokument Zeichensätze, Cache
+        Pragmas, usw. Meta Tags können entweder 'http-equiv' oder 'name' Typen sein, müssen ein
+        'content' Attribut enthalten, und können auch eines der 'lang' oder 'scheme' Modifikator
+        Attributen enthalten.
     </para>
 
     <para>
-        Der <code>HeadMeta</code> Helfer unterstützt die folgenden Methoden für das Setzen und Hinzufügen von
-        Meta Tags:
+        Der <code>HeadMeta</code> Helfer unterstützt die folgenden Methoden für das Setzen und
+        Hinzufügen von Meta Tags:
     </para>
 
     <itemizedlist>
@@ -36,28 +37,30 @@
     </itemizedlist>
 
     <para>
-        Das <code>$keyValue</code> Element wird verwendet um einen Wert für den 'name' oder 'http-equiv'
-        Schlüssel zu definieren; <code>$content</code> ist der Wert für den 'content' Schlüssel, und
-        <code>$modifiers</code> ist ein optionales assoziatives Array das Schlüssel für 'land und/oder 'scheme'
-        enthalten kann.
+        Das <code>$keyValue</code> Element wird verwendet um einen Wert für den 'name' oder
+        'http-equiv' Schlüssel zu definieren; <code>$content</code> ist der Wert für den 'content'
+        Schlüssel, und <code>$modifiers</code> ist ein optionales assoziatives Array das Schlüssel
+        für 'land und/oder 'scheme' enthalten kann.
     </para>
 
     <para>
-        Meta Tags können auch gesetzt werden indem die <code>headMeta()</code> Helfermethode verwendet wird,
-        welche die folgende Signatur hat: <code>headMeta($content, $keyValue, $keyType = 'name',
-        $modifiers = array(), $placement = 'APPEND')</code>. <code>$keyValue</code> ist der Intalt für den
-        Schlüssel der in <code>$keyType</code> spezifiziert ist, und welche entweder 'name' oder 'http-equiv'
-        sein sollte. <code>$placement</code> kann entweder 'SET' (überschreibt alle vorher gespeicherten Werte),
-        'APPEND' (fügt an das Ende des Stacks hinzu), oder 'PREPEND' (fügt an den Beginn des Stacks hinzu) sein.
+        Meta Tags können auch gesetzt werden indem die <code>headMeta()</code> Helfermethode
+        verwendet wird, welche die folgende Signatur hat: <code>headMeta($content, $keyValue,
+        $keyType = 'name', $modifiers = array(), $placement = 'APPEND')</code>.
+        <code>$keyValue</code> ist der Intalt für den Schlüssel der in <code>$keyType</code>
+        spezifiziert ist, und welche entweder 'name' oder 'http-equiv' sein sollte.
+        <code>$placement</code> kann entweder 'SET' (überschreibt alle vorher gespeicherten Werte),
+        'APPEND' (fügt an das Ende des Stacks hinzu), oder 'PREPEND' (fügt an den Beginn des Stacks
+        hinzu) sein.
     </para>
 
     <para>
         <code>HeadMeta</code> überschreibt <code>append()</code>, <code>offsetSet()</code>,
-        <code>prepend()</code>, und <code>set()</code> um die Verwendung der speziellen Methoden wie oben gelistet
-        zu erzwingen. Intern wird jedes Element als <code>stdClass</code> Token gespeichert, welches später
-        durch Verwendung der <code>itemToString()</code> Methode serialisiert wird. Das erlaubt es Prüfungen
-        an den Elementen im Stack durchzuführen, und diese Elemente optional zu verändern indem einfach das
-        zurückgegebene Objekt verändert wird.
+        <code>prepend()</code>, und <code>set()</code> um die Verwendung der speziellen Methoden wie
+        oben gelistet zu erzwingen. Intern wird jedes Element als <code>stdClass</code> Token
+        gespeichert, welches später durch Verwendung der <code>itemToString()</code> Methode
+        serialisiert wird. Das erlaubt es Prüfungen an den Elementen im Stack durchzuführen, und
+        diese Elemente optional zu verändern indem einfach das zurückgegebene Objekt verändert wird.
     </para>
 
     <para>
@@ -69,25 +72,24 @@
         <title>Grundsätzliche Verwendung des HeadMeta Helfers</title>
 
         <para>
-            Neue Meta Tags können jederzeit spezifiziert werden. Typischerweise werden Clientseitige Cacheregeln
-            oder SEO Schlüsselwörter spezifiziert.
+            Neue Meta Tags können jederzeit spezifiziert werden. Typischerweise werden Clientseitige
+            Cacheregeln oder SEO Schlüsselwörter spezifiziert.
         </para>
 
         <para>
-            Wenn zum Beispiel ein spezielles SEO Schlüsselwort spezifiziert werden soll, kann das durch die
-            Erstellung eines Meta Nametags, mit dem Namen 'keywords' und dem Inhalt des Schlüsselworts das mit
-            der Seite assoziiert werden soll, geschehen:
+            Wenn zum Beispiel ein spezielles SEO Schlüsselwort spezifiziert werden soll, kann das
+            durch die Erstellung eines Meta Nametags, mit dem Namen 'keywords' und dem Inhalt des
+            Schlüsselworts das mit der Seite assoziiert werden soll, geschehen:
         </para>
 
         <programlisting role="php"><![CDATA[
 // Meta Schlüsselwörter setzen
 $this->headMeta()->appendName('keywords', 'framework php productivity');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Wenn Clientseitige Cacheregeln gesetzt werden sollen, können http-equiv Tags mit den Regeln die
-            erzwungen werden sollen, gesetzt werden:
+            Wenn Clientseitige Cacheregeln gesetzt werden sollen, können http-equiv Tags mit den
+            Regeln die erzwungen werden sollen, gesetzt werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -96,12 +98,11 @@ $this->headMeta()->appendHttpEquiv('expires',
                                    'Wed, 26 Feb 1997 08:21:57 GMT')
                  ->appendHttpEquiv('pragma', 'no-cache')
                  ->appendHttpEquiv('Cache-Control', 'no-cache');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Ein anderer populärer Verwendungszweck für Meta Tags ist das Setzen des Inhalt-Typs, Zeichensatzes,
-            und der Sprache:
+            Ein anderer populärer Verwendungszweck für Meta Tags ist das Setzen des Inhalt-Typs,
+            Zeichensatzes, und der Sprache:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -109,29 +110,27 @@ $this->headMeta()->appendHttpEquiv('expires',
 $this->headMeta()->appendHttpEquiv('Content-Type',
                                    'text/html; charset=UTF-8')
                  ->appendHttpEquiv('Content-Language', 'en-US');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Als letztes Beispiel, ein einfacher Weg um eine kurze Nachricht anzuzeigen bevor mit Hilfe eines
-            "Meta Refreshes" weitergeleitet wird:
+            Als letztes Beispiel, ein einfacher Weg um eine kurze Nachricht anzuzeigen bevor mit
+            Hilfe eines "Meta Refreshes" weitergeleitet wird:
         </para>
 
         <programlisting role="php"><![CDATA[
 // Einen Meta Refresh mit 3 Sekunden zu einer neuen URL setzen:
 $this->headMeta()->appendHttpEquiv('Refresh',
                                    '3;URL=http://www.some.org/some.html');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Wenn man bereit ist die Meta Tags im Layout zu platzieren, muß einfach der Helfer ausgegeben werden:
+            Wenn man bereit ist die Meta Tags im Layout zu platzieren, muß einfach der Helfer
+            ausgegeben werden:
         </para>
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->headMeta() ?>
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

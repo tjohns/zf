@@ -12,8 +12,7 @@
             directory structure:
         </para>
 
-        <programlisting>
-<![CDATA[
+        <programlisting><![CDATA[
 docroot/
     index.php
 application/
@@ -48,8 +47,7 @@ application/
                 list/
             helpers/
             filters/
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             In this paradigm, the module name serves as a prefix to the
@@ -105,8 +103,7 @@ $front->setControllerDirectory(array(
     'default' => '/path/to/application/controllers',
     'blog'    => '/path/to/application/blog/controllers'
 ));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <code>addControllerDirectory()</code> will take an optional second
@@ -118,8 +115,7 @@ $front->setControllerDirectory(array(
         <programlisting role="php"><![CDATA[
 $front->addControllerDirectory('/path/to/application/news/controllers',
                                'news');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Saving the best for last, the easiest way to specify module
@@ -141,8 +137,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers',
  *             controllers/
  */
 $front->addModuleDirectory('/path/to/application/modules');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The above example will define the <code>default</code>,
@@ -169,8 +164,7 @@ $front->addModuleDirectory('/path/to/application/modules');
  */
 $front->setModuleControllerDirectoryName('con');
 $front->addModuleDirectory('/path/to/application/modules');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note><para>
             You can indicate that no controller subdirectory be used for your
@@ -183,8 +177,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         <title>Routing to Modules</title>
 
         <para>
-            The default route in <code>Zend_Controller_Router_Rewrite</code> is
-            an object of type <code>Zend_Controller_Router_Route_Module</code>.
+            The default route in <classname>Zend_Controller_Router_Rewrite</classname> is
+            an object of type <classname>Zend_Controller_Router_Route_Module</classname>.
             This route expects one of the following routing schemas:
         </para>
 
@@ -221,8 +215,7 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <programlisting role="php"><![CDATA[
 $front->setParam('useDefaultControllerAlways', true);
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 </sect1>
 <!--

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.navigation.pages" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Seiten</title>
 
     <para>
-        <code>Zend_Navigation</code> wird mit zwei Seiten Typen ausgeliefert:
+        <classname>Zend_Navigation</classname> wird mit zwei Seiten Typen ausgeliefert:
 
         <itemizedlist>
             <listitem>

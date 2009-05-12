@@ -4,7 +4,7 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_Tool_Framework</code> is a framework for exposing common
+        <classname>Zend_Tool_Framework</classname> is a framework for exposing common
         functionalities such as the creation of project scaffolds, code
         generation, search index generation, and much more. Functionality may be
         written and exposed via PHP classes dropped into the PHP
@@ -15,7 +15,7 @@
     </para>
 
     <para>
-        <code>Zend_Tool_Framework</code> provides the following:
+        <classname>Zend_Tool_Framework</classname> provides the following:
     </para>
 
     <itemizedlist>
@@ -31,7 +31,7 @@
             <para>
                 <emphasis>Base client functionality</emphasis> and a concrete
                 console implementation that connect external tools and
-                interfaces to the <code>Zend_Tool_Framework</code>. The Console
+                interfaces to the <classname>Zend_Tool_Framework</classname>. The Console
                 client may be used in CLI environments such as unix shells and
                 the Windows console.
             </para>
@@ -60,7 +60,7 @@
             <para>
                 <emphasis>A standard set of system providers"</emphasis> that
                 allow the system to report what the full capabilities of the
-                system are as well as provide useful feedback.  This also
+                system are as well as provide useful feedback. This also
                 includes a comprehensive "Help System".
             </para>
         </listitem>
@@ -68,23 +68,23 @@
 
     <para>
         Definitions that you should be aware of through this manual with respect
-        to <code>Zend_Tool_Framework</code> include:
+        to <classname>Zend_Tool_Framework</classname> include:
     </para>
 
     <itemizedlist>
         <listitem><para>
-            <code>Zend_Tool_Framework</code> - The framework which exposes
+            <classname>Zend_Tool_Framework</classname> - The framework which exposes
             tooling capabilities.
         </para></listitem>
 
         <listitem><para>
             <emphasis>Tooling Client</emphasis> - A developer tool that connects
-            to and consumes <code>Zend_Tool_Framework</code>.
+            to and consumes <classname>Zend_Tool_Framework</classname>.
         </para></listitem>
 
         <listitem><para>
             <emphasis>Client</emphasis> - The subsystem of
-            <code>Zend_Tool_Framework</code> that exposes an interface such that
+            <classname>Zend_Tool_Framework</classname> that exposes an interface such that
             tooling clients can connect, query and execute commands.
         </para></listitem>
 
@@ -104,7 +104,7 @@
         </para></listitem>
 
         <listitem><para>
-            <code>Zend_Tool_Project</code> Provider - A set of providers
+            <classname>Zend_Tool_Project</classname> Provider - A set of providers
             specifically for creating and maintaining Zend Framework-based
             projects.
         </para></listitem>

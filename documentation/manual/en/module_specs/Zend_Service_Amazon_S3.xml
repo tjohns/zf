@@ -20,8 +20,8 @@
         <title>Registering with Amazon S3</title>
 
         <para>
-            Before you can get started with <code>Zend_Service_Amazon_S3</code>, you must first
-            register for an account.  Please see the
+            Before you can get started with <classname>Zend_Service_Amazon_S3</classname>, you must first
+            register for an account. Please see the
             <ulink url="http://aws.amazon.com/s3/faqs/">S3 FAQ</ulink>
             page on the Amazon website for more information.
         </para>
@@ -36,7 +36,7 @@
         <title>API Documentation</title>
 
         <para>
-            The <code>Zend_Service_Amazon_S3</code> class provides the PHP wrapper to the
+            The <classname>Zend_Service_Amazon_S3</classname> class provides the PHP wrapper to the
             Amazon S3 REST interface. Please consult the
             <ulink url="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=48">Amazon S3 documentation</ulink>
             for detailed description of the service. You will need to be familiar with basic concepts
@@ -49,7 +49,7 @@
         <title>Features</title>
 
         <para>
-            <code>Zend_Service_Amazon_S3</code> provides the following functionality:
+            <classname>Zend_Service_Amazon_S3</classname> provides the following functionality:
 
             <itemizedlist>
                 <listitem>
@@ -111,12 +111,11 @@ $s3->createBucket("my-own-bucket");
 $s3->putObject("my-own-bucket/myobject", "somedata");
 
 echo $s3->getObject("my-own-bucket/myobject");
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
 
         <para>
-            Since <code>Zend_Service_Amazon_S3</code> service requires authentication,
+            Since <classname>Zend_Service_Amazon_S3</classname> service requires authentication,
             you should pass your credentials (AWS key and secret key) to the constructor.
 
             If you only use one account, you can set default credentials for the service:
@@ -127,8 +126,7 @@ require_once 'Zend/Service/Amazon/S3.php';
 
 Zend_Service_Amazon_S3::setKeys($my_aws_key, $my_aws_secret_key);
 $s3 = new Zend_Service_Amazon_S3();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.service.amazon.s3.buckets">
@@ -171,8 +169,7 @@ $s3 = new Zend_Service_Amazon_S3($my_aws_key, $my_aws_secret_key);
 
 $s3->cleanBucket("my-own-bucket");
 $s3->removeBucket("my-own-bucket");
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
             </listitem>
             <listitem>
@@ -191,8 +188,7 @@ $list = $s3->getBuckets();
 foreach($list as $bucket) {
   echo "I have bucket $bucket\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
             </listitem>
             <listitem>
@@ -228,7 +224,6 @@ foreach($list as $bucket) {
         to specify object with public access, in which case it will be available through the URL:
         <code>http://s3.amazonaws.com/[bucket-name]/[object-name]</code>.
         </para>
-
 
         <itemizedlist>
             <listitem>
@@ -294,8 +289,7 @@ $s3->putFile("me.png", "my-own-bucket/Pictures/Me.png",
     array(Zend_Service_Amazon_S3::S3_ACL_HEADER =>
           Zend_Service_Amazon_S3::S3_ACL_PUBLIC_READ));
 echo "Go to http://s3.amazonaws.com/my-own-bucket/Pictures/Me.png to see me!\n";
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
                     </listitem>
                 </varlistentry>
@@ -358,8 +352,7 @@ foreach($list as $name) {
   $data = $s3->getObject("my-own-bucket/$name");
   echo "with data: $data\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
         </example>
             </listitem>
             <listitem>
@@ -382,7 +375,7 @@ foreach($list as $name) {
     <sect2 id="zend.service.amazon.s3.streams">
         <title>Stream wrapper</title>
         <para>
-        In addition to the interfaces described above, <code>Zend_Service_Amazon_S3</code> also supports
+        In addition to the interfaces described above, <classname>Zend_Service_Amazon_S3</classname> also supports
         operating as a stream wrapper. For this, you need to register the client object as the stream wrapper:
         </para>
         <example id="zend.service.amazon.s3.streams.example">
@@ -398,8 +391,7 @@ mkdir("s3://my-own-bucket");
 file_put_contents("s3://my-own-bucket/testdata", "mydata");
 
 echo file_get_contents("s3://my-own-bucket/testdata");
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

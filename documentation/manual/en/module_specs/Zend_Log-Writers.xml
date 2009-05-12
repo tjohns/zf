@@ -3,14 +3,14 @@
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writers</title>
   <para>
-    A Writer is an object that inherits from <code>Zend_Log_Writer_Abstract</code>. A Writer's
+    A Writer is an object that inherits from <classname>Zend_Log_Writer_Abstract</classname>. A Writer's
     responsibility is to record log data to a storage backend.
   </para>
 
   <sect2 id="zend.log.writers.stream">
     <title>Writing to Streams</title>
     <para>
-      <code>Zend_Log_Writer_Stream</code> sends log
+      <classname>Zend_Log_Writer_Stream</classname> sends log
       data to a <ulink url="http://www.php.net/stream">PHP stream</ulink>.
     </para>
 
@@ -24,8 +24,7 @@ $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -38,16 +37,15 @@ $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
 
       By default, the stream opens in the append mode (<code>"a"</code>).
-      To open it with a different mode, the <code>Zend_Log_Writer_Stream</code> constructor
+      To open it with a different mode, the <classname>Zend_Log_Writer_Stream</classname> constructor
       accepts an optional second parameter for the mode.
     </para>
 
     <para>
-      The constructor of <code>Zend_Log_Writer_Stream</code> also accepts an existing stream resource:
+      The constructor of <classname>Zend_Log_Writer_Stream</classname> also accepts an existing stream resource:
 
       <programlisting role="php"><![CDATA[
 $stream = @fopen('/path/to/logfile', 'a', false);
@@ -59,20 +57,19 @@ $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
 
       You cannot specify the mode for existing stream resources. Doing so
-      causes a <code>Zend_Log_Exception</code> to be thrown.
+      causes a <classname>Zend_Log_Exception</classname> to be thrown.
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.database">
     <title>Writing to Databases</title>
     <para>
-      <code>Zend_Log_Writer_Db</code> writes log information to a database table using
-      <code>Zend_Db</code>. The constructor of <code>Zend_Log_Writer_Db</code> receives
-      a <code>Zend_Db_Adapter</code> instance, a table name, and a mapping of database
+      <classname>Zend_Log_Writer_Db</classname> writes log information to a database table using
+      <classname>Zend_Db</classname>. The constructor of <classname>Zend_Log_Writer_Db</classname> receives
+      a <classname>Zend_Db_Adapter</classname> instance, a table name, and a mapping of database
       columns to event data items:
 
       <programlisting role="php"><![CDATA[
@@ -88,8 +85,7 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
 
       The example above writes a single row of log data to the database table named
       <code>log_table_name</code> table. The database column named <code>lvl</code>
@@ -105,7 +101,7 @@ $logger->info('Informational message');
   <sect2 id="zend.log.writers.null">
     <title>Stubbing Out the Writer</title>
     <para>
-      The <code>Zend_Log_Writer_Null</code> is a stub that does not write log data to anything.
+      The <classname>Zend_Log_Writer_Null</classname> is a stub that does not write log data to anything.
       It is useful for disabling logging or stubbing out logging during tests:
 
       <programlisting role="php"><![CDATA[
@@ -114,15 +110,14 @@ $logger = new Zend_Log($writer);
 
 // goes nowhere
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.mock">
     <title>Testing with the Mock</title>
     <para>
-      The <code>Zend_Log_Writer_Mock</code> is a very simple writer that records
+      The <classname>Zend_Log_Writer_Mock</classname> is a very simple writer that records
       the raw data it receives in an array exposed as a public property.
 
       <programlisting role="php"><![CDATA[
@@ -140,8 +135,7 @@ var_dump($mock->events[0]);
 //    [priority] => 6
 //    [priorityName] => INFO
 // )
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -167,8 +161,7 @@ $logger->addWriter($writer2);
 
 // goes to both writers
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 </sect1>

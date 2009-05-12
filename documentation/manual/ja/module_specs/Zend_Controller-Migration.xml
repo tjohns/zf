@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15467 -->
 <sect1 id="zend.controller.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -11,6 +11,22 @@
         新しい仕組みに対応させてください。
     </para>
 
+    <sect2 id="zend.controller.migration.fromoneseventooneeight">
+        <title>1.7.x から 1.8.0 以降への移行</title>
+
+        <sect3 id="zend.controller.migration.fromoneseventooneeight.router">
+            <title>標準のルートの変更</title>
+
+            <para>
+                新しい標準ルートでは翻訳セグメントが使用できるようになったため、
+                ルートのセグメントの先頭にある <code>@</code> は特殊文字と解釈されるようになりました。
+                この文字を静的セグメント内で使用するには、前にもうひとつ
+                <code>@</code> をつけてエスケープする必要があります。
+                また、<code>:</code> も同様です。
+            </para>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromonesixtooneseven">
         <title>1.6.x から 1.7.0 以降への移行</title>
 
@@ -19,7 +35,7 @@
 
             <para>
                 ユーザからの指摘により、
-                <code>Zend_Controller_Action_Helper_ViewRenderer</code>
+                <classname>Zend_Controller_Action_Helper_ViewRenderer</classname>
                 が使っているディスパッチャ抽象クラスのメソッドの中で
                 ディスパッチャインターフェイスに存在しないものがあることに気づきました。
                 次のメソッドを追加し、
@@ -31,7 +47,7 @@
                     <code>formatModuleName()</code>:
                 リクエストオブジェクト内に格納されたりしている生のコントローラ名を受け取り、
                 それを再フォーマットして
-                <code>Zend_Controller_Action</code> を継承した適切なクラス名にします。
+                <classname>Zend_Controller_Action</classname> を継承した適切なクラス名にします。
                 </para></listitem>
             </itemizedlist>
         </sect3>
@@ -44,8 +60,8 @@
             <title>ディスパッチャインターフェイスの変更</title>
 
             <para>
-                <code>Zend_Controller_Front</code> と
-                <code>Zend_Controller_Router_Route_Module</code>
+                <classname>Zend_Controller_Front</classname> と
+                <classname>Zend_Controller_Router_Route_Module</classname>
                 は、ディスパッチャインターフェイスにないメソッドを使用していました。
                 次の 3 つのメソッドを追加し、
                 自作のディスパッチャが同梱の実装と共存できるようにしています。
@@ -134,7 +150,7 @@
             <listitem>
                 <para>
                     その次にいい方法: ViewRenderer はビュースクリプトの解決を
-                    <code>Zend_Filter_Inflector</code> に委譲しています。
+                    <classname>Zend_Filter_Inflector</classname> に委譲しています。
                     インフレクタのルールを変更し、
                     アクションの単語間をダッシュで区切らないようにします。
                 </para>
@@ -150,8 +166,7 @@ $inflector->setFilterRule(':action', array(
     ),
     'StringToLower'
 ));
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     上のコードは、インフレクタを変更して単語をダッシュで区切らないようにしています。
@@ -175,8 +190,7 @@ $inflector->setFilterRule(':action', array(
 
                 <programlisting role="php"><![CDATA[
 $front->setParam('useCaseSensitiveActions', true);
-]]>
-</programlisting>
+]]></programlisting>
 
                 <para>
                     これで camelCasing 形式の URL を使えるようになり、
@@ -217,8 +231,7 @@ $front->setParam('useCaseSensitiveActions', true);
 
         <programlisting role="php"><![CDATA[
 $front->setParam('noErrorHandler', true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             <code>ViewRenderer</code> アクションヘルパーは、
@@ -239,8 +252,7 @@ $front->setParam('noErrorHandler', true);
         <programlisting role="php"><![CDATA[
 // $front は Zend_Controller_Front のインスタンスであるとします
 $front->setParam('noViewRenderer', true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             しかし、長い目で見ればこれはあまりよい作戦ではありません。
@@ -267,8 +279,7 @@ $front->setParam('noViewRenderer', true);
 
         <programlisting role="php"><![CDATA[
 $this->_helper->viewRenderer->setNoRender();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             レンダリング、転送あるいはリダイレクトを行っているアクションメソッドがひとつもない場合は、
@@ -283,8 +294,7 @@ public function preDispatch()
     $this->_helper->viewRenderer->setNoRender()
     // .. 何かほかのことをします...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             もしメソッド内で <code>render()</code> をコールしていて、
@@ -343,8 +353,7 @@ public function preDispatch()
 // $view はすでに定義されているものとします
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -355,8 +364,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                 <programlisting role="php"><![CDATA[
 $viewRenderer =
     Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);]]>
-                </programlisting>
+$viewRenderer->setView($view);]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -391,21 +399,21 @@ $viewRenderer->setView($view);]]>
             <listitem>
                 <para>
                     <code>setRedirectCode()</code> の代わりに
-                    <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>
+                    <classname>Zend_Controller_Action_Helper_Redirector::setCode()</classname>
                     を使用します。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>setRedirectPrependBase()</code> の代わりに
-                    <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>
+                    <classname>Zend_Controller_Action_Helper_Redirector::setPrependBase()</classname>
                     を使用します。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>setRedirectExit()</code> の代わりに
-                    <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>
+                    <classname>Zend_Controller_Action_Helper_Redirector::setExit()</classname>
                     を使用します。
                 </para>
             </listitem>
@@ -429,8 +437,7 @@ $viewRenderer->setView($view);]]>
 
         <programlisting role="php"><![CDATA[
 Zend_Controller_Front::run('/path/to/controllers');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             しかし、ディレクトリ構造を見直し、いくつかのコンポーネントが削除されました。
@@ -440,17 +447,17 @@ Zend_Controller_Front::run('/path/to/controllers');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router</code> は削除されました。
+                    <classname>Zend_Controller_Router</classname> は削除されました。
                     かわりに rewrite ルータを使用してください。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_RewriteRouter</code> は
-                    <code>Zend_Controller_Router_Rewrite</code> という名前に変わり、
+                    <classname>Zend_Controller_RewriteRouter</classname> は
+                    <classname>Zend_Controller_Router_Rewrite</classname> という名前に変わり、
                     このフレームワークの標準ルータに格上げされました。
-                    <code>Zend_Controller_Front</code> は、
+                    <classname>Zend_Controller_Front</classname> は、
                     特に別のルータを指定しない限りこのルータをデフォルトで使用します。
                 </para>
             </listitem>
@@ -458,7 +465,7 @@ Zend_Controller_Front::run('/path/to/controllers');
             <listitem>
                 <para>
                     rewrite ルータで使用する、新しいルートクラスが追加されました。名前は
-                    <code>Zend_Controller_Router_Route_Module</code> です。
+                    <classname>Zend_Controller_Router_Route_Module</classname> です。
                     これは MVC で使用するデフォルトのルートのほかに、<link
                         linkend="zend.controller.modular">コントローラモジュール
                         </link> をサポートしています。
@@ -467,21 +474,21 @@ Zend_Controller_Front::run('/path/to/controllers');
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_StaticRoute</code> は
-                    <code>Zend_Controller_Router_Route_Static</code> という名前に変わりました。
+                    <classname>Zend_Controller_Router_StaticRoute</classname> は
+                    <classname>Zend_Controller_Router_Route_Static</classname> という名前に変わりました。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher</code> は
-                    <code>Zend_Controller_Dispatcher_Standard</code> という名前に変わりました。
+                    <classname>Zend_Controller_Dispatcher</classname> は
+                    <classname>Zend_Controller_Dispatcher_Standard</classname> という名前に変わりました。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::_forward()</code> の引数が変わりました。
+                    <classname>Zend_Controller_Action::_forward()</classname> の引数が変わりました。
                     新しいシグネチャは次のとおりです。
                 </para>
 
@@ -490,8 +497,7 @@ final protected function _forward($action,
                                   $controller = null,
                                   $module = null,
                                   array $params = null);
-]]>
-                </programlisting>
+]]></programlisting>
 
                 <para>
                     <code>$action</code> は常に必須です。
@@ -518,8 +524,7 @@ final protected function _forward($action,
 
         <programlisting role="php"><![CDATA[
 Zend_Controller_Front::run('/path/to/controllers');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- ルータを作成します -- */
@@ -536,8 +541,7 @@ $ctrl->setRouter($router);
 /* -- コントローラのディレクトリを設定し、ディスパッチします -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
 $ctrl->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             レスポンスオブジェクトを使用して、コンテンツとヘッダを取得することを推奨します。
@@ -565,7 +569,7 @@ $ctrl->dispatch();
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::dispatch()</code>
+                    <classname>Zend_Controller_Front::dispatch()</classname>
                     は、デフォルトでレスポンスオブジェクトの例外をトラップします。
                     例外の内容はレンダリングしません。これにより、
                     システムについての機密情報がレンダリングされてしまうことを防ぎます。
@@ -580,8 +584,7 @@ $ctrl->dispatch();
                         </para>
                         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
-]]>
-                        </programlisting>
+]]></programlisting>
                     </listitem>
 
                     <listitem>
@@ -599,36 +602,35 @@ $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
 echo $response;
-]]>
-                        </programlisting>
+]]></programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
+                <classname>Zend_Controller_Dispatcher_Interface::dispatch()</classname>
                 は、ディスパッチャトークンではなく
                 <xref linkend="zend.controller.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Router_Interface::route()</code>
+                <classname>Zend_Controller_Router_Interface::route()</classname>
                 は、ディスパッチャトークンではなく
                 <xref linkend="zend.controller.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Action</code> の変更点は以下のようになります。</para>
+                <para><classname>Zend_Controller_Action</classname> の変更点は以下のようになります。</para>
 
                 <itemizedlist>
                     <listitem><para>
                         コンストラクタが受け付ける引数は
-                        <code>Zend_Controller_Request_Abstract $request</code>、
-                        <code>Zend_Controller_Response_Abstract $response</code>
+                        <classname>Zend_Controller_Request_Abstract $request</classname>、
+                        <classname>Zend_Controller_Response_Abstract $response</classname>
                         および <code>array $params (optional)</code> の三つになりました。
-                        <code>Zend_Controller_Action::__construct()</code>
+                        <classname>Zend_Controller_Action::__construct()</classname>
                         は、これらを使用してリクエストやレスポンス、
                         そしてオブジェクトの invokeArgs プロパティを指定します。
                         コンストラクタをオーバーライドすることで、
@@ -643,8 +645,8 @@ echo $response;
                         しかし、このメソッドはもはやフロントコントローラでは使用されません。
                         これは、クラスをページコントローラとして使用する場合にのみ使用します。
                         オプションの引数
-                        <code>Zend_Controller_Request_Abstract $request</code>
-                        および <code>Zend_Controller_Response_Abstract $response</code>
+                        <classname>Zend_Controller_Request_Abstract $request</classname>
+                        および <classname>Zend_Controller_Response_Abstract $response</classname>
                         を受け取ります。
                     </para></listitem>
 
@@ -671,7 +673,7 @@ echo $response;
                     <listitem>
                         <para>
                             プロパティ <code>_action</code> は設定されなくなりました。
-                            このプロパティの内容は <code>Zend_Controller_Dispatcher_Token</code>
+                            このプロパティの内容は <classname>Zend_Controller_Dispatcher_Token</classname>
                             でしたが、これは現在のバージョンにはもう存在しません。
                             トークンの唯一の目的は、要求されたコントローラやアクション、
                             URL パラメータについての情報を提供することでした。
@@ -696,8 +698,7 @@ $action = $this->getRequest()->getActionName();
 $params = $this->_getParams();
 // パラメータ 'foo' を取得します。見つからなかった場合はデフォルト値 'default' を設定します
 $foo = $this->_getParam('foo', 'default');
-]]>
-                        </programlisting>
+]]></programlisting>
                     </listitem>
 
                     <listitem>
@@ -718,23 +719,22 @@ public function __call($method, $args)
 
     throw new Zend_Controller_Exception('無効なメソッド呼び出しです');
 }
-]]>
-                        </programlisting>
+]]></programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code>
+                <classname>Zend_Controller_RewriteRouter::setRewriteBase()</classname>
                 は削除されました。かわりに
-                <code>Zend_Controller_Front::setBaseUrl()</code> を使用してください
+                <classname>Zend_Controller_Front::setBaseUrl()</classname> を使用してください
                 (あるいは、リクエストクラスを使用している場合は
-                <code>Zend_Controller_Request_Http::setBaseUrl()</code> を使用します)。
+                <classname>Zend_Controller_Request_Http::setBaseUrl()</classname> を使用します)。
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Plugin_Interface</code> は
-                <code>Zend_Controller_Plugin_Abstract</code> に置き換えられました。
+                <classname>Zend_Controller_Plugin_Interface</classname> は
+                <classname>Zend_Controller_Plugin_Abstract</classname> に置き換えられました。
                 すべてのメソッドは、ディスパッチャトークンではなく
                 <xref linkend="zend.controller.request" />
                 をやり取りするようになりました。

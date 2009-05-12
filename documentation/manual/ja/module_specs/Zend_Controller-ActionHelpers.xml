@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>導入</title>
         <para>
-            アクションヘルパーを使用すると、<code>Zend_Controller_Action</code>
+            アクションヘルパーを使用すると、<classname>Zend_Controller_Action</classname>
             を継承した任意のアクションコントローラに対して
             実行時やその他必要に応じて機能追加をすることができます。
             アクションヘルパーの狙いは、
@@ -22,7 +22,7 @@
             や <link
                 linkend="zend.controller.plugins">Zend_Controller_Plugin</link>
             と同じように、処理の仲買をするために用いることもできます。
-            アクションヘルパーは (<code>Zend_View_Helper</code> と同様に)、
+            アクションヘルパーは (<classname>Zend_View_Helper</classname> と同様に)、
             必要になった時点で読み込むこともできますし、
             リクエスト時 (起動時) やアクションコントローラの作成時 (init())
             で読み込むこともできます。詳細は、以下の使用例を参照ください。
@@ -38,7 +38,7 @@
         </para>
 
         <para>
-            ヘルパーブローカは、<code>Zend_Controller_Action</code>
+            ヘルパーブローカは、<classname>Zend_Controller_Action</classname>
             の <code>$_helper</code> に格納されます。
             このブローカを使用して、ヘルパーを取得したりコールしたりします。
             以下のような方法があります。
@@ -55,8 +55,7 @@
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
 $flashMessenger->addMessage('先ほどのリクエストで、あることをしました');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -68,8 +67,7 @@ $flashMessenger->addMessage('先ほどのリクエストで、あることをし
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->FlashMessenger;
 $flashMessenger->addMessage('先ほどのリクエストで、あることをしました');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -83,8 +81,7 @@ $flashMessenger->addMessage('先ほどのリクエストで、あることをし
 
                 <programlisting role="php"><![CDATA[
 $this->_helper->FlashMessenger('先ほどのリクエストで、あることをしました');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -104,7 +101,7 @@ $this->_helper->FlashMessenger('先ほどのリクエストで、あることを
         <title>ヘルパーブローカ</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code>
+            <classname>Zend_Controller_Action_HelperBroker</classname>
             がヘルパーオブジェクトやそのパスの登録に関する詳細を処理します。
             また、必要に応じてそこからヘルパーを取得することができます。
         </para>
@@ -116,8 +113,7 @@ $this->_helper->FlashMessenger('先ほどのリクエストで、あることを
 
         <programlisting role="php"><![CDATA[
 Zend_Controller_Action_HelperBroker::addHelper($helper);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             もちろん、ヘルパーのインスタンスを作成してそれをブローカに渡すという作業は
@@ -138,8 +134,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);
                 <programlisting role="php"><![CDATA[
 // My/Action/Helpers/ にある、名前が My_Action_Helpers で始まるヘルパーを追加します
 Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -154,8 +149,7 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
 // Plugins/Helpers/ にある、名前が Helper で始まるヘルパーを追加します
 Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
                                              'Helper');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -185,8 +179,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Redirector helper registered';
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             ヘルパーブローかからヘルパーを取得する静的メソッドには、さらに
@@ -220,8 +213,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 $redirector =
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             最後に、登録済みのヘルパーをブローカから削除するには
@@ -235,8 +227,7 @@ $redirector =
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.stockhelpers">
@@ -269,7 +260,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             アクションヘルパーは、抽象クラス
-            <code>Zend_Controller_Action_Helper_Abstract</code>
+            <classname>Zend_Controller_Action_Helper_Abstract</classname>
             を継承して作成します。
             ここには、基本的なインターフェイスやヘルパーブローカが使用する必須機能などが含まれています。
             具体的には、次のようなメソッドです。
@@ -329,7 +320,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
                     はヘルパーの名前を取得します。
                     クラス名にアンダースコアが含まれる場合は最後のアンダースコア以降の文字、
                     そうでない場合はクラス名全体を返します。たとえば、クラス名が
-                    <code>Zend_Controller_Action_Helper_Redirector</code>
+                    <classname>Zend_Controller_Action_Helper_Redirector</classname>
                     の場合は <code>Redirector</code> を、クラス名が
                     <code>FooMessage</code> の場合はそのままの名前を返します。
                 </para>
@@ -350,8 +341,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <programlisting role="php"><![CDATA[
 // /blog/view/item/id/42 にリダイレクトします
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             内部的には、まずヘルパーブローカの <code>__call()</code>

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <sect1 id="zend.auth.introduction">
 
     <title>導入</title>
 
     <para>
-        <code>Zend_Auth</code> は、認証のための API を提供します。
+        <classname>Zend_Auth</classname> は、認証のための API を提供します。
         また、一般的な使用例に対応する具象認証アダプタも用意しています。
     </para>
 
     <para>
-        <code>Zend_Auth</code> が扱うのはあくまでも <emphasis role="strong">認証 (authentication)</emphasis>
-        であり、<emphasis role="strong">承認 (authorization)</emphasis> ではありません。
+        <classname>Zend_Auth</classname> が扱うのはあくまでも <emphasis>認証 (authentication)</emphasis>
+        であり、<emphasis>承認 (authorization)</emphasis> ではありません。
         認証 (authentication) とはつまり、あるエンティティが何者であるのかを示す
         (識別する) ことです。これを、なんらかの条件にもとづいて行います。
         承認 (authorization) とは、あるエンティティが他のエンティティに対して
         アクセスしたり何らかの操作をしたりする権限があるかどうかを判定する処理です。
-        これは <code>Zend_Auth</code> の対象外となります。
+        これは <classname>Zend_Auth</classname> の対象外となります。
         Zend Framework における認証やアクセス制御の詳細については、
-        <link linkend="zend.acl"><code>Zend_Acl</code></link> を参照ください。
+        <link linkend="zend.acl"><classname>Zend_Acl</classname></link> を参照ください。
     </para>
 
     <note>
         <para>
-            <code>Zend_Auth</code> クラスはシングルトンパターン
+            <classname>Zend_Auth</classname> クラスはシングルトンパターン
             (クラスのインスタンスは常にひとつだけ)
             を実装しており、静的メソッド <code>getInstance()</code> でそれを使用します。
             つまり、<code>new</code> 演算子や
-            <code>clone</code> キーワードは <code>Zend_Auth</code>
+            <code>clone</code> キーワードは <classname>Zend_Auth</classname>
             クラスでは動作しないということです。そのかわりに
-            <code>Zend_Auth::getInstance()</code> を使用します。
+            <classname>Zend_Auth::getInstance()</classname> を使用します。
         </para>
     </note>
 
@@ -39,18 +39,18 @@
         <title>アダプタ</title>
 
         <para>
-            <code>Zend_Auth</code> アダプタの使用目的は、
+            <classname>Zend_Auth</classname> アダプタの使用目的は、
             LDAP や RDBMS あるいはファイル
             のような特定の型の認証サービスに対する認証を行うことです。
             アダプタによってそのオプションや挙動は大きくことなるでしょうが、
             いくつかの基本処理は、あらゆる認証アダプタで共通となります。
             たとえば認証条件 (いわゆる ID) を受け取り、
             認証サービスに対する問い合わせを行い、
-            結果を返すという処理は、すべての <code>Zend_Auth</code> アダプタで共通です。
+            結果を返すという処理は、すべての <classname>Zend_Auth</classname> アダプタで共通です。
         </para>
 
         <para>
-            各 <code>Zend_Auth</code> アダプタクラスは、<code>Zend_Auth_Adapter_Interface</code>
+            各 <classname>Zend_Auth</classname> アダプタクラスは、<classname>Zend_Auth_Adapter_Interface</classname>
             を実装しています。このインターフェイスで定義されているメソッドが
             <code>authenticate()</code> で、アダプタクラスは
             認証クエリを実行するためにこれを実装する必要があります。
@@ -93,15 +93,14 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         // ...
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             docblock コメントで説明しているとおり、
             <code>authenticate()</code> は
-            <code>Zend_Auth_Result</code> (あるいは <code>Zend_Auth_Result</code> の派生クラス)
+            <classname>Zend_Auth_Result</classname> (あるいは <classname>Zend_Auth_Result</classname> の派生クラス)
             のインスタンスを返す必要があります。何らかの理由で認証の問い合わせができなかった場合は、
             <code>authenticate()</code> は
-            <code>Zend_Auth_Adapter_Exception</code>
+            <classname>Zend_Auth_Adapter_Exception</classname>
             から派生した例外をスローしなければなりません。
         </para>
 
@@ -112,11 +111,11 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>結果</title>
 
         <para>
-            <code>Zend_Auth</code> アダプタは、<code>authenticate()</code> の結果として
-            <code>Zend_Auth_Result</code> のインスタンスを返します。
+            <classname>Zend_Auth</classname> アダプタは、<classname>authenticate()</classname> の結果として
+            <classname>Zend_Auth_Result</classname> のインスタンスを返します。
             これにより、認証を試みた結果を表します。アダプタのインスタンスを作成した際に
-            <code>Zend_Auth_Result</code> オブジェクトが作成され、
-            以下の 4 つのメソッドで <code>Zend_Auth</code> アダプタの結果に対する共通の操作ができます。
+            <classname>Zend_Auth_Result</classname> オブジェクトが作成され、
+            以下の 4 つのメソッドで <classname>Zend_Auth</classname> アダプタの結果に対する共通の操作ができます。
             <itemizedlist>
                 <listitem>
                     <para>
@@ -126,7 +125,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getCode()</code> - <code>Zend_Auth_Result</code> の定数を返します。
+                        <code>getCode()</code> - <classname>Zend_Auth_Result</classname> の定数を返します。
                         これは、認証に失敗したのか成功したのかを表すものです。
                         これを使用する場面としては、認証の結果をいくつかの結果から区別したい場合などがあります。
                         これにより、たとえば認証結果について、より詳細な情報を管理することができるようになります。
@@ -164,8 +163,7 @@ Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
 Zend_Auth_Result::FAILURE_UNCATEGORIZED
-]]>
-            </programlisting>
+]]></programlisting>
 
         </para>
 
@@ -194,8 +192,7 @@ switch ($result->getCode()) {
         /** その他の原因で失敗した場合の処理 **/
         break;
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </para>
 
@@ -223,22 +220,22 @@ switch ($result->getCode()) {
             <title>PHP セッションにおけるデフォルトの持続性</title>
 
             <para>
-                 デフォルトでは、<code>Zend_Auth</code> は、
+                 デフォルトでは、<classname>Zend_Auth</classname> は、
                  認証に成功した際の ID 情報を PHP のセッションを使用して保存します。
-                 認証に成功すると、<code>Zend_Auth::authenticate()</code>
+                 認証に成功すると、<classname>Zend_Auth::authenticate()</classname>
                  は認証結果を持続ストレージに保存します。何も指定しなければ、
-                 <code>Zend_Auth</code> が使用するストレージクラスは
-                 <code>Zend_Auth_Storage_Session</code> となります。これは
-                 <link linkend="zend.session"><code>Zend_Session</code></link> を使用しています。
-                 独自のクラスを使用するには、<code>Zend_Auth_Storage_Interface</code>
-                 を実装したクラスのオブジェクトを <code>Zend_Auth::setStorage()</code>
+                 <classname>Zend_Auth</classname> が使用するストレージクラスは
+                 <classname>Zend_Auth_Storage_Session</classname> となります。これは
+                 <link linkend="zend.session"><classname>Zend_Session</classname></link> を使用しています。
+                 独自のクラスを使用するには、<classname>Zend_Auth_Storage_Interface</classname>
+                 を実装したクラスのオブジェクトを <classname>Zend_Auth::setStorage()</classname>
                  で設定します。
             </para>
 
             <note>
                 <para>
                     もし ID が自動的に持続ストレージに保存されるのが気に入らない場合は、
-                    <code>Zend_Auth</code> クラスをまるごと使用するのを控え、
+                    <classname>Zend_Auth</classname> クラスをまるごと使用するのを控え、
                     アダプタクラスを直接使用します。
                 </para>
             </note>
@@ -248,12 +245,12 @@ switch ($result->getCode()) {
                 <title>セッション名前空間の変更</title>
 
                 <para>
-                    <code>Zend_Auth_Storage_Session</code> は、セッション名前空間として
+                    <classname>Zend_Auth_Storage_Session</classname> は、セッション名前空間として
                     'Zend_Auth' を使用します。これを変更するには、別の値を
-                    <code>Zend_Auth_Storage_Session</code> のコンストラクタで指定します。
-                    この値が、内部で <code>Zend_Session_Namespace</code>
+                    <classname>Zend_Auth_Storage_Session</classname> のコンストラクタで指定します。
+                    この値が、内部で <classname>Zend_Session_Namespace</classname>
                     のコンストラクタに渡されます。これは認証を試みる前に行う必要があります。
-                    なぜなら、<code>Zend_Auth::authenticate()</code>
+                    なぜなら、<classname>Zend_Auth::authenticate()</classname>
                     は ID を自動的に保存するからです。
 
                     <programlisting role="php"><![CDATA[
@@ -269,8 +266,7 @@ $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
 
 // 認証と結果の保存、そして成功時に ID を持続させます
 $result = $auth->authenticate($authAdapter);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </para>
 
@@ -283,10 +279,10 @@ $result = $auth->authenticate($authAdapter);
             <title>独自のストレージの実装</title>
 
             <para>
-                <code>Zend_Auth_Storage_Session</code> とは異なる形式で、
+                <classname>Zend_Auth_Storage_Session</classname> とは異なる形式で、
                 ID を持続させたくなることもあるでしょう。そのような場合は、
-                <code>Zend_Auth_Storage_Interface</code> を実装したクラスのインスタンスを
-                <code>Zend_Auth::setStorage()</code> で設定します。
+                <classname>Zend_Auth_Storage_Interface</classname> を実装したクラスのインスタンスを
+                <classname>Zend_Auth::setStorage()</classname> で設定します。
             </para>
 
             <example id="zend.auth.introduction.persistence.custom.example">
@@ -295,8 +291,8 @@ $result = $auth->authenticate($authAdapter);
 
                 <para>
                     ID を持続させるストレージクラスを
-                    <code>Zend_Auth_Storage_Session</code> の代わりに使用するには、
-                    <code>Zend_Auth_Storage_Interface</code> を実装します。
+                    <classname>Zend_Auth_Storage_Session</classname> の代わりに使用するには、
+                    <classname>Zend_Auth_Storage_Interface</classname> を実装します。
 
                     <programlisting role="php"><![CDATA[
 class MyStorage implements Zend_Auth_Storage_Interface
@@ -356,14 +352,13 @@ class MyStorage implements Zend_Auth_Storage_Interface
          */
     }
 }
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </para>
 
                 <para>
                     このストレージクラスを使用するには、認証クエリの前に
-                    <code>Zend_Auth::setStorage()</code> を実行します。
+                    <classname>Zend_Auth::setStorage()</classname> を実行します。
 
                     <programlisting role="php"><![CDATA[
 // Zend_Auth に、独自のストレージクラスを使うよう指示します
@@ -375,8 +370,7 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
 
 // 認証と結果の保存、そして成功時に ID を持続させます
 $result = Zend_Auth::getInstance()->authenticate($authAdapter);
-]]>
-                    </programlisting>
+]]></programlisting>
 
                 </para>
 
@@ -391,11 +385,11 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
         <title>使用法</title>
 
         <para>
-            <code>Zend_Auth</code> の使用法には、次の二通りがあります。
+            <classname>Zend_Auth</classname> の使用法には、次の二通りがあります。
             <orderedlist>
             <listitem>
                 <para>
-                    間接的に <code>Zend_Auth::authenticate()</code> 経由で使用する
+                    間接的に <classname>Zend_Auth::authenticate()</classname> 経由で使用する
                 </para>
             </listitem>
             <listitem>
@@ -407,8 +401,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
         </para>
 
         <para>
-            次の例は、<code>Zend_Auth</code> アダプタを間接的に
-            <code>Zend_Auth</code> クラスから使用するものです。
+            次の例は、<classname>Zend_Auth</classname> アダプタを間接的に
+            <classname>Zend_Auth</classname> クラスから使用するものです。
 
             <programlisting role="php"><![CDATA[
 // Zend_Auth のシングルトンインスタンスへの参照を取得します
@@ -430,8 +424,7 @@ if (!$result->isValid()) {
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -443,8 +436,7 @@ if ($auth->hasIdentity()) {
     // ID があるのでそれを取得します
     $identity = $auth->getIdentity();
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -453,13 +445,12 @@ if ($auth->hasIdentity()) {
             これは、アプリケーションの "ログアウト" 処理を実装するためのものです。
             <programlisting role="php"><![CDATA[
 Zend_Auth::getInstance()->clearIdentity();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
             自動的に永続ストレージが用いられるのがまずい場合もあるでしょう。
-            そんな場合は、<code>Zend_Auth</code> クラスをバイパスして
+            そんな場合は、<classname>Zend_Auth</classname> クラスをバイパスして
             アダプタクラスを直接使用します。
             アダプタクラスを直接使用するとは、アダプタオブジェクトの設定と準備を行い、
             その <code>authenticate()</code> メソッドをコールするということです。
@@ -482,8 +473,7 @@ if (!$result->isValid()) {
     // 認証に成功しました
     // $result->getIdentity() === $username
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
     </sect2>

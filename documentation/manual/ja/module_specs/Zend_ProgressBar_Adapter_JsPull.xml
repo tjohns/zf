@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect3 id="zend.progressbar.adapter.jspull">
     <title>Zend_ProgressBar_Adapter_JsPull</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_JsPull</code> は jsPush
+        <classname>Zend_ProgressBar_Adapter_JsPull</classname> は jsPush
         とは逆の動作をします。つまり、
         更新をブラウザにプッシュするのではなく更新情報をほかから受け取ることになります。
-        一般に、このアダプタを使う場合は <code>Zend_ProgressBar</code>
+        一般に、このアダプタを使う場合は <classname>Zend_ProgressBar</classname>
         の persistence オプションを使用する必要があります。
         通知を受け取ると、このアダプタは JSON 文字列をブラウザに送ります。
         その内容は jsPush アダプタから送られてくるものとほぼ同じです。
@@ -19,7 +19,7 @@
     <para>
         アダプタのオプションを設定するには、<code>set*</code>
         メソッドを使用するか、あるいはコンストラクタの最初のパラメータで
-        配列か <code>Zend_Config</code> インスタンスを渡します。
+        配列か <classname>Zend_Config</classname> インスタンスを渡します。
         使用できるオプションは次のとおりです。
     </para>
     <itemizedlist>

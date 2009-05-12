@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code>
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname>
         は、アプリケーションからスローされた例外を処理するためのプラグインです。
         たとえば、指定したコントローラやアクションが見つからないといったエラーを処理します。
         これは、<link linkend="zend.controller.exceptions">MVC の例外についてのセクション</link>
@@ -34,7 +34,7 @@
     </para>
 
     <para>
-        デフォルトでは、<code>Zend_Controller_Plugin_ErrorHandler</code>
+        デフォルトでは、<classname>Zend_Controller_Plugin_ErrorHandler</classname>
         はデフォルトモジュールの <code>ErrorController::errorAction()</code>
         に処理を転送します。これを変更するには、以下のようなアクセス用メソッドを使用します。
     </para>
@@ -78,7 +78,7 @@
     </para>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> は
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> は
         <code>postDispatch()</code> フックとして登録され、
         <link linkend="zend.controller.response">レスポンスオブジェクト</link>
         に格納された例外を確認します。もし何かの例外が見つかったら、
@@ -105,7 +105,7 @@
         <para>
             捕捉した例外は、リクエストで登録したオブジェクトの中に記録されます。
             これを取得するには、
-            <code>Zend_Controller_Action::_getParam('error_handler')</code>
+            <classname>Zend_Controller_Action::_getParam('error_handler')</classname>
             を使用します。
         </para>
 
@@ -117,8 +117,7 @@ class ErrorController extends Zend_Controller_Action
         $errors = $this->_getParam('error_handler');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             エラーオブジェクトを取得したら、次に
@@ -129,21 +128,21 @@ class ErrorController extends Zend_Controller_Action
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</classname>
                     は、コントローラが見つからなかったことを表します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</classname>
                     は、アクションが見つからなかったことを表します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</classname>
                     は、その他の例外を表します。
                 </para>
             </listitem>
@@ -176,8 +175,7 @@ class ErrorController extends Zend_Controller_Action
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             エラーハンドラで発生した礼儀を取得するには、
@@ -189,7 +187,6 @@ class ErrorController extends Zend_Controller_Action
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
-
 
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -218,8 +215,7 @@ public function errorAction()
                 break;
         }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
@@ -242,8 +238,7 @@ public function errorAction()
 
         <programlisting role="php"><![CDATA[
 $this->getResponse()->clearBody();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
@@ -254,8 +249,7 @@ $this->getResponse()->clearBody();
             <programlisting role="php"><![CDATA[
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
@@ -267,8 +261,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'controller' => 'static',
     'action'     => 'error'
 )));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
@@ -281,8 +274,7 @@ $plugin->setErrorHandlerModule('mystuff')
 
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin($plugin);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
     <sect4 id="zend.controller.plugins.standard.errorhandler.controllerexamples">
@@ -326,8 +318,7 @@ EOH;
         $this->view->content = $content;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 </sect3>
 <!--

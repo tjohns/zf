@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.amf.introduction">
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Amf</code> bietet Unterstützung für Adobe's <ulink
+        <classname>Zend_Amf</classname> bietet Unterstützung für Adobe's <ulink
         url="http://en.wikipedia.org/wiki/Action_Message_Format">Action
         Message Format</ulink> (AMF), um Kommunikation zwischen Adobe's
         <ulink url="http://en.wikipedia.org/wiki/Adobe_Flash_Player">Flash

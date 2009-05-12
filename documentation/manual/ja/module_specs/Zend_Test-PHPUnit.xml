@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.test.phpunit" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Test_PHPUnit</title>
 
     <para>
-        <code>Zend_Test_PHPUnit</code> は
+        <classname>Zend_Test_PHPUnit</classname> は
         MVC アプリケーション向けのテストケースを用意します。
         さまざまな責務に対応したテスト用のアサーションが含まれています。
         実際に何ができるのかを知るには、
@@ -97,8 +97,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'User: foobar');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             この例は、もう少しシンプルに書くこともできます。

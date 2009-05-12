@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect1 id="zend.validate.messages">
 
     <title>検証メッセージ</title>
 
     <para>
-        <code>Zend_Validate</code> を継承したバリデータには、
+        <classname>Zend_Validate</classname> を継承したバリデータには、
         検証に失敗したときに使用するメッセージが用意されています。
         ここにまとめた情報をもとに、
         独自のメッセージを設定したりバリデータが返すメッセージを翻訳したりすることができます。
@@ -506,8 +506,7 @@
     <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Alnum();
 $messages  = $validator->getMessageTemplates();
-]]>
-    </programlisting>
+]]></programlisting>
 
 </sect1>
 <!--

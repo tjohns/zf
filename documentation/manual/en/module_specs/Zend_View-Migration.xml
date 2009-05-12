@@ -14,7 +14,7 @@
         <para>
             Prior to the 1.7.5 release, the Zend Framework team was notified of
             a potential Local File Inclusion (LFI) vulnerability in the
-            <code>Zend_View::render()</code> method. Prior to 1.7.5, the method
+            <classname>Zend_View::render()</classname> method. Prior to 1.7.5, the method
             allowed, by default, the ability to specify view scripts that
             included parent directory notation (e.g., "../" or "..\"). This
             opens the possibility for an LFI attack if unfiltered user input is
@@ -27,7 +27,7 @@ echo $view->render($_GET['foobar']); // LFI inclusion
 ]]></programlisting>
 
         <para>
-            <code>Zend_View</code> now by default raises an exception when such
+            <classname>Zend_View</classname> now by default raises an exception when such
             a view script is requested.
         </para>
 

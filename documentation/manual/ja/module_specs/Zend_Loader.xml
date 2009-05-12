@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect1 id="zend.loader.load">
 
     <title>ファイルやクラスの動的な読み込み</title>
@@ -12,11 +12,11 @@
     <tip>
         <title>Zend_Loader 対 require_once()</title>
         <para>
-            <code>Zend_Loader</code> のメソッドは、読み込みたいファイルの名前が変化する場合に便利です。
+            <classname>Zend_Loader</classname> のメソッドは、読み込みたいファイルの名前が変化する場合に便利です。
             たとえば、ユーザの入力やメソッドの引数などのパラメータに基づいたファイル名を使用する場合などです。
             もし読み込むファイルやクラスの名前が決まっている場合は、
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>
-            のような PHP の関数ではなくあえて <code>Zend_Loader</code> を使用するメリットはありません。
+            のような PHP の関数ではなくあえて <classname>Zend_Loader</classname> を使用するメリットはありません。
         </para>
     </tip>
 
@@ -25,7 +25,7 @@
         <title>ファイルの読み込み</title>
 
         <para>
-            静的メソッド <code>Zend_Loader::loadFile()</code>
+            静的メソッド <classname>Zend_Loader::loadFile()</classname>
             は、PHP ファイルを読み込みます。
             読み込まれるファイルには任意の PHP コードを含めることができます。
             このメソッドは PHP 関数
@@ -38,8 +38,7 @@
             <title>loadFile() メソッドの例</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);
-]]>
-            </programlisting>
+]]></programlisting>
     </example>
 
         <para>
@@ -60,7 +59,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 
         <para>
             引数 <code>$once</code> は論理値です。<code>TRUE</code> を指定すると、
-            <code>Zend_Loader::loadFile()</code> は PHP の関数
+            <classname>Zend_Loader::loadFile()</classname> は PHP の関数
             <ulink url="http://php.net/include"><code>include_once()</code></ulink>
             でファイルを読み込みます。それ以外の場合は
             <ulink url="http://php.net/include_once"><code>include()</code></ulink>
@@ -74,7 +73,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
         <title>クラスの読み込み</title>
 
         <para>
-            静的メソッド <code>Zend_Loader::loadClass($class, $dirs)</code>
+            静的メソッド <classname>Zend_Loader::loadClass($class, $dirs)</classname>
             は、PHP ファイルを読み込んでクラスが存在するかどうかを確かめます。
         </para>
 
@@ -87,8 +86,7 @@ Zend_Loader::loadClass('Container_Tree',
         '/home/production/myapp'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -99,7 +97,7 @@ Zend_Loader::loadClass('Container_Tree',
 
         <para>
             <code>$dirs</code> に文字列あるいは配列を指定すると、
-            <code>Zend_Loader::loadClass()</code> は指定した順にそのディレクトリを探します。
+            <classname>Zend_Loader::loadClass()</classname> は指定した順にそのディレクトリを探します。
             そして最初に見つかったファイルを読み込みます。
             ディレクトリ <code>$dirs</code> にファイルがみつからない場合は、
             PHP の <code>include_path</code> で指定された場所を探します。
@@ -107,12 +105,12 @@ Zend_Loader::loadClass('Container_Tree',
 
         <para>
             ファイルが見つからない場合、あるいは読み込んだファイルにクラスが存在しない場合は
-            <code>Zend_Loader::loadClass()</code> は <code>Zend_Exception</code>
+            <classname>Zend_Loader::loadClass()</classname> は <classname>Zend_Exception</classname>
             をスローします。
         </para>
 
         <para>
-            ファイルの読み込みには <code>Zend_Loader::loadFile()</code> を使用するので、
+            ファイルの読み込みには <classname>Zend_Loader::loadFile()</classname> を使用するので、
             クラス名として指定できるのは
             英数字とハイフン ('-')、アンダースコア ('_') そしてピリオド ('.') だけです。
         </para>
@@ -124,7 +122,7 @@ Zend_Loader::loadClass('Container_Tree',
         <title>ファイルが読み込み可能かどうかの確認</title>
 
         <para>
-            静的メソッド <code>Zend_Loader::isReadable($pathname)</code>
+            静的メソッド <classname>Zend_Loader::isReadable($pathname)</classname>
             は、指定した場所にファイルが存在して読み込み可能な場合に
             <code>TRUE</code>、それ以外の場合に <code>FALSE</code> を返します。
         </para>
@@ -135,8 +133,7 @@ Zend_Loader::loadClass('Container_Tree',
 if (Zend_Loader::isReadable($filename)) {
     // $filename で何かをします
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -145,7 +142,7 @@ if (Zend_Loader::isReadable($filename)) {
             このメソッドは、PHP の関数
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>
             のラッパーです。この関数は <code>include_path</code>
-            を探しませんが、<code>Zend_Loader::isReadable()</code>
+            を探しませんが、<classname>Zend_Loader::isReadable()</classname>
             は <code>include_path</code> も検索対象に含めます。
         </para>
 
@@ -156,32 +153,31 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Autoloader の使用法</title>
 
         <para>
-            <code>Zend_Loader</code> クラスには、PHP の SPL
+            <classname>Zend_Loader</classname> クラスには、PHP の SPL
             自動ローダーに登録するためのメソッドが含まれています。そのコールバックメソッドが
-            <code>Zend_Loader::autoload()</code> です。利便性を考慮して、
-            <code>Zend_Loader</code> では <code>registerAutoload()</code> 関数を提供しています。
+            <classname>Zend_Loader::autoload()</classname> です。利便性を考慮して、
+            <classname>Zend_Loader</classname> では <code>registerAutoload()</code> 関数を提供しています。
             この関数は、<code>autoload()</code> メソッドを登録するものです。
             <code>spl_autoload</code> 拡張モジュールが使用できない環境の場合は、
-            <code>registerAutoload()</code> メソッドは <code>Zend_Exception</code> をスローします。
+            <code>registerAutoload()</code> メソッドは <classname>Zend_Exception</classname> をスローします。
         </para>
 
         <example id="zend.loader.load.autoload.example">
             <title>自動ローダー用コールバックメソッドの登録例</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::registerAutoload();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
             Zend Framework の autoload コールバックを登録すると、
             明示的に読み込まなくても Zend Framework のクラスを参照できるようになります。
             <code>autoload()</code> メソッドは、クラスを参照する際に自動的に
-            <code>Zend_Loader::loadClass()</code> を使用します。
+            <classname>Zend_Loader::loadClass()</classname> を使用します。
         </para>
 
         <para>
-            <code>Zend_Loader</code> クラスを継承した場合は、<code>registerAutoload()</code>
+            <classname>Zend_Loader</classname> クラスを継承した場合は、<code>registerAutoload()</code>
             に引数を追加することができます。この引数で、どのクラスから
             <code>autoload()</code> メソッドを登録するのかを指定します。
         </para>
@@ -218,8 +214,7 @@ class My_Loader extends Zend_Loader
 }
 
 Zend_Loader::registerAutoload('My_Loader');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>

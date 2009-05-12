@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.navigation.pages.mvc">
     <title>Zend_Navigation_Page_Mvc</title>
 
     <para>
         MVC Seiten werden definiert indem MVC Parameter verwendet werden wie von der
-        <code>Zend_Controller</code> Komponent bekannt. Eine MVC Seite wird intern in der
+        <classname>Zend_Controller</classname> Komponent bekannt. Eine MVC Seite wird intern in der
         <code>getHref()</code> Methode <classname>Zend_Controller_Action_Helper_Url</classname>
         verwenden um hrefs zu erstellen, und die <code>isActive()</code> Methode wird die
         Parameter von <classname>Zend_Controller_Request_Abstract</classname> mit den Seiten
@@ -88,13 +88,13 @@
 
         <para>
             Die zurückgegebene URI ist relativ zur <code>baseUrl</code> in
-            <code>Zend_Controller_Front</code>. Im Beispiel ist die baseUrl der Einfachheit halber
-            '/'.
+            <classname>Zend_Controller_Front</classname>. Im Beispiel ist die baseUrl der
+            Einfachheit halber '/'.
         </para>
     </note>
 
     <example id="zend.navigation.pages.mvc.example.getHref">
-        <title><code>getHref() erstellt die Seiten URI</code></title>
+        <title>getHref() erstellt die Seiten URI</title>
 
         <para>
             Dieses Beispiel zeigt das MVC Seiten intern
@@ -123,12 +123,11 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'module'     => 'blog',
     'params'     => array('id' => 1337)
 ));
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.mvc.example.isActive">
-        <title><code>isActive()</code> erkennt ob eine Seite aktiv ist</title>
+        <title>isActive() erkennt ob eine Seite aktiv ist</title>
 
         <para>
             Dieses Beispiel zeigt das MVC Seiten erkennen ob sie aktiv sind indem die Parameter
@@ -188,8 +187,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
 // Gibt false zurück weil die Seite den id Parameter in der
 // Anfrage gesetzt haben muß
 $page->isActive(); // gibt false zurück
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.navigation.pages.mvc.example.routes">
@@ -209,9 +207,9 @@ $page->isActive(); // gibt false zurück
                     <code>isActive()</code> Methode nicht dazu in der Lage zu erkennen ob die Seite
                     aktiv ist oder nicht. Der Grund hierfür ist, das es aktuell keinen Weg gibt
                     die Standardparameter von einem
-                    <code>Zend_Controller_Router_Route_Interface</code> Objekt zu erhalten, oder
-                    die aktuelle Route von einem <code>Zend_Controller_Router_Interface</code>
-                    Objekt.
+                    <classname>Zend_Controller_Router_Route_Interface</classname> Objekt zu
+                    erhalten, oder die aktuelle Route von einem
+                    <classname>Zend_Controller_Router_Interface</classname> Objekt.
                 </para>
             </note>
         </para>
@@ -243,7 +241,6 @@ $page = new Zend_Navigation_Page_Mvc(array(
 
 // Gibt /a/42 zurück
 $page->getHref();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect2>

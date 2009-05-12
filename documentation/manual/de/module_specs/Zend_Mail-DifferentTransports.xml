@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.mail.different-transports">
     <title>Verwendung von unterschiedlichen Versandwegen</title>
@@ -19,14 +19,13 @@ $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
 $mail->send();  // wieder Standardmethode verwenden
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <note>
         <title>Zusätzliche Versandwege</title>
         <para>
-            Weitere Versandwege können geschrieben werden, indem  <code>Zend_Mail_Transport_Interface</code>
-            implementiert wird.
+            Weitere Versandwege können geschrieben werden, indem
+             <classname>Zend_Mail_Transport_Interface</classname> implementiert wird.
         </para>
     </note>
 </sect1>

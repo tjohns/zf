@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.locale.parsing">
 
     <title>正規化および地域化</title>
 
     <para>
-        <code>Zend_Locale_Format</code> は、<code>Zend_Locale</code> が内部で使用しているコンポーネントです。
-        ロケール対応のクラスは、<code>Zend_Locale_Format</code>
+        <classname>Zend_Locale_Format</classname> は、<classname>Zend_Locale</classname> が内部で使用しているコンポーネントです。
+        ロケール対応のクラスは、<classname>Zend_Locale_Format</classname>
         を用いて数値や日付の正規化および地域化を行います。
         正規化とは、さまざまな形式で表されるデータ (日付など) を取り込んで解析し、
         標準化された構造化表現 (year、month、day の各要素からなる配列など) に変換することです。
@@ -18,7 +18,7 @@
         異なる習慣や規約を使用している人が見ると異なる意味にとられることがあります。
         数値や日付を、あいまいさをなくして正確に解釈するには、
         これらの文字列を正規化し、標準化されたデータ構造に変換する必要があります。
-        したがって、<code>Zend_Locale_Format</code> のすべてのメソッドは、
+        したがって、<classname>Zend_Locale_Format</classname> のすべてのメソッドは、
         入力データを処理するためにロケール情報を必要とします。
         <note>
             <title>デフォルトの "root" ロケール</title>
@@ -61,8 +61,7 @@ $number = Zend_Locale_Format::getNumber('13.524,678',
                                        );
 
 print $number; // 13524.678 を返します
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <sect3 id="zend.locale.number.normalize.precision">
@@ -115,8 +114,7 @@ $number = Zend_Locale_Format::getNumber('13.524,678',
                                               'locale' => $locale)
                                        );
 print $number; // 13524.67 を返します
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
 
         </sect3>
@@ -145,8 +143,7 @@ $number = Zend_Locale_Format::toNumber(13547.36,
 
 // 13.547,36 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -175,8 +172,7 @@ $number = Zend_Locale_Format::toNumber(13547.3678,
 
 // 13.547,37 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -254,8 +250,7 @@ $number = Zend_Locale_Format::toNumber(13547.3,
 
 // 13.547,30 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -278,8 +273,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
 } else {
     print "数値ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -304,8 +298,7 @@ $number = Zend_Locale_Format::getFloat('13.524,678',
 
 // 13524.68 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -330,8 +323,7 @@ $number = Zend_Locale_Format::toFloat(13547.3655,
 
 // 13.547,4 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -355,8 +347,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
 } else {
     print "float ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -379,8 +370,7 @@ $number = Zend_Locale_Format::getInteger('13.524,678',
 
 // 13524 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -403,8 +393,7 @@ $number = Zend_Locale_Format::toInteger(13547.3655,
 
 // 13.547 を返します
 print $number;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -428,8 +417,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
 } else {
     print "integer ではありません";
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -439,7 +427,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
         <title>数値系の変換</title>
 
         <para>
-            <code>Zend_Locale_Format::convertNumerals()</code> は、
+            <classname>Zend_Locale_Format::convertNumerals()</classname> は、
             さまざまな
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">数値系</ulink>
             の間での数値の変換を行います。その中には、標準のアラビア数字
@@ -451,7 +439,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             これは、不正確な変換によってエラーが発生するのを防ぐためです。
             指定された数値系で数値として扱われない文字は、
             そのまま出力に渡されます。つまり、単位の区切り文字などは変換されないということです。
-            <code>Zend_Locale*</code> コンポーネントは、CLDR が提供するデータに依存しています
+            <classname>Zend_Locale*</classname> コンポーネントは、CLDR が提供するデータに依存しています
             (<ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_scripts.html?sortby=date">
                 言語ごとの文字の一覧</ulink> を参照ください)。
         </para>
@@ -484,8 +472,7 @@ $latinScript = Zend_Locale_Format::convertNumerals($arabicScript,
 
 print "\n元の内容:   " . $arabicScript;
 print "\n正規化したもの: " . $latinScript;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <para>
@@ -502,8 +489,7 @@ $arabicScript = Zend_Locale_Format::convertNumerals($latinScript,
 
 print "\n元の内容: ".$latinScript;
 print "\n地域化したもの: " . $arabicScript;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.locale.numbersystems.example-3">
@@ -518,8 +504,7 @@ function getScriptCode($scriptName, $locale)
 echo getScriptCode('Latin', 'en'); // 出力は "Latn" となります
 echo getScriptCode('Tamil', 'en'); // 出力は "Taml" となります
 echo getScriptCode('tamoul', 'fr'); // 出力は "Taml" となります
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <sect3 id="zend.locale.appendix.numberscripts.supported">

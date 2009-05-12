@@ -6,7 +6,7 @@
     <para>
         Assertions are at the heart of Unit Testing; you use them to verify
         that the results are what you expect. To this end,
-        <code>Zend_Test_PHPUnit_ControllerTestCase</code> provides a number of
+        <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> provides a number of
         assertions to make testing your MVC apps and controllers simpler.
     </para>
 
@@ -150,7 +150,7 @@
 
         <para>
             Often an action will redirect. Instead of following the redirect,
-            <code>Zend_Test_PHPUnit_ControllerTestCase</code> allows you to
+            <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> allows you to
             test for redirects with a handful of assertions.
         </para>
 

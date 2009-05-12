@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15235 -->
 <sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
 
@@ -22,8 +22,7 @@
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.rest.server.usage.example-2">
@@ -45,8 +44,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 $server->handle();
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -54,7 +52,7 @@ $server->handle();
         <title>Zend_Rest_Server サービスのコール</title>
 
         <para>
-            <code>Zend_Rest_Server</code> サービスをコールするには、
+            <classname>Zend_Rest_Server</classname> サービスをコールするには、
             GET/POST 時の引数 <code>method</code> にそのメソッド名を指定しなければなりません。
             その後に、任意の数の引数を続けることができます。これは、引数の名前
             (たとえば "who") を指定するか、あるいは引数の位置を表す数値
@@ -111,8 +109,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 $server->handle();
-]]>
-</programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -152,8 +149,7 @@ $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
 $server->handle();
-]]>
-</programlisting>
+]]></programlisting>
         </example>
 
         <para>

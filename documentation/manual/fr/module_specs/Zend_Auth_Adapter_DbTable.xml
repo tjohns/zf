@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15346 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.dbtable">
-
     <title>Authentification avec une table de base de données</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
-
         <title>Introduction</title>
 
         <para>
@@ -31,8 +29,8 @@
                 <listitem>
                     <para>
                         <code>identityColumn</code>&#160;: il s'agit du nom de la colonne dans la
-                        table utilisée pour représenter l'identité. La colonne d'identité doit contenir
-                        une valeur unique, comme un "<code>username</code>" ou une adresse
+                        table utilisée pour représenter l'identité. La colonne d'identité doit
+                        contenir une valeur unique, comme un "<code>username</code>" ou une adresse
                         émail.
                     </para>
                 </listitem>
@@ -40,8 +38,9 @@
                     <para>
                         <code>credentialColumn</code>&#160;: il s'agit du nom de la colonne dans la
                         table utilisée pour représenter le crédit. Dans le cas d'une simple
-                        authentification par identité / mot de passe, la valeur de crédit correspond au
-                        mot de passe. Voir aussi l'option <code>credentialTreatment</code>.
+                        authentification par identité / mot de passe, la valeur de crédit
+                        correspond au mot de passe. Voir aussi l'option
+                        <code>credentialTreatment</code>.
                     </para>
                 </listitem>
                 <listitem>
@@ -51,17 +50,16 @@
                         sinon traités à travers une fonction ou un algorithme. En spécifiant un
                         traitement paramétrable de chaîne avec cette méthode, comme
                         <code>'MD5(?)'</code> ou <code>'PASSWORD(?)'</code>, un développeur peut
-                        appliquer un code SQL arbitraire sur les données de crédit fournies. Comme ces
-                        fonctions sont spécifiques à chaque gestionnaire de base de données, vérifiez
-                        le manuel de la base de données pour vérifier la disponibilité de ces fonctions
-                        dans votre système.
+                        appliquer un code SQL arbitraire sur les données de crédit fournies. Comme
+                        ces fonctions sont spécifiques à chaque gestionnaire de base de données,
+                        vérifiez le manuel de la base de données pour vérifier la disponibilité de
+                        ces fonctions dans votre système.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
-
             <title>Utilisation basique</title>
 
             <para>
@@ -166,13 +164,10 @@ Array
                 Puisque la ligne de la table contient la valeur de crédit, il est important de
                 garantir ces valeurs contre l'accès fortuit.
             </para>
-
         </example>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
-
         <title>Utilisation avancée : maintenir persistant l'objet de résultat DbTable</title>
 
         <para>
@@ -208,18 +203,16 @@ if ($result->isValid()) {
 }
 ]]></programlisting>
         </para>
-
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
-
         <title>Utilisation avancée par l'exemple</title>
 
         <para>
             Bien que le but initial de <classname>Zend_Auth</classname> (et par extension celui de
-            <classname>Zend_Auth_Adapter_DbTable</classname>) est principalement l'<emphasis
-            role="strong">authentification</emphasis> et non l'<emphasis
-            role="strong">autorisation</emphasis> (ou contrôle d'accès), il existe quelques
+            <classname>Zend_Auth_Adapter_DbTable</classname>) est principalement
+            l'<emphasis>authentification</emphasis> et non
+            l'<emphasis>autorisation</emphasis> (ou contrôle d'accès), il existe quelques
             exemples et problèmes qui franchissent la limite des domaines auxquels ils
             appartiennent. Selon la façon dont vous avez décidé d'expliquer votre problème, il
             semble parfois raisonnable de résoudre ce qui pourrait ressembler à un problème
@@ -270,7 +263,6 @@ $sqlAlter = "ALTER TABLE [users] "
           . "ADD COLUMN [password_salt] "
           . "AFTER [password]";
 
-
 $dbAdapter->query($sqlAlter);
 ]]></programlisting>
 
@@ -308,7 +300,5 @@ $adapter = new Zend_Auth_Adapter_DbTable(
                 serveur Web est intact, les données sont inutilisables par l'attaquant.
             </para>
         </note>
-
     </sect2>
-
 </sect1>

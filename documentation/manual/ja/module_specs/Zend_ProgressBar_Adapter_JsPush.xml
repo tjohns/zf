@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15157 -->
 <sect3 id="zend.progressbar.adapter.jspush">
     <title>Zend_ProgressBar_Adapter_JsPush</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_JsPush</code> は、
+        <classname>Zend_ProgressBar_Adapter_JsPush</classname> は、
         ブラウザ内のプログレスバーを Javascript の Push で更新するアダプタです。
         つまり、実行中のプロセスの情報を取得するために改めて接続を行う必要がなく、
         そのプロセス自身が状況を直接ブラウザに送信するということです。
@@ -12,7 +12,7 @@
     <para>
         アダプタのオプションを設定するには、<code>set*</code>
         メソッドを使用するか、あるいはコンストラクタの最初のパラメータで
-        配列か <code>Zend_Config</code> インスタンスを渡します。
+        配列か <classname>Zend_Config</classname> インスタンスを渡します。
         使用できるオプションは次のとおりです。
     </para>
     <itemizedlist>
@@ -20,7 +20,7 @@
             <para>
                 <code>updateMethodName</code>:
                 毎回の更新時にコールされる javascript のメソッド。
-                デフォルト値は <code>Zend_ProgressBar_Update</code> です。
+                デフォルト値は <classname>Zend_ProgressBar_Update</classname> です。
             </para>
         </listitem>
         <listitem>
@@ -87,8 +87,7 @@
 </div>
 
 <iframe src="long-running-process.php" id="long-running-process"></iframe>
-]]>
-        </programlisting>
+]]></programlisting>
         <programlisting role="css"><![CDATA[
 #long-running-process {
     position: absolute;
@@ -113,15 +112,13 @@
 
     background-color: #000000;
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <programlisting role="javascript"><![CDATA[
 function Zend_ProgressBar_Update(data)
 {
     document.getElementById('zend-progressbar-done').style.width = data.percent + '%';
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             これは、黒の枠線と進捗状況表示用ブロックからなるシンプルなコンテナを作成します。

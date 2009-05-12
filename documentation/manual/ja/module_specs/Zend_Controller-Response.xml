@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.controller.response">
     <title>レスポンスオブジェクト</title>
 
@@ -15,14 +15,13 @@
             さらに、フロントコントローラで捕捉した例外はすべてレスポンスオブジェクトに渡されます。
             これにより、例外の処理がやりやすくなります。
             この挙動を変更するには
-            <code>Zend_Controller_Front::throwExceptions(true)</code>
+            <classname>Zend_Controller_Front::throwExceptions(true)</classname>
             と設定します。
         </para>
 
         <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             ヘッダを含むレスポンス出力を送信するには、
@@ -31,8 +30,7 @@ $front->throwExceptions(true);
 
         <programlisting role="php"><![CDATA[
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -40,7 +38,7 @@ $response->sendResponse();
                 <code>sendResponse()</code> をコールします。通常はこれをコールする必要はありません。
                 しかし、テスト中などにレスポンスの内容を操作したい場合は、
                 <code>returnResponse</code> フラグを
-                <code>Zend_Controller_Front::returnResponse(true)</code>
+                <classname>Zend_Controller_Front::returnResponse(true)</classname>
                 と設定することでこの振る舞いを変更できます。
             </para>
 
@@ -51,8 +49,7 @@ $response = $front->dispatch();
 // 何かの処理、たとえばログの記録などを行ってから
 // 結果を出力します
 $response->sendResponse();
-]]>
-            </programlisting>
+]]></programlisting>
         </note>
 
         <para>
@@ -67,8 +64,7 @@ $response->sendResponse();
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             こうすることで、すべてのヘッダを一度に送信し、
@@ -81,7 +77,7 @@ $this->getResponse()
                     linkend="zend.controller.action.viewintegration">ビューの統合
                     </link> を使用する場合は、
                 レンダリングされたビュースクリプトの内容をレスポンスオブジェクトに設定する必要はありません。
-                <code>Zend_Controller_Action::render()</code> がデフォルトでこれを行います。
+                <classname>Zend_Controller_Action::render()</classname> がデフォルトでこれを行います。
             </para>
         </note>
 
@@ -117,8 +113,7 @@ $response = $front->dispatch();
 
 // 最後に結果を表示します
 $response->sendResponse();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             デフォルトでは、例外メッセージは表示されません。
@@ -140,8 +135,7 @@ $response->sendResponse();
 // あるいは
 $front->throwExceptions(true);
 $front->dispatch();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -293,8 +287,7 @@ class MyController extends Zend_Controller_Action
         $this->render();
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             上の例で <code>/my/foo</code> をコールすると、
@@ -307,8 +300,7 @@ array(
     'default' => ..., // MyController::fooAction() が作成した本文
     'footer'  => ...  // フッタの内容
 );
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             これをレンダリングすると、配列に要素が追加された順に表示されます。
@@ -489,7 +481,7 @@ array(
 
         <para>
             レスポンスクラスの基底クラスは
-            <code>Zend_Controller_Response_Abstract</code>
+            <classname>Zend_Controller_Response_Abstract</classname>
             です。レスポンスクラスを作成する際には、
             このクラスあるいはその派生クラスのいずれかを継承しなければなりません。
             このクラスが提供するメソッドについては、先ほど説明しました。

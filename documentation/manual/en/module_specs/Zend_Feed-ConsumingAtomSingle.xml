@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
+        If you read a single entry, you will still have a <classname>Zend_Feed_Atom</classname> object, but it will
         automatically create an "anonymous" feed to contain the entry.
     </para>
 
@@ -21,8 +21,7 @@ $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 echo 'The feed has: ' . $feed->count() . ' entry.';
 
 $entry = $feed->current();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 
     <para>
@@ -35,8 +34,7 @@ $entry = $feed->current();
         <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
 echo $entry->title();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--

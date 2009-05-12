@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>ライター</title>
   <para>
-    ライターは、<code>Zend_Log_Writer_Abstract</code>
+    ライターは、<classname>Zend_Log_Writer_Abstract</classname>
     を継承したオブジェクトです。ライターの役割は、
     ログのデータをバックエンドのストレージに記録することです。
   </para>
@@ -12,7 +12,7 @@
   <sect2 id="zend.log.writers.stream">
     <title>ストリームへの書き出し</title>
     <para>
-      <code>Zend_Log_Writer_Stream</code> は、ログデータを
+      <classname>Zend_Log_Writer_Stream</classname> は、ログデータを
       <ulink url="http://www.php.net/stream">PHP のストリーム</ulink>
       に書き出します。
     </para>
@@ -27,8 +27,7 @@ $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -41,16 +40,15 @@ $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
-]]>
-      </programlisting>
+]]></programlisting>
 
       デフォルトでは、ストリームを追記モード (<code>"a"</code>) でオープンします。
-      別のモードでオープンするには、<code>Zend_Log_Writer_Stream</code>
+      別のモードでオープンするには、<classname>Zend_Log_Writer_Stream</classname>
       のコンストラクタで二番目のオプション引数にモードを指定します。
     </para>
 
     <para>
-      <code>Zend_Log_Writer_Stream</code> のコンストラクタには、
+      <classname>Zend_Log_Writer_Stream</classname> のコンストラクタには、
       既存のストリームリソースを指定することもできます。
 
       <programlisting role="php"><![CDATA[
@@ -63,21 +61,20 @@ $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
 $logger->info('通知メッセージ');
-]]>
-      </programlisting>
+]]></programlisting>
 
       既存のストリームリソースに対してモードを指定することはできません。
-      指定しようとすると <code>Zend_Log_Exception</code> をスローします。
+      指定しようとすると <classname>Zend_Log_Exception</classname> をスローします。
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.database">
     <title>データベースへの書き出し</title>
     <para>
-      <code>Zend_Log_Writer_Db</code> は、
-      <code>Zend_Db</code> を使用してログ情報をデータベースに書き出します。
-      <code>Zend_Log_Writer_Db</code> のコンストラクタには
-      <code>Zend_Db_Adapter</code> のインスタンス、テーブル名
+      <classname>Zend_Log_Writer_Db</classname> は、
+      <classname>Zend_Db</classname> を使用してログ情報をデータベースに書き出します。
+      <classname>Zend_Log_Writer_Db</classname> のコンストラクタには
+      <classname>Zend_Db_Adapter</classname> のインスタンス、テーブル名
       およびデータベースのカラムとイベントデータ項目との対応を指定します。
       columns to event data items:
 
@@ -94,8 +91,7 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 $logger = new Zend_Log($writer);
 
 $logger->info('通知メッセージ');
-]]>
-      </programlisting>
+]]></programlisting>
 
       上の例は、一行ぶんのログデータを <code>log_table_name</code>
       という名前のテーブルに書き出します。データベースのカラム
@@ -111,7 +107,7 @@ $logger->info('通知メッセージ');
   <sect2 id="zend.log.writers.null">
     <title>ライターのスタブ</title>
     <para>
-      <code>Zend_Log_Writer_Null</code> はスタブで、ログデータをどこにも書き出しません。
+      <classname>Zend_Log_Writer_Null</classname> はスタブで、ログデータをどこにも書き出しません。
       これは、ログ出力を無効にしたりテスト時などに便利です。
 
       <programlisting role="php"><![CDATA[
@@ -120,15 +116,14 @@ $logger = new Zend_Log($writer);
 
 // どこにも出力されません
 $logger->info('通知メッセージ');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.mock">
     <title>モックによるテスト</title>
     <para>
-      <code>Zend_Log_Writer_Mock</code> は非常にシンプルなライターです。
+      <classname>Zend_Log_Writer_Mock</classname> は非常にシンプルなライターです。
       受け取った生のデータを配列に格納し、それを public プロパティとして公開します。
 
       <programlisting role="php"><![CDATA[
@@ -146,8 +141,7 @@ var_dump($mock->events[0]);
 //    [priority] => 6
 //    [priorityName] => INFO
 // )
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
 
     <para>
@@ -174,8 +168,7 @@ $logger->addWriter($writer2);
 
 // 両方のライターに書き出されます
 $logger->info('通知メッセージ');
-]]>
-      </programlisting>
+]]></programlisting>
     </para>
   </sect2>
 </sect1>

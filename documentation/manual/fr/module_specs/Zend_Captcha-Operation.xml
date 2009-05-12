@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.captcha.operation">
-
     <title>Opération Captcha</title>
 
     <para>
@@ -66,5 +65,4 @@ if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }
 ]]></programlisting>
-
 </sect1>

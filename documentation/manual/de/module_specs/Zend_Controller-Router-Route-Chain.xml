@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15003 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.controller.router.routes.chain">
     <title>Zend_Controller_Router_Route_Chain</title>
 
     <para>
-        <code>Zend_Controller_Router_Route_Chain</code> ist eine Route die es erlaubt mehrere
-        Routen miteinander zu verketten. Das erlaubt es Hostname-Routen und Pfad-Routen zu
+        <classname>Zend_Controller_Router_Route_Chain</classname> ist eine Route die es erlaubt
+        mehrere Routen miteinander zu verketten. Das erlaubt es Hostname-Routen und Pfad-Routen zu
         verketten, oder zum Beispiel mehrere Pfad-Routen. Verkettung kann entweder
         program-technisch oder mit einer Konfigurationsdatei durchgeführt werden.
     </para>
@@ -23,13 +23,13 @@
 
     <para>
         Wenn Programmtechnisch verkettet wird, gibt es zwei Wege das zu tun. Der erste besteht
-        darin eine neue Instanz von <code>Zend_Controller_Router_Route_Chain</code> zu erstellen
-        und dann die <code>chain</code> Methode mehrere Male mit allen Routen aufzurufen die
-        zusammen verkettet werden sollen. Der andere Weg besteht darin die erste Route zu nehmen,
-        z.B. eine Hostname Route, und die <code>chain</code> Methode mit der Route auf Ihr
+        darin eine neue Instanz von <classname>Zend_Controller_Router_Route_Chain</classname> zu
+        erstellen und dann die <code>chain</code> Methode mehrere Male mit allen Routen aufzurufen
+        die zusammen verkettet werden sollen. Der andere Weg besteht darin die erste Route zu
+        nehmen, z.B. eine Hostname Route, und die <code>chain</code> Methode mit der Route auf Ihr
         aufzurufen, die angehängt werden soll. Das verändert die Hostname Route nicht, gibt aber
-        eine neue Instanz von <code>Zend_Controller_Router_Route_Chain</code> zurück, die dann
-        beide Routen verkettet hat:
+        eine neue Instanz von <classname>Zend_Controller_Router_Route_Chain</classname> zurück, die
+        dann beide Routen verkettet hat:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -44,8 +44,7 @@ $chainedRoute->chain($hostnameRoute)
 
 // Zweiter Weg, direkt verketten
 $chainedRoute = $hostnameRoute->chain($pathRoute);
-]]>
-    </programlisting>
+]]></programlisting>
 
     <para>
         Wenn Routen miteinander verkettet werden, ist Ihr standardmäßiges Trennzeichen ein
@@ -62,11 +61,10 @@ $chainedRoute = $firstRoute->chain($secondRoute, '-');
 
 // Zusammenbauen der Route: "foo-bar"
 echo $chainedRoute->assemble();
-]]>
-    </programlisting>
+]]></programlisting>
 
     <sect4 id="zend.controller.router.routes.chain.config">
-        <title>Verkettete Routen über <code>Zend_Config</code></title>
+        <title>Verkettete Routen über Zend_Config</title>
 
         <para>
             Um Routen in einer Config Datei miteinander zu verketten gibt es zusätzliche Parameter
@@ -113,8 +111,7 @@ echo $chainedRoute->assemble();
         <route>misc</route>
     </misc>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Das führt zu den drei Routen <code>www-language-index</code>,
@@ -154,8 +151,7 @@ echo $chainedRoute->assemble();
         <chain>www, language, imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Man kann auch den <code>chain</code> Parameter als Array übergeben statt die Routen
@@ -175,8 +171,7 @@ echo $chainedRoute->assemble();
         <chain>imprint</chain>
     </www-imprint>
 </routes>
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 </sect3>
 <!--

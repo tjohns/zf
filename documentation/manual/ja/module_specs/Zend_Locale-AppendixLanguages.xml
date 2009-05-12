@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.locale.appendix">
 
     <title>サポートするロケール</title>
 
     <para>
-        <code>Zend_Locale</code> はロケールについての情報を提供します。
+        <classname>Zend_Locale</classname> はロケールについての情報を提供します。
         次の表は、すべての言語と関連するロケールを言語の順に並べたものです。
     </para>
 

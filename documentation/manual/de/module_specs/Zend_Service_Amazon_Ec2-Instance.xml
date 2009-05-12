@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15004 -->
+<!-- EN-Revision: 15369 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.amazon.ec2.instance">
     <title>Zend_Service_Amazon_Ec2: Instanzen</title>
@@ -68,7 +68,9 @@
                         <entry><para>
                             m1.small
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::SMALL</code></entry>
+                        <entry>
+                            <classname>Zend_Service_Amazon_Ec2_Instance::SMALL</classname>
+                        </entry>
                     </row>
                     <row>
                         <entry><code>Groß</code></entry>
@@ -91,7 +93,9 @@
                         <entry><para>
                             m1.large
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::LARGE</code></entry>
+                        <entry>
+                            <classname>Zend_Service_Amazon_Ec2_Instance::LARGE</classname>
+                        </entry>
                     </row>
                     <row>
                         <entry><code>Extra Groß</code></entry>
@@ -114,7 +118,9 @@
                         <entry><para>
                             m1.xlarge
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::XLARGE</code></entry>
+                        <entry>
+                            <classname>Zend_Service_Amazon_Ec2_Instance::XLARGE</classname>
+                        </entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Medium</code></entry>
@@ -137,7 +143,9 @@
                         <entry><para>
                             c1.medium
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</code></entry>
+                        <entry>
+                            <classname>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</classname>
+                        </entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Extra Groß</code></entry>
@@ -160,7 +168,9 @@
                         <entry><para>
                             c1.xlarge
                         </para></entry>
-                        <entry><code>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</code></entry>
+                        <entry>
+                            <classname>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</classname>
+                        </entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -296,8 +306,7 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320',
                                    'keyName' => 'myKey',
                                    'securityGroup' => array('web',
                                                             'default')));
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -319,8 +328,7 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320',
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->reboot('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -338,8 +346,7 @@ $return = $ec2_instance->reboot('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->terminate('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <note>
             <title>Terminierte Instanzen</title>
@@ -377,8 +384,7 @@ $return = $ec2_instance->terminate('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->describe('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -406,8 +412,7 @@ $return = $ec2_instance->describe('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->describeByImageId('imageId');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <note>
@@ -441,8 +446,7 @@ $return = $ec2_instance->describeByImageId('imageId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->consoleOutput('instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
 
@@ -463,8 +467,7 @@ $return = $ec2_instance->consoleOutput('instanceId');
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
                                                      'aws_secret_key');
 $return = $ec2_instance->terminate('productCode', 'instanceId');
-]]>
-            </programlisting>
+]]></programlisting>
 
         </example>
     </sect2>

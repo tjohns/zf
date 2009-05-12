@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15215 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.memory.overview">
     <title>Übersicht</title>
@@ -7,7 +7,7 @@
     <sect2 id="zend.memory.introduction">
         <title>Einführung</title>
         <para>
-            Die <code>Zend_Memory</code> Komponente ist dafür gedacht Daten in
+            Die <classname>Zend_Memory</classname> Komponente ist dafür gedacht Daten in
             Systemen mit limitiertem Speicher zu Verwalten.
         </para>
 
@@ -33,9 +33,9 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title>Verwenden der <code>Zend_Memory</code> Komponente</title>
+            <title>Verwenden der Zend_Memory Komponente</title>
             <para>
-                <code>Zend_Memory::factory()</code> instantiiert das Speichermanager
+                <classname>Zend_Memory::factory()</classname> instantiiert das Speichermanager
                 Objekt mit den definierten Backend Optionen.
             </para>
             <programlisting role="php"><![CDATA[
@@ -61,8 +61,7 @@ echo $loadedFiles[$index1]->value;
 $loadedFiles[$index2]->value = $newValue;
 
 $loadedFiles[$index3]->value[$charIndex] = '_';
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -71,7 +70,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         <title>Theorie der Verwendung</title>
 
         <para>
-            Die <code>Zend_Memory</code> Komponente arbeitet mit den folgenden Konzepten:
+            Die <classname>Zend_Memory</classname> Komponente arbeitet mit den folgenden Konzepten:
             <itemizedlist>
                 <listitem>
                     <para>Memory Manager</para>
@@ -127,8 +126,7 @@ $memObject->value[$index] = '_';
 echo ord($memObject->value[$index1]);
 
 $memObject->value = substr($memObject->value, $start, $length);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <note>
@@ -159,9 +157,8 @@ $memObject->value = substr($memObject->value, $start, $length);
             <title>Verschiebbarer Memory</title>
 
             <para>
-                Verschiebbare Memory Objekte werden transparent geswappt und
-                geladen von und in das Cache Backend durch <code>Zend_Memory</code> wenn das
-                notwendig wird.
+                Verschiebbare Memory Objekte werden transparent geswappt und geladen von und in das
+                Cache Backend durch <classname>Zend_Memory</classname> wenn das notwendig wird.
             </para>
 
             <para>

@@ -18,13 +18,12 @@ $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
 $mail->send();  // use default again
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
     <note>
         <title>Additional transports</title>
         <para>
-            Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+            Additional transports can be written by implementing <classname>Zend_Mail_Transport_Interface</classname>.
         </para>
     </note>
 </sect1>

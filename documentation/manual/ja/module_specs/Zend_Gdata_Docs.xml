@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.gdata.docs">
     <title>Google Documents List Data API の使用法</title>
 
@@ -25,7 +25,7 @@
         <para>
             特定のユーザの Google Documents の一覧を取得するには、docs サービスの
             <code>getDocumentListFeed</code> メソッドを使用します。
-            このサービスは <code>Zend_Gdata_Docs_DocumentListFeed</code>
+            このサービスは <classname>Zend_Gdata_Docs_DocumentListFeed</classname>
             オブジェクトを返します。
             その中には、認証済みユーザに関連付けられたドキュメントの一覧が含まれます。
         </para>
@@ -35,13 +35,12 @@ $service = Zend_Gdata_Docs::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $docs = new Zend_Gdata_Docs($client);
 $feed = $docs->getDocumentListFeed();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-        結果として得られる <code>Zend_Gdata_Docs_DocumentListFeed</code>
+        結果として得られる <classname>Zend_Gdata_Docs_DocumentListFeed</classname>
         オブジェクトが、サーバからの応答を表します。
-        このフィードには <code>Zend_Gdata_Docs_DocumentListEntry</code>
+        このフィードには <classname>Zend_Gdata_Docs_DocumentListEntry</classname>
         オブジェクトの一覧 (<code>$feed->entries</code>) が含まれ、
         それぞれがひとつの Google Document を表します。
         </para>
@@ -104,8 +103,7 @@ function uploadDocument($docs, $html, $originalFileName,
   echo $newDocumentEntry->title."\n";
   if ($html) {echo "</a>\n";}
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.docs.queries">
@@ -133,8 +131,7 @@ function uploadDocument($docs, $html, $originalFileName,
 
             <programlisting role="php"><![CDATA[
 $feed = $docs->getDocumentListFeed(
-    'http://docs.google.com/feeds/documents/private/full/-/document');]]>
-            </programlisting>
+    'http://docs.google.com/feeds/documents/private/full/-/document');]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.docs.listspreadsheets">
@@ -146,15 +143,14 @@ $feed = $docs->getDocumentListFeed(
 
             <programlisting role="php"><![CDATA[
 $feed = $docs->getDocumentListFeed(
-    'http://docs.google.com/feeds/documents/private/full/-/spreadsheet');]]>
-            </programlisting>
+    'http://docs.google.com/feeds/documents/private/full/-/spreadsheet');]]></programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.docs.textquery">
             <title>テキストクエリの実行</title>
             <para>
                 ドキュメントの中身を検索するには、リクエスト内で
-                <code>Zend_Gdata_Docs_Query</code> を使用します。
+                <classname>Zend_Gdata_Docs_Query</classname> を使用します。
                 クエリオブジェクトを使用してクエリ URI を組み立て、
                 検索する単語をパラメータとして渡します。
                 これは、ある文字列を含むドキュメントを一覧から探すクエリの例です。
@@ -162,8 +158,7 @@ $feed = $docs->getDocumentListFeed(
             <programlisting role="php"><![CDATA[
 $docsQuery = new Zend_Gdata_Docs_Query();
 $docsQuery->setQuery($query);
-$feed = $client->getDocumentListFeed($docsQuery);]]>
-            </programlisting>
+$feed = $client->getDocumentListFeed($docsQuery);]]></programlisting>
         </sect3>
 
     </sect2>

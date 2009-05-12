@@ -33,7 +33,7 @@
         <title>Automatic output</title>
 
         <para>
-            <code>Zend_Measure</code> supports outputting of strings automatically.
+            <classname>Zend_Measure</classname> supports outputting of strings automatically.
             <example id="zend.measure.output.auto.example-1">
                 <title>Automatic output</title>
                 <programlisting role="php"><![CDATA[
@@ -44,8 +44,7 @@ $unit = new Zend_Measure_Length($mystring,
                                 $locale);
 
 echo $unit;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -80,8 +79,7 @@ $unit = new Zend_Measure_Length($mystring,
                                 $locale);
 
 echo $unit->getValue();
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -107,8 +105,7 @@ $unit = new Zend_Measure_Weight($mystring,
                                 $locale);
 
 echo $unit->getType();
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 

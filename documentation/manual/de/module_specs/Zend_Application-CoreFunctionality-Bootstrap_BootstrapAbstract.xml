@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15289 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.application.core-functionality.bootstrap-bootstrapabstract">
     <title>Zend_Application_Bootstrap_BootstrapAbstract</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_BootstrapAbstract</code> ist eine abstrakte Klasse die die
-        Basisfunktionalität des normalen Bootstrappings bietet. Sie implementiert sowohl
-        <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>
-        als auch
-        <link linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">Zend_Application_Bootstrap_ResourceBootstrapper</link>.
+        <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname> ist eine abstrakte
+        Klasse welche die Basisfunktionalität des normalen Bootstrappings bietet. Sie implementiert
+        sowohl <link
+            linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>
+        als auch <link
+            linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">Zend_Application_Bootstrap_ResourceBootstrapper</link>.
     </para>
 
     <table id="zend.application.core-functionality.bootstrap-bootstrapabstract.api.table">
@@ -30,21 +31,21 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$application</code>: <emphasis>Benötigt</emphasis>.
-                            Akzeptiert entweder ein <code>Zend_Application</code> oder ein
-                            <code>Zend_Application_Bootstrap_Bootstrapper</code> Objekt als sein
-                            einziges Argument.
+                            Akzeptiert entweder ein <classname>Zend_Application</classname> oder ein
+                            <classname>Zend_Application_Bootstrap_Bootstrapper</classname> Objekt
+                            als sein einziges Argument.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
                         Constructor. Akzeptiert ein einzelnes Argument, welches ein
-                        <code>Zend_Application</code> Objekt oder ein anderes Bootstrap Objekt
-                        sein sollte.
+                        <classname>Zend_Application</classname> Objekt oder ein anderes Bootstrap
+                        Objekt sein sollte.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>Benötigt</emphasis>.
@@ -108,9 +109,11 @@
                 </row>
 
                 <row>
-                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_Bootstrapper
-                            $application)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
+                    <entry><code>setApplication(Zend_Application |
+                            Zend_Application_Bootstrap_Bootstrapper $application)</code></entry>
+                    <entry>
+                        <classname>Zend_Application_Bootstrap_BootstrapAbstract</classname>
+                    </entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$application</code>: <emphasis>Benötigt</emphasis>.
@@ -123,7 +126,10 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry>
+                        <classname>Zend_Application |
+                        Zend_Application_Bootstrap_Bootstrapper</classname>
+                    </entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt das Anwendungs/Bootstrap Objekt das über den Konstruktor übergeben
@@ -149,6 +155,68 @@
                         Empfängt eine Liste von vorhandenen Ressourcen Initialisierungsnamen die
                         in der Klasse definiert sind. Das kann von der Implementierung abhängig
                         sein.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>getContainer()</code></entry>
+                    <entry><code>object</code></entry>
+                    <entry>N/A</entry>
+                    <entry><para>
+                        Empfängt den Container der die Ressourcen speichert. Wenn aktuell kein
+                        Container registriert ist, wird eine Instanz von <link
+                            linkend="zend.registry">Zend_Registry</link> registriert bevor diese
+                        retourniert wird.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>setContainer($container)</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$container</code>, <emphasis>Benötigt</emphasis>. Ein Objekt
+                            in dem Ressourcen gespeichert werden.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        Bietet einen Container in dem Ressourcen gespeichert werden. Wenn eine
+                        Ressourcen Methode oder ein Plugin einen Wert zurückgibt, wird dieser
+                        im Container gespeichert um später empfangen werden zu können.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>hasResource($name)</code></entry>
+                    <entry><code>boolean</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$name</code>, <emphasis>Benötigt</emphasis>. Name der Ressource
+                            die zu prüfen ist.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        Wenn eine Ressourcen-Methode oder ein Plugin einen Wert zurückgibt, wird
+                        dieser im Ressourcen Container gespeichert (siehe
+                        <code>getContainer()</code> und <code>setContainer()</code>). Diese
+                        Methode zeigt ob ein Wert für dies Ressouce gesetzt wurde oder nicht.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>getResource($name)</code></entry>
+                    <entry><code>mixed</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$name</code>, <emphasis>Benötigt</emphasis>.
+                            Name der Ressource die geholt werden soll.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        Wenn eine Ressourcen-Methode oder ein Plugin einen Wert zurückgibt, wird
+                        dieser im Ressourcen Container gespeichert (siehe
+                        <code>getContainer()</code> und <code>setContainer()</code>). Diese
+                        Methode gibt die Ressource vom Container zurück.
                     </para></entry>
                 </row>
 

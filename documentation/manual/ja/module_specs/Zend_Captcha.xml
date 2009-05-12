@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.captcha.introduction">
     <title>導入</title>
 
@@ -19,8 +19,8 @@
         Captcha にはさまざまな方式があります。
         なぞなぞを使ったりつぶれたフォントで表示したり、
         あるいは複数の画像の中から関連するものを選ばせたりといったものです。
-        <code>Zend_Captcha</code> はさまざまなバックエンドを提供し、
-        単体でも <code>Zend_Form</code>
+        <classname>Zend_Captcha</classname> はさまざまなバックエンドを提供し、
+        単体でも <classname>Zend_Form</classname>
         と組み合わせても使用できるようにすることを目指しています。
     </para>
 </sect1>

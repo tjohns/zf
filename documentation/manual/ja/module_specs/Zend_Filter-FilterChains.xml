@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.filter.filter_chains">
 
     <title>フィルタチェイン</title>
@@ -9,7 +9,7 @@
         ひとつの値に対して、複数のフィルタを指定した順に適用しなければならないことがよくあります。
         たとえば、ログインフォームで受け付けるユーザ名を
         小文字の英字のみに限定する場合などです。
-        <code>Zend_Filter</code> は、複数のフィルタを連結する機能を提供しています。
+        <classname>Zend_Filter</classname> は、複数のフィルタを連結する機能を提供しています。
         以下のコードで、二つのフィルタをユーザ名に対して適用する方法を説明します。
 
         <programlisting role="php"><![CDATA[
@@ -20,17 +20,16 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
 
 // ユーザ名をフィルタリングします
 $username = $filterChain->filter($_POST['username']);
-]]>
-        </programlisting>
+]]></programlisting>
 
-        フィルタは、<code>Zend_Filter</code> に追加した順に適用されます。
+        フィルタは、<classname>Zend_Filter</classname> に追加した順に適用されます。
         上の例では、まずユーザ名から非英字を除去したあとで、
         大文字を小文字に変換します。
 
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> を実装したオブジェクトなら何でも、
+        <classname>Zend_Filter_Interface</classname> を実装したオブジェクトなら何でも、
         フィルタチェインに追加できます。
     </para>
 

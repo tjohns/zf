@@ -4,7 +4,7 @@
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> provides a drop-in
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> provides a drop-in
         plugin for handling exceptions thrown by your application, including
         those resulting from missing controllers or actions; it is an
         alternative to the methods listed in the <link
@@ -34,7 +34,7 @@
     </para>
 
     <para>
-        By default, <code>Zend_Controller_Plugin_ErrorHandler</code> will
+        By default, <classname>Zend_Controller_Plugin_ErrorHandler</classname> will
         forward to <code>ErrorController::errorAction()</code> in the default
         module. You may set alternate values for these by using the various
         accessors available to the plugin:
@@ -77,7 +77,7 @@
     </para>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> registers a
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> registers a
         <code>postDispatch()</code> hook and checks for exceptions registered in
         <link linkend="zend.controller.response">the response object</link>. If
         any are found, it attempts to forward to the registered error handler
@@ -104,7 +104,7 @@
         <para>
             Exceptions captured are logged in an object registered in the
             request. To retrieve it, use
-            <code>Zend_Controller_Action::_getParam('error_handler')</code>:
+            <classname>Zend_Controller_Action::_getParam('error_handler')</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -115,8 +115,7 @@ class ErrorController extends Zend_Controller_Action
         $errors = $this->_getParam('error_handler');
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Once you have the error object, you can get the type via
@@ -126,21 +125,21 @@ class ErrorController extends Zend_Controller_Action
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</classname>,
                     indicating the controller was not found.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</classname>,
                     indicating the requested action was not found.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</classname>,
                     indicating other exceptions.
                 </para>
             </listitem>
@@ -174,8 +173,7 @@ class ErrorController extends Zend_Controller_Action
         }
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Finally, you can retrieve the exception that triggered the error
@@ -187,7 +185,6 @@ class ErrorController extends Zend_Controller_Action
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
-
 
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -216,8 +213,7 @@ public function errorAction()
                 break;
         }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
@@ -238,8 +234,7 @@ public function errorAction()
 
         <programlisting role="php"><![CDATA[
 $this->getResponse()->clearBody();
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
@@ -250,8 +245,7 @@ $this->getResponse()->clearBody();
             <programlisting role="php"><![CDATA[
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
@@ -263,8 +257,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'controller' => 'static',
     'action'     => 'error'
 )));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
@@ -277,8 +270,7 @@ $plugin->setErrorHandlerModule('mystuff')
 
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin($plugin);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect4>
 
@@ -323,8 +315,7 @@ EOH;
         $this->view->content = $content;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
     </sect4>
 </sect3>
 <!--

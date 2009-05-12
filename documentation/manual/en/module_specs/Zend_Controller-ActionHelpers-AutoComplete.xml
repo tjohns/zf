@@ -42,8 +42,7 @@ class FooController extends Zend_Controller_Action
                                   ->prepareAutoCompletion($data);
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     <para>
         By default, autocompletion does the following:
@@ -135,8 +134,7 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // within a controller action:
 $this->_helper->autoCompleteDojo($data);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
             <title>AutoCompletion with Dojo Using Zend MVC</title>
@@ -169,8 +167,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
         return this.inherited("fetch", arguments);
     }
 });
-]]>
-</programlisting>
+]]></programlisting>
 
             <para>
                 This class is simply an extension of Dojo's own QueryReadStore,
@@ -212,8 +209,7 @@ class TestController extends Zend_Controller_Action
         return $this->_form;
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Here, we simply create a form with 'test' and 'go' methods. The
@@ -265,8 +261,7 @@ class TestController extends Zend_Controller_Action
         $this->_helper->autoCompleteDojo($matches);
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 In our <code>autocompleteAction()</code> we do a number of
@@ -320,8 +315,7 @@ dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
 <?php $this->headScript()->captureEnd() ?>
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 Note the calls to view helpers such as headStyle and headScript;

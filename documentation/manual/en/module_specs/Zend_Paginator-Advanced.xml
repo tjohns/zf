@@ -14,7 +14,7 @@
 
         <para>
             To do so, you must implement
-            <code>Zend_Paginator_Adapter_Interface</code>. There are two
+            <classname>Zend_Paginator_Adapter_Interface</classname>. There are two
             methods required to do this:
         </para>
 
@@ -38,9 +38,9 @@
             If you've ever used the SPL interface
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>,
             you're familiar with <code>count()</code>. As used with
-            <code>Zend_Paginator</code>, this is the total number of items
+            <classname>Zend_Paginator</classname>, this is the total number of items
             in the data collection.
-            Additionally, the <code>Zend_Paginator</code> instance provides a method
+            Additionally, the <classname>Zend_Paginator</classname> instance provides a method
             <code>countAllItems()</code> that proxies to the adapter
             <code>count()</code> method.
         </para>
@@ -55,13 +55,12 @@
         <para>
             <programlisting role="php"><![CDATA[
 return array_slice($this->_array, $offset, $itemCountPerPage);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
             Take a look at the packaged adapters (all of which implement the
-            <code>Zend_Paginator_Adapter_Interface</code>) for ideas of how you
+            <classname>Zend_Paginator_Adapter_Interface</classname>) for ideas of how you
             might go about implementing your own.
         </para>
     </sect2>
@@ -71,15 +70,14 @@ return array_slice($this->_array, $offset, $itemCountPerPage);
 
         <para>
             Creating your own scrolling style requires that you implement
-            <code>Zend_Paginator_ScrollingStyle_Interface</code>, which defines
+            <classname>Zend_Paginator_ScrollingStyle_Interface</classname>, which defines
             a single method, <code>getPages()</code>. Specifically,
         </para>
 
         <para>
             <programlisting role="php"><![CDATA[
 public function getPages(Zend_Paginator $paginator, $pageRange = null);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -90,7 +88,7 @@ public function getPages(Zend_Paginator $paginator, $pageRange = null);
 
         <para>
             Unless it extends another scrolling style (see
-            <code>Zend_Paginator_ScrollingStyle_Elastic</code> for an example),
+            <classname>Zend_Paginator_ScrollingStyle_Elastic</classname> for an example),
             your custom scrolling style will inevitably end with something
             similar to the following line of code:
         </para>
@@ -98,8 +96,7 @@ public function getPages(Zend_Paginator $paginator, $pageRange = null);
         <para>
             <programlisting role="php"><![CDATA[
 return $paginator->getPagesInRange($lowerBound, $upperBound);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -110,7 +107,7 @@ return $paginator->getPagesInRange($lowerBound, $upperBound);
 
         <para>
             When you're ready to use your new scrolling style, you'll need to
-            tell <code>Zend_Paginator</code> what directory to look in. To do
+            tell <classname>Zend_Paginator</classname> what directory to look in. To do
             that, do the following:
         </para>
 
@@ -119,8 +116,7 @@ return $paginator->getPagesInRange($lowerBound, $upperBound);
 $prefix = 'My_Paginator_ScrollingStyle';
 $path   = 'My/Paginator/ScrollingStyle/';
 Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 
@@ -128,10 +124,10 @@ Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
         <title>Caching features</title>
 
         <para>
-            <code>Zend_Paginator</code> can be told to cache the data it has already
+            <classname>Zend_Paginator</classname> can be told to cache the data it has already
             passed on, preventing the adapter from fetching them each time they are used.
             To tell paginator to automatically cache the adapter's data, just pass to
-            its <code>setCache()</code> method a <code>Zend_Cache_Core</code> instance.
+            its <code>setCache()</code> method a <classname>Zend_Cache_Core</classname> instance.
         </para>
 
         <para>
@@ -141,12 +137,11 @@ $fO = array('lifetime' => 3600, 'automatic_serialization' => true);
 $bO = array('cache_dir'=>'/tmp');
 $cache = Zend_cache::factory('Core', 'File', $fO, $bO);
 Zend_Paginator::setCache($cache);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
-            As far as <code>Zend_Paginator</code> has got a <code>Zend_Cache_Core</code> instance, data will
+            As far as <classname>Zend_Paginator</classname> has got a <classname>Zend_Cache_Core</classname> instance, data will
             be cached. Sometimes you would like not to cache data even if you already passed
             a cache instance. You should then use <code>setCacheEnable()</code> for that.
         </para>
@@ -159,8 +154,7 @@ Zend_Paginator::setCache($cache);
 // ... later on the script
 $paginator->setCacheEnable(false);
 // cache is now disabled
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -185,8 +179,7 @@ $paginator->clearPageItemCache(3);
 
 // clear all the cache data
 $paginator->clearPageItemCache();
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -203,8 +196,7 @@ $items = $paginator->getCurrentItems();
 
 // all the cache data will be flushed:
 $paginator->setItemCountPerPage(2);
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
 
         <para>
@@ -224,8 +216,7 @@ $otherItems = $paginator->getItemsPerPage(4);
 
 // see the cached items as a two-dimension array:
 var_dump($paginator->getPageItemCache());
-]]>
-            </programlisting>
+]]></programlisting>
         </para>
     </sect2>
 </sect1>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15207 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.console.getopt.configuration">
-    <title>Konfigurieren von <code>Zend_Console_Getopt</code></title>
+    <title>Konfigurieren von Zend_Console_Getopt</title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Regeln für das Hinzufügen von Optionen</title>
         <para>
             Man kann mehr Optionsregeln hinzufügen, zusätzlich zu denen die
-            schon im <code>Zend_Console_Getopt</code> Constructor definiert wurden,
+            schon im <classname>Zend_Console_Getopt</classname> Constructor definiert wurden,
             durch Verwendung der <code>addRules()</code> Methode. Das Argument für
             <code>addRules()</code> ist das gleiche wie das erste Argument für den
             Constructor der Klasse. Es ist entweder eine Zeichenkette im Format der
@@ -27,15 +27,14 @@ $opts->addRules(
     'verbose|v' => 'Druckt zusätzliche Ausgaben'
   )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Das obige Beispiel zeigt das hinzufügen der "<code>--verbose</code>"
             Option mit einem Alias von "<code>-v</code>" zu einem Set von Optionen
             welche bereits im Aufruf durch den Constructor definiert wurden.
             Man kann kurze Format Optionen und lange Format Optionen in der
-            gleichen Instanz von <code>Zend_Console_Getopt</code> vermischen.
+            gleichen Instanz von <classname>Zend_Console_Getopt</classname> vermischen.
         </para>
     </sect2>
 
@@ -60,8 +59,7 @@ $opts->setHelp(
         'p' => 'Pfirsich Option, mit optionalem Zeichenketten Parameter'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Wenn Optionen mit Aliasen definiert wurden, kann jeder dieser Aliase
@@ -85,9 +83,8 @@ $opts->setHelp(
             Aliase sind noch immer in Verwendung.
         </para>
         <para>
-            Ein Alias kann nur einmal definiert werden. Wenn versucht wird einen
-            Alias nochmals zu definieren wird eine <code>Zend_Console_Getopt_Exception</code>
-            geworfen.
+            Ein Alias kann nur einmal definiert werden. Wenn versucht wird einen Alias nochmals zu
+            definieren wird eine <classname>Zend_Console_Getopt_Exception</classname> geworfen.
         </para>
         <example id="zend.console.getopt.configuration.addaliases.example">
             <title>Verwenden von setAliases()</title>
@@ -100,8 +97,7 @@ $opts->setAliases(
         'p' => 'pfirsich'
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Im obigen Beispiel sind, nach Definition der Aliase, "<code>-a</code>",
@@ -118,7 +114,7 @@ $opts->setAliases(
     <sect2 id="zend.console.getopt.configuration.addargs">
         <title>Argument Listen hinzufügen</title>
         <para>
-            Standardmäßig verwendet <code>Zend_Console_Getopt</code>
+            Standardmäßig verwendet <classname>Zend_Console_Getopt</classname>
             <code>$_SERVER['argv']</code> für die Analyse des Arrays von
             Kommandozeilen Argumenten. Alternativ kann das Array mit Argumenten
             als zweites Argument dem Constructor angegeben werden. Letztendlich
@@ -141,15 +137,14 @@ $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Ein neues Array als Ersatz für die bestehenden Argumente
 $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.console.getopt.configuration.config">
         <title>Konfiguration hinzufügen</title>
         <para>
-            Der dritte Parameter des <code>Zend_Console_Getopt</code> Constructors
+            Der dritte Parameter des <classname>Zend_Console_Getopt</classname> Constructors
             ist ein Array von Optionen zur Konfiguration welche das Verhalten der
             zurückgegebenen Objektinstanz beeinflusst. Es können auch durch Verwendung
             der <code>setOptions()</code> Optionen für die Konfiguration definiert werden,
@@ -159,21 +154,22 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         <note>
             <title>Klarstellung des Ausdrucks "Option"</title>
             <para>
-                Der Ausdruck "Option" wird für die Konfiguration der <code>Zend_Console_Getopt</code>
-                Klasse verwendet um der Terminologie zu folgen die überall im Zend Framework benutzt
-                wird. Das ist nicht das selbe wie die Kommandozeilen Optionen die von der
-                <code>Zend_Console_Getopt</code> Klasse analysiert werden.
+                Der Ausdruck "Option" wird für die Konfiguration der
+                <classname>Zend_Console_Getopt</classname> Klasse verwendet um der Terminologie zu
+                folgen die überall im Zend Framework benutzt wird. Das ist nicht das selbe wie die
+                Kommandozeilen Optionen die von der <classname>Zend_Console_Getopt</classname>
+                Klasse analysiert werden.
             </para>
         </note>
         <para>
             Die aktuell unterstützten Optionen sind durch Konstanten in der Klasse definiert.
-            Diese Optionen, bzw deren konstanter Bezeichner (mit wörtlichem Wert in Großschreibweise)
-            sind anbei gelistet:
+            Diese Optionen, bzw deren konstanter Bezeichner (mit wörtlichem Wert in
+            Großschreibweise) sind anbei gelistet:
         </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_DASHDASH</code> ("dashDash"),
+                    <classname>Zend_Console_Getopt::CONFIG_DASHDASH</classname> ("dashDash"),
                     wenn aktiviert, ermöglicht dieses spezielle Flag "<code>--</code>"
                     das Ende von Flags zu signieren. Kommendozeilen Argumente welche
                     dem Doppel-Bindestrich Zeichen folgen werden nicht als Option
@@ -183,7 +179,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"),
+                    <classname>Zend_Console_Getopt::CONFIG_IGNORECASE</classname> ("ignoreCase"),
                     wenn aktiviert, werden Flags als Aliase voneinander betrachtet
                     wenn Sie sich nur in der Groß-/Kleinschreibung unterscheiden.
                     Das bedeutet das "<code>-a</code>" und "<code>-A</code>" als
@@ -193,13 +189,12 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code>
-                    ("ruleMode") kann die Werte <code>Zend_Console_Getopt::MODE_ZEND</code>
-                    ("zend") und <code>Zend_Console_Getopt::MODE_GNU</code>
-                    ("gnu") haben. Diese Option sollte nicht verwendet werden ausser
-                    die Klasse wird erweiter um zusätzliche Syntax Formen zu
-                    unterstützen. Die zwei Modi die in der Basisklasse
-                    <code>Zend_Console_Getopt</code> unterstützt werden sind
+                    <classname>Zend_Console_Getopt::CONFIG_RULEMODE</classname> ("ruleMode") kann
+                    die Werte <classname>Zend_Console_Getopt::MODE_ZEND</classname> ("zend") und
+                    <classname>Zend_Console_Getopt::MODE_GNU</classname> ("gnu") haben. Diese Option
+                    sollte nicht verwendet werden ausser die Klasse wird erweiter um zusätzliche
+                    Syntax Formen zu unterstützen. Die zwei Modi die in der Basisklasse
+                    <classname>Zend_Console_Getopt</classname> unterstützt werden sind
                     eindeutig. Wenn die Angabe eine Zeichenkette ist, nimmt die Klasse
                     <code>MODE_GNU</code> an, sonst wird <code>MODE_ZEND</code> angenommen.
                     Aber wenn die Klasse erweitert wird, und zusätzliche Syntaxformen hinzugefügt
@@ -220,8 +215,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             Das Argument für die <code>setOptions()</code> Methode ist ein
@@ -242,8 +236,7 @@ $opts->setOptions(
         'dashDash'   => false
     )
 );
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15103 -->
 <sect1 id="zend.session.introduction">
 
     <title>導入</title>
@@ -17,7 +17,7 @@
         を使用してサーバ側 (状態を保持するデータ)
         とクライアント側 (特定のユーザエージェント。たとえばウェブブラウザ)
         の論理的な一対一の関係を表します。
-        <code>Zend_Session</code> はセッションデータの管理と保持を行い、クッキーのデータを論理的に補完し、
+        <classname>Zend_Session</classname> はセッションデータの管理と保持を行い、クッキーのデータを論理的に補完し、
         同一クライアントからの複数ページにわたるリクエストを扱います。
         クッキーのデータと異なり、セッションデータはクライアント側には保存されません。
         セッションデータがクライアントと共有されるのは、
@@ -25,8 +25,8 @@
         クライアントからのリクエストへの応答として使用できるようになった場合のみです。
         このコンポーネントのドキュメントにおいて「セッションデータ」という用語は、
         <ulink url="http://www.php.net/manual/ja/reserved.variables.php#reserved.variables.session"><code>$_SESSION</code></ulink>
-        に保存されたり <code>Zend_Session</code> で管理されたり、
-        独立して <code>Zend_Session_Namespace</code> のアクセス用オブジェクトで管理されたりする
+        に保存されたり <classname>Zend_Session</classname> で管理されたり、
+        独立して <classname>Zend_Session_Namespace</classname> のアクセス用オブジェクトで管理されたりする
         サーバ側のデータをさすものとします。
         <emphasis role="bold">セッション名前空間</emphasis>
         により、セッションデータに対して昔ながらの
@@ -37,18 +37,18 @@
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> のインスタンスは、<code>$_SESSION</code>
+        <classname>Zend_Session_Namespace</classname> のインスタンスは、<code>$_SESSION</code>
         の一部を切り取って名前空間つきでアクセスするためのオブジェクトとなります。
-        <code>Zend_Session</code> コンポーネントは、PHP の既存の
+        <classname>Zend_Session</classname> コンポーネントは、PHP の既存の
         ext/session をラップして管理用インターフェイスを提供します。また、
-        <code>Zend_Session_Namespace</code> のセッション名前空間を持続させるための API も提供します。
-        <code>Zend_Session_Namespace</code> は、標準化されたオブジェクト指向のインターフェイスで
+        <classname>Zend_Session_Namespace</classname> のセッション名前空間を持続させるための API も提供します。
+        <classname>Zend_Session_Namespace</classname> は、標準化されたオブジェクト指向のインターフェイスで
         名前空間を扱います。これは、PHP 標準のセッションの仕組みを使用しています。
         匿名セッションおよび認証済み ("ログイン") セッション名前空間の両方をサポートしています。
-        Zend Framework の認証コンポーネントである <code>Zend_Auth</code> は、
-        <code>Zend_Session_Namespace</code> を使用して "Zend_Auth"
+        Zend Framework の認証コンポーネントである <classname>Zend_Auth</classname> は、
+        <classname>Zend_Session_Namespace</classname> を使用して "Zend_Auth"
         名前空間に認証済みユーザの情報を保存します。
-        <code>Zend_Session_Core</code> が内部で使用しているのは通常の PHP
+        <classname>Zend_Session_Core</classname> が内部で使用しているのは通常の PHP
         ext/session 関数なので、おなじみのオプションや設定が適用されます
         (<ulink url="http://www.php.net/session">http://www.php.net/session</ulink>
         を参照ください)。これは、オブジェクト指向で扱えたりデフォルトをサポートしていたりという点で

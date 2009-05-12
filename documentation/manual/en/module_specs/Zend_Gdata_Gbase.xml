@@ -31,7 +31,7 @@
         </para>
         <para>
             Before any transactions can occur, this connection needs to be made. Creating a connection to the base servers involves two steps: creating an HTTP client and binding a
-            <code>Zend_Gdata_Gbase</code> service instance to that client.
+            <classname>Zend_Gdata_Gbase</classname> service instance to that client.
         </para>
         <sect3 id="zend.gdata.gbase.connect.authentication">
             <title>Authentication</title>
@@ -53,7 +53,7 @@
                 </listitem>
             </itemizedlist>
             <para>
-                The <code>Zend_Gdata</code>
+                The <classname>Zend_Gdata</classname>
                 library provides support for all three authentication schemes. The rest of this chapter will assume that you are familiar the authentication schemes available and how to create an appropriate authenticated connection. For more information, please see section <xref linkend="zend.gdata.introduction.authentication" />.
                 or the
                 <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>.
@@ -63,16 +63,16 @@
             <title>Create A Service Instance</title>
             <para>
                 In order to interact with Google Base, this library provides the
-                <code>Zend_Gdata_Gbase</code>
+                <classname>Zend_Gdata_Gbase</classname>
                 service class. This class provides a common interface to the Google Data and Atom Publishing Protocol models and assists in marshaling requests to and from the base servers.
             </para>
             <para>
                 Once deciding on an authentication scheme, the next step is to create an instance of
-                <code>Zend_Gdata_Gbase</code>
+                <classname>Zend_Gdata_Gbase</classname>
                 . This class takes in an instance of
-                <code>Zend_Http_Client</code>
+                <classname>Zend_Http_Client</classname>
                 as a single argument. This provides an interface for AuthSub and ClientAuth authentication, as both of these creation of a special authenticated HTTP client. If no arguments are provided, an unauthenticated instance of
-                <code>Zend_Http_Client</code>
+                <classname>Zend_Http_Client</classname>
                 will be automatically created.
             </para>
             <para>
@@ -89,8 +89,7 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Create an instance of the Base service
 $service = new Zend_Gdata_Gbase($client);
-]]>
-            </programlisting>
+]]></programlisting>
 <para>A Base service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
 <programlisting role="php"><![CDATA[
 
@@ -180,14 +179,12 @@ session_start();
 // Create an instance of the Base service, redirecting the user
 // to the AuthSub server if necessary.
 $service = new Zend_Gdata_Gbase(getAuthSubHttpClient());
-]]>
- </programlisting>
+]]></programlisting>
 <para>Finally, an unauthenticated server can be created for use with snippets feeds:</para>
 <programlisting role="php"><![CDATA[
 // Create an instance of the Base service using an unauthenticated HTTP client
 $service = new Zend_Gdata_Gbase();
-]]>
- </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.gbase.retrieve">
@@ -201,7 +198,7 @@ $service = new Zend_Gdata_Gbase();
                 You can send a structured query to retrieve items from your own customer items feed or from the public snippets feed.
             </para>
             <para>
-                When retrieving items using the Base API, specially constructed query URLs are used to describe what events should be returned. The  <code>Zend_Gdata_Gbase_ItemQuery</code> and <code>Zend_Gdata_Gbase_SnippetQuery</code> classes simplify this task by automatically constructing a query URL based on provided parameters.
+                When retrieving items using the Base API, specially constructed query URLs are used to describe what events should be returned. The  <classname>Zend_Gdata_Gbase_ItemQuery</classname> and <classname>Zend_Gdata_Gbase_SnippetQuery</classname> classes simplify this task by automatically constructing a query URL based on provided parameters.
             </para>
             <sect4 id="zend.gdata.gbase.retrieve.query.customeritems">
                 <title>Query Customer Items Feed</title>
@@ -216,8 +213,7 @@ $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
 $feed = $service->getGbaseItemFeed($query);
-]]>
-                </programlisting>
+]]></programlisting>
                 <para>
                     A full list of these parameters is available at the <ulink url="http://code.google.com/apis/base/items-feed.html#QueParameters">Query parameters section</ulink> of the Customer Items Feed documentation.
                 </para>
@@ -235,8 +231,7 @@ $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
 $feed = $service->getGbaseSnippetFeed($query);
-]]>
-                </programlisting>
+]]></programlisting>
                 <para>
                     A full list of these parameters is available at the <ulink url="http://code.google.com/apis/base/snippets-feed.html#Parameters">Query parameters section</ulink> of the Snippets Feed documentation.
                 </para>
@@ -259,8 +254,7 @@ foreach ($feed->entries as $entry) {
     echo "Attribute " . $attr->name . " : " . $attr->text . "<br>";
   }
 }
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Or, you can look for specific attribute name and iterate through the results that match:
             </para>
@@ -272,8 +266,7 @@ foreach ($feed->entries as $entry) {
     echo "Main ingredient: " . $attr->text . "<br>";
   }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.gbase.crud">
@@ -321,8 +314,7 @@ $newEntry->addGbaseAttribute("payment_accepted", "Google Checkout", "text");
 
 $dryRun = true;
 $createdEntry = $service->insertGbaseItem($newEntry, $dryRun);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
         <sect3 id="zend.gdata.gbase.crud.modify">
             <title>Modify an Item</title>
@@ -371,10 +363,9 @@ $entry->save($dryRun);
 // Or, save the changes by calling updateGbaseItem() on the service object
 // $dryRun = true;
 // $service->updateGbaseItem($entry, $dryRun);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
-                After making the changes, either invoke <code>save($dryRun)</code> method on the <code>Zend_Gdata_Gbase_ItemEntry</code> object or call <code>updateGbaseItem($entry, $dryRun)</code> method on the <code>Zend_Gdata_Gbase</code> object to save the changes.
+                After making the changes, either invoke <code>save($dryRun)</code> method on the <classname>Zend_Gdata_Gbase_ItemEntry</classname> object or call <code>updateGbaseItem($entry, $dryRun)</code> method on the <classname>Zend_Gdata_Gbase</classname> object to save the changes.
             </para>
         </sect3>
         <sect3 id="zend.gdata.gbase.crud.delete">
@@ -385,16 +376,14 @@ $entry->save($dryRun);
             <programlisting role="php"><![CDATA[
 $dryRun = false;
 $service->deleteGbaseItem($entry, $dryRun);
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
-                Alternatively, you can invoke <code>delete()</code> on the <code>Zend_Gdata_Gbase_ItemEntry</code> object:
+                Alternatively, you can invoke <code>delete()</code> on the <classname>Zend_Gdata_Gbase_ItemEntry</classname> object:
             </para>
             <programlisting role="php"><![CDATA[
 $dryRun = false;
 $entry->delete($dryRun);
-]]>
-            </programlisting>
+]]></programlisting>
         </sect3>
     </sect2>
 </sect1>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.console.getopt.fetching">
     <title>オプションおよび引数の取得</title>
     <para>
-        <code>Zend_Console_Getopt</code> オブジェクトでオプションを宣言し、
+        <classname>Zend_Console_Getopt</classname> オブジェクトでオプションを宣言し、
         コマンドラインあるいは配列から引数を受け取ったら、
         このオブジェクトを使用して、ユーザがプログラムを起動した際に
         指定したオプションを取得することができます。
@@ -12,7 +12,7 @@
         オプションの名前を指定して問い合わせることができます。
     </para>
     <para>
-        実際にデータをパースするのは、<code>Zend_Console_Getopt</code>
+        実際にデータをパースするのは、<classname>Zend_Console_Getopt</classname>
         に対する最初の問い合わせを行ったときです。
         つまり、パースを行う前にいくつかのメソッドで
         オプションや引数、ヘルプ文字列や設定項目を変更することができるということです。
@@ -22,7 +22,7 @@
         <title>Getopt の例外処理</title>
         <para>
             ユーザがコマンドラインで無効な引数を指定すると、
-            パース関数は <code>Zend_Console_Getopt_Exception</code>
+            パース関数は <classname>Zend_Console_Getopt_Exception</classname>
             をスローします。この例外を、アプリケーションのコードで処理する必要があります。
             <code>parse()</code> メソッドを使用して、オブジェクトに引数をパースさせます。
             <code>try</code> ブロック内で <code>parse()</code>
@@ -42,8 +42,7 @@ try {
     echo $e->getUsageMessage();
     exit;
 }
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             例外が発生するのは、次のような場合です。
@@ -85,8 +84,7 @@ try {
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
 $p_parameter = $opts->getOption('p');
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             あるいは、マジックメソッド <code>__get()</code> を使用して、
@@ -101,8 +99,7 @@ if (isset($opts->b)) {
     echo "オプション b を取得しました。\n";
 }
 $p_parameter = $opts->p; // 設定されていない場合は null となります
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
             オプションにエイリアスが指定されている場合は、
@@ -168,11 +165,10 @@ $p_parameter = $opts->p; // 設定されていない場合は null となりま�
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
 $args = $opts->getRemainingArgs(); // array('filename') を返します
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> は、GNU
+            <classname>Zend_Console_Getopt</classname> は、GNU
             の慣習である「ダッシュふたつだけの引数があったら、
             オプションはそこで終わりとみなす」をサポートしています。
             その後に続く引数は、非オプション引数として扱わなければなりません。

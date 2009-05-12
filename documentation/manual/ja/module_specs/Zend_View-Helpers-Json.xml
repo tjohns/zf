@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15343 -->
 <sect3 id="zend.view.helpers.initial.json">
     <title>JSON ヘルパー</title>
 
@@ -18,8 +18,7 @@
 
     <programlisting role="text"><![CDATA[
 Content-Type: application/json
-]]>
-</programlisting>
+]]></programlisting>
 
     <para>
         たいていの AJAX ライブラリは、
@@ -32,8 +31,49 @@ Content-Type: application/json
 
     <programlisting role="php"><![CDATA[
 <?php echo $this->json($this->data) ?>
-]]>
-    </programlisting>
+]]></programlisting>
+
+    <note>
+        <title>レイアウトの維持、およびZend_Json_Expr によるエンコードの有効化</title>
+
+        <para>
+            JSON ヘルパーの各メソッドには、オプションで 2 番目の引数を指定することができます。
+            この 2 番目の引数は、レイアウト機能の有効/無効を指定する boolean フラグか
+            あるいは <classname>Zend_Json::encode()</classname>
+            に渡して内部的なデータのエンコードに使用するオプションの配列となります。
+        </para>
+
+        <para>
+            レイアウトを維持するには、2 番目のパラメータを
+            <code>true</code> としなければなりません。
+            2 番目のパラメータを配列ににする場合にレイアウトを維持するには、配列に
+            <code>keepLayouts</code> というキーを含め、その値を
+            <code>true</code> にします。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// 2 番目の引数に true を指定するとレイアウトが有効になります
+echo $this->json($this->data, true);
+
+// あるいは、キー "keepLayouts" に true を指定します
+echo $this->json($this->data, array('keepLayouts' => true));
+]]></programlisting>
+
+        <para>
+            <classname>Zend_Json::encode()</classname> は、ネイティブ JSON 式を
+            <classname>Zend_Json_Expr</classname> オブジェクトを使用してエンコードすることができます。
+            このオプションはデフォルトでは無効になっています。
+            有効にするには、<code>enableJsonExprFinder</code>
+            オプションに <code>true</code> を設定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?php echo $this->json($this->data, array(
+    'enableJsonExprFinder' => true, 
+    'keepLayouts'          => true,
+)) ?>
+]]></programlisting>
+    </note>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:

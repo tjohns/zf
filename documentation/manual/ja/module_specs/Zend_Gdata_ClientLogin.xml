@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15156 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>ClientLogin による認証</title>
 
@@ -36,9 +36,9 @@
 
         <para>
             ClientLogin を使用した認証済みの Http クライアントを作成するには、
-            静的関数 <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
+            静的関数 <classname>Zend_Gdata_ClientLogin::getHttpClient()</classname>
             をコールし、Google アカウントの認証情報をプレーンテキストで渡します。
-            この関数の返り値は、<code>Zend_Http_Client</code> クラスのオブジェクトとなります。
+            この関数の返り値は、<classname>Zend_Http_Client</classname> クラスのオブジェクトとなります。
         </para>
 
         <para>
@@ -49,11 +49,11 @@
         </para>
 
         <para>
-            オプションの四番目のパラメータには <code>Zend_Http_Client</code>
+            オプションの四番目のパラメータには <classname>Zend_Http_Client</classname>
             のインスタンスを指定できます。これによって、
             たとえばプロキシサーバなどのクライアント設定を行うことができます。
             このパラメータに <code>null</code> を渡すと、
-            汎用的な <code>Zend_Http_Client</code> オブジェクトが作成されます。
+            汎用的な <classname>Zend_Http_Client</classname> オブジェクトが作成されます。
         </para>
 
         <para>
@@ -80,7 +80,7 @@
         <para>
             以下の例は、PHP のウェブアプリケーションのコードです。
             Google Calendar サービスに対する認証を行い、
-            認証済みの <code>Zend_Http_Client</code> を使用して <code>Zend_Gdata</code>
+            認証済みの <classname>Zend_Http_Client</classname> を使用して <classname>Zend_Gdata</classname>
             クライアントオブジェクトを作成します。
         </para>
 
@@ -98,8 +98,7 @@ try {
 }
 
 $cal = new Zend_Gdata_Calendar($client);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

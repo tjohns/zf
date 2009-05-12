@@ -4,7 +4,7 @@
     <title>Reading Mail Messages</title>
 
     <para>
-        <code>Zend_Mail</code> can read mail messages from several local or remote mail storages. All of them have the
+        <classname>Zend_Mail</classname> can read mail messages from several local or remote mail storages. All of them have the
         same basic API to count and fetch messages and some of them implement additional interfaces for not so common
         features. For a feature overview of the implemented storages see the following table.
     </para>
@@ -87,8 +87,7 @@ echo $mail->countMessages() . " messages found\n";
 foreach ($mail as $message) {
     echo "Mail from '{$message->from}': {$message->subject}\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-open-local">
@@ -99,24 +98,22 @@ foreach ($mail as $message) {
         </para>
         <para>
             If you want to read from a Mbox file you only need to give the filename to the constructor of
-            <code>Zend_Mail_Storage_Mbox</code>:
+            <classname>Zend_Mail_Storage_Mbox</classname>:
         </para>
 
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail_Storage_Mbox(array('filename' =>
                                              '/home/test/mail/inbox'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>Maildir is very similar but needs a dirname:</para>
 
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail_Storage_Maildir(array('dirname' =>
                                                 '/home/test/mail/'));
-]]>
-        </programlisting>
+]]></programlisting>
 
-        <para>Both constructors throw a <code>Zend_Mail_Exception</code> if the storage can't be read.</para>
+        <para>Both constructors throw a <classname>Zend_Mail_Exception</classname> if the storage can't be read.</para>
 
     </sect2>
     <sect2 id="zend.mail.read-open-remote">
@@ -144,8 +141,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
                                          'password' => 'test'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             For both storages SSL and TLS are supported. If you use SSL the default port changes as given in the RFC.
@@ -165,12 +161,11 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test',
                                          'ssl'      => 'TLS'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
-            Both constructors can throw <code>Zend_Mail_Exception</code> or <code>Zend_Mail_Protocol_Exception</code>
-            (extends <code>Zend_Mail_Exception</code>), depending on the type of error.
+            Both constructors can throw <classname>Zend_Mail_Exception</classname> or <classname>Zend_Mail_Protocol_Exception</classname>
+            (extends <classname>Zend_Mail_Exception</classname>), depending on the type of error.
         </para>
 
     </sect2>
@@ -184,8 +179,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
 
         <programlisting role="php"><![CDATA[
 $message = $mail->getMessage($messageNum);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Array access is also supported, but this access method won't supported any additional parameters that could be added to
@@ -194,8 +188,7 @@ $message = $mail->getMessage($messageNum);
 
         <programlisting role="php"><![CDATA[
 $message = $mail[$messageNum];
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>For iterating over all messages the Iterator interface is implemented:</para>
 
@@ -203,8 +196,7 @@ $message = $mail[$messageNum];
 foreach ($mail as $messageNum => $message) {
     // do stuff ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To count the messages in the storage, you can either use the method <code>countMessages()</code> or use array
@@ -217,8 +209,7 @@ $maxMessage = $mail->countMessages();
 
 // array access
 $maxMessage = count($mail);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>To remove a mail, you use the method <code>removeMessage()</code> or again array access:</para>
 
@@ -228,8 +219,7 @@ $mail->removeMessage($messageNum);
 
 // array access
 unset($mail[$messageNum]);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-message">
@@ -256,8 +246,7 @@ $type = $message->contentType;
 if( isset($message->cc) ) { // or $message->headerExists('cc');
     $cc = $message->cc;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>If you have multiple headers with the same name- i.e. the Received headers- you might want an array
         instead of a string. In this case, use the <code>getHeader()</code> method.</para>
@@ -282,8 +271,7 @@ $received = $message->getHeader('received');
 if (is_string($received)) {
     // only one received header found in message
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>The method <code>getHeaders()</code> returns all headers as array with the lower-cased name as
         key and the value as and array for multiple headers or as string for single headers.</para>
@@ -299,8 +287,7 @@ foreach ($message->getHeaders() as $name => $value) {
         echo "$name: $entry\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>If you don't have a multipart message, fetching the content is easily done via
         <code>getContent()</code>. Unlike the headers, the content is only fetched when needed (aka late-fetch).</para>
@@ -310,12 +297,11 @@ foreach ($message->getHeaders() as $name => $value) {
 echo '<pre>';
 echo $message->getContent();
 echo '</pre>';
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>Checking for multipart messages is done with the method <code>isMultipart()</code>. If you have
-        multipart message you can get an instance of <code>Zend_Mail_Part</code> with the method
-        <code>getPart()</code>. <code>Zend_Mail_Part</code> is the base class of <code>Zend_Mail_Message</code>,
+        multipart message you can get an instance of <classname>Zend_Mail_Part</classname> with the method
+        <code>getPart()</code>. <classname>Zend_Mail_Part</classname> is the base class of <classname>Zend_Mail_Message</classname>,
         so you have the same methods: <code>getHeader()</code>, <code>getHeaders()</code>, <code>getContent()</code>,
         <code>getPart()</code>, <code>isMultipart</code> and the properties for headers.</para>
 
@@ -328,10 +314,9 @@ while ($part->isMultipart()) {
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
 echo "Content:\n";
 echo $part->getContent();
-]]>
-        </programlisting>
+]]></programlisting>
 
-        <para><code>Zend_Mail_Part</code> also implements <code>RecursiveIterator</code>, which makes it easy to scan through all parts. And
+        <para><classname>Zend_Mail_Part</classname> also implements <code>RecursiveIterator</code>, which makes it easy to scan through all parts. And
         for easy output, it also implements the magic method <code>__toString()</code>, which returns the content.</para>
 
         <programlisting role="php"><![CDATA[
@@ -352,16 +337,15 @@ if (!$foundPart) {
 } else {
     echo "plain text part: \n" . $foundPart;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-flags">
         <title>Checking for flags</title>
 
-        <para>Maildir and IMAP support storing flags. The class <code>Zend_Mail_Storage</code> has constants for all known
-        maildir and IMAP system flags, named <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code>. To check
-        for flags <code>Zend_Mail_Message</code> has a method called <code>hasFlag()</code>. With
+        <para>Maildir and IMAP support storing flags. The class <classname>Zend_Mail_Storage</classname> has constants for all known
+        maildir and IMAP system flags, named <classname>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</classname>. To check
+        for flags <classname>Zend_Mail_Message</classname> has a method called <code>hasFlag()</code>. With
         <code>getFlags()</code> you'll get all set flags.</para>
 
         <programlisting role="php"><![CDATA[
@@ -379,7 +363,6 @@ foreach ($mail as $message) {
     }
     echo $message->subject . "\n";
 }
-
 
 // check for known flags
 $flags = $message->getFlags();
@@ -401,11 +384,10 @@ foreach ($flags as $flag) {
             echo $flag . '(unknown flag) ';
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>As IMAP allows user or client defined flags, you could get flags that don't have a constant in
-        <code>Zend_Mail_Storage</code>. Instead, they are returned as strings and can be checked the same way with
+        <classname>Zend_Mail_Storage</classname>. Instead, they are returned as strings and can be checked the same way with
         <code>hasFlag()</code>.</para>
 
         <programlisting role="php"><![CDATA[
@@ -417,8 +399,7 @@ if (!$message->hasFlag('$SpamTested')) {
 } else {
     echo 'this message is ham';
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-folders">
@@ -426,18 +407,18 @@ if (!$message->hasFlag('$SpamTested')) {
 
         <para>
             All storages, except Pop3, support folders, also called mailboxes. The interface implemented by all storages
-            supporting folders is called <code>Zend_Mail_Storage_Folder_Interface</code>. Also all of these classes have an
+            supporting folders is called <classname>Zend_Mail_Storage_Folder_Interface</classname>. Also all of these classes have an
             additional optional parameter called <code>folder</code>, which is the folder selected after login, in the constructor.
         </para>
         <para>
-            For the local storages you need to use separate classes called <code>Zend_Mail_Storage_Folder_Mbox</code> or
-            <code>Zend_Mail_Storage_Folder_Maildir</code>. Both need one parameter called <code>dirname</code> with the name of the base dir.
+            For the local storages you need to use separate classes called <classname>Zend_Mail_Storage_Folder_Mbox</classname> or
+            <classname>Zend_Mail_Storage_Folder_Maildir</classname>. Both need one parameter called <code>dirname</code> with the name of the base dir.
             The format for maildir is as defined in maildir++ (with a dot as default delimiter), Mbox is a directory
             hierarchy with Mbox files. If you don't have a Mbox file called INBOX in your Mbox base dir you need to set
             another folder in the constructor.
         </para>
         <para>
-            <code>Zend_Mail_Storage_Imap</code> already supports folders by default. Examples for opening these storages:
+            <classname>Zend_Mail_Storage_Imap</classname> already supports folders by default. Examples for opening these storages:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -465,13 +446,12 @@ $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' =>
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             With the method getFolders($root = null) you can get the folder hierarchy starting with the root folder or
-            the given folder. It's returned as an instance of <code>Zend_Mail_Storage_Folder</code>, which implements
-            <code>RecursiveIterator</code> and all children are also instances of <code>Zend_Mail_Storage_Folder</code>. Each of
+            the given folder. It's returned as an instance of <classname>Zend_Mail_Storage_Folder</classname>, which implements
+            <code>RecursiveIterator</code> and all children are also instances of <classname>Zend_Mail_Storage_Folder</classname>. Each of
             these instances has a local and a global name returned by the methods <code>getLocalName()</code> and
             <code>getGlobalName()</code>. The global name is the absolute name from the root folder (including
             delimiters), the local name is the name in the parent folder.
@@ -525,13 +505,12 @@ foreach ($folders as $localName => $folder) {
         . htmlspecialchars($localName) . '</option>';
 }
 echo '</select>';
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The current selected folder is returned by the method <code>getSelectedFolder()</code>. Changing the folder
             is done with the method <code>selectFolder()</code>, which needs the global name as parameter. If you want
-            to avoid to write delimiters you can also use the properties of a <code>Zend_Mail_Storage_Folder</code> instance:
+            to avoid to write delimiters you can also use the properties of a <classname>Zend_Mail_Storage_Folder</classname> instance:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -546,8 +525,7 @@ echo 'Last folder was '
    . $mail->getSelectedFolder()
    . "new folder is $folder\n";
 $mail->selectFolder($folder);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-advanced">
@@ -572,16 +550,15 @@ foreach ($mail as $message) {
 
     $mail->noop(); // keep alive
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
         <sect3 id="zend.mail.read-advanced.caching">
             <title>Caching instances</title>
 
             <para>
-            <code>Zend_Mail_Storage_Mbox</code>, <code>Zend_Mail_Storage_Folder_Mbox</code>, <code>Zend_Mail_Storage_Maildir</code> and
-            <code>Zend_Mail_Storage_Folder_Maildir</code> implement the magic methods <code>__sleep()</code> and
+            <classname>Zend_Mail_Storage_Mbox</classname>, <classname>Zend_Mail_Storage_Folder_Mbox</classname>, <classname>Zend_Mail_Storage_Maildir</classname> and
+            <classname>Zend_Mail_Storage_Folder_Maildir</classname> implement the magic methods <code>__sleep()</code> and
             <code>__wakeup()</code>, which means they are serializable. This avoids parsing the files or directory tree
             more than once. The disadvantage is that your Mbox or Maildir storage should not change. Some easy checks
             may be done, like reparsing the current Mbox file if the modification time changes, or reparsing the folder
@@ -609,16 +586,15 @@ if (!$cache->isCached($cache_id) ||
 // do stuff ...
 
 $cache->set($cache_id, $mail);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
         <sect3 id="zend.mail.read-advanced.extending">
             <title>Extending Protocol Classes</title>
 
             <para>
-                Remote storages use two classes: <code>Zend_Mail_Storage_&lt;Name&gt;</code> and
-                <code>Zend_Mail_Protocol_&lt;Name&gt;</code>. The protocol class translates the protocol commands and
+                Remote storages use two classes: <classname>Zend_Mail_Storage_&lt;Name&gt;</classname> and
+                <classname>Zend_Mail_Protocol_&lt;Name&gt;</classname>. The protocol class translates the protocol commands and
                 responses from and to PHP, like methods for the commands or variables with different structures for
                 data. The other/main class implements the common interface.
             </para>
@@ -695,8 +671,7 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
                                           'password'    => 'test',
                                           'knock_ports' =>
                                               array(1101, 1105, 1111)));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 As you see, we always assume we're connected, logged in and, if supported, a folder is selected in the
@@ -709,7 +684,7 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             <title>Using Quota (since 1.5)</title>
 
             <para>
-            <code>Zend_Mail_Storage_Writable_Maildir</code> has support for Maildir++ quotas. It's disabled by default,
+            <classname>Zend_Mail_Storage_Writable_Maildir</classname> has support for Maildir++ quotas. It's disabled by default,
             but it's possible to use it manually, if the automatic checks are not desired (this means
             <code>appendMessage()</code>, <code>removeMessage()</code> and <code>copyMessage()</code> do no checks
             and do not add entries to the maildirsize file). If enabled, an exception is thrown if you try to write
@@ -728,8 +703,7 @@ $mail->setQuota(true); // true to enable, false to disable
 echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
 // check quota can be used even if quota checks are disabled
 echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             <code>checkQuota()</code> can also return a more detailed response:
@@ -744,8 +718,7 @@ echo 'You have ',
      $quota['quota']['count'],
      ' messages and use ';
 echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             If you want to specify your own quota instead of using the one specified in the maildirsize file you
@@ -755,12 +728,11 @@ echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
             <programlisting role="php"><![CDATA[
 // message count and octet size supported, order does matter
 $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             To add your own quota checks use single letters as keys, and they will be preserved (but obviously not checked).
-            It's also possible to extend  <code>Zend_Mail_Storage_Writable_Maildir</code> to define your own quota only
+            It's also possible to extend  <classname>Zend_Mail_Storage_Writable_Maildir</classname> to define your own quota only
             if the maildirsize file is missing (which can happen in Maildir++):
             </para>
 
@@ -782,9 +754,7 @@ class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
         }
     }
 }
-]]>
-            </programlisting>
-
+]]></programlisting>
 
         </sect3>
     </sect2>

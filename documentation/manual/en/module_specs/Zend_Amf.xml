@@ -4,11 +4,11 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_Amf</code> provides support for Adobe's <ulink
-            url="http://en.wikipedia.org/wiki/Action_Message_Format">Action
-            Message Format</ulink> (AMF), to allow communication between Adobe's
+        <classname>Zend_Amf</classname> provides support for Adobe's <ulink
+        url="http://en.wikipedia.org/wiki/Action_Message_Format">Action
+        Message Format</ulink> (AMF), to allow communication between Adobe's
         <ulink url="http://en.wikipedia.org/wiki/Adobe_Flash_Player">Flash
-            Player</ulink> and PHP. Specifically, it provides a gateway server
+        Player</ulink> and PHP. Specifically, it provides a gateway server
         implementation for handling requests sent from the Flash Player to the
         server and mapping these requests to object and class methods and
         arbitrary callbacks.
@@ -16,7 +16,7 @@
 
     <para>
         The <ulink url="http://download.macromedia.com/pub/labs/amf/amf3_spec_121207.pdf">AMF3
-            specification</ulink> is freely available, and serves as a reference
+        specification</ulink> is freely available, and serves as a reference
         for what types of messages may be sent between the Flash Player and
         server.
     </para>

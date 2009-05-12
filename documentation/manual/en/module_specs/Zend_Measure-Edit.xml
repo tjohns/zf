@@ -6,7 +6,7 @@
 
     <para>
         Parsing and normalization of input, combined with output to localized notations makes data accessible to users
-        in different locales. Many additional methods exist in <code>Zend_Measure_*</code> components to manipulate and
+        in different locales. Many additional methods exist in <classname>Zend_Measure_*</classname> components to manipulate and
         work with this data, after it has been normalized.
     </para>
 
@@ -80,8 +80,7 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
 
 // define a precision for the output
 print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON, 3);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>
@@ -110,8 +109,7 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $sum = $unit->add($unit2);
 
 echo $sum; // outputs "300 cm"
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -141,8 +139,7 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $sum = $unit->sub($unit2);
 
 echo $sum;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -170,8 +167,7 @@ if ($unit->equals($unit2)) {
 } else {
     print "These are different measurements";
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
             <example id="zend.measure.edit.equal.example-2">
                 <title>Identical measurements</title>
@@ -187,8 +183,7 @@ if ($unit->equals($unit2)) {
 } else {
     print "These are different measurements";
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -215,8 +210,7 @@ $unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 print "Equal:".$unit2->compare($unit);
 print "Lesser:".$unit2->compare($unit3);
 print "Greater:".$unit3->compare($unit2);
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -246,8 +240,7 @@ echo $unit;
 
 $unit->setValue("1.234,56", Zend_Measure_Length::MILLIMETER,$locale);
 echo $unit;
-]]>
-                </programlisting>
+]]></programlisting>
             </example>
         </para>
 
@@ -269,8 +262,7 @@ echo $unit; // outputs "1 m"
 
 $unit->setType(Zend_Measure_Length::KILOMETER);
 echo $unit; // outputs "1000 km"
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
 
     </sect2>

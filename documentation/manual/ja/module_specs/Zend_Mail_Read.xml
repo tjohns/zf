@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15341 -->
 <sect1 id="zend.mail.read">
     <title>メールメッセージの読み込み</title>
 
     <para>
-        <code>Zend_Mail</code> を使用すると、
+        <classname>Zend_Mail</classname> を使用すると、
         ローカルあるいはリモートに保存されたメールを読み込むことができます。
         すべての保存形式に共通の基本 API では、メッセージ数を数えたり
         メッセージを読み込んだりすることができます。また、
@@ -91,8 +91,7 @@ echo $mail->countMessages() . " messages found\n";
 foreach ($mail as $message) {
     echo "Mail from '{$message->from}': {$message->subject}\n";
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-open-local">
@@ -104,26 +103,24 @@ foreach ($mail as $message) {
         </para>
         <para>
             Mbox ファイルからメールを読み込むには、そのファイル名を
-            <code>Zend_Mail_Storage_Mbox</code> のコンストラクタに渡すだけです。
+            <classname>Zend_Mail_Storage_Mbox</classname> のコンストラクタに渡すだけです。
         </para>
 
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail_Storage_Mbox(array('filename' =>
                                              '/home/test/mail/inbox'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>Maildir もほぼ同様ですが、こちらはディレクトリ名を指定します。</para>
 
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail_Storage_Maildir(array('dirname' =>
                                                 '/home/test/mail/'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
          どちらのコンストラクタも、もし読み込めなかった場合は
-         <code>Zend_Mail_Exception</code> をスローします。
+         <classname>Zend_Mail_Exception</classname> をスローします。
         </para>
 
     </sect2>
@@ -154,8 +151,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
                                          'password' => 'test'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             どちらの保存形式についても、SSL や TLS をサポートしています。
@@ -177,13 +173,12 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test',
                                          'ssl'      => 'TLS'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             どちらのコンストラクタも、エラーの形式によって
-            <code>Zend_Mail_Exception</code> あるいは <code>Zend_Mail_Protocol_Exception</code>
-            (<code>Zend_Mail_Exception</code> を継承したもの) をスローします。
+            <classname>Zend_Mail_Exception</classname> あるいは <classname>Zend_Mail_Protocol_Exception</classname>
+            (<classname>Zend_Mail_Exception</classname> を継承したもの) をスローします。
         </para>
 
     </sect2>
@@ -199,8 +194,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
 
         <programlisting role="php"><![CDATA[
 $message = $mail->getMessage($messageNum);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             配列形式のアクセスもサポートしていますが、<code>getMessage()</code>
@@ -210,8 +204,7 @@ $message = $mail->getMessage($messageNum);
 
         <programlisting role="php"><![CDATA[
 $message = $mail[$messageNum];
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>全メッセージについて順に処理するために、Iterator インターフェイスも実装されています。</para>
 
@@ -219,8 +212,7 @@ $message = $mail[$messageNum];
 foreach ($mail as $messageNum => $message) {
     // 何かの処理 ...
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             保存されているメッセージ数を数えるには、
@@ -233,8 +225,7 @@ $maxMessage = $mail->countMessages();
 
 // 配列形式のアクセス
 $maxMessage = count($mail);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             メールを削除するには、<code>removeMessage()</code>
@@ -247,8 +238,7 @@ $mail->removeMessage($messageNum);
 
 // 配列形式のアクセス
 unset($mail[$messageNum]);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-message">
@@ -279,8 +269,7 @@ $type = $message->contentType;
 if( isset($message->cc) ) { // あるいは $message->headerExists('cc');
     $cc = $message->cc;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>同名のヘッダが複数ある場合 (たとえば Received ヘッダなど)、
         それを文字列ではなく配列として扱うこともできます。これは
@@ -306,8 +295,7 @@ $received = $message->getHeader('received');
 if (is_string($received)) {
     // メッセージ内にそのヘッダはひとつしかありません
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para><code>getHeaders()</code> メソッドは、すべてのヘッダを配列で返します。
         キーはヘッダ名を小文字にしたもので、値は文字列 (そのヘッダがひとつの場合)
@@ -324,8 +312,7 @@ foreach ($message->getHeaders() as $name => $value) {
         echo "$name: $entry\n";
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>マルチパートメッセージがないのなら、その内容は
         <code>getContent()</code> で簡単に取得できます。ヘッダの場合とは異なり、
@@ -337,13 +324,12 @@ foreach ($message->getHeaders() as $name => $value) {
 echo '<pre>';
 echo $message->getContent();
 echo '</pre>';
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>マルチパートメッセージであるかどうかを調べるには <code>isMultipart()</code>
         メソッドを使用します。マルチパートメッセージがある場合は、
-        <code>getPart()</code> メソッドで <code>Zend_Mail_Part</code> のインスタンスを取得します。
-        <code>Zend_Mail_Part</code> は <code>Zend_Mail_Message</code> の基底クラスなので、
+        <code>getPart()</code> メソッドで <classname>Zend_Mail_Part</classname> のインスタンスを取得します。
+        <classname>Zend_Mail_Part</classname> は <classname>Zend_Mail_Message</classname> の基底クラスなので、
         <code>getHeader()</code> や <code>getHeaders()</code>、<code>getContent()</code>、
         <code>getPart()</code>、<code>isMultipart</code> といったメソッドを同様に使えます。
         また、ヘッダもプロパティとして使用できます。</para>
@@ -357,10 +343,9 @@ while ($part->isMultipart()) {
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
 echo "Content:\n";
 echo $part->getContent();
-]]>
-        </programlisting>
+]]></programlisting>
 
-        <para><code>Zend_Mail_Part</code> は <code>RecursiveIterator</code> も実装しています。
+        <para><classname>Zend_Mail_Part</classname> は <code>RecursiveIterator</code> も実装しています。
         つまり、すべてのパートを順にスキャンすることも簡単にできます。また、
         結果を簡単に出力できるよう、マジックメソッド <code>__toString()</code>
         を実装しています。このメソッドは、パートの中身を返します。</para>
@@ -383,18 +368,17 @@ if (!$foundPart) {
 } else {
     echo "プレーンテキストパート: \n" . $foundPart;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-flags">
         <title>フラグのチェック</title>
 
         <para>Maildir および IMAP はフラグの保存をサポートしています。
-        <code>Zend_Mail_Storage</code> クラスには、maildir や IMAP
+        <classname>Zend_Mail_Storage</classname> クラスには、maildir や IMAP
         で使用するすべてのフラグに対応する定数が定義されています。これは
-        <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code> という名前です。
-        フラグをチェックするには、<code>Zend_Mail_Message</code>
+        <classname>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</classname> という名前です。
+        フラグをチェックするには、<classname>Zend_Mail_Message</classname>
         の <code>hasFlag()</code> メソッドを使用します。
         <code>getFlags()</code> で、設定されているすべてのフラグを取得することができます。</para>
 
@@ -413,7 +397,6 @@ foreach ($mail as $message) {
     }
     echo $message->subject . "\n";
 }
-
 
 // フラグをチェックします
 $flags = $message->getFlags();
@@ -435,11 +418,10 @@ foreach ($flags as $flag) {
             echo $flag . '(未知のフラグ) ';
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>IMAP ではユーザやクライアントが独自にフラグを設定することができます。
-        <code>Zend_Mail_Storage</code> で定数が定義されていない、
+        <classname>Zend_Mail_Storage</classname> で定数が定義されていない、
         このようなフラグを取得することも可能です。これらは文字列として返され、
         <code>hasFlag()</code> で同じようにチェックできます。</para>
 
@@ -452,8 +434,7 @@ if (!$message->hasFlag('$SpamTested')) {
 } else {
     echo 'このメッセージはハムです (スパムではありません)';
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-folders">
@@ -463,13 +444,13 @@ if (!$message->hasFlag('$SpamTested')) {
             Pop3 以外のすべての保存形式は、フォルダをサポートしています。
             これはメールボックスとも言います。各保存形式で、
             フォルダをサポートするために実装しているインターフェイスが
-            <code>Zend_Mail_Storage_Folder_Interface</code> です。
+            <classname>Zend_Mail_Storage_Folder_Interface</classname> です。
             これらすべてのクラスでは、コンストラクタで追加のオプションパラメータ
             <code>folder</code> を指定できます。これは、ログイン後に使用するフォルダを指定するものです。
         </para>
         <para>
-            ローカルの保存形式では、<code>Zend_Mail_Storage_Folder_Mbox</code>
-            あるいは <code>Zend_Mail_Storage_Folder_Maildir</code>
+            ローカルの保存形式では、<classname>Zend_Mail_Storage_Folder_Mbox</classname>
+            あるいは <classname>Zend_Mail_Storage_Folder_Maildir</classname>
             のいずれかのクラスを使用します。どちらもパラメータ <code>dirname</code>
             が必須で、これは基底ディレクトリの名前となります。
             maildir のフォーマットは maildir++ で定義されているもの
@@ -479,7 +460,7 @@ if (!$message->hasFlag('$SpamTested')) {
             コンストラクタで別のフォルダを設定する必要があります。
         </para>
         <para>
-            <code>Zend_Mail_Storage_Imap</code> は、デフォルトでフォルダをサポートしています。
+            <classname>Zend_Mail_Storage_Imap</classname> は、デフォルトでフォルダをサポートしています。
             これらの保存形式をオープンする例を以下に示します。
         </para>
 
@@ -508,15 +489,14 @@ $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' =>
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test'));
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             getFolders($root = null) メソッドを使用すると、
             ルートフォルダあるいは指定したフォルダから始まるフォルダ階層を取得できます。
-            返り値は <code>Zend_Mail_Storage_Folder</code> のインスタンスとなります。これは
+            返り値は <classname>Zend_Mail_Storage_Folder</classname> のインスタンスとなります。これは
             <code>RecursiveIterator</code> を実装しており、子要素もすべて
-            <code>Zend_Mail_Storage_Folder</code> のインスタンスとなります。
+            <classname>Zend_Mail_Storage_Folder</classname> のインスタンスとなります。
             これらの各インスタンスはローカル名およびグローバル名を持っており、
             それぞれ <code>getLocalName()</code> メソッドおよび
             <code>getGlobalName()</code> メソッドで取得できます。
@@ -577,15 +557,14 @@ foreach ($folders as $localName => $folder) {
         . htmlspecialchars($localName) . '</option>';
 }
 echo '</select>';
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             現在選択されているフォルダを返すメソッドは <code>getSelectedFolder()</code>
             です。フォルダを変更するには <code>selectFolder()</code> メソッドを使用します。
             このメソッドのパラメータには、グローバル名を指定しなければなりません。
             区切り文字を書き込んでしまうことを防ぎたければ、
-            <code>Zend_Mail_Storage_Folder</code> インスタンスのプロパティを使用します。
+            <classname>Zend_Mail_Storage_Folder</classname> インスタンスのプロパティを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -600,8 +579,7 @@ echo 'Last folder was '
    . $mail->getSelectedFolder()
    . "new folder is $folder\n";
 $mail->selectFolder($folder);
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-advanced">
@@ -626,16 +604,15 @@ foreach ($mail as $message) {
 
     $mail->noop(); // 接続をキープします
 }
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
         <sect3 id="zend.mail.read-advanced.caching">
             <title>インスタンスのキャッシュ</title>
 
             <para>
-            <code>Zend_Mail_Storage_Mbox</code>、<code>Zend_Mail_Storage_Folder_Mbox</code>、<code>Zend_Mail_Storage_Maildir</code>
-            および <code>Zend_Mail_Storage_Folder_Maildir</code> は、マジックメソッド
+            <classname>Zend_Mail_Storage_Mbox</classname>、<classname>Zend_Mail_Storage_Folder_Mbox</classname>、<classname>Zend_Mail_Storage_Maildir</classname>
+            および <classname>Zend_Mail_Storage_Folder_Maildir</classname> は、マジックメソッド
             <code>__sleep()</code> と <code>__wakeup()</code> を実装しています。
             つまり、シリアライズが可能であるということです。
             これで、ファイルやディレクトリツリーを何度もパースする必要がなくなります。
@@ -666,16 +643,15 @@ if (!$cache->isCached($cache_id) ||
 // 何らかの処理 ...
 
 $cache->set($cache_id, $mail);
-]]>
-            </programlisting>
+]]></programlisting>
 
         </sect3>
         <sect3 id="zend.mail.read-advanced.extending">
             <title>プロトコルクラスの拡張</title>
 
             <para>
-                リモートの保存形式では、ふたつのクラス <code>Zend_Mail_Storage_&lt;Name&gt;</code> および
-                <code>Zend_Mail_Protocol_&lt;Name&gt;</code> を使用しています。
+                リモートの保存形式では、ふたつのクラス <classname>Zend_Mail_Storage_&lt;Name&gt;</classname> および
+                <classname>Zend_Mail_Protocol_&lt;Name&gt;</classname> を使用しています。
                 プロトコルクラスは、プロトコルのコマンドを処理して、レスポンスを
                 PHP に受け渡しします。コマンドに対応したメソッド、
                 さまざまなデータ構造に対応した変数を保持します。
@@ -754,8 +730,7 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
                                           'password'    => 'test',
                                           'knock_ports' =>
                                               array(1101, 1105, 1111)));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
                 ご覧の通り、メインクラスのコンストラクタでは
@@ -771,7 +746,7 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             <title>容量制限の使用 (1.5 以降)</title>
 
             <para>
-            <code>Zend_Mail_Storage_Writable_Maildir</code> は Maildir++
+            <classname>Zend_Mail_Storage_Writable_Maildir</classname> は Maildir++
             の容量制限をサポートしています。デフォルトではこの機能は無効になっていますが、
             手動で使用することもできます。これは、自動チェックをしたくないとき (つまり
             <code>appendMessage()</code>、<code>removeMessage()</code> および
@@ -793,8 +768,7 @@ $mail->setQuota(true); // true で有効に、そして false で無効にしま
 echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
 // チェックを無効にしている場合でも手動でのチェックは使用できます
 echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             <code>checkQuota()</code> は、より詳細な情報も返します。
@@ -809,8 +783,7 @@ echo 'You have ',
      $quota['quota']['count'],
      ' messages and use ';
 echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             maildirsize ファイルで指定したものではなく独自の容量制限を使用したい場合は、
@@ -820,13 +793,12 @@ echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
             <programlisting role="php"><![CDATA[
 // メッセージ数とオクテットサイズに対応しています。順序が重要です
 $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
-]]>
-            </programlisting>
+]]></programlisting>
 
             <para>
             独自の容量チェックを追加するには、単一の文字をキーとして使用します。
             キーが保存されます (が、チェックはされません)。
-            <code>Zend_Mail_Storage_Writable_Maildir</code>
+            <classname>Zend_Mail_Storage_Writable_Maildir</classname>
             を継承して独自の容量制限 を定義することもできます。
             maildirsize ファイルが存在しないときにのみ使用します
             (Maildir++ ではこれが起こりえます)。
@@ -850,9 +822,7 @@ class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
         }
     }
 }
-]]>
-            </programlisting>
-
+]]></programlisting>
 
         </sect3>
     </sect2>

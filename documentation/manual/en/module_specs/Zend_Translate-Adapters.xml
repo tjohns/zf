@@ -5,14 +5,14 @@
     <title>Adapters for Zend_Translate</title>
 
     <para>
-        <code>Zend_Translate</code> can handle different adapters for translation.
+        <classname>Zend_Translate</classname> can handle different adapters for translation.
         Each adapter has its own advantages and disadvantages.
         Below is a comprehensive list of all supported adapters for
         translation source files.
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Adapters for <code>Zend_Translate</code></title>
+        <title>Adapters for Zend_Translate</title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -81,7 +81,7 @@
         <title>How to decide which translation adapter to use</title>
 
         <para>
-            You should decide which Adapter you want to use for <code>Zend_Translate</code>.
+            You should decide which Adapter you want to use for <classname>Zend_Translate</classname>.
             Frequently, external criteria such as a project requirement or
             a customer requirement determines this for you, but if you are in
             the position to do this yourself, the following hints may simplify
@@ -93,7 +93,7 @@
                 When deciding your adapter you should also be aware of the used
                 encoding. Even if Zend Framework declares UTF-8 as default
                 encoding you will sometimes be in the need of other encoding.
-                <code>Zend_Translate</code> will not change any encoding which is defined
+                <classname>Zend_Translate</classname> will not change any encoding which is defined
                 within the source file which means that if your Gettext source
                 is build upon ISO-8859-1 it will also return strings in this encoding
                 without converting them. There is only one restriction:
@@ -165,7 +165,7 @@
                 introduced by GNU, and is now used worldwide.
                 It is not human readable, but there are several freeware tools
                 (for instance, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>), which are very helpful.
-                The <code>Zend_Translate</code> Gettext Adapter is not implemented using
+                The <classname>Zend_Translate</classname> Gettext Adapter is not implemented using
                 PHP's gettext extension.
                 You can use the Gettext Adapter even if you do not have
                 the PHP gettext extension installed.
@@ -306,21 +306,21 @@
         <title>Integrate self written Adapters</title>
 
         <para>
-            <code>Zend_Translate</code> allows you to integrate and use self written Adapter
+            <classname>Zend_Translate</classname> allows you to integrate and use self written Adapter
             classes. They can be used like the standard Adapter classes which
-            are already included within <code>Zend_Translate</code>.
+            are already included within <classname>Zend_Translate</classname>.
         </para>
 
         <para>
-            Any adapter class you want to use with <code>Zend_Translate</code> must be a subclass
-            of <code>Zend_Translate_Adapter</code>. <code>Zend_Translate_Adapter</code> is an abstract class
+            Any adapter class you want to use with <classname>Zend_Translate</classname> must be a subclass
+            of <classname>Zend_Translate_Adapter</classname>. <classname>Zend_Translate_Adapter</classname> is an abstract class
             which already defines all what is needed for translation. What has to be
             done by you, is the definition of the reader for translation datas.
         </para>
 
         <para>
             The usage of the prefix "Zend" should be limited to Zend Framework.
-            If you extend <code>Zend_Translate</code> with your own adapter, you should name it
+            If you extend <classname>Zend_Translate</classname> with your own adapter, you should name it
             like "Company_Translate_Adapter_MyFormat". The following code shows an
             example of how a self written adapter class could be implemented:
         </para>
@@ -335,8 +335,7 @@ try {
     // File not found, no adapter class...
     // General failure
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -345,15 +344,15 @@ try {
         <title>Speedup all Adapters</title>
 
         <para>
-            <code>Zend_Translate</code> allows you use internally <code>Zend_Cache</code> to
+            <classname>Zend_Translate</classname> allows you use internally <classname>Zend_Cache</classname> to
             fasten the loading of translation sources. This comes very handy if you use many
             translation sources or extensive source formats like XML based files.
         </para>
 
         <para>
             To use caching you will just have to give a cache object to the
-            <code>Zend_Translate::setCache()</code> method. It takes a instance of
-            <code>Zend_Cache</code> as only parameter. Also if you use any adapter direct you
+            <classname>Zend_Translate::setCache()</classname> method. It takes a instance of
+            <classname>Zend_Cache</classname> as only parameter. Also if you use any adapter direct you
             can use the <code>setCache()</code> method. For convenience there are also the static methods
             <code>getCache()</code>, <code>hasCache()</code>, <code>clearCache()</code> and
             <code>removeCache()</code>.
@@ -368,13 +367,12 @@ Zend_Translate::setCache($cache);
 $translate = new Zend_Translate('gettext',
                                 '/path/to/translate.mo',
                                 'en');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
-                You must set the cache <emphasis role="strong">before</emphasis> you use or initiate
-                any adapter or instance of <code>Zend_Translate</code>. Otherwise your translation
+                You must set the cache <emphasis>before</emphasis> you use or initiate
+                any adapter or instance of <classname>Zend_Translate</classname>. Otherwise your translation
                 source will not be cached until you add a new source with the
                 <code>addTranslation()</code> method.
             </para>

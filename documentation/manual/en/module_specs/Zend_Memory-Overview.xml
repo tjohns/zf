@@ -6,7 +6,7 @@
     <sect2 id="zend.memory.introduction">
         <title>Introduction</title>
         <para>
-            The <code>Zend_Memory</code> component is intended to manage data in an
+            The <classname>Zend_Memory</classname> component is intended to manage data in an
             environment with limited memory.
         </para>
 
@@ -30,9 +30,9 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title>Using <code>Zend_Memory</code> component</title>
+            <title>Using Zend_Memory component</title>
             <para>
-                <code>Zend_Memory::factory()</code> instantiates the memory
+                <classname>Zend_Memory::factory()</classname> instantiates the memory
                 manager object with specified backend options.
             </para>
                 <programlisting role="php"><![CDATA[
@@ -57,8 +57,7 @@ echo $loadedFiles[$index1]->value;
 $loadedFiles[$index2]->value = $newValue;
 
 $loadedFiles[$index3]->value[$charIndex] = '_';
-]]>
-                </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -67,7 +66,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         <title>Theory of Operation</title>
 
         <para>
-            <code>Zend_Memory</code> component operates with the following concepts:
+            <classname>Zend_Memory</classname> component operates with the following concepts:
             <itemizedlist>
                 <listitem>
                     <para>Memory manager</para>
@@ -122,8 +121,7 @@ $memObject->value[$index] = '_';
 echo ord($memObject->value[$index1]);
 
 $memObject->value = substr($memObject->value, $start, $length);
-]]>
-                </programlisting>
+]]></programlisting>
             </para>
 
             <note>
@@ -154,7 +152,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <para>
                 Movable memory objects are transparently swapped and loaded
-                to/from the cache backend by <code>Zend_Memory</code> when it's necessary.
+                to/from the cache backend by <classname>Zend_Memory</classname> when it's necessary.
             </para>
 
             <para>

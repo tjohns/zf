@@ -4,7 +4,7 @@
     <title>Modifying Feed and Entry structures</title>
 
     <para>
-        <code>Zend_Feed</code>'s natural syntax extends to constructing and modifying feeds and entries as well
+        <classname>Zend_Feed</classname>'s natural syntax extends to constructing and modifying feeds and entries as well
         as reading them. You can easily turn your new or modified objects back into well-formed XML for saving
         to a file or sending to a server.
     </para>
@@ -19,8 +19,7 @@ $entry->title = 'This is a new title';
 $entry->author->email = 'my_email@example.com';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
             new entry, including any necessary XML namespaces.
@@ -34,8 +33,8 @@ echo $entry->saveXML();
 
     <para>
         If you want to use a namespace other than <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>
-        in your entry, you need to register the namespace with <code>Zend_Feed</code> using
-        <code>Zend_Feed::registerNamespace()</code>. When you are modifying an existing element, it will always
+        in your entry, you need to register the namespace with <classname>Zend_Feed</classname> using
+        <classname>Zend_Feed::registerNamespace()</classname>. When you are modifying an existing element, it will always
         maintain its original namespace. When adding a new element, it will go into the default namespace if
         you do not explicitly specify another namespace.
     </para>
@@ -57,8 +56,7 @@ $entry->{'myns:container_elt'}->part1 = 'first nested custom part';
 $entry->{'myns:container_elt'}->part2 = 'second nested custom part';
 
 echo $entry->saveXML();
-]]>
-        </programlisting>
+]]></programlisting>
     </example>
 </sect1>
 <!--
