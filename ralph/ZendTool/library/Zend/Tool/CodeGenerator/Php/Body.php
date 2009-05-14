@@ -1,4 +1,0 @@
-<?php
-
-class Zend_Tool_CodeGenerator_Php_Body extends Zend_Tool_CodeGenerator_CodeGeneratorAbstract
-{}

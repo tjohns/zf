@@ -1,3 +1,0 @@
-<?php
-
-class Zend_Tool_Provider_ZfProject_ViewHelper extends Zend_Tool_Provider_ZfProject_ProviderAbstract {}
