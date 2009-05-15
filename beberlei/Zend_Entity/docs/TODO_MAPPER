@@ -1,5 +1,6 @@
 TODO
 
+* Rename Resource into MetadataFactory
 * Definitions: Inverse Relationsships
 * Definitions: Initializing of Loader and Persister and fetching of relations should be done lazy
 * Definitions: Add compound keys and better key handling in general.

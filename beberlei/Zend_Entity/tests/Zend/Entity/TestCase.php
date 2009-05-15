@@ -42,6 +42,20 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         return $mapper;
     }
 
+    public function createMapperMock($db=null, $entityDefinition=null, $resourceMap=null, $loader=null, $persister=null)
+    {
+        if($db == null) {
+            $db = $this->getDatabaseConnection();
+        }
+        if($entityDefinition == null) {
+            $entityDefinition = $this->createSampleEntityDefinition();
+        }
+        if($resourceMap == null) {
+            $resourceMap = $this->createResourceMapMock();
+        }
+        return $this->getMock('Zend_Entity_Mapper', array(), array($db, $entityDefinition, $resourceMap));
+    }
+
     /**
      * @return Zend_Entity_Mapper_Loader_Interface
      */
@@ -119,9 +133,38 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      * @param  Zend_Entity_UnitOfWork $unitOfWork
      * @param  Zend_Entity_Resource_Interface $resourceMap
      * @param  Zend_Entity_IdentityMap $identityMap
+     * @param  Zend_Db_Adapter_Abstract $db
      * @return Zend_Entity_Manager_Interface
      */
-    protected function createEntityManager($unitOfWork=null, $resourceMap=null, $identityMap=null)
+    protected function createEntityManager($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
+    {
+        if($db == null) {
+            $db = $this->getDatabaseConnection();
+        }
+
+        $options = $this->generateEntityManagerOptions($unitOfWork, $resourceMap, $identityMap);
+        return new Zend_Entity_Manager($db, $options);
+    }
+
+    /**
+     *
+     * @param  Zend_Entity_UnitOfWork $unitOfWork
+     * @param  Zend_Entity_Resource_Interface $resourceMap
+     * @param  Zend_Entity_IdentityMap $identityMap
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @return Zend_Entity_Manager_Interface
+     */
+    protected function createEntityManagerMock($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
+    {
+        if($db==null) {
+            $db = $this->getDatabaseConnection();
+        }
+
+        $options = $this->generateEntityManagerOptions($unitOfWork, $resourceMap, $identityMap);
+        return new Zend_Entity_TestManagerMock($db, $options);
+    }
+
+    private function generateEntityManagerOptions($unitOfWork=null, $resourceMap=null, $identityMap=null)
     {
         $options = array(
             'unitOfWork' => $unitOfWork,
@@ -130,8 +173,15 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         if($resourceMap !== null) {
             $options['resource'] = $resourceMap;
         }
+        return $options;
+    }
 
-        return new Zend_Entity_Manager($this->getDatabaseConnection(), $options);
+    /**
+     * @return Zend_Db_Select
+     */
+    protected function createDbSelectMock()
+    {
+        return $this->getMock('Zend_Db_Select', array(), array($this->getDatabaseConnection()));
     }
 
     const UOW_MOCK_BEGINTRANSACTION = 1;

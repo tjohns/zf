@@ -7,6 +7,8 @@ class Zend_Entity_Mapper_Definition_TestCase extends PHPUnit_Framework_TestCase
     const TEST_TABLE = "TestTable";
     const TEST_PROPERTY = "prop1";
     const TEST_PROPERTY2 = "prop2";
+    const TEST_COLUMN = 'TestTable_prop1';
+    const TEST_COLUMN2 = 'TestTable_prop2';
 
     /**
      * @return Zend_Entity_Mapper_Definition_Entity

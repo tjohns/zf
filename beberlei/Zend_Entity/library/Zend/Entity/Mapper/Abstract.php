@@ -207,7 +207,9 @@ abstract class Zend_Entity_Mapper_Abstract
     public function select()
     {
         $select = new Zend_Entity_Mapper_Select( $this->getAdapter() );
-        $this->getLoader()->initSelect($select);
+        $loader = $this->getLoader();
+        $loader->initSelect($select);
+        $loader->initColumns($select);
         return $select;
     }
     
@@ -278,7 +280,6 @@ abstract class Zend_Entity_Mapper_Abstract
     protected function query(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
     {
         $loader = $this->getLoader();
-        $loader->initColumns($select);
 
         $stmt = $this->getAdapter()->query($select);
         return $loader->processResultset($stmt, $entityManager);

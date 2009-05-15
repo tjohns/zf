@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__)."/../../../../TestHelper.php";
+require_once "PHPUnit/Extensions/Database/Operation/Replace.php";
 
 class Zend_Test_PHPUnit_Database_Operation_ReplaceTest extends PHPUnit_Framework_TestCase
 {

@@ -11,10 +11,11 @@ class Zend_Entity_Mapper_Definition_PrimaryKeyTest extends Zend_Entity_Mapper_De
         $this->assertEquals($idMock, $primaryKeyDef->getGenerator());
     }
 
-    public function testPropertyIsKeyName()
+    public function testColumnIsKeyName()
     {
         $primaryKeyDef = new Zend_Entity_Mapper_Definition_PrimaryKey(self::TEST_PROPERTY);
-        $this->assertEquals(self::TEST_PROPERTY, $primaryKeyDef->getKey());
+        $primaryKeyDef->setColumnName(self::TEST_PROPERTY2);
+        $this->assertEquals(self::TEST_PROPERTY2, $primaryKeyDef->getKey());
     }
 
     public function testSetGetColumnName()

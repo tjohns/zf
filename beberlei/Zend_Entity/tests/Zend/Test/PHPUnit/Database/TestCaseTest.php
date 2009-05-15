@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__)."/../../../TestHelper.php";
+require_once "PHPUnit/Extensions/Database/DataSet/CompositeDataSet.php";
 
 class Zend_Test_PHPUnit_Database_TestCaseTest extends Zend_Test_PHPUnit_DatabaseTestCase
 {

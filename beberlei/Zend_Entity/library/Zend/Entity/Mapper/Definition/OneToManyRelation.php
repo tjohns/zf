@@ -18,16 +18,20 @@
  */
 
 class Zend_Entity_Mapper_Definition_OneToManyRelation extends Zend_Entity_Mapper_Definition_AbstractRelation
-{    
-    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
+{
+    /**
+     * @return boolean
+     */
+    public function isOwning()
     {
-        parent::compile($entityDef, $map);
+        return false;
+    }
 
-        if($this->getForeignKey() == null) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "OneToMany Relation '".$this->getPropertyName()."' requires name of foreign key field."
-            );
-        }
+    /**
+     * @return boolean
+     */
+    public function isInverse()
+    {
+        return true;
     }
 }

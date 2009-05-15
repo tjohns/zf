@@ -120,9 +120,16 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     protected function createLazyLoadEntity(Zend_Entity_Manager $manager, $class, $id)
     {
-        $callback          = array($manager, "findByKey");
-        $callbackArguments = array($class, $id);
-        return new Zend_Entity_Mapper_LazyLoad_Entity($callback, $callbackArguments);
+        $identityMap = $manager->getIdentityMap();
+        if($identityMap->hasObject($class, $id)) {
+            $lazyEntity = $identityMap->getObject($class, $id);
+        } else {
+            $callback          = array($manager, "findByKey");
+            $callbackArguments = array($class, $id);
+            $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity($callback, $callbackArguments);
+            $identityMap->addObject($class, $id, $lazyEntity);
+        }
+        return $lazyEntity;
     }
 
     protected function createLazyLoadCollection(Zend_Entity_Manager $manager, $class, $select)
@@ -186,30 +193,29 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         }
         foreach($this->_lazyLoadCollections AS $collectionDef) {
             $relation   = $collectionDef->getRelation();
-
             $foreignDefinition = $entityManager->getResource()->getDefinitionByEntityName($relation->getClass());
-            $foreignPrimaryKey = $foreignDefinition->getPrimaryKey()->getKey();
 
-            $intersectTable = $collectionDef->getTable();
             $keyValue = $entityState[$this->_primaryKey->getPropertyName()];
 
             $select = $entityManager->select($relation->getClass());
             $db = $select->getAdapter();
 
-            // Two possibilites: Either there exists a mapping table != foreignTable, or we have a simple OneToMany relationship
+            $intersectTable = $collectionDef->getTable();
             if($foreignDefinition->getTable() !== $collectionDef->getTable()) {
-                // A mapping table exists between the two entities
+                
+                $foreignPrimaryKey = $foreignDefinition->getPrimaryKey()->getKey();
+
                 $intersectOnLhs = $db->quoteIdentifier($intersectTable.".".$relation->getColumnName());
                 $intersectOnRhs = $db->quoteIdentifier($foreignDefinition->getTable().".".$foreignPrimaryKey);
                 $intersectOn = $intersectOnLhs." = ".$intersectOnRhs;
                 $select->join($intersectTable, $intersectOn, array());
-                $select->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->getKey())." = ?", $keyValue);
-            } else {
-                // Foreign Entity holds the foreign key in its table.
-                $select->where( $db->quoteIdentifier($foreignDefinition->getTable().".".$collectionDef->getKey())." = ?", $keyValue);
+            }
+            $select->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->getKey())." = ?", $keyValue);
+
+            if($collectionDef->getOrderBy() !== null) {
+                $select->order($collectionDef->getOrderBy());
             }
 
-            // Check for additional Where clause
             if($collectionDef->getWhere() !== null) {
                 $select->where($collectionDef->getWhere());
             }
@@ -239,6 +245,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $foreignKeyValue = $state[$propertyName];
             $relatedEntity = $entityManager->findByKey($relation->getClass(), $foreignKeyValue);
             $state[$propertyName] = $relatedEntity;
+        }
+        foreach($this->_lateSelectedCollections AS $collection) {
+            
         }
         return $state;
     }

@@ -40,4 +40,23 @@ class Zend_Entity_Mapper_Definition_ManyToOneRelationTest extends Zend_Entity_Ma
         $relation = $this->createRelation();
         $relation->setNotFound("foo");
     }
+
+    public function testCompileManyToOneSetsColumnIfUnset()
+    {
+        $relatedDef = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
+        $relatedDef->expects($this->once())
+                   ->method('getPrimaryKey')
+                   ->will($this->returnValue(new Zend_Entity_Mapper_Definition_PrimaryKey("foo")));
+        $resourceMock = $this->createEntityResourceMock();
+        $resourceMock->expects($this->once())
+                     ->method('getDefinitionByEntityName')
+                     ->with(self::TEST_CLASS)
+                     ->will($this->returnValue($relatedDef));
+
+        $relation = $this->createRelation();
+        $relation->setClass(self::TEST_CLASS);
+        $this->assertNull($relation->getColumnName());
+        $relation->compile($this->createEntityDefinitionMock(), $resourceMock);
+        $this->assertEquals(self::TEST_PROPERTY, $relation->getColumnName());
+    }
 }

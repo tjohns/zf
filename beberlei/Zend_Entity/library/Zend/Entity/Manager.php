@@ -219,20 +219,20 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Return Select statement
      * 
-     * @param  string $entityClass
+     * @param  string $entityName
      * @return Zend_Db_Select
      */
-    public function select($entity)
+    public function select($entityName)
     {
-        $mapper = $this->getMapperByEntity($entity);
+        $mapper = $this->getMapperByEntity($entityName);
         return $mapper->select();
     }
 
     /**
      * Find all entitys matching select statement
      *
-     * @param  Zend_Db_Select $select
      * @param  string $entityName
+     * @param  Zend_Db_Select $select
      * @return Zend_Entity_Collection
      */
     public function find($entityName, $select)

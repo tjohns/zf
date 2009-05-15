@@ -64,29 +64,12 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
     {
         if(!is_callable($callback)) {
             require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(sprintf(
-                "Invalid callback given '%s' for construcing lazy load collection.",
-                $this->_callbackToString($callback)
-            ));
+            throw new Zend_Entity_Exception(
+                "Invalid callback given for construcing lazy load collection."
+            );
         }
         $this->_callback          = $callback;
         $this->_callbackArguments = $arguments;
-    }
-
-    private function _callbackToString($callback)
-    {
-        $callstr = "";
-        if(is_array($callback)) {
-            if(is_object($callback[0])) {
-                $callstr .= get_class($callback[0]);
-            } else {
-                $callstr .= $callback[0];
-            }
-            $callstr .= "::";
-            $callback = $callback[1];
-        }
-        $callstr .= $callback;
-        return $callstr;
     }
 
     /**
@@ -98,7 +81,7 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
     {
         if($this->_collection == null) {
             $collection = call_user_func_array($this->_callback, $this->_callbackArguments);
-            if($collection instanceof Zend_Entity_Collection) {
+            if($collection instanceof Zend_Entity_Collection_Interface) {
                 $this->_collection = $collection;
             } else {
                 require_once "Zend/Entity/Exception.php";
@@ -139,7 +122,7 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
 
     public function valid()
     {
-        return ($this->getInnerCollection()->current()!==false);
+        return $this->getInnerCollection()->valid();
     }
 
     public function next()
@@ -187,6 +170,6 @@ class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_I
         if($this->_collection === null) {
             return false;
         }
-        return true;
+        return $this->_collection->wasLoadedFromDatabase();
     }
 }

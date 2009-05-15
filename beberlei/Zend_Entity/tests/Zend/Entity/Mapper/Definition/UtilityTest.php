@@ -23,7 +23,7 @@ class Zend_Entity_Mapper_Definition_UtilityTest extends PHPUnit_Framework_TestCa
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $className = "Zend_Entity_UnknownClassName";
+        $className = "MyEntity_UnknownClassName";
         $loader = $this->createPluginLoaderThatReturnsClassOnLoad($className);
         Zend_Entity_Mapper_Definition_Utility::setDefinitionLoader($loader);
 

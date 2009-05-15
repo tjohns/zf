@@ -53,12 +53,12 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
     /**
      * @var string
      */
-    protected $_foreignKey;
+    protected $_columnName = null;
 
     /**
-     * @var string
+     * @var boolean
      */
-    protected $_columnName = null;
+    protected $_inverse = false;
 
     /**
      * Get Database column name of this property.
@@ -177,18 +177,33 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
         return $this->_notFound;
     }
 
-    public function getForeignKey()
+    /**
+     * @return boolean
+     */
+    public function isInverse()
     {
-        return $this->_foreignKey;
-    }
-
-    public function setForeignKey($foreignKey)
-    {
-        $this->_foreignKey = $foreignKey;
+        return (!$this->isOwning());
     }
 
     /**
-     * Compile ManyToOne Relation Element
+     * @return boolean
+     */
+    public function isOwning()
+    {
+        return ($this->_inverse==false);
+    }
+
+    /**
+     * @param boolean $inverse
+     * @return void
+     */
+    public function setInverse($inverse)
+    {
+        $this->_inverse = $inverse;
+    }
+
+    /**
+     * Compile Abstract Relation Element
      *
      * @param Zend_Entity_Mapper_Definition_Entity $entityDef
      * @param Zend_Entity_Resource_Interface $map
@@ -200,10 +215,6 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
             throw new Zend_Entity_Exception(
                 "Cannot compile relation due to missing class reference for property: ".$this->getPropertyName()
             );
-        }
-
-        if($this->getColumnName() == null) {
-            $this->setColumnName(($this->getPropertyName()));
         }
     }
 }

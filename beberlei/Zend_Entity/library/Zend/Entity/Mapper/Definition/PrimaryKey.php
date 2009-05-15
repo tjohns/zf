@@ -31,7 +31,7 @@ class Zend_Entity_Mapper_Definition_PrimaryKey extends Zend_Entity_Mapper_Defini
      */
     public function getKey()
     {
-        return $this->getPropertyName();
+        return $this->getColumnName();
     }
 
     /**

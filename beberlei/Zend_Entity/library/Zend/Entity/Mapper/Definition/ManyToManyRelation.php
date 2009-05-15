@@ -23,11 +23,9 @@ class Zend_Entity_Mapper_Definition_ManyToManyRelation extends Zend_Entity_Mappe
     {
         parent::compile($entityDef, $map);
 
-        if($this->getForeignKey() == null) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "OneToMany Relation '".$this->getPropertyName()."' requires name of foreign key field."
-            );
+        if($this->getColumnName() == null) {
+            $foreignDef = $map->getDefinitionByEntityName($this->getClass());
+            $this->setColumnName($foreignDef->getPrimaryKey()->getColumnName());
         }
     }
 }

@@ -64,6 +64,11 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     protected $_element = null;
 
     /**
+     * @var boolean
+     */
+    protected $_inverse = false;
+
+    /**
      * Construct Collection Definition
      *
      * @param string $propertyName
@@ -238,6 +243,27 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     public function getCollectionType()
     {
         return $this->_collectionType;
+    }
+
+    /**
+     * Is this collection the inverse of the relation?
+     *
+     * @return boolean
+     */
+    public function getInverse()
+    {
+        return $this->_inverse;
+    }
+
+    /**
+     * Set Inverse configuration
+     *
+     * @param boolean $inverse
+     * @return void
+     */
+    public function setInverse($inverse)
+    {
+        $this->_inverse = $inverse;
     }
 
     /**

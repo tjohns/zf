@@ -34,16 +34,32 @@ class Zend_Entity_Mapper_LazyLoad_Entity implements Zend_Entity_Interface
      */
     protected $_object;
 
-    public function __construct($callback, array $args)
+    /**
+     * @var int
+     */
+    protected $_lazyLoadEntityId;
+
+    /**
+     * @param array|string $callback
+     * @param array $args
+     */
+    public function __construct($callback, array $args=array())
     {
         if(!is_callable($callback)) {
-            throw new Exception("Callback is not callble.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Invalid callback given.");
         }
         $this->_callback = $callback;
         $this->_callbackArguments     = $args;
+        $this->_lazyLoadEntityId = $args[1];
     }
 
-    protected function getObject()
+    /**
+     * Retrieve the original object from the database if not already done so.
+     * 
+     * @return Zend_Entity_Interface
+     */
+    public function getObject()
     {
         if($this->_object == null) {
             $this->_object = call_user_func_array($this->_callback, $this->_callbackArguments);
@@ -86,11 +102,22 @@ class Zend_Entity_Mapper_LazyLoad_Entity implements Zend_Entity_Interface
         unset($this->getObject()->$name);
     }
 
+    /**
+     * @return boolean
+     */
     public function entityWasLoaded()
     {
         if($this->_object == null) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLazyLoadEntityId()
+    {
+        return $this->_lazyLoadEntityId;
     }
 }

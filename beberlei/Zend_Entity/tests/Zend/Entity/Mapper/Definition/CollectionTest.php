@@ -123,6 +123,21 @@ class Zend_Entity_Mapper_Definition_CollectionTest extends Zend_Entity_Mapper_De
         $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
     }
 
+    public function testGetDefaultInverse()
+    {
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+
+        $this->assertFalse($colDef->getInverse());
+    }
+
+    public function testGetSetInverse()
+    {
+        $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setInverse(true);
+
+        $this->assertTrue($colDef->getInverse());
+    }
+
     /**
      * @return Zend_Entity_Mapper_Definition_Collection
      */

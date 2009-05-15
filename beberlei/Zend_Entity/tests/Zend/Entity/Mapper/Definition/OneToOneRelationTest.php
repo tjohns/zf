@@ -40,4 +40,11 @@ class Zend_Entity_Mapper_Definition_OneToOneRelationTest extends Zend_Entity_Map
         $relation = $this->createRelation();
         $relation->setNotFound("foo");
     }
+
+    public function testCompileOneToOne()
+    {
+        $relation = $this->createRelation();
+        $relation->setClass(self::TEST_CLASS);
+        $relation->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
 }

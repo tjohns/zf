@@ -1,6 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Mapper_Loader_ManyToOneFixture extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_Fixture_ManyToOneDefs extends Zend_Entity_Fixture_Abstract
 {
     const TEST_A_CLASS = 'Zend_TestEntity1';
     const TEST_A_TABLE = 'table_a';
@@ -18,12 +18,13 @@ abstract class Zend_Entity_Mapper_Loader_ManyToOneFixture extends Zend_Entity_Ma
     const TEST_B_PROPERTY = 'property';
     const TEST_B_PROPERTY_COLUMN = 'b_property';
 
-    public function setUp()
-    {
-        $this->resourceMap = new Zend_Entity_Resource_Testing();
-        $this->resourceMap->addDefinition( $this->createClassBDefinition() );
-        $this->resourceMap->addDefinition( $this->createClassADefinition() );
-    }
+    const DUMMY_DATA_ID = 1;
+    const DUMMY_DATA_PROPERTY = 'foo';
+    const DUMMY_DATA_MANYTOONE = '1';
+
+    protected $definitionCreationMethods = array(
+        'createClassBDefinition', 'createClassADefinition',
+    );
 
     public function createClassADefinition()
     {
@@ -46,8 +47,11 @@ abstract class Zend_Entity_Mapper_Loader_ManyToOneFixture extends Zend_Entity_Ma
 
         return $def;
     }
-
-    abstract public function createLoader($definition);
+    
+    public function createLoader($def)
+    {
+        return new Zend_Entity_Mapper_Loader_Basic($def);
+    }
 
 
     public function getClassALoader()
@@ -60,14 +64,10 @@ abstract class Zend_Entity_Mapper_Loader_ManyToOneFixture extends Zend_Entity_Ma
         return $this->createLoader($this->resourceMap->getDefinitionByEntityName(self::TEST_B_CLASS));
     }
 
-    const DUMMY_DATA_ID = 1;
-    const DUMMY_DATA_PROPERTY = 'foo';
-    const DUMMY_DATA_MANYTOONE = '1';
-
-    public function getDummyDataRowClassA()
+    public function getDummyDataRowClassA($id=self::DUMMY_DATA_ID)
     {
         return array(
-            self::TEST_A_ID_COLUMN => self::DUMMY_DATA_ID,
+            self::TEST_A_ID_COLUMN => $id,
             self::TEST_A_PROPERTY_COLUMN => self::DUMMY_DATA_PROPERTY,
             self::TEST_A_MANYTOONE_COLUMN => self::DUMMY_DATA_MANYTOONE,
         );

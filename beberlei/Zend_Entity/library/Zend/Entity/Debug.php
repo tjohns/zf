@@ -9,18 +9,23 @@ class Zend_Entity_Debug
     {
         if($object instanceof Zend_Entity_Interface) {
             $object = $object->getState();
+            $state = array();
             foreach($object AS $k => $v) {
-                if($v instanceof Zend_Entity_Mapper_LazyLoad_Collection) {
+                if($v instanceof Zend_Entity_Collection_Interface && $v->wasLoadedFromDatabase() == false) {
                     $v = "*LAZYLOADCOLLECTION*";
                 } else if($v instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
-                    $v = "*LAZYLOADOBJECT*";
+                    $v = "*LAZYLOADENTITY*";
                 }
-                $object[$k] = $v;
+                $state[$k] = $v;
             }
-            var_dump($object);
+            var_dump($state);
         } else if($object instanceof Zend_Entity_Collection_Interface) {
-            foreach($object AS $k => $v) {
-                Zend_Entity_Debug::dump($v);
+            if($object->wasLoadedFromDatabase() == false) {
+                var_dump("*LAZYLOADCOLLECTION*");
+            } else {
+                foreach($object AS $k => $v) {
+                    Zend_Entity_Debug::dump($v);
+                }
             }
         }
     }

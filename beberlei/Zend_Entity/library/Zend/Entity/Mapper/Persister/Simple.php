@@ -17,20 +17,17 @@
  * @license    New BSD License
  */
 
-/**
- * Simple Persister can handle single entities with no or only ManyToOne and OneToOne relationsships.
- */
 class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persister_Interface
 {
     /**
      * @var array
      */
-    protected $_properties;
+    protected $_properties = array();
 
     /**
      * @var array
      */
-    protected $_relations;
+    protected $_toOneRelations = array();
 
     /**
      * @var string
@@ -56,8 +53,18 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function initialize(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $defMap)
     {
-        $this->_properties       = $entityDef->getProperties();
-        $this->_relations        = $entityDef->getRelations();
+        $properties = array();
+        foreach($entityDef->getProperties() AS $property) {
+            if(!($property instanceof Zend_Entity_Mapper_Definition_Formula)) {
+                $properties[] = $property;
+            }
+        }
+        $this->_properties       = $properties;
+        foreach($entityDef->getRelations() AS $relation) {
+            if($relation->isOwning()) {
+                $this->_toOneRelations[] = $relation;
+            }
+        }
         $this->_class            = $entityDef->getClass();
         $this->_primaryKey       = $entityDef->getPrimaryKey();
         $this->_table            = $entityDef->getTable();
@@ -82,15 +89,17 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             // TODO $propertyValue = $property->convertToSqlValue($propertyValue);
             $dbState[$columnName] = $propertyValue;
         }
-        foreach($this->_relations AS $relation) {
+        foreach($this->_toOneRelations AS $relation) {
             $propertyName = $relation->getPropertyName();
             // TODO: is allowed to be null?
             // TODO: is still lazy load proxy?
             // TODO: Cascading save/update? Spill over!
             $relatedObject      = $entityState[$propertyName];
 
-            $foreignKeyProperty = $relation->getForeignKey();
-            if(is_object($relatedObject)) {
+            if($relatedObject instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
+                $dbState[$relation->getColumnName()] = $relatedObject->getLazyLoadEntityId();
+            } else if($relatedObject instanceof Zend_Entity_Interface) {
+                $foreignKeyProperty = $relation->getForeignKeyPropertyName();
                 $relatedObjectState = $relatedObject->getState();
                 $dbState[$relation->getColumnName()] = $relatedObjectState[$foreignKeyProperty];
             } else {
@@ -108,7 +117,11 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             $entity->setState($newPrimaryKey);
 
             $identityMap = $entityManager->getIdentityMap();
-            $identityMap->addObject($this->_class, Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($newPrimaryKey), $entity);
+            $identityMap->addObject(
+                $this->_class,
+                Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($newPrimaryKey),
+                $entity
+            );
         } else {
             $where   = $pk->buildWhereCondition($dbAdapter, $tableName, $dbState);
             $dbState = $pk->removeSequenceFromState($dbState);

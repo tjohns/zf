@@ -21,11 +21,17 @@ require_once "Abstract.php";
 
 class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
 {
+    /**
+     * @param Zend_Db_Select $select
+     */
     public function initSelect(Zend_Db_Select $select)
     {
         $select->from($this->_table);
     }
 
+    /**
+     * @param Zend_Db_Select $select
+     */
     public function initColumns(Zend_Db_Select $select)
     {
         $select->columns($this->_sqlColumnAliasMap);
