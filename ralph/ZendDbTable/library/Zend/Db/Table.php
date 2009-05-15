@@ -45,19 +45,30 @@ class Zend_Db_Table extends Zend_Db_Table_Abstract
      */
     public function __construct($config = array(), $definition = null)
     {
+        if ($definition !== null && is_array($definition)) {
+            $definition = new Zend_Db_Table_Definition($definition);
+        }
+        
         if (is_string($config)) {
             if (Zend_Registry::isRegistered($config)) {
                 $config = array(self::ADAPTER => $config);
             } else {
-                $config = array(self::NAME => $config);
+                // process this as table with or without a definition
+                if ($definition instanceof Zend_Db_Table_Definition
+                    && $definition->hasTableConfig($config)) {
+                    // this will have DEFINITION_CONFIG_NAME & DEFINITION
+                    $config = $definition->getTableConfig($config);
+                } else {
+                    $config = array(self::NAME => $config);
+                }
             }
-        }
-        
-        if ($definition instanceof Zend_Db_Table_Definition) {
-            $config[self::DEFINITION] = $definition;
         }
         
         parent::__construct($config);
     }
+    
+    
+    
+
     
 }

@@ -8,3 +8,4 @@ foreach ($authors as $author) {
     echo $author->id . ': ' . $author->first_name . ' ' . $author->last_name . PHP_EOL;
 }
 
+echo PHP_EOL;

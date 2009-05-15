@@ -48,7 +48,8 @@ abstract class Zend_Db_Table_Abstract
 {
 
     const ADAPTER          = 'db';
-    const DEFINITION       = 'definition';
+    const DEFINITION        = 'definition';
+    const DEFINITION_CONFIG_NAME = 'definitionConfigName';
     const SCHEMA           = 'schema';
     const NAME             = 'name';
     const PRIMARY          = 'primary';
@@ -84,6 +85,20 @@ abstract class Zend_Db_Table_Abstract
     protected static $_defaultDb;
 
     /**
+     * Optional Zend_Db_Table_Definition object
+     *
+     * @var unknown_type
+     */
+    protected $_definition = null;
+    
+    /**
+     * Optional definition config name used in concrete implementation
+     *
+     * @var string
+     */
+    protected $_definitionConfigName = null;
+    
+    /**
      * Default cache for information provided by the adapter's describeTable() method.
      *
      * @var Zend_Cache_Core
@@ -97,13 +112,6 @@ abstract class Zend_Db_Table_Abstract
      */
     protected $_db;
 
-    /**
-     * Optional Zend_Db_Table_Definition object
-     *
-     * @var unknown_type
-     */
-    protected $_definition = null;
-    
     /**
      * The schema name (default null means current schema)
      *
@@ -266,18 +274,6 @@ abstract class Zend_Db_Table_Abstract
      */
     public function setOptions(Array $options)
     {
-        // merge the provided options over the table optiosn in the 
-        // definition if they exist
-        if (isset($options[self::NAME]) 
-            && isset($options[self::DEFINITION])
-            && $options[self::DEFINITION] instanceof Zend_Db_Table_Definition
-            && $options[self::DEFINITION]->hasTableConfig($options[self::NAME])) {
-            $options = array_merge(
-                $options[self::DEFINITION]->getTableConfig($options[self::NAME]),
-                $options
-                );
-        }
-        
         foreach ($options as $key => $value) {
             switch ($key) {
                 case self::ADAPTER:
@@ -285,6 +281,9 @@ abstract class Zend_Db_Table_Abstract
                     break;
                 case self::DEFINITION:
                     $this->setDefinition($value);
+                    break;
+                case self::DEFINITION_CONFIG_NAME:
+                    $this->setDefinitionConfigName($value);
                     break;
                 case self::SCHEMA:
                     $this->_schema = (string) $value;
@@ -345,6 +344,28 @@ abstract class Zend_Db_Table_Abstract
     public function getDefinition()
     {
         return $this->_definition;
+    }
+    
+    /**
+     * setDefinitionConfigName()
+     *
+     * @param string $definition
+     * @return Zend_Db_Table_Abstract
+     */
+    public function setDefinitionConfigName($definitionConfigName)
+    {
+        $this->_definitionConfigName = $definitionConfigName;
+        return $this;
+    }
+    
+    /**
+     * getDefinitionConfigName()
+     *
+     * @return string
+     */
+    public function getDefinitionConfigName()
+    {
+        return $this->_definitionConfigName;
     }
     
     /**
@@ -436,6 +457,9 @@ abstract class Zend_Db_Table_Abstract
     public function getReference($tableClassname, $ruleKey = null)
     {
         $thisClass = get_class($this);
+        if ($thisClass === 'Zend_Db_Table') {
+            $thisClass = $this->_definitionConfigName;
+        }
         $refMap = $this->_getReferenceMapNormalized();
         if ($ruleKey !== null) {
             if (!isset($refMap[$ruleKey])) {

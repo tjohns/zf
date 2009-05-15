@@ -19,15 +19,12 @@ $definition = new Zend_Db_Table_Definition(array(
         )
     ));
 
-$authorTable = new Zend_Db_Table('author', $definition);
-$authors = $authorTable->fetchAll();
+$bookTable = new Zend_Db_Table('book', $definition);
+$book = $bookTable->find(1)->current();
 
-foreach ($authors as $author) {
-    echo $author->id . ': ' . $author->first_name . ' ' . $author->last_name . PHP_EOL;
-    $books = $author->findDependentRowset('book');
-    foreach ($books as $book) {
-        echo '    ' . $book->title . PHP_EOL;
-    }
-}
+echo $book->title . ' by ';
+$author = $book->findParentRow('author');
+
+echo $author->first_name . $author->last_name . PHP_EOL;
 
 echo PHP_EOL;

@@ -859,7 +859,8 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
      */
     protected function _prepareReference(Zend_Db_Table_Abstract $dependentTable, Zend_Db_Table_Abstract $parentTable, $ruleKey)
     {
-        $map = $dependentTable->getReference(get_class($parentTable), $ruleKey);
+        $parentTableName = (get_class($parentTable) === 'Zend_Db_Table') ? $parentTable->getDefinitionConfigName() : get_class($parentTable);
+        $map = $dependentTable->getReference($parentTableName, $ruleKey);
 
         if (!isset($map[Zend_Db_Table_Abstract::REF_COLUMNS])) {
             $parentInfo = $parentTable->info();
@@ -888,11 +889,7 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         if (is_string($dependentTable)) {
             if ((($tableDefinition = $this->_table->getDefinition()) !== null)
                 && ($tableDefinition->hasTableConfig($dependentTable))) {
-                $dependentTable = new Zend_Db_Table(array(
-                    'db' => $db,
-                    'name' => $dependentTable,
-                    'definition' => $tableDefinition
-                    ));
+                $dependentTable = new Zend_Db_Table($dependentTable, $tableDefinition);
             } elseif (!class_exists($dependentTable)) {
                 try {
                     require_once 'Zend/Loader.php';
@@ -950,7 +947,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($parentTable)) {
-            if (!class_exists($parentTable)) {
+            if ((($tableDefinition = $this->_table->getDefinition()) !== null)
+                && ($tableDefinition->hasTableConfig($parentTable))) {
+                $parentTable = new Zend_Db_Table($parentTable, $tableDefinition);
+            } elseif (!class_exists($parentTable)) {
                 try {
                     require_once 'Zend/Loader.php';
                     Zend_Loader::loadClass($parentTable);
@@ -958,8 +958,8 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
                     require_once 'Zend/Db/Table/Row/Exception.php';
                     throw new Zend_Db_Table_Row_Exception($e->getMessage());
                 }
+                $parentTable = new $parentTable(array('db' => $db));
             }
-            $parentTable = new $parentTable(array('db' => $db));
         }
         if (! $parentTable instanceof Zend_Db_Table_Abstract) {
             $type = gettype($parentTable);

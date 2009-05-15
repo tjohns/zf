@@ -34,7 +34,15 @@ class Zend_Db_Table_Definition
     {
         
         // @todo logic here
+        $tableConfig[Zend_Db_Table::DEFINITION_CONFIG_NAME] = $tableName;
+        $tableConfig[Zend_Db_Table::DEFINITION] = $this;
         
+        if (!isset($tableConfig[Zend_Db_Table::NAME])) {
+            $tableConfig[Zend_Db_Table::NAME] = $tableName;
+        }
+        
+        
+         
         $this->_tableConfigs[$tableName] = $tableConfig;
     }
     
