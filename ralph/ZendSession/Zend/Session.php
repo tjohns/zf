@@ -229,6 +229,22 @@ class Zend_Session extends Zend_Session_Abstract
         }
     }
 
+    public static function getOptions($optionName = null)
+    {
+        $options = ini_get_all('session');
+        foreach (self::$_localOptions as $localOptionName => $localOptionMemberName) {
+            $options[$localOptionName] = self::${$localOptionMemberName};
+        }
+        
+        if ($optionName) {
+            if (array_key_exists($optionName, $options)) {
+                return $options[$optionName];
+            }
+            return null;
+        }
+        
+        return $options;
+    }
 
     /**
      * setSaveHandler() - Session Save Handler assignment
