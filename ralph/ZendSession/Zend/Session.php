@@ -785,6 +785,7 @@ class Zend_Session extends Zend_Session_Abstract
     public static function namespaceUnset($namespace)
     {
         parent::_namespaceUnset($namespace);
+        Zend_Session_Namespace::resetSingleInstance($namespace);
     }
 
 
