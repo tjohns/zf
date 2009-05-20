@@ -102,15 +102,17 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         }
         foreach($entityDefinition->getExtensions() AS $extension) {
             if($extension instanceof Zend_Entity_Mapper_Definition_Collection) {
-                $relation = $extension->getRelation();
-                if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
-                    $this->_lateSelectedCollections[] = $extension;
-                    $this->_hasLateLoadingObjects     = true;
-                } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
-                    $this->_lazyLoadCollections[]     = $extension;
-                    $this->_hasLazyLoads              = true;
-                } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
-                    // TODO: Implement Join saving of information
+                if($extension->getCollectionType() == Zend_Entity_Mapper_Definition_Collection::COLLECTION_RELATION) {
+                    $relation = $extension->getRelation();
+                    if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
+                        $this->_lateSelectedCollections[] = $extension;
+                        $this->_hasLateLoadingObjects     = true;
+                    } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+                        $this->_lazyLoadCollections[]     = $extension;
+                        $this->_hasLazyLoads              = true;
+                    } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
+                        // TODO: Implement Join saving of information
+                    }
                 }
             }
         }
@@ -121,7 +123,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     protected function createLazyLoadEntity(Zend_Entity_Manager $manager, $class, $id)
     {
         $identityMap = $manager->getIdentityMap();
-        if($identityMap->hasObject($class, $id)) {
+        if($identityMap->hasLazyObject($class, $id)) {
             $lazyEntity = $identityMap->getObject($class, $id);
         } else {
             $callback          = array($manager, "findByKey");

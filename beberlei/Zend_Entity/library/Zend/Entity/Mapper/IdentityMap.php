@@ -26,19 +26,58 @@ class Zend_Entity_Mapper_IdentityMap
      */
     protected $_loadedObjects = array();
 
+    /**
+     * @param string $entityInterface
+     * @param string $key
+     * @param Zend_Entity_Interface $entity
+     */
     public function addObject($entityInterface, $key, Zend_Entity_Interface $entity)
     {
         $this->_loadedObjects[$entityInterface][$key] = $entity;
     }
 
+    /**
+     * @param string $entityInterface
+     * @param string $key
+     * @return boolean
+     */
     public function hasObject($entityInterface, $key)
     {
-        if(isset($this->_loadedObjects[$entityInterface][$key])) {
-            return true;
-        }
-        return false;
+        return (
+            isset($this->_loadedObjects[$entityInterface][$key]) &&
+            !$this->isLazyLoadObject($entityInterface, $key)
+        );
     }
 
+    /**
+     * @param string $entityInterface
+     * @param string $key
+     * @return boolean
+     */
+    public function hasLazyObject($entityInterface, $key)
+    {
+        return (
+            isset($this->_loadedObjects[$entityInterface][$key]) &&
+            $this->isLazyLoadObject($entityInterface, $key)
+        );
+    }
+
+    /**
+     * @param  string $entityInterface
+     * @param  string $key
+     * @return boolean
+     */
+    public function isLazyLoadObject($entityInterface, $key)
+    {
+        return ($this->_loadedObjects[$entityInterface][$key] instanceof Zend_Entity_Mapper_LazyLoad_Entity);
+    }
+
+    /**
+     *
+     * @param  string $entityInterface
+     * @param  string $key
+     * @return Zend_Entity_Interface
+     */
     public function getObject($entityInterface, $key)
     {
         return $this->_loadedObjects[$entityInterface][$key];
