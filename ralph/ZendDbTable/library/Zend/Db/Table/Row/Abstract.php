@@ -116,12 +116,8 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         if (isset($config['table']) && $config['table'] instanceof Zend_Db_Table_Abstract) {
             $this->_table = $config['table'];
             $this->_tableClass = get_class($this->_table);
-        } else if ($this->_tableClass !== null) {
-            if (!class_exists($this->_tableClass)) {
-                require_once 'Zend/Loader.php';
-                Zend_Loader::loadClass($this->_tableClass);
-            }
-            $this->_table = new $this->_tableClass();
+        } elseif ($this->_tableClass !== null) {
+            $this->_table = $this->_getTableFromString($this->_tableClass);
         }
 
         if (isset($config['data'])) {
@@ -545,20 +541,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         if (count($pkDiffData) > 0) {
             $depTables = $this->_getTable()->getDependentTables();
             if (!empty($depTables)) {
-                $db = $this->_getTable()->getAdapter();
                 $pkNew = $this->_getPrimaryKey(true);
                 $pkOld = $this->_getPrimaryKey(false);
                 foreach ($depTables as $tableClass) {
-                    if (!class_exists($tableClass)) {
-                        try {
-                            require_once 'Zend/Loader.php';
-                            Zend_Loader::loadClass($tableClass);
-                        } catch (Zend_Exception $e) {
-                            require_once 'Zend/Db/Table/Row/Exception.php';
-                            throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                        }
-                    }
-                    $t = new $tableClass(array('db' => $db));
+                    $t = $this->_getTableFromString($tableClass);
                     $t->_cascadeUpdate($this->getTableClass(), $pkOld, $pkNew);
                 }
             }
@@ -627,19 +613,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
          */
         $depTables = $this->_getTable()->getDependentTables();
         if (!empty($depTables)) {
-            $db = $this->_getTable()->getAdapter();
             $pk = $this->_getPrimaryKey();
             foreach ($depTables as $tableClass) {
-                if (!class_exists($tableClass)) {
-                    try {
-                        require_once 'Zend/Loader.php';
-                        Zend_Loader::loadClass($tableClass);
-                    } catch (Zend_Exception $e) {
-                        require_once 'Zend/Db/Table/Row/Exception.php';
-                        throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                    }
-                }
-                $t = new $tableClass(array('db' => $db));
+                $t = $this->_getTableFromString($tableClass);
                 $t->_cascadeDelete($this->getTableClass(), $pk);
             }
         }
@@ -887,21 +863,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($dependentTable)) {
-            if ((($tableDefinition = $this->_table->getDefinition()) !== null)
-                && ($tableDefinition->hasTableConfig($dependentTable))) {
-                $dependentTable = new Zend_Db_Table($dependentTable, $tableDefinition);
-            } elseif (!class_exists($dependentTable)) {
-                try {
-                    require_once 'Zend/Loader.php';
-                    Zend_Loader::loadClass($dependentTable);
-                } catch (Zend_Exception $e) {
-                    require_once 'Zend/Db/Table/Row/Exception.php';
-                    throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                }
-                $dependentTable = new $dependentTable(array('db' => $db));
-            }
+            $dependentTable = $this->_getTableFromString($dependentTable);
         }
-        if (! $dependentTable instanceof Zend_Db_Table_Abstract) {
+        
+        if (!$dependentTable instanceof Zend_Db_Table_Abstract) {
             $type = gettype($dependentTable);
             if ($type == 'object') {
                 $type = get_class($dependentTable);
@@ -947,21 +912,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($parentTable)) {
-            if ((($tableDefinition = $this->_table->getDefinition()) !== null)
-                && ($tableDefinition->hasTableConfig($parentTable))) {
-                $parentTable = new Zend_Db_Table($parentTable, $tableDefinition);
-            } elseif (!class_exists($parentTable)) {
-                try {
-                    require_once 'Zend/Loader.php';
-                    Zend_Loader::loadClass($parentTable);
-                } catch (Zend_Exception $e) {
-                    require_once 'Zend/Db/Table/Row/Exception.php';
-                    throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                }
-                $parentTable = new $parentTable(array('db' => $db));
-            }
+            $parentTable = $this->_getTableFromString($parentTable);
         }
-        if (! $parentTable instanceof Zend_Db_Table_Abstract) {
+        
+        if (!$parentTable instanceof Zend_Db_Table_Abstract) {
             $type = gettype($parentTable);
             if ($type == 'object') {
                 $type = get_class($parentTable);
@@ -1008,18 +962,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         $db = $this->_getTable()->getAdapter();
 
         if (is_string($intersectionTable)) {
-            if (!class_exists($intersectionTable)) {
-                try {
-                    require_once 'Zend/Loader.php';
-                    Zend_Loader::loadClass($intersectionTable);
-                } catch (Zend_Exception $e) {
-                    require_once 'Zend/Db/Table/Row/Exception.php';
-                    throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                }
-            }
-            $intersectionTable = new $intersectionTable(array('db' => $db));
+            $intersectionTable = $this->_getTableFromString($intersectionTable);
         }
-        if (! $intersectionTable instanceof Zend_Db_Table_Abstract) {
+        
+        if (!$intersectionTable instanceof Zend_Db_Table_Abstract) {
             $type = gettype($intersectionTable);
             if ($type == 'object') {
                 $type = get_class($intersectionTable);
@@ -1029,17 +975,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         }
 
         if (is_string($matchTable)) {
-            if (!class_exists($matchTable)) {
-                try {
-                    require_once 'Zend/Loader.php';
-                    Zend_Loader::loadClass($matchTable);
-                } catch (Zend_Exception $e) {
-                    require_once 'Zend/Db/Table/Row/Exception.php';
-                    throw new Zend_Db_Table_Row_Exception($e->getMessage());
-                }
-            }
-            $matchTable = new $matchTable(array('db' => $db));
+            $matchTable = $this->_getTableFromString($matchTable);
         }
+        
         if (! $matchTable instanceof Zend_Db_Table_Abstract) {
             $type = gettype($matchTable);
             if ($type == 'object') {
@@ -1173,6 +1111,35 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
 
         require_once 'Zend/Db/Table/Row/Exception.php';
         throw new Zend_Db_Table_Row_Exception("Unrecognized method '$method()'");
+    }
+    
+
+    /**
+     * _getTableFromString
+     *
+     * @param string $tableName
+     * @return Zend_Db_Table_Abstract
+     */
+    protected function _getTableFromString($tableName)
+    {
+        $tableDefinition = $this->_table->getDefinition();
+        
+        if ($tableDefinition !== null && $tableDefinition->hasTableConfig($tableName)) {
+            return new Zend_Db_Table($tableName, $tableDefinition);
+        } 
+        
+        // assume the tableName is the class name
+        if (!class_exists($tableName)) {
+            try {
+                require_once 'Zend/Loader.php';
+                Zend_Loader::loadClass($tableName);
+            } catch (Zend_Exception $e) {
+                require_once 'Zend/Db/Table/Row/Exception.php';
+                throw new Zend_Db_Table_Row_Exception($e->getMessage());
+            }
+        }
+
+        return new $tableName(array('db' => $this->_getTable()->getAdapter()));
     }
 
 }

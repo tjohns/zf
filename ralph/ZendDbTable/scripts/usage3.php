@@ -25,6 +25,6 @@ $book = $bookTable->find(1)->current();
 echo $book->title . ' by ';
 $author = $book->findParentRow('author');
 
-echo $author->first_name . $author->last_name . PHP_EOL;
+echo $author->first_name . ' ' . $author->last_name . PHP_EOL;
 
 echo PHP_EOL;

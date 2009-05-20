@@ -76,7 +76,7 @@ abstract class Zend_Db_Table_Abstract
     const DEFAULT_NONE     = 'defaultNone';
     const DEFAULT_CLASS    = 'defaultClass';
     const DEFAULT_DB       = 'defaultDb';
-
+    
     /**
      * Default Zend_Db_Adapter_Abstract object.
      *
@@ -988,12 +988,17 @@ abstract class Zend_Db_Table_Abstract
     /**
      * Returns an instance of a Zend_Db_Table_Select object.
      *
+     * @param bool $withFromPart Whether or not to include the from part in the select object
      * @return Zend_Db_Table_Select
      */
-    public function select()
+    public function select($withFromPart = false)
     {
         require_once 'Zend/Db/Table/Select.php';
-        return new Zend_Db_Table_Select($this);
+        $select = new Zend_Db_Table_Select($this);
+        if ($withFromPart == true) {
+            $select->from($this->info(self::NAME), Zend_Db_Table_Select::SQL_WILDCARD, $this->info(self::SCHEMA));
+        }
+        return $select;
     }
 
     /**
