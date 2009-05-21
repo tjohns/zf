@@ -1159,11 +1159,11 @@ abstract class Zend_Db_Table_Abstract
         $whereClause = null;
         if (count($whereList)) {
             $whereOrTerms = array();
+            $tableName = $this->_db->quoteTableAs($this->_name, null, true);
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyPosition => $keyValue) {
                     $type = $this->_metadata[$keyNames[$keyPosition]]['DATA_TYPE'];
-                    $tableName = $this->_db->quoteTableAs($this->_name, null, true);
                     $columnName = $this->_db->quoteIdentifier($keyNames[$keyPosition], true);
                     $whereAndTerms[] = $this->_db->quoteInto(
                         $tableName . '.' . $columnName . ' = ?',
