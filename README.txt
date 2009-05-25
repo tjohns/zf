@@ -1,9 +1,9 @@
-Welcome to the Zend Framework 1.8 Release! 
+Welcome to the Zend Framework 1.8.2 Release! 
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.8 Release ([INSERT REV NUM HERE]).
-Released on May 12, 2009.
+Zend Framework 1.8.2 Release ([INSERT REV NUM HERE]).
+Released on May 27, 2009.
 
 NEW FEATURES
 ------------
@@ -48,7 +48,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=11023
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=11030
 
 SYSTEM REQUIREMENTS
 -------------------
