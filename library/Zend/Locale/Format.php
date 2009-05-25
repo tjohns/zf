@@ -172,6 +172,10 @@ class Zend_Locale_Format
                     }
                     break;
 
+                case 'disablecache' :
+                    Zend_Locale_Data::disableCache($value);
+                    break;
+
                 case 'precision' :
                     if ($value === NULL) {
                         $value = -1;

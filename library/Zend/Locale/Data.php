@@ -61,6 +61,14 @@ class Zend_Locale_Data
     private static $_cache = null;
 
     /**
+     * Internal option, cache disabled
+     *
+     * @var    boolean
+     * @access private
+     */
+    private static $_cacheDisabled = false;
+
+    /**
      * Read the content from locale
      *
      * Can be called like:
@@ -290,7 +298,7 @@ class Zend_Locale_Data
     {
         $locale = self::_checkLocale($locale);
 
-        if (!isset(self::$_cache)) {
+        if (!isset(self::$_cache) && !self::$_cacheDisabled) {
             require_once 'Zend/Cache.php';
             self::$_cache = Zend_Cache::factory(
                 'Core',
@@ -306,7 +314,7 @@ class Zend_Locale_Data
 
         $val = urlencode($val);
         $id = strtr('Zend_LocaleL_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
-        if ($result = self::$_cache->load($id)) {
+        if (!self::$_cacheDisabled && ($result = self::$_cache->load($id))) {
             return unserialize($result);
         }
 
@@ -826,7 +834,7 @@ class Zend_Locale_Data
     {
         $locale = self::_checkLocale($locale);
 
-        if (!isset(self::$_cache)) {
+        if (!isset(self::$_cache) && !self::$_cacheDisabled) {
             require_once 'Zend/Cache.php';
             self::$_cache = Zend_Cache::factory(
                 'Core',
@@ -841,7 +849,7 @@ class Zend_Locale_Data
         }
         $val = urlencode($val);
         $id = strtr('Zend_LocaleC_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
-        if ($result = self::$_cache->load($id)) {
+        if (!self::$_cacheDisabled && ($result = self::$_cache->load($id))) {
             return unserialize($result);
         }
 
@@ -1309,5 +1317,15 @@ class Zend_Locale_Data
     public static function clearCache()
     {
         self::$_cache->clean();
+    }
+
+    /**
+     * Disables the cache
+     *
+     * @param unknown_type $flag
+     */
+    public static function disableCache($flag)
+    {
+        self::$_cacheDisabled = (boolean) $flag;
     }
 }

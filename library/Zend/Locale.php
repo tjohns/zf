@@ -440,7 +440,7 @@ class Zend_Locale
     /**
      * Returns the language part of the locale
      *
-     * @return string - language
+     * @return string Language
      */
     public function getLanguage()
     {
@@ -871,6 +871,18 @@ class Zend_Locale
     {
         require_once 'Zend/Locale/Data.php';
         Zend_Locale_Data::clearCache();
+    }
+
+    /**
+     * Disables the set cache
+     *
+     * @param  boolean $flag True disables any set cache, default is false
+     * @return void
+     */
+    public static function disableCache($flag)
+    {
+        require_once 'Zend/Locale/Data.php';
+        Zend_Locale_Data::disableCache($flag);
     }
 
     /**
