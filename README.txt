@@ -5,8 +5,12 @@ RELEASE INFORMATION
 Zend Framework 1.8.2 Release ([INSERT REV NUM HERE]).
 Released on May 27, 2009.
 
-NEW FEATURES
-------------
+For detailed changes, please see:
+
+    http://framework.zend.com/changelog/1.8.2
+
+NEW FEATURES in 1.8.0
+---------------------
 
 * Zend_Tool, contributed by Ralph Schindler
 * Zend_Application, contributed by Ben Scholzen and Matthew Weier O'Phinney
