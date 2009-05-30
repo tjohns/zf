@@ -99,6 +99,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
      *                                                ramdiskId string      The ID of the RAM disk with which to launch the instance.
      *                                                blockDeviceVirtualName string     Specifies the virtual name to map to the corresponding device name. For example: instancestore0
      *                                                blockDeviceName string            Specifies the device to which you are mapping a virtual name. For example: sdb
+     *                                                monitor boolean               Turn on CloudWatch Monitoring for an instance.
      * @return array
      */
     public function run(array $options)
@@ -159,6 +160,10 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
         if(isset($options['blockDeviceVirtualName']) && isset($options['blockDeviceName'])) {
             $params['BlockDeviceMapping.n.VirtualName'] = $options['blockDeviceVirtualName'];
             $params['BlockDeviceMapping.n.DeviceName'] = $options['blockDeviceName'];
+        }
+        
+        if(isset($options['monitor']) && $options['monitor'] === true) {
+            $params['Monitoring.Enabled'] = true;
         }
 
         $response = $this->sendRequest($params);
@@ -439,6 +444,27 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
         }
 
         return false;
+    }
+    
+    /**
+    * Turn on Amazon CloudWatch Monitoring for an instance or a list of instances
+    * 
+    *   @param array|string $instance           The instance or list of instances you want to enable monitoring for
+    *   @return array
+    */
+    public function monitor($instance)
+    {
+    
+    }
+    /**
+    * Turn off Amazon CloudWatch Monitoring for an instance or a list of instances
+    * 
+    *   @param array|string $instance           The instance or list of instances you want to disable monitoring for
+    *   @return array
+    */
+    public function unmonitor($instance)
+    {
+    
     }
 
 }
