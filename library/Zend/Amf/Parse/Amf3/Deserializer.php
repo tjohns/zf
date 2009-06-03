@@ -250,7 +250,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
 
         // Create a holder for the array in the reference list
         $data = array();
-        $this->_referenceObjects[] &= $data;
+        $this->_referenceObjects[] =& $data;
         $key = $this->readString();
 
         // Iterating for string based keys.
