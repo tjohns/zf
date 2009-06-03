@@ -33,7 +33,7 @@ class Zend_Service_Amazon_Ec2_Response {
     /**
      * XML namespace used for EC2 responses.
      */
-    const XML_NAMESPACE = 'http://ec2.amazonaws.com/doc/2008-12-01/';
+    const XML_NAMESPACE = 'http://ec2.amazonaws.com/doc/2009-04-04/';
 
     /**
      * The original HTTP response
@@ -135,5 +135,10 @@ class Zend_Service_Amazon_Ec2_Response {
         }
 
         return $this->_document;
+    }
+
+    public function __toString()
+    {
+        return $this->_httpResponse->getBody();
     }
 }

@@ -45,7 +45,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
     /**
      * The API version to use
      */
-    const EC2_API_VERSION = '2008-12-01';
+    const EC2_API_VERSION = '2009-04-04';
 
     /**
      * Signature Version
@@ -78,7 +78,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
         try {
             /* @var $request Zend_Http_Client */
             $request = self::getHttpClient();
-			$request->resetParameters();
+            $request->resetParameters();
 
             $request->setConfig(array(
                 'timeout' => self::HTTP_TIMEOUT
