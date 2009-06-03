@@ -1,0 +1,9 @@
+PHPUnit 3.3.16 by Sebastian Bergmann.
+
+SSSSS.....SSS.........FFFF.......FF..FFFFFFFFF.FF...........  60 / 456
+.........................FFFFF..............IEE....II....... 120 / 456
+.F...FFFFFF.FFFFFFF.F.FF.FFFF.FFFFF..SSSS......F.FF......... 180 / 456
+..FFFFF...FF..F.F.FF.FF...FFFFFFFFFF.FFF.F.SS..........E.... 240 / 456
+..............FF.....FE.SFEFFEF...FFFFFFF..FFFFFFF.......... 300 / 456
+.
+Fatal error: Call to a member function findManyToManyRowset() on a non-object in /Users/ralphschindler/Projects/ZFStandardTrunk/tests/Zend/Db/Table/AbstractTestCase.php on line 1484
