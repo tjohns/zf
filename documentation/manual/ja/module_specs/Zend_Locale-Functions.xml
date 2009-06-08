@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15346 -->
+<!-- EN-Revision: 15855 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale の使用法</title>
@@ -24,7 +24,7 @@
 
         <example id="zend.locale.copying.example-1">
             <title>clone</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale('ar');
 
 // $locale オブジェクトをシリアライズして保存します
@@ -59,7 +59,7 @@ print "copied: ", $copiedLocale;
 
         <example id="zend.locale.equals.example-1">
             <title>ロケールが同一かどうかの調査</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
@@ -93,7 +93,7 @@ if ($locale->equals($mylocale)) {
 
         <example id="zend.locale.getdefault.example-1">
             <title>デフォルトロケールの取得</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // すべてのデフォルトロケールを返します
@@ -146,7 +146,7 @@ print_r($found2);
 
         <example id="zend.locale.setlocale.example-1">
             <title>setLocale</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // 実際のロケール
@@ -173,7 +173,7 @@ print $locale->toString();
 
         <example id="zend.locale.getlocale.example-1">
             <title>getLanguage および getRegion</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale();
 
 // ロケールが 'ja_JP' の場合は、'ja' が言語として返されます
@@ -204,7 +204,7 @@ print $locale->getRegion();
 
         <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $list = Zend_Locale::getTranslationList('language', 'de_AT');
 
 print_r ($list);
@@ -240,9 +240,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                         <entry>
                           地域化された全言語の一覧を返します。
                           ロケールの言語部分がキー、そしてその翻訳が値となります。
-                          利便性のために
-                          <code>getLanguageTranslationList()</code>
-                          メソッドも使用することが可能です。
                         </entry>
                     </row>
                     <row>
@@ -250,9 +247,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                         <entry>
                           地域化された全文字の一覧を返します。
                           ロケールの文字部分がキー、そしてその翻訳が値となります。
-                          利便性のために
-                          <code>getScriptTranslationList()</code>
-                          メソッドも使用することが可能です。
                         </entry>
                     </row>
                     <row>
@@ -264,10 +258,7 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                           国のみを取得するには値として '2' を使用します。
                           可能な場合、ロケールの国部分をキーとして使用します。
                           それ以外の場合は、この領域が使用している公式 ISO コードをキーとして使用します。
-                          領域を翻訳したものが値となります。利便性のために、
-                          すべての国を取得する <code>getCountryTranslationList()</code>
-                          メソッドとすべての領域 (国以外) を取得する
-                          <code>getTerritoryTranslationList()</code> メソッドが用意されています。
+                          領域を翻訳したものが値となります。
                           値を省略した場合は、両方の一覧を取得します。
                         </entry>
                     </row>
@@ -452,6 +443,18 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                           単純に行うには
                           <link linkend="zend.date.introduction">Zend_Date</link>
                           を使用します。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>DateItem</emphasis></entry>
+                        <entry>指定した日付項目あるいは時刻項目に関するデフォルトフォーマットの一覧を返します。</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>DateInterval</emphasis></entry>
+                        <entry>
+                            間隔を表示したい際に使用する日付・時刻フォーマットの一覧を返します。
+                            この一覧は多次元配列です。最初の配列が間隔の書式、
+                            その次の配列が最大の差のトークンとなります。
                         </entry>
                     </row>
                     <row>
@@ -718,6 +721,41 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                             そして領域 (地域) が配列の値となります。
                         </entry>
                     </row>
+                    <row>
+                        <entry><emphasis>PostalToTerritory</emphasis></entry>
+                        <entry>
+                            その郵便番号が使われている領域の一覧を正規表現で返します。
+                            ISO 領域コード ('territory') が配列のキー、
+                            そして正規表現が配列の値となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>NumberingSystem</emphasis></entry>
+                        <entry>
+                            桁表記に使用する文字の一覧を返します。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>FallbackToChar</emphasis></entry>
+                        <entry>
+                            よく使われる unicode 文字の置換用文字の一覧を返します。
+                            これを使用して、たとえば "©" を "(C)" に置換したりします。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>CharToFallback</emphasis></entry>
+                        <entry>
+                            よく使われる置換用文字に対応する unicode 文字の一覧を返します。
+                            これを使用して、たとえば "(C)" を "©" に置換したりします。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>LocaleUpgrade</emphasis></entry>
+                        <entry>
+                            ロケールの依存性の一覧を返します。
+                            これを使用して、言語を完全修飾形式のロケールに変換します。
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -757,9 +795,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                         <entry>
                           言語の翻訳を返します。
                           希望通りの翻訳を選択するために、言語コードを値として指定する必要があります。
-                          利便性のために
-                          <code>getLanguageTranslation($value)</code>
-                          メソッドも使用することが可能です。
                         </entry>
                     </row>
                     <row>
@@ -767,9 +802,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                         <entry>
                           文字の翻訳を返します。
                           希望通りの翻訳を選択するために、文字コードを値として指定する必要があります。
-                          利便性のために
-                          <code>getScriptTranslation($value)</code>
-                          メソッドも使用することが可能です。
                         </entry>
                     </row>
                     <row>
@@ -779,9 +811,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                           領域の翻訳を返します。
                           これは国、大陸および領域のいずれかとなります。
                           希望通りの翻訳を選択するために、領域コードを値として指定する必要があります。
-                          利便性のために
-                          <code>getCountryTranslation($value)</code>
-                          メソッドも使用することが可能です。
                         </entry>
                     </row>
                     <row>
@@ -798,12 +827,6 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                           このキーは、翻訳で使用する一般的な値です。
                           通常はカレンダーや文字照合、通貨などです。
                           希望通りのキーを選択するために、キーコードを値として指定する必要があります。
-                        </entry>
-                    </row>
-                    <row>
-                        <entry><emphasis>DateChars</emphasis></entry>
-                        <entry>
-                          日付の表示に使用するすべての文字を含む文字テーブルを返します。
                         </entry>
                     </row>
                     <row>
@@ -1003,6 +1026,21 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                           単純に行うには
                           <link linkend="zend.date.introduction">Zend_Date</link>
                           を使用します。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>DateItem</emphasis></entry>
+                        <entry>指定した日付項目あるいは時刻項目に関するデフォルトフォーマットを返します。</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>DateInterval</emphasis></entry>
+                        <entry>
+                            指定した日付・時刻フォーマットの間隔フォーマットを返します。
+                            最初の値は暦のフォーマットで、通常は 'gregorian' となります。
+                            二番目の値は間隔フォーマットで、
+                            三番目の値は最大の差のトークンです。
+                            たとえば、array('gregorian', 'yMMMM', 'y') は間隔フォーマット
+                            'yMMMM' で、最大の差は 'y' となります。
                         </entry>
                     </row>
                     <row>
@@ -1282,6 +1320,41 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
                         <entry><emphasis>TerritoryToAlpha3</emphasis></entry>
                         <entry>3 桁の文字コードに対応する領域 (地域) を返します。</entry>
                     </row>
+                    <row>
+                        <entry><emphasis>PostalToTerritory</emphasis></entry>
+                        <entry>
+                            指定した領域に対応する郵便番号の正規表現を返します。
+                            領域は ISO4217 形式の文字列で指定する必要があります。
+                            たとえば世界全体は '001' となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>NumberingSystem</emphasis></entry>
+                        <entry>
+                            桁表記に使用する文字を返します。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>FallbackToChar</emphasis></entry>
+                        <entry>
+                            よく使われる unicode 文字の置換用文字を返します。
+                            これを使用して、たとえば "©" を "(C)" に置換したりします。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>CharToFallback</emphasis></entry>
+                        <entry>
+                            よく使われる置換用文字に対応する unicode 文字を返します。
+                            これを使用して、たとえば "(C)" を "©" に置換したりします。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis>LocaleUpgrade</emphasis></entry>
+                        <entry>
+                            指定した言語に関するロケールの依存性を返します。
+                            これを使用して、この言語を完全修飾形式のロケールに変換します。
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -1375,7 +1448,7 @@ print Zend_Locale::getTranslation('de', 'language', 'zh');
 
         <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // すべての国名をドイツ語で表示します
 print_r(Zend_Locale::getTranslationList('country', 'de'));
 ]]></programlisting>
@@ -1388,7 +1461,7 @@ print_r(Zend_Locale::getTranslationList('country', 'de'));
 
         <example id="zend.locale.getdata.example-4">
             <title>国の名前を、ある言語から別の言語に変換する</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $code2name = Zend_Locale::getLanguageTranslationList('en_US');
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
@@ -1412,7 +1485,7 @@ echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
 
         <example id="zend.locale.getdata.example-6">
             <title>すべての言語を、その国のネイティブ言語で書き出す</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $list = Zend_Locale::getLanguageTranslationList('auto');
 
 foreach($list as $language => $content) {
@@ -1474,7 +1547,7 @@ foreach($list as $language => $content) {
 
         <example id="zend.locale.getquestion.example-1">
             <title>getQuestion()</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale();
 // 設問の文字列
 print_r($locale->getQuestion('de'));
@@ -1528,7 +1601,7 @@ Array
 
         <example id="zend.locale.getlocalelist.example-1">
             <title>getLocaleList()</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $localelist = Zend_Locale::getLocaleList();
 ]]></programlisting>
         </example>
@@ -1553,7 +1626,7 @@ $localelist = Zend_Locale::getLocaleList();
 
         <example id="zend.locale.detection.example-1">
             <title>シンプルなロケールの検出</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $input = 'to_RU';
 if (Zend_Locale::isLocale($input)) {
     print "'{$input}' is a locale";
@@ -1584,13 +1657,13 @@ if (Zend_Locale::isLocale($input)) {
             しかし、この自動変換機能がじゃまになることもあるでしょう。そんな場合には
             <code>isLocale()</code> の 2 番目のパラメータを使用します。
             <code>strict</code> パラメータのデフォルトは
-            <code>false</code> で、自動変換を無効にするにはこれを <code>true</code>
+            <constant>FALSE</constant> で、自動変換を無効にするにはこれを <constant>TRUE</constant>
             とします。
         </para>
 
         <example id="zend.locale.detection.example-2">
             <title>厳格なロケール検出</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $input = 'to_RU';
 if (Zend_Locale::isLocale($input, true)) {
     print "'{$input}' is a locale";
@@ -1609,7 +1682,7 @@ if (Zend_Locale::isLocale($input, true)) {
 
         <example id="zend.locale.detection.example-3">
             <title>ロケールに対応した振る舞いの実装</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 if ($locale === null) {
     $locale = new Zend_Locale();
 }
@@ -1679,7 +1752,7 @@ if ($locale instanceof Zend_Locale) {
 
         <example id="zend.locale.detection.example-4">
             <title>ZF 1.8 以降でのロケール対応の振る舞いの実装</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $locale = Zend_Locale::findLocale($inputstring);
 ]]></programlisting>
         </example>

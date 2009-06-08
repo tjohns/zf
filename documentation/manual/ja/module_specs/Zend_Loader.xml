@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15343 -->
+<!-- EN-Revision: 15743 -->
 <sect1 id="zend.loader.load">
 
     <title>ファイルやクラスの動的な読み込み</title>
@@ -36,7 +36,7 @@
 
         <example id="zend.loader.load.file.example">
             <title>loadFile() メソッドの例</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 ]]></programlisting>
     </example>
@@ -52,13 +52,13 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 
         <para>
             引数 <code>$dirs</code> にはファイルを探すディレクトリを指定します。
-            <code>NULL</code> の場合は <code>include_path</code> の中のみを対象とします。
+            <constant>NULL</constant> の場合は <code>include_path</code> の中のみを対象とします。
             文字列あるいは配列を指定すると、指定されたディレクトリをまず探した後で、
             それから <code>include_path</code> を探します。
         </para>
 
         <para>
-            引数 <code>$once</code> は論理値です。<code>TRUE</code> を指定すると、
+            引数 <code>$once</code> は論理値です。<constant>TRUE</constant> を指定すると、
             <classname>Zend_Loader::loadFile()</classname> は PHP の関数
             <ulink url="http://php.net/include"><code>include_once()</code></ulink>
             でファイルを読み込みます。それ以外の場合は
@@ -79,7 +79,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 
         <example id="zend.loader.load.class.example">
             <title>loadClass() メソッドの例</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
@@ -124,12 +124,12 @@ Zend_Loader::loadClass('Container_Tree',
         <para>
             静的メソッド <classname>Zend_Loader::isReadable($pathname)</classname>
             は、指定した場所にファイルが存在して読み込み可能な場合に
-            <code>TRUE</code>、それ以外の場合に <code>FALSE</code> を返します。
+            <constant>TRUE</constant>、それ以外の場合に <constant>FALSE</constant> を返します。
         </para>
 
         <example id="zend.loader.load.isreadable.example">
             <title>isReadable() メソッドの例</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // $filename で何かをします
 }
@@ -164,7 +164,7 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example">
             <title>自動ローダー用コールバックメソッドの登録例</title>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 Zend_Loader::registerAutoload();
 ]]></programlisting>
         </example>
@@ -194,7 +194,7 @@ Zend_Loader::registerAutoload();
                 <code>self::loadClass()</code> の処理を任せるのなら、
                 サブクラスのメソッドではなく親クラス側の同名のメソッドをコールします。
             </para>
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)
@@ -220,8 +220,8 @@ Zend_Loader::registerAutoload('My_Loader');
         <para>
             autoload コールバックを削除することもできます。
             <code>registerAutoload()</code> にはオプションで 2 番目の引数を指定することができ、
-            デフォルトでは <code>true</code> が設定されるようになっています。
-            この引数を <code>false</code> とすると、
+            デフォルトでは <constant>TRUE</constant> が設定されるようになっています。
+            この引数を <constant>FALSE</constant> とすると、
             指定したコールバックが SPL の autoload スタックから削除されます。
         </para>
 

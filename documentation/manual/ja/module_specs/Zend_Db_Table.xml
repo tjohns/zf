@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15422 -->
+<!-- EN-Revision: 15851 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -41,7 +41,7 @@
 
             <para>
                 そのクラスが定義しているデータベースのテーブルを定義するには、
-                protected な変数 <code>$_name</code> を使用します。
+                protected な変数 <varname>$_name</varname> を使用します。
                 これは文字列で、データベースでのテーブル名を指定する必要があります。
             </para>
 
@@ -49,7 +49,7 @@
 
                 <title>テーブル名を明示的に指定することによるテーブルクラスの宣言</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -67,7 +67,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>テーブル名を暗黙的に指定することによるテーブルクラスの宣言</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class bugs extends Zend_Db_Table_Abstract
 {
     // テーブル名とクラス名が一致します
@@ -78,10 +78,10 @@ class bugs extends Zend_Db_Table_Abstract
 
             <para>
                 テーブルのスキーマについても、protected 変数
-                <code>$_schema</code> で宣言することができます。
-                あるいは <code>$_name</code> プロパティでテーブル名の前にスキーマ名をつなげて指定することもできます。
-                <code>$_name</code> で指定したスキーマのほうが、
-                <code>$_schema</code> プロパティで指定したスキーマよりも優先されます。
+                <varname>$_schema</varname> で宣言することができます。
+                あるいは <varname>$_name</varname> プロパティでテーブル名の前にスキーマ名をつなげて指定することもできます。
+                <varname>$_name</varname> で指定したスキーマのほうが、
+                <varname>$_schema</varname> プロパティで指定したスキーマよりも優先されます。
                 RDBMS によってはスキーマのことを「データベース」や「表領域」
                 などということもありますが、同じように使用できます。
                 スキーマを、テーブル名の一部として宣言することもできます。
@@ -91,7 +91,7 @@ class bugs extends Zend_Db_Table_Abstract
 
                 <title>テーブルクラスでのスキーマの宣言</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 // 一つ目の方法
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -119,7 +119,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 スキーマ名とテーブル名は、コンストラクタの設定ディレクティブでも指定することができます。
-                これは、<code>$_name</code> や <code>$_schema</code>
+                これは、<varname>$_name</varname> や <varname>$_schema</varname>
                 といったプロパティで設定したデフォルト値を上書きします。
                 <code>name</code> ディレクティブで指定したスキーマ名は、
                 <code>schema</code> オプションで指定したスキーマ名より優先されます。
@@ -129,7 +129,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>インスタンス作成時のテーブル名とスキーマ名の指定</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
 }
@@ -165,7 +165,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
             <para>
                 すべてのテーブルは主キーを持たなければなりません。
                 主キーカラムを宣言するには、protected 変数
-                <code>$_primary</code> を使用します。
+                <varname>$_primary</varname> を使用します。
                 これは、単一のカラムの名前を表す文字列か、
                 もし主キーが複合キーの場合はカラム名の配列となります。
             </para>
@@ -174,7 +174,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
 
                 <title>主キーを指定する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -220,7 +220,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>_setupTableName() メソッドのオーバーライドの例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
@@ -263,7 +263,7 @@ class Bugs extends Zend_Db_Table_Abstract
                         はテーブル名が "schema.table" 形式の場合にスキーマを設定し、
                         <code>describeTable()</code> をコールしてメタデータ情報を取得します。
                         このメソッドが返す配列のカラム
-                        <code>$_cols</code> の情報をデフォルトで使用します。
+                        <varname>$_cols</varname> の情報をデフォルトで使用します。
                         このメソッドをオーバーライドすると、カラムを指定することができます。
                     </para>
                 </listitem>
@@ -272,7 +272,7 @@ class Bugs extends Zend_Db_Table_Abstract
                     <para>
                         <code>_setupPrimaryKey()</code>
                         はデフォルトの主キーを <code>describeTable()</code>
-                        から取得した内容に設定し、配列 <code>$_cols</code>
+                        から取得した内容に設定し、配列 <varname>$_cols</varname>
                         に主キーカラムが含まれているかどうかを調べます。
                         このメソッドをオーバーライドすると、主キーカラムを指定することができます。
                     </para>
@@ -297,7 +297,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>init() メソッドの使用例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_observer;
@@ -343,7 +343,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>アダプタオブジェクトを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
 $table = new Bugs(array('db' => $db));
@@ -372,7 +372,7 @@ $table = new Bugs(array('db' => $db));
 
                 <title>デフォルトアダプタを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
@@ -408,7 +408,7 @@ $table = new Bugs();
 
                 <title>レジストリのキーを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
@@ -448,7 +448,7 @@ $table = new Bugs(array('db' => 'my_db'));
 
             <title>テーブルへの挿入の例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $data = array(
@@ -473,7 +473,7 @@ $table->insert($data);
 
             <title>式をテーブルに挿入する例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $data = array(
@@ -503,7 +503,7 @@ $data = array(
 
             <para>
                 <classname>Zend_Db_Table_Abstract</classname> で protected 変数
-                <code>$_sequence</code> の値を boolean の <code>true</code>
+                <varname>$_sequence</varname> の値を boolean の <constant>TRUE</constant>
                 にすると、そのテーブルは自動インクリメントの主キーを持つものとみなされます。
             </para>
 
@@ -511,7 +511,7 @@ $data = array(
 
                 <title>自動インクリメントの主キーを持つテーブルを宣言する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -535,7 +535,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 新しい行を作成した際にはこのシーケンスを用いてキーの値を生成します。
                 IBM DB2 には、これと同等の動作をする <code>IDENTITY</code> という記法があります。
                 これらの記法を使用する場合は、<classname>Zend_Db_Table</classname> クラスで
-                <code>$_sequence</code> を <code>true</code> と設定し、
+                <varname>$_sequence</varname> を <constant>TRUE</constant> と設定し、
                 自動インクリメントを有効にしてください。
             </para>
 
@@ -552,7 +552,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                <code>$_sequence</code> に文字列を設定すると、
+                <varname>$_sequence</varname> に文字列を設定すると、
                 <classname>Zend_Db_Table_Abstract</classname> は、それがデータベースの
                 シーケンスオブジェクトの名前であるとみなします。
                 シーケンスを実行して新しい値を生成し、その値を
@@ -563,7 +563,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>シーケンスを用いたテーブルを宣言する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -601,7 +601,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                <code>$_sequence</code> の値を boolean の <code>false</code>
+                <varname>$_sequence</varname> の値を boolean の <constant>FALSE</constant>
                 にすると、<classname>Zend_Db_Table_Abstract</classname> はそのテーブルが自然キーを持つものとみなします。
                 <code>insert()</code> メソッドを使用する際には、
                 主キーカラムの値をデータの配列で指定する必要があります。
@@ -613,7 +613,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>自然キーを用いたテーブルを宣言する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class BugStatus extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bug_status';
@@ -656,7 +656,7 @@ class BugStatus extends Zend_Db_Table_Abstract
 
             <title>テーブルの行の更新の例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $data = array(
@@ -709,7 +709,7 @@ $table->update($data, $where);
 
             <title>テーブルからの行の削除の例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
@@ -756,7 +756,7 @@ $table->delete($where);
 
             <title>主キーの値によって行を捜す例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 // 単一の行を探し、
@@ -812,7 +812,7 @@ $rows = $table->find(array(1234, 5678));
                 (5678, 'DEF') となります。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class BugsProducts extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs_products';
@@ -860,7 +860,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
 
                     <para>
 
-                        <programlisting role="php"><![CDATA[
+                        <programlisting language="php"><![CDATA[
 // 行セットを取得します
 $rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
 $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
@@ -932,7 +932,7 @@ $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
 
                     <title>単純な使用法</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -956,7 +956,7 @@ $rows = $table->fetchAll($select);
 
                     <title>流れるようなインターフェイスの例</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $rows =
@@ -984,7 +984,7 @@ $rows =
 
                 <title>式から行を取得する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select()->where('bug_status = ?', 'NEW');
@@ -1006,7 +1006,7 @@ $rows = $table->fetchAll($select);
 
                 <title>式を使用した行の検索の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $order  = 'bug_id';
@@ -1051,7 +1051,7 @@ $rows = $table->fetchAll($select);
 
                     <title>指定したカラムの取得</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -1092,7 +1092,7 @@ $rows = $table->fetchAll($select);
 
                     <title>式の結果をカラムとして取得する</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -1118,11 +1118,13 @@ $rows = $table->fetchAll($select);
 
                     <title>ルックアップテーブルによる fetchAll() の結果の絞込み</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
-$select = $table->select();
-$select->where('bug_status = ?', 'NEW')
+// join する際には、from 部を指定して取得するのが重要です
+$select = $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
+$select->setIntegrityCheck(false)
+       ->where('bug_status = ?', 'NEW')
        ->join('accounts', 'accounts.account_name = bugs.reported_by')
        ->where('accounts.account_name = ?', 'Bob');
 
@@ -1149,10 +1151,10 @@ $rows = $table->fetchAll($select);
 
                 <title>Zend_Db_Table_Select の整合性チェックを削除し、JOIN した行を許可する</title>
 
-                <programlisting><![CDATA[
+                <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
-$select = $table->select()->setIntegrityCheck(false);
+$select = $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
        ->join('accounts',
               'accounts.account_name = bugs.reported_by',
@@ -1181,7 +1183,7 @@ $rows = $table->fetchAll($select);
 
             <title>式から単一の行を取得する例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $select  = $table->select()->where('bug_status = ?', 'NEW')
@@ -1195,7 +1197,7 @@ $row = $table->fetchRow($select);
         <para>
             このメソッドは、<classname>Zend_Db_Table_Row_Abstract</classname> 型のオブジェクトを返します。
             指定した検索条件に一致する行がデータベースのテーブルにない場合は、
-            <code>fetchRow()</code> は PHP の <code>null</code> 値を返します。
+            <code>fetchRow()</code> は PHP の <constant>NULL</constant> 値を返します。
         </para>
 
     </sect2>
@@ -1214,7 +1216,7 @@ $row = $table->fetchRow($select);
 
             <title>テーブル名を取得する例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $info = $table->info();
@@ -1352,7 +1354,7 @@ echo "テーブル名は " . $info['name'] . " です\n";
                 </listitem>
             </itemizedlist>
 
-            どちらの場合においても、メソッドの引数はひとつで、<code>null</code> (キャッシュを使用しない)
+            どちらの場合においても、メソッドの引数はひとつで、<constant>NULL</constant> (キャッシュを使用しない)
             あるいは <link linkend="zend.cache.frontends.core"><classname>Zend_Cache_Core</classname></link>
             のインスタンスを指定します。これらを組み合わせることで、
             デフォルトのメタデータキャッシュを指定した上で
@@ -1367,7 +1369,7 @@ echo "テーブル名は " . $info['name'] . " です\n";
                 次のコードは、デフォルトのメタデータキャッシュをすべてのテーブルオブジェクトで使用する方法を示すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[<
+            <programlisting language="php"><![CDATA[
 // まずキャッシュを作成します
 $frontendOptions = array(
     'automatic_serialization' => true
@@ -1405,7 +1407,7 @@ $bugs = new Bugs();
                 次のコードは、メタデータキャッシュを特定のテーブルオブジェクトに設定する方法を示すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // まずキャッシュを作成します
 $frontendOptions = array(
     'automatic_serialization' => true
@@ -1439,7 +1441,7 @@ $bugs = new Bugs(array('metadataCache' => $cache));
             <para>
                 アダプタの describeTable() メソッドの返す内容は配列なので、
                 <classname>Zend_Cache_Core</classname> フロントエンドのオプション
-                <code>automatic_serialization</code> は <code>true</code> と設定しましょう。
+                <code>automatic_serialization</code> は <constant>TRUE</constant> と設定しましょう。
             </para>
 
         </note>
@@ -1466,7 +1468,7 @@ $bugs = new Bugs(array('metadataCache' => $cache));
                 メタデータの構造は次のようになります。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 protected $_metadata = array(
     '<column_name>' => array(
         'SCHEMA_NAME'      => <string>,
@@ -1498,7 +1500,7 @@ protected $_metadata = array(
                 <code>metadataCacheInClass</code> フラグをオフにします。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // インスタンス作成時
 $bugs = new Bugs(array('metadataCacheInClass' => false));
 
@@ -1508,7 +1510,7 @@ $bugs->setMetadataCacheInClass(false);
 
             <para>
                 このフラグはデフォルトで有効になっています。この場合は、
-                <code>$_metadata</code> 配列はインスタンスの作成時にのみ作成されます。
+                <varname>$_metadata</varname> 配列はインスタンスの作成時にのみ作成されます。
             </para>
         </sect3>
     </sect2>
@@ -1545,7 +1547,7 @@ $bugs->setMetadataCacheInClass(false);
 
                 <title>行クラスおよび行セットクラスの指定の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class My_Row extends Zend_Db_Table_Row_Abstract
 {
     ...
@@ -1584,7 +1586,7 @@ $rows = $table->fetchAll($where);
 
                 <title>行クラスおよび行セットクラスの変更の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
@@ -1628,7 +1630,7 @@ $rowsCustom = $table->fetchAll($where);
 
                 <title>タイムスタンプを処理する独自ロジック</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -1680,7 +1682,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>状況を指定してバグを検索する独自メソッド</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
@@ -1710,7 +1712,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 たとえば、テーブルのクラス名が
                 "<code>BugsProducts</code>" だとすると、クラスのプロパティ
-                <code>$_name</code> を明示的に宣言しなかった場合は
+                <varname>$_name</varname> を明示的に宣言しなかった場合は
                 データベース内の物理的なテーブル
                 "<code>bugs_products</code>" にマッチします。この関連付けでは、
                 "CamelCase" 形式のクラス名が小文字に変換され、単語の区切りがアンダースコアに変わります。
@@ -1718,13 +1720,13 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 データベースのテーブル名を、クラス名とは独立したものにすることもできます。
-                その場合は、テーブルクラスのプロパティ <code>$_name</code>
+                その場合は、テーブルクラスのプロパティ <varname>$_name</varname>
                 に、そのクラス名を指定します。
             </para>
 
             <para>
                 <classname>Zend_Db_Table_Abstract</classname> は、クラス名とテーブル名を関連付けるための語尾変化は行いません。
-                テーブルクラスで <code>$_name</code> の宣言を省略すると、
+                テーブルクラスで <varname>$_name</varname> の宣言を省略すると、
                 そのクラス名に正確に一致する名前のテーブルと関連付けられます。
             </para>
 
@@ -1747,7 +1749,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>語尾変化を実装した抽象テーブルクラスの例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()

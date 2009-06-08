@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15156 -->
+<!-- EN-Revision: 15719 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -91,7 +91,7 @@
                         ヘルパーブローカにそれを渡して登録する。
                     </para>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
@@ -105,7 +105,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                         ヘルパーブローカから必要に応じて作成、取得する。
                     </para>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $viewRenderer =
     Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
@@ -126,7 +126,7 @@ $viewRenderer->setView($view)
             <code>getStaticHelper()</code> メソッドを使用するのがいちばん簡単です。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ]]></programlisting>
 
@@ -151,7 +151,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
             例として、次のようなクラスを考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // foo モジュールのコントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -184,7 +184,7 @@ $this->foo(); // Foo_View_Helper_Foo::foo() をコールします
                 <para>
                     <code>setView($view)</code>
                     は <code>ViewRenderer</code> が使用するビューオブジェクトを設定します。
-                    これは、クラスのプロパティ <code>$view</code> の値を設定します。
+                    これは、クラスのプロパティ <varname>$view</varname> の値を設定します。
                 </para>
             </listitem>
 
@@ -236,7 +236,7 @@ $this->foo(); // Foo_View_Helper_Foo::foo() をコールします
                 <para>
                     <code>setScriptAction($name)</code>
                     を使用すると、レンダリングするアクションスクリプトを指定することができます。
-                    <code>$name</code> は、スクリプト名から拡張子を除いたもの
+                    <varname>$name</varname> は、スクリプト名から拡張子を除いたもの
                     (そして、<code>noController</code> が指定されていない限り、
                     コントローラのディレクトリ名も除いたもの) となります。
                     指定しなかった場合は、リクエストオブジェクト内のアクションに基づいた名前の
@@ -279,7 +279,7 @@ $this->foo(); // Foo_View_Helper_Foo::foo() をコールします
                     はこのメソッドのエイリアスで、コントローラ内から簡単にコールすることができます。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 // 現在のアクションスクリプトではなく 'foo' をレンダリングします
 $this->_helper->viewRenderer('foo');
 
@@ -305,7 +305,7 @@ $this->_helper->viewRenderer('form', 'html', true);
             で説明したフラグと同じものです。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
 $viewRenderer =
@@ -424,7 +424,7 @@ $viewRenderer =
             <listitem><para>
                     <code>setInflector($inflector, $reference)</code> は、
                     <code>ViewRenderer</code> で使用する独自のインフレクタを設定します。
-                    <code>$reference</code> が true の場合は、
+                    <varname>$reference</varname> が true の場合は、
                     対象だけでなくサフィックスやモジュールディレクトリも
                     <code>ViewRenderer</code> のプロパティへの静的な参照とします。
             </para></listitem>
@@ -507,7 +507,7 @@ $viewRenderer =
                     オプションで、パスセグメントの名前を指定することもできます。
                     このメソッドを使用する際には、<code>ViewRenderer</code>
                     はスクリプト名を自動的に決定することはありません。
-                    そのかわりに、<code>$script</code> で指定された内容を直接
+                    そのかわりに、<varname>$script</varname> で指定された内容を直接
                     ビューオブジェクトの <code>render()</code> メソッドに渡します。
                 </para>
 
@@ -532,7 +532,7 @@ $viewRenderer =
                     <code>getViewScript($action, $vars)</code>
                     は、渡されたアクションや <code>$vars</code>
                     で指定した変数の値に基づいてビュースクリプトのパスを作成します。
-                    <code>$vars</code> 配列のキーは、パスを指定するためのキー
+                    <varname>$vars</varname> 配列のキーは、パスを指定するためのキー
                     ('moduleDir'、'module'、'controller'、'action' および 'suffix')
                     のいずれかとなります。渡された変数の値をもとにしてパスを作成します。
                     なにも渡されなかった場合は、現在のリクエストの内容をもとにしてパスを作成します。
@@ -567,11 +567,11 @@ $viewRenderer =
             <listitem>
                 <para>
                     <code>render($action, $name, $noController)</code>
-                    は、まず <code>$name</code> あるいは
-                    <code>$noController</code> が指定されているかどうかを調べます。
+                    は、まず <varname>$name</varname> あるいは
+                    <varname>$noController</varname> が指定されているかどうかを調べます。
                     指定されている場合は、ViewRenderer の対応するフラグ
                     (それぞれ responseSegment と noController) を設定します。
-                    次に、<code>$action</code> 引数が指定されていれば、
+                    次に、<varname>$action</varname> 引数が指定されていれば、
                     それを <code>getViewScript()</code> に渡します。
                     最後に、取得したビュースクリプトのパスを
                     <code>renderScript()</code> に渡します。
@@ -601,9 +601,9 @@ $viewRenderer =
                 <para>
                     <code>renderBySpec($action, $vars, $name)</code>
                     は、パス指定用の変数を渡してビュースクリプトのパスを決定します。
-                    <code>$action</code> および <code>$vars</code> の内容を
+                    <varname>$action</varname> および <varname>$vars</varname> の内容を
                     <code>getScriptPath()</code> に、そしてその結果得られたスクリプトのパスと
-                    <code>$name</code> を <code>renderScript()</code> に渡します。
+                    <varname>$name</varname> を <code>renderScript()</code> に渡します。
                 </para>
             </listitem>
         </itemizedlist>
@@ -621,7 +621,7 @@ $viewRenderer =
                 アクションメソッドで変数の値を設定するというものです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // 起動ファイル内で
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
@@ -700,7 +700,7 @@ class Foo_BarController extends Zend_Controller_Action
                 自動レンダリングを無効にする (<code>setNoRender()</code>) かです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // Bar モジュールの Baz コントローラクラス
 class Bar_BazController extends Zend_Controller_Action
 {
@@ -747,7 +747,7 @@ class Bar_BatController extends Zend_Controller_Action
                 これは <code>setRender()</code> を起動します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -790,7 +790,7 @@ class Foo_BarController extends Zend_Controller_Action
                 どちらも同じオブジェクトへの参照を取得することになります。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // Foo モジュールの Bar コントローラクラス
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -838,7 +838,7 @@ class Foo_BarController extends Zend_Controller_Action
                 'tpl' を設定します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 /**
  * 起動ファイル
  */
@@ -864,7 +864,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                 <code>render()</code> を必要なだけコールすればいいのです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()

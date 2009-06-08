@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15346 -->
+<!-- EN-Revision: 15854 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -116,7 +116,7 @@
             フィールドには英字のみを許可することを指定しています。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $filters = array(
     'month'   => 'Digits',
     'account' => 'StringTrim'
@@ -141,7 +141,7 @@ $validators = array(
             <listitem>
                 <para>
                     単一のスカラー文字列。これはクラス名に対応します。
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $validators = array(
     'month'   => 'Digits',
 );
@@ -152,7 +152,7 @@ $validators = array(
                 <para>
                     Zend_Filter_Interface あるいは Zend_Validate_Interface
                     を実装したクラスのいずれかのインスタンス。
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $digits = new Zend_Validate_Digits();
 
 $validators = array(
@@ -169,7 +169,7 @@ $validators = array(
                     さらに、もうひとつの方法があります。
                     クラス名の後にそのコンストラクタに渡す引数を続ける方法です。
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting language="php"><![CDATA[
 $validators = array(
     'month'   => array(
         'Digits',                // 文字列
@@ -199,7 +199,7 @@ $validators = array(
             ルールは、それを宣言した順に適用されます。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $filters = array(
     '*'     => 'StringTrim',
     'month' => 'Digits'
@@ -219,7 +219,7 @@ $filters = array(
             このオブジェクトを使用して、入力データを処理していきます。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators);
 ]]></programlisting>
 
@@ -233,7 +233,7 @@ $input = new Zend_Filter_Input($filters, $validators);
             Zend_Filter_Input への入力として渡すことができます。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $data = $_GET;
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
@@ -244,7 +244,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data);
             ここで渡すデータの形式は、先ほど説明したのと同じ形式の連想配列となります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators);
 $input->setData($newData);
 ]]></programlisting>
@@ -276,12 +276,12 @@ $input->setData($newData);
 
             <para>
                 すべての入力データがバリデーションルールを通過すると、
-                <code>isValid()</code> メソッドは <code>true</code> を返します。
+                <code>isValid()</code> メソッドは <constant>TRUE</constant> を返します。
                 無効な形式の入力や必須フィールドの未入力がひとつでもあると、
-                <code>isValid()</code> は <code>false</code> を返します。
+                <code>isValid()</code> は <constant>FALSE</constant> を返します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 if ($input->isValid()) {
   echo "OK\n";
 }
@@ -292,10 +292,10 @@ if ($input->isValid()) {
                 ここには、フィールドの名前を指定します。
                 指定したフィールドがバリデーションを通過して取得可能になると、
                 <code>isValid('fieldName')</code>
-                は <code>true</code> を返します。
+                は <constant>TRUE</constant> を返します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 if ($input->isValid('month')) {
   echo "'month' フィールドの内容は正しい形式です\n";
 }
@@ -334,7 +334,7 @@ if ($input->isValid('month')) {
                 </listitem>
             </itemizedlist>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
@@ -385,7 +385,7 @@ if ($input->hasUnknown()) {
                 <code>setOptions()</code> メソッドで指定します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $options = array(
     'missingMessage' => "Field '%field%' is required"
 );
@@ -420,7 +420,7 @@ $input->setOptions($options);
                 および <code>getUnescaped()</code> というメソッドがあります。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $m = $input->month;                 // エスケープ済み (マジックメソッド)
 $m = $input->getEscaped('month');   // エスケープ済み
 $m = $input->getUnescaped('month'); // エスケープ前
@@ -451,7 +451,7 @@ $m = $input->getUnescaped('month'); // エスケープ前
                 その場合は、それをコンストラクタのオプション配列で指定します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $options = array('escapeFilter' => 'StringTrim');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
@@ -462,7 +462,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
                 メソッドを使用することもできます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators, $data);
 $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 ]]></programlisting>
@@ -527,7 +527,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
                 <classname>Zend_Filter_Input::FIELDS</classname> を使用することができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $filters = array(
     'month' => array(
         'Digits',        // 数値インデックスのフィルタ名 [0]
@@ -559,10 +559,10 @@ $filters = array(
                 たとえば、パスワードを登録する場合に、ふたつのフィールドに入力させて
                 その値が一致することを確認するなどといった処理は、よくあるものです。
                 配列の引数を受け取り、それらの入力フィールドの値が等しいときにだけ
-                <code>true</code> を返すバリデータを考えてみましょう。
+                <constant>TRUE</constant> を返すバリデータを考えてみましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'password' => array(
         'StringEquals',
@@ -600,7 +600,7 @@ $validators = array(
                 <classname>Zend_Filter_Input::PRESENCE</classname> を使用することができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'digits',
@@ -638,7 +638,7 @@ $validators = array(
                 つまり、個々のルールで別々のデフォルト値を宣言できるということです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'digits',
@@ -685,7 +685,7 @@ echo $input->month; // 1 を出力します
 
             <para>
                 空の文字列も有効であるとみなしたい場合は、メタコマンド
-                'allowEmpty' を <code>true</code> に設定します。
+                'allowEmpty' を <constant>TRUE</constant> に設定します。
                 すると、入力データとして空の文字列が渡された場合も検証を通過します。
             </para>
 
@@ -694,7 +694,7 @@ echo $input->month; // 1 を出力します
                 <classname>Zend_Filter_Input::ALLOW_EMPTY</classname> を使用することができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'address2' => array(
         'Alnum',
@@ -704,12 +704,12 @@ $validators = array(
 ]]></programlisting>
 
             <para>
-                このメタコマンドのデフォルト値は <code>false</code> です。
+                このメタコマンドのデフォルト値は <constant>FALSE</constant> です。
             </para>
 
             <para>
                 非常に珍しいケースですが、バリデータは一切登録せずにメタコマンド
-                'allowEmpty' を <code>false</code> (つまり、空の値は無効とみなす)
+                'allowEmpty' を <constant>FALSE</constant> (つまり、空の値は無効とみなす)
                 と設定した検証ルールを定義すると、
                 Zend_Filter_Input はデフォルトのエラーメッセージを返します。
                 このメッセージは <code>getMessages()</code> で取得することができます。
@@ -718,7 +718,7 @@ $validators = array(
                 あるいは <code>setOptions()</code> メソッドで指定します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $options = array(
     'notEmptyMessage' => "'%field%' に何か値を入力してください"
 );
@@ -744,7 +744,7 @@ $input->setOptions($options);
 
             <para>
                 一方、メタコマンド 'breakChainOnFailure' を
-                <code>true</code> とすると、
+                <constant>TRUE</constant> とすると、
                 どれかひとつのバリデータが失敗すると、
                 その時点でバリデータチェインが終了するようになります。
                 チェイン内のそれ以降のバリデータによる入力チェックは行いません。
@@ -757,7 +757,7 @@ $input->setOptions($options);
                 <classname>Zend_Filter_Input::BREAK_CHAIN</classname> を使用することができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'Digits',
@@ -770,7 +770,7 @@ $input = new Zend_Filter_Input(null, $validators);
 ]]></programlisting>
 
             <para>
-                このメタコマンドのデフォルト値は <code>false</code> です。
+                このメタコマンドのデフォルト値は <constant>FALSE</constant> です。
             </para>
 
             <para>
@@ -785,7 +785,7 @@ $input = new Zend_Filter_Input(null, $validators);
                 それをバリデータルールの定義時に指定します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // breakChainOnFailure 属性を個別に設定した
 // バリデータチェインを作成します
 $chain = new Zend_Validate();
@@ -823,7 +823,7 @@ $input = new Zend_Filter_Input(null, $validators);
                 以下に示すのは、あるバリデータにデフォルトのエラーメッセージを設定する例です。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'digits',
@@ -845,7 +845,7 @@ $validators = array(
                 それ以外はデフォルトのメッセージを使用するということができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'digits',
@@ -869,7 +869,7 @@ $validators = array(
                 この場合、文字列ではなく連想配列形式で渡します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $validators = array(
     'month' => array(
         'digits', new Zend_Validate_Between(1, 12),
@@ -894,6 +894,28 @@ $validators = array(
                 等についての情報については、各バリデータクラスのドキュメントを参照ください。
             </para>
 
+            <para>
+                検証ルールのなかにバリデータがひとつだけしかない場合、
+                あるいはすべてのバリデータで同じメッセージセットを使用する場合は、
+                配列構造で追加しなくても参照できます。
+            </para>
+
+            <programlisting language="php"><![CDATA[
+$validators = array(
+    'month' => array(
+        new Zend_Validate_Between(1, 12),
+        'messages' => array(
+                        Zend_Validate_Between::NOT_BETWEEN =>
+                            '月の値 %value% は、' .
+                            '%min% 以上 %max% 以下の値でなければなりません',
+                        Zend_Validate_Between::NOT_BETWEEN_STRICT =>
+                            '月の値 %value% は、%min% より大きく、' .
+                            'かつ %max% より小さい値でなければなりません'
+        )
+    )
+);
+]]></programlisting>
+
         </sect3>
 
         <sect3 id="zend.filter.input.metacommands.global">
@@ -909,7 +931,7 @@ $validators = array(
                 全ルール共通のデフォルト値を設定することができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // デフォルトで、全フィールドに空文字列を許可するようにします
 $options = array('allowEmpty' => true);
 
@@ -954,7 +976,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
             名前空間は、コンストラクタのオプションで指定することができます。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $options = array('filterNamespace' => 'My_Namespace_Filter',
                  'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
@@ -966,7 +988,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
             これらは、Zend_Filter_Input が使うプラグインローダへの直接のプロキシとなります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $input->addValidatorPrefixPath('Other_Namespace', 'Other/Namespace');
 $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 

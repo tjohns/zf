@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15341 -->
+<!-- EN-Revision: 15927 -->
 <sect1 id="zend.amf.server">
     <title>Zend_Amf_Server</title>
 
     <para>
-        <classname>Zend_Amf_Server</classname> は RPC スタイルのサーバで、
-        Adobe Flash Player からの AMF プロトコルによるリクエストを処理します。
-        他の Zend Framework のサーバクラス群と同様に SoapServer API にしたがっており、
+        <classname>Zend_Amf_Server</classname> は <acronym>RPC</acronym> スタイルのサーバで、
+        Adobe Flash Player からの <acronym>AMF</acronym> プロトコルによるリクエストを処理します。
+        他の Zend Framework のサーバクラス群と同様に SoapServer <acronym>API</acronym> にしたがっており、
         サーバを作成するための習得しやすいインターフェイスを提供します。
     </para>
 
@@ -15,11 +15,11 @@
         <title>基本的な AMF サーバ</title>
 
         <para>
-            さまざまな public メソッドを持つクラス <code>Foo</code>
-            を作ったものとしましょう。AMF サーバを作成するためのコードは次のようになります。
+            さまざまな public メソッドを持つクラス <emphasis>Foo</emphasis>
+            を作ったものとしましょう。<acronym>AMF</acronym> サーバを作成するためのコードは次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server = new Zend_Amf_Server();
 $server->setClass('Foo');
 $response = $server->handle();
@@ -30,7 +30,7 @@ echo $response;
             もうひとつの方法として、単純な関数をコールバックとしてアタッチすることもできます。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server = new Zend_Amf_Server();
 $server->addFunction('myUberCoolFunction');
 $response = $server->handle();
@@ -40,11 +40,11 @@ echo $response;
         <para>
             複数のクラスや関数を混ぜて使用することもできます。
             その場合は、それぞれに名前空間を指定してメソッド名の衝突を回避させることをおすすめします。
-            名前空間を指定するには、<code>addFunction()</code> あういは
-            <code>setClass()</code> の 2 番目の引数に文字列を指定します。
+            名前空間を指定するには、<methodname>addFunction()</methodname> あるいは
+            <methodname>setClass()</methodname> の 2 番目の引数に文字列を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server = new Zend_Amf_Server();
 $server->addFunction('myUberCoolFunction', 'my')
        ->setClass('Foo', 'foo')
@@ -54,33 +54,35 @@ echo $response;
 ]]></programlisting>
 
         <para>
-        <code>Zend Amf Server</code> は、指定したディレクトリパスから動的にサービスに読み込ませることもできます。
+        <classname>Zend Amf Server</classname> は、
+        指定したディレクトリパスから動的にサービスに読み込ませることもできます。
         好きなだけのディレクトリをサーバに指定することが可能です。
-        サーバに後から追加したディレクトリから順に (LIFO: 後入れ先出し)
+        サーバに後から追加したディレクトリから順に (<acronym>LIFO</acronym>: 後入れ先出し)
         検索を行い、クラスにマッチするディレクトリを探します。
-        ディレクトリの追加は <code>addDirectory()</code> メソッドで行います。
+        ディレクトリの追加は <methodname>addDirectory()</methodname> メソッドで行います。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server->addDirectory(dirname(__FILE__) .'/../services/');
 $server->addDirectory(dirname(__FILE__) .'/../package/');
 ]]></programlisting>
 
         <para>
-        リモートサービスをコールする際には、アンダースコア (_) およびどっと
-        dot(.) をディレクトリ区切り文字として使用します。
-        アンダースコアを使用すると、PEAR や Zend Framework のクラス命名規約に従った形式となります。
-        つまり、サービス <code>com_Foo_Bar</code> をコールした場合は、
+        リモートサービスをコールする際には、アンダースコア ("_") およびドット
+        (".") をディレクトリ区切り文字として使用します。
+        アンダースコアを使用すると、<acronym>PEAR</acronym> や
+        Zend Framework のクラス命名規約に従った形式となります。
+        つまり、サービス <classname>com_Foo_Bar</classname> をコールした場合は、
         インクルードされたパスのどこかにある
-        <code>com/Foo/Bar.php</code> を探します。ドット記法を使用してリモートサービスを
-        <code>com.Foo.Bar</code> のように指定すると、
-        インクルードされたパスの最後に <code>com/Foo/Bar.php</code>
-        を追加して Bar.php を自動的に読み込みます。
+        <filename>com/Foo/Bar.php</filename> を探します。ドット記法を使用してリモートサービスを
+        <filename>com.Foo.Bar</filename> のように指定すると、
+        インクルードされたパスの最後に <filename>com/Foo/Bar.php</filename>
+        を追加して <filename>Bar.php</filename> を自動的に読み込みます。
         </para>
 
         <para>
-            スクリプトに送られたすべての AMF リクエストがサーバで処理され、
-            その結果の AMF レスポンスが返されます。
+            スクリプトに送られたすべての <acronym>AMF</acronym> リクエストがサーバで処理され、
+            その結果の <acronym>AMF</acronym> レスポンスが返されます。
         </para>
     </example>
 
@@ -89,12 +91,12 @@ $server->addDirectory(dirname(__FILE__) .'/../package/');
 
         <para>
             Zend Framework の他のサーバコンポーネント群と同様、クラスのメソッドには
-            PHP docblock 形式のドキュメントが必要です。
+            <acronym>PHP</acronym> docblock 形式のドキュメントが必要です。
             少なくとも必須引数と返り値についてのアノテーションが必要となります。
             次の例をごらんください。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // アタッチする関数
 
 /**
@@ -108,7 +110,7 @@ function helloWorld($name, $greeting = 'Hello')
 }
 ]]></programlisting>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // アタッチするクラス
 
 class World
@@ -135,26 +137,30 @@ class World
 
         <para>
             <classname>Zend_Amf_Server</classname> に Flex プロジェクトから接続するのはきわめて簡単です。
-            エンドポイントの URI を
+            エンドポイントの <acronym>URI</acronym> を
             <classname>Zend_Amf_Server</classname> スクリプトに指定するだけでよいのです。
         </para>
 
         <para>
             たとえば、作成したサーバをアプリケーションルートに
-            <code>server.php</code> という名前で配置したとしましょう。URI は
-            <code>http://example.com/server.php</code> となります。
+            <filename>server.php</filename> という名前で配置したとしましょう。<acronym>URI</acronym> は
+            <filename>http://example.com/server.php</filename> となります。
             この場合は、services-config.xml ファイルを編集して、
             チャンネルのエンドポイント URI 属性をこの値に変更します。
         </para>
+
         <para>
-            まだ service-config.xml ファイルを作っていない場合は、まずナビゲータウィンドウでプロジェクトを開きます。
+            まだ <filename>service-config.xml</filename> ファイルを作っていない場合は、
+            まずナビゲータウィンドウでプロジェクトを開きます。
             そしてプロジェクト名のところを右クリックして 'プロパティ' を選択します。
             プロジェクトのプロパティダイアログで 'Flex ビルドパス' を選択し、
-            'ライブラリパス' タブで 'rpc.swc' ファイルがプロジェクトに追加されていることを確認したら、
+            'ライブラリパス' タブで '<filename>rpc.swc</filename>'
+            ファイルがプロジェクトに追加されていることを確認したら、
             OK を押してウィンドウを閉じます。
         </para>
+
         <para>
-            また、リモートオブジェクトのエンドポイントを探す際に service-config.xml
+            また、リモートオブジェクトのエンドポイントを探す際に <filename>service-config.xml</filename>
             を使用することをコンパイラに指定する必要もあります。
             ナビゲータのプロジェクトフォルダを右クリックしてプロパティを選択し、
             もういちどプロジェクトのプロパティパネルを開きます。
@@ -162,9 +168,10 @@ class World
             -services "services-config.xml" を追加します。
             適用、そして OK を押してオプションを更新します。
             これで結局何をやったのかというと、実行時の変数を
-            service-config.xml から読み込んで RemotingObject クラスで使うよう
+            <filename>services-config.xml</filename> から読み込んで RemotingObject クラスで使うよう
             Flex コンパイラに指示したということです。
         </para>
+
         <para>
             それから、リモートメソッドへの接続の際に使用するサービス設定ファイルを
             Flex に教えてやる必要があります。そこで、Flex プロジェクトの src フォルダに
@@ -173,14 +180,15 @@ class World
             を選択すると新しいウィンドウが開きます。プロジェクトフォルダを選択し、
             ファイル名を 'services-config.xml' と指定して終了を押します。
         </para>
+
         <para>
-        Flex は新しい services-config.xml ファイルを作成し、それを開きます。
-        次の例のとおりに services-config.xml ファイルを作成してください。
-        エンドポイントの部分はあなたが使用するサーバに書き換えます。
-        そしてファイルを保存することを忘れないようにしましょう。
+            Flex は新しい <filename>services-config.xml</filename> ファイルを作成し、それを開きます。
+            次の例のとおりに <filename>services-config.xml</filename> ファイルを作成してください。
+            エンドポイントの部分はあなたが使用するサーバに書き換えます。
+            そしてファイルを保存することを忘れないようにしましょう。
         </para>
 
-        <programlisting role="xml"><![CDATA[
+        <programlisting language="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <services-config>
     <services>
@@ -209,11 +217,11 @@ class World
 
         <para>
             この例にはポイントがふたつあります。まず
-            AMF チャネルを作成し、そしてエンドポイントの URL を
+            <acronym>AMF</acronym> チャネルを作成し、そしてエンドポイントの <acronym>URL</acronym> を
             <classname>Zend_Amf_Server</classname> に指定します。
         </para>
 
-        <programlisting role="xml"><![CDATA[
+        <programlisting language="xml"><![CDATA[
 <channel-definition id="zend-endpoint"
     <endpoint uri="http://example.com/server.php"
         class="flex.messaging.endpoints.AMFEndpoint"/>
@@ -227,11 +235,12 @@ class World
         </para>
 
         <para>
-            Flex の MXML ファイルで、RemoteObject をサービスにバインドしなければなりません。
-            MXML で次のように記述します。
+            Flex の <acronym>MXML</acronym> ファイルで、
+            RemoteObject をサービスにバインドしなければなりません。
+            <acronym>MXML</acronym> で次のように記述します。
         </para>
 
-        <programlisting role="xml"><![CDATA[
+        <programlisting language="xml"><![CDATA[
 <mx:RemoteObject id="myservice"
     fault="faultHandler(event)"
     showBusyCursor="true"
@@ -240,12 +249,12 @@ class World
 
         <para>
             ここでは、新しいリモートオブジェクトに "myservice" という名前をつけ、
-            さきほど <code>services-config.xml</code> で定義した "zend"
+            さきほど <filename>services-config.xml</filename> で定義した "zend"
             にそれをバインドしています。ActionScript からメソッドをコールするには、
             "myservice.&lt;method&gt;" とするだけです。例を示します。
         </para>
 
-        <programlisting role="ActionScript"><![CDATA[
+        <programlisting language="ActionScript"><![CDATA[
 myservice.hello("Wade");
 ]]></programlisting>
 
@@ -254,7 +263,7 @@ myservice.hello("Wade");
             "myservice.&lt;namespace&gt;.&lt;method&gt;" のようにします。
         </para>
 
-        <programlisting role="ActionScript"><![CDATA[
+        <programlisting language="ActionScript"><![CDATA[
 myservice.world.hello("Wade");
 ]]></programlisting>
 
@@ -270,7 +279,7 @@ myservice.world.hello("Wade");
 
         <para>
             デフォルトでは、アタッチしたクラスや関数からスローされた例外はすべて捕捉され、
-            AMF ErrorMessage として返されます。しかし、この ErrorMessage
+            <acronym>AMF</acronym> ErrorMessage として返されます。しかし、この ErrorMessage
             オブジェクトの中身は、サーバが "production" モード (デフォルトの状態)
             であるか否かによって異なります。
         </para>
@@ -286,7 +295,7 @@ myservice.world.hello("Wade");
             production モードを無効にするには、次のようにします。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server->setProduction(false);
 ]]></programlisting>
 
@@ -294,7 +303,7 @@ $server->setProduction(false);
             再度有効にするには、true を渡します。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $server->setProduction(true);
 ]]></programlisting>
 
@@ -305,17 +314,17 @@ $server->setProduction(true);
                 production モードを無効にするのは、開発時のみにすることを推奨します。
                 例外メッセージやバックトレースにはシステムに関する重大な情報が含まれる可能性があり、
                 外部からアクセスされることは好ましくありません。
-                AMF はバイナリ形式ではありますが、その仕様は公開されています。
+                <acronym>AMF</acronym> はバイナリ形式ではありますが、その仕様は公開されています。
                 つまり、誰でもメッセージを解読できる可能性があるということです。
             </para>
         </note>
 
         <para>
-            もうひとつ、特に注意を要するのが PHP のエラーです。
-            INI 設定 <code>display_errors</code> が有効になっていると、
-            エラー報告レベルに応じてあらゆる PHP のエラーが直接出力されてしまいます。
-            これは、AMF のレスポンスを壊してしまう可能性があります。
-            運用時には <code>display_errors</code> を無効にし、
+            もうひとつ、特に注意を要するのが <acronym>PHP</acronym> のエラーです。
+            <acronym>INI</acronym> 設定 <emphasis>display_errors</emphasis> が有効になっていると、
+            エラー報告レベルに応じてあらゆる <acronym>PHP</acronym> のエラーが直接出力されてしまいます。
+            これは、<acronym>AMF</acronym> のレスポンスを壊してしまう可能性があります。
+            運用時には <emphasis>display_errors</emphasis> を無効にし、
             この問題を回避することを推奨します。
         </para>
     </sect2>
@@ -326,7 +335,7 @@ $server->setProduction(true);
         <para>
             レスポンスオブジェクトを操作したくなることもあるかもしれません。
             メッセージヘッダを追加したい場合などが考えられます。サーバの
-            <code>handle()</code> メソッドはレスポンスオブジェクトを返すので、これが利用できます。
+            <methodname>handle()</methodname> メソッドはレスポンスオブジェクトを返すので、これが利用できます。
         </para>
 
         <example id="zend.amf.server.response.messageHeaderExample">
@@ -337,7 +346,7 @@ $server->setProduction(true);
                 'bar' を設定したものをレスポンスに追加してからそれを返します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $response = $server->handle();
 $response->addAmfHeader(new Zend_Amf_Value_MessageHeader('foo', true, 'bar'))
 echo $response;
@@ -349,25 +358,26 @@ echo $response;
         <title>型付きオブジェクト</title>
 
         <para>
-            SOAP と同様、AMF でもクライアントとサーバの間でオブジェクトをやりとりすることができます。
+            <acronym>SOAP</acronym> と同様、
+            <acronym>AMF</acronym> でもクライアントとサーバの間でオブジェクトをやりとりすることができます。
             これにより、クライアントとサーバの間での柔軟性と一貫性を確保することができます。
         </para>
 
         <para>
             <classname>Zend_Amf</classname> には、
-            ActionScript と PHP オブジェクトを関連付けるための 3 つのメソッドが用意されています。
+            ActionScript と <acronym>PHP</acronym> オブジェクトを関連付けるための 3 つのメソッドが用意されています。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     まず、サーバ側で明示的なバインドを行うには
-                    <code>setClassMap()</code> メソッドを使用します。
+                    <methodname>setClassMap()</methodname> メソッドを使用します。
                     最初の引数は ActionScript クラス名で、2 番目の引数は関連付ける
-                    PHP クラス名となります。
+                    <acronym>PHP</acronym> クラス名となります。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 // ActionScript クラス 'ContactVO' と PHP クラス 'Contact' を関連付けます
 $server->setClassMap('ContactVO', 'Contact');
 ]]></programlisting>
@@ -375,12 +385,12 @@ $server->setClassMap('ContactVO', 'Contact');
 
             <listitem>
                 <para>
-                    次に、PHP クラス内で public プロパティ
-                    <code>$_explicitType</code> を設定する方法があります。
+                    次に、<acronym>PHP</acronym> クラス内で public プロパティ
+                    <varname>$_explicitType</varname> を設定する方法があります。
                     ここには、関連付けたい ActionScript クラス名を指定します。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Contact
 {
     public $_explicitType = 'ContactVO';
@@ -391,11 +401,11 @@ class Contact
             <listitem>
                 <para>
                     3 番目の方法として、PHP クラスの public メソッド
-                    <code>getASClassName()</code> を使用することもできます。
+                    <methodname>getASClassName()</methodname> を使用することもできます。
                     このメソッドは、適切な ActionScript クラスを返すようにしなければなりません。
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 class Contact
 {
     public function getASClassName()
@@ -409,15 +419,17 @@ class Contact
 
         <para>
             サーバ側で ContactVO を作成したら、
-            サーバオブジェクトに対応するクラスを AS3 で書かなければなりません。
+            サーバオブジェクトに対応するクラスを <acronym>AS3</acronym> で書かなければなりません。
         </para>
+
         <para>
             Flex プロジェクトの src フォルダを右クリックし、新規作成 ->
             ActionScript ファイルを選択します。ファイルに ContactVO
             という名前をつけて終了を押すと、新しいファイルがあらわれます。
             次のコードをコピーして、クラスを作成しましょう。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 package
 {
     [Bindable]
@@ -434,16 +446,18 @@ package
     }
 }
 ]]></programlisting>
+
         <para>
-            このクラスは、同名の PHP のクラスと構文的に同等となります。
+            このクラスは、同名の <acronym>PHP</acronym> のクラスと構文的に同等となります。
             変数名はまったく同じで、大文字小文字もあわせておかなければ正しく動作しません。
-            このクラスでは、AS3 独特のメタタグが 2 つ用いられています。
+            このクラスでは、<acronym>AS3</acronym> 独特のメタタグが 2 つ用いられています。
             最初のタグは bindable で、これは更新時に change イベントを発火させます。
             2 番目のタグは RemoteClass で、このクラスがリモートオブジェクトを保持できること、
-            そのエイリアス名が (ここでは) <code>ContactVO</code> であることを定義します。
-            このタグに設定される値は、PHP のクラスと正確に一致していなければなりません。
+            そのエイリアス名が (ここでは) <emphasis>ContactVO</emphasis> であることを定義します。
+            このタグに設定される値は、<acronym>PHP</acronym> のクラスと正確に一致していなければなりません。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 [Bindable]
 private var myContact:ContactVO;
 
@@ -451,11 +465,81 @@ private function getContactHandler(event:ResultEvent):void {
     myContact = ContactVO(event.result);
 }
 ]]></programlisting>
+
         <para>
             サービスコールの後の result イベントは即時に Flex の ContactVO にキャストされます。
             myContact にバインドされているすべての内容は、返された
             ContactVO データで更新されます。
         </para>
+    </sect2>
+
+    <sect2 id="zend.amf.server.resources">
+        <title>リソース</title>
+
+        <para>
+            <classname>Zend_Amf</classname> には、サービスクラスが返すリソース型を
+            ActionScript で使用可能な形式のデータにマッピングするツールが用意されています。
+        </para>
+
+        <para>
+            リソース型を扱うには、そのリソース名に対応する名前のプラグインクラスを作成する必要があります。
+           クラス名は、リソース名の単語の先頭を大文字化してスペースを除去したものとなり
+            (つまり、リソース型 "mysql result" の場合は MysqlResult となります)、
+            それに何らかのプレフィックスをつけてたとえば <classname>My_MysqlResult</classname>
+            のようになります。このクラスは <methodname>parse()</methodname>
+            メソッドを実装しなければなりません。
+            このメソッドはリソースを引数として受け取り、ActionScript に送信する値を返します。
+            このクラスを記述するファイル名は、クラス名の最後の部分と同じ名前にしなければなりません。
+            たとえば先ほどの例の場合は <filename>MysqlResult.php</filename> となります。
+        </para>
+
+        <para>
+            リソース用のプラグインを含むディレクトリは、
+            <classname>Zend_Amf</classname> 型ローダーで登録しなければなりません。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+Zend_Amf_Parse_TypeLoader::addResourceDirectory(
+    "My",
+    "application/library/resources/My"
+));
+]]></programlisting>
+
+        <para>
+            プラグインのロードに関する詳細は、
+            <link end="zend.loader.pluginloader">プラグインローダー</link> を参照ください。
+        </para>
+
+        <para>
+            <classname>Zend_Amf</classname> リソース用のデフォルトディレクトリは自動的に登録されており、
+            現在ここには "mysql result" リソースおよび "stream" リソースのプラグインが格納されています。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+// Example class implementing handling resources of type mysql result
+class Zend_Amf_Parse_Resource_MysqlResult
+{
+    /**
+     * Parse resource into array
+     *
+     * @param resource $resource
+     * @return array
+     */
+    public function parse($resource) {
+        $result = array();
+        while($row = mysql_fetch_assoc($resource)) {
+            $result[] = $row;
+        }
+        return $result;
+    }
+}
+]]></programlisting>
+
+        <para>
+            未知のリソース型 (つまり、処理用プラグインが存在しない型)
+            を返そうとすると、例外が発生します。
+        </para>
+
     </sect2>
 
     <sect2 id="zend.amf.server.flash">
@@ -465,29 +549,36 @@ private function getContactHandler(event:ResultEvent):void {
             <classname>Zend_Amf_Server</classname> に Flash プロジェクトから接続する方法は、
             Flex からの場合とは多少異なります。しかし、いったん接続してしまえば
             <classname>Zend_Amf_Server</classname> は flex の場合と同じように動作します。
-            次の例は Flex AS3 ファイルからでも使用できます。
+            次の例は Flex <acronym>AS3</acronym> ファイルからでも使用できます。
             同じ <classname>Zend_Amf_Server</classname> 設定ファイルを用い、
             World クラスを用いて接続します。
         </para>
+
         <para>
             Flash CS を開き、新規 Flash ファイル (ActionScript 3) を作成します。
-            そのドキュメントに ZendExample.fla という名前をつけ、このサンプルを使用するフォルダに保存します。
-            次に、同じディレクトリに新規 AS3 ファイルを作成し、Main.as という名前をつけます。
+            そのドキュメントに <filename>ZendExample.fla</filename> という名前をつけ、
+            このサンプルを使用するフォルダに保存します。
+            次に、同じディレクトリに新規 <acronym>AS3</acronym> ファイルを作成し、
+            <filename>Main.as</filename> という名前をつけます。
             そして両方のファイルをエディタで開きます。
             これから、ドキュメントクラスを通じてふたつのファイルをつないできます。
             ZendExample を選択し、ステージ上でクリックします。
             ステージのプロパティパネルで、ドキュメントクラスを Main に変更します。
-            これで、ActionScript ファイル Main.as が ZendExample.fla
-            のユーザインターフェイスとつながります。
-            Flash ファイル ZendExample を実行すると、Main.as クラスが実行されるようになるのです。
-            次に、AMF をコールする ActionScript を追加します。
+            これで、ActionScript ファイル <filename>Main.as</filename> が
+            <filename>ZendExample.fla</filename> のユーザインターフェイスとつながります。
+            Flash ファイル ZendExample を実行すると、
+            <filename>Main.as</filename> クラスが実行されるようになるのです。
+            次に、<acronym>AMF</acronym> をコールする ActionScript を追加します。
         </para>
+
         <para>
-            それでは、Main クラスを作成していきましょう。これを用いてデータをサーバに送信し、結果を表示します。
-            次のコードを Main.as にコピーしましょう。これから、
+            それでは、Main クラスを作成していきましょう。
+            これを用いてデータをサーバに送信し、結果を表示します。
+            次のコードを <filename>Main.as</filename> にコピーしましょう。これから、
             このコードの中身を追いかけながら何をやっているのかを説明していきます。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 package {
   import flash.display.MovieClip;
   import flash.events.*;
@@ -524,68 +615,173 @@ package {
         <para>
             まず、さまざまな作業をするための ActionScript ライブラリをインポートする必要があります。
             ひとつめが NetConnection で、これはクライアントとサーバの間でパイプのような働きをします。
-            もうひとつは Responder オブジェクトで、これはコールが成功したかどうかなどのサーバからの返り値を処理します。
+            もうひとつは Responder オブジェクトで、
+            これはコールが成功したかどうかなどのサーバからの返り値を処理します。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 import flash.net.NetConnection;
 import flash.net.Responder;
 ]]></programlisting>
+
         <para>
             クラスの中で 3 つの変数を用意します。これらがそれぞれ NetConnection、Responder
-            そして <classname>Zend_Amf_Server</classname> へのゲートウェイ URL をあらわします。
+            そして <classname>Zend_Amf_Server</classname> へのゲートウェイ
+            <acronym>URL</acronym> をあらわします。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 private var gateway:String = "http://example.com/server.php";
 private var connection:NetConnection;
 private var responder:Responder;
 ]]></programlisting>
+
         <para>
             Main のコンストラクタでレスポンダを作成し、また
             <classname>Zend_Amf_Server</classname> エンドポイントへの新規接続も作成します。
             レスポンダでは、サーバからのレスポンスを処理するメソッドが 2 つ定義されています。
             わかりやすくするため、それぞれ onResult および onFault と名づけます。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 responder = new Responder(onResult, onFault);
 connection = new NetConnection;
 connection.connect(gateway);
 ]]></programlisting>
+
         <para>
             onComplete 関数は、コンストラクタの処理が終わった直後に実行されます。
             ここで、データをサーバに送信します。
             <classname>Zend_Amf_Server</classname> World->hello 関数をコールするコードを 1 行追加しています。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 connection.call("World.hello", responder, params);
 ]]></programlisting>
+
         <para>
             responder を作成した際に、サーバからのレスポンスを処理する関数として
             onResult と onFault を定義しました。サーバから正しい結果が返ってきたとき用の関数を追加します。
             成功時のイベントハンドラは、サーバへの接続が正しく処理されるたびに毎回実行されます。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 private function onResult(result:Object):void {
     // Display the returned data
     trace(String(result));
 }
 ]]></programlisting>
+
         <para>
             onFault 関数は、サーバから無効な結果が返ってきたときにコールされます。
-            たとえば、サーバからエラーが返された場合、サーバへの URL が無効な場合、
-            リモート側にサービスやメソッドが存在しない場合など、接続時に問題が発生した場合にコールされることになります。
+            たとえば、サーバからエラーが返された場合、サーバへの <acronym>URL</acronym> が無効な場合、
+            リモート側にサービスやメソッドが存在しない場合など、
+            接続時に問題が発生した場合にコールされることになります。
         </para>
-        <programlisting role="as"><![CDATA[
+
+        <programlisting language="as"><![CDATA[
 private function onFault(fault:Object):void {
     trace(String(fault.description));
 }
 ]]></programlisting>
+
         <para>
             これで、ActionScript 内でのリモート接続処理は完成しました。
             ZendExample を実行すると、Zend Amf へ接続されるようになります。
             ここまでを振り返ってみましょう。まず最初にリモートサーバへの接続に必要な変数を追加し、
             サーバからのレスポンスを受け取ったときに使用するメソッドを定義し、
-            そして最後に返された結果を trace() で出力しました。
+            そして最後に返された結果を <methodname>trace()</methodname> で出力しました。
         </para>
+
+    </sect2>
+
+    <sect2 id="zend.amf.server.auth">
+        <title>認証</title>
+
+        <para>
+            <classname>Zend_Amf_Server</classname> では、認証と認可のフックを指定して
+            サービスへのアクセス制御をすることができます。この仕組みは、
+            <link end="zend.auth"><classname>Zend_Auth</classname></link> および
+            <link end="zend.acl"><classname>Zend_Acl</classname></link>
+            コンポーネントが提供するものを使用しています。
+        </para>
+
+        <para>
+            認証を定義するには、抽象クラス
+            <classname>Zend_Amf_Auth_Abstract</classname> を継承した認証アダプタを作成します。
+            このアダプタは、通常の
+            <link end="zend.auth.introduction.adapters">認証アダプタ</link>
+            と同様に <methodname>authenticate()</methodname> メソッドを実装しなければなりません。
+        </para>
+
+        <para>
+            アダプタでの認証の際には、親クラス
+            <classname>Zend_Amf_Auth_Abstract</classname> のプロパティ
+            <emphasis>_username</emphasis> および
+            <emphasis>_password</emphasis> を使用しなければなりません。
+            <acronym>AMF</acronym> リクエストヘッダに認証情報が含まれていれば、
+            <methodname>authenticate()</methodname> がコールされる前にサーバが
+            <methodname>setCredentials()</methodname> メソッドを用いてその情報を設定します。
+        </para>
+
+        <para>
+            アダプタが返す識別情報は、<emphasis>role</emphasis>
+            プロパティを含むオブジェクトでなければなりません。
+            これを用いて <acronym>ACL</acronym> アクセス制御が動作します。
+        </para>
+
+        <para>
+            認証に失敗した場合はそれ以降のリクエストの処理は行われず、
+            失敗したというメッセージとその理由を結果として返します。
+        </para>
+
+        <para>
+            アダプタとサーバを関連づけるには <methodname>setAuth()</methodname> メソッドを使用します。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$server->setAuth(new My_Amf_Auth());
+]]></programlisting>
+
+        <para>
+            アクセス制御を行うには
+            <methodname>setAcl()</methodname> メソッドで設定した
+            <classname>Zend_Acl</classname> オブジェクトを使用します。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$acl = new Zend_Acl();
+createPermissions($acl); // パーミッション情報を作成します
+$server->setAcl($acl);
+]]></programlisting>
+
+        <para>
+            <acronym>ACL</acronym> オブジェクトが設定され、コールされるクラスで
+            <methodname>initAcl()</methodname> メソッドが定義されていれば、
+            <acronym>ACL</acronym> オブジェクトを引数としてこのメソッドがコールされます。
+            このクラスは追加の <acronym>ACL</acronym> ルールを作成して
+            <constant>TRUE</constant> を返すこともできますし、
+            このクラスでのアクセス制御が不要な場合は
+            <constant>FALSE</constant> を返すこともできます。
+        </para>
+
+        <para>
+            <acronym>ACL</acronym> の準備が終わると、
+            サーバ側で「指定されたロールで、指定されたクラス (関数コールの際は null)
+            のリソース、指定された関数の実行権限があるかどうか」を調べます。
+            認証情報が提供されていない場合は
+            <emphasis>anonymous</emphasis> ロールが定義されているかどうかを調べ、
+            定義されている場合はそれを使用します。定義されていない場合はアクセスを拒否します。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+if($this->_acl->isAllowed($role, $class, $function)) {
+    return true;
+} else {
+    require_once 'Zend/Amf/Server/Exception.php';
+    throw new Zend_Amf_Server_Exception("Access not allowed");
+}
+]]></programlisting>
 
     </sect2>
 

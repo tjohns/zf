@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15156 -->
+<!-- EN-Revision: 15850 -->
 <sect1 id="zend.controller.front">
     <title>フロントコントローラ</title>
 
@@ -57,7 +57,7 @@
                 <code>dispatch()</code> をコールする前のどこかで以下のようにします。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // ErrorHandler プラグインを無効にします
 $front->setParam('noErrorHandler', true);
 ]]></programlisting>
@@ -67,7 +67,7 @@ $front->setParam('noErrorHandler', true);
                 <code>dispatch()</code> をコールする前に以下を実行します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // ViewRenderer ヘルパーを無効にします
 $front->setParam('noViewRenderer', true);
 ]]></programlisting>
@@ -91,7 +91,7 @@ $front->setParam('noViewRenderer', true);
                 フロントコントローラのインスタンスを作成する唯一の方法はこのメソッドをコールすることとなります。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $front = Zend_Controller_Front::getInstance();
 ]]></programlisting>
         </sect3>
@@ -112,7 +112,7 @@ $front = Zend_Controller_Front::getInstance();
                 いくつか例を示します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // デフォルトのコントローラディレクトリを設定します
 $front->setControllerDirectory('../application/controllers');
 
@@ -241,7 +241,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 フロントコントローラのカスタマイズが不要な場合に便利なメソッドです。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 // フロントコントローラを作成してコントローラディレクトリを設定し、
 // ディスパッチするまでをいちどでお手軽に行います
 Zend_Controller_Front::run('../application/controllers');
@@ -350,7 +350,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code>
                     は、<link linkend="zend.controller.plugins">プラグインオブジェクト</link>
-                    を登録します。オプションの <code>$stackIndex</code>
+                    を登録します。オプションの <varname>$stackIndex</varname>
                     を設定すると、プラグインの実行順を制御することができます。
                 </para>
             </listitem>
@@ -359,7 +359,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>unregisterPlugin($plugin)</code> は、
                     <link linkend="zend.controller.plugins">プラグインオブジェクト</link>
-                    の登録を解除します。<code>$plugin</code>
+                    の登録を解除します。<varname>$plugin</varname>
                     にはプラグインオブジェクトそのものか、あるいはプラグインのクラス名を表す文字列を指定します。
                     ここで指定したプラグインの登録を解除します。
                 </para>
@@ -382,8 +382,8 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>returnResponse($flag)</code> は、フロントコントローラが
-                    <code>dispatch()</code> からのレスポンスを返す (<code>true</code>)
-                    かレスポンスを自動的に発行する (<code>false</code>)
+                    <code>dispatch()</code> からのレスポンスを返す (<constant>TRUE</constant>)
+                    かレスポンスを自動的に発行する (<constant>FALSE</constant>)
                     かを切り替えます。デフォルトでは、レスポンスは
                     (<classname>Zend_Controller_Response_Abstract::sendResponse()</classname> によって)
                     自動的に発行されます。<code>returnResponse()</code>
@@ -417,8 +417,8 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>setParam($name, $value)</code> は、
-                    パラメータ <code>$name</code> の値を
-                    <code>$value</code> に設定します。
+                    パラメータ <varname>$name</varname> の値を
+                    <varname>$value</varname> に設定します。
                 </para>
             </listitem>
 
@@ -432,7 +432,7 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>getParam($name)</code> は、
-                    <code>$name</code> で指定した名前のパラメータの値を取得します。
+                    <varname>$name</varname> で指定した名前のパラメータの値を取得します。
                 </para>
             </listitem>
 
@@ -516,7 +516,7 @@ Zend_Controller_Front::run('../application/controllers');
             最低限 <code>getInstance()</code> メソッドをオーバーライドしなければなりません。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 class My_Controller_Front extends Zend_Controller_Front
 {
     public static function getInstance()

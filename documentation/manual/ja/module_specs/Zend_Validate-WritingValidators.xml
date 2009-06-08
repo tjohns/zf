@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15157 -->
+<!-- EN-Revision: 15742 -->
 <sect1 id="zend.validate.writing_validators">
 
     <title>バリデータの書き方</title>
@@ -27,7 +27,7 @@
     <para>
         上の <classname>Zend_Validate_Interface</classname> についての説明からも推測できるように、
         Zend Framework が提供しているバリデーションクラスの返り値は、
-        検証に成功したか失敗したかを表す boolean 値となります。また、<emphasis role="bold">なぜ</emphasis>
+        検証に成功したか失敗したかを表す boolean 値となります。また、<emphasis>なぜ</emphasis>
         検証が失敗したのかについての情報も提供します。この理由がわかると、
         アプリケーション側で何かと便利です。たとえば、ユーザビリティ改善のための統計情報として利用することなどができます。　
     </para>
@@ -38,9 +38,9 @@
         <classname>Zend_Validate_Abstract</classname> を継承します。
         継承したクラス内で <code>isValid()</code> メソッドのロジックを実装し、
         発生しうる失敗の形式に対応したメッセージ変数とメッセージテンプレートを定義します。
-        検証に失敗した場合には <code>isValid()</code> は <code>false</code>
+        検証に失敗した場合には <code>isValid()</code> は <constant>FALSE</constant>
         を返さなければなりません。検証を通過した場合は、<code>isValid()</code>
-        は <code>true</code> を返さなければなりません。
+        は <constant>TRUE</constant> を返さなければなりません。
     </para>
 
     <para>
@@ -59,7 +59,7 @@
             次の例は、非常に単純なバリデータの書き方を説明するものです。
             ここで定義している検証規則は非常に単純で、入力値が浮動小数点値かどうかのみを調べています。
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class MyValid_Float extends Zend_Validate_Abstract
 {
     const FLOAT = 'float';
@@ -118,7 +118,7 @@ class MyValid_Float extends Zend_Validate_Abstract
         <para>
             これらの原因に応じて、クラス内でメッセージへの変換が行われます。
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class MyValid_NumericBetween extends Zend_Validate_Abstract
 {
     const MSG_NUMERIC = 'msgNumeric';
@@ -172,7 +172,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
         <para>
             <code>isValid()</code> での妥当性チェックのいずれかが失敗すると、
-            適切なメッセージを準備して即時に <code>false</code> を返すことに注意しましょう。
+            適切なメッセージを準備して即時に <constant>FALSE</constant> を返すことに注意しましょう。
             つまり、これらの検証は、その並び順に依存します。
             どれかひとつのチェックが失敗すると、それ以降の検証規則を確認する必要はなくなるからです。
             しかし、時にはこのような処理が不要な場合もあります。
@@ -211,7 +211,7 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
         <para>
             この検証規則を実装したクラスは、次のようになります。
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 class MyValid_PasswordStrength extends Zend_Validate_Abstract
 {
     const LENGTH = 'length';
@@ -258,8 +258,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 ]]></programlisting>
 
             <code>isValid()</code> では四つのチェックを行っていますが、
-            チェックに失敗してもその場では <code>false</code> を返していないことに注目しましょう。
-            これにより、入力されたパスワードが満たしていない条件を <emphasis role="bold">すべて</emphasis>
+            チェックに失敗してもその場では <constant>FALSE</constant> を返していないことに注目しましょう。
+            これにより、入力されたパスワードが満たしていない条件を <emphasis>すべて</emphasis>
             示すことができるようになります。たとえば、パスワードとして入力された値が
             "<code>#$%</code>" だったとすると、<code>isValid()</code>
             は四つのメッセージをすべて作成し、後で <code>getMessages()</code>
