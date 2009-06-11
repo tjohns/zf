@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="about.css" type="text/css"?>
+<dialog
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	title="About Zend_Toolbar" orient="vertical" buttons="accept" width="320"
+	height="240">
+	<groupbox align="center" flex="1">
+		<vbox align="center">
+			<description id="title" value="Zend_Toolbar" />
+			<description id="version" value="version: 0.1.0" />
+			<description id="created" value="created by" />
+			<description id="author" value="toto" />
+		</vbox>
+	</groupbox>
+	<description id="made" value="Made with XulBooster" />
+</dialog>

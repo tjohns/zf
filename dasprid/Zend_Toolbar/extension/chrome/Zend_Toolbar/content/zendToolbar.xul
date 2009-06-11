@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://Zend_Toolbar/skin/zendToolbar.css" type="text/css"?>
+<overlay id="zend-toolbar" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <window id="main-window">
+        <vbox id="browser-bottombox">
+            <hbox id="zend-toolbar-statusbar" insertbefore="status-bar">
+                <label id="zend-toolbar-version" value="1.9.0"/>
+                <label id="zend-toolbar-variables" value="View variables"/>
+                <label id="zend-toolbar-queries" value="6 queries in 0.5 seconds"/>
+                <label id="zend-toolbar-errors" value="1 error"/>
+                <label id="zend-toolbar-filesize" value="1.6kb"/>
+                <label id="zend-toolbar-runtime" value="1.4 seconds"/>
+            </hbox>
+        </vbox>
+    </window>
+</overlay>

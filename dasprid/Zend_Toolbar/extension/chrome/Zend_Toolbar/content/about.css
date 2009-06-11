@@ -1,0 +1,25 @@
+@CHARSET "ISO-8859-1";
+
+#title {
+	font-weight: bold; 
+	font-size: x-large;;
+	color: orange
+	
+}
+
+#created {
+	font-weight: bold;
+}
+
+#made {
+	color: blue
+}
+
+groupbox {
+	border-color: blue
+	
+}
+
+dialog {
+	background-color: white
+}
