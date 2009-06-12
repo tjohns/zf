@@ -23,6 +23,11 @@
 require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
 
 /**
+ * Zend_Crypt_Hmac
+ */
+require_once 'Zend/Crypt/Hmac.php';
+
+/**
  * An Amazon EC2 interface that allows yout to run, terminate, reboot and describe Amazon
  * Ec2 Instances.
  *
@@ -34,9 +39,51 @@ require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
  */
 class Zend_Service_Amazon_Ec2_Instance_Windows extends Zend_Service_Amazon_Ec2_Abstract
 {
-    public function bundle()
-    {}
+    /**
+     * Bundles an Amazon EC2 instance running Windows
+     *
+     * @param string $instanceId        The instance you want to bundle
+     * @param string $s3Bucket          Where you want the ami to live on S3
+     * @param string $s3Prefix          The prefix you want to assign to the AMI on S3
+     * @param integer $uploadExpiration The expiration of the upload policy.  Amazon recommends 12 hours or longer.
+     *                                  This is based in nubmer of minutes. Default is 1440 minutes (24 hours)
+     * @return array                    containing the information on the new bundle operation
+     */
+    public function bundle($instanceId, $s3Bucket, $s3Prefix, $uploadExpiration = 1440)
+    {
+        $params = array();
+        $params['Action'] = 'BundleInstance';
+        $params['InstanceId'] = $instanceId;
+        $params['Storage.S3.AWSAccessKeyId'] = $this->_getAccessKey();
+        $params['Storage.S3.Bucket'] = $s3Bucket;
+        $params['Storage.S3.Prefix'] = $s3Prefix;
+        $uploadPolicy = $this->_getS3UploadPolicy($s3Bucket, $s3Prefix, $uploadExpiration);
+        $params['Storage.S3.UploadPolicy'] = $uploadPolicy;
+        $params['Storage.S3.UploadPolicySignature'] = $this->_signS3UploadPolicy($uploadPolicy);
 
+        $response = $this->sendRequest($params);
+
+        $xpath = $response->getXPath();
+
+        $return = array();
+        $return['instanceId'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:instanceId/text())');
+        $return['bundleId'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:bundleId/text())');
+        $return['state'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:state/text())');
+        $return['startTime'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:startTime/text())');
+        $return['updateTime'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:updateTime/text())');
+        $return['progress'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:progress/text())');
+        $return['storage']['s3']['bucket'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:storage/ec2:S3/ec2:bucket/text())');
+        $return['storage']['s3']['prefix'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:storage/ec2:S3/ec2:prefix/text())');
+
+        return $return;
+    }
+
+    /**
+     * Cancels an Amazon EC2 bundling operation
+     *
+     * @param string $bundleId          The ID of the bundle task to cancel
+     * @return array                    Information on the bundle task
+     */
     public function cancelBundle($bundleId)
     {
         $params = array();
@@ -57,10 +104,16 @@ class Zend_Service_Amazon_Ec2_Instance_Windows extends Zend_Service_Amazon_Ec2_A
         $return['storage']['s3']['bucket'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:storage/ec2:S3/ec2:bucket/text())');
         $return['storage']['s3']['prefix'] = $xpath->evaluate('string(//ec2:bundleInstanceTask/ec2:storage/ec2:S3/ec2:prefix/text())');
 
-
         return $return;
     }
 
+    /**
+     * Describes current bundling tasks
+     *
+     * @param string|array $bundleId            A single or a list of bundle tasks that you want
+     *                                          to find information for.
+     * @return array                            Information for the task that you requested
+     */
     public function describeBundle($bundleId)
     {
         $params = array();
@@ -100,12 +153,35 @@ class Zend_Service_Amazon_Ec2_Instance_Windows extends Zend_Service_Amazon_Ec2_A
         return $return;
     }
 
-    protected function _s3UploadPolicySig($bucketName, $prefix, $expireInMinutes = 1440)
+    /**
+     * Generates the S3 Upload Policy Information
+     *
+     * @param string $bucketName        Which bucket you want the ami to live in on S3
+     * @param string $prefix            The prefix you want to assign to the AMI on S3
+     * @param integer $expireInMinutes  The expiration of the upload policy.  Amazon recommends 12 hours or longer.
+     *                                  This is based in nubmer of minutes. Default is 1440 minutes (24 hours)
+     * @return string                   Base64 encoded string that is the upload policy
+     */
+    protected function _getS3UploadPolicy($bucketName, $prefix, $expireInMinutes = 1440)
     {
         $arrParams = array();
         $arrParams['expiration'] = gmdate("Y-m-d\TH:i:s.\\0\\0\\0\\Z", (time() + ($expireInMinutes * 60)));
-        $arrParmss['conditions'][] = array('bucket' => $bucketName);
-        $arrParmss['conditions'][] = array('acl' => 'ec2-bundle-read');
-        $arrParmss['conditions'][] = array('starts-with', '$key', $prefix);
+        $arrParams['conditions'][] = array('bucket' => $bucketName);
+        $arrParams['conditions'][] = array('acl' => 'ec2-bundle-read');
+        $arrParams['conditions'][] = array('starts-with', '$key', $prefix);
+
+        return base64_encode(Zend_Json::encode($arrParams));
+    }
+
+    /**
+     * Signed S3 Upload Policy
+     *
+     * @param string $policy            Base64 Encoded string that is the upload policy
+     * @return string                   SHA1 encoded S3 Upload Policy
+     */
+    protected function _signS3UploadPolicy($policy)
+    {
+        $hmac = Zend_Crypt_Hmac::compute($this->_getSecretKey(), 'SHA1', $policy, Zend_Crypt_Hmac::BINARY);
+        return $hmac;
     }
 }

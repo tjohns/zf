@@ -306,7 +306,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
 
         $return = array();
 
-        foreach($arrInstances['instances'] as $k => $instance) {
+        foreach($arrInstances['instances'] as $instance) {
             if($instance['imageId'] !== $imageId) continue;
             $return[] = $instance;
         }
