@@ -13,10 +13,6 @@ set_include_path(
 
 define('ZEND_ENTITY_CLINIC_SQLITE_DATA', dirname(__FILE__)."/Zend/Entity/ScenarioData/Clinic/clinic.sqlite");
 
-/*require_once "Zend/Loader.php";
-Zend_Loader::registerAutoload();
- *
- */
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader =Zend_Loader_Autoloader::getInstance();
 $autoloader->suppressNotFoundWarnings(false);
