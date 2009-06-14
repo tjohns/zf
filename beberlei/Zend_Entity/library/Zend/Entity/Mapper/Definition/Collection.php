@@ -18,7 +18,6 @@
  */
 
 class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Definition_Table
-    implements Zend_Entity_Mapper_Definition_Property_Interface
 {
     const COLLECTION_RELATION = 'relation';
     const COLLECTION_ELEMENTS = 'elements';
@@ -26,10 +25,15 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * @var string
      */
+    protected $_propertyName = null;
+
+    /**
+     * @var string
+     */
     protected $_collectionType = self::COLLECTION_RELATION;
 
     /**
-     * @var Zend_Entity_Mapper_Definition_Relation
+     * @var Zend_Entity_Mapper_Definition_AbstractRelation
      */
     protected $relation;
 
@@ -85,7 +89,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
      */
     public function getPropertyName()
     {
-        return $this->propertyName;
+        return $this->_propertyName;
     }
 
     /**
@@ -93,7 +97,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
      */
     public function setPropertyName($propertyName)
     {
-        $this->propertyName = $propertyName;
+        $this->_propertyName = $propertyName;
     }
 
     /**
@@ -151,7 +155,7 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * What type of relation is this collection?
      *
-     * @return Zend_Entity_Mapper_Definition_Relation
+     * @return Zend_Entity_Mapper_Definition_AbstractRelation
      */
     public function getRelation()
     {
@@ -161,9 +165,9 @@ class Zend_Entity_Mapper_Definition_Collection extends Zend_Entity_Mapper_Defini
     /**
      * Set type of relation of this collection.
      *
-     * @param Zend_Entity_Mapper_Definition_Relation $relation
+     * @param Zend_Entity_Mapper_Definition_AbstractRelation $relation
      */
-    public function setRelation(Zend_Entity_Mapper_Definition_Relation $relation)
+    public function setRelation(Zend_Entity_Mapper_Definition_AbstractRelation $relation)
     {
         $this->_collectionType = self::COLLECTION_RELATION;
         $this->relation = $relation;

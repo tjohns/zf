@@ -19,12 +19,13 @@ interface Zend_Entity_Manager_Interface
     public function select($entity);
 
     /**
-     * Find all entities matching Query Object statement
+     * Find all entities matching query statement
      *
-     * @param object $select
      * @param string $entityName
+     * @param Zend_Db_Select|string $sql
+     * @return Zend_Entity_Collection
      */
-    public function find($entityName, $select);
+    public function performFindQuery($entityName, $select);
 
     /**
      * Find one entity matching select statement
@@ -53,7 +54,7 @@ interface Zend_Entity_Manager_Interface
      * @param string $key
      * @return Zend_Entity_Interface
      */
-    public function findByKey($entityName, $key);
+    public function load($entityName, $key);
 
     /**
      * Save entity by registering it with UnitOfWork or hitting the database mapper.

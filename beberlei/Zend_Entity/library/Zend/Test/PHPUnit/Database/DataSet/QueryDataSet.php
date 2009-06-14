@@ -1,5 +1,7 @@
 <?php
 
+require_once "PHPUnit/Extensions/Database/DataSet/QueryDataSet.php";
+
 class Zend_Test_PHPUnit_Database_DataSet_QueryDataSet extends PHPUnit_Extensions_Database_DataSet_QueryDataSet
 {
     /**

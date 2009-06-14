@@ -1,7 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entity_Mapper_Definition_Property
-    implements Zend_Entity_Mapper_Definition_Relation
+abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entity_Mapper_Definition_Property_Abstract
 {
     /**
      * @var array
@@ -48,7 +47,7 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
     /**
      * @var string
      */
-    protected $_notFound = self::NOTFOUND_EXCEPTION;
+    protected $_notFound = Zend_Entity_Mapper_Definition_Property::NOTFOUND_EXCEPTION;
 
     /**
      * @var string
@@ -59,26 +58,6 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
      * @var boolean
      */
     protected $_inverse = false;
-
-    /**
-     * Get Database column name of this property.
-     *
-     * @return string
-     */
-    public function getColumnName()
-    {
-        return $this->_columnName;
-    }
-
-    /**
-     * Set database column name of this property.
-     *
-     * @param string $columnName
-     */
-    public function setColumnName($columnName)
-    {
-        $this->_columnName = $columnName;
-    }
 
     /**
      * Return class name of the related entity

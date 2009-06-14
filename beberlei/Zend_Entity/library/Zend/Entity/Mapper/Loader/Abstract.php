@@ -27,7 +27,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     /**
      * @var array
      */
-    protected $_columnsToPropertyNames = array();
+    protected $_columnNameToProperty = array();
 
     /**
      * @var array
@@ -75,14 +75,14 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             // TODO: Implement Lazy Load Properties
             $columnName = $property->getColumnName();
             $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
-            $this->_columnsToPropertyNames[$columnName] = $property->getPropertyName();
+            $this->_columnNameToProperty[$columnName] = $property;
         }
         foreach($entityDefinition->getRelations() AS $relation) {
             if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
                 // Setup retrieval of the foreign key value
                 $columnName = $relation->getColumnName();
                 $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
-                $this->_columnsToPropertyNames[$columnName] = $relation->getPropertyName();
+                $this->_columnNameToProperty[$columnName] = $relation;
                 
                 // Save Relation to the later retrieval stack
                 $this->_lateSelectedRelations[] = $relation;
@@ -91,7 +91,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 // Setup retrieval of the foreign key value
                 $columnName = $relation->getColumnName();
                 $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
-                $this->_columnsToPropertyNames[$columnName] = $relation->getPropertyName();
+                $this->_columnNameToProperty[$columnName] = $relation;
 
                 // Prepare for Lazy Load building.
                 $this->_lazyLoadRelations[]     = $relation;
@@ -118,15 +118,28 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         }
     }
 
-    abstract protected function renameColumnToPropertyKeys($row);
+    protected function renameAndCastColumnToPropertyKeys($row)
+    {
+        $state = array();
+        foreach($this->_columnNameToProperty AS $columnName => $property) {
+            if(!array_key_exists($columnName, $row)) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "In rename column to property the column '".$columnName."' does not exist in resultset."
+                );
+            }
+            $state[$property->getPropertyName()] = $property->castColumnToPhpType($row[$columnName]);
+        }
+        return $state;
+    }
 
     protected function createLazyLoadEntity(Zend_Entity_Manager $manager, $class, $id)
     {
         $identityMap = $manager->getIdentityMap();
-        if($identityMap->hasLazyObject($class, $id)) {
+        if($identityMap->hasObject($class, $id) || $identityMap->hasLazyObject($class, $id)) {
             $lazyEntity = $identityMap->getObject($class, $id);
         } else {
-            $callback          = array($manager, "findByKey");
+            $callback          = array($manager, "load");
             $callbackArguments = array($class, $id);
             $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity($callback, $callbackArguments);
             $identityMap->addObject($class, $id, $lazyEntity);
@@ -136,7 +149,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     protected function createLazyLoadCollection(Zend_Entity_Manager $manager, $class, $select)
     {
-        $callback          = array($manager, "find");
+        $callback          = array($manager, "performFindQuery");
         $callbackArguments = array($class, $select);
         return new Zend_Entity_Mapper_LazyLoad_Collection($callback, $callbackArguments);
     }
@@ -147,13 +160,12 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
         $identityMap = $entityManager->getIdentityMap();
         $key         = $this->_primaryKey->retrieveKeyValuesFromProperties($row);
-        $keyHash     = Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($key);
-        if($identityMap->hasObject($entityClass, $keyHash) == true) {
-            $entity = $identityMap->getObject($entityClass, $keyHash);
+        if($identityMap->hasObject($entityClass, $key) == true) {
+            $entity = $identityMap->getObject($entityClass, $key);
         } else {
             $entity = $this->createEntity($row);
             // Set this before loadRelationsIntoEntity() to circumvent infinite loop on backreferences and stuff
-            $identityMap->addObject($entityClass, $keyHash, $entity);
+            $identityMap->addObject($entityClass, $key, $entity);
 
             $this->loadRow($entity, $row, $entityManager);
         }
@@ -168,7 +180,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     public function loadRow(Zend_Entity_Interface $entity, array $row, Zend_Entity_Manager_Interface $entityManager)
     {
-        $state = $this->renameColumnToPropertyKeys($row);
+        $state = $this->renameAndCastColumnToPropertyKeys($row);
         unset($row);
 
         // All no-existant properties are lazy loaded now:
@@ -245,7 +257,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         foreach($this->_lateSelectedRelations AS $relation) {
             $propertyName = $relation->getPropertyName();
             $foreignKeyValue = $state[$propertyName];
-            $relatedEntity = $entityManager->findByKey($relation->getClass(), $foreignKeyValue);
+            $relatedEntity = $entityManager->load($relation->getClass(), $foreignKeyValue);
             $state[$propertyName] = $relatedEntity;
         }
         foreach($this->_lateSelectedCollections AS $collection) {

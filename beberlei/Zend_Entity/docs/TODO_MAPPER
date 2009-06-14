@@ -1,23 +1,20 @@
 TODO
 
+* Type Casting: Test it
 * Rename Resource into MetadataFactory
+* UnitOfWork: Topographical Sorting? Implement user-land overridable
 * Definitions: Inverse Relationsships
 * Definitions: Initializing of Loader and Persister and fetching of relations should be done lazy
-* Definitions: Add compound keys and better key handling in general.
+* Definitions: Add compound keys through a PrimaryKey object.
 * Definitions: Entity - Add Namespace argument for entities to write less on Subnamespaced entities when referencing them.
 * Definitions: Add Entity-Name Configuration Option
-* Definitions: Collection - Add possibility to add properties, because a collection join table does not need to be an entity!!!! can be value objects
-* DefinitionMap: add Caching for Compiled Definition Templates
 * Collections: Add difference between Set, Map and List ?! May even add Ordered Lists via callback or own implementation
 * Collections: Lazy Load Collection should allow to add elements without triggering the lazy load and having them integrated correctly, when lazy load is triggered.
 * Lazy Load Entities: Class has to be overwritable to implement the Entity interface that fakes identity.
 * Mapper: Save and Delete
     * Implement Cascading Persisters
-* Build unittests
 * Manager/Mapper: Add reference to entity in Zend_Entity_Db_Select to save one call to entity name.
 * Mapper: refresh() method needs specific API method on the loader to be useful
-* Loader: Iterator and/or Array Fetching, has to be a specific mode that all loaders somehow realize, Also no lazyloading in Array retrievement!
-* Loader: Build simple loader, that loads all related objects via additional selects or lazy load, Loader_Basic misses only late bound collections and lazy properties.
 * Loader: Implement Field lazy loading, maybe supporting contextual lazyloading of more than one field like in http://datamapper.org/doku.php?id=spotlight:laziness
 * EntityManager: Implement Second Level Cache into IdentityMap - Zend_Cache holds objects in Cache for a lifetime, re-cached on each change
     * Easy: Cachable are only the Database representations of an object, not the object itsself. This way all the objects are saved on their own

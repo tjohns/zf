@@ -50,7 +50,7 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
         $collection = array();
         while($row = $stmt->fetch(Zend_Db::FETCH_ASSOC)) {
             if($fetchMode == Zend_Entity_Manager::FETCH_ARRAY) {
-                $entity = $this->renameColumnToPropertyKeys($row);
+                $entity = $this->renameAndCastColumnToPropertyKeys($row);
             } else {
                 $entity = $this->createEntityFromRow($row, $entityManager);
 
@@ -66,20 +66,5 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
             $collection = new Zend_Entity_Collection($collection);
         }
         return $collection;
-    }
-
-    protected function renameColumnToPropertyKeys($row)
-    {
-        $state = array();
-        foreach($this->_columnsToPropertyNames AS $columnName => $propertyName) {
-            if(!array_key_exists($columnName, $row)) {
-                require_once "Zend/Entity/Exception.php";
-                throw new Zend_Entity_Exception(
-                    "In rename column to property the column '".$columnName."' does not exist in resultset."
-                );
-            }
-            $state[$propertyName] = $row[$columnName];
-        }
-        return $state;
     }
 }

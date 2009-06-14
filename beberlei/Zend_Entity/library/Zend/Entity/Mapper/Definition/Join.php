@@ -18,7 +18,6 @@
  */
 
 class Zend_Entity_Mapper_Definition_Join extends Zend_Entity_Mapper_Definition_Table
-    implements Zend_Entity_Mapper_Definition_Property_Interface
 {
     /**
      * @var string

@@ -32,17 +32,17 @@ interface Zend_Entity_Mapper_Persister_Interface
      * Save entity into persistence based on the persisters scope
      *
      * @param  Zend_Entity_Interface $entity
-     * @param  Zend_Entity_Manager $entityManager
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager);
+    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager);
 
     /**
      * Remove entity from persistence based on the persisters scope
      *
      * @param  Zend_Entity_Interface $entity
-     * @param  Zend_Entity_Manager $entityManager
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager);
+    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager);
 }

@@ -81,9 +81,9 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
 
         if($property instanceof Zend_Entity_Mapper_Definition_Table) {
             $this->_extensions[$propertyName] = $property;
-        } elseif($property instanceof Zend_Entity_Mapper_Definition_Relation) {
+        } elseif($property instanceof Zend_Entity_Mapper_Definition_AbstractRelation) {
             $this->_relations[$propertyName] = $property;
-        } else {
+        } elseif($property instanceof Zend_Entity_Mapper_Definition_Property_Abstract) {
             if($property instanceof Zend_Entity_Mapper_Definition_PrimaryKey) {
                 $this->_id = $property;
             }
@@ -115,7 +115,7 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     /**
      * Return all relations
      *
-     * @return Zend_Entity_Mapper_Definition_Relation[]
+     * @return Zend_Entity_Mapper_Definition_AbstractRelation[]
      */
     public function getRelations()
     {

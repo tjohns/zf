@@ -232,13 +232,13 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * Find all entitys matching select statement
      *
      * @param  string $entityName
-     * @param  Zend_Db_Select $select
+     * @param  Zend_Db_Select|string $select
      * @return Zend_Entity_Collection
      */
-    public function find($entityName, $select)
+    public function performFindQuery($entityName, $select)
     {
         $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->find($select, $this);
+        return $mapper->performFindQuery($select, $this);
     }
 
     /**
@@ -276,7 +276,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
         if($order !== null) {
             $select->order($order);
         }
-        return $mapper->find($select, $this);
+        return $mapper->performFindQuery($select, $this);
     }
 
     /**
@@ -286,10 +286,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param string $key
      * @return Zend_Entity_Interface
      */
-    public function findByKey($entityName, $key)
+    public function load($entityName, $key)
     {
         $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->findByKey($key, $this);
+        return $mapper->load($key, $this);
     }
 
     /**

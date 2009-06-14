@@ -30,6 +30,11 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_toOneRelations = array();
 
     /**
+     * @var array
+     */
+    protected $_toManyCascadeRelations = array();
+
+    /**
      * @var string
      */
     protected $_class;
@@ -62,7 +67,12 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         $this->_properties       = $properties;
         foreach($entityDef->getRelations() AS $relation) {
             if($relation->isOwning()) {
-                $this->_toOneRelations[] = $relation;
+                $this->_toOneRelations[$relation->getPropertyName()] = $relation;
+            }
+        }
+        foreach($entityDef->getExtensions() AS $collection) {
+            if($this->isCascadingToManyCollection($collection)) {
+                $this->_toManyCascadeRelations[] = $collection;
             }
         }
         $this->_class            = $entityDef->getClass();
@@ -71,42 +81,145 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     }
 
     /**
+     * Is this is a cascading collection?
+     * 
+     * @param Zend_Entity_Mapper_Definition_Collection $collection
+     * @return boolean
+     */
+    private function isCascadingToManyCollection(Zend_Entity_Mapper_Definition_Collection $collection)
+    {
+        return( ($collection->getCollectionType() == Zend_Entity_Mapper_Definition_Collection::COLLECTION_RELATION) &&
+            ($collection->getRelation()->getCascade() != Zend_Entity_Mapper_Definition_Property::CASCADE_NONE) );
+    }
+
+    /**
+     * @ignore
+     * @param Zend_Entity_Interface $relatedObject
+     * @param Zend_Entity_Mapper_Definition_AbstractRelation $relationDef
+     * @param Zend_Entity_Manager_Interface $entityManager
+     * @return mixed
+     */
+    public function evaluateRelatedObject($relatedObject, $relationDef, $entityManager)
+    {
+        if($relatedObject instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
+            $value = $relatedObject->getLazyLoadEntityId();
+        } else if($relatedObject instanceof Zend_Entity_Interface) {
+            $foreignKeyProperty = $relationDef->getForeignKeyPropertyName();
+            $relatedObjectState = $relatedObject->getState();
+            $value = $relatedObjectState[$foreignKeyProperty];
+
+            switch($relationDef->getCascade()) {
+                case Zend_Entity_Mapper_Definition_Property::CASCADE_ALL:
+                case Zend_Entity_Mapper_Definition_Property::CASCADE_SAVE:
+                    $entityManager->save($relatedObject);
+                    break;
+            }
+        } else {
+            $value = null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @ignore
+     * @param Zend_Entity_Collection_Interface $relatedCollection
+     * @param Zend_Entity_Mapper_Definition_Collection $collectionDef
+     * @param Zend_Entity_Manager_Interface $entityManager
+     */
+    public function evaluateRelatedCollection($relatedCollection, $collectionDef, $entityManager)
+    {
+        if($relatedCollection instanceof Zend_Entity_Collection_Interface && $relatedCollection->wasLoadedFromDatabase() == true) {
+            switch($collectionDef->getRelation()->getCascade()) {
+                case Zend_Entity_Mapper_Definition_Property::CASCADE_ALL:
+                case Zend_Entity_Mapper_Definition_Property::CASCADE_SAVE:
+                    foreach($relatedCollection AS $collectionEntity) {
+                        $entityManager->save($collectionEntity);
+                    }
+                    break;
+            }
+
+            if($collectionDef->getRelation() instanceof Zend_Entity_Mapper_Definition_ManyToManyRelation) {
+                $db = $entityManager->getAdapter();
+                
+                foreach($relatedCollection->getAdded() AS $relatedEntity) {
+
+                }
+                foreach($relatedCollection->getRemoved() AS $relatedEntity) {
+                    
+                }
+            }
+        }
+    }
+
+    /**
      * Save entity into persistence based on the persisters scope
      *
      * @param  Zend_Entity_Interface $entity
-     * @param  Zend_Entity_Manager $entityManager
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
+    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $entityState = $entity->getState();
+        $dbState = $this->transformEntityToDbState($entityState, $entityManager);
+        $this->doPerformSave($entity, $dbState, $entityManager);
+        $this->updateCollections($entityState, $entityManager);
+    }
+
+    /**
+     * @ignore
+     * @param array $entityState
+     * @param Zend_Entity_Manager_Interface $entityManager
+     */
+    public function updateCollections($entityState, $entityManager)
+    {
+        foreach($this->_toManyCascadeRelations AS $collectionDef) {
+            $relatedCollection = $entityState[$collectionDef->getPropertyName()];
+
+            $this->evaluateRelatedCollection($relatedCollection, $collectionDef, $entityManager);
+        }
+    }
+
+    /**
+     * @ignore
+     * @param  array $entityState
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @return array
+     */
+    public function transformEntityToDbState($entityState, $entityManager)
+    {
         $dbState = array();
         foreach($this->_properties AS $property) {
             $propertyName = $property->getPropertyName();
             $columnName   = $property->getColumnName();
-            // TODO is allowed to be null?
-            $propertyValue = $entityState[$propertyName];
-            // TODO $propertyValue = $property->convertToSqlValue($propertyValue);
+            if(!array_key_exists($propertyName, $entityState)) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception("Missing property '".$propertyName."' in entity state. Does getState() return this value?");
+            }
+            $propertyValue = $property->castPropertyToSqlType($entityState[$propertyName]);
             $dbState[$columnName] = $propertyValue;
         }
         foreach($this->_toOneRelations AS $relation) {
             $propertyName = $relation->getPropertyName();
-            // TODO: is allowed to be null?
-            // TODO: is still lazy load proxy?
-            // TODO: Cascading save/update? Spill over!
             $relatedObject      = $entityState[$propertyName];
-
-            if($relatedObject instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
-                $dbState[$relation->getColumnName()] = $relatedObject->getLazyLoadEntityId();
-            } else if($relatedObject instanceof Zend_Entity_Interface) {
-                $foreignKeyProperty = $relation->getForeignKeyPropertyName();
-                $relatedObjectState = $relatedObject->getState();
-                $dbState[$relation->getColumnName()] = $relatedObjectState[$foreignKeyProperty];
-            } else {
-                $dbState[$relation->getColumnName()] = null;
-            }
+            $dbState[$relation->getColumnName()] = $this->evaluateRelatedObject(
+                $relatedObject,
+                $relation,
+                $entityManager
+            );
         }
+        return $dbState;
+    }
 
+    /**
+     * @ignore
+     * @param Zend_Entity_Interface $entity
+     * @param array $dbState
+     * @param Zend_Entity_Manager_Interface $entityManager
+     */
+    public function doPerformSave($entity, $dbState, $entityManager)
+    {
         $dbAdapter = $entityManager->getAdapter();
         $pk        = $this->_primaryKey;
         $tableName = $this->_table;
@@ -119,7 +232,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             $identityMap = $entityManager->getIdentityMap();
             $identityMap->addObject(
                 $this->_class,
-                Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($newPrimaryKey),
+                $newPrimaryKey[$pk->getPropertyName()],
                 $entity
             );
         } else {
@@ -132,11 +245,12 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * Remove entity from persistence based on the persisters scope
      *
+     * @ignore
      * @param  Zend_Entity_Interface $entity
-     * @param  Zend_Entity_Manager $entityManager
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
+    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $entityState = $entity->getState();
         $pk  = $this->_primaryKey;

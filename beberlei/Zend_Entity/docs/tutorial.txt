@@ -1,0 +1,217 @@
+Zend Entity
+===================
+
+Zend Entity is an object-relational mapper that centers around the concept of Domain Driven Design and Entity objects.
+An entity object is one that has identity across different requests in your application and can be identified by
+its unique identity. In contrast value objects are only represented by their values, which can change, such as a
+<code>DateTime</code> or a Money object.
+
+Although the identity closely resembles to the primary key concept in relational databases, Zend_Entity aims at
+defining entities that are not coupled to database tables, but are independent of relational databases. Think
+of building your domain layer with objects without thinking about how to fit them to the database and when persistence
+is finally an issue, Zend Entity allows to persist your object graph into a database and re-instantiate it from there.
+
+Defining an Entity
+--------------------
+
+As stated before, just go about writing the objects that define your domain model, we think about persistence later.
+This documentation will use a consistent example of the ElePHPhant Railways Coorparation (ERC), which wants to implement
+a system to represent their railways operation that sells tickets to train routes to their customers. This topic
+is rather complex for a documentation example, but we will implement it by requirement and update each implementation
+accordingly. We begin with the "Route". Currently the ERC does not have stopovers between its origin and destination,
+such that a the implementation of a Route might look like:
+
+    class Route {
+        /**
+         * @var int
+         */
+        private $routeId;
+
+        /**
+         * @var Station
+         */
+        private $originStation;
+
+        /**
+         * @var int
+         */
+        private $originDepartureDate;
+
+        /**
+         * @var Station
+         */
+        private $destinationStation;
+
+        /**
+         * @var int
+         */
+        private $destinationArrivalDate;
+    }
+
+    class Station {
+        /**
+         * @var int
+         */
+        private $stationId;
+
+        /**
+         * @var string
+         */
+        private $stationName;
+    }
+
+We would have to add get and set methods to access these properties, but in general this datastructure defines
+the business we are in currently. How do we persist this representation? Zend Entity defines metadata for each
+entity object that describe how the object structure should be persisted into a database.
+
+Introduction to Persistence Metadata: Routes and Stations
+----------------------------
+
+By default metadata are of entities are described using a programmatic PHP description language. These are called
+Resources and can generally be described by YAML, XML or even Annotations as long as they can translate into the
+generic object notation. To describe the <code>Route</code> and <code>Station</code> classes we create two new
+files Route.php and Station.php and put them into a "config/definitions/railways" folder somewhere into the application.
+
+Route.php
+
+    $def = new Zend_Entity_Mapper_Definition_Entity("Route", array("table" => "routes"));
+    $def->addPrimaryKey("routeId", array(
+        'columnName' => 'id',
+    ));
+    $def->addProperty("originDepartureDate", array('columnName' => 'origin_departure_date'));
+    $def->addProperty("destinationArrivalDate", array('columnName' => 'destination_arrival_date'));
+
+    $def->addManyToOneRelation("originStation", array(
+        'class' => 'Station',
+        'columnName' => 'origin_station_id'
+    ));
+    $def->addManyToOneRelation("destinationStation", array(
+        'class' => 'Station',
+        'columnName' => 'destination_station_id'
+    ));
+
+    return $def;
+
+Station.php
+
+    $def = new Zend_Entity_Mapper_Definition_Entity("Station", array("table" => "stations"));
+    $def->addPrimaryKey("stationId", array("columnName" => "id"));
+    $def->addProperty("stationName", array('columnName' => 'station_name'));
+
+    $def->addCollection("startingRoutes", array(
+        'relation' => new Zend_Entity_Mapper_Definition_OneToManyRelation(
+            'origin_station_id',
+            array(
+                'class' => 'Route',
+
+            )
+         ),
+         'key' => 'origin_station_id',
+    ));
+
+    return $def;
+
+Many defaults are assumed in this example on how the two entities relate to each other. The description
+of the entities is quite expressive and by starring just a little on the code examples one can guess what is going
+on behind the scenes.
+
+This metadata requires the following SQL statements (MySQL dialect) to communicate successfully with the database:
+
+    CREATE TABLE IF NOT EXISTS `routes` (
+      `id` int(10) unsigned NOT NULL auto_increment,
+      `origin_station_id` int(10) unsigned NOT NULL,
+      `origin_departure_date` int(10) unsigned NOT NULL,
+      `destination_station_id` int(10) unsigned NOT NULL,
+      `destination_arrival_date` int(10) unsigned NOT NULL,
+      PRIMARY KEY  (`id`),
+      KEY `origin_station_id` (`origin_station_id`)
+    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+    CREATE TABLE IF NOT EXISTS `stations` (
+      `id` int(10) unsigned NOT NULL auto_increment,
+      `station_name` varchar(255) NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+Now the only thing that is missing is the extension of <code>Route</code> and <code>Station</code> with a generic
+interface that is required to make the entities reveal their state to the EntityManager Persistence Context:
+
+    class Route implements Zend_Entity_Interface {
+        // ...
+
+        public function setState(array $state)
+        {
+            foreach($state AS $k => $v) {
+                $this->$k = $v;
+            }
+        }
+
+        public function getState()
+        {
+            return array(
+                'routeId' => $this->routeId,
+                'originStationId' => $this->originStationId,
+                'originDepartureDate' => $this->originDepartureDate,
+                'destinationStationId' => $this->destinationStationId,
+                'destinationArrivalDate' => $this->destinationArrivalDate,
+            );
+        }
+    }
+
+    class Station implements Zend_Entity_Interface {
+        // ..
+
+        public function getState()
+        {
+            return array(
+                'stationId' => $this->stationId,
+                'stationName' => $this->stationName,
+            );
+        }
+
+        public function setState(array $state)
+        {
+            foreach($state AS $k => $v) {
+                $this->$k = $v;
+            }
+        }
+    }
+
+Creating the EntityManager Persistence Context
+---------------------
+
+Zend Entity has a simple API offered via a facade of the <code>Zend_Entity_Manager_Interface type</code>. To create a new
+persistence context session the only required dependencies are a <code>Zend_Db_Adapter_Abstract</code> and a
+Resource map that points to the metadata definitions of the entities.
+
+    $db = Zend_Db::factory("pdo_mysql", $options);
+
+    $resource = new Zend_Entity_Resource_Code("config/definitions/railways/");
+    $manager = new Zend_Entity_Manager($db, array('resource' => $resource));
+
+Now we can add some data to the database by creating new entities and saving them into persistence context:
+
+    $stationBerlin = new Station();
+    $stationBerlin->setName('Berlin Hbf');
+    $manager->save($stationBerlin);
+
+    $stationBonn = new Station();
+    $stationBonn->setName('Bonn Hbf');
+    $manager->save($stationBonn);
+
+    $route = new Route();
+    $route->setOriginStation($stationBerlin);
+    $route->setOriginDepartureDate(new datetime());
+    $route->setDestinationStation($stationBonn);
+    $route->setDestinationArrivalDate(new datetime());
+    $manager->save($route);
+
+Accessing the newly saved data is possible through several API methods of the entity manager:
+
+    $manager->findByKey('Route', 1);
+    $manager->findByKey('Station', 1);
+    $manager->findAll('Route', $whereCond, $order, $limit); // much as Zend_Db_Table::findAll
+
+    $select = $manager->select('Route');
+    $manager->find('Route', $select);
+    $manager->findOne('Route', $select);

@@ -71,12 +71,12 @@ abstract class Zend_Entity_Mapper_Abstract
     /**
      * Access the object mapper and retrieve data.
      *
-     * @param  Zend_Db_Select $criteria
+     * @param  Zend_Db_Select|string $sql
      * @return Zend_Entity_Interface[]
      */
-    public function find(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
+    public function performFindQuery($sql, Zend_Entity_Manager $entityManager)
     {
-        return $this->query($select, $entityManager);
+        return $this->query($sql, $entityManager);
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function findOne(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
     {
-        $collection = $this->find($select, $entityManager);
+        $collection = $this->performFindQuery($select, $entityManager);
         if(count($collection) == 1) {
             return $collection[0];
         } else {
@@ -104,14 +104,13 @@ abstract class Zend_Entity_Mapper_Abstract
      * @param  int|string
      * @return Zend_Entity_Interface
      */
-    public function findByKey($keyValue, Zend_Entity_Manager $entityManager)
+    public function load($keyValue, Zend_Entity_Manager $entityManager)
     {
-        $keyIdent = Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($keyValue);
         $entityClassName = $this->getEntityClassName();
-        if($entityManager->getIdentityMap()->hasObject($entityClassName, $keyIdent)) {
-            return $entityManager->getIdentityMap()->getObject($entityClassName, $keyIdent);
+        if($entityManager->getIdentityMap()->hasObject($entityClassName, $keyValue)) {
+            return $entityManager->getIdentityMap()->getObject($entityClassName, $keyValue);
         } else {
-            $select = $this->buildFindByKeySelectQuery($keyValue);
+            $select = $this->buildLoadSelectQuery($keyValue);
             return $this->findOne($select, $entityManager);
         }
     }
@@ -120,7 +119,7 @@ abstract class Zend_Entity_Mapper_Abstract
      * @param  string|int $keyValue
      * @return Zend_Db_Select
      */
-    protected function buildFindByKeySelectQuery($keyValue)
+    protected function buildLoadSelectQuery($keyValue)
     {
         $key    = $this->getPrimaryKey()->getColumnName();
         $select = $this->select();
@@ -206,7 +205,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function select()
     {
-        $select = new Zend_Entity_Mapper_Select( $this->getAdapter() );
+        $select = new Zend_Entity_Mapper_Select( $this->getAdapter(), $this );
         $loader = $this->getLoader();
         $loader->initSelect($select);
         $loader->initColumns($select);
@@ -274,14 +273,15 @@ abstract class Zend_Entity_Mapper_Abstract
      * Query With Select objects.
      *
      * @throws Exception
-     * @param  string
+     * @param  string $sql
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Db_Statement
      */
-    protected function query(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
+    protected function query($sql, Zend_Entity_Manager_Interface $entityManager)
     {
         $loader = $this->getLoader();
 
-        $stmt = $this->getAdapter()->query($select);
+        $stmt = $this->getAdapter()->query($sql);
         return $loader->processResultset($stmt, $entityManager);
     }
     
