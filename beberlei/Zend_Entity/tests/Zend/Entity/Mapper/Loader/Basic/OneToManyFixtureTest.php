@@ -1,12 +1,31 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_Mapper_Loader_OneToManyFixture
+class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
     protected $entityManager = null;
+
+    /**
+     *
+     * @var Zend_Entity_Fixture_OneToManyDefs
+     */
+    protected $fixture;
 
     public function createLoader($def)
     {
         return new Zend_Entity_Mapper_Loader_Basic($def);
+    }
+
+    /**
+     * @return Zend_Entity_Mapper_Loader_Interface
+     */
+    public function getClassALoader()
+    {
+        return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_OneToManyDefs::TEST_A_CLASS));
+    }
+
+    public function setUp()
+    {
+        $this->fixture = new Zend_Entity_Fixture_OneToManyDefs();
     }
 
     /**
@@ -16,9 +35,10 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
     {
         $entity = new Zend_TestEntity1;
         $loader = $this->getClassALoader();
-        $row = array(self::TEST_A_ID_COLUMN => 1);
+        $row = array(Zend_Entity_Fixture_OneToManyDefs::TEST_A_ID_COLUMN => 1);
 
         $this->entityManager = $this->createEntityManager();
+        $this->entityManager->setResource($this->fixture->getResourceMap());
         $loader->loadRow($entity, $row, $this->entityManager);
         $entityState = $entity->getState();
 
@@ -29,7 +49,7 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callbackArgs = $this->readAttribute($entityState[self::TEST_A_ONETOMANY], '_callbackArguments');
+        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callbackArguments');
         $select = $callbackArgs[1];
         return $select;
     }
@@ -38,21 +58,21 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $this->assertTrue(isset($entityState[self::TEST_A_ID]));
-        $this->assertTrue(isset($entityState[self::TEST_A_ONETOMANY]));
-        $this->assertLazyLoad($entityState[self::TEST_A_ONETOMANY]);
+        $this->assertTrue(isset($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ID]));
+        $this->assertTrue(isset($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY]));
+        $this->assertLazyLoad($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY]);
     }
 
     public function testLoadRowLazyLoadCollectionHasCallbackWithSelectStatement()
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callback = $this->readAttribute($entityState[self::TEST_A_ONETOMANY], '_callback');
+        $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callback');
         $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("find", $callback[1]);
+        $this->assertEquals("performFindQuery", $callback[1]);
 
-        $callbackArgs = $this->readAttribute($entityState[self::TEST_A_ONETOMANY], '_callbackArguments');
-        $this->assertEquals(self::TEST_B_CLASS, $callbackArgs[0]);
+        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callbackArguments');
+        $this->assertEquals(Zend_Entity_Fixture_OneToManyDefs::TEST_B_CLASS, $callbackArgs[0]);
         $this->assertTrue($callbackArgs[1] instanceof Zend_Db_Select);
     }
 
@@ -68,7 +88,8 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
 
     public function testLoadRowWithWhereClauseInOneToManyRelatedCollectionIsInSelectStatement()
     {
-        $this->resourceMap->getDefinitionByEntityName(self::TEST_A_CLASS)->getPropertyByName(self::TEST_A_ONETOMANY)->setWhere("table_b.foo = 'bar'");
+        $property = $this->fixture->getEntityPropertyDef(Zend_Entity_Fixture_OneToManyDefs::TEST_A_CLASS, Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY);
+        $property->setWhere("table_b.foo = 'bar'");
 
         $select = $this->loadEntityAAndGetSelectOfLazyLoadCollection();
 
@@ -80,7 +101,8 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
 
     public function testLoadRowWithOrderByClauseInOneToManyRelatedCollectionIsInSelectStatement()
     {
-        $this->resourceMap->getDefinitionByEntityName(self::TEST_A_CLASS)->getPropertyByName(self::TEST_A_ONETOMANY)->setOrderBy("table_b.foo ASC");
+        $property = $this->fixture->getEntityPropertyDef(Zend_Entity_Fixture_OneToManyDefs::TEST_A_CLASS, Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY);
+        $property->setOrderBy("table_b.foo ASC");
 
         $select = $this->loadEntityAAndGetSelectOfLazyLoadCollection();
 

@@ -31,7 +31,10 @@ class Zend_Entity_Fixture_ManyToOneDefs extends Zend_Entity_Fixture_Abstract
         $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_A_CLASS);
         $def->setTable(self::TEST_A_TABLE);
 
-        $def->addPrimaryKey(self::TEST_A_ID, array('columnName' => self::TEST_A_ID_COLUMN));
+        $def->addPrimaryKey(self::TEST_A_ID, array(
+            'columnName' => self::TEST_A_ID_COLUMN,
+            'propertyType' => Zend_Entity_Mapper_Definition_Property::TYPE_INT
+        ));
         $def->addProperty(self::TEST_A_PROPERTY, array('columnName' => self::TEST_A_PROPERTY_COLUMN));
         $def->addManyToOneRelation(self::TEST_A_MANYTOONE, array('columnName' => self::TEST_A_MANYTOONE_COLUMN, 'class' => self::TEST_B_CLASS));
 
@@ -42,7 +45,10 @@ class Zend_Entity_Fixture_ManyToOneDefs extends Zend_Entity_Fixture_Abstract
     {
         $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_B_CLASS);
         $def->setTable(self::TEST_B_TABLE);
-        $def->addPrimaryKey(self::TEST_B_ID, array('columnName' => self::TEST_B_ID_COLUMN));
+        $def->addPrimaryKey(self::TEST_B_ID, array(
+            'columnName' => self::TEST_B_ID_COLUMN,
+            'propertyType' => Zend_Entity_Mapper_Definition_Property::TYPE_INT
+        ));
         $def->addProperty(self::TEST_B_PROPERTY, array('columnName' => self::TEST_B_PROPERTY_COLUMN));
 
         return $def;

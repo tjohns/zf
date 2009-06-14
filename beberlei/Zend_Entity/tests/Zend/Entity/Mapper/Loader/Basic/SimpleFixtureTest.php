@@ -1,7 +1,17 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapper_Loader_SimpleFixtureTestCase
+class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
+    /**
+     * @var Zend_Entity_Fixture_SimpleFixtureDefs
+     */
+    protected $fixture;
+
+    public function setUp()
+    {
+        $this->fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+    }
+
     /**
      * @param Zend_Entity_Mapper_Definition_Entity $def
      * @return Zend_Entity_Mapper_Loader_Basic
@@ -11,12 +21,17 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
         return new Zend_Entity_Mapper_Loader_Basic($def);
     }
 
+    public function getLoader()
+    {
+        return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS));
+    }
+
     public function testCreateSimpleEntityFromRow()
     {
         $loader = $this->getLoader();
 
-        $row = $this->getDummyDataRow();
-        $state = $this->getDummyDataState();
+        $row = $this->fixture->getDummyDataRow();
+        $state = $this->fixture->getDummyDataState();
 
         $entity = $loader->createEntityFromRow($row, $this->createEntityManager());
 
@@ -27,8 +42,8 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
     {
         $entity = new Zend_TestEntity1;
         $loader = $this->getLoader();
-        $row = $this->getDummyDataRow();
-        $state = $this->getDummyDataState();
+        $row = $this->fixture->getDummyDataRow();
+        $state = $this->fixture->getDummyDataState();
 
         $loader->loadRow($entity, $row, $this->createEntityManager());
 
@@ -38,7 +53,7 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
     public function testCheckOnIdentityMapIsPerformedBeforeCreatingNewEntityFromRow()
     {
         $loader = $this->getLoader();
-        $row = $this->getDummyDataRow();
+        $row = $this->fixture->getDummyDataRow();
 
         $this->identityMap = $this->createIdentityMapMock(0);
         $this->identityMap->expects($this->once())->method('hasObject')->will($this->returnValue(true));
@@ -54,8 +69,8 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
     public function testProcessResultsetInEntityMode()
     {
         $loader = $this->getLoader();
-        $row = $this->getDummyDataRow();
-        $state = $this->getDummyDataState();
+        $row = $this->fixture->getDummyDataRow();
+        $state = $this->fixture->getDummyDataState();
 
         $stmt = new Zend_Entity_DbStatementMock();
         $stmt->appendToFetchStack($row);
@@ -72,8 +87,8 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
     public function testProcessResultsetInArrayMode()
     {
         $loader = $this->getLoader();
-        $row = $this->getDummyDataRow();
-        $state = $this->getDummyDataState();
+        $row = $this->fixture->getDummyDataRow();
+        $state = $this->fixture->getDummyDataState();
 
         $stmt = new Zend_Entity_DbStatementMock();
         $stmt->appendToFetchStack($row);
@@ -92,7 +107,7 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
 
         $entity = new Zend_TestEntity1;
         $loader = $this->getLoader();
-        $rowMissingColumn = array(self::TEST_A_ID_COLUMN => 1);
+        $rowMissingColumn = array(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_ID_COLUMN => 1);
 
         $loader->loadRow($entity, $rowMissingColumn, $this->createEntityManager());
     }

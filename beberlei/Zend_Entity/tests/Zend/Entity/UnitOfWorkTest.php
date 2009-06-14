@@ -1,7 +1,6 @@
 <?php
 
 require_once dirname(__FILE__)."/../TestHelper.php";
-require_once "ScenarioData/load_clinic.php";
 
 class Zend_Entity_UnitOfWorkTest extends PHPUnit_Framework_TestCase
 {

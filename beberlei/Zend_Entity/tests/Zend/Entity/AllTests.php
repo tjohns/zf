@@ -11,9 +11,6 @@ require_once "UnitOfWorkTest.php";
 require_once "ManagerTest.php";
 require_once "ManagerFindTest.php";
 require_once "Resource/AllTests.php";
-require_once "Adapter/TestCase.php";
-require_once "Adapter/PDO/MySQL/ClinicScenario.php";
-require_once "Adapter/PDO/SqLite/ClinicScenario.php";
 require_once "Mapper/AllTests.php";
 require_once "MapperTest.php";
 require_once "DebugTest.php";
@@ -32,8 +29,7 @@ class Zend_Entity_AllTests
         $suite->addTestSuite('Zend_Entity_MapperTest');
         $suite->addTestSuite('Zend_Entity_Resource_AllTests');
         $suite->addTest(Zend_Entity_Mapper_AllTests::suite());
-        //$suite->addTestSuite('Zend_Entity_Adapter_PDO_MySQL_ClinicScenario');
-        //$suite->addTestSuite('Zend_Entity_Adapter_PDO_SqLite_ClinicScenario');
+        $suite->addTest(Zend_Entity_IntegrationTest_AllTests::suite());
         return $suite;
     }
 }

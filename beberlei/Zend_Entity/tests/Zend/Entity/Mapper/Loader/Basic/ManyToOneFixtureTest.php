@@ -37,7 +37,7 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToOneFixtureTest extends Zend_Entity_M
         $this->assertSame($state1[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE], $state2[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE]);
     }
 
-    public function testLoadRowCreatesFindByKeyCallbackInLazyLoadObject()
+    public function testLoadRowCreatesloadCallbackInLazyLoadObject()
     {
         $entity = $this->doLoadManyToOneFixtureRowEntity();
 
@@ -50,7 +50,7 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToOneFixtureTest extends Zend_Entity_M
 
         $lazyLoadCallback = $this->readAttribute($lazyLoadCollection, '_callback');
         $this->assertTrue($lazyLoadCallback[0] instanceof Zend_Entity_Manager_Interface);
-        $this->assertEquals("findByKey", $lazyLoadCallback[1]);
+        $this->assertEquals("load", $lazyLoadCallback[1]);
     }
 
     public function testLoadRowWithLateBoundFetching()

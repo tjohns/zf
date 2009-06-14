@@ -1,17 +1,36 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_ManyToManyFixture
+class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
+    /**
+     * @var Zend_Entity_Fixture_ManyToManyDefs
+     */
+    private $fixture = null;
+
     public function createLoader($def)
     {
         return new Zend_Entity_Mapper_Loader_Basic($def);
     }
 
+    /**
+     * @return Zend_Entity_Mapper_Loader_Interface
+     */
+    public function getClassALoader()
+    {
+        return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_ManyToManyDefs::TEST_A_CLASS));
+    }
+
+    /**
+     * @return Zend_Entity_Mapper_Loader_Interface
+     */
+    public function getClassBLoader()
+    {
+        return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_ManyToManyDefs::TEST_B_CLASS));
+    }
+
     public function setUp()
     {
-        $this->resourceMap = new Zend_Entity_Resource_Testing();
-        $this->resourceMap->addDefinition( $this->createClassBDefinition() );
-        $this->resourceMap->addDefinition( $this->createClassADefinition() );
+        $this->fixture = new Zend_Entity_Fixture_ManyToManyDefs();
     }
 
     /**
@@ -21,9 +40,10 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
     {
         $entity = new Zend_TestEntity1;
         $loader = $this->getClassALoader();
-        $row = array(self::TEST_A_ID_COLUMN => 1);
+        $row = array(Zend_Entity_Fixture_ManyToManyDefs::TEST_A_ID_COLUMN => 1);
 
         $this->entityManager = $this->createEntityManager();
+        $this->entityManager->setResource($this->fixture->getResourceMap());
         $loader->loadRow($entity, $row, $this->entityManager);
         $entityState = $entity->getState();
 
@@ -34,21 +54,21 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $this->assertTrue(isset($entityState[self::TEST_A_ID]));
-        $this->assertTrue(isset($entityState[self::TEST_A_MANYTOMANY]));
-        $this->assertLazyLoad($entityState[self::TEST_A_MANYTOMANY]);
+        $this->assertTrue(isset($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_ID]));
+        $this->assertTrue(isset($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY]));
+        $this->assertLazyLoad($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY]);
     }
 
     public function testLoadRowLazyLoadCollectionHasCallbackWithSelectStatement()
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callback = $this->readAttribute($entityState[self::TEST_A_MANYTOMANY], '_callback');
+        $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callback');
         $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("find", $callback[1]);
+        $this->assertEquals("performFindQuery", $callback[1]);
 
-        $callbackArgs = $this->readAttribute($entityState[self::TEST_A_MANYTOMANY], '_callbackArguments');
-        $this->assertEquals(self::TEST_B_CLASS, $callbackArgs[0]);
+        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callbackArguments');
+        $this->assertEquals(Zend_Entity_Fixture_ManyToManyDefs::TEST_B_CLASS, $callbackArgs[0]);
         $this->assertTrue($callbackArgs[1] instanceof Zend_Db_Select);
     }
 
@@ -56,12 +76,12 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callbackArgs = $this->readAttribute($entityState[self::TEST_A_MANYTOMANY], '_callbackArguments');
+        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callbackArguments');
         $select = $callbackArgs[1];
 
         $this->assertEquals(
-            "SELECT table_b.b_id FROM table_b
- INNER JOIN manytomany_table ON manytomany_table.b_fkey = table_b.b_id WHERE (manytomany_table.a_fkey = 1)",
+            "SELECT table_b.b_id FROM table_b\n".
+            " INNER JOIN manytomany_table ON manytomany_table.b_fkey = table_b.b_id WHERE (manytomany_table.a_fkey = 1)",
             (string)$select
         );
     }

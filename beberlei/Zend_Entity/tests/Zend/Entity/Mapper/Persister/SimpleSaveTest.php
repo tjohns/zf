@@ -5,61 +5,27 @@ require_once dirname(__FILE__)."/../../../../TestHelper.php";
 class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 {
     /**
-     * @var Zend_Entity_Mapper_Definition_Entity
-     */
-    private $entityDefinition = null;
-
-    /**
-     * @var Zend_Entity_Mapper_Persister_Simple
-     */
-    private $persister = null;
-
-    /**
-     * @var Zend_Entity_Interface
-     */
-    private $entityUnderTest = null;
-
-    /**
-     * @var <type>
+     * @var Zend_Entity_Fixture_Abstract
      */
     private $fixture = null;
-
-    /**
-     * @return Zend_Entity_Mapper_Definition_Entity
-     */
-    public function getEntityDefinition()
-    {
-        if($this->entityDefinition == null) {
-            $def = new Zend_Entity_Mapper_Definition_Entity("Zend_TestEntity1", array("table" => "entities"));
-            $def->addPrimaryKey('id', array('columnName' => 'entities_id'));
-            $def->addProperty('foo');
-            $def->addProperty('bar', array('columnName' => 'baz'));
-
-            $def->compile(new Zend_Entity_Resource_Testing());
-
-            $this->entityDefinition = $def;
-        }
-        return $this->entityDefinition;
-    }
 
     /**
      *
      * @return Zend_Entity_Mapper_Persister_Simple
      */
-    public function createPersister($entityDef=null, $defMap=null)
+    public function createPersister()
     {
-        if($entityDef == null) {
-            $entityDef = $this->getEntityDefinition();
-        }
-        if($defMap == null) {
-            $defMap = new Zend_Entity_Resource_Testing();
-            $defMap->addDefinition($entityDef);
+        if($this->fixture == null) {
+            throw new Exception("createPersister() requires a \$this->fixture to be set with a fixture object.");
         }
 
-        $this->persister = new Zend_Entity_Mapper_Persister_Simple();
-        $this->persister->initialize($entityDef, $defMap);
+        $entityDef = $this->fixture->getEntityDefinition('Zend_TestEntity1');
+        $defMap = $this->fixture->getResourceMap();
 
-        return $this->persister;
+        $persister = new Zend_Entity_Mapper_Persister_Simple();
+        $persister->initialize($entityDef, $defMap);
+
+        return $persister;
     }
 
     public function createEntity($initialState)
@@ -69,14 +35,13 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         return $entity;
     }
 
-    public function testSaveEntityWithoutPrimaryKeyInsertsDbStateIntoDbAdapter()
+    public function testSaveEntity_WithoutPrimaryKey_InsertsDbState_IntoDbAdapter()
     {
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+
         $newId = 1;
 
-        $propertyFixtureState = array('id' => null, 'foo' => 'foo', 'bar' => 'bar');
         $columnExpectedState = array('entities_id' => null, 'foo' => 'foo', 'baz' => 'bar');
-
-        $this->entityUnderTest = $this->createEntity($propertyFixtureState);
 
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
@@ -88,20 +53,24 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
         $em = $this->createEntityManagerMock(null, null, null, $db);
 
-        $persister = $this->createPersister();
-        $persister->save($this->entityUnderTest, $em);
+        $entity = new Zend_TestEntity1();
 
-        $entityState = $this->entityUnderTest->getState();
+        $persister = $this->createPersister();
+        $persister->doPerformSave($entity, $columnExpectedState, $em);
+
+        $entityState = $entity->getState();
         $this->assertEquals($newId, $entityState['id']);
     }
 
-    public function testSaveEntityWithPrimaryKeyUpdatesDbStateWithWhereCondition()
+    public function testSaveEntity_WithPrimaryKey_UpdatesDbState_WithWhereCondition()
     {
-        $propertyFixtureState = array('id' => 1, 'foo' => 'foo', 'bar' => 'bar');
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+
         $columnExpectedState = array('foo' => 'foo', 'baz' => 'bar');
+        $columnFullState = array_merge($columnExpectedState, array('entities_id' => 1));
         $columnExpectedWhere = 'entities.entities_id = 1';
 
-        $this->entityUnderTest = $this->createEntity($propertyFixtureState);
+        $entity = new Zend_TestEntity1;
 
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
@@ -115,111 +84,157 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $em = $this->createEntityManagerMock(null, null, null, $db);
 
         $persister = $this->createPersister();
-        $persister->save($this->entityUnderTest, $em);
+        $persister->doPerformSave($entity, $columnFullState, $em);
     }
 
-    public function testInsertNewEntityUpdatesIdentityMap()
+    public function testInsertNewEntity_UpdatesIdentityMap()
     {
+        $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $newId = 1;
-
-        $propertyFixtureState = array('id' => null, 'foo' => 'foo', 'bar' => 'bar');
         $columnExpectedState = array('entities_id' => null, 'foo' => 'foo', 'baz' => 'bar');
 
-        $this->entityUnderTest = $this->createEntity($propertyFixtureState);
+        $entity = new Zend_TestEntity1;
 
         $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->once())->method('insert');
         $db->expects($this->once())->method('lastInsertId')->will($this->returnValue($newId));
 
-        $newIdHash = Zend_Entity_Mapper_Definition_Utility::hashKeyIdentifier($newId);
         $identityMap = $this->createIdentityMapMock(0);
         $identityMap->expects($this->once())
                     ->method('addObject')
-                    ->with('Zend_TestEntity1', $newIdHash, $this->entityUnderTest);
+                    ->with('Zend_TestEntity1', $newId, $entity);
 
         $em = $this->createEntityManagerMock(null, null, $identityMap, $db);
 
         $persister = $this->createPersister();
-        $persister->save($this->entityUnderTest, $em);
+        $persister->doPerformSave($entity, $columnExpectedState, $em);
     }
 
-    public function testSaveEntityWithRelatedEntitySavesForeignKeyIntoDb()
+    public function testSaveEntity_WithRelatedEntity_SavesForeignKey_IntoDb()
     {
         $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
-        $this->entityUnderTest = new Zend_TestEntity1();
-        $this->entityUnderTest->setState($this->fixture->getDummyDataStateClassA());
+        $entityA = new Zend_TestEntity1();
+        $entityA->setState($this->fixture->getDummyDataStateClassA());
         $entityB = new Zend_TestEntity2();
         $entityB->setState($this->fixture->getDummyDataStateClassB());
+        $entityA->setmanytoone($entityB);
 
-        $relatedId = $entityB->getid();
+        $persister = $this->createPersister();
+        $actualDbState = $persister->transformEntityToDbState($entityA->getState(), $this->createEntityManagerMock());
 
-        $this->entityUnderTest->setmanytoone($entityB);
-
-        $this->assertDatabaseAdapterUpdateIsCalledCorrectlyOnSave($relatedId);
+        $this->assertEquals(
+            $entityB->getid(),
+            $actualDbState[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE_COLUMN]
+        );
     }
 
-    public function testSaveEntityWithRelatedLazyEntitySavesForeignKeyIntoDb()
+    public function testSaveEntity_WithRelatedLazyEntity_SavesForeignKey_IntoDb()
     {
         $relatedId = 1;
 
         $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
-        $this->entityUnderTest = new Zend_TestEntity1();
-        $this->entityUnderTest->setState($this->fixture->getDummyDataStateClassA());
-        $entityB = new Zend_Entity_Mapper_LazyLoad_Entity('trim', array('findByKey', $relatedId));
-        $this->entityUnderTest->setmanytoone($entityB);
+        $entity = new Zend_TestEntity1();
+        $entity->setState($this->fixture->getDummyDataStateClassA());
+        $entityB = new Zend_Entity_Mapper_LazyLoad_Entity('trim', array('load', $relatedId));
+        $entity->setmanytoone($entityB);
 
-        $this->assertDatabaseAdapterUpdateIsCalledCorrectlyOnSave($relatedId);
+        $persister = $this->createPersister();
+        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createEntityManagerMock());
+
+        $this->assertEquals(
+            $relatedId,
+            $actualDbState[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE_COLUMN]
+        );
     }
 
-    public function testSaveEntityWithRelatedNullSavesNullForeignKeyIntoDb()
+    public function testSaveEntity_WithRelatedNull_SavesNull_IntoDb()
     {
-        $relatedId = null;
+        $emptyRelation = null;
 
         $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
-        $this->entityUnderTest = new Zend_TestEntity1();
-        $this->entityUnderTest->setState($this->fixture->getDummyDataStateClassA());
-        $this->entityUnderTest->setmanytoone($relatedId);
+        $entity = new Zend_TestEntity1();
+        $entity->setState($this->fixture->getDummyDataStateClassA());
+        $entity->setmanytoone($emptyRelation);
 
-        $this->assertDatabaseAdapterUpdateIsCalledCorrectlyOnSave($relatedId);
-    }
+        $persister = $this->createPersister();
+        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createEntityManagerMock());
 
-    public function assertDatabaseAdapterUpdateIsCalledCorrectlyOnSave($relatedId)
-    {
-        $expectedColumnState = $this->fixture->getDummyDataRowClassA();
-        $expectedColumnState[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE_COLUMN] = $relatedId;
-        $columnExpectedWhere = 'table_a.a_id = '.$this->entityUnderTest->getid();
-        unset($expectedColumnState[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_ID_COLUMN]);
-
-        $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->once())
-           ->method('update')
-           ->with('table_a', $expectedColumnState, $columnExpectedWhere);
-        $db->expects($this->once())
-           ->method('quoteInto')
-           ->with('table_a.a_id = ?', $this->entityUnderTest->getid())
-           ->will($this->returnValue($columnExpectedWhere));
-
-        $em = $this->createEntityManagerMock(null, null, null, $db);
-
-        $persister = $this->createPersister(
-            $this->fixture->getResourceMap()->getDefinitionByEntityName('Zend_TestEntity1'),
-            $this->fixture->getResourceMap()
+        $this->assertEquals(
+            $emptyRelation,
+            $actualDbState[Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE_COLUMN]
         );
-        $persister->save($this->entityUnderTest, $em);
     }
 
-    public function testSaveEntityWithEmptyRelatedEntitySavesNullIfNullable()
-    {
 
+    public function testSaveEntity_WithPersistCascadeSave_DelegatesToEntityManager()
+    {
+        $this->doTestSaveEntityWithCascade("save");
     }
 
-    public function testSaveEntityWithEmptyRelatedEntityThrowsExceptionIfNotNullable()
+    public function testSaveEntity_WithPersistCascadeAll_DelegatesToEntityManager()
     {
+        $this->doTestSaveEntityWithCascade("all");
+    }
+
+    public function testSaveEntity_WithPersistCascadeDeleteAndNone()
+    {
+        $this->doTestSaveEntityWithCascade("delete", false);
+        $this->doTestSaveEntityWithCascade("none", false);
+    }
+
+    protected function doTestSaveEntityWithCascade($cascade, $delegates=true)
+    {
+        $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         
+        $relationDef = $this->fixture->getEntityPropertyDef('Zend_TestEntity1', 'manytoone');
+        $relationDef->setCascade($cascade);
+
+        $entityB = new Zend_TestEntity2();
+        $entityB->setState($this->fixture->getDummyDataStateClassB());
+
+        $em = $this->getMock('Zend_Entity_Manager_Interface');
+        if($delegates == true) {
+            $em->expects($this->once())
+               ->method('save')
+               ->with($entityB);
+        } else {
+            $em->expects($this->never())->method('save');
+        }
+
+        $persister = $this->createPersister();
+        $persister->evaluateRelatedObject($entityB, $relationDef, $em);
     }
 
-    public function testSaveEntityWithPersistCascadeDelegatesToEntityManager()
+    public function testSaveEntity_WithRelatedCascading_OneToManyCollection()
     {
-        
+        $this->fixture = new Zend_Entity_Fixture_OneToManyDefs();
+
+        $collectionDef = $this->fixture->getEntityPropertyDef('Zend_TestEntity1', 'onetomany');
+        $collectionDef->getRelation()->setCascade("save");
+
+        $entityA = new Zend_TestEntity2();
+        $entityB = new Zend_TestEntity2();
+        $collection = new Zend_Entity_Collection(array($entityA, $entityB), 'Zend_TestEntity2');
+
+        $em = $this->getMock('Zend_Entity_Manager_Interface');
+        $em->expects($this->exactly(2))->method('save');
+
+        $persister = $this->createPersister();
+        $persister->evaluateRelatedCollection($collection, $collectionDef, $em);
+    }
+
+    public function testSaveEntity_WithRelatedCascading_LazyLoadCollection()
+    {
+        $this->fixture = new Zend_Entity_Fixture_OneToManyDefs();
+
+        $collectionDef = $this->fixture->getEntityPropertyDef('Zend_TestEntity1', 'onetomany');
+        $collectionDef->getRelation()->setCascade("save");
+
+        $collection = new Zend_Entity_Mapper_LazyLoad_Collection('trim', array(1, 2));
+
+        $em = $this->getMock('Zend_Entity_Manager_Interface');
+        $em->expects($this->exactly(0))->method('save');
+
+        $persister = $this->createPersister();
+        $persister->evaluateRelatedCollection($collection, $collectionDef, $em);
     }
 }

@@ -144,7 +144,7 @@ class Zend_Entity_Mapper_Definition_CollectionTest extends Zend_Entity_Mapper_De
     protected function createCompileableCollection()
     {
         $colDef = new Zend_Entity_Mapper_Definition_Collection(self::TEST_PROPERTY);
-        $relationMock = $this->getMock('Zend_Entity_Mapper_Definition_Relation');
+        $relationMock = $this->getMock('Zend_Entity_Mapper_Definition_AbstractRelation', array(), array("propertyName"));
         $colDef->setRelation($relationMock);
         $colDef->setKey(self::TEST_PROPERTY2);
 

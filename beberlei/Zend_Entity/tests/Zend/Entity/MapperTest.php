@@ -28,7 +28,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper(null, null, null, $loader);
         $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
+        $mapper->performFindQuery($select, $this->createEntityManager());
     }
 
     public function testFindSelectDelegatesResultProcessingToLoader()
@@ -39,7 +39,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper(null, null, null, $loader);
         $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
+        $mapper->performFindQuery($select, $this->createEntityManager());
     }
 
     public function testPassedAdapterIsUsedForQuerying()
@@ -51,7 +51,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper($db);
         $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
+        $mapper->performFindQuery($select, $this->createEntityManager());
     }
 
     public function testFindOneThrowsExceptionIfOtherThanOneFound()
@@ -67,22 +67,9 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $mapper->findOne($select, $this->createEntityManager());
     }
 
-    public function testFindOneEntity()
-    {
-        $resultWithOneEntry = array(1);
-
-        $loader = $this->createLoaderMockThatReturnsProccessedResultset($resultWithOneEntry);
-        $mapper = $this->createMapper(null, null, null, $loader);
-
-        $select = $mapper->select();
-        $result = $mapper->findOne($select, $this->createEntityManager());
-
-        $this->assertEquals($resultWithOneEntry[0], $result);
-    }
-
     const TEST_KEY_VALUE = 1;
 
-    public function testFindByKeyWithoutIdentityMapMatchHitsDatabaseAdapterForQuery()
+    public function testloadWithoutIdentityMapMatchHitsDatabaseAdapterForQuery()
     {
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
@@ -91,10 +78,10 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
            $loader = $this->createLoaderMockThatReturnsProccessedResultset(array(1));
 
         $mapper = $this->createMapper($db, null, null, $loader);
-        $mapper->findByKey(self::TEST_KEY_VALUE, $this->createEntityManager());
+        $mapper->load(self::TEST_KEY_VALUE, $this->createEntityManager());
     }
 
-    public function testFindByKeyWithoutIdentityMapMatchThrowsExceptionIfNotExactlyOneIsFound()
+    public function testloadWithoutIdentityMapMatchThrowsExceptionIfNotExactlyOneIsFound()
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
@@ -105,10 +92,10 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $loader = $this->createLoaderMockThatReturnsProccessedResultset(array(1, 2));
 
         $mapper = $this->createMapper($db, null, null, $loader);
-        $mapper->findByKey(self::TEST_KEY_VALUE, $this->createEntityManager());
+        $mapper->load(self::TEST_KEY_VALUE, $this->createEntityManager());
     }
 
-    public function testFindByKeyWithIdentityMapMatchReturnsWithoutHittingDatabase()
+    public function testloadWithIdentityMapMatchReturnsWithoutHittingDatabase()
     {
         $expectedObject = new stdClass();
 
@@ -123,7 +110,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $entityManager = $this->createEntityManager(null, null, $identityMap);
         $mapper = $this->createMapper($db);
 
-        $actualObject = $mapper->findByKey(self::TEST_KEY_VALUE, $entityManager);
+        $actualObject = $mapper->load(self::TEST_KEY_VALUE, $entityManager);
 
         $this->assertEquals($expectedObject, $actualObject);
     }

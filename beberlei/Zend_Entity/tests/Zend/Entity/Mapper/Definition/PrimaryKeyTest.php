@@ -127,10 +127,7 @@ class Zend_Entity_Mapper_Definition_PrimaryKeyTest extends Zend_Entity_Mapper_De
         );
         $pkValues = $primaryKeyDef->retrieveKeyValuesFromProperties($state);
 
-        $expectedPkValues = array(
-            self::TEST_PROPERTY => 1,
-        );
-        $this->assertEquals($expectedPkValues, $pkValues);
+        $this->assertEquals(1, $pkValues);
     }
 
     /**

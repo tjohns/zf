@@ -37,15 +37,15 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     public function testFindIsDelegatedToMapper()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('find', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('performFindQuery', $select);
         
-        $manager->find(self::KNOWN_ENTITY_CLASS, $select);
+        $manager->performFindQuery(self::KNOWN_ENTITY_CLASS, $select);
     }
 
     public function testFindOneIsDelegatedToMapper()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('findOne', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('findOne', $select);
 
         $manager->findOne(self::KNOWN_ENTITY_CLASS, $select);
     }
@@ -53,7 +53,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     public function testFindAllOfEntityWithoutAdditionalRestriction()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('find', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('performFindQuery', $select);
 
         $select->expects($this->never())->method('where');
         $select->expects($this->never())->method('limit');
@@ -65,7 +65,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     public function testFindAllOfEntityWithWhereRestriction()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('find', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('performFindQuery', $select);
 
         $select->expects($this->once())->method('where')->with($this->equalTo('foo'));
         $select->expects($this->never())->method('limit');
@@ -77,7 +77,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     public function testFindAllOfEntityWithLimitRestriction()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('find', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('performFindQuery', $select);
 
         $select->expects($this->never())->method('where');
         $select->expects($this->once())->method('limit')->will($this->returnValue('foo'));
@@ -89,7 +89,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     public function testFindAllOfEntityWithOrderRestriction()
     {
         $select = $this->createDbSelectMock();
-        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpecation('find', $select);
+        $manager = $this->createEntityManagerMockWithMapperMockFindMethodExpectation('performFindQuery', $select);
 
         $select->expects($this->never())->method('where');
         $select->expects($this->never())->method('limit');
@@ -98,7 +98,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
         $manager->findAll(self::KNOWN_ENTITY_CLASS, null, null, 'foo');
     }
 
-    public function createEntityManagerMockWithMapperMockFindMethodExpecation($methodName, $select)
+    public function createEntityManagerMockWithMapperMockFindMethodExpectation($methodName, $select)
     {
         $manager = $this->createEntityManagerMock();
 
