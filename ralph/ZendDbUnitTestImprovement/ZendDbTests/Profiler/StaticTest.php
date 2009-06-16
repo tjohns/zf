@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Db_TestSetup
+ * @see Zend_Db_TestCase
  */
-require_once 'Zend/Db/TestSetup.php';
+require_once 'Zend/Db/TestCase.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,7 +38,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
+class Zend_Db_Profiler_StaticTest extends Zend_Db_TestCase
 {
 
     /**
@@ -328,7 +328,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerSetEnabled()
     {
-        $prof = $this->_db->getProfiler();
+        $prof = $this->sharedFixture->dbAdapter->getProfiler();
 
         $this->assertSame($prof->setEnabled(true), $prof);
         $this->assertTrue($prof->getEnabled());
@@ -344,7 +344,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerSetFilterElapsedSecs()
     {
-        $prof = $this->_db->getProfiler();
+        $prof = $this->sharedFixture->dbAdapter->getProfiler();
 
         $this->assertSame($prof->setFilterElapsedSecs(), $prof);
         $this->assertNull($prof->getFilterElapsedSecs());
@@ -363,7 +363,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerSetFilterQueryType()
     {
-        $prof = $this->_db->getProfiler();
+        $prof = $this->sharedFixture->dbAdapter->getProfiler();
 
         $this->assertSame($prof->setFilterQueryType(), $prof);
         $this->assertNull($prof->getFilterQueryType());
@@ -383,7 +383,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerClear()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $this->assertSame($prof->clear(), $prof);
@@ -398,7 +398,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerQueryStart()
     {
-        $prof = $this->_db->getProfiler();
+        $prof = $this->sharedFixture->dbAdapter->getProfiler();
 
         $this->assertNull($prof->queryStart('sqlDisabled1'));
 
@@ -508,7 +508,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerQueryEndHandleInvalid()
     {
-        $prof = $this->_db->getProfiler();
+        $prof = $this->sharedFixture->dbAdapter->getProfiler();
 
         $prof->queryEnd('invalid');
 
@@ -529,7 +529,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerQueryEndAlreadyEnded()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $queryId = $prof->queryStart('sql');
@@ -552,21 +552,21 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerQueryEndFilterElapsedSecs()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true)
                 ->setFilterElapsedSecs(1);
 
         $prof->queryEnd($prof->queryStart('sqlTimeShort1'));
 
-        $this->_db->query('sqlTimeShort2');
+        $this->sharedFixture->dbAdapter->query('sqlTimeShort2');
 
-        $this->_db->setOnQuerySleep(2);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(2);
 
-        $this->_db->query('sqlTimeLong');
+        $this->sharedFixture->dbAdapter->query('sqlTimeLong');
 
-        $this->_db->setOnQuerySleep(0);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(0);
 
-        $this->_db->query('sqlTimeShort3');
+        $this->sharedFixture->dbAdapter->query('sqlTimeShort3');
 
         $this->assertEquals(1, count($queryProfiles = $prof->getQueryProfiles()));
 
@@ -583,16 +583,16 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerQueryEndFilterQueryType()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true)
                 ->setFilterQueryType(Zend_Db_Profiler::UPDATE);
 
-        $this->_db->query('INSERT');
-        $this->_db->query('UPDATE');
-        $this->_db->query('DELETE');
-        $this->_db->query('SELECT');
-        $this->_db->query('UPDATE');
-        $this->_db->query('DELETE');
+        $this->sharedFixture->dbAdapter->query('INSERT');
+        $this->sharedFixture->dbAdapter->query('UPDATE');
+        $this->sharedFixture->dbAdapter->query('DELETE');
+        $this->sharedFixture->dbAdapter->query('SELECT');
+        $this->sharedFixture->dbAdapter->query('UPDATE');
+        $this->sharedFixture->dbAdapter->query('DELETE');
 
         $this->assertEquals(2, count($prof->getQueryProfiles()));
     }
@@ -605,7 +605,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
     public function testProfilerGetQueryProfileHandleInvalid()
     {
         try {
-            $this->_db->getProfiler()->getQueryProfile('invalid');
+            $this->sharedFixture->dbAdapter->getProfiler()->getQueryProfile('invalid');
             $this->fail('Expected Zend_Db_Profiler_Exception not thrown');
         } catch (Zend_Db_Profiler_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
@@ -619,7 +619,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetQueryProfileHandleValid()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $queryId = $prof->queryStart('sql');
@@ -635,7 +635,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetQueryProfilesFilterQueryType()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $queries = array(
@@ -646,7 +646,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
             );
 
         foreach ($queries as $query) {
-            $this->_db->query($query);
+            $this->sharedFixture->dbAdapter->query($query);
         }
 
         foreach ($queries as $queryId => $query) {
@@ -664,15 +664,15 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetTotalElapsedSecsBasic()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
-        $this->_db->setOnQuerySleep(1);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(1);
 
         $numQueries = 3;
 
         for ($queryCount = 0; $queryCount < $numQueries; ++$queryCount) {
-            $this->_db->query("sql $queryCount");
+            $this->sharedFixture->dbAdapter->query("sql $queryCount");
         }
 
         $this->assertThat(
@@ -688,28 +688,28 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetTotalElapsedSecsFilterQueryType()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
-        $this->_db->query('SELECT');
+        $this->sharedFixture->dbAdapter->query('SELECT');
 
-        $this->_db->query('SELECT');
+        $this->sharedFixture->dbAdapter->query('SELECT');
 
-        $this->_db->setOnQuerySleep(1);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(1);
 
-        $this->_db->query('UPDATE');
+        $this->sharedFixture->dbAdapter->query('UPDATE');
 
-        $this->_db->setOnQuerySleep(0);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(0);
 
-        $this->_db->query('SELECT');
+        $this->sharedFixture->dbAdapter->query('SELECT');
 
-        $this->_db->setOnQuerySleep(1);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(1);
 
-        $this->_db->query('UPDATE');
+        $this->sharedFixture->dbAdapter->query('UPDATE');
 
-        $this->_db->setOnQuerySleep(0);
+        $this->sharedFixture->dbAdapter->setOnQuerySleep(0);
 
-        $this->_db->query('SELECT');
+        $this->sharedFixture->dbAdapter->query('SELECT');
 
         $this->assertThat(
             $prof->getTotalElapsedSecs(Zend_Db_Profiler::SELECT),
@@ -729,13 +729,13 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetTotalNumQueries()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $numQueries = 3;
 
         for ($queryCount = 0; $queryCount < $numQueries; ++$queryCount) {
-            $this->_db->query("sql $queryCount");
+            $this->sharedFixture->dbAdapter->query("sql $queryCount");
         }
 
         $this->assertEquals($numQueries, $prof->getTotalNumQueries());
@@ -748,7 +748,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetTotalNumQueriesFilterQueryType()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $queries = array(
@@ -760,7 +760,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
 
         foreach ($queries as $querySql => $queryCount) {
             for ($i = 0; $i < $queryCount; ++$i) {
-                $this->_db->query("$querySql $i");
+                $this->sharedFixture->dbAdapter->query("$querySql $i");
             }
         }
 
@@ -776,7 +776,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetLastQueryProfileFalse()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
         $this->assertFalse($prof->getLastQueryProfile());
@@ -789,10 +789,10 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
      */
     public function testProfilerGetLastQueryProfile()
     {
-        $prof = $this->_db->getProfiler()
+        $prof = $this->sharedFixture->dbAdapter->getProfiler()
                 ->setEnabled(true);
 
-        $this->_db->query('sql 1');
+        $this->sharedFixture->dbAdapter->query('sql 1');
 
         $prof->queryStart('sql 2');
 

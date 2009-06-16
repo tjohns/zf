@@ -89,10 +89,10 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
         $channel->setResponse($this->_response);
 
         $this->_profiler = new Zend_Db_Profiler_Firebug();
-        $this->_db = Zend_Db::factory('PDO_SQLITE',
+        $this->sharedFixture->dbAdapter = Zend_Db::factory('PDO_SQLITE',
                                array('dbname' => ':memory:',
                                      'profiler' => $this->_profiler));
-        $this->_db->getConnection()->exec('CREATE TABLE foo (
+        $this->sharedFixture->dbAdapter->getConnection()->exec('CREATE TABLE foo (
                                               id      INTEGNER NOT NULL,
                                               col1    VARCHAR(10) NOT NULL
                                             )');
@@ -100,7 +100,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->_db->getConnection()->exec('DROP TABLE foo');
+        $this->sharedFixture->dbAdapter->getConnection()->exec('DROP TABLE foo');
 
         Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
         Zend_Wildfire_Plugin_FirePhp::destroyInstance();
@@ -111,7 +111,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
         $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
 
-        $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
+        $this->sharedFixture->dbAdapter->insert('foo', array('id'=>1,'col1'=>'original'));
 
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
 
@@ -119,7 +119,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
         $this->_profiler->setEnabled(true);
 
-        $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
+        $this->sharedFixture->dbAdapter->insert('foo', array('id'=>1,'col1'=>'original'));
 
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
 
@@ -137,7 +137,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
         $this->_profiler->setEnabled(true);
 
-        $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
+        $this->sharedFixture->dbAdapter->insert('foo', array('id'=>1,'col1'=>'original'));
 
         $this->_profiler->setEnabled(false);
 
@@ -153,8 +153,8 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
         $this->_profiler = new Zend_Db_Profiler_Firebug('Label 1');
         $this->_profiler->setEnabled(true);
-        $this->_db->setProfiler($this->_profiler);
-        $this->_db->insert('foo', array('id'=>1,'col1'=>'original'));
+        $this->sharedFixture->dbAdapter->setProfiler($this->_profiler);
+        $this->sharedFixture->dbAdapter->insert('foo', array('id'=>1,'col1'=>'original'));
 
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
 

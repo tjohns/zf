@@ -42,7 +42,7 @@ require_once 'Zend/Config.php';
 /**
  * @see Zend_Db_Adapter_Static
  */
-require_once 'Zend/Db/Adapter/Static.php';
+require_once dirname(__FILE__) . '/_files/Test/Static.php';
 
 
 /**

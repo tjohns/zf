@@ -19,11 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/Relationships/TestCommon.php';
+require_once 'Zend/Db/Table/Relationships/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_Relationships_OdbcTest extends Zend_Db_Table_Relationships_TestCommon
+class Zend_Db_Table_Relationships_OdbcTest extends Zend_Db_Table_Relationships_AbstractTestCase
 {
 
     public function getDriver()

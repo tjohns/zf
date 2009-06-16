@@ -46,6 +46,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class My_ZendDbTable_TableAccounts extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'zfaccounts';
+    protected $_name = 'zf_accounts';
     protected $_dependentTables = array('My_ZendDbTable_TableBugs');
 }

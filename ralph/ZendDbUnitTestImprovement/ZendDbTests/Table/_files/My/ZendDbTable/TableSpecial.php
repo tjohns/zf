@@ -36,7 +36,7 @@ class My_ZendDbTable_TableSpecial extends Zend_Db_Table_Abstract
     // no configuration declared
 }
 
-class zfbugs_products extends Zend_Db_Table_Abstract
+class zf_bugs_products extends Zend_Db_Table_Abstract
 {
     // no configuration declared
 }

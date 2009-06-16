@@ -19,11 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/Select/TestCommon.php';
+require_once 'Zend/Db/Table/Select/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_Select_MysqliTest extends Zend_Db_Table_Select_TestCommon
+class Zend_Db_Table_Select_MysqliTest extends Zend_Db_Table_Select_AbstractTestCase
 {
 
     public function getDriver()
@@ -31,4 +31,9 @@ class Zend_Db_Table_Select_MysqliTest extends Zend_Db_Table_Select_TestCommon
         return 'Mysqli';
     }
 
+    public function testSelectQueryWithBinds()
+    {
+        $this->markTestSkipped('Mysqli does not support named parameters.');
+    }
+    
 }

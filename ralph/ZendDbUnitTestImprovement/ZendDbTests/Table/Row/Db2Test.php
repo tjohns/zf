@@ -19,11 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/Row/TestCommon.php';
+require_once 'Zend/Db/Table/Row/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_Row_Db2Test extends Zend_Db_Table_Row_TestCommon
+class Zend_Db_Table_Row_Db2Test extends Zend_Db_Table_Row_AbstractTestCase
 {
 
     public function getDriver()

@@ -46,6 +46,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class My_ZendDbTable_TableProducts extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'zfproducts';
+    protected $_name = 'zf_products';
     protected $_dependentTables = array('My_ZendDbTable_TableBugsProducts');
 }

@@ -19,21 +19,21 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/TestCommon.php';
+require_once 'Zend/Db/Table/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
+class Zend_Db_Table_OracleTest extends Zend_Db_Table_AbstractTestCase
 {
 
     public function testTableInsert()
     {
-        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName().' does not support auto-increment columns.');
     }
 
     public function testIsIdentity()
     {
-        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName().' does not support auto-increment columns.');
     }
 
     /**
@@ -41,11 +41,11 @@ class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
      */
     public function testTableInsertWithSchema()
     {
-        $schemaName = $this->_util->getSchema();
-        $tableName = 'zfbugs';
+        $schemaName = $this->sharedFixture->dbUtility->getSchema();
+        $tableName = 'zf_bugs';
         $identifier = join('.', array_filter(array($schemaName, $tableName)));
-        $table = $this->_getTable('My_ZendDbTable_TableSpecial',
-            array('name' => $tableName, 'schema' => $schemaName, Zend_Db_Table_Abstract::SEQUENCE => 'zfbugs_seq')
+        $table = $this->sharedFixture->tableUtility->getTable('My_ZendDbTable_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName, Zend_Db_Table_Abstract::SEQUENCE => 'zf_bugs_seq')
         );
 
         $row = array (
@@ -58,33 +58,33 @@ class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
             'verified_by'     => 'dduck'
         );
 
-        $profilerEnabled = $this->_db->getProfiler()->getEnabled();
-        $this->_db->getProfiler()->setEnabled(true);
+        $profilerEnabled = $this->sharedFixture->dbAdapter->getProfiler()->getEnabled();
+        $this->sharedFixture->dbAdapter->getProfiler()->setEnabled(true);
         $insertResult = $table->insert($row);
-        $this->_db->getProfiler()->setEnabled($profilerEnabled);
+        $this->sharedFixture->dbAdapter->getProfiler()->setEnabled($profilerEnabled);
 
-        $qp = $this->_db->getProfiler()->getLastQueryProfile();
-        $tableSpec = $this->_db->quoteIdentifier($identifier, true);
+        $qp = $this->sharedFixture->dbAdapter->getProfiler()->getLastQueryProfile();
+        $tableSpec = $this->sharedFixture->dbAdapter->quoteIdentifier($identifier, true);
         $this->assertContains("INSERT INTO $tableSpec ", $qp->getQuery());
     }
 
     public function testTableInsertSequence()
     {
-        $table = $this->_getTable('My_ZendDbTable_TableBugs',
-            array(Zend_Db_Table_Abstract::SEQUENCE => 'zfbugs_seq'));
+        $table = $this->sharedFixture->tableUtility->getTable('My_ZendDbTable_TableBugs',
+            array(Zend_Db_Table_Abstract::SEQUENCE => 'zf_bugs_seq'));
         $row = array (
             'bug_description' => 'New bug',
             'bug_status'      => 'NEW',
             'created_on'      => new Zend_Db_Expr(
-                $this->_db->quoteInto('DATE ?', '2007-04-02')),
+                $this->sharedFixture->dbAdapter->quoteInto('DATE ?', '2007-04-02')),
             'updated_on'      => new Zend_Db_Expr(
-                $this->_db->quoteInto('DATE ?', '2007-04-02')),
+                $this->sharedFixture->dbAdapter->quoteInto('DATE ?', '2007-04-02')),
             'reported_by'     => 'micky',
             'assigned_to'     => 'goofy'
         );
         $insertResult         = $table->insert($row);
-        $lastInsertId         = $this->_db->lastInsertId('zfbugs');
-        $lastSequenceId       = $this->_db->lastSequenceId('zfbugs_seq');
+        $lastInsertId         = $this->sharedFixture->dbAdapter->lastInsertId('zf_bugs');
+        $lastSequenceId       = $this->sharedFixture->dbAdapter->lastSequenceId('zf_bugs_seq');
         $this->assertEquals($insertResult, $lastInsertId);
         $this->assertEquals($insertResult, $lastSequenceId);
         $this->assertEquals(5, $insertResult);

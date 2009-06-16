@@ -19,46 +19,46 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Statement/TestCommon.php';
+require_once 'Zend/Db/Statement/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
+class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_AbstractTestCase
 {
 
     public function testStatementBindParamByPosition()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support bound parameters by position');
     }
 
     public function testStatementBindValueByPosition()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support bound parameters by position');
     }
 
     public function testStatementErrorCodeKeyViolation()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' does not return error codes correctly.');
     }
 
     public function testStatementErrorInfoKeyViolation()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' does not return error codes correctly.');
     }
 
     public function testStatementExecuteWithParams()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
-        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
+        $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
         $stmt->execute(array('product_id' => 4, 'product_name' => 'Solaris'));
 
-        $select = $this->_db->select()
-            ->from('zfproducts')
+        $select = $this->sharedFixture->dbAdapter->select()
+            ->from('zf_products')
             ->where("$product_id = 4");
-        $result = $this->_db->fetchAll($select);
+        $result = $this->sharedFixture->dbAdapter->fetchAll($select);
         $stmt->closeCursor();
 
         $this->assertEquals(array(array('product_id'=>4, 'product_name'=>'Solaris')), $result);
@@ -66,19 +66,19 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
 
     public function testStatementFetchAllStyleBoth()
     {
-        $this->markTestIncomplete($this->getDriver() . ' driver does not support fetchAll(FETCH_BOTH)');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' driver does not support fetchAll(FETCH_BOTH)');
     }
 
     public function testStatementGetColumnMeta()
     {
-        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' has not implemented getColumnMeta() yet [ZF-1424]');
     }
 
     public function testStatementNextRowset()
     {
-        $select = $this->_db->select()
-            ->from('zfproducts');
-        $stmt = $this->_db->prepare($select->__toString());
+        $select = $this->sharedFixture->dbAdapter->select()
+            ->from('zf_products');
+        $stmt = $this->sharedFixture->dbAdapter->prepare($select->__toString());
         try {
             $stmt->nextRowset();
             $this->fail('Expected to catch Zend_Db_Statement_Oracle_Exception');
@@ -95,26 +95,26 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
      */
     public function testStatementReturnNullWithEmptyField()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
-        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
+        $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
         $stmt->execute(array('product_id' => 4, 'product_name' => null));
 
-        $select = $this->_db->select()
-                       ->from('zfproducts')
+        $select = $this->sharedFixture->dbAdapter->select()
+                       ->from('zf_products')
                        ->where("$product_id = 4");
 
-        $result = $this->_db->fetchAll($select);
+        $result = $this->sharedFixture->dbAdapter->fetchAll($select);
         $this->assertTrue(array_key_exists('product_name', $result[0]), 'fetchAll must return null for empty fields with Oracle');
-        $result = $this->_db->fetchRow($select);
+        $result = $this->sharedFixture->dbAdapter->fetchRow($select);
         $this->assertTrue(array_key_exists('product_name', $result), 'fetchRow must return null for empty fields with Oracle');
     }
 
     public function testStatementSetFetchModeBoth()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' does not implement FETCH_BOTH correctly.');
     }
 
     public function getDriver()

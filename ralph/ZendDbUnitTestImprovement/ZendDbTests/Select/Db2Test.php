@@ -19,16 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Select/TestCommon.php';
+require_once 'Zend/Db/Select/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Select_Db2Test extends Zend_Db_Select_TestCommon
+class Zend_Db_Select_Db2Test extends Zend_Db_Select_AbstractTestCase
 {
 
     public function testSelectJoinCross()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support CROSS JOIN');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support CROSS JOIN');
     }
 
     /**
@@ -36,10 +36,10 @@ class Zend_Db_Select_Db2Test extends Zend_Db_Select_TestCommon
      */
     protected function _selectColumnWithColonQuotedParameter ()
     {
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
-        $select = $this->_db->select()
-                            ->from('zfproducts')
+        $select = $this->sharedFixture->dbAdapter->select()
+                            ->from('zf_products')
                             ->where($product_name . ' = ?', "as'as:x");
         return $select;
     }

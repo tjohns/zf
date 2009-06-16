@@ -23,14 +23,9 @@
 
 
 /**
- * @see Zend_Db_Adapter_TestCommon
+ * @see Zend_Db_Adapter_AbstractTestCase
  */
-require_once 'Zend/Db/Adapter/TestCommon.php';
-
-/**
- * @see Zend_Db_Adapter_Mysqli
- */
-require_once 'Zend/Db/Adapter/Mysqli.php';
+require_once 'Zend/Db/Adapter/AbstractTestCase.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -43,7 +38,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
+class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_AbstractTestCase 
 {
 
     protected $_numericDataTypes = array(
@@ -74,26 +69,26 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterAutoQuoteIdentifiersTrue()
     {
-        $params = $this->_util->getParams();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
 
         $params['options'] = array(
             Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
         );
-        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
         $db->getConnection();
 
-        $select = $this->_db->select();
-        $select->from('zfproducts');
-        $stmt = $this->_db->query($select);
+        $select = $this->sharedFixture->dbAdapter->select();
+        $select->from('zf_products');
+        $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result1 = $stmt->fetchAll();
         $this->assertEquals(3, count($result1), 'Expected 3 rows in first query result');
 
         $this->assertEquals(1, $result1[0]['product_id']);
 
-        $select = $this->_db->select();
-        $select->from('zfproducts');
+        $select = $this->sharedFixture->dbAdapter->select();
+        $select->from('zf_products');
         try {
-            $stmt = $this->_db->query($select);
+            $stmt = $this->sharedFixture->dbAdapter->query($select);
             $result2 = $stmt->fetchAll();
             $this->assertEquals(3, count($result2), 'Expected 3 rows in second query result');
             $this->assertEquals($result1, $result2);
@@ -104,7 +99,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support sequences');
     }
 
     /**
@@ -116,7 +111,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     {
         $string = "foo";
         $alias = "bar";
-        $value = $this->_db->quoteColumnAs($string, $alias);
+        $value = $this->sharedFixture->dbAdapter->quoteColumnAs($string, $alias);
         $this->assertEquals('`foo` AS `bar`', $value);
     }
 
@@ -129,7 +124,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     {
         $string = 'foo.bar';
         $alias = 'bar';
-        $value = $this->_db->quoteColumnAs($string, $alias);
+        $value = $this->sharedFixture->dbAdapter->quoteColumnAs($string, $alias);
         $this->assertEquals('`foo`.`bar`', $value);
     }
 
@@ -139,7 +134,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterQuoteIdentifier()
     {
-        $value = $this->_db->quoteIdentifier('table_name');
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier('table_name');
         $this->assertEquals('`table_name`', $value);
     }
 
@@ -150,7 +145,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteIdentifierArray()
     {
         $array = array('foo', 'bar');
-        $value = $this->_db->quoteIdentifier($array);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($array);
         $this->assertEquals('`foo`.`bar`', $value);
     }
 
@@ -163,7 +158,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     {
         $expr = new Zend_Db_Expr('*');
         $array = array('foo', $expr);
-        $value = $this->_db->quoteIdentifier($array);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($array);
         $this->assertEquals('`foo`.*', $value);
     }
 
@@ -174,7 +169,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteIdentifierDoubleQuote()
     {
         $string = 'table_"_name';
-        $value = $this->_db->quoteIdentifier($string);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($string);
         $this->assertEquals('`table_"_name`', $value);
     }
 
@@ -185,7 +180,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteIdentifierInteger()
     {
         $int = 123;
-        $value = $this->_db->quoteIdentifier($int);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($int);
         $this->assertEquals('`123`', $value);
     }
 
@@ -199,7 +194,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteIdentifierQualified()
     {
         $string = 'table.column';
-        $value = $this->_db->quoteIdentifier($string);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($string);
         $this->assertEquals('`table`.`column`', $value);
     }
 
@@ -210,7 +205,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteIdentifierSingleQuote()
     {
         $string = "table_'_name";
-        $value = $this->_db->quoteIdentifier($string);
+        $value = $this->sharedFixture->dbAdapter->quoteIdentifier($string);
         $this->assertEquals('`table_\'_name`', $value);
     }
 
@@ -223,7 +218,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     {
         $string = "foo";
         $alias = "bar";
-        $value = $this->_db->quoteTableAs($string, $alias);
+        $value = $this->sharedFixture->dbAdapter->quoteTableAs($string, $alias);
         $this->assertEquals('`foo` AS `bar`', $value);
     }
 
@@ -234,8 +229,19 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterDescribeTableAttributeColumnFloat()
     {
-        $desc = $this->_db->describeTable('zfprice');
-        $this->assertEquals('zfprice',  $desc['price']['TABLE_NAME']);
+        $tableName = $this->_getClonedUtility(false)->createTable(
+            'AltPrices',
+            'prices_alt',
+            array(
+                'product_id'    => 'INTEGER NOT NULL',
+                'price_name'    => 'VARCHAR(100)',
+                'price'         => 'FLOAT(10,8)',
+                'price_total'   => 'DECIMAL(10,2) NOT NULL',
+                'PRIMARY KEY'   => 'product_id'
+                )
+            );        
+        $desc = $this->sharedFixture->dbAdapter->describeTable($tableName);
+        $this->assertEquals($tableName,  $desc['price']['TABLE_NAME']);
         $this->assertRegExp('/float/i', $desc['price']['DATA_TYPE']);
     }
 
@@ -243,19 +249,19 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      * Ensures that the PDO Buffered Query does not throw the error
      * 2014 General error
      *
+     * @group ZF-2101
      * @link   http://framework.zend.com/issues/browse/ZF-2101
-     * @return void
      */
-    public function testZF2101()
+    public function testAdapterCanCalledStoredProcedure()
     {
-        $params = $this->_util->getParams();
-        $db = Zend_Db::factory($this->getDriver(), $params);
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
+        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
 
         // Set default bound value
         $customerId = 1;
 
         // Stored procedure returns a single row
-        $stmt = $db->prepare('CALL zf_test_procedure(?)');
+        $stmt = $db->prepare('CALL zf_get_product_procedure(?)');
         $stmt->bindParam(1, $customerId);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -265,7 +271,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $stmt->closeCursor();
 
         // Stored procedure returns a single row
-        $stmt = $db->prepare('CALL zf_test_procedure(?)');
+        $stmt = $db->prepare('CALL zf_get_product_procedure(?)');
         $stmt->bindParam(1, $customerId);
         $stmt->execute();
         $this->assertEquals(1, $result[0]['product_id']);
@@ -278,11 +284,11 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 
     public function testMySqliInitCommand()
     {
-        $params = $this->_util->getParams();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['driver_options'] = array(
             'mysqli_init_command' => 'SET AUTOCOMMIT=0;'
         );
-        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
 
         $sql = 'SELECT @@AUTOCOMMIT as autocommit';
 

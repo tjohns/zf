@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Db_Profiler_TestCommon
+ * @see Zend_Db_Profiler_AbstractTestCase
  */
-require_once 'Zend/Db/Profiler/TestCommon.php';
+require_once 'Zend/Db/Profiler/AbstractTestCase.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,12 +38,12 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Profiler_Db2Test extends Zend_Db_Profiler_TestCommon
+class Zend_Db_Profiler_Db2Test extends Zend_Db_Profiler_AbstractTestCase
 {
 
     public function testProfilerPreparedStatementWithBoundParams()
     {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' is having trouble with binding params');
     }
 
     public function getDriver()

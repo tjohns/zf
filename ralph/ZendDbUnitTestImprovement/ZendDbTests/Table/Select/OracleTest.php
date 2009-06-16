@@ -19,11 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/Select/TestCommon.php';
+require_once 'Zend/Db/Table/Select/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_Select_OracleTest extends Zend_Db_Table_Select_TestCommon
+class Zend_Db_Table_Select_OracleTest extends Zend_Db_Table_Select_AbstractTestCase
 {
 
     /**
@@ -31,10 +31,10 @@ class Zend_Db_Table_Select_OracleTest extends Zend_Db_Table_Select_TestCommon
      */
     protected function _selectColumnWithColonQuotedParameter ()
     {
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
-        $select = $this->_db->select()
-                            ->from('zfproducts')
+        $select = $this->sharedFixture->dbAdapter->select()
+                            ->from('zf_products')
                             ->where($product_name . ' = ?', "as'as:x");
         return $select;
     }
@@ -46,10 +46,10 @@ class Zend_Db_Table_Select_OracleTest extends Zend_Db_Table_Select_TestCommon
     {
         $select = $this->_selectFromSelectObject();
         $query = $select->assemble();
-        $cmp = 'SELECT ' . $this->_db->quoteIdentifier('t') . '.* FROM (SELECT '
-                         . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
-                         . $this->_db->quoteIdentifier('subqueryTable') . ') '
-                         . $this->_db->quoteIdentifier('t');
+        $cmp = 'SELECT ' . $this->sharedFixture->dbAdapter->quoteIdentifier('t') . '.* FROM (SELECT '
+                         . $this->sharedFixture->dbAdapter->quoteIdentifier('subqueryTable') . '.* FROM '
+                         . $this->sharedFixture->dbAdapter->quoteIdentifier('subqueryTable') . ') '
+                         . $this->sharedFixture->dbAdapter->quoteIdentifier('t');
         $this->assertEquals($query, $cmp);
     }
 

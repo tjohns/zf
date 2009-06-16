@@ -19,29 +19,29 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Statement/TestCommon.php';
+require_once 'Zend/Db/Statement/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
+class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_AbstractTestCase
 {
 
     public function testStatementErrorCodeKeyViolation()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' does not return error codes correctly.');
     }
 
     public function testStatementErrorInfoKeyViolation()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' does not return error codes correctly.');
     }
 
     public function testStatementColumnCountForSelect()
     {
-        $select = $this->_db->select()
-            ->from('zfproducts');
+        $select = $this->sharedFixture->dbAdapter->select()
+            ->from('zf_products');
 
-        $stmt = $this->_db->prepare($select->__toString());
+        $stmt = $this->sharedFixture->dbAdapter->prepare($select->__toString());
 
         $n = $stmt->columnCount();
         // DB2 returns the column count once the query has been prepared
@@ -59,20 +59,20 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindParamByPosition()
     {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' is having trouble with binding params');
     }
 
     public function testStatementBindParamByName()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
         $productIdValue   = 4;
         $productNameValue = 'AmigaOS';
 
         try {
-            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
             // test with colon prefix
             $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
             // test with no colon prefix
@@ -87,20 +87,20 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindValueByPosition()
     {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' is having trouble with binding params');
     }
 
     public function testStatementBindValueByName()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
         $productIdValue   = 4;
         $productNameValue = 'AmigaOS';
 
         try {
-            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
             // test with colon prefix
             $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
             // test with no colon prefix
@@ -115,7 +115,7 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementGetColumnMeta()
     {
-        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' has not implemented getColumnMeta() yet [ZF-1424]');
     }
 
     public function getDriver()

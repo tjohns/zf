@@ -19,16 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/TestCommon.php';
+require_once 'Zend/Db/Table/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Table_MysqliTest extends Zend_Db_Table_TestCommon
+class Zend_Db_Table_MysqliTest extends Zend_Db_Table_AbstractTestCase 
 {
 
     public function testTableInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver().' does not support sequences.');
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName().' does not support sequences.');
     }
 
     public function getDriver()

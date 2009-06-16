@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Db_Table_Relationships_TestCommon
+ * @see Zend_Db_Table_Relationships_AbstractTestCase
  */
-require_once 'Zend/Db/Table/Relationships/TestCommon.php';
+require_once 'Zend/Db/Table/Relationships/AbstractTestCase.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,7 +38,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Table_Relationships_MysqliTest extends Zend_Db_Table_Relationships_TestCommon
+class Zend_Db_Table_Relationships_MysqliTest extends Zend_Db_Table_Relationships_AbstractTestCase
 {
 
     public function getDriver()

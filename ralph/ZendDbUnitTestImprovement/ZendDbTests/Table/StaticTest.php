@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Table/TestCommon.php';
+require_once 'Zend/Db/Table/AbstractTestCase.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'PHPUnit/Util/Filter.php';

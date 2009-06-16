@@ -47,7 +47,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class My_ZendDbTable_TableBugs extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'zfbugs';
+    protected $_name = 'zf_bugs';
     protected $_primary = 'bug_id'; // Deliberate non-array value
 
     protected $_dependentTables = array('My_ZendDbTable_TableBugsProducts');

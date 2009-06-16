@@ -19,19 +19,19 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Statement/TestCommon.php';
+require_once 'Zend/Db/Statement/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
+class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_AbstractTestCase 
 {
 
     public function testStatementRowCount()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
 
-        $stmt = $this->_db->prepare("DELETE FROM $products WHERE $product_id = 1");
+        $stmt = $this->sharedFixture->dbAdapter->prepare("DELETE FROM $products WHERE $product_id = 1");
 
         $n = $stmt->rowCount();
         $this->assertType('integer', $n);
@@ -48,15 +48,15 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindParamByName()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
         $productIdValue   = 4;
         $productNameValue = 'AmigaOS';
 
         try {
-            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
             // test with colon prefix
             $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
             // test with no colon prefix
@@ -71,15 +71,15 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindValueByName()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-        $product_name = $this->_db->quoteIdentifier('product_name');
+        $products = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_products');
+        $product_id = $this->sharedFixture->dbAdapter->quoteIdentifier('product_id');
+        $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
         $productIdValue   = 4;
         $productNameValue = 'AmigaOS';
 
         try {
-            $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
+            $stmt = $this->sharedFixture->dbAdapter->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:id, :name)");
             // test with colon prefix
             $this->assertTrue($stmt->bindParam(':id', $productIdValue), 'Expected bindParam(\':id\') to return true');
             // test with no colon prefix
@@ -94,7 +94,7 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
 
     public function testStatementGetColumnMeta()
     {
-        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+        $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' has not implemented getColumnMeta() yet [ZF-1424]');
     }
 
     public function getDriver()

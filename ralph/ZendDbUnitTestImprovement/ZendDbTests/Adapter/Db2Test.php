@@ -20,18 +20,13 @@
  */
 
 /**
- * @see Zend_Db_Adapter_TestCommon
+ * @see Zend_Db_Adapter_AbstractTestCase
  */
-require_once 'Zend/Db/Adapter/TestCommon.php';
-
-/**
- * @see Zend_Db_Adapter_Db2
- */
-require_once 'Zend/Db/Adapter/Db2.php';
+require_once 'Zend/Db/Adapter/AbstractTestCase.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
+class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 {
 
     protected $_numericDataTypes = array(
@@ -47,7 +42,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterDescribeTablePrimaryAuto()
     {
-        $desc = $this->_db->describeTable('zfbugs');
+        $desc = $this->sharedFixture->dbAdapter->describeTable('zf_bugs');
 
         $this->assertTrue($desc['bug_id']['PRIMARY']);
         $this->assertEquals(1, $desc['bug_id']['PRIMARY_POSITION']);
@@ -56,15 +51,15 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterDescribeTableAttributeColumn()
     {
-        $desc = $this->_db->describeTable('zfproducts');
+        $desc = $this->sharedFixture->dbAdapter->describeTable('zf_products');
 
-        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('zf_products',        $desc['product_name']['TABLE_NAME'], 'Expected table name to be zf_products');
         $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME'], 'Expected column name to be product_name');
         $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION'], 'Expected column position to be 2');
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
         $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
         $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        if (!$this->_db->isI5()) {
+        if (!$this->sharedFixture->dbAdapter->isI5()) {
         	$this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
         } else {
         	$this->assertNull(                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
@@ -77,9 +72,9 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterDescribeTablePrimaryKeyColumn()
     {
-        $desc = $this->_db->describeTable('zfproducts');
+        $desc = $this->sharedFixture->dbAdapter->describeTable('zf_products');
 
-        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('zf_products',        $desc['product_id']['TABLE_NAME'], 'Expected table name to be zf_products');
         $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME'], 'Expected column name to be product_id');
         $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION'], 'Expected column position to be 1');
         $this->assertEquals('',                  $desc['product_id']['DEFAULT'], 'Expected default to be empty string');
@@ -102,14 +97,14 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterTransactionCommit()
     {
-        $bugs = $this->_db->quoteIdentifier('zfbugs');
-        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bugs = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_bugs');
+        $bug_id = $this->sharedFixture->dbAdapter->quoteIdentifier('bug_id');
 
         // use our default connection as the Connection1
-        $dbConnection1 = $this->_db;
+        $dbConnection1 = $this->sharedFixture->dbAdapter;
         
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $dbConnection2 = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
         $dbConnection2->getConnection();
         if ($dbConnection2->isI5()) {
         	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
@@ -126,7 +121,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
         // delete a row in connection 1
         $rowsAffected = $dbConnection1->delete(
-            'zfbugs',
+            'zf_bugs',
             "$bug_id = 1"
         );
         $this->assertEquals(1, $rowsAffected);
@@ -145,7 +140,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
         // delete another row in connection 1
         $rowsAffected = $dbConnection1->delete(
-            'zfbugs',
+            'zf_bugs',
             "$bug_id = 2"
         );
         $this->assertEquals(1, $rowsAffected);
@@ -158,14 +153,14 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
     public function testAdapterTransactionRollback()
     {
-        $bugs = $this->_db->quoteIdentifier('zfbugs');
-        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bugs = $this->sharedFixture->dbAdapter->quoteIdentifier('zf_bugs');
+        $bug_id = $this->sharedFixture->dbAdapter->quoteIdentifier('bug_id');
 
         // use our default connection as the Connection1
-        $dbConnection1 = $this->_db;
+        $dbConnection1 = $this->sharedFixture->dbAdapter;
 
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $dbConnection2 = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
         $dbConnection2->getConnection();
         if ($dbConnection2->isI5()) {
         	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
@@ -182,7 +177,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
         // delete a row in connection 1
         $rowsAffected = $dbConnection1->delete(
-            'zfbugs',
+            'zf_bugs',
             "$bug_id = 1"
         );
         $this->assertEquals(1, $rowsAffected);
@@ -202,7 +197,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
 
         // delete another row in connection 1
         $rowsAffected = $dbConnection1->delete(
-            'zfbugs',
+            'zf_bugs',
             "$bug_id = 2"
         );
         $this->assertEquals(1, $rowsAffected);
@@ -228,11 +223,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     public function testAdapterZendConfigEmptyDriverOptions()
     {
         Zend_Loader::loadClass('Zend_Config');
-        $params = $this->_util->getParams();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['driver_options'] = '';
         $params = new Zend_Config($params);
 
-        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
         $db->getConnection();
 
         $config = $db->getConfig();
@@ -253,7 +248,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteArray()
     {
         $array = array("it's", 'all', 'right!');
-        $value = $this->_db->quote($array);
+        $value = $this->sharedFixture->dbAdapter->quote($array);
         $this->assertEquals("'it''s', 'all', 'right!'", $value);
     }
     
@@ -266,7 +261,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteDoubleQuote()
     {
         $string = 'St John"s Wort';
-        $value = $this->_db->quote($string);
+        $value = $this->sharedFixture->dbAdapter->quote($string);
         $this->assertEquals("'St John\"s Wort'", $value);
     }
     
@@ -279,7 +274,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     public function testAdapterQuoteSingleQuote()
     {
         $string = "St John's Wort";
-        $value = $this->_db->quote($string);
+        $value = $this->sharedFixture->dbAdapter->quote($string);
         $this->assertEquals("'St John''s Wort'", $value);
     }
     
@@ -293,7 +288,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     {
         $string = 'id=?';
         $param = 'St John"s Wort';
-        $value = $this->_db->quoteInto($string, $param);
+        $value = $this->sharedFixture->dbAdapter->quoteInto($string, $param);
         $this->assertEquals("id='St John\"s Wort'", $value);
     }
 
@@ -307,7 +302,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
     {
         $string = 'id = ?';
         $param = 'St John\'s Wort';
-        $value = $this->_db->quoteInto($string, $param);
+        $value = $this->sharedFixture->dbAdapter->quoteInto($string, $param);
         $this->assertEquals("id = 'St John''s Wort'", $value);
     }
     
@@ -321,26 +316,26 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterSchemaOptionInListTables()
     {
-        $params = $this->_util->getParams();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         unset($params['schema']);
-        $connection = Zend_Db::factory($this->getDriver(), $params);    
+        $connection = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);    
         $tableCountNoSchema = count($connection->listTables());
         
-        $dbConfig = $this->_db->getConfig();
-        if ($this->_db->isI5()) {
+        $dbConfig = $this->sharedFixture->dbAdapter->getConfig();
+        if ($this->sharedFixture->dbAdapter->isI5()) {
             if (isset($dbConfig['driver_options']['i5_lib'])) {
                 $schema = $dbConfig['driver_options']['i5_lib'];
             }
-        } elseif (!$this->_db->isI5()) {
-            $schema = $this->_util->getSchema();
+        } elseif (!$this->sharedFixture->dbAdapter->isI5()) {
+            $schema = $this->sharedFixture->dbUtility->getSchema();
         } else {
             $this->markTestSkipped('No valid schema to test against.');
             return;
         }
         
-        $params = $this->_util->getParams();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['schema'] = $schema;
-        $connection = Zend_Db::factory($this->getDriver(), $params);
+        $connection = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
         $tableCountSchema = count($connection->listTables());
         
         $this->assertGreaterThan(0, $tableCountNoSchema, 'Adapter without schema should produce large result');
