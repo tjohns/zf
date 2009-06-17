@@ -191,6 +191,8 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             throw new Exception('This utilty cannot create, delete or alter database resources.');
         }
         
+        $this->createArbitraryUtilityResources();
+        
         $defaultSchemaArray = $this->_getDefaultResourceArray();
         
         foreach ($defaultSchemaArray['tables'] as $tableInfo) {
@@ -347,6 +349,8 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             'sequences' => array()
             );
 
+        $this->dropArbitraryUtilityResources();
+            
         return $this;
     }
     
@@ -363,6 +367,28 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         }
         
         return $this->_createdResources['tables'][$tableId];
+    }
+    
+    /**
+     * createArbitraryUtilityResources()
+     * 
+     * This should be overrridden by vendor specific implementations 
+     *
+     * @return null
+     */
+    public function createArbitraryUtilityResources()
+    {
+        return null;
+    }
+    
+    /**
+     * dropArbitraryUtilityResources()
+     *
+     * @return null
+     */
+    public function dropArbitraryUtilityResources()
+    {
+        return null;
     }
     
     /**
