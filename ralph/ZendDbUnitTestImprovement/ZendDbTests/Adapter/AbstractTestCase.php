@@ -1527,7 +1527,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
         $dbConnection1 = $this->sharedFixture->dbAdapter;
 
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
+        $dbConnection2 = $this->_getClonedUtility(true)->getDbAdapter();
         $dbConnection2->getConnection();
 
         // notice the number of rows in connection 2
@@ -1556,7 +1556,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
         $dbConnection1 = $this->sharedFixture->dbAdapter;
 
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
+        $dbConnection2 = $this->_getClonedUtility(true)->getDbAdapter();
         $dbConnection2->getConnection();
 
         // notice the number of rows in connection 2
@@ -1607,7 +1607,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
         $dbConnection1 = $this->sharedFixture->dbAdapter;
 
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
+        $dbConnection2 = $this->_getClonedUtility(true)->getDbAdapter();
         $dbConnection2->getConnection();
 
         // notice the number of rows in connection 2
