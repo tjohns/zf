@@ -853,10 +853,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         // if this is left at PHP_SHUTDOWN time, a error without stack will be throw
         // this is WANTED behavior as any test creating resources should ultimately clean
         // them up.
-        if ($this->_createdResources['tables'] || $this->_createdResources['procedures'] || $this->_createdResources['views']) {
-            $testSuite = $this->_testSuite;
-            //throw new Exception('There are resources that have not been cleaned up in the Zend_Db Test Utility');
-        }
+        $this->_dbAdapter->closeConnection();
         $this->_dbAdapter = null;
     }
     

@@ -254,8 +254,8 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_AbstractTestCase
      */
     public function testAdapterCanCalledStoredProcedure()
     {
-        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
-        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
+        $clondedUtility = $this->_getClonedUtility();
+        $db = $clondedUtility->getDbAdapter();
 
         // Set default bound value
         $customerId = 1;
@@ -284,12 +284,12 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_AbstractTestCase
 
     public function testMySqliInitCommand()
     {
-        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['driver_options'] = array(
             'mysqli_init_command' => 'SET AUTOCOMMIT=0;'
         );
-        $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
-
+        $clonedUtility = $this->_getClonedUtility(true, $params);
+        
+        $db = $clonedUtility->getDbAdapter();
         $sql = 'SELECT @@AUTOCOMMIT as autocommit';
 
         $row = $db->fetchRow($sql);
