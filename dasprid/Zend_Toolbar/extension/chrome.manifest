@@ -3,3 +3,6 @@ skin Zend_Toolbar global chrome/Zend_Toolbar/skin/global/
 locale Zend_Toolbar en-US chrome/Zend_Toolbar/locale/en-US/
 
 overlay	chrome://browser/content/browser.xul    chrome://Zend_Toolbar/content/zendToolbar.xul
+
+# Firebug integration
+overlay  chrome://firebug/content/firebugOverlay.xul            chrome://Zend_Toolbar/content/firebugOverlay.xul

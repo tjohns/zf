@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://Zend_Toolbar/skin/zendToolbar.css" type="text/css"?>
 <overlay id="zend-toolbar" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+
+    <script src="chrome://Zend_Toolbar/content/browserOverlay.js" type="application/x-javascript"/>
+    <script src="chrome://Zend_Toolbar/content/lib.js" type="application/x-javascript"/>
+
+
+    <script type="application/x-javascript" src="chrome://Zend_Toolbar/content/Wildfire/Wildfire.js"/>
+    <script type="application/x-javascript" src="chrome://Zend_Toolbar/content/Wildfire/Channel/HttpHeaders.js"/>
+    <script type="application/x-javascript" src="chrome://Zend_Toolbar/content/Wildfire/Protocol/JsonStream-0.2.js"/>
+    <script type="application/x-javascript" src="chrome://Zend_Toolbar/content/Wildfire/Plugin/FrameworkToolbar.js"/>
+
+
+    <script src="chrome://Zend_Toolbar/content/zendToolbar.js" type="application/x-javascript"/>
+
+
     <window id="main-window">
         <vbox id="browser-bottombox">
             <hbox id="zend-toolbar-statusbar" insertbefore="status-bar">
