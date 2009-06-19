@@ -5,8 +5,6 @@ require_once 'Zend/Db/TestSuite/DbUtility/SQLDialect/Base.php';
 class Zend_Db_TestSuite_DbUtility_SQLDialect_PostgreSQL extends Zend_Db_TestSuite_DbUtility_SQLDialect_Base
 {
 
-    
-
     public function supportsIfNotExists()
     {
         return false;

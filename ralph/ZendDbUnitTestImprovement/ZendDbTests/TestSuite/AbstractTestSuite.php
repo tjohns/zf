@@ -25,7 +25,7 @@ abstract class Zend_Db_TestSuite_AbstractTestSuite extends PHPUnit_Framework_Tes
         parent::__construct();
         
         // set the test name
-        $this->setName(get_class($this) . ' - Suite for Zend_Db_Adapter_' . $this->_driverName);
+        $this->setName(get_class($this) . ' - Suite for Zend_Db_Adapter_' . $this->getDriverName());
         
         // set the driver and suite name
         $this->_driverName = $this->getDriverName();
@@ -67,10 +67,11 @@ abstract class Zend_Db_TestSuite_AbstractTestSuite extends PHPUnit_Framework_Tes
         // create the adapter
         $this->sharedFixture->dbAdapter = $this->sharedFixture->dbUtility->getDbAdapter();
         try {
-            $conn = $this->sharedFixture->dbAdapter->getConnection();
+            $this->sharedFixture->dbAdapter->getConnection();
         } catch (Zend_Exception $e) {
             unset($this->sharedFixture->dbAdapter);
-            $this->markTestSuiteSkipped($e->getMessage());
+            $this->markTestSuiteSkipped('Connection not found: ' . $e->getMessage());
+            return;
         }
         $this->sharedFixture->dbUtility->createDefaultResources();
         $this->sharedFixture->dbUtility->setCanManageResources(false);
