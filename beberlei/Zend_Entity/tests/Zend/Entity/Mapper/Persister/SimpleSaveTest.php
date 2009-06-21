@@ -72,6 +72,10 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
         $entity = new Zend_TestEntity1;
 
+        $identityMapMock = $this->createIdentityMapMock(0);
+        $identityMapMock->expects($this->once())->method('contains')->will($this->returnValue(true));
+        $identityMapMock->expects($this->once())->method('getPrimaryKey')->will($this->returnValue(1));
+
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
            ->method('update')
@@ -81,7 +85,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
            ->with('entities.entities_id = ?', 1)
            ->will($this->returnValue('entities.entities_id = 1'));
 
-        $em = $this->createEntityManagerMock(null, null, null, $db);
+        $em = $this->createEntityManagerMock(null, null, $identityMapMock, $db);
 
         $persister = $this->createPersister();
         $persister->doPerformSave($entity, $columnFullState, $em);

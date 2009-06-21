@@ -74,9 +74,9 @@ abstract class Zend_Entity_Mapper_Abstract
      * @param  Zend_Db_Select|string $sql
      * @return Zend_Entity_Interface[]
      */
-    public function performFindQuery($sql, Zend_Entity_Manager $entityManager)
+    public function find($sql, Zend_Entity_Manager $entityManager)
     {
-        return $this->query($sql, $entityManager);
+        return $this->performFindQuery($sql, $entityManager);
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function findOne(Zend_Db_Select $select, Zend_Entity_Manager $entityManager)
     {
-        $collection = $this->performFindQuery($select, $entityManager);
+        $collection = $this->find($select, $entityManager);
         if(count($collection) == 1) {
             return $collection[0];
         } else {
@@ -151,10 +151,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     protected function entityIsSaveable(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
     {
-        $unitOfWork = $entityManager->getUnitOfWork();
         if($entity instanceof Zend_Entity_Mapper_LazyLoad_Entity && $entity->entityWasLoaded() == false) {
-            return false;
-        } elseif($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN) {
             return false;
         }
         return true;
@@ -169,24 +166,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager )
     {
-        if($this->unitOfWorkAllowsDelete($entity, $entityManager)) {
-            $this->getPersister()->delete($entity, $entityManager);
-        }
-    }
-
-    /**
-     * Is the Entity in a state that the unit of manages which does not necessitate executing the delete?
-     *
-     * @param  Zend_Entity_Interface $entity
-     * @return boolean
-     */
-    protected function unitOfWorkAllowsDelete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
-    {
-        $unitOfWork = $entityManager->getUnitOfWork();
-        if($unitOfWork->getState($entity) == Zend_Entity_Mapper_UnitOfWork::STATE_NEW) {
-            return false;
-        }
-        return true;
+        $this->getPersister()->delete($entity, $entityManager);
     }
 
     /**
@@ -277,12 +257,15 @@ abstract class Zend_Entity_Mapper_Abstract
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Db_Statement
      */
-    protected function query($sql, Zend_Entity_Manager_Interface $entityManager)
+    protected function performFindQuery($sql, Zend_Entity_Manager_Interface $entityManager)
     {
         $loader = $this->getLoader();
 
         $stmt = $this->getAdapter()->query($sql);
-        return $loader->processResultset($stmt, $entityManager);
+        $resultSet = $stmt->fetchAll();
+        $stmt->closeCursor();
+
+        return $loader->processResultset($resultSet, $entityManager);
     }
     
     protected function getMapperTable()

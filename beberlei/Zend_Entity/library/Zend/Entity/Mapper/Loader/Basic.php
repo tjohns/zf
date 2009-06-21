@@ -38,29 +38,22 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
     }
 
     /**
-     * @param  Zend_Db_Statement_Interface $stmt
+     * @param  array $resultSet
      * @param  Zend_Entity_Manager $entityManager
      * @param  string $fetchMode
-     * @return array|Zend_Entity_Collection_Interface
+     * @return Zend_Entity_Collection_Interface
      */
-    public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
+    public function processResultset($resultSet, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
     {
-        $unitOfWork = $entityManager->getUnitOfWork();
-
         $collection = array();
-        while($row = $stmt->fetch(Zend_Db::FETCH_ASSOC)) {
+        foreach($resultSet AS $row) {
             if($fetchMode == Zend_Entity_Manager::FETCH_ARRAY) {
                 $entity = $this->renameAndCastColumnToPropertyKeys($row);
             } else {
                 $entity = $this->createEntityFromRow($row, $entityManager);
-
-                if($unitOfWork->isManagingCurrentTransaction() == true) {
-                    $unitOfWork->registerClean($entity);
-                }
             }
             $collection[] = $entity;
         }
-        $stmt->closeCursor();
 
         if($fetchMode == Zend_Entity_Manager::FETCH_ENTITIES) {
             $collection = new Zend_Entity_Collection($collection);

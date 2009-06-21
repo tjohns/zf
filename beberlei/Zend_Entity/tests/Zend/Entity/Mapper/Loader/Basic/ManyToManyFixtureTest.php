@@ -65,7 +65,7 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
 
         $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callback');
         $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("performFindQuery", $callback[1]);
+        $this->assertEquals("find", $callback[1]);
 
         $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callbackArguments');
         $this->assertEquals(Zend_Entity_Fixture_ManyToManyDefs::TEST_B_CLASS, $callbackArgs[0]);

@@ -34,12 +34,12 @@ interface Zend_Entity_Mapper_Loader_Interface
     public function initColumns(Zend_Db_Select $select);
 
     /**
-     * @param  Zend_Db_Statement_Interface $stmt
+     * @param  array $resultSet
      * @param  Zend_Entity_Manager $entityManager
      * @param  string $fetchMode
      * @return Zend_Entity_Collection_Interface
      */
-    public function processResultset(Zend_Db_Statement_Interface $stmt, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES);
+    public function processResultset($resultSet, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES);
 
     /**
      * Load Row into Entitiy

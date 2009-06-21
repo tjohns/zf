@@ -19,17 +19,45 @@
 
 class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition_Table
 {
+    /**
+     * @var string
+     */
     protected $_className;
 
+    /**
+     * @var array
+     */
     protected $_extensions = array();
 
+    /**
+     * @var array
+     */
     protected $_relations = array();
 
+    /**
+     * @var Zend_Entity_Mapper_Definition_PrimaryKey
+     */
     protected $_id = null;
 
+    /**
+     * @var string
+     */
     protected $_loaderClass = null;
 
+    /**
+     * @var string
+     */
     protected $_persisterClass = null;
+
+    /**
+     * @var string
+     */
+    protected $_stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Array";
+
+    /**
+     * @var Zend_Entity_Mapper_StateTransformer_Abstract
+     */
+    protected $_stateTransformer = null;
 
     /**
      * Construct entity
@@ -187,6 +215,41 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     }
 
     /**
+     * @return string
+     */
+    public function getStateTransformerClass()
+    {
+        return $this->_stateTransformerClass;
+    }
+
+    /**
+     * @param string $stateTransformerClass
+     */
+    public function setStateTransformerClass($stateTransformerClass)
+    {
+        switch(strtolower($stateTransformerClass)) {
+            case 'array':
+                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Array";
+                break;
+            case 'property':
+                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Property";
+                break;
+            case 'reflection':
+                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Reflection";
+                break;
+        }
+        $this->_stateTransformerClass = $stateTransformerClass;
+    }
+
+    /**
+     * @return Zend_Entity_Mapper_StateTransformer_Abstract
+     */
+    public function getStateTransformer()
+    {
+        return $this->_stateTransformer;
+    }
+
+    /**
      * Compile Entity Definition
      * 
      * @param Zend_Entity_Resource_Interface $map
@@ -202,6 +265,14 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
         }
         foreach($this->getExtensions() AS $extension) {
             $extension->compile($this, $map);
+        }
+
+        if(class_exists($this->_stateTransformerClass)) {
+            $this->_stateTransformer = new $this->_stateTransformerClass();
+        } else {
+            throw new Zend_Entity_Exception(
+                "Invalid State Transformer Class name given in '".$this->getClass()."' entity definition."
+            );
         }
 
         $this->setPersisterClass("Zend_Entity_Mapper_Persister_Simple");

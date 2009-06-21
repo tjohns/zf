@@ -72,10 +72,9 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
         $row = $this->fixture->getDummyDataRow();
         $state = $this->fixture->getDummyDataState();
 
-        $stmt = new Zend_Entity_DbStatementMock();
-        $stmt->appendToFetchStack($row);
+        $resultSet = array($row);
 
-        $collection = $loader->processResultset($stmt, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ENTITIES);
+        $collection = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ENTITIES);
 
         $this->assertTrue($collection instanceof Zend_Entity_Collection);
         $this->assertEquals(1, count($collection));
@@ -90,10 +89,9 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
         $row = $this->fixture->getDummyDataRow();
         $state = $this->fixture->getDummyDataState();
 
-        $stmt = new Zend_Entity_DbStatementMock();
-        $stmt->appendToFetchStack($row);
+        $resultSet = array($row);
 
-        $array = $loader->processResultset($stmt, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ARRAY);
+        $array = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ARRAY);
 
         $this->assertTrue(is_array($array));
         $this->assertEquals(1, count($array));

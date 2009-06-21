@@ -57,4 +57,32 @@ class Zend_Entity_Mapper_Definition_PropertyTest extends Zend_Entity_Mapper_Defi
 
         $this->assertEquals("name2", $property->getColumnName());
     }
+
+    public function testConvertPropertySimpleArrayToXml()
+    {
+        $a = array("foo" => "bar", "bar" => "baz");
+        $property = new Zend_Entity_Mapper_Definition_Property("name1");
+        $property->setPropertyType(Zend_Entity_Mapper_Definition_Property::TYPE_ARRAY);
+
+        $xml = $property->castPropertyToSqlType($a);
+        $this->assertEquals(
+            '<?xml version="1.0" ?>'.
+            '<array><foo><![CDATA[bar]]></foo><bar><![CDATA[baz]]></bar></array>',
+            $xml
+        );
+    }
+
+    public function testConvertPropertyNestedArrayToXml()
+    {
+        $a = array("foo" => array("bar" => "baz"), "bar" => array("baz", "foo"));
+        $property = new Zend_Entity_Mapper_Definition_Property("name1");
+        $property->setPropertyType(Zend_Entity_Mapper_Definition_Property::TYPE_ARRAY);
+
+        $xml = $property->castPropertyToSqlType($a);
+        $this->assertEquals(
+            '<?xml version="1.0" ?>'.
+            '<array><foo><bar><![CDATA[baz]]></bar></foo><bar><elem1<![CDATA[baz]]></elem1><elem2><![CDATA[foo]]></bar></array>',
+            $xml
+        );
+    }
 }

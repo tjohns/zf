@@ -127,4 +127,32 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
 
         $extension = $entityDef->getPropertyByName(self::TEST_TABLE);
     }
+
+    public function testGetDefaultStateTransformerClass()
+    {
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
+        $this->assertEquals("Zend_Entity_Mapper_StateTransformer_Array", $entityDef->getStateTransformerClass());
+    }
+
+    /**
+     * @dataProvider dataSetStateTransformerClass
+     * @param <type> $class
+     * @param <type> $expected
+     */
+    public function testSetStateTransformerClass($class, $expected)
+    {
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
+        $entityDef->setStateTransformerClass($class);
+        $this->assertEquals($expected, $entityDef->getStateTransformerClass());
+    }
+
+    static public function dataSetStateTransformerClass()
+    {
+        return array(
+            array('MyStateTransformer', 'MyStateTransformer'),
+            array('Array', 'Zend_Entity_Mapper_StateTransformer_Array'),
+            array('Property', 'Zend_Entity_Mapper_StateTransformer_Property'),
+            array('Reflection', 'Zend_Entity_Mapper_StateTransformer_Reflection'),
+        );
+    }
 }

@@ -28,7 +28,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper(null, null, null, $loader);
         $select = $mapper->select();
-        $mapper->performFindQuery($select, $this->createEntityManager());
+        $mapper->find($select, $this->createEntityManager());
     }
 
     public function testFindSelectDelegatesResultProcessingToLoader()
@@ -39,7 +39,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper(null, null, null, $loader);
         $select = $mapper->select();
-        $mapper->performFindQuery($select, $this->createEntityManager());
+        $mapper->find($select, $this->createEntityManager());
     }
 
     public function testPassedAdapterIsUsedForQuerying()
@@ -51,7 +51,7 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper($db);
         $select = $mapper->select();
-        $mapper->performFindQuery($select, $this->createEntityManager());
+        $mapper->find($select, $this->createEntityManager());
     }
 
     public function testFindOneThrowsExceptionIfOtherThanOneFound()
@@ -126,20 +126,6 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $mapper->save($lazyLoadEntity, $this->createEntityManager());
     }
 
-    public function testSaveUnitOfWorkCleanEntityDoesNotDelegateToPersister()
-    {
-        $persister = $this->createPersisterMock();
-        $persister->expects($this->never())->method('save');
-
-        $mapper = $this->createMapper(null, null, null, null, $persister);
-        $entity = $this->getMock('Zend_Entity_Interface');
-        $unitOfWork = $this->createUnitOfWorkMock(0);
-        $unitOfWork->expects($this->once())->method('getState')->will($this->returnValue(Zend_Entity_Mapper_UnitOfWork::STATE_CLEAN));
-        $entityManager = $this->createEntityManager($unitOfWork);
-
-        $mapper->save($entity, $entityManager);
-    }
-
     public function testSaveNonLazyNonCleanEntityIsDelegatedToPersister()
     {
         $persister = $this->createPersisterMock();
@@ -158,19 +144,5 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapper(null, null, null, null, $persister);
         $mapper->delete($entity, $this->createEntityManager());
-    }
-
-    public function testDeleteEntityThatIsNewDoesNotDelegateToPersister()
-    {
-        $persister = $this->createPersisterMock();
-        $persister->expects($this->never())->method('delete');
-
-        $mapper = $this->createMapper(null, null, null, null, $persister);
-        $entity = $this->getMock('Zend_Entity_Interface');
-        $unitOfWork = $this->createUnitOfWorkMock(0);
-        $unitOfWork->expects($this->once())->method('getState')->will($this->returnValue(Zend_Entity_Mapper_UnitOfWork::STATE_NEW));
-        $entityManager = $this->createEntityManager($unitOfWork);
-
-        $mapper->delete($entity, $entityManager);
     }
 }

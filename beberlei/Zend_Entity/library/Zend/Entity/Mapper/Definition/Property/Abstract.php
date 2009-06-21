@@ -155,8 +155,34 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract
                 /* @var datetime $propertyValue */
                 $propertyValue = $propertyValue->format('U');
                 break;
+            case Zend_Entity_Mapper_Definition_Property::TYPE_ARRAY:
+                $xml = '';
+                $xml = $this->_convertArrayToXml($xml, (array)$propertyValue);
+                $propertyValue = '<?xml version="1.0" ?><array>'.$xml.'</array>';
+                break;
+
         }
         return $propertyValue;
+    }
+
+    private function _convertArrayToXml($xml, array $array)
+    {
+        foreach($array AS $k => $v) {
+            if(is_array($v)) {
+                if(count($v)) {
+                    $xml .= '<'.$k.'>';
+                    $xml .= $this->_convertArrayToXml($xml, $v);
+                } else {
+                    $xml .= '<'.$k.' />';
+                }
+            } else {
+                if(is_numeric($k)) {
+                    $k = "elem".$k;
+                }
+                $xml .= '<'.$k.'><![CDATA['.$v.']]></'.$k.'>';
+            }
+        }
+        return $xml;
     }
 
     public function castColumnToPhpType($columnValue)

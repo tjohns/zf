@@ -25,7 +25,7 @@ interface Zend_Entity_Manager_Interface
      * @param Zend_Db_Select|string $sql
      * @return Zend_Entity_Collection
      */
-    public function performFindQuery($entityName, $select);
+    public function find($entityName, $select);
 
     /**
      * Find one entity matching select statement
@@ -59,7 +59,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Save entity by registering it with UnitOfWork or hitting the database mapper.
      *
-     * @param  Zend_Entity_Interface $record
+     * @param  Zend_Entity_Interface $entity
      * @return void
      */
     public function save(Zend_Entity_Interface $entity);
@@ -67,7 +67,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Try to delete entity by checking with UnitOfWork or directly going to mapper.
      *
-     * @param  Zend_Entity_Interface $record
+     * @param  Zend_Entity_Interface $entity
      * @return void
      */
     public function delete(Zend_Entity_Interface $entity);
@@ -75,10 +75,29 @@ interface Zend_Entity_Manager_Interface
     /**
      * Refresh object state from the database
      *
-     * @param  Zend_Entity_Interface $record
+     * @param  Zend_Entity_Interface $entity
      * @return void
      */
     public function refresh(Zend_Entity_Interface $entity);
+
+    /**
+     * Get a reference of an object.
+     *
+     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_Mapper_LazyLoad_Entity}
+     * or if the entity was loaded before and is found in the identity map the original is used.
+     *
+     * @param string $class
+     * @param int|string $id
+     */
+    public function getReference($class, $id);
+
+    /**
+     * Check if entity instance belongs to the persistence context.
+     *
+     * @param  Zend_Entity_Interface $entity
+     * @return boolean
+     */
+    public function contains(Zend_Entity_Interface $entity);
 
     /**
      * Retrieve the underyling datasource adapter
@@ -105,11 +124,6 @@ interface Zend_Entity_Manager_Interface
     public function rollBack();
 
     /**
-     * Flush Transaction to database and immediatly open up new one.
-     */
-    public function flush();
-
-    /**
      * Clear persistence session, rolling back all current changes if transaction is open
      * and deleting the UnitOfWork and Identity Map states.
      */
@@ -119,20 +133,6 @@ interface Zend_Entity_Manager_Interface
      * Close connection to database, commit transaction if any is open and call clear().
      */
     public function closeConnection();
-
-    /**
-     * Set this session to read only, which might lead to faster object destruction and memory management.
-     *
-     * @return void
-     */
-    public function setReadOnly();
-
-    /**
-     * Retrieve Unit of Work instance from the EntityManager
-     *
-     * @return Zend_Db_Mapper_UnitOfWork_Interface
-     */
-    public function getUnitOfWork();
 
     /**
      * Retrieve Identity Map instance from EntityManager

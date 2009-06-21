@@ -64,6 +64,11 @@ class Zend_Entity_Mapper_Definition_Property extends Zend_Entity_Mapper_Definiti
      */
     const TYPE_TIMESTAMP = 7;
 
+    /**
+     * Array is converted into simple xml structure.
+     */
+    const TYPE_ARRAY     = 8;
+
     const DB_STRING = 1;
 
     const LOAD_EXTRA    = "extra";

@@ -50,6 +50,11 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_table;
 
     /**
+     * @var Zend_Entity_Mapper_StateTransformer_Abstract
+     */
+    protected $_stateTransformer = null;
+
+    /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
      * @param  Zend_Entity_Mapper_Definition_Entity $entityDef
@@ -78,6 +83,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         $this->_class            = $entityDef->getClass();
         $this->_primaryKey       = $entityDef->getPrimaryKey();
         $this->_table            = $entityDef->getTable();
+        $this->_stateTransformer = $entityDef->getStateTransformer();
     }
 
     /**
@@ -161,7 +167,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
-        $entityState = $entity->getState();
+        $entityState = $this->_stateTransformer->getState($entity);
         $dbState = $this->transformEntityToDbState($entityState, $entityManager);
         $this->doPerformSave($entity, $dbState, $entityManager);
         $this->updateCollections($entityState, $entityManager);
@@ -223,20 +229,27 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         $dbAdapter = $entityManager->getAdapter();
         $pk        = $this->_primaryKey;
         $tableName = $this->_table;
-        if($pk->containValidPrimaryKey($dbState) === false) {
-            $dbState = $pk->applyNextSequenceId($dbAdapter, $dbState);
+        $identityMap = $entityManager->getIdentityMap();
+        if($identityMap->contains($entity) == false) {
+            $dbState = array_merge(
+                $dbState,
+                $pk->applyNextSequenceId($dbAdapter, $dbState)
+            );
             $dbAdapter->insert($tableName, $dbState);
-            $newPrimaryKey = $pk->getSequenceState($dbAdapter, $dbState);
-            $entity->setState($newPrimaryKey);
+            $key = $pk->lastSequenceId($dbAdapter, $dbState);
+            $this->_stateTransformer->setId($entity, $pk->getPropertyName(), $key);
 
-            $identityMap = $entityManager->getIdentityMap();
             $identityMap->addObject(
                 $this->_class,
-                $newPrimaryKey[$pk->getPropertyName()],
+                $key,
                 $entity
             );
         } else {
-            $where   = $pk->buildWhereCondition($dbAdapter, $tableName, $dbState);
+            $where = $pk->buildWhereCondition(
+                $dbAdapter,
+                $tableName,
+                $identityMap->getPrimaryKey($entity)
+            );
             $dbState = $pk->removeSequenceFromState($dbState);
             $dbAdapter->update($tableName, $dbState, $where);
         }
@@ -252,27 +265,16 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
-        $entityState = $entity->getState();
+        $identityMap = $entityManager->getIdentityMap();
+        $entityState = $this->_stateTransformer->getState($entity);
         $pk  = $this->_primaryKey;
-        if($pk->containValidPrimaryKey($entityState) == false) {
+        if($identityMap->contains($entity) == false) {
             throw new Exception("Cannot update entity with unknown primary identification state into database.");
-        }
-
-        $dbState = array();
-        foreach($this->_properties AS $property) {
-            if($property instanceof Zend_Entity_Mapper_Definition_PrimaryKey) {
-                $propertyName = $property->getPropertyName();
-                $columnName   = $property->getColumnName();
-                // TODO is allowed to be null?
-                $propertyValue = $entityState[$propertyName];
-                // TODO $propertyValue = $property->convertToSqlValue($propertyValue);
-                $dbState[$columnName] = $propertyValue;
-            }
         }
 
         $db          = $entityManager->getAdapter();
         $tableName   = $this->_table;
-        $whereClause = $pk->buildWhereCondition($db, $tableName, $dbState);
+        $whereClause = $pk->buildWhereCondition($db, $tableName, $identityMap->getPrimaryKey($entity));
         $db->delete($tableName, $whereClause);
         $entity->setState($pk->getEmptyKeyProperties());
     }

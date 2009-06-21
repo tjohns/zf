@@ -7,7 +7,6 @@ require_once "DbStatementMock.php";
 
 require_once "CollectionTest.php";
 require_once "IdentityMapTest.php";
-require_once "UnitOfWorkTest.php";
 require_once "ManagerTest.php";
 require_once "ManagerFindTest.php";
 require_once "Resource/AllTests.php";
@@ -23,7 +22,6 @@ class Zend_Entity_AllTests
         $suite->addTestSuite('Zend_Entity_CollectionTest');
         $suite->addTestSuite('Zend_Entity_DebugTest');
         $suite->addTestSuite('Zend_Entity_IdentityMapTest');
-        $suite->addTestSuite('Zend_Entity_UnitOfWorkTest');
         $suite->addTestSuite('Zend_Entity_ManagerTest');
         $suite->addTestSuite('Zend_Entity_ManagerFindTest');
         $suite->addTestSuite('Zend_Entity_MapperTest');

@@ -27,12 +27,20 @@ class Zend_Entity_Mapper_IdentityMap
     protected $_loadedObjects = array();
 
     /**
+     * Primary Keys
+     *
+     * @var array
+     */
+    protected $_primaryKeys = array();
+
+    /**
      * @param string $entityInterface
      * @param string $key
      * @param Zend_Entity_Interface $entity
      */
     public function addObject($entityInterface, $key, Zend_Entity_Interface $entity)
     {
+        $this->_primaryKeys[spl_object_hash($entity)] = $key;
         $this->_loadedObjects[$entityInterface][$key] = $entity;
     }
 
@@ -84,12 +92,31 @@ class Zend_Entity_Mapper_IdentityMap
     }
 
     /**
+     * @param  Zend_Entity_Interface $entity
+     * @return boolean
+     */
+    public function contains(Zend_Entity_Interface $entity)
+    {
+        return isset($this->_primaryKeys[spl_object_hash($entity)]);
+    }
+
+    /**
+     * @param  Zend_Entity_Interface $entity
+     * @return string
+     */
+    public function getPrimaryKey(Zend_Entity_Interface $entity)
+    {
+        return $this->_primaryKeys[spl_object_hash($entity)];
+    }
+
+    /**
      * Clear this identity map
      *
      * @return void
      */
     public function clear()
     {
+        $this->_primaryKeys = array();
         $this->_loadedObjects = array();
     }
 }

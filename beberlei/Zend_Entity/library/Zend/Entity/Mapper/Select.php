@@ -56,9 +56,9 @@ class Zend_Entity_Mapper_Select extends Zend_Db_Select
     public function execute()
     {
         if($this->_entityManager == null) {
-            throw new Exception("Select Statement is not connected to an Entity Manager, use Zend_Entity_Manager_Interface::performFindQuery().");
+            throw new Exception("Select Statement is not connected to an Entity Manager, use Zend_Entity_Manager_Interface::find().");
         }
 
-        return $this->_mapper->performFindQuery($this->assemble(), $this->_entityManager);
+        return $this->_mapper->find($this->assemble(), $this->_entityManager);
     }
 }

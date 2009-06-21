@@ -23,8 +23,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 {
     const FETCH_ENTITIES        = 1;
     const FETCH_ARRAY           = 2;
-    const FETCH_ENTITY_ITERATOR = 3;
-    const FETCH_ARRAY_ITERATOR  = 4;
 
     /**
      * Db Handler
@@ -32,13 +30,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
-
-    /**
-     * Unit of Work
-     *
-     * @var Zend_Entity_Mapper_UnitOfWork_Interface
-     */
-    protected $_unitOfWork = null;
 
     /**
      * Interface to Mapper hashmap
@@ -75,41 +66,12 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             $options['identityMap'] = new Zend_Entity_Mapper_IdentityMap();
         }
 
-        if(!isset($options['unitOfWork'])) {
-            $options['unitOfWork'] = new Zend_Entity_Mapper_UnitOfWork();
-        }
-
         foreach($options AS $k => $v) {
             $method = 'set'.ucfirst($k);
             if(method_exists($this, $method)) {
                 $this->$method($v);
             }
         }
-    }
-
-    /**
-     * Set UnitOfWork
-     * 
-     * @param  Zend_Entity_Mapper_UnitOfWork $uow
-     * @return Zend_Entity_Manager
-     */
-    public function setUnitOfWork(Zend_Entity_Mapper_UnitOfWork $uow)
-    {
-        $uow->setAdapter($this->getAdapter());
-        $uow->setManager($this);
-        
-        $this->_unitOfWork = $uow;
-        return $this;
-    }
-
-    /**
-     * Return UnitOfWork
-     * 
-     * @return Zend_Entity_Mapper_UnitOfWork
-     */
-    public function getUnitOfWork()
-    {
-        return $this->_unitOfWork;
     }
 
     /**
@@ -235,10 +197,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param  Zend_Db_Select|string $select
      * @return Zend_Entity_Collection
      */
-    public function performFindQuery($entityName, $select)
+    public function find($entityName, $select)
     {
         $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->performFindQuery($select, $this);
+        return $mapper->find($select, $this);
     }
 
     /**
@@ -276,7 +238,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
         if($order !== null) {
             $select->order($order);
         }
-        return $mapper->performFindQuery($select, $this);
+        return $mapper->find($select, $this);
     }
 
     /**
@@ -300,13 +262,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function save(Zend_Entity_Interface $entity)
     {
-        $uow = $this->getUnitOfWork();
-        if($uow->isManagingCurrentTransaction() == true) {
-            $uow->registerDirty($entity);
-        } else {
-            $mapper = $this->getMapperByEntity($entity);
-            $mapper->save($entity, $this);
-        }
+        $mapper = $this->getMapperByEntity($entity);
+        $mapper->save($entity, $this);
     }
 
     /**
@@ -317,13 +274,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function delete(Zend_Entity_Interface $entity)
     {
-        $uow = $this->getUnitOfWork();
-        if($uow->isManagingCurrentTransaction() == true) {
-            $uow->registerDeleted($entity);
-        } else {
-            $mapper = $this->getMapperByEntity($entity);
-            $mapper->delete($entity, $this);
-        }
+        $mapper = $this->getMapperByEntity($entity);
+        $mapper->delete($entity, $this);
     }
 
     /**
@@ -338,13 +290,47 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
+     * Check if entity instance belongs to the persistence context.
+     *
+     * @param  Zend_Entity_Interface $entity
+     * @return boolean
+     */
+    public function contains(Zend_Entity_Interface $entity)
+    {
+        return $this->getIdentityMap()->contains($entity);
+    }
+
+    /**
+     * Get a reference of an object.
+     *
+     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_Mapper_LazyLoad_Entity}
+     * or if the entity was loaded before and is found in the identity map the original is used.
+     *
+     * @param string $class
+     * @param int|string $id
+     */
+    public function getReference($class, $id)
+    {
+        $identityMap = $this->getIdentityMap();
+        if($identityMap->hasObject($class, $id) || $identityMap->hasLazyObject($class, $id)) {
+            $lazyEntity = $identityMap->getObject($class, $id);
+        } else {
+            $callback          = array($this, "load");
+            $callbackArguments = array($class, $id);
+            $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity($callback, $callbackArguments);
+            $identityMap->addObject($class, $id, $lazyEntity);
+        }
+        return $lazyEntity;
+    }
+
+    /**
      * Tell Unit Of work to begin transaction
      *
      * @retun void
      */
     public function beginTransaction()
     {
-        $this->getUnitOfWork()->beginTransaction();
+        $this->_db->beginTransaction();
     }
 
     /**
@@ -354,7 +340,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function commit()
     {
-        $this->getUnitOfWork()->commit();
+        $this->_db->commit();
     }
 
     /**
@@ -364,23 +350,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function rollBack()
     {
-        $this->getUnitOfWork()->rollBack();
-    }
-
-    /**
-     * If Unit of Work is managing the current transaction commit it and begin a new one.
-     *
-     * @throws Zend_Entity_Exception If UnitOfWork currently manages no transaction.
-     * @return void
-     */
-    public function flush()
-    {
-        if($this->getUnitOfWork()->isManagingCurrentTransaction() == true) {
-            $this->getUnitOfWork()->commit();
-            $this->getUnitOfWork()->beginTransaction();
-        } else {
-            throw new Zend_Entity_Exception("UnitOfWork is not managing transaction and entity manager cannot be flushed.");
-        }
+        $this->_db->rollBack();
     }
 
     /**
@@ -390,7 +360,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function clear()
     {
-        $this->getUnitOfWork()->clear();
         $this->getIdentityMap()->clear();
     }
 
@@ -401,20 +370,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function closeConnection()
     {
-        if($this->getUnitOfWork()->isManagingCurrentTransaction() == true) {
-            $this->getUnitOfWork()->commit();
-        }
         $this->clear();
         $this->getAdapter()->closeConnection();
-    }
-
-    /**
-     * Set this entity manager to read only, which might lead to faster object destruction and memory management.
-     *
-     * @return void
-     */
-    public function setReadOnly()
-    {
-        $this->getUnitOfWork()->setReadOnly();
     }
 }

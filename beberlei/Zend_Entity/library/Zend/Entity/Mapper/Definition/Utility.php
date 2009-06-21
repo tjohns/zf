@@ -94,28 +94,4 @@ class Zend_Entity_Mapper_Definition_Utility
         }
         return $definition;
     }
-
-    /**
-     * Generate Hash of Key identifying columns
-     *
-     * @param  string|array $key
-     * @return string
-     */
-    public static function hashKeyIdentifier($key)
-    {
-        if(is_string($key) || is_int($key)) {
-            $hash = md5($key);
-        } else if(is_array($key)) {
-            if(count($key) == 1) {
-                $hash = md5(array_shift($key));
-            } else {
-                $keyHash = array();
-                foreach($key AS $k => $v) {
-                    $keyHash[] = $k."-".$v;
-                }
-                $hash = md5(implode("_", $keyHash));
-            }
-        }
-        return $hash;
-    }
 }

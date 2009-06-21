@@ -12,22 +12,6 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->assertEquals($this->getDatabaseConnection(), $manager->getAdapter());
     }
 
-    public function testGetDefaultUnitOfWork()
-    {
-        $manager = $this->createEntityManager();
-
-        $this->assertTrue( $manager->getUnitOfWork() instanceof Zend_Entity_Mapper_UnitOfWork );
-    }
-
-    public function testSetGetUnitOfWork()
-    {
-        $manager = $this->createEntityManager();
-        $uow = new Zend_Entity_Mapper_UnitOfWork();
-
-        $manager->setUnitOfWork($uow);
-        $this->assertEquals($uow, $manager->getUnitOfWork());
-    }
-
     public function testGetDefaultIdentityMap()
     {
         $manager = $this->createEntityManager();
@@ -100,82 +84,55 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
     }
 
-    public function testManagerShouldDelegateBeginTransactionToUnitOfWork()
+    public function testManagerShouldDelegateBeginTransactionToAdapter()
     {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_BEGINTRANSACTION);
-        $manager = $this->createEntityManager($unitOfWork);
+        $db = $this->getMock('Zend_Entity_DbAdapterMock');
+        $db->expects($this->once())
+           ->method('beginTransaction');
+        $manager = $this->createEntityManager(null, null, null, $db);
 
         $manager->beginTransaction();
     }
 
-    public function testManagerShouldDelegateCommitToUnitOfWork()
+    public function testManagerShouldDelegateCommitToAdapter()
     {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_COMMIT);
-        $manager = $this->createEntityManager($unitOfWork);
+        $db = $this->getMock('Zend_Entity_DbAdapterMock');
+        $db->expects($this->once())
+           ->method('commit');
+        $manager = $this->createEntityManager(null, null, null, $db);
         
         $manager->commit();
     }
-    public function testManagerShouldDelegateRollbackToUnitOfWork()
+    public function testManagerShouldDelegateRollbackToAdapter()
     {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_ROLLBACK);
-        $manager = $this->createEntityManager($unitOfWork);
+        $db = $this->getMock('Zend_Entity_DbAdapterMock');
+        $db->expects($this->once())
+           ->method('rollBack');
+        $manager = $this->createEntityManager(null, null, null, $db);
         
         $manager->rollBack();
     }
 
-    public function testManagerFlushThrowsExceptionIfUnitOfWorkDoesNotManageTransaction()
+    public function testManagerContainsProxyToIdentityMap()
     {
-        $this->setExpectedException("Zend_Entity_Exception");
-        $manager = $this->createEntityManager();
-        
-        $manager->flush();
-    }
-
-    public function testManagerFlushCommitsAndRestartsTransaction()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_BEGINTRANSACTION|self::UOW_MOCK_COMMIT|self::UOW_MOCK_ISMANAGING_TRUE);
-        $manager = $this->createEntityManager($unitOfWork);
-        
-        $manager->flush();
-    }
-
-    public function testManagerClearCallsUnitOfWorkClear()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_CLEAR);
         $identityMap = $this->getMock('Zend_Entity_Mapper_IdentityMap');
-        $identityMap->expects($this->any())
-                    ->method('clear')
+        $identityMap->expects($this->once())
+                    ->method('contains')
                     ->will($this->returnValue(true));
-        $manager = $this->createEntityManager($unitOfWork, null, $identityMap);
 
-        $manager->clear();
+        $entity = new Zend_TestEntity1;
+
+        $manager = $this->createEntityManager(null, null, $identityMap);
+
+        $this->assertTrue($manager->contains($entity));
     }
 
     public function testManagerClearCallsIdentityMapClear()
     {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_CLEAR);
         $identityMap = $this->createIdentityMapMock(self::IDENTITY_MOCK_CLEAR);
-        $manager = $this->createEntityManager($unitOfWork, null, $identityMap);
+        $manager = $this->createEntityManager(null, null, $identityMap);
         
         $manager->clear();
-    }
-
-    public function testManagerDelegatesSetReadOnlyToUnitOfWork()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_SETREADONLY);
-        $identityMap = $this->createIdentityMapMock(self::IDENTITY_MOCK_SETREADONLY_ANY);
-        $manager = $this->createEntityManager($unitOfWork, null, $identityMap);
-        
-        $manager->setReadOnly();
-    }
-
-    public function testManagerDelegatesSetReadOnlyNotToIdentityMap()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_SETREADONLY);
-        $identityMap = $this->createIdentityMapMock(self::IDENTITY_MOCK_SETREADONLY_NEVER);
-        $manager = $this->createEntityManager($unitOfWork, null, $identityMap);
-        
-        $manager->setReadOnly();
     }
 
     public function testCloseConnectionDelegatesToAdapter()
@@ -185,22 +142,6 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
            ->method('closeConnection')
            ->will($this->returnValue(true));
         $manager = new Zend_Entity_Manager($db);
-        
-        $manager->closeConnection();
-    }
-
-    public function testCloseConnectionChecksUnitOfworkManagingTransaction()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_ISMANAGING_FALSE);
-        $manager = $this->createEntityManager($unitOfWork);
-        
-        $manager->closeConnection();
-    }
-
-    public function testCloseConnectionCommitsUnitOfWorkIfManagingTransaction()
-    {
-        $unitOfWork = $this->createUnitOfWorkMock(self::UOW_MOCK_ISMANAGING_TRUE|self::UOW_MOCK_COMMIT);
-        $manager = $this->createEntityManager($unitOfWork);
         
         $manager->closeConnection();
     }

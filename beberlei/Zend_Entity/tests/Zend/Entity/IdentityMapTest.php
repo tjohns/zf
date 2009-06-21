@@ -29,4 +29,54 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);
         $this->assertEquals($entity, $identityMap->getObject("Zend_TestEntity1", "1"));
     }
+
+    public function testAddedObjectIsContained()
+    {
+        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $entity = new Zend_TestEntity1();
+        
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
+        
+        $this->assertTrue($identityMap->contains($entity));
+    }
+
+    public function testUnknownObjectIsNotContained()
+    {
+        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $entity = new Zend_TestEntity1();
+
+        $this->assertFalse($identityMap->contains($entity));
+    }
+
+    public function testGetPrimaryKeyFromIdentity()
+    {
+        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $entity = new Zend_TestEntity1();
+
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
+
+        $this->assertEquals("1", $identityMap->getPrimaryKey($entity));
+    }
+
+    public function testClearEmptiesPrimaryKeys()
+    {
+        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $entity = new Zend_TestEntity1();
+
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
+
+        $identityMap->clear();
+        $this->assertFalse($identityMap->contains($entity));
+    }
+
+    public function testClearEmptiesIdentities()
+    {
+        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $entity = new Zend_TestEntity1();
+
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
+
+        $identityMap->clear();
+        $this->assertFalse($identityMap->hasObject("Zend_TestEntity1", "1"));
+    }
 }

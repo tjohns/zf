@@ -25,37 +25,7 @@ class Zend_Entity_Mapper_Definition_PrimaryKeyTest extends Zend_Entity_Mapper_De
 
         $this->assertEquals(self::TEST_PROPERTY2, $primaryKeyDef->getColumnName());
     }
-
-    public function testDatabaseStateContainValidPrimaryKeyTrue()
-    {
-        $primaryKeyDef = $this->createPrimaryKeyWithColumn();
-        $values = array(
-            self::TEST_PROPERTY => 1,
-        );
-
-        $this->assertTrue($primaryKeyDef->containValidPrimaryKey($values));
-    }
-
-    public function testDatabaseStateContainValidPrimaryKeyFalse()
-    {
-        $primaryKeyDef = $this->createPrimaryKeyWithColumn();
-        $values = array(
-            self::TEST_PROPERTY2 => 1,
-        );
-
-        $this->assertFalse($primaryKeyDef->containValidPrimaryKey($values));
-    }
-
-    public function testBuildPrimaryKeyWhereConditionWithoutValidValuesThrowsException()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $primaryKeyDef = $this->createPrimaryKeyWithColumn();
-        $values = array();
-
-        $primaryKeyDef->buildWhereCondition($this->getDatabaseAdapterMock(), self::TEST_TABLE, $values);
-    }
-
+    
     public function testBuildPrimaryKeyWhereConditionWithValidValues()
     {
         $primaryKeyDef = $this->createPrimaryKeyWithColumn();
@@ -88,10 +58,9 @@ class Zend_Entity_Mapper_Definition_PrimaryKeyTest extends Zend_Entity_Mapper_De
         $entityDatabaseState = array();
         $dbMock = $this->getDatabaseAdapterMock();
         
-        $entityDatabaseState = $primaryKeyDef->getSequenceState($dbMock, $entityDatabaseState);
+        $actualSequenceId = $primaryKeyDef->lastSequenceId($dbMock, $entityDatabaseState);
 
-        $this->assertTrue(isset($entityDatabaseState[self::TEST_PROPERTY]));
-        $this->assertEquals($sequenceId, $entityDatabaseState[self::TEST_PROPERTY]);
+        $this->assertEquals($sequenceId, $actualSequenceId);
     }
 
     public function testRemoveSequenceFromDatabaseState()

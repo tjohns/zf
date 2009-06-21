@@ -69,7 +69,7 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
 
         $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callback');
         $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("performFindQuery", $callback[1]);
+        $this->assertEquals("find", $callback[1]);
 
         $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callbackArguments');
         $this->assertEquals(Zend_Entity_Fixture_OneToManyDefs::TEST_B_CLASS, $callbackArgs[0]);
