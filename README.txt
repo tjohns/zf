@@ -2,12 +2,17 @@ Welcome to the Zend Framework 1.8.3 Release!
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.8.3 Release ([INSERT REV NUM HERE]).
-Released on June 09, 2009.
+Zend Framework 1.8.4 Release ([INSERT REV NUM HERE]).
+Released on June 23, 2009.
 
 For detailed changes, please see:
 
-    http://framework.zend.com/changelog/1.8.3
+    http://framework.zend.com/changelog/1.8.4
+
+As part of this release, we have also begun publishing roadmaps for upcoming
+minor versions of Zend Framework. You may view these here:
+    
+    http://framework.zend.com/roadmap
 
 NEW FEATURES in 1.8
 ---------------------
