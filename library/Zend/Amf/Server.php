@@ -296,6 +296,10 @@ class Zend_Amf_Server implements Zend_Server_Interface
             // if source is null a method that was not defined was called.
             if ($source) {
 				$className = str_replace(".", "_", $source);
+				if(class_exists($className, false) && !isset($this->_classAllowed[$className])) {
+					require_once 'Zend/Amf/Server/Exception.php';
+                    throw new Zend_Amf_Server_Exception('Can not call "' . $className . '" - use setClass()');
+				}
                 try {
                 	$this->getLoader()->load($className);
                 } catch (Exception $e) {
@@ -730,6 +734,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
             $namespace = is_object($class) ? get_class($class) : $class;
         }
         
+        $this->_classAllowed[is_object($class) ? get_class($class) : $class] = true;
 
         $this->_methods[] = Zend_Server_Reflection::reflectClass($class, $argv, $namespace);
         $this->_buildDispatchTable();
