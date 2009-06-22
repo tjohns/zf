@@ -297,9 +297,4 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_AbstractTestCase
         $this->assertEquals(0, $row['autocommit']);
     }
 
-    public function getDriver()
-    {
-        return 'Mysqli';
-    }
-
 }

@@ -37,6 +37,8 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * 
+ * @group Zend_Db_Adapter
  */
 abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_AbstractTestCase
 {
@@ -47,10 +49,14 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
     public function testAdapterZendConfig()
     {
         Zend_Loader::loadClass('Zend_Config');
-        $params = new Zend_Config($this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
+        
+        $driver = $this->sharedFixture->dbUtility->getDriverName();
+        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
+        $config = new Zend_Config($params);
 
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
+        $db = Zend_Db::factory($driver, $config);
+        $config = $db->getConfig();
+        $this->assertArrayHasKey('dbname', $config);
     }
 
     /**
@@ -60,12 +66,16 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
     public function testAdapterZendConfigEmptyNamespace()
     {
         Zend_Loader::loadClass('Zend_Config');
+        $driver = $this->sharedFixture->dbUtility->getDriverName();
         $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['adapterNamespace'] = '';
-        $params = new Zend_Config($params);
+        
+        $config = new Zend_Config($params);
 
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
+        $db = Zend_Db::factory($driver, $config);
+        $config = $db->getConfig();
+        
+        $this->assertArrayHasKey('dbname', $config);
     }
 
     /**
@@ -75,14 +85,15 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
     public function testAdapterZendConfigEmptyDriverOptions()
     {
         Zend_Loader::loadClass('Zend_Config');
+        $driver = $this->sharedFixture->dbUtility->getDriverName();
         $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['driver_options'] = '';
-        $params = new Zend_Config($params);
+        
+        $config = new Zend_Config($params);
 
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
-
+        $db = Zend_Db::factory($driver, $config);
         $config = $db->getConfig();
+
         $this->assertEquals(array(), $config['driver_options']);
     }
 
@@ -97,28 +108,28 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
         $params['options'] = array(
             Zend_Db::AUTO_QUOTE_IDENTIFIERS => true
             );
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db->getConnection();
+        $clonedUtility = $this->_getClonedUtility(true, $params);
+        $dbAdapter = $clonedUtility->getDbAdapter();
 
-        $select = $this->sharedFixture->dbAdapter->select();
+        $select = $dbAdapter->select();
         $select->from('zf_products');
-        $stmt = $this->sharedFixture->dbAdapter->query($select);
+        $stmt = $dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result), 'Expected 3 rows in first query result');
 
         $this->assertEquals(1, $result[0]['product_id']);
 
-        $select = $this->sharedFixture->dbAdapter->select();
+        $select = $dbAdapter->select();
         $select->from('ZF_PRODUCTS');
         try {
-            $stmt = $this->sharedFixture->dbAdapter->query($select);
+            $stmt = $dbAdapter->query($select);
             $result = $stmt->fetchAll();
             $this->fail('Expected exception not thrown');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
-        $db = null;
+
     }
 
     /**
@@ -185,7 +196,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
     {
         $exceptionClass = 'Zend_Db_Adapter_Exception';
         if ($adapterClass === null) {
-            $adapterClass = 'Zend_Db_Adapter_' . $this->getDriver();
+            $adapterClass = 'Zend_Db_Adapter_' . $this->sharedFixture->dbUtility->getDriverName();
         }
 
         $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
@@ -390,7 +401,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
 
         $auto = $desc['product_id']['IDENTITY'];
         if ($auto === null) {
-            $this->markTestIncomplete($this->getDriver() . ' needs to learn how to discover auto-increment keys');
+            $this->markTestIncomplete($this->sharedFixture->dbUtility->getDriverName() . ' needs to learn how to discover auto-increment keys');
         }
         $this->assertTrue($desc['product_id']['IDENTITY']);
     }
@@ -1939,11 +1950,9 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
 
     public function testAdapterSerializationFailsWhenNotAllowedToBeSerialized()
     {
-        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
-        $params['options'] = array(
-            Zend_Db::ALLOW_SERIALIZATION => false
-        );
-        $db = Zend_Db::factory($this->getDriver(), $params);
+        $params = array('options' => array(Zend_Db::ALLOW_SERIALIZATION => false));
+        $clonedUtility = $this->_getClonedUtility(true, $params);
+        $db = $clonedUtility->getDbAdapter();
         $this->setExpectedException('Zend_Db_Adapter_Exception');
         $serialized = serialize($db);
     }
@@ -1953,22 +1962,26 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
         $clonedUtility = $this->_getClonedUtility();
         $dbAdapter = $clonedUtility->getDbAdapter();
         $serialized = serialize($dbAdapter);
-        $db = unserialize($serialized);
-        $this->assertFalse($db->isConnected());
-
-        $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
-        $params['options'] = array(
-            Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE => true
-        );
-        $db = Zend_Db::factory($this->getDriver(), $params);
-        $db = unserialize(serialize($db));
-        $this->assertTrue($db->isConnected());
+        $dbAdapterAfterUnserialize = unserialize($serialized);
+        $this->assertFalse($dbAdapterAfterUnserialize->isConnected());
+    }
+    
+    /**
+     * @expectedException Zend_Db_Adapter_Exception
+     */
+    public function testAdapterUnSerializationAutoReconnectionException()
+    {
+        $params = array('options' => array(Zend_Db::ALLOW_SERIALIZATION => false));
+        $clonedUtility = $this->_getClonedUtility(true, $params);
+        $dbAdapter = $clonedUtility->getDbAdapter();
+        $dbAdapterAfterUnserialize = unserialize(serialize($dbAdapter));
+        $this->assertTrue($dbAdapterAfterUnserialize->isConnected());
     }
 
     /**
      * @group ZF-1541
      */
-    public function testCharacterSetUtf8()
+    public function testAdapterCanSetCharacterSetUtf8()
     {
         $clonedUtility = $this->_getClonedUtility(true, array('charset' => 'utf8'));
         $db = $clonedUtility->getDbAdapter();

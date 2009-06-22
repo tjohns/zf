@@ -314,9 +314,4 @@ class Zend_Db_Adapter_PdoMysqlTest extends Zend_Db_Adapter_AbstractPdoTestCase
         $this->assertEquals(1, $result[0]['product_id']);
     }
 
-    public function getDriver()
-    {
-        return 'Pdo_Mysql';
-    }
-
 }
