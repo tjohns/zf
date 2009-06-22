@@ -1,4 +1,4 @@
-Welcome to the Zend Framework 1.8.3 Release! 
+Welcome to the Zend Framework 1.8.4 Release! 
 
 RELEASE INFORMATION
 ---------------
@@ -57,7 +57,7 @@ NEW FEATURES in 1.8
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=11041
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=11050
 
 SYSTEM REQUIREMENTS
 -------------------
