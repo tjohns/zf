@@ -36,12 +36,25 @@ class Zend_Db_TestSuite_DbUtility_Db2Utility extends Zend_Db_TestSuite_DbUtility
         return new Zend_Db_TestSuite_DbUtility_SQLDialect_Db2();
     }
 
+    protected function _getDefaultResourceArray()
+    {
+        $resources = parent::_getDefaultResourceArray();
+        $resources['sequences'] = array(array('name' => 'products_seq'));
+        $resources['tables'][1]['columns']['product_id'] = 'INT NOT NULL PRIMARY KEY';
+        return $resources;
+    }
+    
     protected function _getDefaultTableDataArray()
     {
     	$data = parent::_getDefaultTableDataArray();
     	$data['Documents'][0]['doc_blob'] = new Zend_Db_Expr(
     	   'BLOB(\'' . $data['Documents'][0]['doc_blob'] . '\')'
     	   );
+    	foreach ($data['Products'] as $productDataId => $productData) {
+    	   $data['Products'][$productDataId]['product_id'] = new Zend_Db_Expr(
+    	       'NEXTVAL FOR ' . $this->_dbAdapter->quoteIdentifier($this->getSequenceNameById('products_seq'), true)
+    	       );
+    	}
         return $data;
     }
     

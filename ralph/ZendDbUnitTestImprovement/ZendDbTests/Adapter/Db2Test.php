@@ -104,16 +104,17 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
         $dbConnection1 = $this->sharedFixture->dbAdapter;
         
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
-        $dbConnection2->getConnection();
-        if ($dbConnection2->isI5()) {
-        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        $clonedUtility = $this->_getClonedUtility();
+        $dbAdapter2 = $clonedUtility->getDbAdapter();
+        $dbAdapter2->getConnection();
+        if ($dbAdapter2->isI5()) {
+        	$dbAdapter2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
         } else {
-            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+            $dbAdapter2->query('SET ISOLATION LEVEL = UR');
         }
         
         // notice the number of rows in connection 2
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(4, $count, 'Expecting to see 4 rows in bugs table (step 1)');
 
         // start an explicit transaction in connection 1
@@ -128,14 +129,14 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         // we should see one less row in connection 2
         // because it is doing an uncommitted read
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table (step 2) because conn2 is doing an uncommitted read');
 
         // commit the DELETE
         $dbConnection1->commit();
 
         // now we should see one fewer rows in connection 2
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 3)');
 
         // delete another row in connection 1
@@ -147,7 +148,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         // we should see results immediately, because
         // the db connection returns to auto-commit mode
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(2, $count);
     }
 
@@ -160,16 +161,17 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
         $dbConnection1 = $this->sharedFixture->dbAdapter;
 
         // create a second connection to the same database
-        $dbConnection2 = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $this->sharedFixture->dbUtility->getDriverConfigurationAsParams());
-        $dbConnection2->getConnection();
-        if ($dbConnection2->isI5()) {
-        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        $clonedUtility = $this->_getClonedUtility();
+        $dbAdapter2 = $clonedUtility->getDbAdapter();
+        $dbAdapter2->getConnection();
+        if ($dbAdapter2->isI5()) {
+        	$dbAdapter2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
         } else {
-            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+            $dbAdapter2->query('SET ISOLATION LEVEL = UR');
         }
         
         // notice the number of rows in connection 2
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(4, $count, 'Expecting to see 4 rows in bugs table (step 1)');
 
         // start an explicit transaction in connection 1
@@ -184,7 +186,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         // we should see one less row in connection 2
         // because it is doing an uncommitted read
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table (step 2) because conn2 is doing an uncommitted read');
 
         // rollback the DELETE
@@ -192,7 +194,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         // now we should see the same number of rows
         // because the DELETE was rolled back
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(4, $count, 'Expecting to still see 4 rows in bugs table after DELETE is rolled back (step 3)');
 
         // delete another row in connection 1
@@ -204,12 +206,13 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         // we should see results immediately, because
         // the db connection returns to auto-commit mode
-        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $count = $dbAdapter2->fetchOne("SELECT COUNT(*) FROM $bugs");
         $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 4)');
     }
 
     public function testAdapterAlternateStatement()
     {
+        require_once dirname(__FILE__) . '/_files/Test/Db2Statement.php';
         $this->_testAdapterAlternateStatement('Test_Db2Statement');
     }
 
@@ -229,7 +232,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
 
         $db = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
         $db->getConnection();
-
+        
         $config = $db->getConfig();
         
         $expectedValue = array(
@@ -237,6 +240,8 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
             'DB2_ATTR_CASE' => 0
             );
         $this->assertEquals($expectedValue, $config['driver_options']);
+        $db->closeConnection();
+        unset($db);
     }
     
     /**
@@ -318,16 +323,21 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
     {
         $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         unset($params['schema']);
-        $connection = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);    
-        $tableCountNoSchema = count($connection->listTables());
         
-        $dbConfig = $this->sharedFixture->dbAdapter->getConfig();
-        if ($this->sharedFixture->dbAdapter->isI5()) {
-            if (isset($dbConfig['driver_options']['i5_lib'])) {
-                $schema = $dbConfig['driver_options']['i5_lib'];
+        $clonedUtility1 = $this->_getClonedUtility(true, $params);
+        $clonedDbAdapter1 = $clonedUtility1->getDbAdapter();
+        
+        // list tables without schema
+        $tableCountNoSchema = count($clonedDbAdapter1->listTables());
+        
+        $clonedDbConfig1 = $this->sharedFixture->dbAdapter->getConfig();
+        
+        if ($clonedDbAdapter1->isI5()) {
+            if (isset($clonedDbConfig1['driver_options']['i5_lib'])) {
+                $schema = $clonedDbConfig1['driver_options']['i5_lib'];
             }
-        } elseif (!$this->sharedFixture->dbAdapter->isI5()) {
-            $schema = $this->sharedFixture->dbUtility->getSchema();
+        } elseif (!$clonedDbAdapter1->isI5()) {
+            $schema = $clonedUtility1->getSchema();
         } else {
             $this->markTestSkipped('No valid schema to test against.');
             return;
@@ -335,18 +345,16 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_AbstractTestCase
         
         $params = $this->sharedFixture->dbUtility->getDriverConfigurationAsParams();
         $params['schema'] = $schema;
-        $connection = Zend_Db::factory($this->sharedFixture->dbUtility->getDriverName(), $params);
-        $tableCountSchema = count($connection->listTables());
+        $clonedUtility2 = $this->_getClonedUtility(true, $params);
+        $clonedDbAdpater2 = $clonedUtility2->getDbAdapter();
+        
+        // list tables with schema
+        $tableCountSchema = count($clonedDbAdpater2->listTables());
         
         $this->assertGreaterThan(0, $tableCountNoSchema, 'Adapter without schema should produce large result');
         $this->assertGreaterThan(0, $tableCountSchema, 'Adapter with schema should produce large result');
 
         $this->assertTrue(($tableCountNoSchema > $tableCountSchema), 'Table count with schema provided should be less than without.');
-    }
-    
-    public function getDriver()
-    {
-        return 'Db2';
     }
 
 }

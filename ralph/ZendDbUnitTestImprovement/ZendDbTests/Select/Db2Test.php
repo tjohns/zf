@@ -31,10 +31,15 @@ class Zend_Db_Select_Db2Test extends Zend_Db_Select_AbstractTestCase
         $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support CROSS JOIN');
     }
 
+    public function testSelectQueryWithBinds()
+    {
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support named bound parameters');
+    }
+    
     /**
      * ZF-5234: this test must be done on string field
      */
-    protected function _selectColumnWithColonQuotedParameter ()
+    protected function _selectColumnWithColonQuotedParameter()
     {
         $product_name = $this->sharedFixture->dbAdapter->quoteIdentifier('product_name');
 
@@ -42,11 +47,6 @@ class Zend_Db_Select_Db2Test extends Zend_Db_Select_AbstractTestCase
                             ->from('zf_products')
                             ->where($product_name . ' = ?', "as'as:x");
         return $select;
-    }
-    
-    public function getDriver()
-    {
-        return 'Db2';
     }
 
 }

@@ -35,6 +35,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
      */
     protected $_createdResources = array(
         'tables'     => array(),
+        'identities' => array(),
         'procedures' => array(),
         'sequences'  => array(),
         'views'      => array()
@@ -142,6 +143,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
     public function setDbAdapter(Zend_Db_Adapter_Abstract $dbAdapter)
     {
         $this->_dbAdapter = $dbAdapter;
+        $this->_sqlDialect->setDbAdapter($this->_dbAdapter);
     }
     
     /**
@@ -207,11 +209,9 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             $this->createView($viewInfo['viewName'], $viewInfo['asStatement'], $viewInfo['fromTableName'], true);
         }
         
-        /*
         foreach ($defaultSchemaArray['sequences'] as $sequenceInfo) {
-            $this->createView($viewInfo['viewName'], $viewInfo['asStatement'], $viewInfo['fromTableName'], true);
+            $this->createSequence($sequenceInfo['name'], true);
         }
-        */
         
         return $this;
     }
@@ -272,30 +272,6 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
     }
     
     /**
-     * resetSequence()
-     *
-     * @param string $sequenceName
-     * @param bool $forceIfUtilityUnknown
-     * @param bool $includeResourcePrefix
-     * @return Zend_Db_TestSuite_DbUtility_AbstractUtility
-     */
-    public function resetSequence($sequenceName, $forceIfUtilityUnknown = false, $includeResourcePrefix = true)
-    {
-        if ($includeResourcePrefix) {
-            $sequenceName = $this->_resourcePrefix . $sequenceName;
-        }
-        
-        if (!$forceIfUtilityUnknown && !array_search($sequenceName, $this->_createdResources['sequences'])) {
-            return;
-        }
-        
-        $sql = $this->_sqlDialect->getResetSequenceSQL($sequenceName);
-        $result = $this->executeRawQuery($sql, __METHOD__);
-        
-        return $this;
-    }
-    
-    /**
      * resetState()
      *
      * @return Zend_Db_TestSuite_DbUtility_AbstractUtility
@@ -306,6 +282,10 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         $this->_dbAdapter->setProfiler(null);
         foreach ($this->_createdResources['tables'] as $tableId => $tableName) {
             $this->deleteTableData($tableId);
+        }
+        
+        foreach ($this->_createdResources['identities'] as $tableName => $identityName) {
+            $this->resetIdentity($tableName);
         }
 
         foreach ($this->_createdResources['sequences'] as $sequenceName) {
@@ -343,10 +323,11 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         }
         
         $this->_createdResources = array(
-            'tables' => array(),
+            'tables'     => array(),
+            'identities' => array(),
             'procedures' => array(),
-            'views' => array(),
-            'sequences' => array()
+            'views'      => array(),
+            'sequences'  => array()
             );
 
         $this->dropArbitraryUtilityResources();
@@ -432,6 +413,10 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $sql = $this->_sqlDialect->getCreateTableSQL($tableName, $columns);
         
+        if (($identityName = $this->_sqlDialect->getLastCreateTableIdentityName()) != '') {
+            $this->_createdResources['identities'][$tableName] = $identityName;
+        }
+        
         if (($sequenceName = $this->_sqlDialect->getLastCreateTableSequenceName()) != '') {
             $this->_createdResources['sequences'][] = $sequenceName;
         }
@@ -464,6 +449,18 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $result = $this->_dbAdapter->query($sql);
         return (bool) $result->fetchColumn();
+    }
+    
+    public function resetIdentity($tableName)
+    {
+        if (!array_key_exists($tableName, $this->_createdResources['identities'])) {
+            return;
+        }
+        
+        $sql = $this->_sqlDialect->getResetIdentitySQL($tableName, $this->_createdResources['identities'][$tableName]);
+        $result = $this->executeRawQuery($sql, __METHOD__);
+        
+        return $this;
     }
     
     /**
@@ -730,7 +727,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $result = $this->executeRawQuery($sql, __METHOD__);
         
-        if ($viewIndex) {
+        if ($viewIndex !== false) {
             unset($this->_createdResources['views'][$viewIndex]);    
         }
         
@@ -750,8 +747,10 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
      * @param string $fromTableName
      * @param bool $includeResourcePrefix
      */
-    public function createSequence($sequenceName, $asStatement = 'SELECT * FROM', $fromTableName = null, $includeResourcePrefix = true)
+    public function createSequence($sequenceName, $includeResourcePrefix = true)
     {
+        $sequenceId = $sequenceName;
+        
         if ($this->_canManageResources === false) {
             throw new Exception('This utilty cannot create, delete or alter database resources.');
         }
@@ -767,12 +766,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             }
         }
         
-
-        if ($includeResourcePrefix) {
-            $fromTableName = $this->_resourcePrefix . $fromTableName;
-        }
-        
-        $sql = $this->_sqlDialect->getCreateSequenceSQL($sequenceName, $asStatement = 'SELECT * FROM', $fromTableName);
+        $sql = $this->_sqlDialect->getCreateSequenceSQL($sequenceName);
         
         if ($sql == '') {
             return;
@@ -780,7 +774,16 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $result = $this->executeRawQuery($sql, __METHOD__);
         
-        $this->_createdResources['sequences'][] = $sequenceName;
+        $this->_createdResources['sequences'][$sequenceId] = $sequenceName;
+    }
+    
+    public function getSequenceNameById($name)
+    {
+        if (isset($this->_createdResources['sequences'][$name])) {
+            return $this->_createdResources['sequences'][$name];
+        }
+        
+        return $name;
     }
     
     public function hasSequence($sequenceName, $includeResourcePrefix = true)
@@ -797,6 +800,35 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $result = $this->_dbAdapter->query($sql);
         return (bool) $result->fetchColumn();
+    }
+    
+    /**
+     * resetSequence()
+     *
+     * @param string $sequenceName
+     * @param bool $forceIfUtilityUnknown
+     * @param bool $includeResourcePrefix
+     * @return Zend_Db_TestSuite_DbUtility_AbstractUtility
+     */
+    public function resetSequence($sequenceName, $forceIfUtilityUnknown = false, $includeResourcePrefix = true)
+    {
+        if ($includeResourcePrefix) {
+            $sequenceName = $this->_resourcePrefix . $sequenceName;
+        }
+        
+        if (!$forceIfUtilityUnknown && !array_search($sequenceName, $this->_createdResources['sequences'])) {
+            return;
+        }
+        
+        $sql = $this->_sqlDialect->getResetSequenceSQL($sequenceName);
+        
+        if (!$sql) {
+            return;
+        }
+        
+        $result = $this->executeRawQuery($sql, __METHOD__);
+        
+        return $this;
     }
     
     /**
@@ -831,7 +863,7 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
         
         $result = $this->executeRawQuery($sql, __METHOD__);
         
-        if ($sequenceIndex) {
+        if ($sequenceIndex !== false) {
             unset($this->_createdResources['sequences'][$sequenceIndex]);    
         }
         
@@ -866,6 +898,8 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             'views'      => array(),
             'sequences'  => array()
             );
+            
+        $this->_sqlDialect = clone $this->_sqlDialect;
             
         $this->_canManageResources = true;
     }

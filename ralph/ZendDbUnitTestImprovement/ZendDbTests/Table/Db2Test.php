@@ -26,9 +26,4 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Db2Test extends Zend_Db_Table_AbstractTestCase
 {
 
-    public function getDriver()
-    {
-        return 'Db2';
-    }
-
 }

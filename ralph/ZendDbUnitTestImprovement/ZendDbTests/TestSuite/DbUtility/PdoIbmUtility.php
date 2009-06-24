@@ -1,28 +1,24 @@
 <?php
 
-require_once 'Zend/Db/TestSuite/DbUtility/AbstractPdoUtility.php';
+require_once 'Zend/Db/TestSuite/DbUtility/Db2Utility.php';
 
-require_once 'Zend/Db/TestSuite/DbUtility/SQLDialect/Db2.php';
-
-class Zend_Db_TestSuite_DbUtility_PdoIbmUtility extends Zend_Db_TestSuite_DbUtility_AbstractPdoUtility 
+class Zend_Db_TestSuite_DbUtility_PdoIbmUtility extends Zend_Db_TestSuite_DbUtility_Db2Utility
 {
 
-    public function getDriverConfigurationAsParams()
+    protected function _executeRawQuery($sql)
     {
-        $constants = array(
-            'TESTS_ZEND_DB_ADAPTER_DB2_HOSTNAME' => 'host',
-            'TESTS_ZEND_DB_ADAPTER_DB2_USERNAME' => 'username',
-            'TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD' => 'password',
-            'TESTS_ZEND_DB_ADAPTER_DB2_DATABASE' => 'dbname',
-            'TESTS_ZEND_DB_ADAPTER_DB2_PORT'     => 'port'
-            );
-        return parent::_getConstantAsParams($constants);
+        $conn = $this->_dbAdapter->getConnection();
+        $retval = $conn->exec($sql);
+        if ($retval === false) {
+            $e = $conn->error;
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
+        }
     }
     
-    public function getSQLDialect()
+    public function getServer()
     {
-        return new Zend_Db_TestSuite_DbUtility_SQLDialect_Db2();
+        return substr($this->_db->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
     }
-
 
 }

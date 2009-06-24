@@ -21,19 +21,17 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Db2 extends Zend_Db_TestSuite_DbUti
         return $type;
     }
     
-    /*
     protected function _getCreateTableSQLPostProcess($tableName, $columns, $sql)
     {
         foreach ($columns as $col) {
-            if (strpos($col, 'SERIAL PRIMARY KEY')) {
-                $target = str_replace(array('\'', '"', '`'), '', $col);
-                $this->_lastCreateTableSequenceName = $tableName . '_' . substr($target, 0, strpos($target, ' ')) . '_seq';
+            if (($desPos = strpos($col, 'INT NOT NULL GENERATED ')) !== false) {
+                $identityName = str_replace(array('\'', '"', '`'), '', trim(substr($col, 0, $desPos)));
+                $this->_lastCreateTableIdentityName = $identityName;
                 return;
             }
         }
     }
-    */
-    
+
     public function getHasTableSQL($tableName)
     {
         $sql = $this->_dbAdapter->quoteInto(
@@ -41,6 +39,35 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Db2 extends Zend_Db_TestSuite_DbUti
             $tableName
             );
         return $sql;
+    }
+
+    public function getResetIdentitySQL($tableName, $identityName)
+    {
+        return 'ALTER TABLE ' . $this->_dbAdapter->quoteIdentifier($tableName) 
+            . ' ALTER COLUMN ' . $this->_dbAdapter->quoteIdentifier($identityName) . ' RESTART WITH 1';
+    }
+    
+    public function getHasSequenceSQL($sequenceName)
+    {
+        return 'SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S ' 
+            . $this->_dbAdapter->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
+    }
+    
+    public function getCreateSequenceSQL($sequenceName)
+    {
+        return 'CREATE SEQUENCE ' . $this->_dbAdapter->quoteIdentifier($sequenceName, true) 
+            . ' AS INT START WITH 1 INCREMENT BY 1 MINVALUE 1';
+    }
+    
+    public function getResetSequenceSQL($sequenceName)
+    {
+        return 'ALTER SEQUENCE ' . $this->_dbAdapter->quoteIdentifier($sequenceName, true)
+            . ' RESTART WITH 1';
+    }
+    
+    public function getDropSequenceSQL($sequenceName)
+    {
+        return 'DROP SEQUENCE ' . $this->_dbAdapter->quoteIdentifier($sequenceName, true) . ' RESTRICT';
     }
     
     /*
@@ -75,10 +102,7 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Db2 extends Zend_Db_TestSuite_DbUti
     }
     
 
-    public function getDeleteFromTableSQL($tableName)
-    {
-        return 'TRUNCATE TABLE ' . $this->_dbAdapter->quoteIdentifier($tableName, true) . ' CASCADE';
-    }
+
     */
     
     

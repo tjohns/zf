@@ -3,8 +3,12 @@
 class Zend_Db_TestSuite_DbUtility_SQLDialect_Base
 {
     
+    /**
+     * @var Zend_Db_Adapter_Abstract
+     */
     protected $_dbAdapter = null;
     
+    protected $_lastCreateTableIdentityName;
     protected $_lastCreateTableSequenceName;
     
     public function __construct()
@@ -23,6 +27,7 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Base
     
     public function getCreateTableSQL($tableName, Array $columns = array())
     {
+        $this->_lastCreateTableIdentityName = null;
         $this->_lastCreateTableSequenceName = null;
         $sql = $this->_getCreateTableSQLTableName($tableName);
         
@@ -62,6 +67,11 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Base
         return $this->_lastCreateTableSequenceName;
     }
     
+    public function getLastCreateTableIdentityName()
+    {
+        return $this->_lastCreateTableIdentityName;
+    }
+    
     public function getHasTableSQL($tableName)
     {
         return null;
@@ -70,6 +80,11 @@ class Zend_Db_TestSuite_DbUtility_SQLDialect_Base
     public function getDeleteFromTableSQL($tableName)
     {
         return 'DELETE FROM ' . $this->_dbAdapter->quoteIdentifier($tableName, true);
+    }
+    
+    public function getResetIdentitySQL($tableName, $identityName)
+    {
+        return null;
     }
     
     public function getDropTableSQL($tableName)

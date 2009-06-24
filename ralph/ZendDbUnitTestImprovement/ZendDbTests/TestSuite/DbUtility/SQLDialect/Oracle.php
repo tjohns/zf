@@ -1,6 +1,8 @@
 <?php
 
-class Zend_Db_TestSuite_SQLDDLDialect_OracleDialect
+require_once 'Zend/Db/TestSuite/DbUtility/SQLDialect/Base.php';
+
+class Zend_Db_TestSuite_DbUtility_SQLDialect_Oracle extends Zend_Db_TestSuite_DbUtility_SQLDialect_Base
 {
 
     public function getSqlType($type)

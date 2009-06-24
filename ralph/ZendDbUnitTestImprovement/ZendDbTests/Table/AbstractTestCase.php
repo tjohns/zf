@@ -706,7 +706,11 @@ abstract class Zend_Db_Table_AbstractTestCase extends Zend_Db_TestSuite_Abstract
         $insertResult = $table->insert($row);
         $this->sharedFixture->dbAdapter->getProfiler()->setEnabled($profilerEnabled);
 
-        $qp = $this->sharedFixture->dbAdapter->getProfiler()->getLastQueryProfile();
+        if ($table->info(Zend_Db_Table_Abstract::SEQUENCE) === true) {
+            $qp = $this->sharedFixture->dbAdapter->getProfiler()->getQueryProfile(1);
+        } else {
+            $qp = $this->sharedFixture->dbAdapter->getProfiler()->getLastQueryProfile();
+        }
         $tableSpec = $this->sharedFixture->dbAdapter->quoteIdentifier($identifier, true);
         $this->assertContains("INSERT INTO $tableSpec ", $qp->getQuery());
     }
@@ -1533,7 +1537,8 @@ abstract class Zend_Db_Table_AbstractTestCase extends Zend_Db_TestSuite_Abstract
     public function testTableFetchallCanHandleWhereWithParameritizationCharacters()
     {
         $table = $this->_getTableById('Products');
-        $where = $table->getAdapter()->quoteInto('product_name = ?', "some?product's");
+        $column = $table->getAdapter()->quoteIdentifier('product_name');
+        $where = $table->getAdapter()->quoteInto("$column = ?", "some?product's");
         $rows = $table->fetchAll($where);
         $this->assertEquals(0, count($rows));
     }

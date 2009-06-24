@@ -40,8 +40,5 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_PdoIbmTest extends Zend_Db_Table_AbstractTestCase
 {
-    public function getDriver()
-    {
-        return 'Pdo_Ibm';
-    }
+
 }

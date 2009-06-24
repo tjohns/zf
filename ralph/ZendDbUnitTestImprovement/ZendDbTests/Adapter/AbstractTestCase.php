@@ -1792,11 +1792,10 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
 
     protected function _testAdapterAlternateStatement($stmtClass)
     {
-        if (!class_exists($stmtClass)) {
+        if (!class_exists($stmtClass, false)) {
             $stmtClassFile = str_replace('_', DIRECTORY_SEPARATOR, $stmtClass) . '.php';
+            include_once dirname(__FILE__) . '/_files/' . $stmtClassFile;
         }
-        
-        include_once dirname(__FILE__) . '/_files/' . $stmtClassFile;
         
         $params = array('options' => array(Zend_Db::AUTO_QUOTE_IDENTIFIERS => false));
         

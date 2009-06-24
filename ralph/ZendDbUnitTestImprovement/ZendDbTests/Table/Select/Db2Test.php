@@ -44,6 +44,12 @@ class Zend_Db_Table_Select_Db2Test extends Zend_Db_Table_Select_AbstractTestCase
         $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support CROSS JOIN');
     }
 
+    public function testSelectQueryWithBinds()
+    {
+        $this->markTestSkipped($this->sharedFixture->dbUtility->getDriverName() . ' does not support named bound parameters');
+    }
+    
+    
     public function getDriver()
     {
         return 'Db2';

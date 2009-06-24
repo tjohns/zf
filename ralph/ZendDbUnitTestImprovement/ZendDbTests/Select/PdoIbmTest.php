@@ -41,11 +41,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Select_PdoIbmTest extends Zend_Db_Select_AbstractTestCase
 {
 
-    public function getDriver()
-    {
-        return 'Pdo_Ibm';
-    }
-
     public function testSelectGroupByExpr()
     {
        $server = $this->sharedFixture->dbUtility->getServer();

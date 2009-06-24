@@ -75,7 +75,8 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
      */
     public function testSelectQuery()
     {
-        $select = $this->_select();
+        // use order to ensure proper ordering
+        $select = $this->_select()->order('product_id ASC');
         $this->assertType('Zend_Db_Select', $select,
             'Expecting object of type Zend_Db_Select, got '.get_class($select));
         $stmt = $select->query();
@@ -497,7 +498,7 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     public function testSelectJoinLeft()
     {
-        $select = $this->_selectJoinLeft();
+        $select = $this->_selectJoinLeft()->order('product_id ASC');
         $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(7, count($result));
@@ -538,6 +539,7 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     /**
      * Test adding an outer join to a Zend_Db_Select object.
+     * @return Zend_Db_Select
      */
     protected function _selectJoinRight()
     {
@@ -553,7 +555,8 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     public function testSelectJoinRight()
     {
-        $select = $this->_selectJoinRight();
+        // use order to ensure proper ordering
+        $select = $this->_selectJoinRight()->order('product_id ASC');
         $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(7, count($result));
@@ -810,7 +813,7 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     public function testSelectWhereWithParameter()
     {
-        $select = $this->_selectWhereWithParameter();
+        $select = $this->_selectWhereWithParameter()->order('product_id ASC');
         $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
@@ -895,7 +898,7 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     public function testSelectWhereOr()
     {
-        $select = $this->_selectWhereOr();
+        $select = $this->_selectWhereOr()->order('product_id');
         $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
@@ -920,7 +923,7 @@ abstract class Zend_Db_Select_AbstractTestCase extends Zend_Db_TestSuite_Abstrac
 
     public function testSelectWhereOrWithParameter()
     {
-        $select = $this->_selectWhereOrWithParameter();
+        $select = $this->_selectWhereOrWithParameter()->order('product_id');
         $stmt = $this->sharedFixture->dbAdapter->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));
