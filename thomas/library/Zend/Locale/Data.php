@@ -66,7 +66,7 @@ class Zend_Locale_Data
      * @var    boolean
      * @access private
      */
-    private static $_cacheDisabled = true;
+    private static $_cacheDisabled = false;
 
     /**
      * Read the content from locale
@@ -297,17 +297,7 @@ class Zend_Locale_Data
     public static function getList($locale, $path, $value = false)
     {
         $locale = self::_checkLocale($locale);
-
-        if (!isset(self::$_cache) && !self::$_cacheDisabled) {
-            require_once 'Zend/Cache.php';
-            self::$_cache = Zend_Cache::factory(
-                'Core',
-                'File',
-                array('automatic_serialization' => true),
-                array());
-        }
-
-        $val = $value;
+        $val    = $value;
         if (is_array($value)) {
             $val = implode('_' , $value);
         }
@@ -903,17 +893,7 @@ class Zend_Locale_Data
     public static function getContent($locale, $path, $value = false)
     {
         $locale = self::_checkLocale($locale);
-
-        if (!isset(self::$_cache) && !self::$_cacheDisabled) {
-            require_once 'Zend/Cache.php';
-            self::$_cache = Zend_Cache::factory(
-                'Core',
-                'File',
-                array('automatic_serialization' => true),
-                array());
-        }
-
-        $val = $value;
+        $val    = $value;
         if (is_array($value)) {
             $val = implode('_' , $value);
         }
