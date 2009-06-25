@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <RDF:Description about="urn:mozilla:install-manifest">
+        <em:aboutURL>chrome://Zend_Toolbar/content/about.xul</em:aboutURL>
+        <em:creator>Zend Framework</em:creator>
+        <em:description/>
+        <em:homepageURL>http://framework.zend.com</em:homepageURL>
+        <em:iconURL/>
+        <em:id>zend_toolbar@framework.zend.com</em:id>
+        <em:name>Zend_Toolbar</em:name>
+        <em:version>@VERSION@</em:version>
+        <em:updateURL/>
+        <em:type>2</em:type>
+        <em:targetApplication>
+            <RDF:Description>
+                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+                <em:maxVersion>3.5.*</em:maxVersion>
+                <em:minVersion>3.0</em:minVersion>
+            </RDF:Description>
+        </em:targetApplication>
+    <em:optionsURL/><em:updateKey/><em:hidden/><em:developer>Ben Scholzen</em:developer><em:localized><RDF:Description><em:locale/><em:name/><em:description/></RDF:Description></em:localized><em:localized><RDF:Description><em:locale/><em:name/><em:description/></RDF:Description></em:localized><em:localized><RDF:Description><em:locale/><em:name/><em:description/></RDF:Description></em:localized><em:localized><RDF:Description><em:locale/><em:name/><em:description/></RDF:Description></em:localized><em:targetPlatform/></RDF:Description>
+</RDF>
