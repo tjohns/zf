@@ -30,7 +30,7 @@ XPI     = zend_toolbar.xpi
 all: xpi
 
 xpi: dist-dir install.rdf 
-	zip -r $(DIST)/$(XPI) * -x $(DIST) -x Makefile -x install.rdf.in
+	zip -r $(DIST)/$(XPI) * -x $(DIST) -x Makefile -x install.rdf.in -x "*.svn/*"
 
 dist-dir:
 	mkdir -p $(DIST)
