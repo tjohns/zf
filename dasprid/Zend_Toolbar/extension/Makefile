@@ -27,7 +27,10 @@ VERSION = 1.8.0-dev
 DIST    = dist
 XPI     = zend_toolbar.xpi
 
-all: dist-dir install.rdf xpi
+all: xpi
+
+xpi: dist-dir install.rdf 
+	zip -r $(DIST)/$(XPI) * -x $(DIST) -x Makefile -x install.rdf.in
 
 dist-dir:
 	mkdir -p $(DIST)
@@ -35,9 +38,6 @@ dist-dir:
 
 install.rdf:
 	sed 's/@VERSION@/$(VERSION)/' install.rdf.in > install.rdf
-	
-xpi:
-	zip -r $(DIST)/$(XPI) * -x $(DIST) -x Makefile -x install.rdf.in	
 
 clean:
 	rm -f install.rdf
