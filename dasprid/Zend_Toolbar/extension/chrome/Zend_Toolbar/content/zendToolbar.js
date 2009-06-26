@@ -78,20 +78,21 @@ var Zend_Toolbar = function()
             onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
             {
                 if (aFlag & private.Ci.nsIWebProgressListener.STATE_STOP) {
+                    aRequest.QueryInterface(Ci.nsIHttpChannel);
                     aRequest.visitResponseHeaders({
                         visitHeader: function(name, value) 
                         {
                             private.wildfireToolbarPlugin.channel.messageReceived(name, value);
                         }
                     });
-                    
+
                     private.wildfireToolbarPlugin.channel.allMessagesReceived();
-                    
+
                     if (private.wildfireToolbarPlugin.hasData()) {
                         var data = private.wildfireToolbarPlugin.getData();
                         alert(data.version);
                     } else {
-                        alert('no data');
+                        // TODO: no data, hide toolbar
                     }
                 }
                 
