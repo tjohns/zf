@@ -47,33 +47,44 @@ require_once 'Zend/Wildfire/Plugin/FrameworkToolbar.php';
 class ZendL_Toolbar_Plugin extends Zend_Controller_Plugin_Abstract
 {
     /**
+     * Wildfire toolbar plugin
+     *
+     * @var Zend_Wildfire_Plugin_FrameworkToolbar
+     */
+    protected $_wildfirePlugin;
+    
+    /**
+     * Create the wildfire plugin 
+     * 
+     * It is required at this point, so that the Wildfire controller plugin
+     * is registered before dispatchLoopShutdown
+     *
+     * @return void
+     */
+    public function dispatchLoopStartup()
+    {
+        $this->_wildfirePlugin = Zend_Wildfire_Plugin_FrameworkToolbar::getInstance();
+    }
+    
+    /**
      * Inject the debug information at the end of the request
      *
      * @return void
      */
     public function dispatchLoopShutdown()
     {
-//        $response = Zend_Controller_Front::getInstance()->getResponse();
-//        $response->setHeader('X-ZF-Enabled', 'true');
+        $data = array(
+            'version' => Zend_Version::VERSION,
+            'variables' => array(
+                'post'    => $_POST,
+                'get'     => $_GET,
+                'cookie'  => $_COOKIE,
+                'session' => $_SESSION,
+                'env'     => $_ENV
+            )
+        ); 
 
-//        require_once 'Zend/Json.php';
-        
-        $data = array('foo'       => 'bar',
-                      'lastQuery' => 'SELECT * FROM `table` WHERE 1',
-                      'longStuff' => str_repeat('.', 5000),
-                      'log'       => "Foo\nbar\r\nBaz");
-
-/*        
-        $json   = explode("\n", chunk_split(Zend_Json::encode($data), 4096, "\n"));
-        $length = count($json);
-        
-        foreach ($json as $num => $line) {
-            $response->setHeader('X-ZF-Data-' . $num, $line);
-        }
-*/        
-        
-        // Send data via wildfire
-        Zend_Wildfire_Plugin_FrameworkToolbar::getInstance()->send($data);
+        $this->_wildfirePlugin->send($data);
     }
 }
 
