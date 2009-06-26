@@ -38,9 +38,9 @@ var Zend_Toolbar = function()
          */
         construct: function()
         {
-            app.wildfireToolbarPlugin = new Wildfire.Plugin.FrameworkToolbar();
-            app.wildfireToolbarPlugin.init();
-    
+            private.wildfireToolbarPlugin = new Wildfire.Plugin.FrameworkToolbar();
+            private.wildfireToolbarPlugin.init();
+                   
             gBrowser.addProgressListener(private.pageListener, private.Ci.nsIWebProgress.NOTIFY_STATE_DOCUMENT);
         },
 
@@ -63,6 +63,11 @@ var Zend_Toolbar = function()
         Cc: Components.classes,
         Ci: Components.interfaces,
         Cr: Components.results,
+        
+        /**
+         * Wildfire toolbar plugin
+         */
+        wildfireToolbarPlugin: null,
             
         /**
          * Page load listener
@@ -72,20 +77,21 @@ var Zend_Toolbar = function()
         pageListener: {
             onStateChange: function(aWebProgress, aRequest, aFlag, aStatus)
             {
-                if (aFlag & this.Ci.nsIWebProgressListener.STATE_STOP) {
+                if (aFlag & private.Ci.nsIWebProgressListener.STATE_STOP) {
                     aRequest.visitResponseHeaders({
                         visitHeader: function(name, value) 
                         {
-                            app.wildfireToolbarPlugin.channel.messageReceived(name, value);
+                            private.wildfireToolbarPlugin.channel.messageReceived(name, value);
                         }
                     });
                     
-                    app.wildfireToolbarPlugin.channel.allMessagesReceived();
-
-                    if (app.wildfireToolbarPlugin.hasData()) {
-                        var data = app.wildfireToolbarPlugin.getData();
+                    private.wildfireToolbarPlugin.channel.allMessagesReceived();
+                    
+                    if (private.wildfireToolbarPlugin.hasData()) {
+                        var data = private.wildfireToolbarPlugin.getData();
+                        alert(data.version);
                     } else {
-                        // Hide toolbar
+                        alert('no data');
                     }
                 }
                 
@@ -119,20 +125,20 @@ var Zend_Toolbar = function()
           
             QueryInterface: function(aIID)
             {
-                if (aIID.equals(this.Ci.nsIWebProgressListener) ||
-                    aIID.equals(this.Ci.nsISupportsWeakReference) ||
-                    aIID.equals(this.Ci.nsISupports))
+                if (aIID.equals(private.Ci.nsIWebProgressListener) ||
+                    aIID.equals(private.Ci.nsISupportsWeakReference) ||
+                    aIID.equals(private.Ci.nsISupports))
                 {
                     return this;
                 }
                 
-                throw this.Cr.NS_NOINTERFACE;
+                throw private.Cr.NS_NOINTERFACE;
             }
         }
     };
     
     return public;
-};   
+}();   
 
 /**
  * Register constructor and destructor
