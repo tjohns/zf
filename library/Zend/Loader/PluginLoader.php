@@ -122,9 +122,6 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
      */
     protected function _formatPrefix($prefix)
     {
-    	if($prefix == "") {
-    		return $prefix;
-    	}
         return rtrim($prefix, '_') . '_';
     }
 
