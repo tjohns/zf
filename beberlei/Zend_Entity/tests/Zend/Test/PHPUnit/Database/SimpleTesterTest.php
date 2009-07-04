@@ -1,5 +1,11 @@
 <?php
 
+require_once "Zend/Test/PHPUnit/Database/SimpleTester.php";
+require_once "Zend/Test/PHPUnit/Database/Connection.php";
+require_once "Zend/Test/DbAdapterMock.php";
+require_once "PHPUnit/Extensions/Database/DataSet/IDataSet.php";
+require_once "Zend/Test/PHPUnit/Database/Exception.php";
+
 class Zend_Test_PHPUnit_Database_SimpleTesterTest extends PHPUnit_Framework_TestCase
 {
     public function testGetConnection()

@@ -9,7 +9,7 @@ abstract class Zend_Test_PHPUnit_Database_DataSet_DataSetTestCase extends PHPUni
 
     public function setUp()
     {
-        $this->connectionMock = $this->getMock('PHPUnit_Extensions_Database_DB_IDatabaseConnection');
+        $this->connectionMock = $this->getMock('Zend_Test_PHPUnit_Database_Connection', array(), array(), '', false);
     }
 
     public function decorateConnectionMockWithZendAdapter()

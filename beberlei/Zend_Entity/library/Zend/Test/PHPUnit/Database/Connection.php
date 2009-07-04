@@ -1,8 +1,50 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Test
+ * @subpackage PHPUnit
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
 
 /**
- * @package Zend
- * @subpackage Test\Database
+ * @see PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
+ */
+require_once "PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php";
+
+/**
+ * @see Zend_Test_PHPUnit_Database_DataSet_QueryTable
+ */
+require_once "Zend/Test/PHPUnit/Database/DataSet/QueryTable.php";
+
+/**
+ * @see Zend_Test_PHPUnit_Database_Metadata_Generic
+ */
+require_once "Zend/Test/PHPUnit/Database/Metadata/Generic.php";
+
+/**
+ * Generic Abstraction of Zend_Db Connections in the PHPUnit Database Extension context.
+ *
+ * @uses       Zend_Db_Adapter_Abstract
+ * @uses       PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
+ * @category   Zend
+ * @package    Zend_Test
+ * @subpackage PHPUnit
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Test_PHPUnit_Database_Connection extends PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
 {

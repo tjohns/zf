@@ -1,7 +1,49 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Test
+ * @subpackage PHPUnit
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
 
 require_once "PHPUnit/Extensions/Database/DataSet/QueryDataSet.php";
 
+require_once "PHPUnit/Extensions/Database/DB/IDatabaseConnection.php";
+
+/**
+ * @see Zend_Test_PHPUnit_Database_DataSet_QueryTable
+ */
+require_once "Zend/Test/PHPUnit/Database/DataSet/QueryTable.php";
+
+/**
+ * @see Zend_Db_Select
+ */
+require_once "Zend/Db/Select.php";
+
+/**
+ * Uses several query strings or Zend_Db_Select objects to form a dataset of tables for assertion with other datasets.
+ *
+ * @uses       PHPUnit_Extensions_Database_DataSet_QueryDataSet
+ * @category   Zend
+ * @package    Zend_Test
+ * @subpackage PHPUnit
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Test_PHPUnit_Database_DataSet_QueryDataSet extends PHPUnit_Extensions_Database_DataSet_QueryDataSet
 {
     /**
@@ -11,8 +53,9 @@ class Zend_Test_PHPUnit_Database_DataSet_QueryDataSet extends PHPUnit_Extensions
      */
     public function __construct(PHPUnit_Extensions_Database_DB_IDatabaseConnection $databaseConnection)
     {
-        if( !($databaseConnection->getConnection() instanceof Zend_Db_Adapter_Abstract) ) {
-            throw new Zend_Test_PHPUnit_Database_Exception();
+        if( !($databaseConnection instanceof Zend_Test_PHPUnit_Database_Connection) ) {
+            require_once "Zend/Test/PHPUnit/Database/Exception.php";
+            throw new Zend_Test_PHPUnit_Database_Exception("Zend_Test_PHPUnit_Database_DataSet_QueryDataSet only works with Zend_Test_PHPUnit_Database_Connection connections-");
         }
         $this->databaseConnection = $databaseConnection;
     }

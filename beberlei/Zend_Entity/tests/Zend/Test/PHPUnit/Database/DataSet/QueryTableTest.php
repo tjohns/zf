@@ -6,8 +6,10 @@ class Zend_Test_PHPUnit_Database_DataSet_QueryTableTest extends Zend_Test_PHPUni
 {
     public function testCreateQueryTableWithoutZendDbConnectionThrowsException()
     {
+        $connectionMock = $this->getMock('PHPUnit_Extensions_Database_DB_IDatabaseConnection');
+
         $this->setExpectedException('Zend_Test_PHPUnit_Database_Exception');
-        $queryTable = new Zend_Test_PHPUnit_Database_DataSet_QueryTable("foo", "SELECT * FROM foo", $this->connectionMock);
+        $queryTable = new Zend_Test_PHPUnit_Database_DataSet_QueryTable("foo", "SELECT * FROM foo", $connectionMock);
     }
 
     public function testCreateQueryTableWithZendDbConnection()

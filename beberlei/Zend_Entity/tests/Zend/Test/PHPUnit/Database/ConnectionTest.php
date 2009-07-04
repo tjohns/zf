@@ -1,5 +1,8 @@
 <?php
 
+require_once "Zend/Test/DbAdapterMock.php";
+require_once "Zend/Test/PHPUnit/Database/Connection.php";
+
 class Zend_Test_PHPUnit_Database_ConnectionTest extends PHPUnit_Framework_TestCase
 {
     protected $adapterMock;
