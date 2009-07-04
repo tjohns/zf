@@ -48,6 +48,8 @@ class Zend_Test_PHPUnit_Database_Operation_Truncate implements PHPUnit_Extension
             } else {
                 $db->query('IMPORT FROM /dev/null OF DEL REPLACE INTO '.$tableName);
             }
+        } else if($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            $db->query('TRUNCATE TABLE '.$tableName);
         } else {
             $db->query('TRUNCATE '.$tableName);
         }
