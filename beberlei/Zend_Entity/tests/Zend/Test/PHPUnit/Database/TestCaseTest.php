@@ -57,8 +57,8 @@ class Zend_Test_PHPUnit_Database_TestCaseTest extends Zend_Test_PHPUnit_Database
 
     public function testCreateDbTableDataSetConvenienceMethodReturnType()
     {
-        $mock = $this->getMock('Zend_Db_Table', array(), array(), "", false);
-        $tableDataSet = $this->createDbTableDataSet(array($mock));
+        $connection = $this->getMock('Zend_Test_PHPUnit_Database_Connection', array(), array(), '', false);
+        $tableDataSet = $this->createDbTableDataSet($connection);
         $this->assertTrue($tableDataSet instanceof Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet);
     }
 

@@ -113,9 +113,13 @@ abstract class Zend_Test_PHPUnit_DatabaseTestCase extends PHPUnit_Extensions_Dat
      * @param  array $tables
      * @return Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet
      */
-    protected function createDbTableDataSet(array $tables=array())
+    protected function createDbTableDataSet(Zend_Test_PHPUnit_Database_Connection $connection, array $tables=array())
     {
-        return new Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet();
+        $dataSet = new Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet($connection);
+        foreach($tables AS $table) {
+            $dataSet->addTable($table);
+        }
+        return $dataSet;
     }
 
     /**
