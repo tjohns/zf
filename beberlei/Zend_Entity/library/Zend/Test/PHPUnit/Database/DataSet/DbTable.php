@@ -1,5 +1,7 @@
 <?php
 
+require_once "PHPUnit/Extensions/Database/DataSet/QueryTable.php";
+
 class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Database_DataSet_QueryTable
 {
     /**
@@ -8,6 +10,26 @@ class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Data
      * @var Zend_Db_Table_Abstract
      */
     protected $_table = null;
+
+    /**
+     * @var string
+     */
+    protected $_where = null;
+
+    /**
+     * @var string
+     */
+    protected $_orderBy = null;
+
+    /**
+     * @var string
+     */
+    protected $_count = null;
+
+    /**
+     * @var int
+     */
+    protected $_offset = null;
 
     /**
      * Construct Dataset Table from Zend_Db_Table object
@@ -21,6 +43,10 @@ class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Data
     public function __construct(Zend_Db_Table_Abstract $table, $where=null, $order=null, $count=null, $offset=null)
     {
         $this->_table = $table;
+        $this->_where = $where;
+        $this->_order = $order;
+        $this->_count = $count;
+        $this->_offset = $offset;
     }
 
     /**
