@@ -113,9 +113,9 @@ abstract class Zend_Test_PHPUnit_DatabaseTestCase extends PHPUnit_Extensions_Dat
      * @param  array $tables
      * @return Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet
      */
-    protected function createDbTableDataSet(Zend_Test_PHPUnit_Database_Connection $connection, array $tables=array())
+    protected function createDbTableDataSet(array $tables=array())
     {
-        $dataSet = new Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet($connection);
+        $dataSet = new Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet();
         foreach($tables AS $table) {
             $dataSet->addTable($table);
         }
@@ -125,22 +125,27 @@ abstract class Zend_Test_PHPUnit_DatabaseTestCase extends PHPUnit_Extensions_Dat
     /**
      * Create a table based on one Zend_Db_Table instance
      *
-     * @param  Zend_Db_Table_Abstract $table
+     * @param Zend_Db_Table_Abstract $table
+     * @param string $where
+     * @param string $order
+     * @param string $count
+     * @param string $offset
      * @return Zend_Test_PHPUnit_Database_DataSet_DbTable
      */
-    protected function createDbTable(Zend_Db_Table_Abstract $table)
+    protected function createDbTable(Zend_Db_Table_Abstract $table, $where=null, $order=null, $count=null, $offset=null)
     {
-        return new Zend_Test_PHPUnit_Database_DataSet_DbTable($table);
+        return new Zend_Test_PHPUnit_Database_DataSet_DbTable($table, $where, $order, $count, $offset);
     }
 
     /**
      * Create a data table based on a Zend_Db_Table_Rowset instance
      *
      * @param  Zend_Db_Table_Rowset_Abstract $rowset
+     * @param  string
      * @return Zend_Test_PHPUnit_Database_DataSet_DbRowset
      */
-    protected function createDbRowset(Zend_Db_Table_Rowset_Abstract $rowset)
+    protected function createDbRowset(Zend_Db_Table_Rowset_Abstract $rowset, $tableName = null)
     {
-        return new Zend_Test_PHPUnit_Database_DataSet_DbRowset($rowset);
+        return new Zend_Test_PHPUnit_Database_DataSet_DbRowset($rowset, $tableName);
     }
 }

@@ -57,8 +57,8 @@ class Zend_Test_PHPUnit_Database_TestCaseTest extends Zend_Test_PHPUnit_Database
 
     public function testCreateDbTableDataSetConvenienceMethodReturnType()
     {
-        $connection = $this->getMock('Zend_Test_PHPUnit_Database_Connection', array(), array(), '', false);
-        $tableDataSet = $this->createDbTableDataSet($connection);
+        $tableMock = $this->getMock('Zend_Db_Table', array(), array(), "", false);
+        $tableDataSet = $this->createDbTableDataSet(array($tableMock));
         $this->assertTrue($tableDataSet instanceof Zend_Test_PHPUnit_Database_DataSet_DbTableDataSet);
     }
 
@@ -72,7 +72,9 @@ class Zend_Test_PHPUnit_Database_TestCaseTest extends Zend_Test_PHPUnit_Database
     public function testCreateDbRowsetConvenienceMethodReturnType()
     {
         $mock = $this->getMock('Zend_Db_Table_Rowset', array(), array(array()));
-        $rowset = $this->createDbRowset($mock);
+        $mock->expects($this->once())->method('toArray')->will($this->returnValue(array("foo" => 1, "bar" => 1)));
+        
+        $rowset = $this->createDbRowset($mock, "fooTable");
 
         $this->assertTrue($rowset instanceof Zend_Test_PHPUnit_Database_DataSet_DbRowset);
     }

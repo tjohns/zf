@@ -20,3 +20,7 @@ $autoloader->suppressNotFoundWarnings(false);
 PHPUnit_Util_Filter::addDirectoryToWhitelist(ZEND_ENTITY_MAPPER_LIBRARY_PATH, ".php");
 
 require_once "Zend/Entity/Fixture/Entities.php";
+
+if(file_exists("TestConfiguration.php")) {
+    require_once "TestConfiguration.php";
+}

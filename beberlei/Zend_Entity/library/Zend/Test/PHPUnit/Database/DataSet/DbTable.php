@@ -48,6 +48,11 @@ class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Data
     protected $_table = null;
 
     /**
+     * @var array
+     */
+    protected $_columns = array();
+
+    /**
      * @var string
      */
     protected $_where = null;
@@ -78,6 +83,9 @@ class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Data
      */
     public function __construct(Zend_Db_Table_Abstract $table, $where=null, $order=null, $count=null, $offset=null)
     {
+        $this->tableName = $table->info('name');
+        $this->_columns = $table->info('cols');
+
         $this->_table = $table;
         $this->_where = $where;
         $this->_order = $order;
@@ -94,6 +102,17 @@ class Zend_Test_PHPUnit_Database_DataSet_DbTable extends PHPUnit_Extensions_Data
     {
         if ($this->data === null) {
             $this->data = $this->_table->fetchAll($this->_where, $this->_order, $this->_count, $this->_offset);
+        }
+    }
+
+    /**
+     * Create Table Metadata object
+     */
+    protected function createTableMetaData()
+    {
+        if ($this->tableMetaData === NULL) {
+            $this->loadData();
+            $this->tableMetaData = new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($this->tableName, $this->_columns);
         }
     }
 }

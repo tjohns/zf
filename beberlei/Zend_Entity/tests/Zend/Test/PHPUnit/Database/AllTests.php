@@ -8,6 +8,8 @@ require_once "Metadata/GenericTest.php";
 require_once "TestCaseTest.php";
 require_once "ConnectionTest.php";
 require_once "SimpleTesterTest.php";
+require_once "Integration/SqLiteIntegrationTest.php";
+require_once "Integration/MysqlIntegrationTest.php";
 
 class Zend_Test_PHPUnit_Database_AllTests
 {
@@ -20,6 +22,8 @@ class Zend_Test_PHPUnit_Database_AllTests
         $suite->addTest(Zend_Test_PHPUnit_Database_DataSet_AllTests::suite());
         $suite->addTest(Zend_Test_PHPUnit_Database_Operation_AllTests::suite());
         $suite->addTestSuite('Zend_Test_PHPUnit_Database_Metadata_GenericTest');
+        $suite->addTestSuite('Zend_Test_PHPUnit_Database_Integration_SqLiteIntegrationTest');
+        $suite->addTestSuite('Zend_Test_PHPUnit_Database_Integration_MysqlIntegrationTest');
 
         return $suite;
     }
