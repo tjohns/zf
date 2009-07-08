@@ -39,8 +39,8 @@ class Zend_Db_TestSuite_DbUtility_Db2Utility extends Zend_Db_TestSuite_DbUtility
     protected function _getDefaultResourceArray()
     {
         $resources = parent::_getDefaultResourceArray();
-        $resources['sequences'] = array(array('name' => 'products_seq'));
-        $resources['tables'][1]['columns']['product_id'] = 'INT NOT NULL PRIMARY KEY';
+        //$resources['sequences'] = array(array('name' => 'products_seq'));
+        //$resources['tables'][1]['columns']['product_id'] = 'INT NOT NULL PRIMARY KEY';
         return $resources;
     }
     
@@ -50,11 +50,12 @@ class Zend_Db_TestSuite_DbUtility_Db2Utility extends Zend_Db_TestSuite_DbUtility
     	$data['Documents'][0]['doc_blob'] = new Zend_Db_Expr(
     	   'BLOB(\'' . $data['Documents'][0]['doc_blob'] . '\')'
     	   );
-    	foreach ($data['Products'] as $productDataId => $productData) {
-    	   $data['Products'][$productDataId]['product_id'] = new Zend_Db_Expr(
-    	       'NEXTVAL FOR ' . $this->_dbAdapter->quoteIdentifier($this->getSequenceNameById('products_seq'), true)
-    	       );
-    	}
+//    	foreach ($data['Products'] as $productDataId => $productData) {
+//    	   $data['Products'][$productDataId]['product_id'] = new Zend_Db_Expr(
+//    	       'DEFAULT'
+//    	       //'NEXTVAL FOR ' . $this->_dbAdapter->quoteIdentifier($this->getSequenceNameById('products_seq'), true)
+//    	       );
+//    	}
         return $data;
     }
     
@@ -65,13 +66,14 @@ class Zend_Db_TestSuite_DbUtility_Db2Utility extends Zend_Db_TestSuite_DbUtility
             $result = db2_exec($conn, $sql);
         } catch (Exception $e) {
             require_once 'Zend/Db/Exception.php';
-            throw new Zend_Db_Exception("SQL error for \"$sql\": " . $e->getMessage());
+            $error = db2_stmt_errormsg();
+            throw new Zend_Db_Exception("SQL error for \"$sql\": " . $e->getMessage() . ' - raw error: ' . $error);
         }
         
         if (!$result) {
-            $e = db2_stmt_errormsg();
+            $error = db2_stmt_errormsg();
             require_once 'Zend/Db/Exception.php';
-            throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
+            throw new Zend_Db_Exception("SQL error for \"$sql\": $error");
         }
     }
 

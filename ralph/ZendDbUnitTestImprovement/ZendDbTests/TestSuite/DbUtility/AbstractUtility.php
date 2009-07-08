@@ -209,9 +209,9 @@ abstract class Zend_Db_TestSuite_DbUtility_AbstractUtility
             $this->createView($viewInfo['viewName'], $viewInfo['asStatement'], $viewInfo['fromTableName'], true);
         }
         
-        foreach ($defaultSchemaArray['sequences'] as $sequenceInfo) {
-            $this->createSequence($sequenceInfo['name'], true);
-        }
+//        foreach ($defaultSchemaArray['sequences'] as $sequenceInfo) {
+//            $this->createSequence($sequenceInfo['name'], true);
+//        }
         
         return $this;
     }

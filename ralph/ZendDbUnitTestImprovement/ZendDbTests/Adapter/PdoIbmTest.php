@@ -40,10 +40,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Adapter_PdoIbmTest extends Zend_Db_Adapter_Db2Test
 {
-    public function getDriver()
-    {
-        return 'Pdo_Ibm';
-    }
 
     public function testAdapterTransactionCommit()
     {

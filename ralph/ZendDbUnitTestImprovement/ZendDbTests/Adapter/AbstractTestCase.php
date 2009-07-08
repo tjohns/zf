@@ -670,6 +670,7 @@ abstract class Zend_Db_Adapter_AbstractTestCase extends Zend_Db_TestSuite_Abstra
 
     public function testAdapterInsertSequence()
     {
+        $this->markTestIncomplete('Rewrite this test to ensure a new table is created with sequence attached.');
         $row = array (
             'product_id' => $this->sharedFixture->dbAdapter->nextSequenceId('zf_products_seq'),
             'product_name' => 'Solaris',
