@@ -37,7 +37,13 @@ class Zend_Entity_Mapper_Definition_ManyToOneRelation extends Zend_Entity_Mapper
         parent::compile($entityDef, $map);
 
         $foreignDef = $map->getDefinitionByEntityName($this->getClass());
-        $this->_foreignKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
+
+        $foreignKey = $foreignDef->getPrimaryKey();
+        if($foreignKey !== null) {
+            $this->_foreignKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
+        } else {
+            throw new Zend_Entity_Exception();
+        }
 
         if($this->getColumnName() == null) {
             $this->setColumnName(($this->getPropertyName()));

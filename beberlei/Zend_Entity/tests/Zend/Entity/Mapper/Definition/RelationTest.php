@@ -19,14 +19,6 @@ abstract class Zend_Entity_Mapper_Definition_RelationTest extends Zend_Entity_Ma
         $this->assertEquals(Zend_Entity_Mapper_Definition_Property::FETCH_SELECT, $relDef->getFetch());
     }
 
-    public function testSetFetchStrategyToJoin()
-    {
-        $relDef = $this->createRelation();
-        $relDef->setFetch(Zend_Entity_Mapper_Definition_Property::FETCH_JOIN);
-
-        $this->assertEquals(Zend_Entity_Mapper_Definition_Property::FETCH_JOIN, $relDef->getFetch());
-    }
-
     public function testSetFetchStrategyToInvalidNameThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");

@@ -20,8 +20,8 @@
 class Zend_Entity_Mapper_Definition_Property extends Zend_Entity_Mapper_Definition_Property_Abstract
 {
     const FETCH_SELECT    = "select";
-    const FETCH_JOIN      = "join";
     const FETCH_LAZY      = "lazy";
+    const FETCH_EAGER     = "eager";
 
     /**
      * Convert Database field into a PHP integer when retrieved.

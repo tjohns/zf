@@ -2,6 +2,7 @@ TODO
 
 * Type Casting: Test it
 * Rename Resource into MetadataFactory
+* Implement support for Custom Collection Classes
 * UnitOfWork: Topographical Sorting? Implement user-land overridable
 * Definitions: Inverse Relationsships
 * Definitions: Initializing of Loader and Persister and fetching of relations should be done lazy

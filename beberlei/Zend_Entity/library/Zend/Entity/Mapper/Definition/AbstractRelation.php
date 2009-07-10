@@ -6,7 +6,6 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
      * @var array
      */
     static protected $_allowedFetchValues = array(
-        Zend_Entity_Mapper_Definition_Property::FETCH_JOIN,
         Zend_Entity_Mapper_Definition_Property::FETCH_LAZY,
         Zend_Entity_Mapper_Definition_Property::FETCH_SELECT,
     );

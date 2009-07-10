@@ -19,6 +19,13 @@
 
 class Zend_Entity_Mapper_Definition_OneToOneRelation extends Zend_Entity_Mapper_Definition_AbstractRelation
 {
+    protected $_foreignKeyPropertyName = null;
+
+    public function getForeignKeyPropertyName()
+    {
+        return $this->_foreignKeyPropertyName;
+    }
+
     /**
      * Compile OneToOne Relation Element
      *
@@ -28,5 +35,18 @@ class Zend_Entity_Mapper_Definition_OneToOneRelation extends Zend_Entity_Mapper_
     public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
     {
         parent::compile($entityDef, $map);
+
+        $foreignDef = $map->getDefinitionByEntityName($this->getClass());
+
+        if($foreignDef !== null) {
+            $foreignKey = $foreignDef->getPrimaryKey();
+            if($foreignKey !== null) {
+                $this->_foreignKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
+            } else {
+                throw new Zend_Entity_Exception();
+            }
+        } else {
+            // TODO: Exception? also implement in ManyToOne?
+        }
     }
 }

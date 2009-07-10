@@ -1,4 +1,23 @@
 <?php
+/**
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/bsd-license.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to kontakt@beberlei.de so we can send you a copy immediately.
+ *
+ * @category   Zend_Entity
+ * @package    Mapper
+ * @subpackage Loader
+ * @copyright  Copyright (c) 2005-2009 Benjamin Eberlei
+ * @license    http://www.opensource.org/licenses/bsd-license.php     New BSD License
+ * @author     Benjamin Eberlei (kontakt@beberlei.de)
+ */
+
 
 require_once "Interface.php";
 
@@ -92,7 +111,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 
                 // Save Relation to the later retrieval stack
                 $this->_lateSelectedRelations[] = $relation;
-                $this->_hasLateLoadingObjects   = true;
+                $this->_hasLateLoadingObjects = true;
             } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
                 // Setup retrieval of the foreign key value
                 $columnName = $relation->getColumnName();
@@ -100,10 +119,8 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 $this->_columnNameToProperty[$columnName] = $relation;
 
                 // Prepare for Lazy Load building.
-                $this->_lazyLoadRelations[]     = $relation;
-                $this->_hasLazyLoads            = true;
-            } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
-                // TODO: Save relation related join information
+                $this->_lazyLoadRelations[] = $relation;
+                $this->_hasLazyLoads = true;
             }
             $propertyNames[] = $relation->getPropertyName();
         }
@@ -113,12 +130,10 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                     $relation = $extension->getRelation();
                     if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
                         $this->_lateSelectedCollections[] = $extension;
-                        $this->_hasLateLoadingObjects     = true;
+                        $this->_hasLateLoadingObjects = true;
                     } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
                         $this->_lazyLoadCollections[]     = $extension;
-                        $this->_hasLazyLoads              = true;
-                    } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_JOIN) {
-                        // TODO: Implement Join saving of information
+                        $this->_hasLazyLoads = true;
                     }
                 }
             }
@@ -147,23 +162,21 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     protected function createLazyLoadCollection(Zend_Entity_Manager $manager, $class, $select)
     {
-        $callback          = array($manager, "find");
+        $callback = array($manager, "find");
         $callbackArguments = array($class, $select);
         return new Zend_Entity_Mapper_LazyLoad_Collection($callback, $callbackArguments);
     }
 
     public function createEntityFromRow(array $row, Zend_Entity_Manager_Interface $entityManager)
     {
-        $entityClass = $this->_class;
-
         $identityMap = $entityManager->getIdentityMap();
         $key = $this->_primaryKey->retrieveKeyValuesFromProperties($row);
-        if($identityMap->hasObject($entityClass, $key) == true) {
-            $entity = $identityMap->getObject($entityClass, $key);
+        if($identityMap->hasObject($this->_class, $key) == true) {
+            $entity = $identityMap->getObject($this->_class, $key);
         } else {
             $entity = $this->createEntity($row);
             // Set this before loadRelationsIntoEntity() to circumvent infinite loop on backreferences and stuff
-            $identityMap->addObject($entityClass, $key, $entity);
+            $identityMap->addObject($this->_class, $key, $entity);
 
             $this->loadRow($entity, $row, $entityManager);
         }
