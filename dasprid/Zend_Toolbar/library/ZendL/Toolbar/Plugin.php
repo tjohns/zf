@@ -20,6 +20,11 @@
 
 
 /**
+ * @see Zend_Version
+ */
+require_once 'Zend/Version.php';
+
+/**
  * @see Zend_Controller_Front
  */
 require_once 'Zend/Controller/Front.php';
@@ -79,7 +84,7 @@ class ZendL_Toolbar_Plugin extends Zend_Controller_Plugin_Abstract
                 'post'    => $_POST,
                 'get'     => $_GET,
                 'cookie'  => $_COOKIE,
-                'session' => $_SESSION,
+                'session' => (isset($_SESSION))?$_SESSION:null,
                 'env'     => $_ENV
             )
         ); 
