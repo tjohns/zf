@@ -106,7 +106,12 @@ class Zend_Entity_IdentityMap
      */
     public function getPrimaryKey(Zend_Entity_Interface $entity)
     {
-        return $this->_primaryKeys[spl_object_hash($entity)];
+        $hash = spl_object_hash($entity);
+        if(isset($this->_primaryKeys[$hash])) {
+            return $this->_primaryKeys[$hash];
+        } else {
+            throw new Exception("Entity of class '".$entity."' is not contained in persistence context and has no primary key.");
+        }
     }
 
     /**

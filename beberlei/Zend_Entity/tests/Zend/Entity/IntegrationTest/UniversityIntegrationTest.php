@@ -35,7 +35,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
         $path = dirname(__FILE__)."/University/Definitions/";
         $dbAdapter = $this->getAdapter();
-        $this->_entityManager = new Zend_Entity_Manager($dbAdapter, array('resource' => new Zend_Entity_MetadataFactory_Code($path)));
+        $this->_entityManager = new Zend_Entity_Manager($dbAdapter, array('metadataFactory' => new Zend_Entity_MetadataFactory_Code($path)));
     }
 
     /**
@@ -131,5 +131,62 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
         $student = $this->_entityManager->findOne("ZendEntity_Student", $select);
         $this->assertEquals(2, $student->id);
         $this->assertEquals("Ludwig von Mises", $student->name);
+    }
+
+    public function testForExistantStudent_SaveAdditionalCourse()
+    {
+        $student = $this->_entityManager->load("ZendEntity_Student", 2);
+        $course = $this->_entityManager->load("ZendEntity_Course", 2);
+        $student->currentCourses[] = $course;
+
+        $this->_entityManager->save($student);
+
+        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds->addTable("university_students_semester_courses");
+
+        $this->assertDataSetsEqual(
+            $this->createFlatXMLDataSet(dirname(__FILE__)."/University/Fixtures/ExistingStudentAdditionalCoursesAssertion.xml"),
+            $ds
+        );
+    }
+
+    public function testNewStudent_SaveWithCourses()
+    {
+        $course = $this->_entityManager->load("ZendEntity_Course", 1);
+
+        $student = new ZendEntity_Student();
+        $student->id = 4;
+        $student->name = "Friedrich August von Hayek";
+        $student->studentId = "9876";
+        $student->currentCourses = new Zend_Entity_Collection();
+        $student->currentCourses[] = $course;
+
+        $this->_entityManager->save($student);
+
+        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds->addTable("university_students");
+        $ds->addTable("university_students_semester_courses");
+
+        $this->assertDataSetsEqual(
+            $this->createFlatXMLDataSet(dirname(__FILE__)."/University/Fixtures/NewStudentWithCoursesAssertion.xml"),
+            $ds
+        );
+    }
+
+    public function testExistingStudent_RemoveCourse()
+    {
+        $student = $this->_entityManager->load("ZendEntity_Student", 2);
+        unset($student->currentCourses[1]);
+
+        $this->_entityManager->save($student);
+
+        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds->addTable("university_students");
+        $ds->addTable("university_students_semester_courses");
+
+        $this->assertDataSetsEqual(
+            $this->createFlatXMLDataSet(dirname(__FILE__)."/University/Fixtures/ExistingStudentRemoveCourseAssertion.xml"),
+            $ds
+        );
     }
 }

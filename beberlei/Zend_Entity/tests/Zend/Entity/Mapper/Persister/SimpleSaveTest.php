@@ -74,7 +74,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
         $identityMapMock = $this->createIdentityMapMock(0);
         $identityMapMock->expects($this->once())->method('contains')->will($this->returnValue(true));
-        $identityMapMock->expects($this->once())->method('getPrimaryKey')->will($this->returnValue(1));
+        $identityMapMock->expects($this->exactly(2))->method('getPrimaryKey')->will($this->returnValue(1));
 
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
@@ -223,7 +223,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $em->expects($this->exactly(2))->method('save');
 
         $persister = $this->createPersister();
-        $persister->evaluateRelatedCollection($collection, $collectionDef, $em);
+        $persister->evaluateRelatedCollection("1", $collection, $collectionDef, $em);
     }
 
     public function testSaveEntity_WithRelatedCascading_LazyLoadCollection()
@@ -239,6 +239,6 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $em->expects($this->exactly(0))->method('save');
 
         $persister = $this->createPersister();
-        $persister->evaluateRelatedCollection($collection, $collectionDef, $em);
+        $persister->evaluateRelatedCollection("1", $collection, $collectionDef, $em);
     }
 }

@@ -99,14 +99,20 @@ abstract class Zend_Entity_Mapper_Definition_Table
             } else {
                 $options = $args[1];
             }
-            return $this->_add($propertyType, $propertyName, $options);
+            return $this->add($propertyType, $propertyName, $options);
         } else {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception("Unknown method '".$method."' called.");
         }
     }
 
-    protected function _add($propertyType, $propertyName, $options)
+    /**
+     * @param  string $propertyType
+     * @param  string $propertyName
+     * @param  array $options
+     * @return Zend_Entity_Mapper_Definition_Property_Abstract
+     */
+    public function add($propertyType, $propertyName, $options)
     {
         if($this->hasProperty($propertyName)) {
             throw new Zend_Entity_Exception("Property '".$propertyName."' already exists! Cannot have the same property twice.");

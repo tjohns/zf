@@ -99,7 +99,7 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
      * @param  array $options
      * @return object
      */
-    protected function _add($propertyType, $propertyName, $options)
+    public function add($propertyType, $propertyName, $options)
     {
         if(isset($this->_properties[$propertyName]) || isset($this->_relations[$propertyName])) {
             require_once "Zend/Entity/Exception.php";
@@ -257,18 +257,29 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
      */
     public function compile(Zend_Entity_MetadataFactory_Interface $map)
     {
-        foreach($this->getProperties() AS $property) {
+        if($this->_id === null) {
+            throw new Zend_Entity_Exception(
+                "No primary key was set for entity '".$this->getClass()."' but is a required attribute."
+            );
+        }
+
+        $propertyNames = array();
+        foreach($this->_properties AS $property) {
             $property->compile($this, $map);
+            $propertyNames[] = $property->getPropertyName();
         }
-        foreach($this->getRelations() AS $relation) {
+        foreach($this->_relations AS $relation) {
             $relation->compile($this, $map);
+            $propertyNames[] = $relation->getPropertyName();
         }
-        foreach($this->getExtensions() AS $extension) {
+        foreach($this->_extensions AS $extension) {
             $extension->compile($this, $map);
+            $propertyNames[] = $extension->getPropertyName();
         }
 
         if(class_exists($this->_stateTransformerClass)) {
             $this->_stateTransformer = new $this->_stateTransformerClass();
+            $this->_stateTransformer->setPropertyNames($propertyNames);
         } else {
             throw new Zend_Entity_Exception(
                 "Invalid State Transformer Class name given in '".$this->getClass()."' entity definition."

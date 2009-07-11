@@ -21,6 +21,7 @@ $def->addProperty("studentId", array(
 $def->addCollection("currentCourses", array(
     'relation' => new Zend_Entity_Mapper_Definition_ManyToManyRelation(
         "currentCourses", array(
+            'cascade' => "save",
             'class' => 'ZendEntity_Course',
         )
     ),

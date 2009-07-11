@@ -150,9 +150,12 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
         return false;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $entity)
     {
-        $this->_collection[$offset] = $value;
+        $this->assertEntityIsOfCorrectType($entity);
+
+        $this->_added[] = $entity;
+        $this->_collection[$offset] = $entity;
     }
     
     public function offsetUnset($offset)

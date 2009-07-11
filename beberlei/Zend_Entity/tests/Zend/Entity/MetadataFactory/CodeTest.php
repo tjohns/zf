@@ -10,18 +10,18 @@ class Zend_Entity_MetadataFactory_CodeTest extends PHPUnit_Framework_TestCase
     const ENTITY_PATH = 'path/TestEntity.php';
     const INVALID_ENTITY_NAME = '6%53&';
 
-    public function testUnknownEntityDefinitionFileShouldThrowException()
+    public function testUnknownEntityDefinitionFile_ThrowsException()
     {
         $this->setExpectedException(
             "Zend_Entity_Exception",
             "Definition file 'invalidpath/UnknownEntity.php' for entity 'UnknownEntity' does not exist!"
         );
 
-        $map = new Zend_Entity_MetadataFactory_Code("invalidpath");
-        $map->getDefinitionByEntityName("UnknownEntity");
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code("invalidpath");
+        $metadataFactory->getDefinitionByEntityName("UnknownEntity");
     }
 
-    public function testFileNotReturningDefinitionShouldThrowException()
+    public function testFileNotReturningDefinition_ThrowsException()
     {
         $entity  = "mapper".md5(time());
 
@@ -32,24 +32,54 @@ class Zend_Entity_MetadataFactory_CodeTest extends PHPUnit_Framework_TestCase
 
         $tempnam = $entity.".php";
         touch(sys_get_temp_dir() . DIRECTORY_SEPARATOR . $tempnam);
-        $map = new Zend_Entity_MetadataFactory_Code(sys_get_temp_dir());
-        $map->getDefinitionByEntityName($entity);
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code(sys_get_temp_dir());
+        $metadataFactory->getDefinitionByEntityName($entity);
     }
 
     public function testCorrectDefinitionFileShouldReturnDefinitionObject()
     {
-        $map = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
-        $def = $map->getDefinitionByEntityName("EmptyEntityDefinition");
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
+        $def = $metadataFactory->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertTrue($def instanceof Zend_Entity_Mapper_Definition_Entity);
     }
 
-    public function testResourceMapShouldCacheReturnedDefinitions()
+    public function testMetadataFactoryShouldCacheReturnedDefinitions()
     {
-        $map = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
-        $def1 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
-        $def2 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
+        $def1 = $metadataFactory->getDefinitionByEntityName("EmptyEntityDefinition");
+        $def2 = $metadataFactory->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertEquals($def1, $def2);
     }
+
+    public function testMetadataFactoryShouldIssueCompileLoadedDefinition()
+    {
+        $defMock = $this->getEntityDefinitionMock();
+        $metadataMock = $this->getDefinitionMapMock($defMock);
+
+        $definition = $metadataMock->getDefinitionByEntityName(self::ENTITY_NAME);
+        $this->assertEquals($defMock, $definition);
+    }
+
+    public function testInvalidEntityNameThrowsException()
+    {
+        $this->setExpectedException(
+            "Zend_Entity_Exception",
+            "Trying to load invalid entity name '".self::INVALID_ENTITY_NAME."'. Only ".Zend_Entity_MetadataFactory_Code::INVALID_ENTITY_NAME_PATTERN." are allowed."
+        );
+
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code(self::ENTITY_PATH);
+        $metadataFactory->getDefinitionByEntityName(self::INVALID_ENTITY_NAME);
+    }
+
+    public function testNamespaceSeparatorIsValidEntityNameChar()
+    {
+        $defMock = $this->getEntityDefinitionMock(self::ENTITY_NAME_WITH_NAMESPACE);
+        $metadataFactory = $this->getDefinitionMapMock($defMock, self::ENTITY_NAME_WITH_NAMESPACE);
+        $metadataFactory->getDefinitionByEntityName(self::ENTITY_NAME_WITH_NAMESPACE);
+
+        $this->assertEquals(self::ENTITY_NAME_WITH_NAMESPACE, $defMock->getClass());
+    }
+
 
     protected function getEntityDefinitionMock($entityName=self::ENTITY_NAME)
     {
@@ -71,40 +101,11 @@ class Zend_Entity_MetadataFactory_CodeTest extends PHPUnit_Framework_TestCase
         $ds = DIRECTORY_SEPARATOR;
         $path = str_replace($ds.$ds, $ds, $directory."/".$entityName.".php");
 
-        $mapMock = $this->getMock('Zend_Entity_MetadataFactory_Code', array('loadDefinitionFile', 'assertPathExists'), array($directory));
-        $mapMock->expects($this->once())
+        $metadataMock = $this->getMock('Zend_Entity_MetadataFactory_Code', array('loadDefinitionFile', 'assertPathExists'), array($directory));
+        $metadataMock->expects($this->once())
                 ->method('loadDefinitionFile')
                 ->with($path, $entityName)
                 ->will($this->returnValue($defMock));
-        return $mapMock;
-    }
-
-    public function testResourceMapShouldIssueCompileLoadedDefinition()
-    {
-        $defMock = $this->getEntityDefinitionMock();
-        $mapMock = $this->getDefinitionMapMock($defMock);
-
-        $definition = $mapMock->getDefinitionByEntityName(self::ENTITY_NAME);
-        $this->assertEquals($defMock, $definition);
-    }
-
-    public function testInvalidEntityNameThrowsException()
-    {
-        $this->setExpectedException(
-            "Zend_Entity_Exception",
-            "Trying to load invalid entity name '".self::INVALID_ENTITY_NAME."'. Only ".Zend_Entity_MetadataFactory_Code::INVALID_ENTITY_NAME_PATTERN." are allowed."
-        );
-
-        $map = new Zend_Entity_MetadataFactory_Code(self::ENTITY_PATH);
-        $map->getDefinitionByEntityName(self::INVALID_ENTITY_NAME);
-    }
-
-    public function testNamespaceSeparatorIsValidEntityNameChar()
-    {
-        $defMock = $this->getEntityDefinitionMock(self::ENTITY_NAME_WITH_NAMESPACE);
-        $map = $this->getDefinitionMapMock($defMock, self::ENTITY_NAME_WITH_NAMESPACE);
-        $map->getDefinitionByEntityName(self::ENTITY_NAME_WITH_NAMESPACE);
-
-        $this->assertEquals(self::ENTITY_NAME_WITH_NAMESPACE, $defMock->getClass());
+        return $metadataMock;
     }
 }

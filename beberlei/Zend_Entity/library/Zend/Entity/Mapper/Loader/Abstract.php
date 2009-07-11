@@ -141,7 +141,6 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         }
 
         $this->_stateTransformer = $entityDefinition->getStateTransformer();
-        $this->_stateTransformer->setPropertyNames($propertyNames);
     }
 
     protected function renameAndCastColumnToPropertyKeys($row)
