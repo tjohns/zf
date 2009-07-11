@@ -178,11 +178,16 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Zend_Db_Select
+     * @param Zend_Entity_Mapper_Abstract $mapper
+     * @return Zend_Entity_Mapper_Select
      */
-    protected function createDbSelectMock()
+    protected function createDbSelectMock(Zend_Entity_Mapper_Abstract $mapper=null)
     {
-        return $this->getMock('Zend_Db_Select', array(), array($this->getDatabaseConnection()));
+        if($mapper == null) {
+            $mapper = $this->createMapperMock();
+        }
+
+        return $this->getMock('Zend_Entity_Mapper_Select', array(), array($this->getDatabaseConnection(), $mapper));
     }
 
     const UOW_MOCK_BEGINTRANSACTION = 1;

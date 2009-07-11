@@ -76,7 +76,13 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function find($sql, Zend_Entity_Manager $entityManager)
     {
-        return $this->performFindQuery($sql, $entityManager);
+        $loader = $this->getLoader();
+
+        $stmt = $this->getAdapter()->query($sql);
+        $resultSet = $stmt->fetchAll();
+        $stmt->closeCursor();
+
+        return $loader->processResultset($resultSet, $entityManager);
     }
 
     /**
@@ -247,25 +253,6 @@ abstract class Zend_Entity_Mapper_Abstract
     protected function createLoader()
     {
         $this->_loader = new Zend_Entity_Mapper_Loader_Basic($this->getDefinition());
-    }
-
-    /**
-     * Query With Select objects.
-     *
-     * @throws Exception
-     * @param  string $sql
-     * @param  Zend_Entity_Manager_Interface $entityManager
-     * @return Zend_Db_Statement
-     */
-    protected function performFindQuery($sql, Zend_Entity_Manager_Interface $entityManager)
-    {
-        $loader = $this->getLoader();
-
-        $stmt = $this->getAdapter()->query($sql);
-        $resultSet = $stmt->fetchAll();
-        $stmt->closeCursor();
-
-        return $loader->processResultset($resultSet, $entityManager);
     }
     
     protected function getMapperTable()

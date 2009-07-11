@@ -13,12 +13,12 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
         $this->setExpectedException("Exception");
         $e = new Exception();
         
-        $resourceMapMock = $this->createResourceMapMock();
-        $resourceMapMock->expects($this->once())
+        $metadataFactoryMock = $this->createResourceMapMock();
+        $metadataFactoryMock->expects($this->once())
                         ->method('getDefinitionByEntityName')
                         ->with($this->equalTo(self::UNKNOWN_ENTITY_CLASS))
                         ->will($this->throwException($e));
-        $manager = $this->createEntityManager(null, $resourceMapMock);
+        $manager = $this->createEntityManager(null, $metadataFactoryMock);
         
         $manager->select(self::UNKNOWN_ENTITY_CLASS);
     }
@@ -27,11 +27,34 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
     {
         $mapper = $this->createMapperMock();
         $mapper->expects($this->once())
-               ->method('select');
+               ->method('select')
+               ->will($this->returnValue($this->createDbSelectMock($mapper)));
         $manager = $this->createTestingEntityManager();
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
 
         $manager->select(self::KNOWN_ENTITY_CLASS);
+    }
+
+    public function testGetSelectIsPassedEntityManager()
+    {
+        $manager = $this->createTestingEntityManager();
+
+        $mapper = $this->createMapperMock();
+
+        $select = $this->createDbSelectMock($mapper);
+        $select->expects($this->once())
+               ->method('setEntityManager')
+               ->with($this->equalTo($manager));
+
+        $mapper->expects($this->once())
+               ->method('select')
+               ->will($this->returnValue($select));
+
+        $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
+
+        $s = $manager->select(self::KNOWN_ENTITY_CLASS);
+
+        $this->assertSame($select, $s);
     }
 
     public function testFindIsDelegatedToMapper()

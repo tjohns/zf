@@ -152,7 +152,12 @@ interface Zend_Entity_Manager_Interface
     /**
      * Retrieve Identity Map instance from EntityManager
      *
-     * @return Zend_Db_Mapper_IdentityMap
+     * @return Zend_Entity_IdentityMap
      */
     public function getIdentityMap();
+
+    /**
+     * @return Zend_Entity_MetadataFactory_Interface
+     */
+    public function getMetadataFactory();
 }

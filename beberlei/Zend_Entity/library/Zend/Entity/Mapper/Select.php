@@ -13,6 +13,12 @@ class Zend_Entity_Mapper_Select extends Zend_Db_Select
     protected $_entityManager = null;
 
     /**
+     *
+     * @var Zend_Entity_Mapper_Definition_Entity
+     */
+    protected $_entityDefinition = null;
+
+    /**
      * Class constructor
      *
      * @param Zend_Db_Adapter_Abstract $adapter

@@ -148,7 +148,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * Return concrete mapper implementation of the given Entity Type
      * 
      * @param  string|Zend_Entity_Interface $entity
-     * @return Zend_Entity_Mapper_Interface
+     * @return Zend_Entity_Mapper_Abstract
      */
     public function getMapperByEntity($entity)
     {
@@ -185,7 +185,9 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     public function createNativeQuery($entityName)
     {
         $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->select();
+        $select = $mapper->select();
+        $select->setEntityManager($this);
+        return $select;
     }
 
     /**
@@ -205,8 +207,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function select($entityName)
     {
-        $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->select();
+        return $this->createNativeQuery($entityName);
     }
 
     /**
@@ -267,10 +268,23 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param string $key
      * @return Zend_Entity_Interface
      */
-    public function load($entityName, $key)
+    public function load($entityName, $keyValue)
     {
-        $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->load($key, $this);
+        if($this->getIdentityMap()->hasObject($entityName, $keyValue)) {
+            $object = $this->getIdentityMap()->getObject($entityName, $keyValue);
+        } else {
+            $mapper = $this->getMapperByEntity($entityName);
+            $def = $mapper->getDefinition();
+
+            $tableName = $def->getTable();
+            $key = $def->getPrimaryKey()->getColumnName();
+            $select = $mapper->select();
+            $cond = $this->getAdapter()->quoteIdentifier($tableName.".".$key);
+            $select->where($cond." = ?", $keyValue);
+
+            $object = $mapper->findOne($select, $this);
+        }
+        return $object;
     }
 
     /**
