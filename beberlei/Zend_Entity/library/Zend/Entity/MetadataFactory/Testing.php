@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_Resource_Testing implements Zend_Entity_Resource_Interface
+class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory_Interface
 {
     /**
      * @var array

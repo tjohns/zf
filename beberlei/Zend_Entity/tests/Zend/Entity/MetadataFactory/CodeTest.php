@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__)."/../../TestHelper.php";
 
-class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_MetadataFactory_CodeTest extends PHPUnit_Framework_TestCase
 {
     const ENTITY_DIRECTORY = 'path/';
     const ENTITY_NAME = 'TestEntity';
@@ -17,7 +17,7 @@ class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
             "Definition file 'invalidpath/UnknownEntity.php' for entity 'UnknownEntity' does not exist!"
         );
 
-        $map = new Zend_Entity_Resource_Code("invalidpath");
+        $map = new Zend_Entity_MetadataFactory_Code("invalidpath");
         $map->getDefinitionByEntityName("UnknownEntity");
     }
 
@@ -32,20 +32,20 @@ class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
 
         $tempnam = $entity.".php";
         touch(sys_get_temp_dir() . DIRECTORY_SEPARATOR . $tempnam);
-        $map = new Zend_Entity_Resource_Code(sys_get_temp_dir());
+        $map = new Zend_Entity_MetadataFactory_Code(sys_get_temp_dir());
         $map->getDefinitionByEntityName($entity);
     }
 
     public function testCorrectDefinitionFileShouldReturnDefinitionObject()
     {
-        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../Fixture/");
+        $map = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
         $def = $map->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertTrue($def instanceof Zend_Entity_Mapper_Definition_Entity);
     }
 
     public function testResourceMapShouldCacheReturnedDefinitions()
     {
-        $map = new Zend_Entity_Resource_Code(dirname(__FILE__)."/../Fixture/");
+        $map = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/../Fixture/");
         $def1 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
         $def2 = $map->getDefinitionByEntityName("EmptyEntityDefinition");
         $this->assertEquals($def1, $def2);
@@ -71,7 +71,7 @@ class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
         $ds = DIRECTORY_SEPARATOR;
         $path = str_replace($ds.$ds, $ds, $directory."/".$entityName.".php");
 
-        $mapMock = $this->getMock('Zend_Entity_Resource_Code', array('loadDefinitionFile', 'assertPathExists'), array($directory));
+        $mapMock = $this->getMock('Zend_Entity_MetadataFactory_Code', array('loadDefinitionFile', 'assertPathExists'), array($directory));
         $mapMock->expects($this->once())
                 ->method('loadDefinitionFile')
                 ->with($path, $entityName)
@@ -92,10 +92,10 @@ class Zend_Entity_Resource_CodeTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(
             "Zend_Entity_Exception",
-            "Trying to load invalid entity name '".self::INVALID_ENTITY_NAME."'. Only ".Zend_Entity_Resource_Code::INVALID_ENTITY_NAME_PATTERN." are allowed."
+            "Trying to load invalid entity name '".self::INVALID_ENTITY_NAME."'. Only ".Zend_Entity_MetadataFactory_Code::INVALID_ENTITY_NAME_PATTERN." are allowed."
         );
 
-        $map = new Zend_Entity_Resource_Code(self::ENTITY_PATH);
+        $map = new Zend_Entity_MetadataFactory_Code(self::ENTITY_PATH);
         $map->getDefinitionByEntityName(self::INVALID_ENTITY_NAME);
     }
 

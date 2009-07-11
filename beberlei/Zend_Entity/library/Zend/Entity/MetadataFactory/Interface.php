@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-interface Zend_Entity_Resource_Interface
+interface Zend_Entity_MetadataFactory_Interface
 {
     /**
      * Get an Entity Mapper Definition by the name of the Entity

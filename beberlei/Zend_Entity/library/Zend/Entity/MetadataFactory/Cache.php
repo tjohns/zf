@@ -17,10 +17,10 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Resource_Cache implements Zend_Entity_Resource_Interface
+class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_Interface
 {
     /**
-     * @var Zend_Entity_Resource_Interface
+     * @var Zend_Entity_MetadataFactory_Interface
      */
     protected $_resourceMap = null;
 
@@ -30,10 +30,10 @@ class Zend_Entity_Resource_Cache implements Zend_Entity_Resource_Interface
     protected $_cache = null;
 
     /**
-     * @param Zend_Entity_Resource_Interface $resourceMap
+     * @param Zend_Entity_MetadataFactory_Interface $resourceMap
      * @param Zend_Cache_Core $cache
      */
-    public function __construct(Zend_Entity_Resource_Interface $resourceMap, Zend_Cache_Core $cache)
+    public function __construct(Zend_Entity_MetadataFactory_Interface $resourceMap, Zend_Cache_Core $cache)
     {
         $this->_resourceMap = $resourceMap;
         $this->_cache = $cache;

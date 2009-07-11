@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Resource_Code implements Zend_Entity_Resource_Interface
+class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_Interface
 {
     const INVALID_ENTITY_NAME_PATTERN = '/([^_a-zA-Z0-9\\\]+)/';
 
