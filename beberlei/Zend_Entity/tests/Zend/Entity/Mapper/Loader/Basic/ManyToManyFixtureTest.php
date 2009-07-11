@@ -43,7 +43,9 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
         $row = array(Zend_Entity_Fixture_ManyToManyDefs::TEST_A_ID_COLUMN => 1);
 
         $this->entityManager = $this->createEntityManager();
-        $this->entityManager->setResource($this->fixture->getResourceMap());
+        $this->entityManager->setMetadataFactory(
+            $this->fixture->getResourceMap()
+        );
         $loader->loadRow($entity, $row, $this->entityManager);
         $entityState = $entity->getState();
 

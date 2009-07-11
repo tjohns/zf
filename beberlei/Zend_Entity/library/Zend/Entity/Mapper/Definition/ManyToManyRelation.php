@@ -19,7 +19,7 @@
 
 class Zend_Entity_Mapper_Definition_ManyToManyRelation extends Zend_Entity_Mapper_Definition_AbstractRelation
 {
-    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
+    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
     {
         parent::compile($entityDef, $map);
 

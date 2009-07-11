@@ -111,10 +111,10 @@ class Zend_Entity_Mapper_Definition_Join extends Zend_Entity_Mapper_Definition_T
      * Compile Join-Table
      *
      * @param  Zend_Entity_Mapper_Definition_Entity $entityDef
-     * @param  Zend_Entity_Resource_Interface $map
+     * @param  Zend_Entity_MetadataFactory_Interface $map
      * @return void
      */
-    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
+    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
     {
         foreach($this->getProperties() AS $property) {
             $property->compile($entityDef, $map);

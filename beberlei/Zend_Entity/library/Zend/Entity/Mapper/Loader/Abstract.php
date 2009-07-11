@@ -217,7 +217,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         }
         foreach($this->_lazyLoadCollections AS $collectionDef) {
             $relation   = $collectionDef->getRelation();
-            $foreignDefinition = $entityManager->getResource()->getDefinitionByEntityName($relation->getClass());
+            $foreignDefinition = $entityManager->getMetadataFactory()->getDefinitionByEntityName($relation->getClass());
 
             $keyValue = $entityState[$this->_primaryKey->getPropertyName()];
 

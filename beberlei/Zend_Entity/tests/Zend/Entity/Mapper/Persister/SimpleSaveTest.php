@@ -51,7 +51,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
             ->method('lastInsertId')
             ->will($this->returnValue($newId));
 
-        $em = $this->createEntityManagerMock(null, null, null, $db);
+        $em = $this->createTestingEntityManager(null, null, null, $db);
 
         $entity = new Zend_TestEntity1();
 
@@ -85,7 +85,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
            ->with('entities.entities_id = ?', 1)
            ->will($this->returnValue('entities.entities_id = 1'));
 
-        $em = $this->createEntityManagerMock(null, null, $identityMapMock, $db);
+        $em = $this->createTestingEntityManager(null, null, $identityMapMock, $db);
 
         $persister = $this->createPersister();
         $persister->doPerformSave($entity, $columnFullState, $em);
@@ -107,7 +107,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
                     ->method('addObject')
                     ->with('Zend_TestEntity1', $newId, $entity);
 
-        $em = $this->createEntityManagerMock(null, null, $identityMap, $db);
+        $em = $this->createTestingEntityManager(null, null, $identityMap, $db);
 
         $persister = $this->createPersister();
         $persister->doPerformSave($entity, $columnExpectedState, $em);
@@ -123,7 +123,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entityA->setmanytoone($entityB);
 
         $persister = $this->createPersister();
-        $actualDbState = $persister->transformEntityToDbState($entityA->getState(), $this->createEntityManagerMock());
+        $actualDbState = $persister->transformEntityToDbState($entityA->getState(), $this->createTestingEntityManager());
 
         $this->assertEquals(
             $entityB->getid(),
@@ -142,7 +142,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entity->setmanytoone($entityB);
 
         $persister = $this->createPersister();
-        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createEntityManagerMock());
+        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createTestingEntityManager());
 
         $this->assertEquals(
             $relatedId,
@@ -160,7 +160,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entity->setmanytoone($emptyRelation);
 
         $persister = $this->createPersister();
-        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createEntityManagerMock());
+        $actualDbState = $persister->transformEntityToDbState($entity->getState(), $this->createTestingEntityManager());
 
         $this->assertEquals(
             $emptyRelation,

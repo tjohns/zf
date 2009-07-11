@@ -20,11 +20,11 @@ class Zend_Entity_Mapper_Definition_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      *
-     * @return Zend_Entity_Resource_Interface
+     * @return Zend_Entity_MetadataFactory_Interface
      */
     public function createEntityResourceMock()
     {
-        return $this->getMock('Zend_Entity_Resource_Interface');
+        return $this->getMock('Zend_Entity_MetadataFactory_Interface');
     }
 
     /**

@@ -16,13 +16,13 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     {
         $manager = $this->createEntityManager();
         
-        $this->assertTrue( $manager->getIdentityMap() instanceof Zend_Entity_Mapper_IdentityMap );
+        $this->assertTrue( $manager->getIdentityMap() instanceof Zend_Entity_IdentityMap );
     }
 
     public function testSetGetIdentityMap()
     {
         $manager = $this->createEntityManager();
-        $map = new Zend_Entity_Mapper_IdentityMap();
+        $map = new Zend_Entity_IdentityMap();
 
         $manager->setIdentityMap($map);
         $this->assertEquals($map, $manager->getIdentityMap());
@@ -33,52 +33,53 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->setExpectedException("Zend_Entity_Exception");
         $manager = $this->createEntityManager();
         
-        $manager->getResource();
+        $manager->getMetadataFactory();
     }
 
     public function testSetGetResourceMapEqualsReference()
     {
         $manager = $this->createEntityManager();
-        $resourceMap = new Zend_Entity_Resource_Code("path");
+        $resourceMap = new Zend_Entity_MetadataFactory_Code("path");
         
-        $manager->setResource($resourceMap);
-        $this->assertEquals($resourceMap, $manager->getResource());
+        $manager->setMetadataFactory($resourceMap);
+        $this->assertEquals($resourceMap, $manager->getMetadataFactory());
     }
 
     public function testSetResourceThroughConstructorOptionsArray()
     {
-        $resourceMap = new Zend_Entity_Resource_Code("path");
+        $resourceMap = new Zend_Entity_MetadataFactory_Code("path");
         $manager = $this->createEntityManager(null, $resourceMap, null);
         
-        $this->assertEquals($resourceMap, $manager->getResource());
+        $this->assertEquals($resourceMap, $manager->getMetadataFactory());
     }
 
     public function testGetMapperByEntityStringNameReturnsMapperOnValidCall()
     {
         $entityName = "Zend_TestEntity1";
-        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
-        $resourceMap = $this->getMock('Zend_Entity_Resource_Interface');
-        $resourceMap->expects($this->once())
-                    ->method('getDefinitionByEntityName')
-                    ->with($this->equalTo($entityName))
-                    ->will($this->returnValue($definitionMock));
-        $manager = $this->createEntityManager(null, $resourceMap);
+        $metadataFactory = $this->createMetadataFactory($entityName);
+        $manager = $this->createEntityManager(null, $metadataFactory);
         $mapper  = $manager->getMapperByEntity($entityName);
         
         $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
+    }
+
+    private function createMetadataFactory($entityName)
+    {
+        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
+        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
+        $metadataFactory->expects($this->once())
+                    ->method('getDefinitionByEntityName')
+                    ->with($this->equalTo($entityName))
+                    ->will($this->returnValue($definitionMock));
+        return $metadataFactory;
     }
 
     public function testGetMapperByEntityClassNameReturnsMapperOnValidCall()
     {
         $entity = new Zend_TestEntity1();
         $entityName = "Zend_TestEntity1";
-        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
-        $resourceMap = $this->getMock('Zend_Entity_Resource_Interface');
-        $resourceMap->expects($this->once())
-                    ->method('getDefinitionByEntityName')
-                    ->with($this->equalTo($entityName))
-                    ->will($this->returnValue($definitionMock));
-        $manager = $this->createEntityManager(null, $resourceMap);
+        $metadataFactory = $this->createMetadataFactory($entityName);
+        $manager = $this->createEntityManager(null, $metadataFactory);
         $mapper  = $manager->getMapperByEntity($entity);
         
         $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
@@ -115,7 +116,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
     public function testManagerContainsProxyToIdentityMap()
     {
-        $identityMap = $this->getMock('Zend_Entity_Mapper_IdentityMap');
+        $identityMap = $this->getMock('Zend_Entity_IdentityMap');
         $identityMap->expects($this->once())
                     ->method('contains')
                     ->will($this->returnValue(true));
@@ -143,6 +144,39 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
            ->will($this->returnValue(true));
         $manager = new Zend_Entity_Manager($db);
         
-        $manager->closeConnection();
+        $manager->close();
+    }
+
+    public function testSaveIsDelegatedToMapper()
+    {
+        $entity = new Zend_TestEntity1();
+        $className = get_class($entity);
+
+        $mapperMock = $this->createMapperMock();
+        $mapperMock->expects($this->once())
+                   ->method('save')
+                   ->with($this->equalTo($entity));
+
+        $manager = $this->createTestingEntityManager();
+        $manager->addMapper($className, $mapperMock);
+
+        $manager->save($entity);
+    }
+
+    public function testDeleteIsDelegatedToMapper()
+    {
+        $entity = new Zend_TestEntity1();
+        $className = get_class($entity);
+
+        $mapperMock = $this->createMapperMock();
+        $mapperMock->expects($this->once())
+                   ->method('delete')
+                   ->with($this->equalTo($entity));
+
+
+        $manager = $this->createTestingEntityManager();
+        $manager->addMapper($className, $mapperMock);
+
+        $manager->delete($entity);
     }
 }

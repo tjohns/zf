@@ -28,7 +28,7 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
         $mapper = $this->createMapperMock();
         $mapper->expects($this->once())
                ->method('select');
-        $manager = $this->createEntityManagerMock();
+        $manager = $this->createTestingEntityManager();
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
 
         $manager->select(self::KNOWN_ENTITY_CLASS);
@@ -98,9 +98,30 @@ class Zend_Entity_ManagerFindTest extends Zend_Entity_TestCase
         $manager->findAll(self::KNOWN_ENTITY_CLASS, null, null, 'foo');
     }
 
+    public function testCreateNativeQuery()
+    {
+        $manager = $this->createTestingEntityManager();
+        $select = $this->createDbSelectMock();
+
+        $mapper = $this->createMapperMock();
+        $mapper->expects($this->any())
+               ->method('select')
+               ->will($this->returnValue($select));
+        $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
+
+        $sqlQuery = $manager->createNativeQuery(self::KNOWN_ENTITY_CLASS);
+
+        $this->assertEquals($select, $sqlQuery);
+    }
+
+    public function testCreateQuery()
+    {
+        
+    }
+
     public function createEntityManagerMockWithMapperMockFindMethodExpectation($methodName, $select)
     {
-        $manager = $this->createEntityManagerMock();
+        $manager = $this->createTestingEntityManager();
 
         $mapper = $this->createMapperMock();
         $mapper->expects($this->any())->method('select')->will($this->returnValue($select));

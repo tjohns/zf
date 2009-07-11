@@ -166,7 +166,7 @@ class Zend_Entity_Mapper_Definition_CollectionTest extends Zend_Entity_Mapper_De
     }
 
     /**
-     * @return Zend_Entity_Resource_Interface
+     * @return Zend_Entity_MetadataFactory_Interface
      */
     protected function createEntityResourceMockWithDefitionByClassNameExpectsGetTable()
     {

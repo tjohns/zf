@@ -15,7 +15,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      *
      * @param Zend_Db_Adapter_Abstract $db
      * @param Zend_Entity_Mapper_Definition_Entity $entityDefinition
-     * @param Zend_Entity_Resource_Interface $resourceMap
+     * @param Zend_Entity_MetadataFactory_Interface $resourceMap
      * @param Zend_Entity_Mapper_Loader_Interface $loader
      * @param Zend_Entity_Mapper_Persister_Interface $persister
      * @return Zend_Entity_Mapper
@@ -100,7 +100,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
 
     public function createResourceMapMock()
     {
-        return $this->getMock('Zend_Entity_Resource_Interface');
+        return $this->getMock('Zend_Entity_MetadataFactory_Interface');
     }
 
     public function createSampleEntityDefinition()
@@ -132,7 +132,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     /**
      *
      * @param  Zend_Entity_UnitOfWork $unitOfWork
-     * @param  Zend_Entity_Resource_Interface $resourceMap
+     * @param  Zend_Entity_MetadataFactory_Interface $resourceMap
      * @param  Zend_Entity_IdentityMap $identityMap
      * @param  Zend_Db_Adapter_Abstract $db
      * @return Zend_Entity_Manager_Interface
@@ -150,12 +150,12 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     /**
      *
      * @param  Zend_Entity_UnitOfWork $unitOfWork
-     * @param  Zend_Entity_Resource_Interface $resourceMap
+     * @param  Zend_Entity_MetadataFactory_Interface $resourceMap
      * @param  Zend_Entity_IdentityMap $identityMap
      * @param  Zend_Db_Adapter_Abstract $db
-     * @return Zend_Entity_Manager_Interface
+     * @return Zend_Entity_TestManagerMock
      */
-    protected function createEntityManagerMock($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
+    protected function createTestingEntityManager($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
     {
         if($db==null) {
             $db = $this->getDatabaseConnection();
@@ -165,14 +165,14 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         return new Zend_Entity_TestManagerMock($db, $options);
     }
 
-    private function generateEntityManagerOptions($unitOfWork=null, $resourceMap=null, $identityMap=null)
+    private function generateEntityManagerOptions($unitOfWork=null, $metadataFactory=null, $identityMap=null)
     {
         $options = array(
             'unitOfWork' => $unitOfWork,
             'identityMap' => $identityMap,
         );
-        if($resourceMap !== null) {
-            $options['resource'] = $resourceMap;
+        if($metadataFactory !== null) {
+            $options['metadataFactory'] = $metadataFactory;
         }
         return $options;
     }
@@ -193,61 +193,17 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     const UOW_MOCK_SETREADONLY = 32;
     const UOW_MOCK_ROLLBACK = 64;
 
-    /**
-     * @param int $mockMask
-     * @return Zend_Entity_Mapper_UnitOfWork
-     */
-    protected function createUnitOfWorkMock($mockMask = 0)
-    {
-        $unitOfWork = $this->getMock('Zend_Entity_Mapper_UnitOfWork');
-        if( ($mockMask&self::UOW_MOCK_BEGINTRANSACTION) > 0) {
-            $unitOfWork->expects($this->once())
-                       ->method('beginTransaction')
-                       ->will($this->returnValue(true));
-        }
-        if( ($mockMask&self::UOW_MOCK_COMMIT) > 0) {
-            $unitOfWork->expects($this->once())
-                       ->method('commit')
-                       ->will($this->returnValue(true));
-        }
-        if( ($mockMask&self::UOW_MOCK_ISMANAGING_TRUE) > 0) {
-                $unitOfWork->expects($this->once())
-                           ->method('isManagingCurrentTransaction')
-                           ->will($this->returnValue(true));
-        } else if( ($mockMask&self::UOW_MOCK_ISMANAGING_FALSE) > 0) {
-                $unitOfWork->expects($this->once())
-                           ->method('isManagingCurrentTransaction')
-                           ->will($this->returnValue(false));
-        }
-        if( ($mockMask&self::UOW_MOCK_CLEAR) > 0) {
-            $unitOfWork->expects($this->once())
-                       ->method('clear')
-                       ->will($this->returnValue(true));
-        }
-        if( ($mockMask&self::UOW_MOCK_SETREADONLY) > 0) {
-            $unitOfWork->expects($this->any())
-                       ->method('setReadOnly')
-                       ->will($this->returnValue(true));
-        }
-        if( ($mockMask&self::UOW_MOCK_ROLLBACK) > 0) {
-            $unitOfWork->expects($this->once())
-                       ->method('rollBack')
-                       ->will($this->returnValue(true));
-        }
-        return $unitOfWork;
-    }
-
     const IDENTITY_MOCK_CLEAR = 1;
     const IDENTITY_MOCK_SETREADONLY_NEVER = 2;
     const IDENTITY_MOCK_SETREADONLY_ANY = 4;
 
     /**
      * @param int $mask
-     * @return Zend_Entity_Mapper_IdentityMap
+     * @return Zend_Entity_IdentityMap
      */
     protected function createIdentityMapMock($mask)
     {
-        $identityMap = $this->getMock('Zend_Entity_Mapper_IdentityMap');
+        $identityMap = $this->getMock('Zend_Entity_IdentityMap');
         if( ($mask&self::IDENTITY_MOCK_CLEAR) > 0) {
             $identityMap->expects($this->any())
                         ->method('clear')

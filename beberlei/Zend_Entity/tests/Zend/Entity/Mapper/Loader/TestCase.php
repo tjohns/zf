@@ -8,12 +8,12 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     protected $entityManager = null;
 
     /**
-     * @var Zend_Entity_Resource_Testing
+     * @var Zend_Entity_MetadataFactory_Testing
      */
     protected $resourceMap = null;
 
     /**
-     * @var Zend_Entity_Mapper_IdentityMap
+     * @var Zend_Entity_IdentityMap
      */
     protected $identityMap = null;
 

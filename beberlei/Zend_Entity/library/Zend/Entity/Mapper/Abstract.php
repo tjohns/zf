@@ -36,7 +36,7 @@ abstract class Zend_Entity_Mapper_Abstract
     /**
      * Entity Resource Map (of all the other entities)
      *
-     * @var Zend_Entity_Resource_Interface
+     * @var Zend_Entity_MetadataFactory_Interface
      */
     protected $_entityResourceMap = null;
 
@@ -59,9 +59,9 @@ abstract class Zend_Entity_Mapper_Abstract
      *
      * @param  Zend_Db_Adapter_Abstract  $db
      * @param  Zend_Entity_Mapper_Definition_Entity $def
-     * @param  Zend_Entity_Resource_Interface $map
+     * @param  Zend_Entity_MetadataFactory_Interface $map
      */
-    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_Mapper_Definition_Entity $def, Zend_Entity_Resource_Interface $map)
+    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_Mapper_Definition_Entity $def, Zend_Entity_MetadataFactory_Interface $map)
     {
         $this->_db = $db;
         $this->_entityDefinition = $def;

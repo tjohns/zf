@@ -36,12 +36,12 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * 
      * @var array
      */
-    protected $_entityToMapper = array();
+    protected $_entityMappers = array();
 
     /**
      * Object identity map
      * 
-     * @var Zend_Entity_Mapper_IdentityMap
+     * @var Zend_Entity_IdentityMap
      */
     protected $_identityMap = null;
 
@@ -50,7 +50,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      *
      * @var Zend_Entity_Mapper_DefinitionMap
      */
-    protected $_resource = null;
+    protected $_metadataFactory = null;
 
     /**
      * Construct new model factory.
@@ -63,7 +63,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
         $this->setAdapter($db);
         
         if(!isset($options['identityMap'])) {
-            $options['identityMap'] = new Zend_Entity_Mapper_IdentityMap();
+            $options['identityMap'] = new Zend_Entity_IdentityMap();
         }
 
         foreach($options AS $k => $v) {
@@ -77,10 +77,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Set the Identity Map
      * 
-     * @param Zend_Entity_Mapper_IdentityMap $map
+     * @param Zend_Entity_IdentityMap $map
      * @return Zend_Entity_Manager
      */
-    public function setIdentityMap(Zend_Entity_Mapper_IdentityMap $map)
+    public function setIdentityMap(Zend_Entity_IdentityMap $map)
     {
         $this->_identityMap = $map;
         return $this;
@@ -89,7 +89,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Return current identity map.
      * 
-     * @return Zend_Entity_Mapper_IdentityMap
+     * @return Zend_Entity_IdentityMap
      */
     public function getIdentityMap()
     {
@@ -99,27 +99,27 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Set the Entity Resource Map
      *
-     * @param  Zend_Entity_Resource_Interface
+     * @param  Zend_Entity_MetadataFactory_Interface
      * @return Zend_Entity_Manager
      */
-    public function setResource(Zend_Entity_Resource_Interface $map)
+    public function setMetadataFactory(Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
-        $this->_resource = $map;
+        $this->_metadataFactory = $metadataFactory;
         return $this;
     }
 
     /**
      * Get Resource Map
      *
-     * @return Zend_Entity_Resource_Interface
+     * @return Zend_Entity_MetadataFactory_Interface
      */
-    public function getResource()
+    public function getMetadataFactory()
     {
-        if($this->_resource === null) {
+        if($this->_metadataFactory === null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception("No resource definition map was given to Entity Manager.");
         }
-        return $this->_resource;
+        return $this->_metadataFactory;
     }
 
     /**
@@ -158,10 +158,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             $className = $entity;
         }
 
-        if(!isset($this->_entityToMapper[$className])) {
+        if(!isset($this->_entityMappers[$className])) {
             $this->loadEntityMapper($className);
         }
-        return $this->_entityToMapper[$className];
+        return $this->_entityMappers[$className];
     }
 
     /**
@@ -172,10 +172,29 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     protected function loadEntityMapper($entityClassName)
     {
-        $resourceMap = $this->getResource();
+        $resourceMap = $this->getMetadataFactory();
         $entityDefinition = $resourceMap->getDefinitionByEntityName($entityClassName);
         $mapper = new Zend_Entity_Mapper($this->getAdapter(), $entityDefinition, $resourceMap);
-        $this->_entityToMapper[$entityClassName] = $mapper;
+        $this->_entityMappers[$entityClassName] = $mapper;
+    }
+
+    /**
+     * @param string $entityName
+     * @return Zend_Entity_Mapper_Select
+     */
+    public function createNativeQuery($entityName)
+    {
+        $mapper = $this->getMapperByEntity($entityName);
+        return $mapper->select();
+    }
+
+    /**
+     * @param string $entityName
+     * @return Zend_Entity_Mapper_Query
+     */
+    public function createQuery($entityName)
+    {
+        throw new Exception("not implemented yet");
     }
 
     /**
@@ -297,7 +316,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function contains(Zend_Entity_Interface $entity)
     {
-        return $this->getIdentityMap()->contains($entity);
+        return $this->_identityMap->contains($entity);
     }
 
     /**
@@ -360,7 +379,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function clear()
     {
-        $this->getIdentityMap()->clear();
+        $this->_identityMap->clear();
     }
 
     /**
@@ -368,9 +387,9 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      *
      * @return void
      */
-    public function closeConnection()
+    public function close()
     {
         $this->clear();
-        $this->getAdapter()->closeConnection();
+        $this->_db->closeConnection();
     }
 }

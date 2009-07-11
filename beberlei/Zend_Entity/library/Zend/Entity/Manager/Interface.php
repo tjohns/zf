@@ -11,8 +11,21 @@ interface Zend_Entity_Manager_Interface
     public function getMapperByEntity($entity);
 
     /**
+     * @param string $entityName
+     * @return Zend_Entity_Mapper_Select
+     */
+    public function createNativeQuery($entityName);
+
+    /**
+     * @param string $entityName
+     * @return Zend_Entity_Mapper_Query
+     */
+    public function createQuery($entityName);
+
+    /**
      * Return Query Object for given Entity
      *
+     * @deprecated
      * @param  string $entityClass
      * @return object
      */
@@ -21,6 +34,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Find all entities matching query statement
      *
+     * @deprecated
      * @param string $entityName
      * @param Zend_Db_Select|string $sql
      * @return Zend_Entity_Collection
@@ -30,6 +44,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Find one entity matching select statement
      *
+     * @deprecated
      * @param string $entityName
      * @param object $select
      * @return Zend_Entity_Interface
@@ -132,7 +147,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Close connection to database, commit transaction if any is open and call clear().
      */
-    public function closeConnection();
+    public function close();
 
     /**
      * Retrieve Identity Map instance from EntityManager

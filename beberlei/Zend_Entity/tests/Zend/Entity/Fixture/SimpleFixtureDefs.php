@@ -15,7 +15,7 @@ class Zend_Entity_Fixture_SimpleFixtureDefs extends Zend_Entity_Fixture_Abstract
 
     public function setUp()
     {
-        $this->resourceMap = new Zend_Entity_Resource_Testing();
+        $this->resourceMap = new Zend_Entity_MetadataFactory_Testing();
         $this->resourceMap->addDefinition( $this->createClassADefinition() );
     }
 

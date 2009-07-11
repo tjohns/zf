@@ -252,10 +252,10 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     /**
      * Compile Entity Definition
      * 
-     * @param Zend_Entity_Resource_Interface $map
+     * @param Zend_Entity_MetadataFactory_Interface $map
      * @return void
      */
-    public function compile(Zend_Entity_Resource_Interface $map)
+    public function compile(Zend_Entity_MetadataFactory_Interface $map)
     {
         foreach($this->getProperties() AS $property) {
             $property->compile($this, $map);

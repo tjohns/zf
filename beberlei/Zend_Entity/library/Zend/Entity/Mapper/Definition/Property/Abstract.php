@@ -219,7 +219,7 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract
 
     /**
      * @param Zend_Entity_Mapper_Definition_Entity $entityDef
-     * @param Zend_Entity_Resource_Interface $map
+     * @param Zend_Entity_MetadataFactory_Interface $map
      */
-    abstract public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map);
+    abstract public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map);
 }

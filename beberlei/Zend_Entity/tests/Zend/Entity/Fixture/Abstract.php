@@ -14,7 +14,7 @@ abstract class Zend_Entity_Fixture_Abstract
     public function setUp()
     {
         $definitions = array();
-        $this->resourceMap = new Zend_Entity_Resource_Testing();
+        $this->resourceMap = new Zend_Entity_MetadataFactory_Testing();
         foreach($this->definitionCreationMethods AS $method) {
             $definition = call_user_func_array(array($this, $method), array());
             $this->resourceMap->addDefinition($definition);
@@ -26,7 +26,7 @@ abstract class Zend_Entity_Fixture_Abstract
     }
 
     /**
-     * @return Zend_Entity_Resource_Testing
+     * @return Zend_Entity_MetadataFactory_Testing
      */
     public function getResourceMap()
     {

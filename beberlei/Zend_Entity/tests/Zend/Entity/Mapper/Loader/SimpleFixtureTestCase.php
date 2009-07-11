@@ -11,7 +11,7 @@ abstract class Zend_Entity_Mapper_Loader_SimpleFixtureTestCase extends Zend_Enti
 
     public function setUp()
     {
-        $this->resourceMap = new Zend_Entity_Resource_Testing();
+        $this->resourceMap = new Zend_Entity_MetadataFactory_Testing();
         $this->resourceMap->addDefinition( $this->createClassADefinition() );
     }
 

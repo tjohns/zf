@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Mapper_IdentityMap
+class Zend_Entity_IdentityMap
 {
     /**
      * HashMap to keep loaded objects only once.

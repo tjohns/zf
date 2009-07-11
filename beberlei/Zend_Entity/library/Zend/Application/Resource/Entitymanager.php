@@ -42,7 +42,7 @@ class Zend_Application_Resource_Entitymanager extends Zend_Application_Resource_
             $options = $this->getOptions();
 
             if(isset($options['metadataDefinitionPath'])) {
-                $resourceMap = new Zend_Entity_Resource_Code($options['metadataDefinitionPath']);
+                $resourceMap = new Zend_Entity_MetadataFactory_Code($options['metadataDefinitionPath']);
             } else {
                 throw new Zend_Application_Resource_Exception("Entity Manager needs 'metadataDefinitionPath' option.");
             }

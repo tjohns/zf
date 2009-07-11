@@ -6,13 +6,13 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 {
     public function testDefaultHasObjectEvaluatesToFalse()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $this->assertFalse($identityMap->hasObject("Anything", 1));
     }
 
     public function testAddingObjectLetsHasObjectEvaluateTrue()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
 
         $entity = new Zend_TestEntity1();
 
@@ -22,7 +22,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testAddingGettingObjectReturnsReferenceToSameObject()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
 
         $entity = new Zend_TestEntity1();
 
@@ -32,7 +32,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testAddedObjectIsContained()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
         
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);
@@ -42,7 +42,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testUnknownObjectIsNotContained()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
         $this->assertFalse($identityMap->contains($entity));
@@ -50,7 +50,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testGetPrimaryKeyFromIdentity()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);
@@ -60,7 +60,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testClearEmptiesPrimaryKeys()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);
@@ -71,7 +71,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
 
     public function testClearEmptiesIdentities()
     {
-        $identityMap = new Zend_Entity_Mapper_IdentityMap();
+        $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
         $identityMap->addObject("Zend_TestEntity1", "1", $entity);

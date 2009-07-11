@@ -5,6 +5,8 @@ require_once "Definition/AllTests.php";
 require_once "LazyLoad/AllTests.php";
 require_once "Loader/AllTests.php";
 require_once "Persister/AllTests.php";
+require_once "StateTransformer/AllTests.php";
+require_once "SelectTest.php";
 
 class Zend_Entity_Mapper_AllTests
 {
@@ -15,6 +17,8 @@ class Zend_Entity_Mapper_AllTests
         $suite->addTest(Zend_Entity_Mapper_LazyLoad_AllTests::suite());
         $suite->addTest(Zend_Entity_Mapper_Loader_AllTests::suite());
         $suite->addTest(Zend_Entity_Mapper_Persister_AllTests::suite());
+        $suite->addTest(Zend_Entity_Mapper_StateTransformer_AllTests::suite());
+        $suite->addTestSuite('Zend_Entity_Mapper_SelectTest');
 
         return $suite;
     }

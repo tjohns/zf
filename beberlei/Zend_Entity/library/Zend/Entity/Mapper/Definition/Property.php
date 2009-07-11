@@ -87,9 +87,9 @@ class Zend_Entity_Mapper_Definition_Property extends Zend_Entity_Mapper_Definiti
      * Compile this property state.
      * 
      * @param Zend_Entity_Mapper_Definition_Entity $entityDef
-     * @param Zend_Entity_Resource_Interface $map
+     * @param Zend_Entity_MetadataFactory_Interface $map
      */
-    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_Resource_Interface $map)
+    public function compile(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
     {
         if($this->getColumnName() == null) {
             $this->setColumnName(($this->getPropertyName()));
