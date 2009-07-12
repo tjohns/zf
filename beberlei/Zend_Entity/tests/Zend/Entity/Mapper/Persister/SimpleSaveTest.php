@@ -138,7 +138,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $entity = new Zend_TestEntity1();
         $entity->setState($this->fixture->getDummyDataStateClassA());
-        $entityB = new Zend_Entity_Mapper_LazyLoad_Entity('trim', array('load', $relatedId));
+        $entityB = new Zend_Entity_LazyLoad_Entity('trim', array('load', $relatedId));
         $entity->setmanytoone($entityB);
 
         $persister = $this->createPersister();
@@ -233,7 +233,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $collectionDef = $this->fixture->getEntityPropertyDef('Zend_TestEntity1', 'onetomany');
         $collectionDef->getRelation()->setCascade("save");
 
-        $collection = new Zend_Entity_Mapper_LazyLoad_Collection('trim', array(1, 2));
+        $collection = new Zend_Entity_LazyLoad_Collection('trim', array(1, 2));
 
         $em = $this->getMock('Zend_Entity_Manager_Interface');
         $em->expects($this->exactly(0))->method('save');

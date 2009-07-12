@@ -77,19 +77,6 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         return $loader;
     }
 
-    public function createNonLoadedLazyLoadEntity()
-    {
-        $lazyEntity = $this->getMock(
-            'Zend_Entity_Mapper_LazyLoad_Entity',
-            array(),
-            array(),
-            'Zend_Entity_Mapper_LazyLoad_Entity_Mock'.md5(microtime(True)),
-            false
-        );
-        $lazyEntity->expects($this->once())->method('entityWasLoaded')->will($this->returnValue(false));
-        return $lazyEntity;
-    }
-
     /**
      * @return Zend_Entity_Mapper_Persister_Interface
      */
@@ -132,36 +119,36 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     /**
      *
      * @param  Zend_Entity_UnitOfWork $unitOfWork
-     * @param  Zend_Entity_MetadataFactory_Interface $resourceMap
+     * @param  Zend_Entity_MetadataFactory_Interface $metadataFactory
      * @param  Zend_Entity_IdentityMap $identityMap
      * @param  Zend_Db_Adapter_Abstract $db
      * @return Zend_Entity_Manager_Interface
      */
-    protected function createEntityManager($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
+    protected function createEntityManager($unitOfWork=null, $metadataFactory=null, $identityMap=null, $db=null)
     {
         if($db == null) {
             $db = $this->getDatabaseConnection();
         }
 
-        $options = $this->generateEntityManagerOptions($unitOfWork, $resourceMap, $identityMap);
+        $options = $this->generateEntityManagerOptions($unitOfWork, $metadataFactory, $identityMap);
         return new Zend_Entity_Manager($db, $options);
     }
 
     /**
      *
      * @param  Zend_Entity_UnitOfWork $unitOfWork
-     * @param  Zend_Entity_MetadataFactory_Interface $resourceMap
+     * @param  Zend_Entity_MetadataFactory_Interface $metadataFactory
      * @param  Zend_Entity_IdentityMap $identityMap
      * @param  Zend_Db_Adapter_Abstract $db
      * @return Zend_Entity_TestManagerMock
      */
-    protected function createTestingEntityManager($unitOfWork=null, $resourceMap=null, $identityMap=null, $db=null)
+    protected function createTestingEntityManager($unitOfWork=null, $metadataFactory=null, $identityMap=null, $db=null)
     {
         if($db==null) {
             $db = $this->getDatabaseConnection();
         }
 
-        $options = $this->generateEntityManagerOptions($unitOfWork, $resourceMap, $identityMap);
+        $options = $this->generateEntityManagerOptions($unitOfWork, $metadataFactory, $identityMap);
         return new Zend_Entity_TestManagerMock($db, $options);
     }
 
@@ -171,23 +158,20 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
             'unitOfWork' => $unitOfWork,
             'identityMap' => $identityMap,
         );
-        if($metadataFactory !== null) {
-            $options['metadataFactory'] = $metadataFactory;
+        if($metadataFactory === null) {
+            $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
         }
+        $options['metadataFactory'] = $metadataFactory;
         return $options;
     }
 
     /**
-     * @param Zend_Entity_Mapper_Abstract $mapper
+     * @param Zend_Entity_Mapper_Loader_Interface $loader
      * @return Zend_Entity_Mapper_Select
      */
-    protected function createDbSelectMock(Zend_Entity_Mapper_Abstract $mapper=null)
+    protected function createDbSelect()
     {
-        if($mapper == null) {
-            $mapper = $this->createMapperMock();
-        }
-
-        return $this->getMock('Zend_Entity_Mapper_Select', array(), array($this->getDatabaseConnection(), $mapper));
+        return new Zend_Entity_Mapper_Select($this->getDatabaseConnection());
     }
 
     const UOW_MOCK_BEGINTRANSACTION = 1;
@@ -230,13 +214,13 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     public function assertLazyLoad($object)
     {
         $lazyLoad = false;
-        if($object instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
+        if($object instanceof Zend_Entity_LazyLoad_Entity) {
             $lazyLoad = true;
         }
-        if($object instanceof Zend_Entity_Mapper_LazyLoad_Collection) {
+        if($object instanceof Zend_Entity_LazyLoad_Collection) {
             $lazyLoad = true;
         }
-        if($object instanceof Zend_Entity_Mapper_LazyLoad_Field) {
+        if($object instanceof Zend_Entity_LazyLoad_Field) {
             $lazyLoad = true;
         }
         $this->assertTrue($lazyLoad, "Object of type <".get_class($object)."> is not a lazy load object.");

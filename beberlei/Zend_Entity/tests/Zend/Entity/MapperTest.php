@@ -10,36 +10,14 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $this->assertEquals($entityDefinition, $mapper->getDefinition());
     }
 
-    public function testSelectInitializesViaLoader()
+    public function testSelectType()
     {
-        $loader = $this->createLoaderMock();
-        $loader->expects($this->once())
-               ->method('initSelect');
-        $mapper = $this->createMapper(null, null, null, $loader);
+        $entityDefinition = new Zend_Entity_Mapper_Definition_Entity('foo');
+        $mapper = $this->createMapper(null, $entityDefinition);
 
         $select = $mapper->select();
-    }
 
-    public function testFindSelectDelegatesInitColumnsToLoader()
-    {
-        $loader = $this->createLoaderMock();
-        $loader->expects($this->once())
-               ->method('initColumns');
-
-        $mapper = $this->createMapper(null, null, null, $loader);
-        $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
-    }
-
-    public function testFindSelectDelegatesResultProcessingToLoader()
-    {
-        $loader = $this->createLoaderMock();
-        $loader->expects($this->once())
-               ->method('processResultset');
-
-        $mapper = $this->createMapper(null, null, null, $loader);
-        $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
+        $this->assertType('Zend_Entity_Mapper_Select', $select);
     }
 
     public function testPassedAdapterIsUsedForQuerying()
@@ -115,15 +93,22 @@ class Zend_Entity_MapperTest extends Zend_Entity_TestCase
         $this->assertEquals($expectedObject, $actualObject);
     }
 
-    public function testSaveNonLoadedLazyLoadProxyEntityDoesNotDelegateToPersister()
+    public function testSaveNonLoadedLazyLoadProxy_IsDelegatedToPersister()
     {
         $persister = $this->createPersisterMock();
-        $persister->expects($this->never())->method('save');
+        $persister->expects($this->once())->method('save');
 
         $mapper = $this->createMapper(null, null, null, null, $persister);
-        $lazyLoadEntity = $this->createNonLoadedLazyLoadEntity();
+        $lazyEntity = $this->getMock(
+            'Zend_Entity_LazyLoad_Entity',
+            array(),
+            array(),
+            'Zend_Entity_LazyLoad_Entity_Mock'.md5(microtime(True)),
+            false
+        );
+        $lazyEntity->expects($this->never())->method('entityWasLoaded');
 
-        $mapper->save($lazyLoadEntity, $this->createEntityManager());
+        $mapper->save($lazyEntity, $this->createEntityManager());
     }
 
     public function testSaveNonLazyNonCleanEntityIsDelegatedToPersister()

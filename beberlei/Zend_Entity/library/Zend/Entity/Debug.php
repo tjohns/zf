@@ -13,7 +13,7 @@ class Zend_Entity_Debug
             foreach($object AS $k => $v) {
                 if($v instanceof Zend_Entity_Collection_Interface && $v->wasLoadedFromDatabase() == false) {
                     $v = "*LAZYLOADCOLLECTION*";
-                } else if($v instanceof Zend_Entity_Mapper_LazyLoad_Entity) {
+                } else if($v instanceof Zend_Entity_LazyLoad_Entity) {
                     $v = "*LAZYLOADENTITY*";
                 }
                 $state[$k] = $v;

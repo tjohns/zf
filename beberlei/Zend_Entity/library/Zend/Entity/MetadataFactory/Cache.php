@@ -22,7 +22,7 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
     /**
      * @var Zend_Entity_MetadataFactory_Interface
      */
-    protected $_resourceMap = null;
+    protected $_metadataFactory = null;
 
     /**
      * @var Zend_Cache_Core
@@ -30,13 +30,23 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
     protected $_cache = null;
 
     /**
-     * @param Zend_Entity_MetadataFactory_Interface $resourceMap
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      * @param Zend_Cache_Core $cache
      */
-    public function __construct(Zend_Entity_MetadataFactory_Interface $resourceMap, Zend_Cache_Core $cache)
+    public function __construct(Zend_Entity_MetadataFactory_Interface $metadataFactory, Zend_Cache_Core $cache)
     {
-        $this->_resourceMap = $resourceMap;
+        $this->_metadataFactory = $metadataFactory;
         $this->_cache = $cache;
+    }
+
+    /**
+     * Retrieve an array of all definitions by name.
+     *
+     * @return array
+     */
+    public function getDefinitionEntityNames()
+    {
+        return $this->_metadataFactory->getDefinitionEntityNames();
     }
 
     /**
@@ -48,7 +58,7 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
         if($this->_cache->test($entityName)) {
             $entityDef = $this->_cache->load($entityName);
         } else {
-            $entityDef = $this->_resourceMap->getDefinitionByEntityName($entityName);
+            $entityDef = $this->_metadataFactory->getDefinitionByEntityName($entityName);
         }
         return $entityDef;
     }

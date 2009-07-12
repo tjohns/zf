@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Mapper_LazyLoad_Entity implements Zend_Entity_Interface
+class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
 {
     /**
      * @var array

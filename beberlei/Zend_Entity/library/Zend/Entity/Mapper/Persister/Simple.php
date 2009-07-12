@@ -107,7 +107,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function evaluateRelatedObject($relatedObject, $relationDef, $entityManager)
     {
-        if($relatedObject instanceof Zend_Entity_Mapper_LazyLoad_Entity && $relatedObject->entityWasLoaded() == false) {
+        if($relatedObject instanceof Zend_Entity_LazyLoad_Entity && $relatedObject->entityWasLoaded() == false) {
             $value = $relatedObject->getLazyLoadEntityId();
         } else if($relatedObject instanceof Zend_Entity_Interface) {
             $foreignKeyProperty = $relationDef->getForeignKeyPropertyName();

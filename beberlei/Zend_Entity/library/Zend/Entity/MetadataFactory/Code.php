@@ -25,9 +25,29 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
 
     protected $_maps = array();
 
+    protected $_entityNames = null;
+
     public function __construct($path)
     {
         $this->_path = $path;
+    }
+
+    /**
+     * Retrieve an array of all definitions by name.
+     *
+     * @return array
+     */
+    public function getDefinitionEntityNames()
+    {
+        if($this->_entityNames == null) {
+            $this->_entityNames = array();
+            foreach(scandir($this->_path) AS $item) {
+                if( ($pos = strpos($item, ".php")) !== false) {
+                    $this->_entityNames[] = substr($item, 0, $pos);
+                }
+            }
+        }
+        return $this->_entityNames;
     }
 
     /**

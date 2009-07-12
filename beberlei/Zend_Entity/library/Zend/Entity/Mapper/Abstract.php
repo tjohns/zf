@@ -143,24 +143,8 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
     {
-        if($this->entityIsSaveable($entity, $entityManager)) {
-            $persister = $this->getPersister();
-            $persister->save($entity, $entityManager);
-        }
-    }
-
-    /**
-     * Check if the entity can be saved which means no non-loaded Lazy Load or marked as Clean via the UnitOfWork.
-     *
-     * @param Zend_Entity_Interface $entity
-     * @return boolean
-     */
-    protected function entityIsSaveable(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
-    {
-        if($entity instanceof Zend_Entity_Mapper_LazyLoad_Entity && $entity->entityWasLoaded() == false) {
-            return false;
-        }
-        return true;
+        $persister = $this->getPersister();
+        $persister->save($entity, $entityManager);
     }
 
     /**
@@ -191,11 +175,7 @@ abstract class Zend_Entity_Mapper_Abstract
      */
     public function select()
     {
-        $select = new Zend_Entity_Mapper_Select( $this->getAdapter(), $this );
-        $loader = $this->getLoader();
-        $loader->initSelect($select);
-        $loader->initColumns($select);
-        return $select;
+        return new Zend_Entity_Mapper_Select( $this->getAdapter() );
     }
     
     /**
@@ -239,7 +219,7 @@ abstract class Zend_Entity_Mapper_Abstract
      * 
      * @return Zend_Entity_Mapper_Loader_Interface
      */
-    protected function getLoader()
+    public function getLoader()
     {
         if($this->_loader === null) {
             $this->createLoader();

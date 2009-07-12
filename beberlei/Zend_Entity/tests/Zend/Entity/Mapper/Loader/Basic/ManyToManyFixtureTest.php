@@ -66,20 +66,19 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
         $entityState = $this->loadEntityAAndGetState();
 
         $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callback');
-        $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("find", $callback[1]);
+        $this->assertType('Zend_Entity_Query_AbstractQuery', $callback[0]);
+        $this->assertEquals("getResultList", $callback[1]);
 
         $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callbackArguments');
-        $this->assertEquals(Zend_Entity_Fixture_ManyToManyDefs::TEST_B_CLASS, $callbackArgs[0]);
-        $this->assertTrue($callbackArgs[1] instanceof Zend_Db_Select);
+        $this->assertEquals(array(), $callbackArgs);
     }
 
     public function testLoadRowLazyLoadCollectionSelectStatementIsBuildCorrectly()
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callbackArguments');
-        $select = $callbackArgs[1];
+        $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY], '_callback');
+        $select = $callback[0];
 
         $this->assertEquals(
             "SELECT table_b.b_id FROM table_b\n".

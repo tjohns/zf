@@ -20,6 +20,13 @@
 interface Zend_Entity_MetadataFactory_Interface
 {
     /**
+     * Retrieve an array of all definitions by name.
+     *
+     * @return array
+     */
+    public function getDefinitionEntityNames();
+
+    /**
      * Get an Entity Mapper Definition by the name of the Entity
      *
      * @param  string $entityName

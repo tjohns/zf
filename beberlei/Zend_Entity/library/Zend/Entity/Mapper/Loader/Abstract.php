@@ -161,9 +161,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     protected function createLazyLoadCollection(Zend_Entity_Manager $manager, $class, $select)
     {
-        $callback = array($manager, "find");
-        $callbackArguments = array($class, $select);
-        return new Zend_Entity_Mapper_LazyLoad_Collection($callback, $callbackArguments);
+        $callback = array($select, "getResultList");
+        $callbackArguments = array();
+        return new Zend_Entity_LazyLoad_Collection($callback, $callbackArguments);
     }
 
     public function createEntityFromRow(array $row, Zend_Entity_Manager_Interface $entityManager)
@@ -220,8 +220,8 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
             $keyValue = $entityState[$this->_primaryKey->getPropertyName()];
 
-            $select = $entityManager->select($relation->getClass());
-            $db = $select->getAdapter();
+            $db = $entityManager->getAdapter();
+            $select = $entityManager->createNativeQuery($relation->getClass());
 
             $intersectTable = $collectionDef->getTable();
             if($foreignDefinition->getTable() !== $collectionDef->getTable()) {

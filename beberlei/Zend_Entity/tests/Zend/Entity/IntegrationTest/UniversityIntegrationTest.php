@@ -107,13 +107,13 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
     public function testGetStudent_ConditionalOnCourseId()
     {
-        $select = $this->_entityManager->select("ZendEntity_Student");
+        $select = $this->_entityManager->createNativeQuery("ZendEntity_Student");
         $select->joinInner(
             "university_students_semester_courses",
             "university_students_semester_courses.student_id = university_students.student_id"
         )->where("university_students_semester_courses.course_id = 1");
 
-        $students = $this->_entityManager->find("ZendEntity_Student", $select);
+        $students = $select->getResultList();
 
         $this->assertEquals(2, count($students));
         $this->assertEquals(1, $students[0]->id);
@@ -122,13 +122,14 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
     public function testFindOneStudent_ConditionalOnCourseId()
     {
-        $select = $this->_entityManager->select("ZendEntity_Student");
+        $select = $this->_entityManager->createNativeQuery("ZendEntity_Student");
         $select->joinInner(
             "university_students_semester_courses",
             "university_students_semester_courses.student_id = university_students.student_id"
         )->where("university_students_semester_courses.course_id = 3");
 
-        $student = $this->_entityManager->findOne("ZendEntity_Student", $select);
+        $student = $select->getSingleResult();
+
         $this->assertEquals(2, $student->id);
         $this->assertEquals("Ludwig von Mises", $student->name);
     }

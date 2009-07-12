@@ -23,46 +23,6 @@ interface Zend_Entity_Manager_Interface
     public function createQuery($entityName);
 
     /**
-     * Return Query Object for given Entity
-     *
-     * @deprecated
-     * @param  string $entityClass
-     * @return object
-     */
-    public function select($entity);
-
-    /**
-     * Find all entities matching query statement
-     *
-     * @deprecated
-     * @param string $entityName
-     * @param Zend_Db_Select|string $sql
-     * @return Zend_Entity_Collection
-     */
-    public function find($entityName, $select);
-
-    /**
-     * Find one entity matching select statement
-     *
-     * @deprecated
-     * @param string $entityName
-     * @param object $select
-     * @return Zend_Entity_Interface
-     */
-    public function findOne($entityName, $select);
-
-    /**
-     * Find all entities of a type
-     *
-     * @param string $entityName
-     * @param string $subcondition
-     * @param int    $limit
-     * @param string $order
-     * @return Zend_Entity_Collection
-     */
-    public function findAll($entityName, $subcondition=null, $limit=null, $order=null);
-
-    /**
      * Find by primary key
      *
      * @param string $entityName
@@ -98,7 +58,7 @@ interface Zend_Entity_Manager_Interface
     /**
      * Get a reference of an object.
      *
-     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_Mapper_LazyLoad_Entity}
+     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_LazyLoad_Entity}
      * or if the entity was loaded before and is found in the identity map the original is used.
      *
      * @param string $class

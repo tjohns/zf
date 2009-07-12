@@ -3,50 +3,81 @@
 class Zend_Entity_Mapper_DbSelectQuery extends Zend_Entity_Query_AbstractQuery
 {
     /**
+     * @var Zend_Entity_Mapper_Abstract
+     */
+    protected $_loader = null;
+
+    /**
+     * @var Zend_Entity_Manager_Interface
+     */
+    protected $_entityManager = null;
+
+    /**
      * @var Zend_Entity_Mapper_Select
      */
     protected $_select = null;
 
-    protected function _initQuery()
-    {
-        $this->_select = $this->_mapper->select();
-    }
+    /**
+     * @var int
+     */
+    protected $_offset = null;
+
+    /**
+     * @var int
+     */
+    protected $_itemCountPerPage = null;
 
     /**
      *
-     * @param  string $class
-     * @param  string $operation
-     * @param  mixed $value
-     * @return Zend_Entity_Mapper_DbSelectQuery
+     * @param Zend_Entity_Mapper_Select $select
+     * @param Zend_Entity_Mapper_Loader_Interface $loader
+     * @param Zend_Entity_Manager_Interface $manager
      */
-    public function joinInner($class, $operation, $value)
+    public function __construct(Zend_Entity_Mapper_Select $select, Zend_Entity_Mapper_Loader_Interface $loader, Zend_Entity_Manager_Interface $manager)
     {
-        $db = $this->_entityManager->getAdapter();
-        $metadataFactory = $this->_entityManager->getMetadataFactory();
-        $foreignDefinition = $metadataFactory->getDefinitionByEntityName($class);
+        $this->_select = $select;
+        $this->_loader = $loader;
+        $this->_entityManager = $manager;
 
-        $intersectTable = $collectionDef->getTable();
-        if($foreignDefinition->getTable() !== $collectionDef->getTable()) {
+        $loader->initSelect($select);
+        $loader->initColumns($select);
+    }
 
-            $foreignPrimaryKey = $foreignDefinition->getPrimaryKey()->getKey();
+    public function getResultList()
+    {
+        $stmt = $this->_select->query(); // TODO: Fetch Mmode and Bind!
+        $resultSet = $stmt->fetchAll();
+        $stmt->closeCursor();
 
-            $intersectOnLhs = $db->quoteIdentifier($intersectTable.".".$relation->getColumnName());
-            $intersectOnRhs = $db->quoteIdentifier($foreignDefinition->getTable().".".$foreignPrimaryKey);
-            $intersectOn = $intersectOnLhs." = ".$intersectOnRhs;
-        }
+        return $this->_loader->processResultset($resultSet, $this->_entityManager);
+    }
 
-        $this->_select->joinInner($foreignTable, $foreignOnClause);
-
+    public function setFirstResult($offset)
+    {
+        $this->_offset = $offset;
+        $this->_select->limit($this->_itemCountPerPage, $this->_offset);
         return $this;
     }
 
-    public function execute()
+    public function setMaxResults($itemCountPerPage)
     {
-        
+        $this->_itemCountPerPage = $itemCountPerPage;
+        $this->_select->limit($this->_itemCountPerPage, $this->_offset);
+        return $this;
     }
-    
-    protected function _assembleQuery()
+
+    public function count()
     {
-        
+        return $this->_itemCountPerPage;
+    }
+
+    public function __call($method, $args)
+    {
+        return call_user_func_array(array($this->_select, $method), $args);
+    }
+
+    public function __toString()
+    {
+        return $this->_select->assemble();
     }
 }

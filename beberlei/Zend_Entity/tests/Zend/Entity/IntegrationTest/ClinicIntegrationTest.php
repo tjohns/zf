@@ -53,12 +53,12 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
 
     public function testFindByQuery()
     {
-        $select = $this->_entityManager->select("Clinic_Patient");
-        $select->where("name = ?", "John Doe");
+        $query = $this->_entityManager->createNativeQuery("Clinic_Patient");
+        $query->where("name = ?", "John Doe");
 
-        $patients = $this->_entityManager->find("Clinic_Patient", $select);
+        $patients = $query->getResultList();
         $this->assertTrue($patients instanceof Zend_Entity_Collection, "EntityManager::find() has to return an Entity Collection");
-        $this->assertFalse($patients instanceof Zend_Entity_Mapper_LazyLoad_Collection, "EntityManager::find() never returns a lazy load collection as root node.");
+        $this->assertFalse($patients instanceof Zend_Entity_LazyLoad_Collection, "EntityManager::find() never returns a lazy load collection as root node.");
 
         $this->assertEquals(1, count($patients), "Database contains exactly 1 patient in its unmodified state.");
 
@@ -73,10 +73,10 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
 
     public function testFindOneByQuery()
     {
-        $select = $this->_entityManager->select("Clinic_Patient");
-        $select->where("name = ?", "John Doe");
+        $query = $this->_entityManager->createNativeQuery("Clinic_Patient");
+        $query->where("name = ?", "John Doe");
 
-        $patient = $this->_entityManager->findOne("Clinic_Patient", $select);
+        $patient = $query->getSingleResult();
 
         $this->assertTrue($patient instanceof Zend_Entity_Interface, "EntityManager::findOne has to return an entity.");
         $this->assertEquals(1,            $patient->getId());

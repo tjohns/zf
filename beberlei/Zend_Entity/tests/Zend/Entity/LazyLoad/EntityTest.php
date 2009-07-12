@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_Mapper_LazyLoad_EntityTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_LazyLoad_EntityTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider dataAccessingLazyLoadEntityDelegate
@@ -29,14 +29,14 @@ class Zend_Entity_Mapper_LazyLoad_EntityTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity('foo', array());
+        $lazyEntity = new Zend_Entity_LazyLoad_Entity('foo', array());
     }
 
     public function testGetLazyLoadEntityIdIsSecondArgumentField()
     {
         $fixtureLazyLoadEntityId = 1;
 
-        $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity('trim', array('foo', $fixtureLazyLoadEntityId));
+        $lazyEntity = new Zend_Entity_LazyLoad_Entity('trim', array('foo', $fixtureLazyLoadEntityId));
         $this->assertEquals($fixtureLazyLoadEntityId, $lazyEntity->getLazyLoadEntityId());
     }
 
@@ -56,7 +56,7 @@ class Zend_Entity_Mapper_LazyLoad_EntityTest extends PHPUnit_Framework_TestCase
     public function createLazyLoadEntity($method)
     {
         $callback = array($this, 'createEntityExpectingMethodOnce');
-        $entity = new Zend_Entity_Mapper_LazyLoad_Entity($callback, array($method, 1));
+        $entity = new Zend_Entity_LazyLoad_Entity($callback, array($method, 1));
         return $entity;
     }
 

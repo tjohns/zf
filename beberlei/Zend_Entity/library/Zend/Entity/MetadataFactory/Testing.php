@@ -18,6 +18,16 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
     }
 
     /**
+     * Retrieve an array of all definitions by name.
+     *
+     * @return array
+     */
+    public function getDefinitionEntityNames()
+    {
+        return array_keys($this->_defMap);
+    }
+
+    /**
      * Get an Entity Mapper Definition by the name of the Entity
      *
      * @param  string $entityName

@@ -24,7 +24,7 @@ class Zend_Entity_DebugTest extends PHPUnit_Framework_TestCase
 
     public function testDumpEntityWithLazyLoadEntity()
     {
-        $lazyLoadEntity = new Zend_Entity_Mapper_LazyLoad_Entity('rand', array(0, 1));
+        $lazyLoadEntity = new Zend_Entity_LazyLoad_Entity('rand', array(0, 1));
         $entity = $this->createEntityThatReturnsState(array('foo' => $lazyLoadEntity));
 
         $expected = 'array(1) {

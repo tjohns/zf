@@ -51,8 +51,8 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
     {
         $entityState = $this->loadEntityAAndGetState();
 
-        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callbackArguments');
-        $select = $callbackArgs[1];
+        $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callback');
+        $select = $callbackArgs[0];
         return $select;
     }
 
@@ -70,12 +70,11 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
         $entityState = $this->loadEntityAAndGetState();
 
         $callback = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callback');
-        $this->assertEquals($this->entityManager, $callback[0]);
-        $this->assertEquals("find", $callback[1]);
+        $this->assertType('Zend_Entity_Query_AbstractQuery', $callback[0]);
+        $this->assertEquals("getResultList", $callback[1]);
 
         $callbackArgs = $this->readAttribute($entityState[Zend_Entity_Fixture_OneToManyDefs::TEST_A_ONETOMANY], '_callbackArguments');
-        $this->assertEquals(Zend_Entity_Fixture_OneToManyDefs::TEST_B_CLASS, $callbackArgs[0]);
-        $this->assertTrue($callbackArgs[1] instanceof Zend_Db_Select);
+        $this->assertEquals(array(), $callbackArgs);
     }
 
     public function testLoadRowLazyLoadCollectionSelectStatementIsBuildCorrectly()

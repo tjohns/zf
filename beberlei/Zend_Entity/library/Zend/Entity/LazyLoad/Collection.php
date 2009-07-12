@@ -24,7 +24,7 @@
  * data if not necessary and allow for adding of elements without triggering the lazy load.
  *
  */
-class Zend_Entity_Mapper_LazyLoad_Collection implements Zend_Entity_Collection_Interface
+class Zend_Entity_LazyLoad_Collection implements Zend_Entity_Collection_Interface
 {
     /**
      * Inner Iterator

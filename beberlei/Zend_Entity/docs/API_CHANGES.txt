@@ -1,0 +1,9 @@
+Documentation of larger API changes
+
+12. July, 2009
+
+* Removed find(), findOne(), select() from Entity Manager Interface. Run the following replaces to make code work:
+
+1. $entityManager->find($entityName, $select); => $select->getResultList();
+2. $entityManager->select($entityName) => $entityManager->createNativeQuery($entityName);
+3. $entityManager->findOne($entityName, $select); => $select->getSingleResult();

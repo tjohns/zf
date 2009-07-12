@@ -1,39 +1,41 @@
 <?php
 
-abstract class Zend_Entity_Query_AbstractQuery
+abstract class Zend_Entity_Query_AbstractQuery implements Zend_Paginator_Adapter_Interface
 {
-    /**
-     * @var Zend_Entity_Mapper_Abstract
-     */
-    protected $_mapper = null;
+    abstract public function getResultList();
 
     /**
-     * @var Zend_Entity_Manager_Interface
+     *
+     * @throws Zend_Entity_Exception
+     * @return Zend_Entity_Interface
      */
-    protected $_entityManager = null;
-
-    /**
-     * @var object
-     */
-    protected $_entityDefintion = null;
-
-    final public function __construct(
-        Zend_Entity_Mapper_Abstract $mapper,
-        Zend_Entity_Manager_Interface $manager)
+    public function getSingleResult()
     {
-        $this->_mapper = $mapper;
-        $this->_entityManager = $manager;
-        $this->_entityDefintion = $mapper->getDefinition();
-
-        $this->_initQuery();
+        $collection = $this->getResultList();
+        if(count($collection) == 1) {
+            return $collection[0];
+        } else {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                count($collection)." elements found, but exactly one was asked for."
+            );
+        }
     }
 
-    abstract protected function _initQuery();
+    abstract public function setFirstResult($offset);
 
-    public function execute()
+    abstract public function setMaxResults($itemCountPerPage);
+
+    /**
+     * @param int $offset
+     * @param int $itemCountPerPage
+     */
+    public function getItems($offset, $itemCountPerPage)
     {
-        return $this->_mapper->find($this->_assembleQuery(), $this->_entityManager);
+        $this->setMaxResults($itemCountPerPage);
+        $this->setFirstResult($offset);
+        return $this->getResultList();
     }
 
-    abstract protected function _assembleQuery();
+    abstract public function __toString();
 }

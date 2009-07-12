@@ -77,7 +77,7 @@ class Zend_Entity_IdentityMap
      */
     public function isLazyLoadObject($entityInterface, $key)
     {
-        return ($this->_loadedObjects[$entityInterface][$key] instanceof Zend_Entity_Mapper_LazyLoad_Entity);
+        return ($this->_loadedObjects[$entityInterface][$key] instanceof Zend_Entity_LazyLoad_Entity);
     }
 
     /**

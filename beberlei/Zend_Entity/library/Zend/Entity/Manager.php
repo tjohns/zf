@@ -97,7 +97,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * Set the Entity Resource Map
+     * Set the Entity Metadata Factory
      *
      * @param  Zend_Entity_MetadataFactory_Interface
      * @return Zend_Entity_Manager
@@ -109,7 +109,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * Get Resource Map
+     * Get Entity Metadata Factory
      *
      * @return Zend_Entity_MetadataFactory_Interface
      */
@@ -117,7 +117,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     {
         if($this->_metadataFactory === null) {
             require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception("No resource definition map was given to Entity Manager.");
+            throw new Zend_Entity_Exception("No metadata factory was given to Entity Manager.");
         }
         return $this->_metadataFactory;
     }
@@ -179,15 +179,20 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * @param string $entityName
+     * @param string|object $input
      * @return Zend_Entity_Mapper_Select
      */
-    public function createNativeQuery($entityName)
+    public function createNativeQuery($input)
     {
-        $mapper = $this->getMapperByEntity($entityName);
-        $select = $mapper->select();
-        $select->setEntityManager($this);
-        return $select;
+        if(in_array($input, $this->getMetadataFactory()->getDefinitionEntityNames())) {
+            $mapper = $this->getMapperByEntity($input);
+            $loader = $mapper->getLoader();
+            $select = $mapper->select();
+
+            return new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $this);
+        } else {
+            throw new Exception("Missing Native Query Parser/Builder/Whatever!");
+        }
     }
 
     /**
@@ -197,68 +202,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     public function createQuery($entityName)
     {
         throw new Exception("not implemented yet");
-    }
-
-    /**
-     * Return Select statement
-     * 
-     * @param  string $entityName
-     * @return Zend_Db_Select
-     */
-    public function select($entityName)
-    {
-        return $this->createNativeQuery($entityName);
-    }
-
-    /**
-     * Find all entitys matching select statement
-     *
-     * @param  string $entityName
-     * @param  Zend_Db_Select|string $select
-     * @return Zend_Entity_Collection
-     */
-    public function find($entityName, $select)
-    {
-        $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->find($select, $this);
-    }
-
-    /**
-     * Find one entity matching select statement
-     *
-     * @param string $entityName
-     * @param Zend_Db_Select $select
-     * @return Zend_Entity_Interface
-     */
-    public function findOne($entityName, $select)
-    {
-        $mapper = $this->getMapperByEntity($entityName);
-        return $mapper->findOne($select, $this);
-    }
-
-    /**
-     * Find all entities of a type
-     *
-     * @param string $entityName
-     * @param string $subcondition
-     * @param int    $limit
-     * @param string $order
-     * @return Zend_Entity_Collection
-     */
-    public function findAll($entityName, $subcondition=null, $limit=null, $order=null)
-    {
-        $mapper = $this->getMapperByEntity($entityName);
-        $select = $mapper->select();
-        if($subcondition !== null) {
-            $select->where($subcondition);
-        }
-        if($limit !== null) {
-            $select->limit($limit);
-        }
-        if($order !== null) {
-            $select->order($order);
-        }
-        return $mapper->find($select, $this);
     }
 
     /**
@@ -278,11 +221,11 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 
             $tableName = $def->getTable();
             $key = $def->getPrimaryKey()->getColumnName();
-            $select = $mapper->select();
+            $select =  $this->createNativeQuery($def->getClass());
             $cond = $this->getAdapter()->quoteIdentifier($tableName.".".$key);
             $select->where($cond." = ?", $keyValue);
 
-            $object = $mapper->findOne($select, $this);
+            $object = $select->getSingleResult();
         }
         return $object;
     }
@@ -336,7 +279,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Get a reference of an object.
      *
-     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_Mapper_LazyLoad_Entity}
+     * A reference is either a LazyLoad entity of the type {@see Zend_Entity_LazyLoad_Entity}
      * or if the entity was loaded before and is found in the identity map the original is used.
      *
      * @param string $class
@@ -350,7 +293,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
         } else {
             $callback          = array($this, "load");
             $callbackArguments = array($class, $id);
-            $lazyEntity = new Zend_Entity_Mapper_LazyLoad_Entity($callback, $callbackArguments);
+            $lazyEntity = new Zend_Entity_LazyLoad_Entity($callback, $callbackArguments);
             $identityMap->addObject($class, $id, $lazyEntity);
         }
         return $lazyEntity;
