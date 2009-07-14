@@ -874,6 +874,13 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             require_once 'Zend/Db/Table/Row/Exception.php';
             throw new Zend_Db_Table_Row_Exception("Dependent table must be a Zend_Db_Table_Abstract, but it is $type");
         }
+        
+        // even if we are interacting between a table defined in a class and a
+        // table via extension, ensure to persist the definition
+        if (($tableDefinition = $this->_table->getDefinition()) !== null
+            && ($dependentTable->getDefinition() == null)) {
+            $dependentTable->setOptions(array(Zend_Db_Table_Abstract::DEFINITION => $tableDefinition));
+        }
 
         if ($select === null) {
             $select = $dependentTable->select();
@@ -924,6 +931,13 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             throw new Zend_Db_Table_Row_Exception("Parent table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        // even if we are interacting between a table defined in a class and a
+        // table via extension, ensure to persist the definition
+        if (($tableDefinition = $this->_table->getDefinition()) !== null
+            && ($parentTable->getDefinition() == null)) {
+            $parentTable->setOptions(array(Zend_Db_Table_Abstract::DEFINITION => $tableDefinition));
+        }
+        
         if ($select === null) {
             $select = $parentTable->select();
         } else {
@@ -974,6 +988,13 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             throw new Zend_Db_Table_Row_Exception("Intersection table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        // even if we are interacting between a table defined in a class and a
+        // table via extension, ensure to persist the definition
+        if (($tableDefinition = $this->_table->getDefinition()) !== null
+            && ($intersectionTable->getDefinition() == null)) {
+            $intersectionTable->setOptions(array(Zend_Db_Table_Abstract::DEFINITION => $tableDefinition));
+        }
+        
         if (is_string($matchTable)) {
             $matchTable = $this->_getTableFromString($matchTable);
         }
@@ -987,6 +1008,13 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             throw new Zend_Db_Table_Row_Exception("Match table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        // even if we are interacting between a table defined in a class and a
+        // table via extension, ensure to persist the definition
+        if (($tableDefinition = $this->_table->getDefinition()) !== null
+            && ($matchTable->getDefinition() == null)) {
+            $matchTable->setOptions(array(Zend_Db_Table_Abstract::DEFINITION => $tableDefinition));
+        }
+        
         if ($select === null) {
             $select = $matchTable->select();
         } else {
@@ -1139,7 +1167,12 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             }
         }
 
-        return new $tableName(array('db' => $this->_getTable()->getAdapter()));
+        $options = array('db' => $this->_getTable()->getAdapter());
+        if ($tableDefinition !== null) {
+            $options[Zend_Db_Table_Abstract::DEFINITION] = $tableDefinition;
+        }
+
+        return new $tableName($options);
     }
 
 }

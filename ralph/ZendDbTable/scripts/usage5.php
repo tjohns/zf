@@ -24,8 +24,8 @@ $definition = new Zend_Db_Table_Definition(array(
         'name' => 'author',
         'dependentTables' => array('MyBook')
         ),
-    'MyBook' => 'MyBook',
     /*
+    'MyBook' => 'MyBook',
     'book' => array(
         'name' => 'book',
         'referenceMap' => array(
@@ -59,7 +59,7 @@ $authors = $authorTable->fetchAll();
 
 foreach ($authors as $author) {
     echo $author->id . ': ' . $author->first_name . ' ' . $author->last_name . PHP_EOL;
-    $books = $author->findDependentRowset('MyBook');
+    $books = $author->findDependentRowset(new MyBook());
     foreach ($books as $book) {
         echo '    Book: ' . $book->title . PHP_EOL;
         $genreOutputArray = array();
