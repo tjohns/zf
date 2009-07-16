@@ -263,8 +263,9 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
      */
     public function isReady($forceCheckRequest=false)
     {
-    	// Always send messages for now
-    	// TODO: Look for "Wildfire/" in user-agent string
+      	// Always send messages for now
+      	// TODO: Look for "Wildfire/" in user-agent string
+        return true;
     
         if (!$forceCheckRequest
             && !$this->_request
