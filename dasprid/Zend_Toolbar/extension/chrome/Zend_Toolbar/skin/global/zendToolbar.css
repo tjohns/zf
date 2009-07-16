@@ -20,41 +20,31 @@
 
 @CHARSET "UTF-8";
 
-#zend-toolbar-statusbar {
-    padding: 4px;
-    margin: 0;
-}
-
-#zend-toolbar-statusbar label {
-    margin-right: 15px;
+#zend-toolbar-statusbar toolbar {
+    width: 100%;
+    border-bottom: none;
 }
 
 #zend-toolbar-version {
-    padding-left: 30px;
-    background: url("chrome://Zend_Toolbar/skin/zendframework.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/zendframework.png");
 }
 
 #zend-toolbar-variables {
-    padding-left: 20px;
-    background: url("chrome://Zend_Toolbar/skin/variables.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/variables.png");
 }
 
 #zend-toolbar-queries {
-    padding-left: 20px;
-    background: url("chrome://Zend_Toolbar/skin/queries.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/queries.png");
 }
 
 #zend-toolbar-errors {
-    padding-left: 20px;
-    background: url("chrome://Zend_Toolbar/skin/errors.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/errors.png");
 }
 
 #zend-toolbar-filesize {
-    padding-left: 20px;
-    background: url("chrome://Zend_Toolbar/skin/filesize.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/filesize.png");
 }
 
 #zend-toolbar-runtime {
-    padding-left: 20px;
-    background: url("chrome://Zend_Toolbar/skin/runtime.png") no-repeat left center;
+    list-style-image: url("chrome://Zend_Toolbar/skin/runtime.png");
 }

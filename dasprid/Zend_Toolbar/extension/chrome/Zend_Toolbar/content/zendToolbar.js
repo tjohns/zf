@@ -68,6 +68,74 @@ var Zend_Toolbar = function()
          * Wildfire toolbar plugin
          */
         wildfireToolbarPlugin: null,
+        
+        /**
+         * Display the ZF version
+         *
+         * @param string version
+         */
+        showVersion: function(version)
+        {
+            document.getElementById('zend-toolbar-version').label = version;
+        },
+
+        /**
+         * Display all variables
+         *
+         * @param object variables
+         */
+        showVariables: function(variables)
+        {
+            var tree = document.getElementById('zend-toolbar-variables-tree');
+
+            while (tree.childNodes[1].hasChildNodes()) {
+                tree.childNodes[1].removeChild(tree.childNodes[1].childNodes[0]);
+            }
+
+            private.addVariableChildren(tree.childNodes[1], variables);
+        },
+        
+        /**
+         * Add variable children recursively
+         *
+         * @param object treeChildren
+         * @param object variables
+         */
+        addVariableChildren: function(treeChildren, variables)
+        {
+            for (var name in variables) {
+                var item = document.createElement('treeitem');
+                var row  = document.createElement('treerow');
+
+                var cell = document.createElement('treecell');
+                cell.setAttribute('label', name);
+                row.appendChild(cell);
+
+                var cell = document.createElement('treecell');
+                cell.setAttribute('label', variables[name]);
+                row.appendChild(cell);
+
+                item.appendChild(row);
+                Firebug.Console.log('test');
+                if (variables[name] instanceof Object) {
+                    if (variables[name] instanceof Array && variables[name].length == 0) {
+                        cell.setAttribute('label', 'Array (empty)');
+                    } else {
+                        cell.setAttribute('label', 'Array');
+                    }
+                
+                    item.setAttribute('container', 'true');
+                    
+                    var children = document.createElement('treechildren');
+                    
+                    private.addVariableChildren(children, variables[name]);
+                    
+                    item.appendChild(children);
+                }
+
+                treeChildren.appendChild(item);
+            }
+        },
             
         /**
          * Page load listener
@@ -90,9 +158,14 @@ var Zend_Toolbar = function()
 
                     if (private.wildfireToolbarPlugin.hasData()) {
                         var data = private.wildfireToolbarPlugin.getData();
-                        alert(data.version);
+
+                        // Show the toolbar
+                        document.getElementById('zend-toolbar-statusbar').hidden = false;
+                        
+                        private.showVersion(data.version);
+                        private.showVariables(data.variables);
                     } else {
-                        // TODO: no data, hide toolbar
+                        document.getElementById('zend-toolbar-statusbar').hidden = true;
                     }
                 }
                 

@@ -28,14 +28,25 @@
 
     <window id="main-window">
         <vbox id="browser-bottombox">
-            <hbox id="zend-toolbar-statusbar" insertbefore="status-bar">
-                <label id="zend-toolbar-version" value="1.9.0"/>
-                <label id="zend-toolbar-variables" value="View variables"/>
-                <label id="zend-toolbar-queries" value="6 queries in 0.5 seconds"/>
-                <label id="zend-toolbar-errors" value="1 error"/>
-                <label id="zend-toolbar-filesize" value="1.6kb"/>
-                <label id="zend-toolbar-runtime" value="1.4 seconds"/>
-            </hbox>
+            <vbox id="zend-toolbar-statusbar" insertbefore="status-bar" hidden="false">
+                <toolbar>
+	                <toolbarbutton id="zend-toolbar-version" type="radio" group="zend-toolbar-group"/>
+	                <toolbarbutton id="zend-toolbar-variables" type="radio" group="zend-toolbar-group" label="View variables"/>
+	                <toolbarbutton id="zend-toolbar-queries" type="radio" group="zend-toolbar-group" label="6 queries in 0.5 seconds"/>
+	                <toolbarbutton id="zend-toolbar-errors" type="radio" group="zend-toolbar-group" label="1 error"/>
+	                <toolbarbutton id="zend-toolbar-filesize" type="radio" group="zend-toolbar-group" label="1.6kb"/>
+	                <toolbarbutton id="zend-toolbar-runtime" type="radio" group="zend-toolbar-group" label="1.4 seconds"/>
+                </toolbar>
+                <deck id="zend-toolbar-deck" style="height: 300px;">
+					<tree flex="1" id="zend-toolbar-variables-tree">
+                        <treecols>
+                            <treecol id="category" label="Name" primary="true" flex="1"/>
+                            <treecol id="category" label="Value" primary="true" flex="1"/>
+					    </treecols>
+					    <treechildren/>
+					</tree>
+                </deck>
+            </vbox>
         </vbox>
     </window>
 </overlay>
