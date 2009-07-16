@@ -28,7 +28,7 @@
 
     <window id="main-window">
         <vbox id="browser-bottombox">
-            <vbox id="zend-toolbar-statusbar" insertbefore="status-bar" hidden="false">
+            <vbox id="zend-toolbar-statusbar" insertbefore="status-bar" hidden="true">
                 <toolbar>
 	                <toolbarbutton id="zend-toolbar-version" type="radio" group="zend-toolbar-group"/>
 	                <toolbarbutton id="zend-toolbar-variables" type="radio" group="zend-toolbar-group" label="View variables"/>
@@ -37,7 +37,8 @@
 	                <toolbarbutton id="zend-toolbar-filesize" type="radio" group="zend-toolbar-group" label="1.6kb"/>
 	                <toolbarbutton id="zend-toolbar-runtime" type="radio" group="zend-toolbar-group" label="1.4 seconds"/>
                 </toolbar>
-                <deck id="zend-toolbar-deck" style="height: 300px;">
+                <deck id="zend-toolbar-deck" style="height: 300px;" hidden="true">
+                    <description value="Version information"/>
 					<tree flex="1" id="zend-toolbar-variables-tree">
                         <treecols>
                             <treecol id="category" label="Name" primary="true" flex="1"/>
@@ -45,6 +46,10 @@
 					    </treecols>
 					    <treechildren/>
 					</tree>
+					<description value="Query information"/>
+					<description value="Error information"/>
+					<description value="Filesize information"/>
+					<description value="Response time information"/>
                 </deck>
             </vbox>
         </vbox>

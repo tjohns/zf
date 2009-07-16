@@ -42,6 +42,13 @@ var Zend_Toolbar = function()
             private.wildfireToolbarPlugin.init();
                    
             gBrowser.addProgressListener(private.pageListener, private.Ci.nsIWebProgress.NOTIFY_STATE_DOCUMENT);
+            
+            document.getElementById('zend-toolbar-version').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 0');
+            document.getElementById('zend-toolbar-variables').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 1');
+            document.getElementById('zend-toolbar-queries').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 2');
+            document.getElementById('zend-toolbar-errors').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 3');
+            document.getElementById('zend-toolbar-filesize').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 4');
+            document.getElementById('zend-toolbar-runtime').setAttribute('oncommand', 'document.getElementById("zend-toolbar-deck").hidden = false; document.getElementById("zend-toolbar-deck").selectedIndex = 5'); 
         },
 
         /**
@@ -68,6 +75,9 @@ var Zend_Toolbar = function()
          * Wildfire toolbar plugin
          */
         wildfireToolbarPlugin: null,
+        
+        show: function() {
+        },
         
         /**
          * Display the ZF version
