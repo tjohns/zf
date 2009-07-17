@@ -63,15 +63,20 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
     }
 
-    private function createMetadataFactory($entityName)
+
+    public function testGetMapperByEntity_OfLazyLoadClasses_CorrectlyDeterminesMapper()
     {
-        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
-        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
-        $metadataFactory->expects($this->once())
-                    ->method('getDefinitionByEntityName')
-                    ->with($this->equalTo($entityName))
-                    ->will($this->returnValue($definitionMock));
-        return $metadataFactory;
+        $className = "Foo";
+
+        $entity = new Zend_Entity_LazyLoad_Entity('trim', array('foo', 1), $className);
+
+        $mapperMock = $this->createMapperMock();
+        $manager = $this->createTestingEntityManager();
+        $manager->addMapper($className, $mapperMock);
+
+        $m = $manager->getMapperByEntity($entity);
+
+        $this->assertEquals($mapperMock, $m);
     }
 
     public function testGetMapperByEntityClassNameReturnsMapperOnValidCall()
@@ -163,21 +168,124 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager->save($entity);
     }
 
-    public function testDeleteIsDelegatedToMapper()
+    public function testDelete_KnownEntity_IsDelegatedToMapper()
+    {
+        $this->doDeleteOfEntity_IsContained(true);
+    }
+
+    public function testDelete_UnknownEntity_ThrowsIllegalStateException()
+    {
+        $this->setExpectedException("Zend_Entity_IllegalStateException");
+
+        $this->doDeleteOfEntity_IsContained(false);
+    }
+
+    public function doDeleteOfEntity_IsContained($contained)
     {
         $entity = new Zend_TestEntity1();
         $className = get_class($entity);
 
+        $identityMap = $this->createIdentityMapMock();
+        $identityMap->expects($this->once())
+                    ->method('contains')
+                    ->with($this->equalTo($entity))
+                    ->will($this->returnValue($contained));
+
         $mapperMock = $this->createMapperMock();
-        $mapperMock->expects($this->once())
-                   ->method('delete')
-                   ->with($this->equalTo($entity));
+        $mapperMock->expects( ($contained==true)?$this->once():$this->never() )
+                   ->method('delete');
 
-
-        $manager = $this->createTestingEntityManager();
+        $manager = $this->createTestingEntityManager(null, null, $identityMap);
         $manager->addMapper($className, $mapperMock);
 
         $manager->delete($entity);
+    }
+
+    public function testGetReference_FetchesLoadedObjects_FromIdentityMap()
+    {
+        $fixtureClass = "foo";
+        $fixtureId = "1";
+        $fixtureInstance = new stdClass();
+
+        $identityMapMock = $this->createIdentityMapMock();
+        $identityMapMock->expects($this->at(0))
+                        ->method('hasObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue(true));
+        $identityMapMock->expects($this->at(1))
+                        ->method('getObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue($fixtureInstance));
+
+        $manager = $this->createTestingEntityManager(null, null, $identityMapMock);
+
+        $actual = $manager->getReference($fixtureClass, $fixtureId);
+
+        $this->assertSame($fixtureInstance, $actual);
+    }
+
+    public function testGetReference_FetchesLazyLoadObject_FromIdentityMap()
+    {
+        $fixtureClass = "foo";
+        $fixtureId = "1";
+        $fixtureInstance = new stdClass();
+
+        $identityMapMock = $this->createIdentityMapMock();
+        $identityMapMock->expects($this->at(0))
+                        ->method('hasObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue(false));
+        $identityMapMock->expects($this->at(1))
+                        ->method('hasLazyObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue(true));
+        $identityMapMock->expects($this->at(2))
+                        ->method('getObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue($fixtureInstance));
+
+        $manager = $this->createTestingEntityManager(null, null, $identityMapMock);
+
+        $actual = $manager->getReference($fixtureClass, $fixtureId);
+
+        $this->assertSame($fixtureInstance, $actual);
+    }
+
+    public function testGetReference_CreatesLazyLoad_IfObjectNotLoadedBefore()
+    {
+        $fixtureClass = "foo";
+        $fixtureId = "1";
+
+        $identityMapMock = $this->createIdentityMapMock();
+        $identityMapMock->expects($this->at(0))
+                        ->method('hasObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue(false));
+
+        $manager = $this->createTestingEntityManager(null, null, $identityMapMock);
+
+        $actual = $manager->getReference($fixtureClass, $fixtureId);
+
+        $this->assertType('Zend_Entity_LazyLoad_Entity', $actual);
+        $this->assertEquals($fixtureClass, $actual->__ze_getClassName());
+    }
+
+    public function testGetReference_CreatedLazyLoad_IsAddedToIdentityMap()
+    {
+        $fixtureClass = "foo";
+        $fixtureId = "1";
+
+        $identityMapMock = $this->createIdentityMapMock();
+        $identityMapMock->expects($this->at(0))
+                        ->method('hasObject')
+                        ->with($fixtureClass, $fixtureId)
+                        ->will($this->returnValue(false));
+        $identityMapMock->expects($this->at(1))
+                        ->method('addObject');
+
+        $manager = $this->createTestingEntityManager(null, null, $identityMapMock);
+
+        $manager->getReference($fixtureClass, $fixtureId);
     }
 
     const UNKNOWN_ENTITY_CLASS = 'UnknownEntityClass';
@@ -224,6 +332,17 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     public function testCreateQuery()
     {
         $this->markTestIncomplete();
+    }
+
+    private function createMetadataFactory($entityName)
+    {
+        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
+        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
+        $metadataFactory->expects($this->once())
+                    ->method('getDefinitionByEntityName')
+                    ->with($this->equalTo($entityName))
+                    ->will($this->returnValue($definitionMock));
+        return $metadataFactory;
     }
 
     public function createEntityManagerWithMapper($select)

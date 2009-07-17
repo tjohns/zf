@@ -27,6 +27,22 @@ class Zend_Entity_Mapper_Definition_ManyToOneRelation extends Zend_Entity_Mapper
     }
 
     /**
+     * @return boolean
+     */
+    public function isInverse()
+    {
+        return false;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOwning()
+    {
+        return true;
+    }
+
+    /**
      * Compile ManyToOne Relation Element
      *
      * @param Zend_Entity_Mapper_Definition_Entity $entityDef
@@ -40,7 +56,7 @@ class Zend_Entity_Mapper_Definition_ManyToOneRelation extends Zend_Entity_Mapper
 
         $foreignKey = $foreignDef->getPrimaryKey();
         if($foreignKey !== null) {
-            $this->_foreignKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
+            $this->_foreignKeyPropertyName = $foreignKey->getPropertyName();
         } else {
             throw new Zend_Entity_Exception();
         }

@@ -101,6 +101,17 @@ class Zend_Entity_IdentityMap
     }
 
     /**
+     * @param string $entityInterface
+     * @param Zend_Entity_Interface $entity
+     */
+    public function remove($entityInterface, Zend_Entity_Interface $entity)
+    {
+        $hash = spl_object_hash($entity);
+        unset($this->_loadedObjects[$entityInterface][$this->_primaryKeys[$hash]]);
+        unset($this->_primaryKeys[$hash]);
+    }
+
+    /**
      * @param  Zend_Entity_Interface $entity
      * @return string
      */
@@ -110,7 +121,8 @@ class Zend_Entity_IdentityMap
         if(isset($this->_primaryKeys[$hash])) {
             return $this->_primaryKeys[$hash];
         } else {
-            throw new Exception("Entity of class '".$entity."' is not contained in persistence context and has no primary key.");
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Entity of class '".$entity."' is not contained in persistence context and has no primary key.");
         }
     }
 

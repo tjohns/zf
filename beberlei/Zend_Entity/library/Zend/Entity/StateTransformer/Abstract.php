@@ -4,7 +4,7 @@
  * @subpackage Mapper
  */
 
-abstract class Zend_Entity_Mapper_StateTransformer_Abstract
+abstract class Zend_Entity_StateTransformer_Abstract
 {
     /**
      * @var array
@@ -20,21 +20,21 @@ abstract class Zend_Entity_Mapper_StateTransformer_Abstract
     }
 
     /**
-     * @throws Zend_Entity_Mapper_StateTransformer_Exception
+     * @throws Zend_Entity_StateTransformer_Exception
      * @param object
      * @return array
      */
     abstract public function getState($object);
 
     /**
-     * @throws Zend_Entity_Mapper_StateTransformer_Exception
+     * @throws Zend_Entity_StateTransformer_Exception
      * @param object $object
      * @param array $state
      */
     abstract public function setState($object, $state);
 
     /**
-     * @throws Zend_Entity_Mapper_StateTransformer_Exception
+     * @throws Zend_Entity_StateTransformer_Exception
      * @param object $object
      * @param string $idPropertyName
      * @param string|int $id

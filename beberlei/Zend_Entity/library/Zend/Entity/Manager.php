@@ -152,7 +152,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function getMapperByEntity($entity)
     {
-        if($entity instanceof Zend_Entity_Interface) {
+        //TODO: Inheritence is not covered by this
+        if($entity instanceof Zend_Entity_LazyLoad_Entity) {
+            $className = $entity->__ze_getClassName();
+        } else if($entity instanceof Zend_Entity_Interface) {
             $className = get_class($entity);
         } else {
             $className = $entity;
@@ -250,19 +253,15 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function delete(Zend_Entity_Interface $entity)
     {
+        if($this->getIdentityMap()->contains($entity) == false) {
+            require_once "Zend/Entity/IllegalStateException.php";
+            throw new Zend_Entity_IllegalStateException(
+                "Cannot delete entity with unknown primary id from database."
+            );
+        }
+
         $mapper = $this->getMapperByEntity($entity);
         $mapper->delete($entity, $this);
-    }
-
-    /**
-     * Referesh the state of the given entity from the database.
-     *
-     * @param  Zend_Entity_Interface $entity
-     * @return void
-     */
-    public function refresh(Zend_Entity_Interface $entity)
-    {
-        
     }
 
     /**
@@ -289,14 +288,14 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     {
         $identityMap = $this->getIdentityMap();
         if($identityMap->hasObject($class, $id) || $identityMap->hasLazyObject($class, $id)) {
-            $lazyEntity = $identityMap->getObject($class, $id);
+            $reference = $identityMap->getObject($class, $id);
         } else {
-            $callback          = array($this, "load");
+            $callback = array($this, "load");
             $callbackArguments = array($class, $id);
-            $lazyEntity = new Zend_Entity_LazyLoad_Entity($callback, $callbackArguments);
-            $identityMap->addObject($class, $id, $lazyEntity);
+            $reference = new Zend_Entity_LazyLoad_Entity($callback, $callbackArguments, $class);
+            $identityMap->addObject($class, $id, $reference);
         }
-        return $lazyEntity;
+        return $reference;
     }
 
     /**

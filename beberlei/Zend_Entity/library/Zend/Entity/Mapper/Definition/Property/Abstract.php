@@ -35,6 +35,16 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract
     protected $propertyType = Zend_Entity_Mapper_Definition_Property::TYPE_STRING;
 
     /**
+     * @var boolean
+     */
+    protected $_isNullable = false;
+
+    /**
+     * @var boolean
+     */
+    protected $_unique = false;
+
+    /**
      * Construct a property and call existing methods for all options if present.
      *
      * @param string $propertyName
@@ -120,6 +130,38 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract
     }
 
     /**
+     * @return boolean
+     */
+    public function isNullable()
+    {
+        return $this->_isNullable;
+    }
+
+    /**
+     * @param boolean $nullable
+     */
+    public function setNullable($nullable)
+    {
+        $this->_isNullable = $nullable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUnique()
+    {
+        return $this->_unique;
+    }
+
+    /**
+     * @param boolean $unique
+     */
+    public function setUnique($unique)
+    {
+        $this->_unique = $unique;
+    }
+
+    /**
      * @param  mixed $propertyValue
      * @return mixed
      */
@@ -156,33 +198,11 @@ abstract class Zend_Entity_Mapper_Definition_Property_Abstract
                 $propertyValue = $propertyValue->format('U');
                 break;
             case Zend_Entity_Mapper_Definition_Property::TYPE_ARRAY:
-                $xml = '';
-                $xml = $this->_convertArrayToXml($xml, (array)$propertyValue);
-                $propertyValue = '<?xml version="1.0" ?><array>'.$xml.'</array>';
+                $propertyValue = Zend_Entity_StateTransformer_XmlSerializer::toXml($propertyValue);
                 break;
 
         }
         return $propertyValue;
-    }
-
-    private function _convertArrayToXml($xml, array $array)
-    {
-        foreach($array AS $k => $v) {
-            if(is_array($v)) {
-                if(count($v)) {
-                    $xml .= '<'.$k.'>';
-                    $xml .= $this->_convertArrayToXml($xml, $v);
-                } else {
-                    $xml .= '<'.$k.' />';
-                }
-            } else {
-                if(is_numeric($k)) {
-                    $k = "elem".$k;
-                }
-                $xml .= '<'.$k.'><![CDATA['.$v.']]></'.$k.'>';
-            }
-        }
-        return $xml;
     }
 
     public function castColumnToPhpType($columnValue)

@@ -13,4 +13,10 @@ $def->addProperty("name", array(
     'propertyType' => Zend_Entity_Mapper_Definition_Property::TYPE_STRING
 ));
 
+$def->addManyToOneRelation("teacher", array(
+    "columnName" => "teacher_id",
+    "class" => "ZendEntity_Professor",
+    "cascade" => "save",
+));
+
 return $def;

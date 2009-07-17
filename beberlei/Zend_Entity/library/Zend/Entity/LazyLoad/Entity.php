@@ -40,10 +40,15 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
     protected $_lazyLoadEntityId;
 
     /**
+     * @var string
+     */
+    protected $_className = null;
+
+    /**
      * @param array|string $callback
      * @param array $args
      */
-    public function __construct($callback, array $args=array())
+    public function __construct($callback, array $args=array(), $className=null)
     {
         if(!is_callable($callback)) {
             require_once "Zend/Entity/Exception.php";
@@ -52,6 +57,7 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
         $this->_callback = $callback;
         $this->_callbackArguments     = $args;
         $this->_lazyLoadEntityId = $args[1];
+        $this->_className = $className;
     }
 
     /**
@@ -119,5 +125,10 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
     public function getLazyLoadEntityId()
     {
         return $this->_lazyLoadEntityId;
+    }
+
+    public function __ze_getClassName()
+    {
+        return $this->_className;
     }
 }

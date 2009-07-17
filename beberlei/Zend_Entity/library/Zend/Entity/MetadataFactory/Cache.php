@@ -30,13 +30,19 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
     protected $_cache = null;
 
     /**
+     * @var string
+     */
+    protected $_cachePrefix = '';
+
+    /**
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      * @param Zend_Cache_Core $cache
      */
-    public function __construct(Zend_Entity_MetadataFactory_Interface $metadataFactory, Zend_Cache_Core $cache)
+    public function __construct(Zend_Entity_MetadataFactory_Interface $metadataFactory, Zend_Cache_Core $cache, $cachePrefix='')
     {
         $this->_metadataFactory = $metadataFactory;
         $this->_cache = $cache;
+        $this->_cachePrefix = $cachePrefix;
     }
 
     /**
@@ -46,7 +52,15 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
      */
     public function getDefinitionEntityNames()
     {
-        return $this->_metadataFactory->getDefinitionEntityNames();
+        $cacheName = $this->_cachePrefix."ze__entityDefinitionNames";
+
+        $entityNames = $this->_cache->load($cacheName);
+        if($entityNames === false) {
+            $entityNames = $this->_metadataFactory->getDefinitionEntityNames();
+            $this->_cache->save($entityNames, $cacheName);
+        }
+
+        return $entityNames;
     }
 
     /**
@@ -55,11 +69,14 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
      */
     public function getDefinitionByEntityName($entityName)
     {
-        if($this->_cache->test($entityName)) {
-            $entityDef = $this->_cache->load($entityName);
-        } else {
+        $cacheName = $this->_cachePrefix.$entityName;
+
+        $entityDef = $this->_cache->load($cacheName);
+        if($entityDef === false) {
             $entityDef = $this->_metadataFactory->getDefinitionByEntityName($entityName);
+            $this->_cache->save($entityDef, $cacheName);
         }
+        
         return $entityDef;
     }
 }

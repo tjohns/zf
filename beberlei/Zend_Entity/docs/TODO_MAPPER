@@ -1,28 +1,32 @@
 TODO
 
 * Type Casting: Test it
-* Rename Resource into MetadataFactory
 * Implement support for Custom Collection Classes
-* UnitOfWork: Topographical Sorting? Implement user-land overridable
-* Definitions: Inverse Relationsships
+* Remove Zend_Entity_Interface typehint everywhere
+* Query API: Query Object in Domain Speak translating all properties and foreign entity access to internal SQL.
+* EventDispatcher: prePersist(), postPersist(), preRemove(), postRemove(), preUpdate(), postUpdate(), postLoad()
+* EntityManager: Decouple Zend_Db_Adapter into the Mapper
 * Definitions: Initializing of Loader and Persister and fetching of relations should be done lazy
 * Definitions: Add compound keys through a PrimaryKey object.
 * Definitions: Entity - Add Namespace argument for entities to write less on Subnamespaced entities when referencing them.
 * Definitions: Add Entity-Name Configuration Option
 * Collections: Add difference between Set, Map and List ?! May even add Ordered Lists via callback or own implementation
-* Collections: Lazy Load Collection should allow to add elements without triggering the lazy load and having them integrated correctly, when lazy load is triggered.
 * Lazy Load Entities: Class has to be overwritable to implement the Entity interface that fakes identity.
 * Mapper: Save and Delete
     * Implement Cascading Persisters
-* Manager/Mapper: Add reference to entity in Zend_Entity_Db_Select to save one call to entity name.
-* Mapper: refresh() method needs specific API method on the loader to be useful
-* Loader: Implement Field lazy loading, maybe supporting contextual lazyloading of more than one field like in http://datamapper.org/doku.php?id=spotlight:laziness
+* Mapper: merge/refresh() method needs specific API method on the loader to be useful
 * EntityManager: Implement Second Level Cache into IdentityMap - Zend_Cache holds objects in Cache for a lifetime, re-cached on each change
     * Easy: Cachable are only the Database representations of an object, not the object itsself. This way all the objects are saved on their own
     * Dependency: Implement Registry or Factory for EntityManager, allowing to serialize/deserialize Lazy Load collections corretcly
-    * Hold Entities Per Id
-    * Hold Collections Per Select Statement (invalidate this more often)
+* Persister/Loader: Handle Bi-directional relationsships according to EJB standard.
+
+Version 1.1
+Unit Of Work Session Decorator
+ * Force entities to implement interface "Footprint", which has to be userland implemented to notify unit of work of changes
+ * On commit, walk over all entities that are in the context and compare footprint to the original one.
+
 
 Workable Tests:
 * Self referencing objects
 * Association table loading
+* Persisting collections

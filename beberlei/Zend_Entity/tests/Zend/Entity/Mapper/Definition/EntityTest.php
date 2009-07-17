@@ -131,13 +131,13 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
     public function testGetDefaultStateTransformerClass()
     {
         $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
-        $this->assertEquals("Zend_Entity_Mapper_StateTransformer_Array", $entityDef->getStateTransformerClass());
+        $this->assertEquals("Zend_Entity_StateTransformer_Array", $entityDef->getStateTransformerClass());
     }
 
     /**
      * @dataProvider dataSetStateTransformerClass
-     * @param <type> $class
-     * @param <type> $expected
+     * @param string $class
+     * @param string $expected
      */
     public function testSetStateTransformerClass($class, $expected)
     {
@@ -150,10 +150,23 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
     {
         return array(
             array('MyStateTransformer', 'MyStateTransformer'),
-            array('Array', 'Zend_Entity_Mapper_StateTransformer_Array'),
-            array('Property', 'Zend_Entity_Mapper_StateTransformer_Property'),
-            array('Reflection', 'Zend_Entity_Mapper_StateTransformer_Reflection'),
+            array('Array', 'Zend_Entity_StateTransformer_Array'),
+            array('Property', 'Zend_Entity_StateTransformer_Property'),
+            array('Reflection', 'Zend_Entity_StateTransformer_Reflection'),
         );
+    }
+
+    public function testGetEntityNameDefaultsToClass()
+    {
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
+        $this->assertEquals(self::TEST_CLASS, $entityDef->getEntityName());
+    }
+
+    public function testGetEntityName()
+    {
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
+        $entityDef->setEntityName(self::TEST_CLASS2);
+        $this->assertEquals(self::TEST_CLASS2, $entityDef->getEntityName());
     }
 
     private function getMetadataFactoryMock()
@@ -240,7 +253,7 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
 
         $entityDef = new Zend_Entity_Mapper_Definition_Entity("classA");
         $propertyA = new Zend_Entity_Mapper_Definition_PrimaryKey('propA');
-        $entityDef->setPrimaryKey("propA", $propertyA);
+        $entityDef->addPrimaryKey("propA", $propertyA);
 
         $entityDef->setStateTransformerClass('ZendEntity_NonExistantStateTransformer');
 
@@ -254,10 +267,19 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
 
         $entityDef = new Zend_Entity_Mapper_Definition_Entity("classA");
         $propertyA = new Zend_Entity_Mapper_Definition_PrimaryKey('propA');
-        $entityDef->setPrimaryKey("propA", $propertyA);
+        $entityDef->addProperty("propA", $propertyA);
 
         $metadataFactoryMock = $this->getMetadataFactoryMock();
         $entityDef->compile($metadataFactoryMock);
+    }
+
+    public function testSetGetStateTransformer()
+    {
+        $stateTransformer = new Zend_Entity_StateTransformer_Array();
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity("classA");
+        $entityDef->setStateTransformer($stateTransformer);
+
+        $this->assertSame($stateTransformer, $entityDef->getStateTransformer());
     }
 }
 

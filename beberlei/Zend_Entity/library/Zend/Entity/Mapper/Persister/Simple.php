@@ -50,7 +50,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_table;
 
     /**
-     * @var Zend_Entity_Mapper_StateTransformer_Abstract
+     * @var Zend_Entity_StateTransformer_Abstract
      */
     protected $_stateTransformer = null;
 
@@ -135,7 +135,8 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function evaluateRelatedCollection($keyValue, $relatedCollection, $collectionDef, $entityManager)
     {
-        if($relatedCollection instanceof Zend_Entity_Collection_Interface && $relatedCollection->wasLoadedFromDatabase() == true) {
+        if($relatedCollection instanceof Zend_Entity_Collection_Interface
+            && $relatedCollection->wasLoadedFromDatabase() == true) {
             /* @var $relatedCollection Zend_Entity_Mapper_Definition_AbstractRelation */
             switch($collectionDef->getRelation()->getCascade()) {
                 case Zend_Entity_Mapper_Definition_Property::CASCADE_ALL:
@@ -275,16 +276,14 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $identityMap = $entityManager->getIdentityMap();
-        $entityState = $this->_stateTransformer->getState($entity);
-        $pk  = $this->_primaryKey;
-        if($identityMap->contains($entity) == false) {
-            throw new Exception("Cannot update entity with unknown primary identification state into database.");
-        }
-
         $db          = $entityManager->getAdapter();
+        
         $tableName   = $this->_table;
-        $whereClause = $pk->buildWhereCondition($db, $tableName, $identityMap->getPrimaryKey($entity));
+        $whereClause = $this->_primaryKey->buildWhereCondition($db, $tableName, $identityMap->getPrimaryKey($entity));
+        
         $db->delete($tableName, $whereClause);
-        $entity->setState($pk->getEmptyKeyProperties());
+        
+        $this->_stateTransformer->setId($entity, $this->_primaryKey->getPropertyName(), null);
+        $identityMap->remove($this->_class, $entity);
     }
 }

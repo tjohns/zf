@@ -190,7 +190,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      * @param int $mask
      * @return Zend_Entity_IdentityMap
      */
-    protected function createIdentityMapMock($mask)
+    protected function createIdentityMapMock($mask=0)
     {
         $identityMap = $this->getMock('Zend_Entity_IdentityMap');
         if( ($mask&self::IDENTITY_MOCK_CLEAR) > 0) {

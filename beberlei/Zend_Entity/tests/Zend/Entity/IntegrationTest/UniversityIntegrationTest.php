@@ -4,6 +4,7 @@ require_once dirname(__FILE__)."/../../TestHelper.php";
 
 require_once "University/Entities/Student.php";
 require_once "University/Entities/Course.php";
+require_once "University/Entities/Professor.php";
 
 class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PHPUnit_DatabaseTestCase
 {
@@ -66,18 +67,19 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
      * @param int $id
      * @param string $name
      */
-    public function testCourseGetById($id, $name)
+    public function testCourseGetById($id, $name, $teacherId)
     {
         $course = $this->_entityManager->load("ZendEntity_Course", $id);
         $this->assertEquals($id, $course->id);
         $this->assertEquals($name, $course->name);
+        $this->assertEquals($teacherId, $course->teacher->id);
     }
 
     static public function dataCourses()
     {
         return array(
-            array(1, 'Human Action'),
-            array(2, 'Applied Financial Markets'),
+            array(1, 'Human Action', 1),
+            array(2, 'Applied Financial Markets', 2),
         );
     }
 
@@ -189,5 +191,73 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
             $this->createFlatXMLDataSet(dirname(__FILE__)."/University/Fixtures/ExistingStudentRemoveCourseAssertion.xml"),
             $ds
         );
+    }
+
+    /**
+     * @dataProvider dataProfessors
+     */
+    public function testGetProfessor($id, $name, $salary, $courseCount)
+    {
+        $prof = $this->_entityManager->load("ZendEntity_Professor", $id);
+
+        $this->assertType('int', $prof->id);
+        $this->assertEquals($id, $prof->id);
+        $this->assertEquals($name, $prof->name);
+        $this->assertType('int', $prof->salary);
+        $this->assertEquals($salary, $prof->salary);
+        $this->assertEquals($courseCount, count($prof->teachingCourses));
+    }
+
+    static public function dataProfessors()
+    {
+        return array(
+            array("1", "John Stuart Mill", 36000, 1),
+            array("2", "Jean Baptist Say", 54000, 2),
+        );
+    }
+
+    public function testSaveCourseWithBidirectionalCascadingProfessorRelation()
+    {
+        $course = $this->_entityManager->load("ZendEntity_Course", 1);
+        $course->teacher->salary = 123475;
+        $this->_entityManager->save($course);
+    }
+
+    public function testSaveProfessorWithBidirectionalCascadingCourseRelation()
+    {
+        $this->markTestSkipped('Nested Loop Fatal Error!');
+
+        $course = new ZendEntity_Course();
+        $course->name = "Foo";
+
+        $professor = $this->_entityManager->load("ZendEntity_Professor", 2);
+        #$course->teacher = $professor;
+        #$professor->teachingCourses[] = $course;
+        count($professor->teachingCourses);
+
+        $this->_entityManager->save($professor);
+    }
+
+    public function testDeleteStudent()
+    {
+        $student = $this->_entityManager->load("ZendEntity_Student", 1);
+        $this->_entityManager->delete($student);
+
+        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds->addTable("university_students");
+
+        $this->assertDataSetsEqual(
+            $this->createFlatXMLDataSet(dirname(__FILE__)."/University/Fixtures/DeleteStudentAssertion.xml"),
+            $ds
+        );
+    }
+
+    public function testDeleteStudentTwice_ThrowsException()
+    {
+        $student = $this->_entityManager->load("ZendEntity_Student", 1);
+        $this->_entityManager->delete($student);
+
+        $this->setExpectedException("Zend_Entity_IllegalStateException");
+        $this->_entityManager->delete($student);
     }
 }

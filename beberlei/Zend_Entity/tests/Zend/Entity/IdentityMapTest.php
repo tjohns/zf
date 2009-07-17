@@ -80,12 +80,28 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($identityMap->hasObject("Zend_TestEntity1", "1"));
     }
 
-    public function testGetPrimaryKeyFromUncontainedEntityThrowsException()
+    public function testGetPrimaryKey_FromUncontainedEntity_ThrowsException()
     {
         $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
         $this->setExpectedException("Exception");
         $identityMap->getPrimaryKey($entity);
+    }
+
+    public function testRemoveEntity()
+    {
+        $identityMap = new Zend_Entity_IdentityMap();
+        $entity = new Zend_TestEntity1();
+
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
+
+        $this->assertTrue($identityMap->hasObject("Zend_TestEntity1", "1"));
+        $this->assertTrue($identityMap->contains($entity));
+
+        $identityMap->remove("Zend_TestEntity1", $entity);
+
+        $this->assertFalse($identityMap->hasObject("Zend_TestEntity1", "1"));
+        $this->assertFalse($identityMap->contains($entity));
     }
 }

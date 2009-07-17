@@ -79,7 +79,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     protected $_hasLazyLoads        = false;
 
     /**
-     * @var Zend_Entity_Mapper_StateTransformer_Abstract
+     * @var Zend_Entity_StateTransformer_Abstract
      */
     protected $_stateTransformer = null;
 
@@ -193,6 +193,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         $state = $this->renameAndCastColumnToPropertyKeys($row);
         unset($row);
 
+        // TODO: Optimize this 
         if($this->hasLazyBoundObjects()) {
             $state = $this->initializeLazyBoundObjects($state, $entityManager);
         }

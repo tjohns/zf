@@ -25,6 +25,11 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     protected $_className;
 
     /**
+     * @var string
+     */
+    protected $_entityName = null;
+
+    /**
      * @var array
      */
     protected $_extensions = array();
@@ -52,10 +57,10 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     /**
      * @var string
      */
-    protected $_stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Array";
+    protected $_stateTransformerClass = "Zend_Entity_StateTransformer_Array";
 
     /**
-     * @var Zend_Entity_Mapper_StateTransformer_Abstract
+     * @var Zend_Entity_StateTransformer_Abstract
      */
     protected $_stateTransformer = null;
 
@@ -89,6 +94,27 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     public function setClass($className)
     {
         $this->_className = $className;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getEntityName()
+    {
+        if($this->_entityName == null) {
+            return $this->_className;
+        } else {
+            return $this->_entityName;
+        }
+    }
+
+    /**
+     * @param string $entityName
+     */
+    public function setEntityName($entityName)
+    {
+        $this->_entityName = $entityName;
     }
 
     /**
@@ -229,24 +255,32 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     {
         switch(strtolower($stateTransformerClass)) {
             case 'array':
-                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Array";
+                $stateTransformerClass = "Zend_Entity_StateTransformer_Array";
                 break;
             case 'property':
-                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Property";
+                $stateTransformerClass = "Zend_Entity_StateTransformer_Property";
                 break;
             case 'reflection':
-                $stateTransformerClass = "Zend_Entity_Mapper_StateTransformer_Reflection";
+                $stateTransformerClass = "Zend_Entity_StateTransformer_Reflection";
                 break;
         }
         $this->_stateTransformerClass = $stateTransformerClass;
     }
 
     /**
-     * @return Zend_Entity_Mapper_StateTransformer_Abstract
+     * @return Zend_Entity_StateTransformer_Abstract
      */
     public function getStateTransformer()
     {
         return $this->_stateTransformer;
+    }
+
+    /**
+     * @param Zend_Entity_StateTransformer_Abstract $stateTransformer 
+     */
+    public function setStateTransformer(Zend_Entity_StateTransformer_Abstract $stateTransformer)
+    {
+        $this->_stateTransformer = $stateTransformer;
     }
 
     /**

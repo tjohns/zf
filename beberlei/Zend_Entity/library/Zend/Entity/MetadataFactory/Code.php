@@ -23,7 +23,7 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
 
     protected $_path = null;
 
-    protected $_maps = array();
+    protected $_maps = null;
 
     protected $_entityNames = null;
 
@@ -39,41 +39,53 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
      */
     public function getDefinitionEntityNames()
     {
-        if($this->_entityNames == null) {
-            $this->_entityNames = array();
+        $this->loadDefinitions();
+        
+        return $this->_entityNames;
+    }
+
+    protected function loadDefinitions()
+    {
+        if($this->_maps == null) {
+            if(!is_dir($this->_path)) {
+                throw new Zend_Entity_InvalidEntityException(
+                    "Could not load Definitions because '".$this->_path."' is not a directory."
+                );
+            }
+
+            $this->_maps = array();
             foreach(scandir($this->_path) AS $item) {
                 if( ($pos = strpos($item, ".php")) !== false) {
-                    $this->_entityNames[] = substr($item, 0, $pos);
+                    $entityName = substr($item, 0, $pos);
+                    $path = $this->getDefinitionPath($entityName);
+                    $definition = $this->loadDefinitionFile($path, $entityName);
+
+                    $entityName = $definition->getEntityName();
+                    $this->_maps[$entityName] = $definition;
+                    $this->_entityNames[] = $entityName;
                 }
             }
+
+            foreach($this->_maps AS $definition) {
+                $definition->compile($this);
+            }
         }
-        return $this->_entityNames;
     }
 
     /**
      * Return Entity Definition
-     * 
+     *
+     * @throws Zend_Entity_InvalidEntityException
      * @param  string $entityName
      * @return Zend_Entity_Mapper_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName)
     {
+        $this->loadDefinitions();
         if(!isset($this->_maps[$entityName])) {
-            $this->assertEntityNameValid($entityName);
-            $path = $this->getDefinitionPath($entityName);
-            $definition = $this->loadDefinitionFile($path, $entityName);
-            $this->_maps[$entityName] = $definition;
-            
-            $definition->compile($this);
+            throw new Zend_Entity_InvalidEntityException("The entity '".$entityName."' is unknown.");
         }
         return $this->_maps[$entityName];
-    }
-
-    protected function assertEntityNameValid($entityName)
-    {
-        if(preg_match(self::INVALID_ENTITY_NAME_PATTERN, $entityName, $matches)) {
-            throw new Zend_Entity_Exception("Trying to load invalid entity name '".$entityName."'. Only ".self::INVALID_ENTITY_NAME_PATTERN." are allowed.");
-        }
     }
 
     protected function getDefinitionPath($entityName)
@@ -83,22 +95,14 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
             DIRECTORY_SEPARATOR, 
             $this->_path . DIRECTORY_SEPARATOR . $entityName . ".php"
         );
-        $this->assertPathExists($path, $entityName);
         return $path;
-    }
-
-    protected function assertPathExists($path, $entityName)
-    {
-        if(!file_exists($path)) {
-            throw new Zend_Entity_Exception("Definition file '".$path."' for entity '".$entityName."' does not exist!");
-        }
     }
 
     protected function loadDefinitionFile($path, $entityName)
     {
         $definition = require($path);
         if( !($definition instanceof Zend_Entity_Mapper_Definition_Entity) ) {
-            throw new Zend_Entity_Exception("Definition file of entity ".$entityName." does not return a entity definition.");
+            throw new Zend_Entity_InvalidEntityException("Definition file of entity '".$entityName."' does not return a entity definition.");
         }
         return $definition;
     }

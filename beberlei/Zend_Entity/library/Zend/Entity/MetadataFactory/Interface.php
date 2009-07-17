@@ -30,6 +30,7 @@ interface Zend_Entity_MetadataFactory_Interface
      * Get an Entity Mapper Definition by the name of the Entity
      *
      * @param  string $entityName
+     * @throws Zend_Entity_InvalidEntityException
      * @return Zend_Entity_Mapper_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName);

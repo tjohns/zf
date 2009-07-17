@@ -48,14 +48,6 @@ interface Zend_Entity_Manager_Interface
     public function delete(Zend_Entity_Interface $entity);
 
     /**
-     * Refresh object state from the database
-     *
-     * @param  Zend_Entity_Interface $entity
-     * @return void
-     */
-    public function refresh(Zend_Entity_Interface $entity);
-
-    /**
      * Get a reference of an object.
      *
      * A reference is either a LazyLoad entity of the type {@see Zend_Entity_LazyLoad_Entity}

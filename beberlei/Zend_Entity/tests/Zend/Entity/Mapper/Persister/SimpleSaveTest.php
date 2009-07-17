@@ -241,4 +241,30 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $persister = $this->createPersister();
         $persister->evaluateRelatedCollection("1", $collection, $collectionDef, $em);
     }
+
+    public function testDeleteEntity()
+    {
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+
+        $fixtureId = 1;
+        $fixtureTable = "entities";
+        $entity = new Zend_TestEntity1();
+
+        $identityMapMock = $this->createIdentityMapMock();
+        $identityMapMock->expects($this->once())
+                        ->method('getPrimaryKey')
+                        ->will($this->returnValue($fixtureId));
+        $dbMock = $this->createDatabaseConnectionMock();
+        $dbMock->expects($this->at(0))
+               ->method('quoteInto')
+               ->will($this->returnValue("foo"));
+        $dbMock->expects($this->at(1))
+               ->method('delete')
+               ->with($fixtureTable);
+
+        $em = $this->createTestingEntityManager(null, null, $identityMapMock, $dbMock);
+
+        $persister = $this->createPersister();
+        $persister->delete($entity, $em);
+    }
 }

@@ -1,19 +1,27 @@
 <?php
 
-class ZendEntity_Course implements Zend_Entity_Interface
+class ZendEntity_Professor implements Zend_Entity_Interface
 {
     public $id;
 
     public $name;
 
-    public $teacher;
+    public $teachingCourses;
+
+    public $salary;
+
+    public function __construct()
+    {
+        $this->teachingCourses = new Zend_Entity_Collection();
+    }
 
     public function getState()
     {
         return array(
             'id' => $this->id,
             'name' => $this->name,
-            'teacher' => $this->teacher,
+            'teachingCourses' => $this->teachingCourses,
+            'salary' => $this->salary,
         );
     }
 
