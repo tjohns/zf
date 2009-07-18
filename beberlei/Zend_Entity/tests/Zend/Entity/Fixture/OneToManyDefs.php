@@ -30,7 +30,7 @@ class Zend_Entity_Fixture_OneToManyDefs extends Zend_Entity_Fixture_Abstract
         $def->addCollection(self::TEST_A_ONETOMANY, array(
             'relation' => new Zend_Entity_Mapper_Definition_OneToManyRelation(self::TEST_A_ONETOMANY, array(
                 'class' => self::TEST_B_CLASS,
-                'foreignKey' => self::TEST_B_FOREIGN_KEY,
+                'mappedBy' => 'manytoone',
             )),
             'key' => self::TEST_B_FOREIGN_KEY,
         ));
@@ -43,6 +43,7 @@ class Zend_Entity_Fixture_OneToManyDefs extends Zend_Entity_Fixture_Abstract
         $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_B_CLASS);
         $def->setTable(self::TEST_B_TABLE);
         $def->addPrimaryKey(self::TEST_B_ID, array('columnName' => self::TEST_B_ID_COLUMN));
+        $def->addManyToOneRelation("manytoone", array("class" => self::TEST_A_CLASS));
 
         return $def;
     }

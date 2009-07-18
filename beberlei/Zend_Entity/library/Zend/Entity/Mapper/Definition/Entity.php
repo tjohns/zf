@@ -65,6 +65,11 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     protected $_stateTransformer = null;
 
     /**
+     * @var boolean
+     */
+    private $_isCompiled = false;
+
+    /**
      * Construct entity
      * 
      * @param string $className
@@ -118,6 +123,20 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
     }
 
     /**
+     *
+     * @param  string $propertyName
+     * @return boolean
+     */
+    public function hasProperty($propertyName)
+    {
+        return (
+            isset($this->_properties[$propertyName])
+            || isset($this->_relations[$propertyName])
+            || isset($this->_extensions[$propertyName])
+        );
+    }
+
+    /**
      * Implementation of Abstract Property Add method.
      * 
      * @param  string $propertyType
@@ -127,12 +146,13 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
      */
     public function add($propertyType, $propertyName, $options)
     {
-        if(isset($this->_properties[$propertyName]) || isset($this->_relations[$propertyName])) {
+        if($this->hasProperty($propertyName)) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception("Property ".$propertyName." already exists! Cannot have the same property twice.");
         }
         $property = Zend_Entity_Mapper_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
 
+        // Warum die Unterscheidung??? Das sind doch alles Properties!
         if($property instanceof Zend_Entity_Mapper_Definition_Table) {
             $this->_extensions[$propertyName] = $property;
         } elseif($property instanceof Zend_Entity_Mapper_Definition_AbstractRelation) {
@@ -289,7 +309,18 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
      * @param Zend_Entity_MetadataFactory_Interface $map
      * @return void
      */
-    public function compile(Zend_Entity_MetadataFactory_Interface $map)
+    final public function compile(Zend_Entity_MetadataFactory_Interface $map)
+    {
+        if($this->_isCompiled == false) {
+            $this->_isCompiled = true;
+            $this->_compile($map);
+        }
+    }
+
+    /**
+     * @param Zend_Entity_MetadataFactory_Interface $map
+     */
+    protected function _compile(Zend_Entity_MetadataFactory_Interface $map)
     {
         if($this->_id === null) {
             throw new Zend_Entity_Exception(
@@ -316,7 +347,8 @@ class Zend_Entity_Mapper_Definition_Entity extends Zend_Entity_Mapper_Definition
             $this->_stateTransformer->setPropertyNames($propertyNames);
         } else {
             throw new Zend_Entity_Exception(
-                "Invalid State Transformer Class name given in '".$this->getClass()."' entity definition."
+                "Invalid State Transformer Class '".$this->_stateTransformerClass."' ".
+                "name given in '".$this->getClass()."' entity definition."
             );
         }
 

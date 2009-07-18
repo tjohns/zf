@@ -23,6 +23,7 @@ $def->addCollection("currentCourses", array(
         "currentCourses", array(
             'cascade' => "save",
             'class' => 'ZendEntity_Course',
+            'inverse' => false,
         )
     ),
     'key' => 'student_id',

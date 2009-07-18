@@ -59,6 +59,11 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
     protected $_inverse = false;
 
     /**
+     * @var string
+     */
+    protected $_mappedBy = null;
+
+    /**
      * Return class name of the related entity
      *
      * @return string
@@ -181,6 +186,19 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
     }
 
     /**
+     * @param string $mapByPropertyName
+     */
+    public function setMappedBy($mapByPropertyName)
+    {
+        $this->_mappedBy = $mapByPropertyName;
+    }
+
+    public function getMappedBy()
+    {
+        return $this->_mappedBy;
+    }
+
+    /**
      * Compile Abstract Relation Element
      *
      * @param Zend_Entity_Mapper_Definition_Entity $entityDef
@@ -193,6 +211,24 @@ abstract class Zend_Entity_Mapper_Definition_AbstractRelation extends Zend_Entit
             throw new Zend_Entity_Exception(
                 "Cannot compile relation due to missing class reference for property: ".$this->getPropertyName()
             );
+        }
+
+        if($this->isInverse()) {
+            $foreignDef = $map->getDefinitionByEntityName( $this->getClass() );
+            if($this->getMappedBy() == null) {
+                throw new Zend_Entity_Exception(
+                    "The inverse relation '".$this->getPropertyName()."' in ".
+                    "'".$entityDef->getEntityName()."' has to specify a 'mappedBy' element."
+                );
+            }
+
+            if($foreignDef->hasProperty( $this->getMappedBy() ) == false) {
+                throw new Zend_Entity_Exception(
+                    "The mappedBy property '".$this->getMappedBy()."' of the releation ".
+                    "'".$this->getPropertyName()."' on entity '".$entityDef->getEntityName()."' ".
+                    "does not exist on foreign entity '".$foreignDef->getClass()."'."
+                );
+            }
         }
     }
 }

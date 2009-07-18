@@ -169,6 +169,12 @@ class Zend_Entity_Mapper_Definition_EntityTest extends Zend_Entity_Mapper_Defini
         $this->assertEquals(self::TEST_CLASS2, $entityDef->getEntityName());
     }
 
+    public function testHasPropertyOnProperty()
+    {
+        $entityDef = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS);
+        #$entityDef->d
+    }
+
     private function getMetadataFactoryMock()
     {
         return $this->getMock('Zend_Entity_MetadataFactory_Interface');

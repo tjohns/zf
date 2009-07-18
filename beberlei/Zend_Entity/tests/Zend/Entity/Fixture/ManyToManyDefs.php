@@ -31,9 +31,10 @@ class Zend_Entity_Fixture_ManyToManyDefs extends Zend_Entity_Fixture_Abstract
             'propertyType' => Zend_Entity_Mapper_Definition_Property::TYPE_INT
         ));
         $def->addCollection(self::TEST_A_MANYTOMANY, array(
-            'relation' => new Zend_Entity_Mapper_Definition_OneToManyRelation(self::TEST_A_MANYTOMANY, array(
+            'relation' => new Zend_Entity_Mapper_Definition_ManyToManyRelation(self::TEST_A_MANYTOMANY, array(
                 'class' => self::TEST_B_CLASS,
                 'columnName' => self::TEST_B_JOINTABLE_KEY,
+                'inverse' => false,
             )),
             'table' => self::TEST_A_MANYTOMANY_TABLE,
             'key' => self::TEST_A_JOINTABLE_KEY,

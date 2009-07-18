@@ -17,6 +17,7 @@ $def->addCollection("teachingCourses", array(
     'relation' => new Zend_Entity_Mapper_Definition_OneToManyRelation("teachingCourses", array(
         'class' => 'ZendEntity_Course',
         "cascade" => "save",
+        "mappedBy" => "teacher",
     )),
     'key' => 'teacher_id',
 ));

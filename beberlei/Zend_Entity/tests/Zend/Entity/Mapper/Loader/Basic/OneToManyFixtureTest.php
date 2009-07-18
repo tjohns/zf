@@ -82,7 +82,7 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
         $select = $this->loadEntityAAndGetSelectOfLazyLoadCollection();
 
         $this->assertEquals(
-            "SELECT table_b.b_id FROM table_b WHERE (table_b.b_fkey = 1)",
+            "SELECT table_b.b_id, table_b.manytoone FROM table_b WHERE (table_b.b_fkey = 1)",
             (string)$select
         );
     }
@@ -95,7 +95,7 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
         $select = $this->loadEntityAAndGetSelectOfLazyLoadCollection();
 
         $this->assertEquals(
-            "SELECT table_b.b_id FROM table_b WHERE (table_b.b_fkey = 1) AND (table_b.foo = 'bar')",
+            "SELECT table_b.b_id, table_b.manytoone FROM table_b WHERE (table_b.b_fkey = 1) AND (table_b.foo = 'bar')",
             (string)$select
         );
     }
@@ -108,7 +108,7 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
         $select = $this->loadEntityAAndGetSelectOfLazyLoadCollection();
 
         $this->assertEquals(
-            "SELECT table_b.b_id FROM table_b WHERE (table_b.b_fkey = 1) ORDER BY table_b.foo ASC",
+            "SELECT table_b.b_id, table_b.manytoone FROM table_b WHERE (table_b.b_fkey = 1) ORDER BY table_b.foo ASC",
             (string)$select
         );
     }

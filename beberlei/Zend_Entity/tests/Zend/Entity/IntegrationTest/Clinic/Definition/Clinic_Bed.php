@@ -11,7 +11,12 @@ $def->addManyToOneRelation("station", array(
 ));
 $def->addCollection("occupancyPlan", array(
     "key" => "bed_id",
-    "relation" => new Zend_Entity_Mapper_Definition_OneToManyRelation("id", array("class" => "Clinic_Occupancy")),
+    "relation" => new Zend_Entity_Mapper_Definition_OneToManyRelation(
+        "occupancyPlan", array(
+            "class" => "Clinic_Occupancy",
+            "mappedBy" => "bed",
+        )
+    ),
 ));
 
 return $def;

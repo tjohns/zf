@@ -14,7 +14,7 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
      */
     public function addDefinition(Zend_Entity_Mapper_Definition_Entity $entityDefinition)
     {
-        $this->_defMap[$entityDefinition->getClass()] = $entityDefinition;
+        $this->_defMap[$entityDefinition->getEntityName()] = $entityDefinition;
     }
 
     /**
