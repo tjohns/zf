@@ -148,7 +148,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * Return concrete mapper implementation of the given Entity Type
      * 
      * @param  string|Zend_Entity_Interface $entity
-     * @return Zend_Entity_Mapper_Abstract
+     * @return Zend_Entity_MapperAbstract
      */
     public function getMapperByEntity($entity)
     {
@@ -177,7 +177,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     {
         $resourceMap = $this->getMetadataFactory();
         $entityDefinition = $resourceMap->getDefinitionByEntityName($entityClassName);
-        $mapper = new Zend_Entity_Mapper($this->getAdapter(), $entityDefinition, $resourceMap);
+        $mapper = new Zend_Entity_Mapper_Mapper($this->getAdapter(), $entityDefinition, $resourceMap);
         $this->_entityMappers[$entityClassName] = $mapper;
     }
 

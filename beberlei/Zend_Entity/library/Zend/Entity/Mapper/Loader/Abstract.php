@@ -34,7 +34,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     protected $_class;
 
     /**
-     * @var Zend_Entity_Mapper_Definition_PrimaryKey
+     * @var Zend_Entity_Definition_PrimaryKey
      */
     protected $_primaryKey;
 
@@ -86,9 +86,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     /**
      * Construct new Loader based on an entity definition.
      * 
-     * @param Zend_Entity_Mapper_Definition_Entity $entityDefinition
+     * @param Zend_Entity_Definition_Entity $entityDefinition
      */
-    public function __construct(Zend_Entity_Mapper_Definition_Entity $entityDefinition)
+    public function __construct(Zend_Entity_Definition_Entity $entityDefinition)
     {
         $this->_table = $entityDefinition->getTable();
         $this->_class = $entityDefinition->getClass();
@@ -103,7 +103,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $propertyNames[] = $property->getPropertyName();
         }
         foreach($entityDefinition->getRelations() AS $relation) {
-            if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
+            if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_SELECT) {
                 // Setup retrieval of the foreign key value
                 $columnName = $relation->getColumnName();
                 $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
@@ -112,7 +112,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 // Save Relation to the later retrieval stack
                 $this->_lateSelectedRelations[] = $relation;
                 $this->_hasLateLoadingObjects = true;
-            } elseif($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+            } elseif($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 // Setup retrieval of the foreign key value
                 $columnName = $relation->getColumnName();
                 $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
@@ -125,13 +125,13 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $propertyNames[] = $relation->getPropertyName();
         }
         foreach($entityDefinition->getExtensions() AS $extension) {
-            if($extension instanceof Zend_Entity_Mapper_Definition_Collection) {
-                if($extension->getCollectionType() == Zend_Entity_Mapper_Definition_Collection::COLLECTION_RELATION) {
+            if($extension instanceof Zend_Entity_Definition_Collection) {
+                if($extension->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
                     $relation = $extension->getRelation();
-                    if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_SELECT) {
+                    if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_SELECT) {
                         $this->_lateSelectedCollections[] = $extension;
                         $this->_hasLateLoadingObjects = true;
-                    } else if($relation->getFetch() == Zend_Entity_Mapper_Definition_Property::FETCH_LAZY) {
+                    } else if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
                         $this->_lazyLoadCollections[]     = $extension;
                         $this->_hasLazyLoads = true;
                     }

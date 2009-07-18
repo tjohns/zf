@@ -1,6 +1,6 @@
 <?php
 
-$def = new Zend_Entity_Mapper_Definition_Entity("Clinic_Occupancy", array("table" => "occupancies"));
+$def = new Zend_Entity_Definition_Entity("Clinic_Occupancy", array("table" => "occupancies"));
 
 $def->addPrimaryKey("id");
 $def->addManyToOneRelation("patient", array("columnName" => "patient_id", "propertyRef" => "patient", "class" => "Clinic_Patient", "cascade" => "save"));

@@ -14,7 +14,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     /**
      *
      * @param Zend_Db_Adapter_Abstract $db
-     * @param Zend_Entity_Mapper_Definition_Entity $entityDefinition
+     * @param Zend_Entity_Definition_Entity $entityDefinition
      * @param Zend_Entity_MetadataFactory_Interface $resourceMap
      * @param Zend_Entity_Mapper_Loader_Interface $loader
      * @param Zend_Entity_Mapper_Persister_Interface $persister
@@ -53,7 +53,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         if($resourceMap == null) {
             $resourceMap = $this->createResourceMapMock();
         }
-        return $this->getMock('Zend_Entity_Mapper', array(), array($db, $entityDefinition, $resourceMap));
+        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $entityDefinition, $resourceMap));
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
 
     public function createSampleEntityDefinition()
     {
-        $entityDefinition = new Zend_Entity_Mapper_Definition_Entity("Sample");
+        $entityDefinition = new Zend_Entity_Definition_Entity("Sample");
         $entityDefinition->setTable("sample");
         $entityDefinition->addPrimaryKey("id");
         $entityDefinition->addProperty("test");

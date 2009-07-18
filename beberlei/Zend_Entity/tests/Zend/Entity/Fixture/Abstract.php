@@ -35,7 +35,7 @@ abstract class Zend_Entity_Fixture_Abstract
 
     /**
      * @param  string $entityName
-     * @return Zend_Entity_Mapper_Definition_Entity
+     * @return Zend_Entity_Definition_Entity
      */
     public function getEntityDefinition($entityName)
     {
@@ -45,7 +45,7 @@ abstract class Zend_Entity_Fixture_Abstract
     /**
      * @param string $entityName
      * @param string $propertyName
-     * @return Zend_Entity_Mapper_Definition_Property_Abstract
+     * @return Zend_Entity_Definition_Property_Abstract
      */
     public function getEntityPropertyDef($entityName, $propertyName)
     {

@@ -13,10 +13,10 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
     }
 
     /**
-     * @param Zend_Entity_Mapper_Definition_Entity $def
+     * @param Zend_Entity_Definition_Entity $def
      * @return Zend_Entity_Mapper_Loader_Basic
      */
-    public function createLoader(Zend_Entity_Mapper_Definition_Entity $def)
+    public function createLoader(Zend_Entity_Definition_Entity $def)
     {
         return new Zend_Entity_Mapper_Loader_Basic($def);
     }

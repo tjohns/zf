@@ -1,6 +1,6 @@
 <?php
 
-$def = new Zend_Entity_Mapper_Definition_Entity("Clinic_Bed", array("table" => "beds"));
+$def = new Zend_Entity_Definition_Entity("Clinic_Bed", array("table" => "beds"));
 
 $def->addPrimaryKey("id");
 $def->addManyToOneRelation("station", array(
@@ -11,7 +11,7 @@ $def->addManyToOneRelation("station", array(
 ));
 $def->addCollection("occupancyPlan", array(
     "key" => "bed_id",
-    "relation" => new Zend_Entity_Mapper_Definition_OneToManyRelation(
+    "relation" => new Zend_Entity_Definition_OneToManyRelation(
         "occupancyPlan", array(
             "class" => "Clinic_Occupancy",
             "mappedBy" => "bed",

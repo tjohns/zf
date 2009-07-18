@@ -23,15 +23,15 @@ class Zend_Entity_Fixture_ManyToManyDefs extends Zend_Entity_Fixture_Abstract
 
     public function createClassADefinition()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_A_CLASS);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_A_CLASS);
         $def->setTable(self::TEST_A_TABLE);
 
         $def->addPrimaryKey(self::TEST_A_ID, array(
             'columnName' => self::TEST_A_ID_COLUMN,
-            'propertyType' => Zend_Entity_Mapper_Definition_Property::TYPE_INT
+            'propertyType' => Zend_Entity_Definition_Property::TYPE_INT
         ));
         $def->addCollection(self::TEST_A_MANYTOMANY, array(
-            'relation' => new Zend_Entity_Mapper_Definition_ManyToManyRelation(self::TEST_A_MANYTOMANY, array(
+            'relation' => new Zend_Entity_Definition_ManyToManyRelation(self::TEST_A_MANYTOMANY, array(
                 'class' => self::TEST_B_CLASS,
                 'columnName' => self::TEST_B_JOINTABLE_KEY,
                 'inverse' => false,
@@ -45,7 +45,7 @@ class Zend_Entity_Fixture_ManyToManyDefs extends Zend_Entity_Fixture_Abstract
 
     public function createClassBDefinition()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_B_CLASS);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_B_CLASS);
         $def->setTable(self::TEST_B_TABLE);
         $def->addPrimaryKey(self::TEST_B_ID, array('columnName' => self::TEST_B_ID_COLUMN));
 

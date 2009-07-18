@@ -46,7 +46,7 @@ class Zend_Entity_MetadataFactory_CodeTest extends PHPUnit_Framework_TestCase
     {
         $metadataFactory = new Zend_Entity_MetadataFactory_Code(dirname(__FILE__)."/_files/empty");
         $def = $metadataFactory->getDefinitionByEntityName("EmptyEntityDefinition");
-        $this->assertTrue($def instanceof Zend_Entity_Mapper_Definition_Entity);
+        $this->assertTrue($def instanceof Zend_Entity_Definition_Entity);
     }
 
     public function testMetadataFactoryShouldCacheReturnedDefinitions()

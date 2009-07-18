@@ -40,7 +40,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_class;
 
     /**
-     * @var Zend_Entity_Mapper_Definition_PrimaryKey
+     * @var Zend_Entity_Definition_PrimaryKey
      */
     protected $_primaryKey;
 
@@ -57,15 +57,15 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
-     * @param  Zend_Entity_Mapper_Definition_Entity $entityDef
+     * @param  Zend_Entity_Definition_Entity $entityDef
      * @param  Zend_Entity_MetadataFactory_Interface     $defMap
      * @return void
      */
-    public function initialize(Zend_Entity_Mapper_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $defMap)
+    public function initialize(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $defMap)
     {
         $properties = array();
         foreach($entityDef->getProperties() AS $property) {
-            if(!($property instanceof Zend_Entity_Mapper_Definition_Formula)) {
+            if(!($property instanceof Zend_Entity_Definition_Formula)) {
                 $properties[] = $property;
             }
         }
@@ -89,19 +89,19 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * Is this is a cascading collection?
      * 
-     * @param Zend_Entity_Mapper_Definition_Collection $collection
+     * @param Zend_Entity_Definition_Collection $collection
      * @return boolean
      */
-    private function isCascadingToManyCollection(Zend_Entity_Mapper_Definition_Collection $collection)
+    private function isCascadingToManyCollection(Zend_Entity_Definition_Collection $collection)
     {
-        return( ($collection->getCollectionType() == Zend_Entity_Mapper_Definition_Collection::COLLECTION_RELATION) &&
-            ($collection->getRelation()->getCascade() != Zend_Entity_Mapper_Definition_Property::CASCADE_NONE) );
+        return( ($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) &&
+            ($collection->getRelation()->getCascade() != Zend_Entity_Definition_Property::CASCADE_NONE) );
     }
 
     /**
      * @ignore
      * @param Zend_Entity_Interface $relatedObject
-     * @param Zend_Entity_Mapper_Definition_AbstractRelation $relationDef
+     * @param Zend_Entity_Definition_AbstractRelation $relationDef
      * @param Zend_Entity_Manager_Interface $entityManager
      * @return mixed
      */
@@ -110,13 +110,13 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         if($relatedObject instanceof Zend_Entity_LazyLoad_Entity && $relatedObject->entityWasLoaded() == false) {
             $value = $relatedObject->getLazyLoadEntityId();
         } else if($relatedObject instanceof Zend_Entity_Interface) {
-            $foreignKeyProperty = $relationDef->getForeignKeyPropertyName();
+            $foreignKeyPropertyName = $relationDef->getMappedBy();
             $relatedObjectState = $relatedObject->getState();
-            $value = $relatedObjectState[$foreignKeyProperty];
+            $value = $relatedObjectState[$foreignKeyPropertyName];
 
             switch($relationDef->getCascade()) {
-                case Zend_Entity_Mapper_Definition_Property::CASCADE_ALL:
-                case Zend_Entity_Mapper_Definition_Property::CASCADE_SAVE:
+                case Zend_Entity_Definition_Property::CASCADE_ALL:
+                case Zend_Entity_Definition_Property::CASCADE_SAVE:
                     $entityManager->save($relatedObject);
                     break;
             }
@@ -130,17 +130,17 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * @ignore
      * @param Zend_Entity_Collection_Interface $relatedCollection
-     * @param Zend_Entity_Mapper_Definition_Collection $collectionDef
+     * @param Zend_Entity_Definition_Collection $collectionDef
      * @param Zend_Entity_Manager_Interface $entityManager
      */
     public function evaluateRelatedCollection($keyValue, $relatedCollection, $collectionDef, $entityManager)
     {
         if($relatedCollection instanceof Zend_Entity_Collection_Interface
             && $relatedCollection->wasLoadedFromDatabase() == true) {
-            /* @var $relatedCollection Zend_Entity_Mapper_Definition_AbstractRelation */
+            /* @var $relatedCollection Zend_Entity_Definition_AbstractRelation */
             switch($collectionDef->getRelation()->getCascade()) {
-                case Zend_Entity_Mapper_Definition_Property::CASCADE_ALL:
-                case Zend_Entity_Mapper_Definition_Property::CASCADE_SAVE:
+                case Zend_Entity_Definition_Property::CASCADE_ALL:
+                case Zend_Entity_Definition_Property::CASCADE_SAVE:
                     foreach($relatedCollection AS $collectionEntity) {
                         $entityManager->save($collectionEntity);
                     }
@@ -148,7 +148,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             }
         }
 
-        if($collectionDef->getRelation() instanceof Zend_Entity_Mapper_Definition_ManyToManyRelation) {
+        if($collectionDef->getRelation() instanceof Zend_Entity_Definition_ManyToManyRelation) {
             $db = $entityManager->getAdapter();
             $identityMap = $entityManager->getIdentityMap();
 

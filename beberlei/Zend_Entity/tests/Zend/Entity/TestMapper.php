@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_TestMapper extends Zend_Entity_Mapper
+class Zend_Entity_TestMapper extends Zend_Entity_Mapper_Mapper
 {
     /**
      * @param Zend_Entity_Mapper_Loader_Interface $loader

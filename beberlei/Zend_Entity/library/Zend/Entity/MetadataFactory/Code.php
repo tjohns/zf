@@ -77,7 +77,7 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
      *
      * @throws Zend_Entity_InvalidEntityException
      * @param  string $entityName
-     * @return Zend_Entity_Mapper_Definition_Entity
+     * @return Zend_Entity_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName)
     {
@@ -101,7 +101,7 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
     protected function loadDefinitionFile($path, $entityName)
     {
         $definition = require($path);
-        if( !($definition instanceof Zend_Entity_Mapper_Definition_Entity) ) {
+        if( !($definition instanceof Zend_Entity_Definition_Entity) ) {
             throw new Zend_Entity_InvalidEntityException("Definition file of entity '".$entityName."' does not return a entity definition.");
         }
         return $definition;

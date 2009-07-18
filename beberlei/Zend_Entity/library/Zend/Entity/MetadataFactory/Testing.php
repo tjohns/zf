@@ -10,9 +10,9 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
     /**
      * Add new definition to testing map.
      *
-     * @param Zend_Entity_Mapper_Definition_Entity $entityDefinition
+     * @param Zend_Entity_Definition_Entity $entityDefinition
      */
-    public function addDefinition(Zend_Entity_Mapper_Definition_Entity $entityDefinition)
+    public function addDefinition(Zend_Entity_Definition_Entity $entityDefinition)
     {
         $this->_defMap[$entityDefinition->getEntityName()] = $entityDefinition;
     }
@@ -31,7 +31,7 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
      * Get an Entity Mapper Definition by the name of the Entity
      *
      * @param  string $entityName
-     * @return Zend_Entity_Mapper_Definition_Entity
+     * @return Zend_Entity_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName)
     {

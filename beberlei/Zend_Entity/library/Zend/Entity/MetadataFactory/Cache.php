@@ -65,7 +65,7 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
 
     /**
      * @param  string $entityName
-     * @return Zend_Entity_Mapper_Definition_Entity
+     * @return Zend_Entity_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName)
     {

@@ -21,7 +21,7 @@ class Zend_Entity_Fixture_SimpleFixtureDefs extends Zend_Entity_Fixture_Abstract
 
     public function createClassADefinition()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_A_CLASS);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_A_CLASS);
         $def->setTable(self::TEST_A_TABLE);
 
         $def->addPrimaryKey(self::TEST_A_ID, array('columnName' => self::TEST_A_ID_COLUMN));

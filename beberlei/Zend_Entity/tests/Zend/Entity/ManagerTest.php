@@ -60,7 +60,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager = $this->createEntityManager(null, $metadataFactory);
         $mapper  = $manager->getMapperByEntity($entityName);
         
-        $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
+        $this->assertTrue($mapper instanceof Zend_Entity_Mapper_Mapper);
     }
 
 
@@ -87,7 +87,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager = $this->createEntityManager(null, $metadataFactory);
         $mapper  = $manager->getMapperByEntity($entity);
         
-        $this->assertTrue($mapper instanceof Zend_Entity_Mapper);
+        $this->assertTrue($mapper instanceof Zend_Entity_Mapper_Mapper);
     }
 
     public function testManagerShouldDelegateBeginTransactionToAdapter()
@@ -336,7 +336,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
     private function createMetadataFactory($entityName)
     {
-        $definitionMock = $this->getMock('Zend_Entity_Mapper_Definition_Entity');
+        $definitionMock = $this->getMock('Zend_Entity_Definition_Entity');
         $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
         $metadataFactory->expects($this->once())
                     ->method('getDefinitionByEntityName')

@@ -34,7 +34,7 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
      */
     public function createLoaderWithIdAndManyToOneProperty()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS_B);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_CLASS_B);
         $def->setTable(self::TEST_TABLE_B);
 
         $def->addPrimaryKey(self::TEST_IDPROPERTY);
@@ -50,7 +50,7 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
      */
     public function createLoaderWithIdAndPropertyWithDifferentColumnNames()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS_B);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_CLASS_B);
         $def->setTable(self::TEST_TABLE_B);
 
         $def->addPrimaryKey(self::TEST_IDPROPERTY, array('columnName' => self::TEST_IDCOLUMN));
@@ -66,14 +66,14 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
      */
     public function createLoaderWithIdAndManyToManyProperty()
     {
-        $def = new Zend_Entity_Mapper_Definition_Entity(self::TEST_CLASS_B);
+        $def = new Zend_Entity_Definition_Entity(self::TEST_CLASS_B);
         $def->setTable(self::TEST_TABLE_B);
 
         $def->addPrimaryKey(self::TEST_IDPROPERTY);
         $def->addCollection(self::TEST_PROPERTY_B, array(
             'table' => self::TEST_TABLE_A,
             'key' => self::TEST_PROPERTY_A,
-            'relation' => new Zend_Entity_Mapper_Definition_ManyToManyRelation(self::TEST_PROPERTY_B, array(
+            'relation' => new Zend_Entity_Definition_ManyToManyRelation(self::TEST_PROPERTY_B, array(
                 'class' => self::TEST_CLASS,
                 'foreignKey' => self::TEST_PROPERTY_A
             ))
