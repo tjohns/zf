@@ -231,8 +231,8 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
         $course->name = "Foo";
 
         $professor = $this->_entityManager->load("ZendEntity_Professor", 2);
-        #$course->teacher = $professor;
-        #$professor->teachingCourses[] = $course;
+        $course->teacher = $professor;
+        $professor->teachingCourses[] = $course;
         count($professor->teachingCourses);
 
         $this->_entityManager->save($professor);

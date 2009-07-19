@@ -109,4 +109,43 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
 
         $loader->loadRow($entity, $rowMissingColumn, $this->createEntityManager());
     }
+
+    public function testLoadRow_VersionedField_AddedToIdentityMap()
+    {
+        $def = $this->fixture->getEntityDefinition(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS);
+        $def->addVersion("version", array("columnName" => 'a_version'));
+
+        $entity = new Zend_TestEntity1;
+        $loader = $this->getLoader();
+        $versionFixture = 1234;
+
+        $row = array('a_id' => 1, 'a_property' => 'foo', 'a_version' => $versionFixture);
+
+        $em = $this->createEntityManager();
+
+        $entity = $loader->createEntityFromRow($row, $em);
+        $this->assertEquals($versionFixture, $em->getIdentityMap()->getVersion($entity));
+    }
+
+
+    public function testLoadRow_VersionedFieldMissing_ThrowsException()
+    {
+        $this->setExpectedException(
+            "Zend_Entity_Exception",
+            "Missing version column 'a_version' in entity resultset"
+        );
+
+        $def = $this->fixture->getEntityDefinition(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS);
+        $def->addVersion("version", array("columnName" => 'a_version'));
+
+        $entity = new Zend_TestEntity1;
+        $loader = $this->getLoader();
+        $versionFixture = 1234;
+
+        $row = array('a_id' => 1, 'a_property' => 'foo');
+
+        $em = $this->createEntityManager();
+
+        $loader->createEntityFromRow($row, $em);
+    }
 }

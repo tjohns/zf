@@ -34,14 +34,25 @@ class Zend_Entity_IdentityMap
     protected $_primaryKeys = array();
 
     /**
+     * @var array
+     */
+    protected $_versions = array();
+
+    /**
      * @param string $entityInterface
      * @param string $key
      * @param Zend_Entity_Interface $entity
+     * @param int $version
      */
-    public function addObject($entityInterface, $key, Zend_Entity_Interface $entity)
+    public function addObject($entityInterface, $key, Zend_Entity_Interface $entity, $version = null)
     {
-        $this->_primaryKeys[spl_object_hash($entity)] = $key;
+        $h = spl_object_hash($entity);
+        $this->_primaryKeys[$h] = $key;
         $this->_loadedObjects[$entityInterface][$key] = $entity;
+
+        if($version !== null) {
+            $this->_versions[$h] = $version;
+        }
     }
 
     /**
@@ -122,8 +133,35 @@ class Zend_Entity_IdentityMap
             return $this->_primaryKeys[$hash];
         } else {
             require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception("Entity of class '".$entity."' is not contained in persistence context and has no primary key.");
+            throw new Zend_Entity_Exception(
+                "Entity of class '".get_class($entity)."' is not contained ".
+                "in persistence context and has no primary key."
+            );
         }
+    }
+
+    /**
+     * @param Zend_Entity_Interface $entity
+     * @param int $versionId
+     */
+    public function setVersion(Zend_Entity_Interface $entity, $versionId)
+    {
+        $this->_versions[spl_object_hash($entity)] = $versionId;
+    }
+
+    /**
+     * Return version of an entity the current context works with.
+     * 
+     * @param Zend_Entity_Interface $entity
+     * @return int|boolean
+     */
+    public function getVersion(Zend_Entity_Interface $entity)
+    {
+        $hash = spl_object_hash($entity);
+        if(isset($this->_versions[$hash])) {
+            return $this->_versions[$hash];
+        }
+        return false;
     }
 
     /**

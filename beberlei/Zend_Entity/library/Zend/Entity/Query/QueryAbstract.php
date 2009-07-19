@@ -1,6 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Query_AbstractQuery implements Zend_Paginator_Adapter_Interface
+abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter_Interface
 {
     abstract public function getResultList();
 

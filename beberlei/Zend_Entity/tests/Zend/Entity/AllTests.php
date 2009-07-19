@@ -6,6 +6,7 @@ require_once "DbAdapterMock.php";
 require_once "DbStatementMock.php";
 
 require_once "Definition/AllTests.php";
+require_once "Event/AllTests.php";
 require_once "CollectionTest.php";
 require_once "IdentityMapTest.php";
 require_once "ManagerTest.php";
@@ -21,6 +22,7 @@ class Zend_Entity_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite("Zend_Entity");
         $suite->addTest(Zend_Entity_Definition_AllTests::suite());
+        $suite->addTest(Zend_Entity_Event_AllTests::suite());
         $suite->addTestSuite('Zend_Entity_CollectionTest');
         $suite->addTestSuite('Zend_Entity_DebugTest');
         $suite->addTest(Zend_Entity_LazyLoad_AllTests::suite());

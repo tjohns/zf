@@ -55,6 +55,11 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_stateTransformer = null;
 
     /**
+     * @var Zend_Entity_Definition_Version
+     */
+    protected $_versionProperty = null;
+
+    /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
      * @param  Zend_Entity_Definition_Entity $entityDef
@@ -84,6 +89,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         $this->_primaryKey       = $entityDef->getPrimaryKey();
         $this->_table            = $entityDef->getTable();
         $this->_stateTransformer = $entityDef->getStateTransformer();
+        $this->_versionProperty  = $entityDef->getVersionProperty();
     }
 
     /**
@@ -111,8 +117,6 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             $value = $relatedObject->getLazyLoadEntityId();
         } else if($relatedObject instanceof Zend_Entity_Interface) {
             $foreignKeyPropertyName = $relationDef->getMappedBy();
-            $relatedObjectState = $relatedObject->getState();
-            $value = $relatedObjectState[$foreignKeyPropertyName];
 
             switch($relationDef->getCascade()) {
                 case Zend_Entity_Definition_Property::CASCADE_ALL:
@@ -120,6 +124,8 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
                     $entityManager->save($relatedObject);
                     break;
             }
+
+            $value = $entityManager->getIdentityMap()->getPrimaryKey($relatedObject);
         } else {
             $value = null;
         }
@@ -135,6 +141,10 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function evaluateRelatedCollection($keyValue, $relatedCollection, $collectionDef, $entityManager)
     {
+        if(is_array($relatedCollection)) {
+            $relatedCollection = new Zend_Entity_Collection($relatedCollection);
+        }
+
         if($relatedCollection instanceof Zend_Entity_Collection_Interface
             && $relatedCollection->wasLoadedFromDatabase() == true) {
             /* @var $relatedCollection Zend_Entity_Definition_AbstractRelation */
@@ -239,6 +249,15 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         $tableName = $this->_table;
         $identityMap = $entityManager->getIdentityMap();
         if($identityMap->contains($entity) == false) {
+            if($entityManager->getEventListener()->preInsert($entity) == false) {
+                return;
+            }
+
+            if($this->_versionProperty !== null) {
+                $versionColumnName = $this->_versionProperty->getColumnName();
+                $dbState[$versionColumnName] = 1;
+            }
+
             $dbState = array_merge(
                 $dbState,
                 $pk->applyNextSequenceId($dbAdapter, $dbState)
@@ -248,19 +267,41 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             $this->_stateTransformer->setId($entity, $pk->getPropertyName(), $key);
 
             $identityMap->addObject(
-                $this->_class,
-                $key,
-                $entity
+                $this->_class, $key, $entity, 1
             );
+
+            $entityManager->getEventListener()->postInsert($entity);
         } else {
+            if($entityManager->getEventListener()->preUpdate($entity) == false) {
+                return;
+            }
+
             $key = $identityMap->getPrimaryKey($entity);
             $where = $pk->buildWhereCondition(
                 $dbAdapter,
                 $tableName,
                 $identityMap->getPrimaryKey($entity)
             );
+
+            if($this->_versionProperty !== null) {
+                $versionColumnName = $this->_versionProperty->getColumnName();
+                $versionId = $identityMap->getVersion($entity);
+                $dbState[$versionColumnName] = $versionId+1;
+                $where .= " AND ".$dbAdapter->quoteInto($tableName.".".$versionColumnName." = ?", $versionId);
+            }
+
             $dbState = $pk->removeSequenceFromState($dbState);
-            $dbAdapter->update($tableName, $dbState, $where);
+            $rows = $dbAdapter->update($tableName, $dbState, $where);
+
+            if($this->_versionProperty !== null) {
+                if($rows == 0) {
+                    throw new Zend_Entity_OptimisticLockException($entity);
+                } else {
+                    $identityMap->setVersion($entity, $versionId+1);
+                }
+            }
+
+            $entityManager->getEventListener()->postUpdate($entity);
         }
         return $key;
     }
@@ -275,15 +316,31 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
+        if($entityManager->getEventListener()->preDelete($entity) == false) {
+            return;
+        }
+
         $identityMap = $entityManager->getIdentityMap();
         $db          = $entityManager->getAdapter();
         
         $tableName   = $this->_table;
         $whereClause = $this->_primaryKey->buildWhereCondition($db, $tableName, $identityMap->getPrimaryKey($entity));
-        
-        $db->delete($tableName, $whereClause);
+
+        if($this->_versionProperty !== null) {
+            $versionColumnName = $this->_versionProperty->getColumnName();
+            $versionId = $identityMap->getVersion($entity);
+            $whereClause .= " AND ".$db->quoteInto($tableName.".".$versionColumnName." = ?", $versionId);
+        }
+
+        $numDeleted = $db->delete($tableName, $whereClause);
+
+        if($numDeleted == 0 && $this->_versionProperty !== null) {
+            throw new Zend_Entity_OptimisticLockException($entity);
+        }
         
         $this->_stateTransformer->setId($entity, $this->_primaryKey->getPropertyName(), null);
         $identityMap->remove($this->_class, $entity);
+
+        $entityManager->getEventListener()->postDelete($entity);
     }
 }

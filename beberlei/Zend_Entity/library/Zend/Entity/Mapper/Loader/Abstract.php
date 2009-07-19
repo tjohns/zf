@@ -84,6 +84,11 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     protected $_stateTransformer = null;
 
     /**
+     * @var Zend_Entity_Definition_Property
+     */
+    protected $_versionProperty = null;
+
+    /**
      * Construct new Loader based on an entity definition.
      * 
      * @param Zend_Entity_Definition_Entity $entityDefinition
@@ -93,6 +98,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         $this->_table = $entityDefinition->getTable();
         $this->_class = $entityDefinition->getClass();
         $this->_primaryKey = $entityDefinition->getPrimaryKey();
+        $this->_versionProperty = $entityDefinition->getVersionProperty();
 
         $propertyNames = array();
         foreach($entityDefinition->getProperties() AS $property) {
@@ -173,9 +179,21 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         if($identityMap->hasObject($this->_class, $key) == true) {
             $entity = $identityMap->getObject($this->_class, $key);
         } else {
+            $versionId = null;
+            if($this->_versionProperty !== null) {
+                $versionColumnName = $this->_versionProperty->getColumnName();
+                if(isset($row[$versionColumnName])) {
+                    $versionId = $row[$versionColumnName];
+                } else {
+                    throw new Zend_Entity_Exception(
+                        "Missing version column '".$versionColumnName."' in entity resultset"
+                    );
+                }
+            }
+
             $entity = $this->createEntity($row);
             // Set this before loadRelationsIntoEntity() to circumvent infinite loop on backreferences and stuff
-            $identityMap->addObject($this->_class, $key, $entity);
+            $identityMap->addObject($this->_class, $key, $entity, $versionId);
 
             $this->loadRow($entity, $row, $entityManager);
         }
@@ -201,6 +219,8 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $state = $this->initializeLateBoundObjects($state, $entityManager);
         }
         $this->_stateTransformer->setState($entity, $state);
+        
+        $entityManager->getEventListener()->postLoad($entity);
     }
 
     protected function hasLazyBoundObjects()

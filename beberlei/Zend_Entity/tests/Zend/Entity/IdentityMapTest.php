@@ -20,6 +20,37 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($identityMap->hasObject("Zend_TestEntity1", "1"));
     }
 
+    public function testAddObject_LetsSaveVersion()
+    {
+        $identityMap = new Zend_Entity_IdentityMap();
+
+        $entity = new Zend_TestEntity1();
+        $versionFixture = 1234;
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity, $versionFixture);
+
+        $this->assertEquals($versionFixture, $identityMap->getVersion($entity));
+    }
+
+    public function testGetVersion_UnregisteredEntity()
+    {
+        $identityMap = new Zend_Entity_IdentityMap();
+        $entity = new Zend_TestEntity1();
+        $this->assertFalse($identityMap->getVersion($entity));
+    }
+
+    public function testSetVersion()
+    {
+        $identityMap = new Zend_Entity_IdentityMap();
+
+        $entity = new Zend_TestEntity1();
+        $versionFixture = 1234;
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity, $versionFixture);
+
+        $identityMap->setVersion($entity, $versionFixture+1);
+
+        $this->assertEquals($versionFixture+1, $identityMap->getVersion($entity));
+    }
+
     public function testAddingGettingObjectReturnsReferenceToSameObject()
     {
         $identityMap = new Zend_Entity_IdentityMap();
@@ -85,7 +116,10 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
 
-        $this->setExpectedException("Exception");
+        $this->setExpectedException(
+            "Zend_Entity_Exception",
+            "Entity of class 'Zend_TestEntity1' is not contained in persistence context and has no primary key."
+        );
         $identityMap->getPrimaryKey($entity);
     }
 

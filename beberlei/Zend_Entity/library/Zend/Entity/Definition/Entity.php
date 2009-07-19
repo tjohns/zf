@@ -70,6 +70,11 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     private $_isCompiled = false;
 
     /**
+     * @var Zend_Entity_Defintion_Version
+     */
+    private $_version = null;
+
+    /**
      * Construct entity
      * 
      * @param string $className
@@ -160,6 +165,8 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
         } elseif($property instanceof Zend_Entity_Definition_Property_Abstract) {
             if($property instanceof Zend_Entity_Definition_PrimaryKey) {
                 $this->_id = $property;
+            } else if($property instanceof Zend_Entity_Definition_Version) {
+                $this->_version = $property;
             }
             $this->_properties[$propertyName] = $property;
         }
@@ -301,6 +308,14 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     public function setStateTransformer(Zend_Entity_StateTransformer_Abstract $stateTransformer)
     {
         $this->_stateTransformer = $stateTransformer;
+    }
+
+    /**
+     * @return Zend_Entity_Definition_Version
+     */
+    public function getVersionProperty()
+    {
+        return $this->_version;
     }
 
     /**

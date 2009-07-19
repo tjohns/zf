@@ -53,6 +53,11 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected $_metadataFactory = null;
 
     /**
+     * @var Zend_Entity_Event_EventAbstract
+     */
+    protected $_eventListener = null;
+
+    /**
      * Construct new model factory.
      *
      * @param Zend_Db_Adapter_Abstract $db
@@ -142,6 +147,26 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     public function getAdapter()
     {
         return $this->_db;
+    }
+
+    /**
+     * @return Zend_Entity_Event_EventAbstract
+     */
+    public function getEventListener()
+    {
+        if($this->_eventListener == null) {
+            $this->_eventListener = new Zend_Entity_Event_Listener();
+        }
+        return $this->_eventListener;
+    }
+
+    /**
+     * @param Zend_Entity_Event_EventAbstract $eventListener
+     */
+    public function setEventListener(Zend_Entity_Event_EventAbstract $eventListener)
+    {
+        $this->_eventListener = $eventListener;
+        return $this;
     }
 
     /**

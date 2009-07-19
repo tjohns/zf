@@ -287,6 +287,20 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
 
         $this->assertSame($stateTransformer, $entityDef->getStateTransformer());
     }
+
+    public function testIsVersioned_Default()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity("classA");
+        $this->assertNull($entityDef->getVersionProperty());
+    }
+
+    public function testIsVersioned()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity("classA");
+        $entityDef->addVersion("foo");
+
+        $this->assertType('Zend_Entity_Definition_Version', $entityDef->getVersionProperty());
+    }
 }
 
 class Zend_Entity_Definition_TestingEntity extends Zend_Entity_Definition_Entity

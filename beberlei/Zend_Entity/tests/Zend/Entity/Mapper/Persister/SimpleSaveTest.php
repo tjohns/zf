@@ -72,9 +72,8 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
         $entity = new Zend_TestEntity1;
 
-        $identityMapMock = $this->createIdentityMapMock(0);
-        $identityMapMock->expects($this->once())->method('contains')->will($this->returnValue(true));
-        $identityMapMock->expects($this->exactly(2))->method('getPrimaryKey')->will($this->returnValue(1));
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity1", "1", $entity);
 
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())
@@ -85,7 +84,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
            ->with('entities.entities_id = ?', 1)
            ->will($this->returnValue('entities.entities_id = 1'));
 
-        $em = $this->createTestingEntityManager(null, null, $identityMapMock, $db);
+        $em = $this->createTestingEntityManager(null, null, $identityMap, $db);
 
         $persister = $this->createPersister();
         $persister->doPerformSave($entity, $columnFullState, $em);
@@ -93,7 +92,8 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
     public function testInsertNewEntity_UpdatesIdentityMap()
     {
-        $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+        
         $newId = 1;
         $columnExpectedState = array('entities_id' => null, 'foo' => 'foo', 'baz' => 'bar');
 
@@ -102,15 +102,88 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $db = $this->createDatabaseConnectionMock();
         $db->expects($this->once())->method('lastInsertId')->will($this->returnValue($newId));
 
-        $identityMap = $this->createIdentityMapMock(0);
-        $identityMap->expects($this->once())
-                    ->method('addObject')
-                    ->with('Zend_TestEntity1', $newId, $entity);
-
-        $em = $this->createTestingEntityManager(null, null, $identityMap, $db);
+        $em = $this->createTestingEntityManager(null, null, null, $db);
 
         $persister = $this->createPersister();
+
+        $this->assertFalse($em->getIdentityMap()->hasObject("Zend_TestEntity1", $newId));
         $persister->doPerformSave($entity, $columnExpectedState, $em);
+        $this->assertTrue($em->getIdentityMap()->hasObject("Zend_TestEntity1", $newId));
+    }
+
+    public function testInsertNewEntity_WithVersion_SetsVersionField()
+    {
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+        $def = $this->fixture->getEntityDefinition("Zend_TestEntity1");
+        $def->addVersion("version", array("columnName" => "version"));
+
+        $newId = 1;
+        $columnSaveState = array('entities_id' => null, 'foo' => 'foo', 'baz' => 'bar', 'version' => null);
+        $columnExpectedState = array('entities_id' => null, 'foo' => 'foo', 'baz' => 'bar', 'version' => 1);
+
+        $entity = new Zend_TestEntity1;
+
+        $db = $this->createDatabaseConnectionMock();
+        $db->expects($this->once())->method('lastInsertId')->will($this->returnValue($newId));
+        $db->expects($this->once())->method('insert')->with($this->equalTo('entities'), $this->equalTo($columnExpectedState));
+
+        $em = $this->createTestingEntityManager(null, null, null, $db);
+
+        $persister = $this->createPersister();
+
+        $this->assertFalse($em->getIdentityMap()->getVersion($entity));
+        $persister->doPerformSave($entity, $columnExpectedState, $em);
+        $this->assertEquals(1, $em->getIdentityMap()->getVersion($entity));
+    }
+
+    public function testUpdateEntity_WithVersion_IncrementsVersionId()
+    {
+        $this->doUpdateEntity_WithVersion_AffectedRows(1);
+    }
+
+    public function testUpdateEntity_WithVersion_OptimisticLockException()
+    {
+        $this->setExpectedException("Zend_Entity_OptimisticLockException");
+
+        $this->doUpdateEntity_WithVersion_AffectedRows(0);
+    }
+
+    public function doUpdateEntity_WithVersion_AffectedRows($affectedRows)
+    {
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+        $def = $this->fixture->getEntityDefinition("Zend_TestEntity1");
+        $def->addVersion("version", array("columnName" => "version"));
+
+        $entity = new Zend_TestEntity1;
+        $fixtureVersionId = 1;
+        $fixtureId = 1;
+
+        $columnSaveState = array('entities_id' => $fixtureId, 'foo' => 'foo', 'baz' => 'bar', 'version' => $fixtureVersionId);
+        $columnExpectedUpdateState = array('foo' => 'foo', 'baz' => 'bar', 'version' => $fixtureVersionId+1);
+        $expectedUpdateWhereCondition = 'entities.entities_id = 1 AND entities.version = 1';
+
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity1", $fixtureId, $entity, $fixtureVersionId);
+
+        $db = $this->createDatabaseConnectionMock();
+        $db->expects($this->at(0))
+           ->method('quoteInto')
+           ->will($this->returnValue("entities.entities_id = 1"));
+        $db->expects($this->at(1))
+           ->method('quoteInto')
+           ->with($this->equalTo('entities.version = ?'), $this->equalTo($fixtureVersionId))
+           ->will($this->returnValue('entities.version = 1'));
+        $db->expects($this->at(2))
+           ->method('update')
+           ->with($this->equalTo('entities'), $this->equalTo($columnExpectedUpdateState), $this->equalTo($expectedUpdateWhereCondition))
+           ->will($this->returnValue($affectedRows));
+
+        $em = $this->createEntityManager(null, null, $identityMap, $db);
+        $persister = $this->createPersister();
+
+        $persister->doPerformSave($entity, $columnSaveState, $em);
+
+        $this->assertEquals($fixtureVersionId+1, $identityMap->getVersion($entity));
     }
 
     public function testSaveEntity_WithRelatedEntity_SavesForeignKey_IntoDb()
@@ -122,8 +195,13 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entityB->setState($this->fixture->getDummyDataStateClassB());
         $entityA->setmanytoone($entityB);
 
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity2", "1", $entityB);
+
+        $em = $this->createTestingEntityManager(null, null, $identityMap);
+
         $persister = $this->createPersister();
-        $actualDbState = $persister->transformEntityToDbState($entityA->getState(), $this->createTestingEntityManager());
+        $actualDbState = $persister->transformEntityToDbState($entityA->getState(), $em);
 
         $this->assertEquals(
             $entityB->getid(),
@@ -195,7 +273,14 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entityB = new Zend_TestEntity2();
         $entityB->setState($this->fixture->getDummyDataStateClassB());
 
+        // Make sure $identityMap->getPrimaryKey() returns a value on this $entityB
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity2", "1", $entityB);
+
         $em = $this->getMock('Zend_Entity_Manager_Interface');
+        $em->expects($this->once())
+           ->method('getIdentityMap')
+           ->will($this->returnValue($identityMap));
         if($delegates == true) {
             $em->expects($this->once())
                ->method('save')
@@ -250,19 +335,63 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $fixtureTable = "entities";
         $entity = new Zend_TestEntity1();
 
-        $identityMapMock = $this->createIdentityMapMock();
-        $identityMapMock->expects($this->once())
-                        ->method('getPrimaryKey')
-                        ->will($this->returnValue($fixtureId));
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity1", $fixtureId, $entity);
+
         $dbMock = $this->createDatabaseConnectionMock();
         $dbMock->expects($this->at(0))
                ->method('quoteInto')
                ->will($this->returnValue("foo"));
         $dbMock->expects($this->at(1))
                ->method('delete')
-               ->with($fixtureTable);
+               ->with($this->equalTo($fixtureTable));
 
-        $em = $this->createTestingEntityManager(null, null, $identityMapMock, $dbMock);
+        $em = $this->createTestingEntityManager(null, null, $identityMap, $dbMock);
+
+        $persister = $this->createPersister();
+        $persister->delete($entity, $em);
+    }
+
+    public function testDeleteEntity_WithVersion()
+    {
+        $this->doDeleteEntity_WithVersion_ReturnsAffectedRows(1);
+    }
+
+    public function testDeleteEntity_WithVersion_OptimisticLockException()
+    {
+        $this->setExpectedException("Zend_Entity_OptimisticLockException");
+
+        $this->doDeleteEntity_WithVersion_ReturnsAffectedRows(0);
+    }
+
+    public function doDeleteEntity_WithVersion_ReturnsAffectedRows($affectedRows)
+    {
+        $this->fixture = new Zend_Entity_Fixture_RelationLessDefs();
+        $def = $this->fixture->getEntityDefinition('Zend_TestEntity1');
+        $def->addVersion("version", array("columnName" => "version"));
+
+        $fixtureId = 1;
+        $fixtureVersionId = 1;
+        $fixtureTable = "entities";
+        $entity = new Zend_TestEntity1();
+
+        $identityMap = new Zend_Entity_IdentityMap();
+        $identityMap->addObject("Zend_TestEntity1", $fixtureId, $entity, $fixtureVersionId);
+
+        $dbMock = $this->createDatabaseConnectionMock();
+        $dbMock->expects($this->at(0))
+               ->method('quoteInto')
+               ->will($this->returnValue('id = 1'));
+        $dbMock->expects($this->at(1))
+               ->method('quoteInto')
+               ->with($this->equalTo("entities.version = ?"), $this->equalTo($fixtureVersionId))
+               ->will($this->returnValue("entities.version = 1"));
+        $dbMock->expects($this->at(2))
+               ->method('delete')
+               ->with($this->equalTo('entities'), $this->equalTo('id = 1 AND entities.version = 1'))
+               ->will($this->returnValue($affectedRows));
+
+        $em = $this->createTestingEntityManager(null, null, $identityMap, $dbMock);
 
         $persister = $this->createPersister();
         $persister->delete($entity, $em);

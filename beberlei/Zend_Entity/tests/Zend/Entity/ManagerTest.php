@@ -36,21 +36,45 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager->getMetadataFactory();
     }
 
-    public function testSetGetResourceMapEqualsReference()
+    public function testSetGetMetadataFactoryEqualsReference()
     {
         $manager = $this->createEntityManager();
-        $resourceMap = new Zend_Entity_MetadataFactory_Code("path");
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code("path");
         
-        $manager->setMetadataFactory($resourceMap);
-        $this->assertEquals($resourceMap, $manager->getMetadataFactory());
+        $manager->setMetadataFactory($metadataFactory);
+        $this->assertEquals($metadataFactory, $manager->getMetadataFactory());
     }
 
-    public function testSetResourceThroughConstructorOptionsArray()
+    public function testSetMetadataFactoryThroughConstructorOptionsArray()
     {
-        $resourceMap = new Zend_Entity_MetadataFactory_Code("path");
-        $manager = $this->createEntityManager(null, $resourceMap, null);
+        $metadataFactory = new Zend_Entity_MetadataFactory_Code("path");
+        $manager = $this->createEntityManager(null, $metadataFactory, null);
         
-        $this->assertEquals($resourceMap, $manager->getMetadataFactory());
+        $this->assertEquals($metadataFactory, $manager->getMetadataFactory());
+    }
+
+    public function testGetEventListener_Default()
+    {
+        $manager = $this->createEntityManager();
+        $this->assertType('Zend_Entity_Event_Listener', $manager->getEventListener());
+    }
+
+    public function testSetEventListener()
+    {
+        $manager = $this->createEntityManager();
+        $listener = $this->getMock('Zend_Entity_Event_EventAbstract');
+        $manager->setEventListener($listener);
+        $this->assertSame($listener, $manager->getEventListener());
+    }
+
+    public function testSetEventListener_ThroughConstructorOptions()
+    {
+        $listener = $this->getMock('Zend_Entity_Event_EventAbstract');
+        $options = array('eventListener' => $listener);
+        $manager = new Zend_Entity_Manager($this->getDatabaseConnection(), $options);
+
+        $manager->setEventListener($listener);
+        $this->assertSame($listener, $manager->getEventListener());
     }
 
     public function testGetMapperByEntityStringNameReturnsMapperOnValidCall()
@@ -326,7 +350,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
         $query = $manager->createNativeQuery(self::KNOWN_ENTITY_CLASS);
 
-        $this->assertType('Zend_Entity_Query_AbstractQuery', $query);
+        $this->assertType('Zend_Entity_Query_QueryAbstract', $query);
     }
 
     public function testCreateQuery()

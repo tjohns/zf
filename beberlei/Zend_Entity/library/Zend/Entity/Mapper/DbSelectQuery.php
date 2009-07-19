@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_Mapper_DbSelectQuery extends Zend_Entity_Query_AbstractQuery
+class Zend_Entity_Mapper_DbSelectQuery extends Zend_Entity_Query_QueryAbstract
 {
     /**
      * @var Zend_Entity_Mapper_Abstract
