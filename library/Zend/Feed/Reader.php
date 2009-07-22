@@ -312,21 +312,22 @@ class Zend_Feed_Reader
      */
     public static function importString($string)
     {
-        @ini_set('track_errors', 1);
+        $libxml_errflag = libxml_use_internal_errors(true);
         $dom = new DOMDocument;
-        $status = @$dom->loadXML($string);
-        @ini_restore('track_errors');
+        $status = $dom->loadXML($string);
+        libxml_use_internal_errors($libxml_errflag);
 
         if (!$status) {
-            if (!isset($php_errormsg)) {
-                if (function_exists('xdebug_is_enabled')) {
-                    $php_errormsg = '(error message not available, when XDebug is running)';
-                } else {
-                    $php_errormsg = '(error message not available)';
-                }
+            // Build error message
+            $error = libxml_get_last_error();
+            if ($error && $error->message) {
+            	$errormsg = "DOMDocument cannot parse XML: {$error->message}";
+            } else {
+            	$errormsg = "DOMDocument cannot parse XML: Please check the XML document's validity";
             }
+
             require_once 'Zend/Feed/Exception.php';
-            throw new Zend_Feed_Exception("DOMDocument cannot parse XML: $php_errormsg");
+            throw new Zend_Feed_Exception($errormsg);
         }
 
         $type = self::detectType($dom);
@@ -421,7 +422,7 @@ class Zend_Feed_Reader
      */
     public static function detectType($feed)
     {
-        if ($feed instanceof Zend_Feed_Reader_Feed_Interface) {
+        if ($feed instanceof Zend_Feed_Reader_FeedInterface) {
             $dom = $feed->getDomDocument();
         } elseif($feed instanceof DomDocument) {
             $dom = $feed;
@@ -443,7 +444,7 @@ class Zend_Feed_Reader
             }
         } else {
             require_once 'Zend/Feed/Exception.php';
-            throw new Zend_Feed_Exception('Invalid object/scalar provided: must be of type Zend_Feed_Reader_Feed_Interface, DomDocument or string');
+            throw new Zend_Feed_Exception('Invalid object/scalar provided: must be of type Zend_Feed_Reader_FeedInterface, DomDocument or string');
         }
         $xpath = new DOMXPath($dom);
 

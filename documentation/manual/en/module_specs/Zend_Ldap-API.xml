@@ -160,7 +160,7 @@
                         <entry>
                             If set to <constant>FALSE</constant>, this option indicates that the
                             given username should not be split at the first <emphasis>@</emphasis>
-                            or <emphasis>\</emphasis> character to seperate the username from
+                            or <emphasis>\</emphasis> character to separate the username from
                             the domain during the binding-procedure. This allows the user to
                             use usernames that contain an <emphasis>@</emphasis> or
                             <emphasis>\</emphasis> character that do not
@@ -180,13 +180,13 @@
             <para>Method names in <emphasis>italics</emphasis> are static methods.</para>
         </note>
 
-    <xi:include href="Zend_Ldap-API-Ldap.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Attribute.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Dn.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Filter.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Node.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Node-RootDse.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Node-Schema.xml" />
-    <xi:include href="Zend_Ldap-API-Ldap-Ldif-Encoder.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Attribute.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Dn.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Filter.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Node.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Node-RootDse.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Node-Schema.xml" />
+        <xi:include href="Zend_Ldap-API-Ldap-Ldif-Encoder.xml" />
     </sect2>
 </sect1>

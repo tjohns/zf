@@ -17,7 +17,7 @@
  * @package    Zend_Console_Getopt
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 
 /**
@@ -169,7 +169,7 @@ class Zend_Console_Getopt
         self::CONFIG_RULEMODE   => self::MODE_ZEND,
         self::CONFIG_DASHDASH   => true,
         self::CONFIG_IGNORECASE => false,
-        self::CONFIG_PARSEALL => true
+        self::CONFIG_PARSEALL   => true,
     );
 
     /**
@@ -243,7 +243,7 @@ class Zend_Console_Getopt
     {
         if (!isset($_SERVER['argv'])) {
             require_once 'Zend/Console/Getopt/Exception.php';
-            if(ini_get('register_argc_argv') == false) {
+            if (ini_get('register_argc_argv') == false) {
                 throw new Zend_Console_Getopt_Exception(
                     "argv is not available, because ini option 'register_argc_argv' is set Off"
                 );

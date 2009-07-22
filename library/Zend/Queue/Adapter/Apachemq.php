@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stomp.php 15165 2009-04-26 14:44:50Z danlo $
+ * @version    $Id$
  */
 
 /**
@@ -259,7 +259,7 @@ class Zend_Queue_Adapter_Apachemq extends Zend_Queue_Adapter_AdapterAbstract
         $frame->setCommand('SEND');
         $frame->setHeader('destination', $queue->getName());
         $frame->setHeader('content-length', strlen($message));
-        $frame->setBody($message);
+        $frame->setBody((string) $message);
         $this->_client->send($frame);
 
         $data = array(

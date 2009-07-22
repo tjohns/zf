@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Test/PHPUnit/ControllerTestCaseTest.php';
+require_once 'Zend/Test/PHPUnit/Db/AllTests.php';
 
 /**
  * @category   Zend
@@ -50,6 +51,7 @@ class Zend_Test_PHPUnit_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Test- Zend_Test_PHPUnit');
 
         $suite->addTestSuite('Zend_Test_PHPUnit_ControllerTestCaseTest');
+        $suite->addTest(Zend_Test_PHPUnit_Db_AllTests::suite());
 
         return $suite;
     }

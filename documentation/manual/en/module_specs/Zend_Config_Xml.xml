@@ -166,6 +166,53 @@ EOT;
 $config = new Zend_Config_Xml($string, 'staging');
 ]]></programlisting>
     </note>
+<note>
+        <title>Zend_Config XML namespace</title>
+        <para>
+            <classname>Zend_Config</classname> comes with it's own <acronym>XML</acronym>
+            namespace, which adds additional functionality to the parsing process. To take advantage
+            of it, you have to define a namespace with the namespace <acronym>URI</acronym>
+            <filename>http://framework.zend.com/xml/zend-config-xml/1.0/</filename> in
+            your config root node.
+        </para>
+
+        <para>
+            With the namespace enabled, you can now use <acronym>PHP</acronym> constants within
+            your configuration files. Additionally, the <emphasis>extends</emphasis>
+            attribute was moved to the new namespace and is deprecated in the
+            <constant>NULL</constant> namespace. It will be completly removed there in
+            Zend Framework 2.0.
+        </para>
+        <programlisting language="xml"><![CDATA[
+$string = <<<EOT
+<?xml version="1.0"?>
+<config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
+    <production>
+        <includePath>
+            <zf:const zf:name="APPLICATION_PATH"/>/library</includePath>
+        <db>
+            <adapter value="pdo_mysql"/>
+            <params>
+                <host value="db.example.com"/>
+            </params>
+        </db>
+    </production>
+    <staging zf:extends="production">
+        <db>
+            <params>
+                <host value="dev.example.com"/>
+            </params>
+        </db>
+    </staging>
+</config>
+EOT;
+
+define('APPLICATION_PATH', dirname(__FILE__));
+$config = new Zend_Config_Xml($string, 'staging');
+
+echo $config->includePath; // Prints "/var/www/something/library"
+]]></programlisting>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

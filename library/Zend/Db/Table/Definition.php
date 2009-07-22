@@ -17,6 +17,7 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
@@ -77,8 +78,8 @@ class Zend_Db_Table_Definition
     }
     
     /**
-     * @var string $tableName
-     * @var array  $tableConfig
+     * @param string $tableName
+     * @param array  $tableConfig
      * @return Zend_Db_Table_Definition
      */
     public function setTableConfig($tableName, array $tableConfig)

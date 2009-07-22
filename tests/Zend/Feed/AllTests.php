@@ -51,6 +51,8 @@ require_once 'Zend/Feed/Reader/Feed/RssTest.php';
 require_once 'Zend/Feed/Reader/Entry/RssTest.php';
 require_once 'Zend/Feed/Reader/Feed/AtomTest.php';
 require_once 'Zend/Feed/Reader/Entry/AtomTest.php';
+require_once 'Zend/Feed/Reader/Feed/CommonTest.php';
+require_once 'Zend/Feed/Reader/Entry/CommonTest.php';
 
 require_once 'Zend/Feed/Reader/Integration/WordpressRss2DcAtomTest.php';
 require_once 'Zend/Feed/Reader/Integration/WordpressAtom10Test.php';
@@ -95,6 +97,10 @@ class Zend_Feed_AllTests
         $suite->addTestSuite('Zend_Feed_Reader_Feed_AtomTest');
         // ATOM - Item Level
         $suite->addTestSuite('Zend_Feed_Reader_Entry_AtomTest');
+        // COMMON - Feed Level
+        $suite->addTestSuite('Zend_Feed_Reader_Feed_CommonTest');
+        // COMMON - Entry Level
+        $suite->addTestSuite('Zend_Feed_Reader_Entry_CommonTest');
         /**
          * Real World Feed Tests
          */

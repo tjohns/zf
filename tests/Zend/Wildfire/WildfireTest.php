@@ -20,6 +20,10 @@
  * @version    $Id$
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Wildfire_WildfireTest::main');
+}
+
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /** Zend_Wildfire_Channel_HttpHeaders */
@@ -34,11 +38,11 @@ require_once 'Zend/Wildfire/Plugin/FirePhp/Message.php';
 /** Zend_Wildfire_Plugin_FirePhp_TableMessage */
 require_once 'Zend/Wildfire/Plugin/FirePhp/TableMessage.php';
 
-/** Zend_Controller_Request_Http */
-require_once 'Zend/Controller/Request/Http.php';
+/** Zend_Controller_Request_HttpTestCase */
+require_once 'Zend/Controller/Request/HttpTestCase.php';
 
 /** Zend_Controller_Response_Http */
-require_once 'Zend/Controller/Response/Http.php';
+require_once 'Zend/Controller/Response/HttpTestCase.php';
 
 /** Zend_Controller_Front **/
 require_once 'Zend/Controller/Front.php';
@@ -71,8 +75,6 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Wildfire_WildfireTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -80,6 +82,8 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('America/Los_Angeles');
+        Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
+        Zend_Wildfire_Plugin_FirePhp::destroyInstance();
     }
 
     public function tearDown()
@@ -91,8 +95,8 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
     protected function _setupWithFrontController()
     {
-        $this->_request = new Zend_Wildfire_WildfireTest_Request();
-        $this->_response = new Zend_Wildfire_WildfireTest_Response();
+        $this->_request    = new Zend_Wildfire_WildfireTest_Request();
+        $this->_response   = new Zend_Wildfire_WildfireTest_Response();
         $this->_controller = Zend_Controller_Front::getInstance();
         $this->_controller->resetInstance();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')
@@ -960,7 +964,7 @@ class Zend_Wildfire_WildfireTest_HttpHeadersChannel extends Zend_Wildfire_Channe
 {
 }
 
-class Zend_Wildfire_WildfireTest_Request extends Zend_Controller_Request_Http
+class Zend_Wildfire_WildfireTest_Request extends Zend_Controller_Request_HttpTestCase
 {
 
     protected $_enabled = false;
@@ -969,7 +973,7 @@ class Zend_Wildfire_WildfireTest_Request extends Zend_Controller_Request_Http
         $this->_enabled = $enabled;
     }
 
-    public function getHeader($header)
+    public function getHeader($header, $default = null)
     {
         if ($header == 'User-Agent') {
             if ($this->_enabled) {
@@ -982,7 +986,7 @@ class Zend_Wildfire_WildfireTest_Request extends Zend_Controller_Request_Http
 }
 
 
-class Zend_Wildfire_WildfireTest_Response extends Zend_Controller_Response_Http
+class Zend_Wildfire_WildfireTest_Response extends Zend_Controller_Response_HttpTestCase
 {
 
     public function getHeadersForTesting()
@@ -1030,4 +1034,8 @@ class Zend_Wildfire_WildfireTest_Response extends Zend_Controller_Response_Http
         return true;
     }
 
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Wildfire_WildfireTest::main') {
+    Zend_Wildfire_WildfireTest::main();
 }

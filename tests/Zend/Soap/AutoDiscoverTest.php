@@ -328,10 +328,9 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $dom = new DOMDocument();
         ob_start();
         $server->handle();
-        $dom->loadXML(ob_get_contents());
+        $dom->loadXML(ob_get_clean());
         $dom->save(dirname(__FILE__).'/_files/addfunction.wsdl');
 
-        ob_end_clean();
         $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
         $name = $parts[0];
 
@@ -374,10 +373,9 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $dom = new DOMDocument();
         ob_start();
         $server->handle();
-        $dom->loadXML(ob_get_contents());
+        $dom->loadXML(ob_get_clean());
         $dom->save(dirname(__FILE__).'/_files/addfunction.wsdl');
 
-        ob_end_clean();
         $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
         $name = $parts[0];
 
@@ -426,10 +424,9 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $dom = new DOMDocument();
         ob_start();
         $server->handle();
-        $dom->loadXML(ob_get_contents());
+        $dom->loadXML(ob_get_clean());
         $dom->save(dirname(__FILE__).'/_files/addfunction.wsdl');
 
-        ob_end_clean();
         $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
         $name = $parts[0];
 
@@ -458,10 +455,8 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $dom = new DOMDocument();
         ob_start();
         $server->handle();
-        $dom->loadXML(ob_get_contents());
+        $dom->loadXML(ob_get_clean());
         $dom->save(dirname(__FILE__).'/_files/addfunction2.wsdl');
-
-        ob_end_clean();
 
         $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
         $name = $parts[0];
@@ -564,8 +559,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertContains($httpsScriptUri, $wsdlOutput);
     }
@@ -582,8 +576,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertNotContains($scriptUri, $wsdlOutput);
         $this->assertContains("http://example.com/service.php", $wsdlOutput);
@@ -602,8 +595,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertNotContains($scriptUri, $wsdlOutput);
         $this->assertContains("http://example.com/service.php", $wsdlOutput);
@@ -633,8 +625,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertNotContains($scriptUri, $wsdlOutput);
         $this->assertContains("http://example.com/service.php", $wsdlOutput);
@@ -643,8 +634,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertNotContains($scriptUri, $wsdlOutput);
         $this->assertNotContains("http://example.com/service.php", $wsdlOutput);
@@ -665,8 +655,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertEquals(1, substr_count($wsdlOutput, '<message name="testFuncIn">'));
         $this->assertEquals(1, substr_count($wsdlOutput, '<message name="testFuncOut">'));
@@ -754,8 +743,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertEquals(1,
             substr_count($wsdlOutput, 'wsdl:arrayType="tns:Zend_Soap_AutoDiscoverTestClass1[]"'),
@@ -785,8 +773,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->handle();
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertEquals(
             $this->sanitizeWsdlXmlOutputForOsCompability($wsdlOutput),
@@ -795,8 +782,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         ob_start();
         $server->dump(false);
-        $wsdlOutput = ob_get_contents();
-        ob_end_clean();
+        $wsdlOutput = ob_get_clean();
 
         $this->assertEquals(
             $this->sanitizeWsdlXmlOutputForOsCompability($wsdlOutput),

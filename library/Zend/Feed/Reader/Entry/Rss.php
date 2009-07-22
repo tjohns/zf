@@ -25,14 +25,14 @@
 require_once 'Zend/Feed/Reader.php';
 
 /**
- * @see Zend_Feed_Reader_Entry_Interface
+ * @see Zend_Feed_Reader_EntryInterface
  */
-require_once 'Zend/Feed/Reader/Entry/Interface.php';
+require_once 'Zend/Feed/Reader/EntryInterface.php';
 
 /**
- * @see Zend_Feed_Reader_Entry_EntryAbstract
+ * @see Zend_Feed_Reader_EntryAbstract
  */
-require_once 'Zend/Feed/Reader/Entry/EntryAbstract.php';
+require_once 'Zend/Feed/Reader/EntryAbstract.php';
 
 /**
  * @see Zend_Feed_Reader_Extension_DublinCore_Entry
@@ -75,49 +75,8 @@ require_once 'Zend/Date.php';
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract implements Zend_Feed_Reader_Entry_Interface
+class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_EntryAbstract implements Zend_Feed_Reader_EntryInterface
 {
-    /**
-     * Dublin Core object
-     *
-     * @var Zend_Feed_Reader_Extension_DublinCore_Entry
-     */
-    protected $_dc = null;
-
-    /**
-     * Content Module object
-     *
-     * @var Zend_Feed_Reader_Extension_Content_Entry
-     */
-    protected $_content = null;
-
-    /**
-     * Atom Extension object
-     *
-     * @var Zend_Feed_Reader_Extension_Atom_Entry
-     */
-    protected $_atom = null;
-
-    /**
-     * WellFormedWeb Extension object
-     *
-     * @var Zend_Feed_Reader_Extension_WellFormedWeb_Entry
-     */
-    protected $_wfw = null;
-
-    /**
-     * Slash Extension object
-     *
-     * @var Zend_Feed_Reader_Extension_Slash_Entry
-     */
-    protected $_slash = null;
-
-    /**
-     * Atom Threaded Extension object
-     *
-     * @var Zend_Feed_Reader_Extension_Thread_Entry
-     */
-    protected $_thread = null;
 
     /**
      * XPath query for RDF
@@ -150,22 +109,22 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         $pluginLoader = Zend_Feed_Reader::getPluginLoader();
 
         $dublinCoreClass = $pluginLoader->getClassName('DublinCore_Entry');
-        $this->_dc       = new $dublinCoreClass($entry, $entryKey, $type);
+        $this->_extensions['DublinCore_Entry'] = new $dublinCoreClass($entry, $entryKey, $type);
 
         $contentClass   = $pluginLoader->getClassName('Content_Entry');
-        $this->_content = new $contentClass($entry, $entryKey, $type);
+        $this->_extensions['Content_Entry'] = new $contentClass($entry, $entryKey, $type);
 
         $atomClass   = $pluginLoader->getClassName('Atom_Entry');
-        $this->_atom = new $atomClass($entry, $entryKey, $type);
+        $this->_extensions['Atom_Entry'] = new $atomClass($entry, $entryKey, $type);
 
         $wfwClass   = $pluginLoader->getClassName('WellFormedWeb_Entry');
-        $this->_wfw = new $wfwClass($entry, $entryKey, $type);
+        $this->_extensions['WellFormedWeb_Entry'] = new $wfwClass($entry, $entryKey, $type);
 
         $slashClass   = $pluginLoader->getClassName('Slash_Entry');
-        $this->_slash = new $slashClass($entry, $entryKey, $type);
+        $this->_extensions['Slash_Entry'] = new $slashClass($entry, $entryKey, $type);
 
         $threadClass   = $pluginLoader->getClassName('Thread_Entry');
-        $this->_thread = new $threadClass($entry, $entryKey, $type);
+        $this->_extensions['Thread_Entry'] = new $threadClass($entry, $entryKey, $type);
     }
 
     /**
@@ -229,11 +188,11 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (empty($authors)) {
-            $authors = $this->_dc->getAuthors();
+            $authors = $this->getExtension('DublinCore')->getAuthors();
         }
 
         if (empty($authors)) {
-            $authors = $this->_atom->getAuthors();
+            $authors = $this->getExtension('Atom')->getAuthors();
         }
 
         $this->_data['authors'] = $authors;
@@ -252,14 +211,14 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
             return $this->_data['content'];
         }
 
-        $content = $this->_content->getContent();
+        $content = $this->getExtension('Content')->getContent();
 
         if (!$content) {
             $content = $this->getDescription();
         }
 
         if (empty($content)) {
-            $content = $this->_atom->getContent();
+            $content = $this->getExtension('Atom')->getContent();
         }
 
         $this->_data['content'] = $content;
@@ -303,22 +262,26 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
                     try {
                         $date->set($dateModified, Zend_Date::RFC_2822);
                     } catch (Zend_Date_Exception $e) {
-                        require_once 'Zend/Feed/Exception.php';
-                        throw new Zend_Feed_Exception(
-                            'Could not load date due to unrecognised format (should follow RFC 822 or 2822): '
-                            . $e->getMessage()
-                        );
+                        try {
+                            $date->set($dateModified, Zend_Date::DATES);
+                        } catch (Zend_Date_Exception $e) {
+                            require_once 'Zend/Feed/Exception.php';
+                            throw new Zend_Feed_Exception(
+                                'Could not load date due to unrecognised format (should follow RFC 822 or 2822): '
+                                . $e->getMessage()
+                            );
+                        }
                     }
                 }
             }
         }
 
         if (!$date) {
-            $date = $this->_dc->getDate();
+            $date = $this->getExtension('DublinCore')->getDate();
         }
 
         if (!$date) {
-            $date = $this->_atom->getDateModified();
+            $date = $this->getExtension('Atom')->getDateModified();
         }
 
         if (!$date) {
@@ -352,11 +315,11 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (!$description) {
-            $description = $this->_dc->getDescription();
+            $description = $this->getExtension('DublinCore')->getDescription();
         }
 
         if (empty($description)) {
-            $description = $this->_atom->getDescription();
+            $description = $this->getExtension('Atom')->getDescription();
         }
 
         if (!$description) {
@@ -372,7 +335,7 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
 
     /**
      * Get the entry enclosure
-     *
+     * TODO: Is this supported by RSS? Could delegate to Atom Extension if not.
      * @return string
      */
     public function getEnclosure()
@@ -419,11 +382,11 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (!$id) {
-            $id = $this->_dc->getId();
+            $id = $this->getExtension('DublinCore')->getId();
         }
 
         if (empty($id)) {
-            $id = $this->_atom->getId();
+            $id = $this->getExtension('Atom')->getId();
         }
 
         if (!$id) {
@@ -481,7 +444,7 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (!$list->length) {
-            $links = $this->_atom->getLinks();
+            $links = $this->getExtension('Atom')->getLinks();
         } else {
             foreach ($list as $link) {
                 $links[] = $link->nodeValue;
@@ -525,11 +488,11 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (!$title) {
-            $title = $this->_dc->getTitle();
+            $title = $this->getExtension('DublinCore')->getTitle();
         }
 
         if (!$title) {
-            $title = $this->_atom->getTitle();
+            $title = $this->getExtension('Atom')->getTitle();
         }
 
         if (!$title) {
@@ -552,14 +515,14 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
             return $this->_data['commentcount'];
         }
 
-        $commentcount = $this->_slash->getCommentCount();
+        $commentcount = $this->getExtension('Slash')->getCommentCount();
 
         if (!$commentcount) {
-            $commentcount = $this->_thread->getCommentCount();
+            $commentcount = $this->getExtension('Thread')->getCommentCount();
         }
 
         if (!$commentcount) {
-            $commentcount = $this->_atom->getCommentCount();
+            $commentcount = $this->getExtension('Atom')->getCommentCount();
         }
 
         if (!$commentcount) {
@@ -591,7 +554,7 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
         }
 
         if (!$commentlink) {
-            $commentlink = $this->_atom->getCommentLink();
+            $commentlink = $this->getExtension('Atom')->getCommentLink();
         }
 
         if (!$commentlink) {
@@ -614,14 +577,14 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
             return $this->_data['commentfeedlink'];
         }
 
-        $commentfeedlink = $this->_wfw->getCommentFeedLink();
+        $commentfeedlink = $this->getExtension('WellFormedWeb')->getCommentFeedLink();
 
         if (!$commentfeedlink) {
-            $commentfeedlink = $this->_atom->getCommentFeedLink('rss');
+            $commentfeedlink = $this->getExtension('Atom')->getCommentFeedLink('rss');
         }
 
         if (!$commentfeedlink) {
-            $commentfeedlink = $this->_atom->getCommentFeedLink('rdf');
+            $commentfeedlink = $this->getExtension('Atom')->getCommentFeedLink('rdf');
         }
 
         if (!$commentfeedlink) {
@@ -641,12 +604,6 @@ class Zend_Feed_Reader_Entry_Rss extends Zend_Feed_Reader_Entry_EntryAbstract im
     public function setXpath(DOMXPath $xpath)
     {
         parent::setXpath($xpath);
-        $this->_dc->setXpath($this->_xpath);
-        $this->_content->setXpath($this->_xpath);
-        $this->_atom->setXpath($this->_xpath);
-        $this->_slash->setXpath($this->_xpath);
-        $this->_wfw->setXpath($this->_xpath);
-        $this->_thread->setXpath($this->_xpath);
         foreach ($this->_extensions as $extension) {
             $extension->setXpath($this->_xpath);
         }

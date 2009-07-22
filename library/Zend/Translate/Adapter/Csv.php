@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Translate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Date.php 2498 2006-12-23 22:13:38Z thomas $
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -77,11 +77,16 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter
                 continue;
             }
 
-            if (isset($data[1]) !== true) {
+            if (!isset($data[1])) {
                 continue;
             }
 
-            $this->_data[$locale][$data[0]] = $data[1];
+            if (count($data) == 2) {
+                $this->_data[$locale][$data[0]] = $data[1];
+            } else {
+                $singular = array_shift($data);
+                $this->_data[$locale][$singular] = $data;
+            }
         }
 
         return $this->_data;

@@ -543,10 +543,6 @@ class Zend_Ldap
                 Zend_Ldap_Exception::LDAP_X_DOMAIN_MISMATCH);
         }
 
-        if ($form === Zend_Ldap::ACCTNAME_FORM_DN) {
-            return $this->_getAccountDn($acctname);
-        }
-
         if (!$uname) {
             /**
              * @see Zend_Ldap_Exception
@@ -555,13 +551,19 @@ class Zend_Ldap
             throw new Zend_Ldap_Exception(null, "Invalid account name syntax: $acctname");
         }
 
-        $uname = strtolower($uname);
+        if (function_exists('mb_strtolower')) {
+            $uname = mb_strtolower($uname, 'UTF-8');
+        } else {
+            $uname = strtolower($uname);
+        }
 
         if ($form === 0) {
             $form = $this->_getAccountCanonicalForm();
         }
 
         switch ($form) {
+            case Zend_Ldap::ACCTNAME_FORM_DN:
+                return $this->_getAccountDn($acctname);
             case Zend_Ldap::ACCTNAME_FORM_USERNAME:
                 return $uname;
             case Zend_Ldap::ACCTNAME_FORM_BACKSLASH:
@@ -598,7 +600,7 @@ class Zend_Ldap
      * @return array An array of the attributes representing the account
      * @throws Zend_Ldap_Exception
      */
-    private function _getAccount($acctname, array $attrs = null)
+    protected function _getAccount($acctname, array $attrs = null)
     {
         $baseDn = $this->getBaseDn();
         if (!$baseDn) {
@@ -823,7 +825,7 @@ class Zend_Ldap
                     }
                 } else {
                     $username = $this->getCanonicalAccountName($username,
-                        Zend_Ldap::ACCTNAME_FORM_PRINCIPAL);
+                        $this->_getAccountCanonicalForm());
                 }
             }
         }
@@ -856,7 +858,7 @@ class Zend_Ldap
                      */
                     $message = $this->_connectString;
             }
-    
+
             $zle = new Zend_Ldap_Exception($this, $message);
         }
         $this->disconnect();
