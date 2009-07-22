@@ -1,54 +1,50 @@
-Welcome to the Zend Framework 1.8 Release! 
+Welcome to the Zend Framework 1.9 Release! 
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.8 Release ([INSERT REV NUM HERE]).
-Released on April 30, 2009.
+Zend Framework 1.9 Beta 1 Release ([INSERT REV NUM HERE]).
+Released on July 23, 2009.
 
 NEW FEATURES
 ------------
+* Zend_Rest_Route, Zend_Rest_Controller, and
+  Zend_Controller_Plugin_PutHandler, which aid in providing RESTful
+  resources via the MVC layer.
 
-* Zend_Tool, contributed by Ralph Schindler
-* Zend_Application, contributed by Ben Scholzen and Matthew Weier O'Phinney
-* Zend_Loader_Autoloader and Zend_Loader_Autoloader_Resource,
-    contributed by Matthew Weier O'Phinney
-* Zend_Navigation, contributed by Robin Skoglund
-* Zend_CodeGenerator, by Ralph Schindler
-* Zend_Reflection, Ralph Schindler and Matthew Weier O'Phinney
-* Zend Server backend for Zend_Cache, contributed by Alexander Veremyev
-* Zend_Service_Amazon_Ec2, contributed by Jon Whitcraft
-* Zend_Service_Amazon_S3, Justin Plock and Stas Malyshev
-* Zend_Filter_Encrypt, contributed by Thomas Weidner
-* Zend_Filter_Decrypt, contributed by Thomas Weidner
-* Zend_Filter_LocalizedToNormalized and _NormalizedToLocalized,
-    contributed by Thomas Weidner
-* Support for file upload progress support in Zend_File_Transfer,
-    contributed by Thomas Weidner
-* Translation-aware routes, contributed by Ben Scholzen
-* Zend_Json expression support, contributed by Benjamin Eberlei and
-    Oscar Reales
-* Zend_Http_Client_Adapter_Curl, contributed by Benjamin Eberlei
-* SOAP input and output header support, contributed by Alexander Veremyev
-* Support for keyword field search using query strings,
-    contributed by Alexander Veremyev
-* Support for searching across multiple indexes in Zend_Search_Lucene,
-    contributed by Alexander Veremyev
-* Significant improvements for Zend_Search_Lucene search result match
-    highlighting capabilities, contributed by Alexander Veremyev
-* Support for page scaling, shifting and skewing in Zend_Pdf,
-    contributed by Alexander Veremyev
-* Zend_Tag_Cloud, contributed by Ben Scholzen
-* Locale support in Zend_Validate_Int and Zend_Validate_Float,
-    contributed by Thomas Weidner
-* Phonecode support in Zend_Locale, contributed by Thomas Weidner
-* Zend_Validate_Db_RecordExists and _NoRecordExists, contributed by
-    Ryan Mauger
-* Zend_Validate_Iban, contributed by Thomas Weidner
-* Zend_Validate_File_WordCount, contributed by Thomas Weidner
+* Zend_Feed_Reader, which provides a common API to RSS and Atom feeds,
+  as well as extensions to each format, caching, and a slew of other
+  functionality.
+
+* Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
+  use local and remote messaging and queue services for offloading
+  asynchronous processes.
+
+* Zend_Db_Table updates to allow using Zend_Db_Table as a concrete
+  class by passing it one or more table definitions via the
+  constructor.
+
+* Zend_Test_PHPUnit_Db, which provides Zend_Db support for PHPUnit's
+  DBUnit support, allowing developers to do functional and integration
+  testing against databases using data fixtures.
+
+* Annotation processing support for Zend_Pdf, as well as performance
+  improvements.
+
+* Zend_Dojo custom build layer support.
+
+* Numerous Zend_Ldap improvements.
+
+* Zend_Log_Writer_Syslog, a Zend_Log writer for writing to your system
+  log.
+
+* Several new view helpers, including Zend_View_Helper_BaseUrl.
+
+* PHP 5.3 compatibility, including support for new features in the
+  mysqli extension.
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=11002
+http://framework.zend.com/changelog/1.9.0b1
 
 SYSTEM REQUIREMENTS
 -------------------
