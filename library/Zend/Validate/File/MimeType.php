@@ -255,7 +255,6 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
             return $this->_throw($file, self::NOT_DETECTED);
         }
 
-echo "Found MIME type: " . $this->_type . "\n";
         $mimetype = $this->getMimeType(true);
         if (in_array($this->_type, $mimetype)) {
             return true;
