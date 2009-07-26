@@ -39,13 +39,13 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 
     /**
      * Clean up after running a test
-     * 
+     *
      */
     public function tearDown()
     {
         $this->_client = null;
     }
-   
+
     /**
      * URI Tests
      */
@@ -120,15 +120,15 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
     public function testDoubleGetParameter()
     {
         $qstr = 'foo=bar&foo=baz';
-        
+
         $this->_client->setUri('http://example.com/test/?' . $qstr);
         $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
-        
+
         $res = $this->_client->request('GET');
-        $this->assertContains($qstr, $this->_client->getLastRequest(), 
+        $this->assertContains($qstr, $this->_client->getLastRequest(),
             'Request is expected to contain the entire query string');
     }
-    
+
     /**
      * Header Tests
      */
@@ -272,101 +272,60 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Other Tests
+     * Configuration Handling
      */
 
     /**
-     * Test the getLastResponse() method actually returns the last response
+     * Test that we can set a valid configuration array with some options
      *
      */
-    public function testGetLastResponse()
+    public function testConfigSetAsArray()
     {
-        // First, make sure we get null before the request
-        $this->assertEquals(null, $this->_client->getLastResponse(), 
-            'getLastResponse() is still expected to return null');
+        $config = array(
+            'timeout'    => 500,
+            'someoption' => 'hasvalue'
+        );
 
-        // Now, test we get a proper response after the request
-        $this->_client->setUri('http://example.com/foo/bar');
-        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
-        
-        $response = $this->_client->request();
-        $this->assertTrue(($response === $this->_client->getLastResponse()), 
-            'Response is expected to be identical to the result of getLastResponse()');
-    }
-    
-    /**
-     * Test that getLastResponse returns null when not storing
-     *
-     */
-    public function testGetLastResponseWhenNotStoring()
-    {
-        // Now, test we get a proper response after the request
-        $this->_client->setUri('http://example.com/foo/bar');
-        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
-        $this->_client->setConfig(array('storeresponse' => false));
-        
-        $response = $this->_client->request();
+        $this->_client->setConfig($config);
 
-        $this->assertNull($this->_client->getLastResponse(), 
-            'getLastResponse is expected to be null when not storing');
-    }
-    
-    /**
-     * Check we get an exception when trying to send a POST request with an
-     * invalid content-type header
-     * 
-     * @expectedException Zend_Http_Client_Exception
-     */
-    public function testInvalidPostContentType()
-    {
-        $this->_client->setEncType('x-foo/something-fake');
-        $this->_client->setParameterPost('parameter', 'value');
-
-        // This should throw an exception
-        $this->_client->request('POST');
-    }
-
-    /**
-     * Check we get an exception if there's an error in the socket
-     *
-     * @expectedException Zend_Http_Client_Adapter_Exception
-     */
-    public function testSocketErrorException() 
-    {
-        // Try to connect to an invalid host
-        $this->_client->setUri('http://255.255.255.255');
-        
-        // Reduce timeout to 3 seconds to avoid waiting
-        $this->_client->setConfig(array('timeout' => 3));
-
-        // This call should cause an exception
-        $this->_client->request();
-    }
-
-    /**
-     * Check that we can set methods which are not documented in the RFC.
-     * 
-     * @dataProvider validMethodProvider
-     */
-    public function testSettingExtendedMethod($method)
-    {
-        try {
-            $this->_client->setMethod($method);
-        } catch (Exception $e) {
-            $this->fail("An unexpected exception was thrown when setting request method to '{$method}'");
+        $hasConfig = $this->getObjectAttribute($this->_client, 'config');
+        foreach($config as $k => $v) {
+            $this->assertEquals($v, $hasConfig[$k]);
         }
     }
 
     /**
-     * Check that an exception is thrown if non-word characters are used in 
-     * the request method.
+     * Test that a Zend_Config object can be used to set configuration
      *
-     * @dataProvider invalidMethodProvider
+     * @link http://framework.zend.com/issues/browse/ZF-5577
+     */
+    public function testConfigSetAsZendConfig()
+    {
+        require_once 'Zend/Config.php';
+
+        $config = new Zend_Config(array(
+            'timeout'  => 400,
+            'nested'   => array(
+                'item' => 'value',
+            )
+        ));
+
+        $this->_client->setConfig($config);
+
+        $hasConfig = $this->getObjectAttribute($this->_client, 'config');
+        $this->assertEquals($config->timeout, $hasConfig['timeout']);
+        $this->assertEquals($config->nested->item, $hasConfig['nested']['item']);
+    }
+
+    /**
+     * Test that passing invalid variables to setConfig() causes an exception
+     *
+     * @dataProvider      invalidConfigProvider
      * @expectedException Zend_Http_Client_Exception
      */
-    public function testSettingInvalidMethodThrowsException($method)
+    public function testConfigSetInvalid($config)
     {
-        $this->_client->setMethod($method);
+        $this->_client->setConfig($config);
     }
 
     /**
@@ -390,18 +349,116 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
         $adapterCfg = $this->getObjectAttribute($adapter, 'config');
         $this->assertEquals('value2', $adapterCfg['param']);
     }
-    
+
     /**
-     * Test that POST data with mutli-dimentional array is properly encoded as 
+     * Other Tests
+     */
+
+    /**
+     * Test the getLastResponse() method actually returns the last response
+     *
+     */
+    public function testGetLastResponse()
+    {
+        // First, make sure we get null before the request
+        $this->assertEquals(null, $this->_client->getLastResponse(),
+            'getLastResponse() is still expected to return null');
+
+        // Now, test we get a proper response after the request
+        $this->_client->setUri('http://example.com/foo/bar');
+        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
+
+        $response = $this->_client->request();
+        $this->assertTrue(($response === $this->_client->getLastResponse()),
+            'Response is expected to be identical to the result of getLastResponse()');
+    }
+
+    /**
+     * Test that getLastResponse returns null when not storing
+     *
+     */
+    public function testGetLastResponseWhenNotStoring()
+    {
+        // Now, test we get a proper response after the request
+        $this->_client->setUri('http://example.com/foo/bar');
+        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
+        $this->_client->setConfig(array('storeresponse' => false));
+
+        $response = $this->_client->request();
+
+        $this->assertNull($this->_client->getLastResponse(),
+            'getLastResponse is expected to be null when not storing');
+    }
+
+    /**
+     * Check we get an exception when trying to send a POST request with an
+     * invalid content-type header
+     *
+     * @expectedException Zend_Http_Client_Exception
+     */
+    public function testInvalidPostContentType()
+    {
+        $this->_client->setEncType('x-foo/something-fake');
+        $this->_client->setParameterPost('parameter', 'value');
+
+        // This should throw an exception
+        $this->_client->request('POST');
+    }
+
+    /**
+     * Check we get an exception if there's an error in the socket
+     *
+     * @expectedException Zend_Http_Client_Adapter_Exception
+     */
+    public function testSocketErrorException()
+    {
+        // Try to connect to an invalid host
+        $this->_client->setUri('http://255.255.255.255');
+
+        // Reduce timeout to 3 seconds to avoid waiting
+        $this->_client->setConfig(array('timeout' => 3));
+
+        // This call should cause an exception
+        $this->_client->request();
+    }
+
+    /**
+     * Check that we can set methods which are not documented in the RFC.
+     *
+     * @dataProvider validMethodProvider
+     */
+    public function testSettingExtendedMethod($method)
+    {
+        try {
+            $this->_client->setMethod($method);
+        } catch (Exception $e) {
+            $this->fail("An unexpected exception was thrown when setting request method to '{$method}'");
+        }
+    }
+
+    /**
+     * Check that an exception is thrown if non-word characters are used in
+     * the request method.
+     *
+     * @dataProvider invalidMethodProvider
+     * @expectedException Zend_Http_Client_Exception
+     */
+    public function testSettingInvalidMethodThrowsException($method)
+    {
+        $this->_client->setMethod($method);
+    }
+
+    /**
+     * Test that POST data with mutli-dimentional array is properly encoded as
      * multipart/form-data
-     * 
+     *
      */
     public function testFormDataEncodingWithMultiArrayZF7038()
     {
         $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
         $this->_client->setUri('http://example.com');
         $this->_client->setEncType(Zend_Http_Client::ENC_FORMDATA);
-        
+
         $this->_client->setParameterPost('test', array(
             'v0.1',
             'v0.2',
@@ -411,15 +468,15 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
                 'k2.1' => 'v2.1.0'
             )
         ));
-        
+
         $this->_client->request('POST');
-        
+
         $expectedLines = file(dirname(__FILE__) . '/_files/ZF7038-multipartarrayrequest.txt');
         $gotLines = explode("\n", $this->_client->getLastRequest());
-        
+
         $this->assertEquals(count($expectedLines), count($gotLines));
-        
-        while (($expected = array_shift($expectedLines)) && 
+
+        while (($expected = array_shift($expectedLines)) &&
                ($got = array_shift($gotLines))) {
 
             $expected = trim($expected);
@@ -429,12 +486,39 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data providers 
+     * Test that we properly calculate the content-length of multibyte-encoded 
+     * request body
+     * 
+     * This may file in case that mbstring overloads the substr and strlen 
+     * functions, and the mbstring internal encoding is a multibyte encoding. 
+     * 
+     * @link http://framework.zend.com/issues/browse/ZF-2098
      */
+    public function testMultibyteRawPostDataZF2098()
+    {
+        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
+        $this->_client->setUri('http://example.com');
+
+        $bodyFile = dirname(__FILE__) . '/_files/ZF2098-multibytepostdata.txt';
+        
+        $this->_client->setRawData(file_get_contents($bodyFile), 'text/plain');
+        $this->_client->request('POST');
+        $request = $this->_client->getLastRequest();
+        
+        if (! preg_match('/^content-length:\s+(\d+)/mi', $request, $match)) {
+            $this->fail("Unable to find content-length header in request");
+        }
+        
+        $this->assertEquals(filesize($bodyFile), (int) $match[1]);
+    }
     
     /**
-     * Data provider of valid non-standard HTTP methods 
-     * 
+     * Data providers
+     */
+
+    /**
+     * Data provider of valid non-standard HTTP methods
+     *
      * @return array
      */
     static public function validMethodProvider()
@@ -448,10 +532,10 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
             array('X-MS-ENUMATTS')
         );
     }
-    
+
     /**
      * Data provider of invalid HTTP methods
-     * 
+     *
      * @return array
      */
     static public function invalidMethodProvider()
@@ -461,6 +545,22 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
             array('TWO WORDS'),
             array('GET http://foo.com/?'),
             array("Injected\nnewline")
+        );
+    }
+
+    /**
+     * Data provider for invalid configuration containers
+     *
+     * @return array
+     */
+    static public function invalidConfigProvider()
+    {
+        return array(
+            array(false),
+            array('foo => bar'),
+            array(null),
+            array(new stdClass),
+            array(55)
         );
     }
 }

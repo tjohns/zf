@@ -62,7 +62,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
 
     /**
      * List of cURL options that should never be overwritten
-     * 
+     *
      * @var array
      */
     protected $_invalidOverwritableCurlOptions = array(
@@ -110,14 +110,19 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
      * Set the configuration array for the adapter
      *
      * @throws Zend_Http_Client_Adapter_Exception
-     * @param array $config
+     * @param  Zend_Config | array $config
      * @return Zend_Http_Client_Adapter_Curl
      */
     public function setConfig($config = array())
     {
-        if (!is_array($config)) {
+        if ($config instanceof Zend_Config) {
+            $config = $config->toArray();
+
+        } elseif (! is_array($config)) {
             require_once 'Zend/Http/Client/Adapter/Exception.php';
-            throw new Zend_Http_Client_Adapter_Exception('Http Adapter configuration expects an array, ' . gettype($config) . ' recieved.');
+            throw new Zend_Http_Client_Adapter_Exception(
+                'Array or Zend_Config object expected, got ' . gettype($config)
+            );
         }
 
         if(isset($config['proxy_user']) && isset($config['proxy_pass'])) {
@@ -145,7 +150,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
 
     /**
      * Direct setter for cURL adapter related options.
-     * 
+     *
      * @param  string|int $option
      * @param  mixed $value
      * @return Zend_Http_Adapter_Curl
@@ -176,9 +181,9 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         }
 
         // If we are connected to a different server or port, disconnect first
-        if ($this->_curl 
-            && is_array($this->_connected_to) 
-            && ($this->_connected_to[0] != $host 
+        if ($this->_curl
+            && is_array($this->_connected_to)
+            && ($this->_connected_to[0] != $host
             || $this->_connected_to[1] != $port)
         ) {
             $this->close();
