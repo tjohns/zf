@@ -1220,10 +1220,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             }
 
             if (class_exists('finfo', false)) {
+                $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
                 if (!empty($value['options']['magicFile'])) {
-                    $mime = new finfo(FILEINFO_MIME, $value['options']['magicFile']);
+                    $mime = new finfo($const, $value['options']['magicFile']);
                 } else {
-                    $mime = new finfo(FILEINFO_MIME);
+                    $mime = new finfo($const);
                 }
 
                 if ($mime !== false) {
