@@ -2,7 +2,7 @@ Welcome to the Zend Framework 1.9 Release!
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.9 Beta 1 Release ([INSERT REV NUM HERE]).
+Zend Framework 1.9 Release Candidate 1 ([INSERT REV NUM HERE]).
 Released on July 28, 2009.
 
 NEW FEATURES
