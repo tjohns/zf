@@ -3,48 +3,76 @@ Welcome to the Zend Framework 1.9 Release!
 RELEASE INFORMATION
 ---------------
 Zend Framework 1.9 Beta 1 Release ([INSERT REV NUM HERE]).
-Released on July 23, 2009.
+Released on July 28, 2009.
 
 NEW FEATURES
 ------------
+* Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
+  use local and remote messaging and queue services for offloading
+  asynchronous processes. (Contributed by Justin Plock and Daniel Lo)
+
+* Zend_Queue_Adapter_PlatformJobQueue, a Zend_Queue adapter for Zend
+  Platform's Job Queue. (Contributed by Zend Technologies)
+
 * Zend_Rest_Route, Zend_Rest_Controller, and
   Zend_Controller_Plugin_PutHandler, which aid in providing RESTful
-  resources via the MVC layer.
+  resources via the MVC layer. (Contributed by Luke Crouch, SourceForge)
 
 * Zend_Feed_Reader, which provides a common API to RSS and Atom feeds,
   as well as extensions to each format, caching, and a slew of other
-  functionality.
+  functionality. (Contributed by Pádraic Brady)
 
-* Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
-  use local and remote messaging and queue services for offloading
-  asynchronous processes.
+* Zend_Db_Adapter_Sqlsrv, a Zend_Db adapter for Microsoft's SQL Server
+  driver for PHP. (Contributed by Juozas Kaziukenas and Rob Allen)
 
 * Zend_Db_Table updates to allow using Zend_Db_Table as a concrete
   class by passing it one or more table definitions via the
-  constructor.
+  constructor. (Contributed by Ralph Schindler)
 
 * Zend_Test_PHPUnit_Db, which provides Zend_Db support for PHPUnit's
   DBUnit support, allowing developers to do functional and integration
-  testing against databases using data fixtures.
+  testing against databases using data fixtures. (Contributed by
+  Benjamin Eberlei)
 
 * Annotation processing support for Zend_Pdf, as well as performance
-  improvements.
+  improvements. (Contributed by Alexander Veremyev)
 
-* Zend_Dojo custom build layer support.
+* Zend_Dojo custom build layer support. (Contributed by Matthew Weier
+  O'Phinney)
 
-* Numerous Zend_Ldap improvements.
+* Dojo upgraded to 1.3.2.
+
+* Numerous Zend_Ldap improvements, including full support for CRUD
+  operations, search, and manipulating tree structures. (Contributed by
+  Stefan Gehrig)
 
 * Zend_Log_Writer_Syslog, a Zend_Log writer for writing to your system
-  log.
+  log. (Contributed by Thomas Gelf)
 
-* Several new view helpers, including Zend_View_Helper_BaseUrl.
+* Zend_View_Helper_BaseUrl, a view helper for returning the current base
+  URL to your application, as well as for constructing URLs to public
+  resources. (Contributed by Robin Skoglund and Geoffrey Tran)
+
+* Zend_Date now has support for the DateTime extension. (Contributed by
+  Thomas Weidner)
+
+* Zend_Locale has been upgraded to CLDR 1.7. (Contributed by Thomas
+  Weidner)
+
+* Zend_Translate now has plurals support for the Gettext, Csv, and Array
+  adapters. (Contributed by Thomas Weidner)
 
 * PHP 5.3 compatibility, including support for new features in the
-  mysqli extension.
+  mysqli extension. All components are fully tested on both PHP 5.2.x
+  and PHP 5.3.0.
+
+In addition, a large number of smaller improvements were made throughout
+the framework, and around 700 issues have been resolved or closed since
+the release of 1.8.0!
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/changelog/1.9.0b1
+    http://framework.zend.com/changelog/1.9.0rc1
 
 SYSTEM REQUIREMENTS
 -------------------
