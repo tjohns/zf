@@ -12,10 +12,12 @@ class Zend_Image_Adapter_Gd_Action_DrawArc
      * @param GD-object $handle The handle on which the ellipse is drawn
      * @param Zend_Image_Action_DrawEllipse $ellipseObject The object that with all info
      */
-    public function perform($handle, Zend_Image_Action_DrawArc $arcObject) { // As of ZF2.0 / PHP5.3, this can be made static.
+    public function perform(Zend_Image_Adapter_Gd $adapter,
+        Zend_Image_Action_DrawArc $arcObject)
+    { 
 
 	    $color = Zend_Image_Color::calculateHex($arcObject->getColor());
-		$colorAlphaAlloc = 	imagecolorallocatealpha($handle->getResource(),
+		$colorAlphaAlloc = 	imagecolorallocatealpha($adapter->getHandle(),
 							 				   		$color['red'],
 							   						$color['green'],
 							   						$color['blue'],
@@ -26,16 +28,17 @@ class Zend_Image_Adapter_Gd_Action_DrawArc
         } else {
             $style = 0;
         }
-
-        imagefilledarc($handle->getResource(),
-                       $arcObject->getLocation()->getX(),
-                       $arcObject->getLocation()->getY(),
+        
+        $location = $arcObject->getLocation($adapter);
+        imagefilledarc($adapter->getHandle(),
+                       $location->getX(),
+                       $location->getY(),
                        $arcObject->getWidth(),
                        $arcObject->getHeight(),
-                       $arcObject->getCutoutStart(),
-                       $arcObject->getCutoutEnd(),
+                       $arcObject->getCutoutStart()-90,
+                       $arcObject->getCutoutEnd()-90,
                        $colorAlphaAlloc,
                        $style);
-		return $handle;
+                       
 	}
 }

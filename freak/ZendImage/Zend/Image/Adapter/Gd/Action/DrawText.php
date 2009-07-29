@@ -18,7 +18,6 @@ class Zend_Image_Adapter_Gd_Action_DrawText {
                                                     $color['blue'],
                                                     127-$textObject->getAlpha());
 
-
         return $handle;
     }
 }

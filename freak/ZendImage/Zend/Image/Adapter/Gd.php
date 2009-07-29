@@ -18,9 +18,6 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
      */
 	protected $_path = null;
 
-
-//	protected $_imageInfo = null;
-
     /**
      * The width of the image
      *
@@ -91,13 +88,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
 		}
 
 		$actionObject = new $name ( );
-		$actionObject->perform ( $this->_handle, $object );
-
-		/**
-		 * @todo: remove when save() and get() methods are implemented.
-		 */
-//		header('Content-type: image/png');
-//		imagepng($this->_handle);
+		$actionObject->perform ( $this, $object );
 	}
 
     /**
@@ -106,15 +97,18 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
      */
 	protected function _loadHandle() {
 		if(null!==$this->_path) {
-			if(!$this->setImageInfo($this->_path)) {
+			if(!$this->_setImageInfo($this->_path)) {
 				throw new Zend_Image_Exception('No valid image was specified.');
 			}
 			
-			$resource = imagecreatefromstring(file_get_contents($this->_path));
-			$this->_handle = new Zend_Image_Adapter_Gd_Handle($resource);
+			$this->_handle = imagecreatefromstring(file_get_contents($this->_path));
 		} else {
 			throw new Zend_Image_Exception("Could not load handle");
 		}
+	}
+	
+	public function getHandle() {
+		return $this->_handle;
 	}
 
 	/**
@@ -122,22 +116,22 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
      *
      * @param string $path The path of the image of the info requested
      */
-	protected function setImageInfo($path) {
+	protected function _setImageInfo($path) {
 		$info = getimagesize ($path);
 		if(!$info) {
 			return false;
 		}
     
-		$params = array('width'   => $info[0],
-				        'height'  => $info[1],
-				        'type'    => $info[2],
-				        'bits'    => $info['bits']);
+		$this->_imageWidth = $info[0];
+		$this->_imageHeight = $info[1];
+		$this->_imageType = $info[2];
+		$this->_imageBits = $info['bits'];
 		
 		if(isset($info['channels'])) {
-			$params['channels'] = $info['channels'];
+			$this->_imageChannels = $info['channels'];
 		}
 		
-		$this->_handle->setInfo($params);
+		return true;
 	}
 
 	/**
@@ -150,7 +144,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
             case 'image/png':
             case 'png':
             	ob_start();
-                imagepng($this->_handle->getResource());
+                imagepng($this->_handle);
                 return ob_get_flush();
                 break;
 	   }
@@ -163,5 +157,13 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
      */
 	public function setPath($path) {
 		$this->_path = $path;
+	}
+	
+	public function getWidth() {
+		return $this->_imageWidth;
+	}
+	
+	public function getHeight() {
+		return $this->_imageHeight;
 	}
 }

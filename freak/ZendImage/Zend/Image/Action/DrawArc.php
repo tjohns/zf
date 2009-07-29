@@ -178,8 +178,18 @@ class Zend_Image_Action_DrawArc extends Zend_Image_Action_Abstract {
      *
      * @return Zend_Image_Point
      */
-    public function getLocation() {
-       return $this->_pointCenter;
+    public function getLocation(Zend_Image_Adapter_Abstract $adapter=null) {
+        if($adapter!==null) {
+            if($this->_pointCenter->getX()===null) {
+                $this->_pointCenter->setX($adapter->getWidth()/2);
+            }
+           
+            if($this->_pointCenter->getY()===null) {
+                $this->_pointCenter->setY($adapter->getHeight()/2);
+            }
+        }
+
+        return $this->_pointCenter;
     }
 
     /**

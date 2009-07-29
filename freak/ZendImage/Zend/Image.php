@@ -66,11 +66,14 @@ class Zend_Image
             $check = false;
             $this->setAdapter($this->_detectAdapter());
         }
+        
         if ($check && ! $this->_adapter->isAvailable()) {
             require_once 'Zend/Image/Exception.php';
             throw new Zend_Image_Exception("Adapter '$adapter' is not available.");
         }
+        
         $this->setImagePath();
+        return $this;
     }
 
     /**
@@ -86,6 +89,7 @@ class Zend_Image
         } elseif(false) {
             return self::ADAPTER_IMAGEMICK;
         }
+        
         return null;
     }
 
@@ -112,6 +116,8 @@ class Zend_Image
             }
             $this->_adapter->setPath($this->_imagePath);
         }
+        
+        return $this;
     }
 
     /**
@@ -136,6 +142,7 @@ class Zend_Image
         if (! $this->_adapter) {
             $this->setAdapter();
         }
+        
         $this->_adapter->apply($object);
         return $this;
     }
@@ -148,7 +155,7 @@ class Zend_Image
      * Get a string containing the image
      *
      * @param string $format (Optional) The format of the image to return
-     * @return string The actual image
+     * @return void
      */
     public function render ($format = 'png')
     {
@@ -161,7 +168,6 @@ class Zend_Image
     	}
     	
     	echo $this->_adapter->getImage($format);
-    	return true;
     }
 
     /**
