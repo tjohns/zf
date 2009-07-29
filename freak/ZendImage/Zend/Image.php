@@ -11,14 +11,17 @@ class Zend_Image
      * Adapter: Imagemick
      */
     const ADAPTER_IMAGEMICK = 'Imagemick';
-    /**
+
+    /*
+*
      * Names of Actions available
      */
     const LINE = 'DrawLine';
     const POLYGON = 'DrawPolygon';
     const ELLIPSE = 'DrawEllipse';
     const ARC = 'DrawArc';
-
+    const ETC = 'MoreToAddHere';
+    
     /**
      * Adapter set to use for image operation
      *
@@ -118,22 +121,29 @@ class Zend_Image
      * @return Zend_Image
      * @todo: use plugin loader.
      */
-    public function apply ($param1, $options = null)
+    public function apply ($param1, $param2 = null)
     {
-        if ($param1 instanceof Zend_Image_Object_Abstract || $param1 instanceof Zend_Image_Action_Abstract) {
+    	if($param2 instanceof Zend_Image_Action_Abstract ) {
+    		$object = $param2;
+    	} elseif ($param1 instanceof Zend_Image_Action_Abstract) {
             $object = $param1;
         } else {
-            $name = 'Zend_Image_Action_' . $param1;
+            $name = 'Zend_Image_Action_' . ucfirst($param1);
             Zend_Loader::loadClass($name);
-            $object = new $name($options);
+            $object = new $name($param2);
         }
+        
         if (! $this->_adapter) {
             $this->setAdapter();
         }
         $this->_adapter->apply($object);
         return $this;
     }
-
+    
+    public function __call($action,$arguments) {
+    	$this->apply($action,$arguments[0]);
+    }
+    
     /**
      * Get a string containing the image
      *
@@ -144,6 +154,15 @@ class Zend_Image
     {
         return $this->_adapter->getImage($format);
     }
+    
+    public function display($format = 'png',$sendHeader=true) {
+    	if($sendHeader) {
+   			header('Content-type: image/png');
+    	}
+    	
+    	echo $this->_adapter->getImage($format);
+    	return true;
+    }
 
     /**
      * Get a string containing the image
@@ -152,6 +171,6 @@ class Zend_Image
      */
     public function __toString ()
     {
-        return $this->render();
+		return $this->render();
     }
 }

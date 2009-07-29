@@ -2,7 +2,8 @@
 require_once 'Zend/Image/Adapter/Abstract.php';
 require_once 'Zend/Loader.php';
 
-class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
+class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
+{
     /**
      * The handle of this adapter
      *
@@ -82,7 +83,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
      * @param Zend_Image_Action_Abstract $object The object that is applied on the image
 	 */
 	public function apply($object) {
-		$name = 'Zend_Image_Adapter_' . self::NAME . '_Action_' . $object->getName ();
+		$name = __CLASS__. '_Action_' . $object->getName ();
 		Zend_Loader::loadClass ( $name );
 
 		if (! $this->_handle) {
@@ -108,7 +109,9 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 			if(!$this->setImageInfo($this->_path)) {
 				throw new Zend_Image_Exception('No valid image was specified.');
 			}
-			$this->_handle = imagecreatefromstring(file_get_contents($this->_path));
+			
+			$resource = imagecreatefromstring(file_get_contents($this->_path));
+			$this->_handle = new Zend_Image_Adapter_Gd_Handle($resource);
 		} else {
 			throw new Zend_Image_Exception("Could not load handle");
 		}
@@ -124,14 +127,17 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 		if(!$info) {
 			return false;
 		}
-
-		list($this->_imageWidth,
-			 $this->_imageHeight,
-			 $this->_imageType) = $info;
-		$this->_imageBits = $info['bits'];
-		$this->_imageChannels = $info['channels'];
-		$this->_imageMime = $info['mime'];
-		return true;
+    
+		$params = array('width'   => $info[0],
+				        'height'  => $info[1],
+				        'type'    => $info[2],
+				        'bits'    => $info['bits']);
+		
+		if(isset($info['channels'])) {
+			$params['channels'] = $info['channels'];
+		}
+		
+		$this->_handle->setInfo($params);
 	}
 
 	/**
@@ -143,8 +149,9 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 	   switch ($format) {
             case 'image/png':
             case 'png':
-//              header("Content-type: image/png");
-                return imagepng($this->_handle);
+            	ob_start();
+                imagepng($this->_handle->getResource());
+                return ob_get_flush();
                 break;
 	   }
 	}

@@ -5,14 +5,14 @@ class Zend_Image_Point {
      *
      * @var int $_x
      */
-    protected $_x = 0;
+    protected $_x = null;
 
     /**
      * The Y-coordinate of this point
      *
      * @var int $_y
      */
-    protected $_y = 0;
+    protected $_y = null;
 
     /**
      * Sets the location of the point
@@ -68,17 +68,21 @@ class Zend_Image_Point {
      */
     public function setLocation($param1,$param2 = null) {
         if($param1 instanceof Zend_Image_Point) {
-            $this->_x = $param1->getX();
-            $this->_y = $param1->getY();
-            return;
+        	$param2 = $param1->getY();
+        	$param1 = $param1->getX();
         }
 
         if($param1 !== null) {
-            $this->_x = (int) $param1;
+            $this->setX($param1);
         }
 
         if($param2 !== null) {
-            $this->_y = (int) $param2;
+            $this->setY($param2);
         }
+    }
+    
+    public function getLocation() {
+    	return array('x' => $this->getX(),
+    	             'y' => $this->getY());
     }
 }

@@ -1,7 +1,10 @@
 <?php
+require_once 'Zend/Image/Adapter/Gd/Action/Abstract.php';
 require_once 'Zend/Image/Color.php';
 
-class Zend_Image_Adapter_Gd_Action_DrawArc {
+class Zend_Image_Adapter_Gd_Action_DrawArc
+    extends Zend_Image_Adapter_Gd_Action_Abstract
+{
 
     /**
      * Draws an arc on the handle
@@ -12,7 +15,7 @@ class Zend_Image_Adapter_Gd_Action_DrawArc {
     public function perform($handle, Zend_Image_Action_DrawArc $arcObject) { // As of ZF2.0 / PHP5.3, this can be made static.
 
 	    $color = Zend_Image_Color::calculateHex($arcObject->getColor());
-		$colorAlphaAlloc = 	imagecolorallocatealpha($handle,
+		$colorAlphaAlloc = 	imagecolorallocatealpha($handle->getResource(),
 							 				   		$color['red'],
 							   						$color['green'],
 							   						$color['blue'],
@@ -23,7 +26,8 @@ class Zend_Image_Adapter_Gd_Action_DrawArc {
         } else {
             $style = 0;
         }
-        imagefilledarc($handle,
+
+        imagefilledarc($handle->getResource(),
                        $arcObject->getLocation()->getX(),
                        $arcObject->getLocation()->getY(),
                        $arcObject->getWidth(),

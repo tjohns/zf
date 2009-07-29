@@ -17,7 +17,7 @@ class Zend_Image_Adapter_Gd_Action_DrawLine {
 							   						$color['blue'],
 							   						$lineObject->alpha);
 		if(( $lineObject->thickness / 2 - 0.5 )==0) {
-            imageline($handle, $lineObject->getPointStart()->getX(),
+			imageline($handle, $lineObject->getPointStart()->getX(),
 							   $lineObject->getPointStart()->getY(),
 							   $lineObject->getPointEnd()->getX(),
 							   $lineObject->getPointEnd()->getY(),
@@ -57,9 +57,7 @@ class Zend_Image_Adapter_Gd_Action_DrawLine {
 			$handler = new Zend_Image_Adapter_Gd_Action_DrawPolygon();
 			$handle = $handler->perform($handle, $polygonObject);
 		}
-		header('Content-type: image/png');
-		imagepng($handle);
 
-//		return $handle;
+		return $handle;
 	}
 }
