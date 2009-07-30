@@ -41,6 +41,17 @@ option keys (which are the message IDs for translation), you should either
 modify these to use only ASCII characters, or choose a different translation
 adapter.
 
+Zend_Service_Amazon:
+Zend_Service_Amazon has been updated to comply with the latest Amazon
+ECommerce APIs -- which, as of 15 August 2009, will require an API key
+for authentication. As a result, if you now use Zend_Service_Amazon, you
+will need to pass your API key to the Zend_Service_Amazon constructor:
+    
+    $amazon = new Zend_Service_Amazon($appId, $countryCode, $apiKey);
+
+Otherwise, usage of this component remains the same.
+
+
 NEW FEATURES
 ------------
 * Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
