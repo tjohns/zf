@@ -2,55 +2,8 @@ Welcome to the Zend Framework 1.9 Release!
 
 RELEASE INFORMATION
 -------------------
-Zend Framework 1.9.0-dev ([INSERT REV NUM HERE]).
-Released on July 28, 2009.
-
-IMPORTANT CHANGES
------------------
-Zend_Http_Client:
-A change was made in Zend_Http_Client to correct ZF-5744 (Multiple file uploads
-using the same $formname in setFileUpload). Instead of returning an associative
-array of element name => upload information pairs, it now returns an array of
-arrays, with the element name as part of the upload information. This allows
-multiple file uploads using the same element name.
-
-Zend_Config_Xml:
-One deciding factor for many when choosing which Zend_Config format to use for
-their application config had to do with support for constants. Our application
-recommendations include defining two constants, APPLICATION_ENV and
-APPLICATION_PATH, and many developers have found it useful that in INI and PHP
-configurations, these constants are expanded during parsing. Zend_Config_Xml
-now supports this via an XML namespace as follows:
-
-    <config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
-        <production>
-            <includePath><zf:const
-                zf:name="APPLICATION_PATH"/>/library</includePath>
-        </production>
-    </config>
-
-On the PHP side, nothing changes.
-
-Zend_Translate_Adapter_Ini:
-Prior to PHP 5.3, parse_ini_file() and parse_ini_string() handled non-ASCII
-characters in INI option values without an issue. However, starting in PHP 5.3,
-such options will now be silently dropped in the array returned. If you are
-upgrading to PHP 5.3 and using Zend_Translate_Adapter_Ini, this could cause
-potential issues for you. If you use UTF-8 or Latin-1 characters in your INI
-option keys (which are the message IDs for translation), you should either
-modify these to use only ASCII characters, or choose a different translation
-adapter.
-
-Zend_Service_Amazon:
-Zend_Service_Amazon has been updated to comply with the latest Amazon
-ECommerce APIs -- which, as of 15 August 2009, will require an API key
-for authentication. As a result, if you now use Zend_Service_Amazon, you
-will need to pass your API key to the Zend_Service_Amazon constructor:
-    
-    $amazon = new Zend_Service_Amazon($appId, $countryCode, $apiKey);
-
-Otherwise, usage of this component remains the same.
-
+Zend Framework 1.9.0 ([INSERT REV NUM HERE]).
+Released on July 31, 2009.
 
 NEW FEATURES
 ------------
@@ -120,6 +73,52 @@ the release of 1.8.0!
 A detailed list of all features and bug fixes in this release may be found at:
 
     http://framework.zend.com/changelog/1.9.0rc1
+
+IMPORTANT CHANGES
+-----------------
+Zend_Http_Client:
+A change was made in Zend_Http_Client to correct ZF-5744 (Multiple file uploads
+using the same $formname in setFileUpload). Instead of returning an associative
+array of element name => upload information pairs, it now returns an array of
+arrays, with the element name as part of the upload information. This allows
+multiple file uploads using the same element name.
+
+Zend_Config_Xml:
+One deciding factor for many when choosing which Zend_Config format to use for
+their application config had to do with support for constants. Our application
+recommendations include defining two constants, APPLICATION_ENV and
+APPLICATION_PATH, and many developers have found it useful that in INI and PHP
+configurations, these constants are expanded during parsing. Zend_Config_Xml
+now supports this via an XML namespace as follows:
+
+    <config xmlns:zf="http://framework.zend.com/xml/zend-config-xml/1.0/">
+        <production>
+            <includePath><zf:const
+                zf:name="APPLICATION_PATH"/>/library</includePath>
+        </production>
+    </config>
+
+On the PHP side, nothing changes.
+
+Zend_Translate_Adapter_Ini:
+Prior to PHP 5.3, parse_ini_file() and parse_ini_string() handled non-ASCII
+characters in INI option values without an issue. However, starting in PHP 5.3,
+such options will now be silently dropped in the array returned. If you are
+upgrading to PHP 5.3 and using Zend_Translate_Adapter_Ini, this could cause
+potential issues for you. If you use UTF-8 or Latin-1 characters in your INI
+option keys (which are the message IDs for translation), you should either
+modify these to use only ASCII characters, or choose a different translation
+adapter.
+
+Zend_Service_Amazon:
+Zend_Service_Amazon has been updated to comply with the latest Amazon
+ECommerce APIs -- which, as of 15 August 2009, will require an API key
+for authentication. As a result, if you now use Zend_Service_Amazon, you
+will need to pass your API key to the Zend_Service_Amazon constructor:
+    
+    $amazon = new Zend_Service_Amazon($appId, $countryCode, $apiKey);
+
+Otherwise, usage of this component remains the same.
 
 SYSTEM REQUIREMENTS
 -------------------
