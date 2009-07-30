@@ -12,8 +12,8 @@
     </para>
     <para>
       All data is sent via the <classname>Zend_Wildfire_Channel_HttpHeaders</classname> component
-      which uses HTTP headers to ensure the page content is not disturbed.
-      Debugging AJAX requests that require clean JSON and XML responses is possible with this approach.
+      which uses <acronym>HTTP</acronym> headers to ensure the page content is not disturbed.
+      Debugging <acronym>AJAX</acronym> requests that require clean <acronym>JSON</acronym> and <acronym>XML</acronym> responses is possible with this approach.
     </para>
     <para>
       Requirements:
@@ -82,7 +82,7 @@ $response->sendHeaders();
       <title>Setting Styles for Priorities</title>
 
       <para>
-        Built-in and user-defined priorities can be styled with the <code>setPriorityStyle()</code> method.
+        Built-in and user-defined priorities can be styled with the <methodname>setPriorityStyle()</methodname> method.
       </para>
       <programlisting language="php"><![CDATA[
 $logger->addPriority('FOO', 8);
@@ -90,7 +90,7 @@ $writer->setPriorityStyle(8, 'TRACE');
 $logger->foo('Foo Message');
 ]]></programlisting>
       <para>
-        The default style for user-defined priorities can be set with the <code>setDefaultPriorityStyle()</code> method.
+        The default style for user-defined priorities can be set with the <methodname>setDefaultPriorityStyle()</methodname> method.
       </para>
       <programlisting language="php"><![CDATA[
 $writer->setDefaultPriorityStyle('TRACE');
@@ -108,31 +108,31 @@ $writer->setDefaultPriorityStyle('TRACE');
                 </thead>
                 <tbody>
                     <row>
-                        <entry><code>LOG</code></entry>
+                        <entry><constant>LOG</constant></entry>
                         <entry>Displays a plain log message</entry>
                     </row>
                     <row>
-                        <entry><code>INFO</code></entry>
+                        <entry><constant>INFO</constant></entry>
                         <entry>Displays an info log message</entry>
                     </row>
                     <row>
-                        <entry><code>WARN</code></entry>
+                        <entry><constant>WARN</constant></entry>
                         <entry>Displays a warning log message</entry>
                     </row>
                     <row>
-                        <entry><code>ERROR</code></entry>
+                        <entry><constant>ERROR</constant></entry>
                         <entry>Displays an error log message that increments Firebug's error count</entry>
                     </row>
                     <row>
-                        <entry><code>TRACE</code></entry>
+                        <entry><constant>TRACE</constant></entry>
                         <entry>Displays a log message with an expandable stack trace</entry>
                     </row>
                     <row>
-                        <entry><code>EXCEPTION</code></entry>
+                        <entry><constant>EXCEPTION</constant></entry>
                         <entry>Displays an error long message with an expandable stack trace</entry>
                     </row>
                     <row>
-                        <entry><code>TABLE</code></entry>
+                        <entry><constant>TABLE</constant></entry>
                         <entry>Displays a log message with an expandable table</entry>
                     </row>
                 </tbody>
@@ -146,12 +146,12 @@ $writer->setDefaultPriorityStyle('TRACE');
       <title>Preparing data for Logging</title>
 
       <para>
-        While any PHP variable can be logged with the built-in priorities, some special formatting
+        While any <acronym>PHP</acronym> variable can be logged with the built-in priorities, some special formatting
         is required if using some of the more specialized log styles.
       </para>
       <para>
-        The <code>LOG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code>
-        and <code>TRACE</code> styles require no special formatting.
+        The <constant>LOG</constant>, <constant>INFO</constant>, <constant>WARN</constant>, <constant>ERROR</constant>
+        and <constant>TRACE</constant> styles require no special formatting.
       </para>
     </sect3>
 

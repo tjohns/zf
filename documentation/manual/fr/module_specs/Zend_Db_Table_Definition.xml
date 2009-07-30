@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 16943 -->
+<!-- EN-Revision: 17172 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.db.table.definition">
     <title>Zend_Db_Table_Definition</title>
@@ -175,7 +175,6 @@ foreach ($authors as $author) {
         echo '        Genre: ' . implode(', ', $genreOutputArray) . PHP_EOL;
     }
 }
-
 ]]></programlisting>
         </example>
     </sect2>

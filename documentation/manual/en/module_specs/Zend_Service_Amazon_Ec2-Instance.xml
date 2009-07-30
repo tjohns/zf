@@ -8,14 +8,14 @@
 
         <para>
             Amazon EC2 instances are grouped into two families: standard and
-            High-CPU. Standard instances have memory to CPU ratios suitable
+            High-CPU. Standard instances have memory to <acronym>CPU</acronym> ratios suitable
             for most general purpose applications; High-CPU instances have
-            proportionally more CPU resources than memory (RAM) and are well
+            proportionally more <acronym>CPU</acronym> resources than memory (RAM) and are well
             suited for compute-intensive applications. When selecting instance
             types, you might want to use less powerful instance types for your
             web server instances and more powerful instance types for your
-            database instances. Additionally, you might want to run CPU instance
-            types for CPU-intensive data processing tasks.
+            database instances. Additionally, you might want to run <acronym>CPU</acronym> instance
+            types for <acronym>CPU</acronym>-intensive data processing tasks.
         </para>
         <para>
             One of the advantages of EC2 is that you pay by the instance hour,
@@ -38,7 +38,7 @@
                 <thead>
                     <row>
                         <entry>Type</entry>
-                        <entry>CPU</entry>
+                        <entry><acronym>CPU</acronym></entry>
                         <entry>Memory</entry>
                         <entry>Storage</entry>
                         <entry>Platform</entry>
@@ -51,7 +51,7 @@
                     <row>
                         <entry><code>Small</code></entry>
                         <entry><para>
-                            1 EC2 Compute Unit (1 virtual core with 1 EC2
+                            1 <constant>EC2</constant> Compute Unit (1 virtual core with 1 <constant>EC2</constant>
                             Compute Unit)
                         </para></entry>
                         <entry><para>
@@ -70,12 +70,12 @@
                         <entry><para>
                             m1.small
                         </para></entry>
-                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::SMALL</classname></entry>
+                        <entry><constant>Zend_Service_Amazon_Ec2_Instance::SMALL</constant></entry>
                     </row>
                     <row>
                         <entry><code>Large</code></entry>
                         <entry><para>
-                            4 EC2 Compute Units (2 virtual cores with 2 EC2
+                            4 <constant>EC2</constant> Compute Units (2 virtual cores with 2 <constant>EC2</constant>
                             Compute Units each)
                         </para></entry>
                         <entry><para>
@@ -94,12 +94,12 @@
                         <entry><para>
                             m1.large
                         </para></entry>
-                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::LARGE</classname></entry>
+                        <entry><constant>Zend_Service_Amazon_Ec2_Instance::LARGE</constant></entry>
                     </row>
                     <row>
                         <entry><code>Extra Large</code></entry>
                         <entry><para>
-                            8 EC2 Compute Units (4 virtual cores with 2 EC2
+                            8 <constant>EC2</constant> Compute Units (4 virtual cores with 2 <constant>EC2</constant>
                             Compute Units each)
                         </para></entry>
                         <entry><para>
@@ -118,12 +118,12 @@
                         <entry><para>
                             m1.xlarge
                         </para></entry>
-                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::XLARGE</classname></entry>
+                        <entry><constant>Zend_Service_Amazon_Ec2_Instance::XLARGE</constant></entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Medium</code></entry>
                         <entry><para>
-                            5 EC2 Compute Units (2 virtual cores with 2.5 EC2
+                            5 <constant>EC2</constant> Compute Units (2 virtual cores with 2.5 <constant>EC2</constant>
                             Compute Units each)
                         </para></entry>
                         <entry><para>
@@ -142,12 +142,12 @@
                         <entry><para>
                             c1.medium
                         </para></entry>
-                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</classname></entry>
+                        <entry><constant>Zend_Service_Amazon_Ec2_Instance::HCPU_MEDIUM</constant></entry>
                     </row>
                     <row>
                         <entry><code>High-CPU Extra Large</code></entry>
                         <entry><para>
-                            20 EC2 Compute Units (8 virtual cores with 2.5 EC2
+                            20 <constant>EC2</constant> Compute Units (8 virtual cores with 2.5 <constant>EC2</constant>
                             Compute Units each)
                         </para></entry>
                         <entry><para>
@@ -166,7 +166,7 @@
                         <entry><para>
                             c1.xlarge
                         </para></entry>
-                        <entry><classname>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</classname></entry>
+                        <entry><constant>Zend_Service_Amazon_Ec2_Instance::HCPU_XLARGE</constant></entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -201,7 +201,7 @@
                         <row>
                             <entry><code>imageId</code></entry>
                             <entry><para>
-                                ID of the AMI with which to launch instances.
+                                ID of the <acronym>AMI</acronym> with which to launch instances.
                             </para></entry>
                             <entry><para>Yes</para></entry>
                         </row>
@@ -256,7 +256,7 @@
                             <entry><para>
                                 Specifies the availability zone in which to
                                 launch the instance(s). By default, Amazon
-                                EC2 selects an availability zone for you.
+                                <constant>EC2</constant> selects an availability zone for you.
                             </para></entry>
                             <entry><para>No</para></entry>
                         </row>
@@ -271,7 +271,7 @@
                         <row>
                             <entry><code>ramdiskId</code></entry>
                             <entry><para>
-                                The ID of the RAM disk with which to launch
+                                The ID of the <acronym>RAM</acronym> disk with which to launch
                                 the instance.
                             </para></entry>
                             <entry><para>No</para></entry>
@@ -296,7 +296,7 @@
                         <row>
                             <entry><code>monitor</code></entry>
                             <entry><para>
-                                 Turn on AWS CloudWatch Instance Monitoring
+                                 Turn on <acronym>AWS</acronym> CloudWatch Instance Monitoring
                             </para></entry>
                             <entry><para>No</para></entry>
                         </row>
@@ -461,7 +461,7 @@ $return = $ec2_instance->consoleOutput('instanceId');
             </para>
             <para>
                 The <code>confirmProduct</code> operation can only be executed by the
-                owner of the AMI. This feature is useful when an AMI owner is providing
+                owner of the <acronym>AMI</acronym>. This feature is useful when an <acronym>AMI</acronym> owner is providing
                 support and wants to verify whether a user's instance is eligible.
             </para>
             <programlisting language="php"><![CDATA[

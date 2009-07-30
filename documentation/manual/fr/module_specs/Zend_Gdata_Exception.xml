@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.gdata.exception">
     <title>Attraper les exceptions Gdata</title>
@@ -34,14 +34,14 @@ try {
                     <classname>Zend_Gdata_App_BadMethodCallException</classname> est levée
                     lorsque vous tentez d'utiliser une méthode sur un service qui ne l'implémente
                     pas. Par exemple, le service CodeSearch ne supporte pas la méthode
-                    <code>post()</code>.
+                    <methodname>post()</methodname>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <classname>Zend_Gdata_App_HttpException</classname> indique un échec de
-                    requête HTTP. Cette exception vous donne le moyen de récupérer la réponse
+                    requête <acronym>HTTP</acronym>. Cette exception vous donne le moyen de récupérer la réponse
                     <classname>Zend_Http_Response</classname> entière pour déterminer la cause
                     exacte de l'erreur, alors que <code>$e-&gt;getMessage()</code> ne montre pas
                     autant de détails.
@@ -62,7 +62,7 @@ try {
                     <classname>Zend_Gdata_App_CaptchaRequiredException</classname> est envoyée
                     lorsqu'une tentative de ClientLogin reçoit un challenge
                     <trademark>CAPTCHA</trademark> depuis le service d'authentification. Cette
-                    exception contient un jeton ID et une URL vers une image
+                    exception contient un jeton ID et une <acronym>URL</acronym> vers une image
                     <trademark>CAPTCHA</trademark> . Cette image est un puzzle visuel qui devrait
                     être retournée à l'utilisateur du service. Après récupération de la réponse de
                     l'utilisateur, celle-ci peut être incluse lors du ClientLogin suivant.

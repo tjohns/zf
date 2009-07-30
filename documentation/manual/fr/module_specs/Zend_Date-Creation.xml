@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17178 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.date.creation">
     <title>Créer des dates</title>
@@ -15,7 +15,7 @@
         <para>
             La manière la plus simple de créer la date actuelle est d'utiliser le
             constructeur <code>new Zend_Date()</code> ou encore la méthode statique
-            <classname>Zend_Date::now()</classname>. Toutes les deux retournent une instance de
+            <methodname>Zend_Date::now()</methodname>. Toutes les deux retournent une instance de
             <classname>Zend_Date</classname> avec la date actuelle. Elle est représentée par une
             date calendaire et un temps pour le fuseau horaire actuel du serveur.
         </para>
@@ -38,7 +38,7 @@ $date = new Zend_Date();
             <title>Créer une date par méthode statique</title>
 
             <para>
-                La méthode statique <code>now()</code> a exactement le même effet qu'un
+                La méthode statique <methodname>now()</methodname> a exactement le même effet qu'un
                 passage par le constructeur. Cependant la méthode statique, elle, ne peut pas
                 prendre de paramètres additionnels.
             </para>
@@ -95,12 +95,12 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
 
             <para>
                 La sortie de chaque base de données est différente même si elles se
-                ressemblent. Cependant elles ont toutes des formats compatibles <code>ISO</code>.
+                ressemblent. Cependant elles ont toutes des formats compatibles <constant>ISO</constant>.
                 La manière la plus simple de créer une date depuis une base de données est
                 d'utiliser <classname>Zend_Date::ISO_8601</classname>. Les SGBDs connus pour être
                 conformes pour <classname>Zend_Date::ISO_8601</classname> sont MySQL, MSSQL par
                 exemple, mais ils sont tous capables de retourner une représentation
-                <code>ISO8601</code> d'une donnée date. <code>ISO8601</code> possède l'avantage
+                <constant>ISO8601</constant> d'une donnée date. <constant>ISO8601</constant> possède l'avantage
                 d'être lisible et compréhensible par un humain. Son inconvénient est qu'il est
                 légèrement plus lourd à traiter qu'un simple timestamp UNIX. En revanche ceux-ci ne
                 supportent pas les dates inférieures au 1er Janvier 1970.

@@ -32,7 +32,7 @@
         <example id="zend.memory.introduction.example-1">
             <title>Using Zend_Memory component</title>
             <para>
-                <classname>Zend_Memory::factory()</classname> instantiates the memory
+                <methodname>Zend_Memory::factory()</methodname> instantiates the memory
                 manager object with specified backend options.
             </para>
                 <programlisting language="php"><![CDATA[
@@ -126,7 +126,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <note>
                 <para>
-                    If you are using a PHP version earlier than 5.2, use the
+                    If you are using a <acronym>PHP</acronym> version earlier than 5.2, use the
                     <link linkend="zend.memory.memory-objects.api.getRef">getRef()</link>
                     method instead of accessing the value property directly.
                 </para>

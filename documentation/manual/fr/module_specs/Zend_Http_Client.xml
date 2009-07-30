@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17230 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.http.client">
     <title>Introduction</title>
 
     <para>
         <classname>Zend_Http_Client</classname> fournit une interface qui permet d'utiliser le
-        protocole HTTP (Hyper-Text Transfer Protocol). <classname>Zend_Http_Client</classname>
-        supporte les fonctionnalités de base d'un client HTTP, ainsi que des fonctionnalités plus
+        protocole <acronym>HTTP</acronym> (Hyper-Text Transfer Protocol). <classname>Zend_Http_Client</classname>
+        supporte les fonctionnalités de base d'un client <acronym>HTTP</acronym>, ainsi que des fonctionnalités plus
         avancées, comme l'authentification ou l'upload de fichiers. Toutes les requêtes retournent
         un objet Zend_Http_Response, avec lequel on pourra accéder au corps ou aux en-têtes de la
-        réponse HTTP (voyez <xref linkend="zend.http.response" />).
+        réponse <acronym>HTTP</acronym> (voyez <xref linkend="zend.http.response" />).
     </para>
 
     <sect2 id="zend.http.client.introduction">
@@ -18,9 +18,10 @@
 
         <para>
             Le constructeur de classe accepte deux paramètres : l'URI (ou un objet
-            <code><classname>Zend_Uri_Http</classname></code>), et un tableau de configuration. Ils
-            peuvent aussi être définis avec des méthodes plus tard : <code>setUri()</code> et
-            <code>setConfig()</code>. <example id="zend.http.client.introduction.example-1">
+            <code><classname>Zend_Uri_Http</classname></code>), et un tableau ou un objet Zend_Config
+            d'options de configuration. Ils peuvent aussi être définis avec des méthodes plus tard :
+            <methodname>setUri()</methodname> et <methodname>setConfig()</methodname>.
+            <example id="zend.http.client.introduction.example-1">
                     <title>Instanciation d'un objet Zend_Http_Client</title>
 
                     <programlisting language="php"><![CDATA[
@@ -34,6 +35,10 @@ $client->setUri('http://example.org');
 $client->setConfig(array(
     'maxredirects' => 0,
     'timeout'      => 30));
+
+// You can also use a Zend_Config object to set the client's configuration
+$config = new Zend_Config_Ini('httpclient.ini, 'secure');
+$client->setConfig($config);
 ]]></programlisting>
                 </example>
             </para>
@@ -41,10 +46,10 @@ $client->setConfig(array(
         <note>
             <para>
                 <classname>Zend_Http_Client</classname> utilise
-                <classname>Zend_Uri_Http</classname> pour valider les URLs. Ce qui veut dire que
+                <classname>Zend_Uri_Http</classname> pour valider les <acronym>URL</acronym>s. Ce qui veut dire que
                 certains caractères comme les pipes ("|") ou le symbole "^" ne seront pas acceptés
-                par défaut dans les URLs. Ceci peut être modifié par le réglage de l'option
-                "allow_unwise" de <classname>Zend_Uri</classname> à <code>true</code>. Voir <xref
+                par défaut dans les <acronym>URL</acronym>s. Ceci peut être modifié par le réglage de l'option
+                "allow_unwise" de <classname>Zend_Uri</classname> à <constant>TRUE</constant>. Voir <xref
                 linkend="zend.uri.validation.allowunwise" /> pour de plus amples
                 informations.
             </para>
@@ -55,9 +60,10 @@ $client->setConfig(array(
         <title>Les paramètres de configuration</title>
 
         <para>
-            Le constructeur et <code>setConfig()</code> acceptent un tableau associatif de
-            paramètre de configuration. Fixer ces paramètres est optionnel, ils ont tous une valeur
-            par défaut. <table id="zend.http.client.configuration.table">
+            Le constructeur et <methodname>setConfig()</methodname> acceptent un tableau associatif de
+            paramètre de configuration, ou un objet Zend_Config. Fixer ces paramètres est optionnel,
+            ils ont tous une valeur par défaut.
+                <table id="zend.http.client.configuration.table">
                     <title>Zend_Http_Client : paramètres de configuration</title>
 
                     <tgroup cols="4">
@@ -81,19 +87,19 @@ $client->setConfig(array(
                             <row>
                                 <entry>strict</entry>
                                 <entry>Validation faite ou non sur les noms d'en-têtes. Si à
-                                <code>false</code>, des fonctions de validation n'interviendront
+                                <constant>FALSE</constant>, des fonctions de validation n'interviendront
                                 pas. Habituellement ceci ne devrait pas être changé</entry>
                                 <entry>booléen</entry>
-                                <entry><code>true</code></entry>
+                                <entry><constant>TRUE</constant></entry>
                             </row>
 
                             <row>
                                 <entry>strictredirects</entry>
                                 <entry>Est ce que le client doit suivre strictement les redirections
-                                selon la RFC2616 ? (voyez <xref
+                                selon la <constant>RFC2616</constant> ? (voyez <xref
                                 linkend="zend.http.client.redirections" />)</entry>
                                 <entry>booléen</entry>
-                                <entry><code>false</code></entry>
+                                <entry><constant>FALSE</constant></entry>
                             </row>
 
                             <row>
@@ -113,7 +119,7 @@ $client->setConfig(array(
 
                             <row>
                                 <entry>httpversion</entry>
-                                <entry>Version du protocole HTTP à utiliser ('1.1', '1.0' ou
+                                <entry>Version du protocole <acronym>HTTP</acronym> à utiliser ('1.1', '1.0' ou
                                 '0.9')</entry>
                                 <entry>chaîne</entry>
                                 <entry>'1.1'</entry>
@@ -129,20 +135,20 @@ $client->setConfig(array(
 
                             <row>
                                 <entry>keepalive</entry>
-                                <entry>Utilisation du pipelining HTTP (connexion ouverte après
+                                <entry>Utilisation du pipelining <acronym>HTTP</acronym> (connexion ouverte après
                                 déconnexion du client)</entry>
                                 <entry>booléen</entry>
-                                <entry><code>false</code></entry>
+                                <entry><constant>FALSE</constant></entry>
                             </row>
 
                             <row>
                                 <entry>storeresponse</entry>
                                 <entry>Stockage ou non de la dernière réponse pour une récupération
-                                ultérieure avec <code>getLastResponse()</code>. Si réglez à
-                                <code>false</code>, <code>getLastResponse()</code> retournera
-                                <code>null</code>.</entry>
+                                ultérieure avec <methodname>getLastResponse()</methodname>. Si réglez à
+                                <constant>FALSE</constant>, <methodname>getLastResponse()</methodname> retournera
+                                <constant>NULL</constant>.</entry>
                                 <entry>booléen</entry>
-                                <entry><code>true</code></entry>
+                                <entry><constant>TRUE</constant></entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -155,7 +161,7 @@ $client->setConfig(array(
 
         <para>
             Exécuter des requêtes HTTP basiques est très simple grâce à la méthode
-            <code>request()</code>, et ceci nécessite rarement plus d'une ligne de code : <example
+            <methodname>request()</methodname>, et ceci nécessite rarement plus d'une ligne de code : <example
                     id="zend.http.client.basic-requests.example-1">
                     <title>Requête GET simple</title>
 
@@ -163,7 +169,7 @@ $client->setConfig(array(
 $client = new Zend_Http_Client('http://example.org');
 $response = $client->request();
 ]]></programlisting>
-                </example> La méthode <code>request()</code> accepte un paramètre optionnel
+                </example> La méthode <methodname>request()</methodname> accepte un paramètre optionnel
             définissant la méthode HTTP, - GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS ou CONNECT -
             comme définies dans la RFC 2616 concernant le protocole HTTP <footnote>
                 <para>
@@ -176,7 +182,7 @@ $response = $client->request();
 
         <para>
             Si aucune méthode de requêtage HTTP n'est définie, alors la dernière utilisée via
-            <code>setMethod()</code> sera utilisée. Si <code>setMethod()</code> n'a jamais été
+            <methodname>setMethod()</methodname> sera utilisée. Si <methodname>setMethod()</methodname> n'a jamais été
             appelée, GET est alors utilisée par défaut. <example
                     id="zend.http.client.basic-requests.example-2">
                     <title>Requêtes d'autres types que GET</title>
@@ -199,7 +205,7 @@ $response = $client->request();
         <para>
             Ajouter des paramètres GET à la requête HTTP est très simple. Vous pouvez les
             ajouter en tant que partie de l'URL désirée, ou en utilisant la méthode
-            <code>setParameterGet()</code>. Celle-ci prend en premier paramètre le nom du paramètre
+            <methodname>setParameterGet()</methodname>. Celle-ci prend en premier paramètre le nom du paramètre
             GET, et en second sa valeur. Un tableau associatif peut aussi être utilisé. <example
                     id="zend.http.client.parameters.example-1">
                     <title>Ajouts de paramètres GET</title>
@@ -224,8 +230,8 @@ $client->setParameterGet(array(
         <para>
             Coté POST, c'est très similaire à GET, sauf que les paramètres POST doivent faire
             partie du corps de la requête. Il n'est donc pas possible de les ajouter dans l'URL.
-            Utilisez simplement <code>setParameterPost()</code> de la même manière que sa soeur
-            <code>setParameterGet()</code>. <example id="zend.http.client.parameters.example-2">
+            Utilisez simplement <methodname>setParameterPost()</methodname> de la même manière que sa soeur
+            <methodname>setParameterGet()</methodname>. <example id="zend.http.client.parameters.example-2">
                     <title>Ajout de paramètres POST</title>
 
                     <programlisting language="php"><![CDATA[

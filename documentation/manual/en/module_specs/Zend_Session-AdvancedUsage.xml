@@ -7,7 +7,7 @@
     <para>
         While the basic usage examples are a perfectly acceptable way to utilize Zend Framework sessions, there are some
         best practices to consider. This section discusses the finer details of session handling and illustrates more
-        advanced usage of the Zend_Session component.
+        advanced usage of the <classname>Zend_Session</classname> component.
     </para>
 
     <sect2 id="zend.session.advanced_usage.starting_a_session">
@@ -15,7 +15,7 @@
         <title>Starting a Session</title>
 
         <para>
-            If you want all requests to have a session facilitated by Zend_Session, then start the session in the
+            If you want all requests to have a session facilitated by <classname>Zend_Session</classname>, then start the session in the
             bootstrap file:
         </para>
 
@@ -32,12 +32,12 @@ Zend_Session::start();
         <para>
             By starting the session in the bootstrap file, you avoid the possibility that your session might be started
             after headers have been sent to the browser, which results in an exception, and possibly a broken page for
-            website viewers. Various advanced features require <classname>Zend_Session::start()</classname> first. (More on
+            website viewers. Various advanced features require <methodname>Zend_Session::start()</methodname> first. (More on
             advanced features later.)
         </para>
 
         <para>
-            There are four ways to start a session, when using Zend_Session. Two are wrong.
+            There are four ways to start a session, when using <classname>Zend_Session</classname>. Two are wrong.
         </para>
 
         <orderedlist>
@@ -57,19 +57,19 @@ php_value session.auto_start 0
             </listitem>
             <listitem>
                 <para>
-                    Wrong: Do not use PHP's
-                    <ulink url="http://www.php.net/session_start"><code>session_start()</code></ulink> function
-                    directly. If you use <code>session_start()</code> directly, and then start using
+                    Wrong: Do not use <acronym>PHP</acronym>'s
+                    <ulink url="http://www.php.net/session_start"><methodname>session_start()</methodname></ulink> function
+                    directly. If you use <methodname>session_start()</methodname> directly, and then start using
                     <classname>Zend_Session_Namespace</classname>, an exception will be thrown by
-                    <classname>Zend_Session::start()</classname> ("session has already been started"). If you call
-                    <code>session_start()</code> after using <classname>Zend_Session_Namespace</classname> or calling
-                    <classname>Zend_Session::start()</classname>, an error of level <code>E_NOTICE</code> will be generated, and
+                    <methodname>Zend_Session::start()</methodname> ("session has already been started"). If you call
+                    <methodname>session_start()</methodname> after using <classname>Zend_Session_Namespace</classname> or calling
+                    <methodname>Zend_Session::start()</methodname>, an error of level <constant>E_NOTICE</constant> will be generated, and
                     the call will be ignored.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Correct: Use <classname>Zend_Session::start()</classname>. If you want all requests to have and use
+                    Correct: Use <methodname>Zend_Session::start()</methodname>. If you want all requests to have and use
                     sessions, then place this function call early and unconditionally in your bootstrap code.
                     Sessions have some overhead. If some requests need sessions, but other requests will not need to use
                     sessions, then:
@@ -78,40 +78,40 @@ php_value session.auto_start 0
                     <listitem>
                         <para>
                             Unconditionally set the <code>strict</code> option to <constant>TRUE</constant> using
-                            <classname>Zend_Session::setOptions()</classname> in your bootstrap.
+                            <methodname>Zend_Session::setOptions()</methodname> in your bootstrap.
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            Call <classname>Zend_Session::start()</classname> only for requests that need to use sessions and
+                            Call <methodname>Zend_Session::start()</methodname> only for requests that need to use sessions and
                             before any <classname>Zend_Session_Namespace</classname> objects are instantiated.
                         </para>
                     </listitem>
                     <listitem>
                         <para>
                             Use "<code>new Zend_Session_Namespace()</code>" normally, where needed, but make sure
-                            <classname>Zend_Session::start()</classname> has been called previously.
+                            <methodname>Zend_Session::start()</methodname> has been called previously.
                         </para>
                     </listitem>
                 </itemizedlist>
                 <para>
                     The <code>strict</code> option prevents <code>new Zend_Session_Namespace()</code> from automatically
-                    starting the session using <classname>Zend_Session::start()</classname>. Thus, this option helps application
+                    starting the session using <methodname>Zend_Session::start()</methodname>. Thus, this option helps application
                     developers enforce a design decision to avoid using sessions for certain requests, since it causes
                     an exception to be thrown when <classname>Zend_Session_Namespace</classname> is instantiated before
-                    <classname>Zend_Session::start()</classname> is called. Developers should carefully consider the impact of
-                    using <classname>Zend_Session::setOptions()</classname>, since these options have global effect, owing to
+                    <methodname>Zend_Session::start()</methodname> is called. Developers should carefully consider the impact of
+                    using <methodname>Zend_Session::setOptions()</methodname>, since these options have global effect, owing to
                     their correspondence to the underlying options for ext/session.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Correct: Just instantiate <classname>Zend_Session_Namespace</classname> whenever needed, and the underlying
-                    PHP session will be automatically started. This offers extremely simple usage that works well in
+                    <acronym>PHP</acronym> session will be automatically started. This offers extremely simple usage that works well in
                     most situations. However, you then become responsible for ensuring that the first
                     <code>new Zend_Session_Namespace()</code> happens <emphasis>before</emphasis> any
                     output (e.g., <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>) has been sent by
-                    PHP to the client, if you are using the default, cookie-based sessions (strongly recommended). See
+                    <acronym>PHP</acronym> to the client, if you are using the default, cookie-based sessions (strongly recommended). See
                     <xref linkend="zend.session.global_session_management.headers_sent" /> for more information.
                 </para>
             </listitem>
@@ -125,8 +125,8 @@ php_value session.auto_start 0
 
         <para>
             Session namespaces can be locked, to prevent further alterations to the data in that namespace. Use
-            <code>lock()</code> to make a specific namespace read-only, <code>unLock()</code> to make a read-only
-            namespace read-write, and <code>isLocked()</code> to test if a namespace has been previously locked. Locks
+            <methodname>lock()</methodname> to make a specific namespace read-only, <methodname>unLock()</methodname> to make a read-only
+            namespace read-write, and <methodname>isLocked()</methodname> to test if a namespace has been previously locked. Locks
             are transient and do not persist from one request to the next. Locking the namespace has no effect on setter
             methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to
             remove or replace objects stored directly in the namespace. Similarly, locking
@@ -297,8 +297,8 @@ try {
             The second parameter in the constructor above tells <classname>Zend_Session_Namespace</classname> that any future
             instances with the "<classname>Zend_Auth</classname>" namespace are not allowed. Attempting to create such an instance
             causes an exception to be thrown by the constructor. The developer therefore becomes responsible for storing
-            a reference to an instance object (<code>$authSpaceAccessor1</code>, <code>$authSpaceAccessor2</code>, or
-            <code>$authSpaceAccessor3</code> in the example above) somewhere, if access to the session namespace is
+            a reference to an instance object (<varname>$authSpaceAccessor1</varname>, <varname>$authSpaceAccessor2</varname>, or
+            <varname>$authSpaceAccessor3</varname> in the example above) somewhere, if access to the session namespace is
             needed at a later time during the same request. For example, a developer may store the reference in a static
             variable, add the reference to a
             <ulink url="http://www.martinfowler.com/eaaCatalog/registry.html">registry</ulink> (see
@@ -313,8 +313,8 @@ try {
         <title>Working with Arrays</title>
 
         <para>
-            Due to the implementation history of PHP magic methods, modifying an array inside a namespace may not work
-            under PHP versions before 5.2.1. If you will only be working with PHP 5.2.1 or later, then you may <link
+            Due to the implementation history of <acronym>PHP</acronym> magic methods, modifying an array inside a namespace may not work
+            under <acronym>PHP</acronym> versions before 5.2.1. If you will only be working with <acronym>PHP</acronym> 5.2.1 or later, then you may <link
             linkend="zend.session.advanced_usage.objects">skip to the next section</link>.
         </para>
 
@@ -354,7 +354,7 @@ $sessionNamespace->array = array('a', 'b', 'c');
         </example>
 
         <para>
-            If you are using an affected version of PHP and need to modify the array after assigning it to a session
+            If you are using an affected version of <acronym>PHP</acronym> and need to modify the array after assigning it to a session
             namespace key, you may use either or both of the following workarounds.
         </para>
 
@@ -413,9 +413,9 @@ echo $myNamespace->someArray['foo']; // prints "bar"
         <title>Using Sessions with Objects</title>
 
         <para>
-            If you plan to persist objects in the PHP session, know that they will be
+            If you plan to persist objects in the <acronym>PHP</acronym> session, know that they will be
             <ulink url="http://www.php.net/manual/en/language.oop.serialization.php">serialized</ulink> for storage.
-            Thus, any object persisted with the PHP session must be unserialized upon retrieval from storage. The
+            Thus, any object persisted with the <acronym>PHP</acronym> session must be unserialized upon retrieval from storage. The
             implication is that the developer must ensure that the classes for the persisted objects must have been
             defined before the object is unserialized from session storage. If an unserialized object's class is not
             defined, then it becomes an instance of <code>stdClass</code>.
@@ -432,22 +432,22 @@ echo $myNamespace->someArray['foo']; // prints "bar"
             suite of unit tests to cover the code in their applications. The exception
             "<emphasis>Zend_Session is currently marked as read-only</emphasis>" is thrown while
             performing unit tests, if any write-related methods are used after ending the session. However, unit tests
-            using Zend_Session require extra attention, because closing (<classname>Zend_Session::writeClose()</classname>), or
-            destroying a session (<classname>Zend_Session::destroy()</classname>) prevents any further setting or unsetting of
+            using <classname>Zend_Session</classname> require extra attention, because closing (<methodname>Zend_Session::writeClose()</methodname>), or
+            destroying a session (<methodname>Zend_Session::destroy()</methodname>) prevents any further setting or unsetting of
             keys in any instance of <classname>Zend_Session_Namespace</classname>. This behavior is a direct result of the
-            underlying ext/session mechanism and PHP's <code>session_destroy()</code> and
-            <code>session_write_close()</code>, which have no "undo" mechanism to facilitate setup/teardown with unit
+            underlying ext/session mechanism and <acronym>PHP</acronym>'s <methodname>session_destroy()</methodname> and
+            <methodname>session_write_close()</methodname>, which have no "undo" mechanism to facilitate setup/teardown with unit
             tests.
         </para>
 
         <para>
-            To work around this, see the unit test <code>testSetExpirationSeconds()</code> in
+            To work around this, see the unit test <methodname>testSetExpirationSeconds()</methodname> in
             <code>SessionTest.php</code> and <code>SessionTestHelper.php</code>, both located in
-            <code>tests/Zend/Session</code>, which make use of PHP's <code>exec()</code> to launch a separate process.
+            <code>tests/Zend/Session</code>, which make use of <acronym>PHP</acronym>'s <methodname>exec()</methodname> to launch a separate process.
             The new process more accurately simulates a second, successive request from a browser. The separate process
-            begins with a "clean" session, just like any PHP script execution for a web request. Also, any changes to
-            <code>$_SESSION</code> made in the calling process become available to the child process, provided the
-            parent closed the session before using <code>exec()</code>.
+            begins with a "clean" session, just like any <acronym>PHP</acronym> script execution for a web request. Also, any changes to
+            <varname>$_SESSION</varname> made in the calling process become available to the child process, provided the
+            parent closed the session before using <methodname>exec()</methodname>.
         </para>
 
         <example id="zend.session.advanced_usage.testing.example">

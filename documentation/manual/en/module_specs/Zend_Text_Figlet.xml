@@ -5,7 +5,7 @@
     <para>
         <classname>Zend_Text_Figlet</classname> is a component which enables developers to
         create a so called FIGlet text. A FIGlet text is a string, which is
-        represented as ASCII art. FIGlets use a special font format, called
+        represented as <acronym>ASCII</acronym> art. FIGlets use a special font format, called
         FLT (FigLet Font). By default, one standard font is shipped with
         <classname>Zend_Text_Figlet</classname>, but you can download additional fonts at
         <ulink url="http://www.figlet.org/fontdb.cgi">http://www.figlet.org</ulink>.
@@ -17,7 +17,7 @@
             you can take an <code>.flf</code> file and gzip it. To allow
             <classname>Zend_Text_Figlet</classname> to recognize this, the gzipped font
             must have the extension <code>.gz</code>. Further, to be able to use
-            gzipped fonts, you have to have enabled the GZIP extension of PHP.
+            gzipped fonts, you have to have enabled the GZIP extension of <acronym>PHP</acronym>.
         </para>
     </note>
     <note>
@@ -25,7 +25,7 @@
         <para>
             <classname>Zend_Text_Figlet</classname> expects your strings to be UTF-8 encoded
             by default. If this is not the case, you can supply the character
-            encoding as second parameter to the <code>render()</code> method.
+            encoding as second parameter to the <methodname>render()</methodname> method.
         </para>
     </note>
     <para>
@@ -62,8 +62,8 @@
                 <para>
                     <code>justification</code> - May be one of the values of
                     <classname>Zend_Text_Figlet::JUSTIFICATION_*</classname>. There is
-                    <code>JUSTIFICATION_LEFT</code>, <code>JUSTIFICATION_CENTER</code>
-                    and <code>JUSTIFICATION_RIGHT</code> The default justification
+                    <constant>JUSTIFICATION_LEFT</constant>, <constant>JUSTIFICATION_CENTER</constant>
+                    and <constant>JUSTIFICATION_RIGHT</constant> The default justification
                     is defined by the <code>rightToLeft</code> value.
                 </para>
             </listitem>
@@ -71,8 +71,8 @@
                 <para>
                     <code>rightToLeft</code> - Defines in which direction the
                     text is written. May be either
-                    <classname>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</classname> or
-                    <classname>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</classname>. By
+                    <constant>Zend_Text_Figlet::DIRECTION_LEFT_TO_RIGHT</constant> or
+                    <constant>Zend_Text_Figlet::DIRECTION_RIGHT_TO_LEFT</constant>. By
                     default the setting of the font file is used. When justification
                     is not defined, a text written from right-to-left is
                     automatically right-aligned.

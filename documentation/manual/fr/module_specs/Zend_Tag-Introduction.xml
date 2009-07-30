@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17086 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.tag.introduction">
     <title>Introduction</title>
@@ -51,7 +51,7 @@ foreach ($list as $item) {
 ]]></programlisting>
 
         <para>
-            Ceci va afficher les 3 entités Code, Zend Framework et PHP avec les valeurs
+            Ceci va afficher les 3 entités Code, Zend Framework et <acronym>PHP</acronym> avec les valeurs
             absolues 10, 1 et 2.
         </para>
     </example>

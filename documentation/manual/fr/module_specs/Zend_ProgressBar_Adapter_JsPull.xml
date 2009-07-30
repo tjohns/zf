@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15103 -->
+<!-- EN-Revision: 17227 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.progressbar.adapter.jspull">
     <title>Zend_ProgressBar_Adapter_JsPull</title>
@@ -9,10 +9,10 @@
         requiert de venir récupérer les nouvelles mises à jour, plutôt que d'envoyer les mises à
         jour vers le navigateur. Généralement, vous devriez utiliser l'adaptateur avec l'option de
         persistance de <classname>Zend_ProgressBar</classname>. Lors de l'appel, l'adaptateur envoie
-        une chaîne JSON vers le navigateur, qui est comparable à la chaîne JSON envoyée par
+        une chaîne <acronym>JSON</acronym> vers le navigateur, qui est comparable à la chaîne <acronym>JSON</acronym> envoyée par
         l'adaptateur jsPush. La seule différence est qu'il contient un paramètre supplémentaire
-        "<code>finished</code>", qui vaut <code>false</code> quand <code>update()</code> est appelée
-        ou <code>true</code> quand <code>finish()</code> est appelée.
+        "<code>finished</code>", qui vaut <constant>FALSE</constant> quand <methodname>update()</methodname> est appelée
+        ou <constant>TRUE</constant> quand <methodname>finish()</methodname> est appelée.
     </para>
 
     <para>
@@ -26,7 +26,7 @@
         <listitem>
             <para>
                 <code>exitAfterSend</code> : sort de la requête courante après que les données
-                aient été envoyées au navigateur. Vaut <code>true</code> par défaut.
+                aient été envoyées au navigateur. Vaut <constant>TRUE</constant> par défaut.
             </para>
         </listitem>
     </itemizedlist>

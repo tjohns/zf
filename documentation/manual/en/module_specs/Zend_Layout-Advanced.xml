@@ -51,8 +51,8 @@
             <classname>Zend_View_Interface</classname> or extending
             <classname>Zend_View_Abstract</classname> for rendering your layout script.
             Simply pass in your custom view object as a parameter to the
-            constructor/<code>startMvc()</code>, or set it using the
-            <code>setView()</code> accessor:
+            constructor/<methodname>startMvc()</methodname>, or set it using the
+            <methodname>setView()</methodname> accessor:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -79,7 +79,7 @@ $layout->setView($view);
                 implementation that does not support these helpers, you will
                 need to find a way to get the layout variables to the view. This
                 can be done by either extending the <classname>Zend_Layout</classname>
-                object and altering the <code>render()</code> method to pass
+                object and altering the <methodname>render()</methodname> method to pass
                 variables to the view, or creating your own plugin class that
                 passes them prior to rendering the layout.
             </para>
@@ -102,13 +102,13 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>Custom Front Controller Plugins</title>
 
         <para>
-            When used with the MVC components, <classname>Zend_Layout</classname>
+            When used with the <acronym>MVC</acronym> components, <classname>Zend_Layout</classname>
             registers a front controller plugin that renders the layout as the
             last action prior to exiting the dispatch loop. In most cases, the
             default plugin will be suitable, but should you desire to write
             your own, you can specify the name of the plugin class to load by
             passing the <code>pluginClass</code> option to the
-            <code>startMvc()</code> method.
+            <methodname>startMvc()</methodname> method.
         </para>
 
         <para>
@@ -128,7 +128,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <title>Custom Action Helpers</title>
 
         <para>
-            When used with the MVC components, <classname>Zend_Layout</classname>
+            When used with the <acronym>MVC</acronym> components, <classname>Zend_Layout</classname>
             registers an action controller helper with the helper broker. The
             default helper,
             <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>, acts as a
@@ -141,7 +141,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
             an action helper class extending
             <classname>Zend_Controller_Action_Helper_Abstract</classname> and pass the
             class name as the <code>helperClass</code> option to the
-            <code>startMvc()</code> method. Details of the implementation are
+            <methodname>startMvc()</methodname> method. Details of the implementation are
             up to you.
         </para>
     </sect2>
@@ -173,7 +173,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
             accessors, modify the inflector rules and target of the inflector
             associated with the <classname>Zend_Layout</classname> instance, or create
             your own inflector instance and pass it to
-            <classname>Zend_Layout::setInflector()</classname>.
+            <methodname>Zend_Layout::setInflector()</methodname>.
         </para>
 
         <example id="zend.layout.advanced.inflector.accessors">
@@ -248,8 +248,8 @@ $layout->setInflector($inflector);
                 to specify an absolute path for a layout view script, or know
                 that the mechanism you will be using for specifying the layout
                 script does not need inflection. Simply use the
-                <code>enableInflection()</code> and
-                <code>disableInflection()</code> methods.
+                <methodname>enableInflection()</methodname> and
+                <methodname>disableInflection()</methodname> methods.
             </para>
         </note>
     </sect2>

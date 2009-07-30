@@ -128,11 +128,11 @@
                         $value,...)</code> </emphasis>
                     </entry>
                     <entry>
-                        Creates a filter from a string mask. All <code>$value</code>
-                        parameters will be escaped and substituted into <code>$mask</code>
+                        Creates a filter from a string mask. All <varname>$value</varname>
+                        parameters will be escaped and substituted into <varname>$mask</varname>
                         by using
                         <ulink url="http://php.net/sprintf">
-                        <code>sprintf()</code></ulink>
+                        <methodname>sprintf()</methodname></ulink>
                     </entry>
                 </row>
                 <row>
@@ -173,7 +173,7 @@
                     <entry><code>string __toString()</code></entry>
                     <entry>
                         Returns a string representation of the filter. Proxies to
-                        <code>Zend_Ldap_Filter::toString()</code>.
+                        <methodname>Zend_Ldap_Filter::toString()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -206,10 +206,10 @@
                         $values)</code> </emphasis>
                     </entry>
                     <entry>
-                        Escapes the given <code>$values</code> according to RFC 2254
+                        Escapes the given <varname>$values</varname> according to <acronym>RFC</acronym> 2254
                         so that they can be safely used in <acronym>LDAP</acronym> filters. If a single string
                         is given, a string is returned - otherwise an array is returned.
-                        Any control characters with an ACII code &lt; 32 as well as the
+                        Any control characters with an <acronym>ASCII</acronym> code &lt; 32 as well as the
                         characters with special meaning in <acronym>LDAP</acronym> filters "*", "(", ")", and
                         "\" (the backslash) are converted into the representation of a
                         backslash followed by two hex digits representing the hexadecimal
@@ -223,7 +223,7 @@
                     </entry>
                     <entry>
                         Undoes the conversion done by
-                        <code>Zend_Ldap_Filter::escapeValue()</code>. Converts any
+                        <methodname>Zend_Ldap_Filter::escapeValue()</methodname>. Converts any
                         sequences of a backslash followed by two hex digits into the
                         corresponding character.
                     </entry>

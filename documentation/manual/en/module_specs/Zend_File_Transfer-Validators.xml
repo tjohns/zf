@@ -39,8 +39,8 @@
 
         <listitem>
             <para>
-                <code>ExcludeMimeType</code>: This validator validates the MIME type of files. It
-                can also validate MIME types and will throw an error if the MIME type of specified
+                <code>ExcludeMimeType</code>: This validator validates the <acronym>MIME</acronym> type of files. It
+                can also validate <acronym>MIME</acronym> types and will throw an error if the <acronym>MIME</acronym> type of specified
                 file matches.
             </para>
         </listitem>
@@ -108,8 +108,8 @@
 
         <listitem>
             <para>
-                <code>MimeType</code>: This validator validates the MIME type of files. It can also
-                validate MIME types and will throw an error if the MIME type of a specified
+                <code>MimeType</code>: This validator validates the <acronym>MIME</acronym> type of files. It can also
+                validate <acronym>MIME</acronym> types and will throw an error if the <acronym>MIME</acronym> type of a specified
                 file does not match.
             </para>
         </listitem>
@@ -166,9 +166,9 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>isValid($files = null)</code>: Checks the specified files using all
-                    validators. <code>$files</code> may be either a real filename, the element's
-                    name or the name of the temporary file.
+                    <methodname>isValid($files = null)</methodname>: Checks the specified files
+                    using all validators. <varname>$files</varname> may be either a real filename,
+                    the element's name or the name of the temporary file.
                 </para>
             </listitem>
 
@@ -177,7 +177,7 @@
                     <code>addValidator($validator, $breakChainOnFailure, $options = null, $files =
                     null)</code>: Adds the specified validator to the validator
                     stack (optionally only to the file(s) specified).
-                    <code>$validator</code> may be either an actual validator
+                    <varname>$validator</varname> may be either an actual validator
                     instance or a short name specifying the validator type (e.g., 'Count').
                 </para>
             </listitem>
@@ -198,28 +198,28 @@
                     <code>setValidators(array $validators, $files =
                         null)</code>: Overwrites any existing validators with
                     the validators specified. The validators should follow the
-                    syntax for <code>addValidators()</code>.
+                    syntax for <methodname>addValidators()</methodname>.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>hasValidator($name)</code>: Indicates whether a
+                    <methodname>hasValidator($name)</methodname>: Indicates whether a
                     validator has been registered.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getValidator($name)</code>: Returns a previously
+                    <methodname>getValidator($name)</methodname>: Returns a previously
                     registered validator.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getValidators($files = null)</code>: Returns
-                    registered validators. If <code>$files</code> is specified,
+                    <methodname>getValidators($files = null)</methodname>: Returns
+                    registered validators. If <varname>$files</varname> is specified,
                     returns validators for that particular file or set of
                     files.
                 </para>
@@ -227,14 +227,14 @@
 
             <listitem>
                 <para>
-                    <code>removeValidator($name)</code>: Removes a previously
+                    <methodname>removeValidator($name)</methodname>: Removes a previously
                     registered validator.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>clearValidators()</code>: Clears all
+                    <methodname>clearValidators()</methodname>: Clears all
                     registered validators.
                 </para>
             </listitem>
@@ -265,9 +265,9 @@ $upload->setValidators(array(
             <title>Limit Validators to Single Files</title>
 
             <para>
-                <code>addValidator()</code>, <code>addValidators()</code>, and
-                <code>setValidators()</code> each accept a final
-                <code>$files</code> argument. This argument can be used to
+                <methodname>addValidator()</methodname>, <methodname>addValidators()</methodname>,
+                and <methodname>setValidators()</methodname> each accept a final
+                <varname>$files</varname> argument. This argument can be used to
                 specify a particular file or array of files on which to set the
                 given validator.
             </para>
@@ -281,18 +281,18 @@ $upload->addValidator('Size', false, 20000, 'file2');
         </example>
 
         <para>
-            Normally, you should use the <code>addValidators()</code> method, which can be called
-            multiple times.
+            Normally, you should use the <methodname>addValidators()</methodname> method, which
+            can be called multiple times.
         </para>
 
         <example id="zend.file.transfer.validators.usage.examplemultiple">
             <title>Add Multiple Validators</title>
 
             <para>
-                Often it's simpler just to call <code>addValidator()</code> multiple times with one
-                call for each validator. This also increases readability and makes your code more
-                maintainable. All methods provide a fluent interface, so you can couple the calls as
-                shown below:
+                Often it's simpler just to call <methodname>addValidator()</methodname> multiple
+                times with one call for each validator. This also increases readability and makes
+                your code more maintainable. All methods provide a fluent interface, so you can
+                couple the calls as shown below:
             </para>
 
             <programlisting language="php"><![CDATA[
@@ -315,16 +315,17 @@ $upload->addValidator('Size', false, 20000)
         </note>
 
         <para>
-            Last but not least, you can simply check the files using <code>isValid()</code>.
+            Last but not least, you can simply check the files using
+            <methodname>isValid()</methodname>.
         </para>
 
         <example id="zend.file.transfer.validators.usage.exampleisvalid">
             <title>Validate the Files</title>
 
             <para>
-                <code>isValid()</code> accepts the file name of the uploaded or downloaded file, the
-                temporary file name and or the name of the form element. If no parameter or null is
-                given all files will be validated
+                <methodname>isValid()</methodname> accepts the file name of the uploaded or
+                downloaded file, the temporary file name and or the name of the form element. If
+                no parameter or null is given all files will be validated
             </para>
 
             <programlisting language="php"><![CDATA[
@@ -344,17 +345,18 @@ if ($upload->isValid()) {
 
         <note>
             <para>
-                Note that <code>isValid()</code> will be called automatically when you receive the
-                files and have not called it previously.
+                Note that <methodname>isValid()</methodname> will be called automatically when you
+                receive the files and have not called it previously.
             </para>
         </note>
 
         <para>
             When validation has failed it is a good idea to get information about the
             problems found. To get this information, you can use the methods
-            <code>getMessages()</code> which returns all validation messages as array,
-            <code>getErrors()</code> which returns all error codes, and <code>hasErrors()</code>
-            which returns true as soon as a validation error has been found.
+            <methodname>getMessages()</methodname> which returns all validation messages as array,
+            <methodname>getErrors()</methodname> which returns all error codes, and
+            <methodname>hasErrors()</methodname> which returns true as soon as a validation error
+            has been found.
         </para>
 
     </sect2>
@@ -401,9 +403,10 @@ if ($upload->isValid()) {
 
         <para>
             If you initiate this validator with a string or integer, the value will be used as
-            <code>max</code>. Or you can also use the methods <code>setMin()</code> and
-            <code>setMax()</code> to set both options afterwards and <code>getMin()</code> and
-            <code>getMax()</code> to retrieve the actual set values.
+            <code>max</code>. Or you can also use the methods <methodname>setMin()</methodname> and
+            <methodname>setMax()</methodname> to set both options afterwards and
+            <methodname>getMin()</methodname> and <methodname>getMax()</methodname> to retrieve
+            the actual set values.
         </para>
 
         <example id="zend.file.transfer.validators.count.example">
@@ -433,7 +436,7 @@ $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
 
         <para>
             The <code>Crc32</code> validator checks the content of a transferred file by hashing it.
-            This validator uses the hash extension from PHP with the crc32 algorithm.
+            This validator uses the hash extension from <acronym>PHP</acronym> with the crc32 algorithm.
             It supports the following options:
         </para>
 
@@ -492,16 +495,17 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
         </itemizedlist>
 
         <para>
-            This validator accepts multiple extensions, either as a comma-delimited string, or as an
-            array. You may also use the methods <code>setExtension()</code>,
-            <code>addExtension()</code>, and <code>getExtension()</code> to set and retrieve
-            extensions.
+            This validator accepts multiple extensions, either as a comma-delimited string, or as
+            an array. You may also use the methods <methodname>setExtension()</methodname>,
+            <methodname>addExtension()</methodname>, and <methodname>getExtension()</methodname>
+            to set and retrieve extensions.
         </para>
 
         <para>
             In some cases it is useful to match in a case-sensitive fashion. So the constructor
-            allows a second parameter called <code>$case</code> which, if set to true, validates the
-            extension by comparing it with the specified values in a case-sensitive fashion.
+            allows a second parameter called <varname>$case</varname> which, if set to true,
+            validates the extension by comparing it with the specified values in a case-sensitive
+            fashion.
         </para>
 
         <example id="zend.file.transfer.validators.excludeextension.example">
@@ -529,7 +533,7 @@ $upload->addValidator('ExcludeExtension',
         <note>
             <para>
                 Note that this validator only checks the file extension. It does not check the
-                file's MIME type.
+                file's <acronym>MIME</acronym> type.
             </para>
         </note>
     </sect2>
@@ -538,29 +542,29 @@ $upload->addValidator('ExcludeExtension',
         <title>ExcludeMimeType Validator</title>
 
         <para>
-            The <code>ExcludeMimeType</code> validator checks the MIME type of transferred files.
+            The <code>ExcludeMimeType</code> validator checks the <acronym>MIME</acronym> type of transferred files.
             It supports the following options:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>*</code>: Sets any key individually or use a numeric array. Sets the MIME
+                    <code>*</code>: Sets any key individually or use a numeric array. Sets the <acronym>MIME</acronym>
                     type to validate against.
                 </para>
 
                 <para>
-                    With this option you can define the MIME type of files that are not to be
+                    With this option you can define the <acronym>MIME</acronym> type of files that are not to be
                     accepted.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            This validator accepts multiple MIME types, either as a comma-delimited string, or as an
-            array. You may also use the methods <code>setMimeType()</code>,
-            <code>addMimeType()</code>, and <code>getMimeType()</code> to set and retrieve the MIME
-            types.
+            This validator accepts multiple <acronym>MIME</acronym> types, either as a comma-delimited string, or as
+            an array. You may also use the methods <methodname>setMimeType()</methodname>,
+            <methodname>addMimeType()</methodname>, and <methodname>getMimeType()</methodname> to
+            set and retrieve the <acronym>MIME</acronym> types.
         </para>
 
         <example id="zend.file.transfer.validators.excludemimetype.example">
@@ -582,17 +586,17 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
         </example>
 
         <para>
-            The above example shows that it is also possible to disallow groups of MIME types.
-            For example, to disallow all images, just use 'image' as the MIME type. This can be used
-            for all groups of MIME types like 'image', 'audio', 'video', 'text', etc.
+            The above example shows that it is also possible to disallow groups of <acronym>MIME</acronym> types.
+            For example, to disallow all images, just use 'image' as the <acronym>MIME</acronym> type. This can be used
+            for all groups of <acronym>MIME</acronym> types like 'image', 'audio', 'video', 'text', etc.
         </para>
 
         <note>
             <para>
-                Note that disallowing groups of MIME types will disallow all members of this group
+                Note that disallowing groups of <acronym>MIME</acronym> types will disallow all members of this group
                 even if this is not intentional. When you disallow 'image' you will disallow all
                 types of images like 'image/jpeg' or 'image/vasa'. When you are not sure if you want
-                to disallow all types, you should disallow only specific MIME types instead of
+                to disallow all types, you should disallow only specific <acronym>MIME</acronym> types instead of
                 complete groups.
             </para>
         </note>
@@ -617,9 +621,9 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
 
         <para>
             This validator accepts multiple directories, either as a comma-delimited string, or as
-            an array. You may also use the methods <code>setDirectory()</code>,
-            <code>addDirectory()</code>, and <code>getDirectory()</code> to set and retrieve
-            directories.
+            an array. You may also use the methods <methodname>setDirectory()</methodname>,
+            <methodname>addDirectory()</methodname>, and <methodname>getDirectory()</methodname>
+            to set and retrieve directories.
         </para>
 
         <example id="zend.file.transfer.validators.exists.example">
@@ -674,15 +678,15 @@ $upload->addValidator('Exists',
 
         <para>
             This validator accepts multiple extensions, either as a comma-delimited string, or as an
-            array. You may also use the methods <code>setExtension()</code>,
-            <code>addExtension()</code>, and <code>getExtension()</code> to set and retrieve
-            extension values.
+            array. You may also use the methods <methodname>setExtension()</methodname>,
+            <methodname>addExtension()</methodname>, and <methodname>getExtension()</methodname> to
+            set and retrieve extension values.
         </para>
 
         <para>
             In some cases it is useful to test in a case-sensitive fashion. Therefore the
-            constructor takes a second parameter <code>$case</code>, which, if set to true, will
-            validate the extension in a case-sensitive fashion.
+            constructor takes a second parameter <varname>$case</varname>, which, if set to true,
+            will validate the extension in a case-sensitive fashion.
         </para>
 
         <example id="zend.file.transfer.validators.extension.example">
@@ -708,7 +712,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
         <note>
             <para>
                 Note that this validator only checks the file extension. It does not check the
-                file's MIME type.
+                file's <acronym>MIME</acronym> type.
             </para>
         </note>
     </sect2>
@@ -755,10 +759,10 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
 
         <para>
             You can initialize this validator with a string, which will then be used to set the
-            <code>max</code> option. You can also use the methods <code>setMin()</code> and
-            <code>setMax()</code> to set both options after construction, along with
-            <code>getMin()</code> and <code>getMax()</code> to retrieve the values that have been
-            set previously.
+            <code>max</code> option. You can also use the methods <methodname>setMin()</methodname>
+            and <methodname>setMax()</methodname> to set both options after construction, along with
+            <methodname>getMin()</methodname> and <methodname>getMax()</methodname> to retrieve the
+            values that have been set previously.
         </para>
 
         <para>
@@ -836,16 +840,16 @@ $upload->addValidator('FilesSize',
         </itemizedlist>
 
         <para>
-            The methods <code>setImageMin()</code> and <code>setImageMax()</code> also set
-            both minimum and maximum values, while the methods <code>getMin()</code> and
-            <code>getMax()</code> return the currently set values.
+            The methods <methodname>setImageMin()</methodname> and <methodname>setImageMax()</methodname> also set
+            both minimum and maximum values, while the methods <methodname>getMin()</methodname> and
+            <methodname>getMax()</methodname> return the currently set values.
         </para>
 
         <para>
-            For your convenience there are also the <code>setImageWidth()</code> and
-            <code>setImageHeight()</code> methods, which set the minimum and maximum height and
-            width of the image file. They, too, have corresponding <code>getImageWidth()</code> and
-            <code>getImageHeight()</code> methods to retrieve the currently set values.
+            For your convenience there are also the <methodname>setImageWidth()</methodname> and
+            <methodname>setImageHeight()</methodname> methods, which set the minimum and maximum height and
+            width of the image file. They, too, have corresponding <methodname>getImageWidth()</methodname> and
+            <methodname>getImageHeight()</methodname> methods to retrieve the currently set values.
         </para>
 
         <para>
@@ -903,7 +907,7 @@ $upload->addValidator('IsCompressed', false, 'zip');
 
         <note>
             <para>
-                Note that there is no check if you set a MIME type that is not a archive. For
+                Note that there is no check if you set a <acronym>MIME</acronym> type that is not a archive. For
                 example, it would be possible to define gif files to be accepted by this validator.
                 Using the 'MimeType' validator for files which are not archived will result in more
                 readable code.
@@ -940,7 +944,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <note>
             <para>
-                Note that there is no check if you set a MIME type that is not an image. For
+                Note that there is no check if you set a <acronym>MIME</acronym> type that is not an image. For
                 example, it would be possible to define zip files to be accepted by this validator.
                 Using the 'MimeType' validator for files which are not images will result in more
                 readable code.
@@ -953,7 +957,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <para>
             The <code>Hash</code> validator checks the content of a transferred file by hashing it.
-            This validator uses the hash extension from PHP. It supports the following options:
+            This validator uses the hash extension from <acronym>PHP</acronym>. It supports the following options:
         </para>
 
         <itemizedlist>
@@ -975,7 +979,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
                 </para>
 
                 <para>
-                    You can set multiple algorithm by calling the <code>addHash()</code> method
+                    You can set multiple algorithm by calling the <methodname>addHash()</methodname> method
                     multiple times.
                 </para>
             </listitem>
@@ -1016,7 +1020,7 @@ $upload->addValidator('Hash',
 
         <para>
             The <code>Md5</code> validator checks the content of a transferred file by hashing it.
-            This validator uses the hash extension for PHP with the md5 algorithm.
+            This validator uses the hash extension for <acronym>PHP</acronym> with the md5 algorithm.
             It supports the following options:
         </para>
 
@@ -1055,19 +1059,19 @@ $upload->addValidator('Md5',
         <title>MimeType Validator</title>
 
         <para>
-            The <code>MimeType</code> validator checks the MIME type of transferred files.
+            The <code>MimeType</code> validator checks the <acronym>MIME</acronym> type of transferred files.
             It supports the following options:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>*</code>: Sets any key or use a numeric array. Sets the MIME type to
+                    <code>*</code>: Sets any key or use a numeric array. Sets the <acronym>MIME</acronym> type to
                     validate against.
                 </para>
 
                 <para>
-                    Defines the MIME type of files to be accepted.
+                    Defines the <acronym>MIME</acronym> type of files to be accepted.
                 </para>
             </listitem>
 
@@ -1085,16 +1089,16 @@ $upload->addValidator('Md5',
         </itemizedlist>
 
         <para>
-            This validator accepts multiple MIME type, either as a comma-delimited string, or as an
-            array. You may also use the methods <code>setMimeType()</code>,
-            <code>addMimeType()</code>, and <code>getMimeType()</code> to set and retrieve MIME
+            This validator accepts multiple <acronym>MIME</acronym> type, either as a comma-delimited string, or as an
+            array. You may also use the methods <methodname>setMimeType()</methodname>,
+            <methodname>addMimeType()</methodname>, and <methodname>getMimeType()</methodname> to set and retrieve <acronym>MIME</acronym>
             type.
         </para>
 
         <para>
             You can also set the magicfile which shall be used by fileinfo with the 'magicfile'
-            option. Additionally there are convenient <code>setMagicFile()</code> and
-            <code>getMagicFile()</code> methods which allow later setting and retrieving of the
+            option. Additionally there are convenient <methodname>setMagicFile()</methodname> and
+            <methodname>getMagicFile()</methodname> methods which allow later setting and retrieving of the
             magicfile parameter. This methods are available since Zend Framework 1.7.1.
         </para>
 
@@ -1122,17 +1126,17 @@ $upload->addValidator('MimeType',
         </example>
 
         <para>
-            The above example shows that it is also possible to limit the accepted MIME type to a
-            group of MIME types. To allow all images just use 'image' as MIME type. This can be used
-            for all groups of MIME types like 'image', 'audio', 'video', 'text, and so on.
+            The above example shows that it is also possible to limit the accepted <acronym>MIME</acronym> type to a
+            group of <acronym>MIME</acronym> types. To allow all images just use 'image' as <acronym>MIME</acronym> type. This can be used
+            for all groups of <acronym>MIME</acronym> types like 'image', 'audio', 'video', 'text, and so on.
         </para>
 
         <note>
             <para>
-                Note that allowing groups of MIME types will accept all members of this group even
+                Note that allowing groups of <acronym>MIME</acronym> types will accept all members of this group even
                 if your application does not support them. When you allow 'image' you will also get
                 'image/xpixmap' or 'image/vasa' which could be problematic. When you are not sure if
-                your application supports all types you should better allow only defined MIME types
+                your application supports all types you should better allow only defined <acronym>MIME</acronym> types
                 instead of the complete group.
             </para>
         </note>
@@ -1141,13 +1145,13 @@ $upload->addValidator('MimeType',
             <para>
                 This component will use the <code>fileinfo</code> extension if it is available. If
                 it's not, it will degrade to the <code>mime_content_type</code> function. And if the
-                function call fails it will use the MIME type which is given by HTTP.
+                function call fails it will use the <acronym>MIME</acronym> type which is given by <acronym>HTTP</acronym>.
             </para>
 
             <para>
                 You should be aware of possible security problems when you have whether
-                <code>fileinfo</code> nor <code>mime_content_type</code> available. The MIME type
-                given by HTTP is not secure and can be easily manipulated.
+                <code>fileinfo</code> nor <code>mime_content_type</code> available. The <acronym>MIME</acronym> type
+                given by <acronym>HTTP</acronym> is not secure and can be easily manipulated.
             </para>
         </note>
     </sect2>
@@ -1171,8 +1175,8 @@ $upload->addValidator('MimeType',
 
         <para>
             This validator accepts multiple directories either as a comma-delimited string, or as an
-            array. You may also use the methods <code>setDirectory()</code>,
-            <code>addDirectory()</code>, and <code>getDirectory()</code> to set and retrieve
+            array. You may also use the methods <methodname>setDirectory()</methodname>,
+            <methodname>addDirectory()</methodname>, and <methodname>getDirectory()</methodname> to set and retrieve
             directories.
         </para>
 
@@ -1207,7 +1211,7 @@ $upload->addValidator('NotExists', false,
 
         <para>
             The <code>Sha1</code> validator checks the content of a transferred file by hashing it.
-            This validator uses the hash extension for PHP with the sha1 algorithm.
+            This validator uses the hash extension for <acronym>PHP</acronym> with the sha1 algorithm.
             It supports the following options:
         </para>
 
@@ -1277,9 +1281,9 @@ $upload->addValidator('Sha1',
 
         <para>
             You can initialize this validator with a string, which will then be used to set the
-            <code>max</code> option. You can also use the methods <code>setMin()</code> and
-            <code>setMax()</code> to set both options after construction, along with
-            <code>getMin()</code> and <code>getMax()</code> to retrieve the values that have been
+            <code>max</code> option. You can also use the methods <methodname>setMin()</methodname> and
+            <methodname>setMax()</methodname> to set both options after construction, along with
+            <methodname>getMin()</methodname> and <methodname>getMax()</methodname> to retrieve the values that have been
             set previously.
         </para>
 
@@ -1337,9 +1341,9 @@ $upload->addValidator('Size',
 
         <para>
             If you initiate this validator with a string or integer, the value will be used as
-            <code>max</code>. Or you can also use the methods <code>setMin()</code> and
-            <code>setMax()</code> to set both options afterwards and <code>getMin()</code> and
-            <code>getMax()</code> to retrieve the actual set values.
+            <code>max</code>. Or you can also use the methods <methodname>setMin()</methodname> and
+            <methodname>setMax()</methodname> to set both options afterwards and <methodname>getMin()</methodname> and
+            <methodname>getMax()</methodname> to retrieve the actual set values.
         </para>
 
         <example id="zend.file.transfer.validators.wordcount.example">

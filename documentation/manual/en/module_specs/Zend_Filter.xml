@@ -5,7 +5,7 @@
     <title>Introduction</title>
 
     <para>
-        The Zend_Filter component provides a set of commonly needed data
+        The <classname>Zend_Filter</classname> component provides a set of commonly needed data
         filters. It also provides a simple filter chaining mechanism by which
         multiple filters may be applied to a single datum in a user-defined
         order.
@@ -41,7 +41,7 @@
             (e.g., "<code>&amp;</code>" is transformed to
             "<code>&amp;amp;</code>"). Supporting such use cases for web
             developers is important, and "to filter," in the context of using
-            Zend_Filter, means to perform some transformations upon input data.
+            <classname>Zend_Filter</classname>, means to perform some transformations upon input data.
         </para>
 
     </sect2>
@@ -53,7 +53,7 @@
         <para>
             Having this filter definition established provides the foundation
             for <classname>Zend_Filter_Interface</classname>, which requires a single
-            method named <code>filter()</code> to be implemented by a filter
+            method named <methodname>filter()</methodname> to be implemented by a filter
             class.
         </para>
 
@@ -75,18 +75,18 @@ echo $htmlEntities->filter('"'); // &quot;
 
     <sect2 id="zend.filter.introduction.static">
 
-        <title>Using the static get() method</title>
+        <title>Using the static staticFilter() method</title>
 
         <para>
             If it is inconvenient to load a given filter class and create an
             instance of the filter, you can use the static method
-            <classname>Zend_Filter::filterStatic()</classname> as an alternative invocation style.
+            <methodname>Zend_Filter::filterStatic()</methodname> as an alternative invocation style.
             The first argument of this method is a data input value, that you
-            would pass to the <code>filter()</code> method. The second
+            would pass to the <methodname>filter()</methodname> method. The second
             argument is a string, which corresponds to the basename of the
             filter class, relative to the Zend_Filter namespace. The
-            <code>get()</code> method automatically loads the class, creates an
-            instance, and applies the <code>filter()</code> method to the data
+            <methodname>staticFilter()</methodname> method automatically loads the class, creates
+            an instance, and applies the <methodname>filter()</methodname> method to the data
             input.
 
             <programlisting language="php"><![CDATA[
@@ -110,11 +110,11 @@ echo Zend_Filter::filterStatic('"', 'HtmlEntities', array(ENT_QUOTES));
             but if you have the need to run a filter for multiple inputs,
             it's more efficient to follow the first example above,
             creating an instance of the filter object and calling its
-            <code>filter()</code> method.
+            <methodname>filter()</methodname> method.
         </para>
 
         <para>
-            Also, the Zend_Filter_Input class allows you to instantiate and run
+            Also, the <classname>Zend_Filter_Input</classname> class allows you to instantiate and run
             multiple filter and validator classes on demand to process
             sets of input data. See <xref linkend="zend.filter.input" />.
         </para>

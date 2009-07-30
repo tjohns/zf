@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.rest.client">
     <title>Zend_Rest_Client</title>
@@ -38,8 +38,8 @@ echo $client->sayHello('Davey', 'Day')->get();
             <para>
                 <classname>Zend_Rest_Client</classname> tente de rendre les méthodes distantes
                 de la même manière que ses propres méthodes, la seule différence étant que vous
-                devez suivre l'appel de méthode <code>get()</code>, <code>post()</code>,
-                <code>put()</code> ou <code>delete()</code>. Cet appel peut être fait par
+                devez suivre l'appel de méthode <methodname>get()</methodname>, <methodname>post()</methodname>,
+                <methodname>put()</methodname> ou <methodname>delete()</methodname>. Cet appel peut être fait par
                 l'intermédiaire de méthodes enchaînées ou dans des appels séparés de méthode
                 :
             </para>
@@ -80,8 +80,8 @@ if ($result->isSuccess()) {
 
         <para>
             Dans l'exemple ci-dessus, vous pouvez voir que nous utilisons le résultat de la
-            demande comme un objet, pour appeler <code>isSuccess()</code>, et puis grâce à
-            <code>__toString()</code>, nous pouvons simplement faire <code>echo</code> sur l'objet
+            demande comme un objet, pour appeler <methodname>isSuccess()</methodname>, et puis grâce à
+            <methodname>__toString()</methodname>, nous pouvons simplement faire <code>echo</code> sur l'objet
             pour récupérer le résultat. <classname>Zend_Rest_Client_Response</classname> vous
             permettra de afficher n'importe quelle valeur scalaire. Pour les types complexes, vous
             pouvez employer la notation type objet ou type tableau.
@@ -92,9 +92,9 @@ if ($result->isSuccess()) {
             <classname>Zend_Rest_Server</classname> l'objet de
             <classname>Zend_Rest_Client_Response</classname> se comportera comme un
             <code>SimpleXMLElement</code>. Cependant, pour faciliter les choses, il questionnera
-            automatiquement le XML en utilisant XPath si la propriété n'est pas un descendant direct
+            automatiquement le <acronym>XML</acronym> en utilisant XPath si la propriété n'est pas un descendant direct
             de l'élément racine du document. En plus, si vous accédez à une propriété comme à une
-            méthode, vous recevrez la valeur de PHP pour l'objet, ou un tableau de résultats.
+            méthode, vous recevrez la valeur de <acronym>PHP</acronym> pour l'objet, ou un tableau de résultats.
         </para>
 
         <example id="zend.rest.client.return.example-2">

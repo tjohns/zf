@@ -50,7 +50,7 @@
             information known as claims (i.e. person's first name, last name)
             which the web site (a.k.a "relying party") needs in order a user to
             authenticate using an information card. For your reference, the full
-            URI (for instance the <code>givenname</code> claim) is as follows:
+            <acronym>URI</acronym> (for instance the <code>givenname</code> claim) is as follows:
             <code>http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname</code>
         </para>
 
@@ -59,15 +59,15 @@
             browser will bring up a card selection program which not only shows
             them which information cards meet the requirements of the site, but
             also allows them to select which information card to use if multiple
-            meet the criteria. This information card is transmitted as an XML
-            document to the specified <code>POST</code> URL and is ready to be
+            meet the criteria. This information card is transmitted as an <acronym>XML</acronym>
+            document to the specified POST <acronym>URL</acronym> and is ready to be
             processed by the <classname>Zend_InfoCard</classname> component.
         </para>
 
         <para>
             Note, Information cards can only be <code>HTTP POST</code>ed to
-            SSL-encrypted URLs. Please consult your web server's documentation
-            on how to set up SSL encryption.
+            <acronym>SSL</acronym>-encrypted <acronym>URL</acronym>s. Please consult your web server's documentation
+            on how to set up <acronym>SSL</acronym> encryption.
         </para>
     </sect2>
 
@@ -140,9 +140,9 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             In the example above, we first create an instance of the
-            <classname>Zend_Auth_Adapter_InfoCard</classname> and pass the XML data posted
+            <classname>Zend_Auth_Adapter_InfoCard</classname> and pass the <acronym>XML</acronym> data posted
             by the card selector into it. Once an instance has been created you
-            must then provide at least one SSL certificate public/private key
+            must then provide at least one <acronym>SSL</acronym> certificate public/private key
             pair used by the web server that received the <code>HTTP
             POST</code>. These files are used to validate the destination
             of the information posted to the server and are a requirement when
@@ -153,7 +153,7 @@ if (isset($_POST['xmlToken'])) {
             Once the adapter has been configured, you can then use the standard
             <classname>Zend_Auth</classname> facilities to validate the provided
             information card token and authenticate the user by examining the
-            identity provided by the <code>getIdentity()</code> method.
+            identity provided by the <methodname>getIdentity()</methodname> method.
         </para>
     </sect2>
 
@@ -161,9 +161,9 @@ if (isset($_POST['xmlToken'])) {
         <title>Using the Zend_InfoCard component standalone</title>
 
         <para>
-            It is also possible to use the Zend_InfoCard component as a
+            It is also possible to use the <classname>Zend_InfoCard</classname> component as a
             standalone component by interacting with the
-            <classname>Zend_InfoCard</classname> class directly. Using the Zend_InfoCard
+            <classname>Zend_InfoCard</classname> class directly. Using the <classname>Zend_InfoCard</classname>
             class is very similar to its use with the <classname>Zend_Auth</classname>
             component. An example of its use is shown below:
         </para>
@@ -209,9 +209,9 @@ if (isset($_POST['xmlToken'])) {
             In the example above, we use the <classname>Zend_InfoCard</classname> component
             independently to validate the token provided by the user. As was the
             case with the <classname>Zend_Auth_Adapter_InfoCard</classname>, we create an
-            instance of <classname>Zend_InfoCard</classname> and then set one or more SSL
+            instance of <classname>Zend_InfoCard</classname> and then set one or more <acronym>SSL</acronym>
             certificate public/private key pairs used by the web server. Once
-            configured, we can use the <code>process()</code> method to process
+            configured, we can use the <methodname>process()</methodname> method to process
             the information card and return the results.
         </para>
     </sect2>
@@ -229,20 +229,20 @@ if (isset($_POST['xmlToken'])) {
             data requested by your web site when the user authenticated. As
             shown in the examples above, the validity of the information card
             can be ascertained by calling the
-            <classname>Zend_InfoCard_Claims::isValid()</classname> method. Claims
+            <methodname>Zend_InfoCard_Claims::isValid()</methodname> method. Claims
             themselves can either be retrieved by simply accessing the
             identifier desired (i.e. <code>givenname</code>) as a property of
-            the object or through the <code>getClaim()</code> method.
+            the object or through the <methodname>getClaim()</methodname> method.
         </para>
 
         <para>
-            In most cases you will never need to use the <code>getClaim()</code>
+            In most cases you will never need to use the <methodname>getClaim()</methodname>
             method. However, if your <code>requiredClaims</code> mandate that
             you request claims from multiple different sources/namespaces then
             you will need to extract them explicitly using this method (simply
-            pass it the full URI of the claim to retrieve its value from within
+            pass it the full <acronym>URI</acronym> of the claim to retrieve its value from within
             the information card). Generally speaking however, the
-            <classname>Zend_InfoCard</classname> component will set the default URI for
+            <classname>Zend_InfoCard</classname> component will set the default <acronym>URI</acronym> for
             claims to be the one used the most frequently within the information
             card itself and the simplified property-access method can be used.
         </para>
@@ -251,9 +251,9 @@ if (isset($_POST['xmlToken'])) {
             As part of the validation process, it is the developer's responsibility to
             examine the issuing source of the claims contained within the
             information card and to decide if that source is a trusted source of
-            information. To do so, the <code>getIssuer()</code> method is
+            information. To do so, the <methodname>getIssuer()</methodname> method is
             provided within the <classname>Zend_InfoCard_Claims</classname> object which
-            returns the URI of the issuer of the information card claims.
+            returns the <acronym>URI</acronym> of the issuer of the information card claims.
         </para>
     </sect2>
 
@@ -269,7 +269,7 @@ if (isset($_POST['xmlToken'])) {
             claim as part of the <code>requiredClaims</code> of the request. If
             this claim is requested then the <classname>Zend_InfoCard_Claims</classname>
             object will provide a unique identifier for the specific card that
-            was submitted by calling the <code>getCardID()</code> method.
+            was submitted by calling the <methodname>getCardID()</methodname> method.
         </para>
 
         <para>
@@ -350,9 +350,9 @@ public function submitinfocardAction()
             To prevent this, one must implement the
             <classname>Zend_InfoCard_Adapter_Interface</classname> and set an
             instance of this interface prior to calling either the
-            <code>process()</code> (standalone) or <code>authenticate()</code>
+            <methodname>process()</methodname> (standalone) or <methodname>authenticate()</methodname>
             method as a <classname>Zend_Auth</classname> adapter. To set this interface,
-            the <code>setAdapter()</code> method should be used. In the example below,
+            the <methodname>setAdapter()</methodname> method should be used. In the example below,
             we set a <classname>Zend_InfoCard</classname> adapter and use it in our
             application:
         </para>

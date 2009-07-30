@@ -5,7 +5,7 @@
 
     <para>
         <classname>Zend_Ldap</classname> is the base interface into a <acronym>LDAP</acronym> server. It provides
-        connection and binding methods as well as methods to operate on the LDAP
+        connection and binding methods as well as methods to operate on the <acronym>LDAP</acronym>
         tree.
     </para>
 
@@ -25,9 +25,9 @@
                         <code>string filterEscape(string $str)</code>
                     </entry>
                     <entry>
-                        Escapes a value to be used in a <acronym>LDAP</acronym> filter according to RFC
+                        Escapes a value to be used in a <acronym>LDAP</acronym> filter according to <acronym>RFC</acronym>
                         2254. This method is <emphasis>deprecated</emphasis>, please use
-                        <code>Zend_Ldap_Filter_Abstract::escapeValue()</code>
+                        <methodname>Zend_Ldap_Filter_Abstract::escapeValue()</methodname>
                         instead.
                     </entry>
                 </row>
@@ -36,21 +36,21 @@
                         <code>boolean explodeDn($dn, array &amp;$keys = null, array &amp;$vals = null)</code>
                     </entry>
                     <entry>
-                        Checks if a given DN <code>$dn</code> is malformed. If
-                        <code>$keys</code> or <code>$keys</code> and <code>$vals</code> are
+                        Checks if a given DN <varname>$dn</varname> is malformed. If
+                        <varname>$keys</varname> or <varname>$keys</varname> and <varname>$vals</varname> are
                         given, these arrays will be filled with the appropriate DN keys and
                         values. This method is <emphasis>deprecated</emphasis>, please use
-                        <code>Zend_Ldap_Dn::checkDn()</code> instead.
+                        <methodname>Zend_Ldap_Dn::checkDn()</methodname> instead.
                     </entry>
                 </row>
                 <row>
-                    <entry><code>__construct($options)</code></entry>
+                    <entry><methodname>__construct($options)</methodname></entry>
                     <entry>
-                        Constructor. The <code>$options</code> parameter is optional
+                        Constructor. The <varname>$options</varname> parameter is optional
                         and can be set to an array or a <classname>Zend_Config</classname> instance.
                         If no options are provided at instantiation, the connection
                         parameters must be passed to the instance using
-                        <code>Zend_Ldap::setOptions()</code>. The allowed options are
+                        <methodname>Zend_Ldap::setOptions()</methodname>. The allowed options are
                         specified in <link
                             linkend="zend.ldap.api.configuration.table">Zend_Ldap
                             Options</link>
@@ -63,7 +63,7 @@
                 <row>
                     <entry><code>integer getLastErrorCode()</code></entry>
                     <entry>
-                        Returns the <acronym>LDAP</acronym> error number of the last LDAP
+                        Returns the <acronym>LDAP</acronym> error number of the last <acronym>LDAP</acronym>
                         command.
                     </entry>
                 </row>
@@ -73,18 +73,18 @@
                     </entry>
                     <entry>
                         Returns the <acronym>LDAP</acronym> error message of the last <acronym>LDAP</acronym> command. The
-                        optional <code>$errorCode</code> parameter is set to the <acronym>LDAP</acronym> error
-                        number when given. The optional <code>$errorMessages</code> array
+                        optional <varname>$errorCode</varname> parameter is set to the <acronym>LDAP</acronym> error
+                        number when given. The optional <varname>$errorMessages</varname> array
                         will be filled with the raw error messages when given. The various
                         <acronym>LDAP</acronym> error retrieval functions can return different things, so they
-                        are all collected if <code>$errorMessages</code> is given.
+                        are all collected if <varname>$errorMessages</varname> is given.
                     </entry>
                 </row>
                 <row>
                     <entry><code>Zend_Ldap setOptions($options)</code></entry>
                     <entry>
                         Sets the <acronym>LDAP</acronym> connection and binding parameters.
-                        <code>$options</code> can be an array or an instance of
+                        <varname>$options</varname> can be an array or an instance of
                         <classname>Zend_Config</classname>. The allowed options are specified in
                         <link
                             linkend="zend.ldap.api.configuration.table">Zend_Ldap Options</link>
@@ -110,7 +110,7 @@
                     </entry>
                     <entry>
                         Returns the canonical account name of the given account name
-                        <code>$acctname</code>. <code>$form</code> specifies the <link
+                        <varname>$acctname</varname>. <varname>$form</varname> specifies the <link
                             linkend="zend.ldap.using.theory-of-operation.account-name-canonicalization.table">format</link>
                         into which the account name is canonicalized. See <link
                             linkend="zend.ldap.introduction.theory-of-operations.account-name-canonicalization">Account Name Canonicalization</link>
@@ -120,7 +120,7 @@
                 <row>
                     <entry><code>Zend_Ldap disconnect()</code></entry>
                     <entry>
-                        Disconnects the Zend_Ldap instance from the LDAP
+                        Disconnects the Zend_Ldap instance from the <acronym>LDAP</acronym>
                         server.
                     </entry>
                 </row>
@@ -130,10 +130,10 @@
                     </entry>
                     <entry>
                         Connects the Zend_Ldap instance to the given <acronym>LDAP</acronym> server.
-                        All parameters are optional and will be taken from the LDAP
+                        All parameters are optional and will be taken from the <acronym>LDAP</acronym>
                         connection and binding parameters passed to the instance via the
-                        construtor or via <code>Zend_Ldap::setOptions()</code> when set to
-                        <code>null</code>.
+                        construtor or via <methodname>Zend_Ldap::setOptions()</methodname> when set to
+                        <constant>NULL</constant>.
                     </entry>
                 </row>
                 <row>
@@ -141,16 +141,16 @@
                         <code>Zend_Ldap bind(string $username, string $password)</code>
                     </entry>
                     <entry>
-                        Authenticates <code>$username</code> with
-                        <code>$password</code> at the <acronym>LDAP</acronym> server. If both paramaters are
+                        Authenticates <varname>$username</varname> with
+                        <varname>$password</varname> at the <acronym>LDAP</acronym> server. If both paramaters are
                         omitted the binding will be carried out with the credentials given
                         in the connection and binding parameters. If no credentials are
                         given in the connection and binding parameters an anonymous bind
                         will be performed. Note that this requires anonymous binds to be
                         allowed on the <acronym>LDAP</acronym> server. An empty string <code>''</code> can be
-                        passed as <code>$password</code> together with a username if, and
+                        passed as <varname>$password</varname> together with a username if, and
                         only if, <code>allowEmptyPassword</code> is set to
-                        <code>true</code> in the connection and binding parameters.
+                        <constant>TRUE</constant> in the connection and binding parameters.
                     </entry>
                 </row>
                 <row>
@@ -158,7 +158,7 @@
                         <code>Zend_Ldap_Collection search(string|Zend_Ldap_Filter_Abstract $filter, string|Zend_Ldap_Dn $basedn, integer $scope, array $attributes, string $sort, string $collectionClass)</code>
                     </entry>
                     <entry>
-                        Searches the <acronym>LDAP</acronym> tree with the given <code>$filter</code>
+                        Searches the <acronym>LDAP</acronym> tree with the given <varname>$filter</varname>
                         and the given search parameters.
                         <variablelist>
                             <varlistentry>
@@ -179,7 +179,7 @@
                                 <listitem>
                                     <para>
                                         The search base for the search. If omitted or
-                                        <code>null</code>, the <code>baseDn</code> from the
+                                        <constant>NULL</constant>, the <code>baseDn</code> from the
                                         connection and binding parameters is used.
                                     </para>
                                 </listitem>
@@ -191,15 +191,15 @@
                                 <listitem>
                                     <para>
                                         The search scope.
-                                        <code>Zend_Ldap::SEARCH_SCOPE_SUB</code> searches the
-                                        complete subtree including the <code>$baseDn</code> node.
-                                        <code>Zend_Ldap::SEARCH_SCOPE_ONE</code> restricts search
-                                        to one level below <code>$baseDn</code>.
-                                        <code>Zend_Ldap::SEARCH_SCOPE_BASE</code> restricts search
-                                        to the <code>$baseDn</code> itself; this can be used to
+                                        <constant>Zend_Ldap::SEARCH_SCOPE_SUB</constant> searches the
+                                        complete subtree including the <varname>$baseDn</varname> node.
+                                        <constant>Zend_Ldap::SEARCH_SCOPE_ONE</constant> restricts search
+                                        to one level below <varname>$baseDn</varname>.
+                                        <constant>Zend_Ldap::SEARCH_SCOPE_BASE</constant> restricts search
+                                        to the <varname>$baseDn</varname> itself; this can be used to
                                         efficiently retrieve a single entry by its DN. The default
                                         value is
-                                        <code>Zend_Ldap::SEARCH_SCOPE_SUB</code>.
+                                        <constant>Zend_Ldap::SEARCH_SCOPE_SUB</constant>.
                                     </para>
                                 </listitem>
                             </varlistentry>
@@ -213,9 +213,9 @@
                                         returned entries. To include all possible attributes (ACL
                                         restrictions can disallow certain attribute to be retrieved
                                         by a given user) pass either an empty array
-                                        <code>array()</code> or <code>array('*')</code> to the
+                                        <methodname>array()</methodname> or <methodname>array('*')</methodname> to the
                                         method. On some <acronym>LDAP</acronym> servers you can retrieve special
-                                        internal attributes by passing <code>array('*', '+')</code>
+                                        internal attributes by passing <methodname>array('*', '+')</methodname>
                                         to the method.
                                     </para>
                                 </listitem>
@@ -227,9 +227,9 @@
                                 <listitem>
                                     <para>
                                         If given the result collection will be sorted
-                                        after the attribute <code>$sort</code>. Results can only be
+                                        after the attribute <varname>$sort</varname>. Results can only be
                                         sorted after one single attribute as this parameter uses
-                                        the ext/ldap function <code>ldap_sort()</code>.
+                                        the ext/ldap function <methodname>ldap_sort()</methodname>.
                                     </para>
                                 </listitem>
                             </varlistentry>
@@ -240,11 +240,11 @@
                                 <listitem>
                                     <para>
                                         If given the result will be wrapped in an object
-                                        of type <code>$collectionClass</code>. By default an object
-                                        of type <code>Zend_Ldap_Collection</code> will be returned.
+                                        of type <varname>$collectionClass</varname>. By default an object
+                                        of type <classname>Zend_Ldap_Collection</classname> will be returned.
                                         The custom class must extend
-                                        <code>Zend_Ldap_Collection</code> and will be passed a
-                                        <code>Zend_Ldap_Collection_Iterator_Default</code> on
+                                        <classname>Zend_Ldap_Collection</classname> and will be passed a
+                                        <classname>Zend_Ldap_Collection_Iterator_Default</classname> on
                                         instantiation.
                                     </para>
                                 </listitem>
@@ -260,7 +260,7 @@
                     </entry>
                     <entry>
                         Counts the elements returned by the given search parameters.
-                        See <code>Zend_Ldap::search()</code> for a detailed description of
+                        See <methodname>Zend_Ldap::search()</methodname> for a detailed description of
                         the method parameters.
                     </entry>
                 </row>
@@ -271,14 +271,14 @@
                     </entry>
                     <entry>
                         Counts the direct descendants (children) of the entry
-                        identified by the given <code>$dn</code>.
+                        identified by the given <varname>$dn</varname>.
                     </entry>
                 </row>
                 <row>
                     <entry><code>boolean exists(string|Zend_Ldap_Dn $dn)</code></entry>
                     <entry>
                         Checks whether the entry identified by the given
-                        <code>$dn</code> exists.
+                        <varname>$dn</varname> exists.
                     </entry>
                 </row>
                 <row>
@@ -288,10 +288,10 @@
                         $attributes, string $sort)</code>
                     </entry>
                     <entry>
-                        Performs a search operation and returns the result as an PHP
+                        Performs a search operation and returns the result as an <acronym>PHP</acronym>
                         array. This is essentially the same method as
-                        <code>Zend_Ldap::search()</code> except for the return type. See
-                        <code>Zend_Ldap::search()</code> for a detailed description of the
+                        <methodname>Zend_Ldap::search()</methodname> except for the return type. See
+                        <methodname>Zend_Ldap::search()</methodname> for a detailed description of the
                         method parameters.
                     </entry>
                 </row>
@@ -301,14 +301,14 @@
                         $attributes, boolean $throwOnNotFound)</code>
                     </entry>
                     <entry>
-                        Retrieves the <acronym>LDAP</acronym> entry identified by <code>$dn</code> with
-                        the attributes specified in <code>$attributes</code>. If
-                        <code>$attributes</code> is ommitted, all attributes
-                        (<code>array()</code>) are included in the result.
-                        <code>$throwOnNotFound</code> is <code>false</code> by default, so
-                        the method will return <code>null</code> if the specified entry
-                        cannot be found. If set to <code>true</code>, a
-                        <code>Zend_Ldap_Exception</code> will be thrown instead.
+                        Retrieves the <acronym>LDAP</acronym> entry identified by <varname>$dn</varname> with
+                        the attributes specified in <varname>$attributes</varname>. If
+                        <varname>$attributes</varname> is ommitted, all attributes
+                        (<methodname>array()</methodname>) are included in the result.
+                        <varname>$throwOnNotFound</varname> is <constant>FALSE</constant> by default, so
+                        the method will return <constant>NULL</constant> if the specified entry
+                        cannot be found. If set to <constant>TRUE</constant>, a
+                        <classname>Zend_Ldap_Exception</classname> will be thrown instead.
                     </entry>
                 </row>
                 <row>
@@ -329,9 +329,9 @@
                         $entry)</code>
                     </entry>
                     <entry>
-                        Adds the entry identified by <code>$dn</code> with its
-                        attributes <code>$entry</code> to the <acronym>LDAP</acronym> tree. Throws a
-                        <code>Zend_Ldap_Exception</code> if the entry could not be
+                        Adds the entry identified by <varname>$dn</varname> with its
+                        attributes <varname>$entry</varname> to the <acronym>LDAP</acronym> tree. Throws a
+                        <classname>Zend_Ldap_Exception</classname> if the entry could not be
                         added.
                     </entry>
                 </row>
@@ -341,9 +341,9 @@
                         $entry)</code>
                     </entry>
                     <entry>
-                        Updates the entry identified by <code>$dn</code> with its
-                        attributes <code>$entry</code> to the <acronym>LDAP</acronym> tree. Throws a
-                        <code>Zend_Ldap_Exception</code> if the entry could not be
+                        Updates the entry identified by <varname>$dn</varname> with its
+                        attributes <varname>$entry</varname> to the <acronym>LDAP</acronym> tree. Throws a
+                        <classname>Zend_Ldap_Exception</classname> if the entry could not be
                         modified.
                     </entry>
                 </row>
@@ -353,9 +353,9 @@
                         $entry)</code>
                     </entry>
                     <entry>
-                        Saves the entry identified by <code>$dn</code> with its
-                        attributes <code>$entry</code> to the <acronym>LDAP</acronym> tree. Throws a
-                        <code>Zend_Ldap_Exception</code> if the entry could not be saved.
+                        Saves the entry identified by <varname>$dn</varname> with its
+                        attributes <varname>$entry</varname> to the <acronym>LDAP</acronym> tree. Throws a
+                        <classname>Zend_Ldap_Exception</classname> if the entry could not be saved.
                         This method decides by querying the <acronym>LDAP</acronym> tree if the entry will be
                         added or updated.
                     </entry>
@@ -366,14 +366,14 @@
                         $recursively)</code>
                     </entry>
                     <entry>
-                        Deletes the entry identified by <code>$dn</code> from the
-                        <acronym>LDAP</acronym> tree. Throws a <code>Zend_Ldap_Exception</code> if the entry
-                        could not be deleted. <code>$recursively</code> is
-                        <code>false</code> by default. If set to <code>true</code> the
+                        Deletes the entry identified by <varname>$dn</varname> from the
+                        <acronym>LDAP</acronym> tree. Throws a <classname>Zend_Ldap_Exception</classname> if the entry
+                        could not be deleted. <varname>$recursively</varname> is
+                        <constant>FALSE</constant> by default. If set to <constant>TRUE</constant> the
                         deletion will be carried out recursively and will effectively
                         delete a complete subtree. Deletion will fail if
-                        <code>$recursively</code> is <code>false</code> and the entry
-                        <code>$dn</code> is not a leaf entry.
+                        <varname>$recursively</varname> is <constant>FALSE</constant> and the entry
+                        <varname>$dn</varname> is not a leaf entry.
                     </entry>
                 </row>
                 <row>
@@ -383,17 +383,17 @@
                         $alwaysEmulate)</code>
                     </entry>
                     <entry>
-                        Moves the entry identified by <code>$from</code> to a
-                        location below <code>$to</code> keeping its <acronym>RDN</acronym> unchanged.
-                        <code>$recursively</code> specifies if the operation will be
-                        carried out recursively (<code>false</code> by default) so that the
-                        entry <code>$from</code> and all its descendants will be moved.
-                        Moving will fail if <code>$recursively</code> is <code>false</code>
-                        and the entry <code>$from</code> is not a leaf entry.
-                        <code>$alwaysEmulate</code> controls whether the ext/ldap function
-                        <code>ldap_rename()</code> should be used if available. This can
+                        Moves the entry identified by <varname>$from</varname> to a
+                        location below <varname>$to</varname> keeping its <acronym>RDN</acronym> unchanged.
+                        <varname>$recursively</varname> specifies if the operation will be
+                        carried out recursively (<constant>FALSE</constant> by default) so that the
+                        entry <varname>$from</varname> and all its descendants will be moved.
+                        Moving will fail if <varname>$recursively</varname> is <constant>FALSE</constant>
+                        and the entry <varname>$from</varname> is not a leaf entry.
+                        <varname>$alwaysEmulate</varname> controls whether the ext/ldap function
+                        <methodname>ldap_rename()</methodname> should be used if available. This can
                         only work for leaf entries and for servers and for ext/ldap
-                        supporting this function. Set to <code>true</code> to always use an
+                        supporting this function. Set to <constant>TRUE</constant> to always use an
                         emulated rename operation.
                         <note>
                             <para>All move-operations are carried out by copying and then
@@ -414,7 +414,7 @@
                     </entry>
                     <entry>
                         This is an alias for
-                        <code>Zend_Ldap::rename()</code>.
+                        <methodname>Zend_Ldap::rename()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -424,17 +424,17 @@
                         $alwaysEmulate)</code>
                     </entry>
                     <entry>
-                        Renames the entry identified by <code>$from</code> to
-                        <code>$to</code>. <code>$recursively</code> specifies if the
-                        operation will be carried out recursively (<code>false</code> by
-                        default) so that the entry <code>$from</code> and all its
+                        Renames the entry identified by <varname>$from</varname> to
+                        <varname>$to</varname>. <varname>$recursively</varname> specifies if the
+                        operation will be carried out recursively (<constant>FALSE</constant> by
+                        default) so that the entry <varname>$from</varname> and all its
                         descendants will be moved. Moving will fail if
-                        <code>$recursively</code> is <code>false</code> and the entry
-                        <code>$from</code> is not a leaf entry. <code>$alwaysEmulate</code>
-                        controls whether the ext/ldap function <code>ldap_rename()</code>
+                        <varname>$recursively</varname> is <constant>FALSE</constant> and the entry
+                        <varname>$from</varname> is not a leaf entry. <varname>$alwaysEmulate</varname>
+                        controls whether the ext/ldap function <methodname>ldap_rename()</methodname>
                         should be used if available. This can only work for leaf entries
                         and for servers and for ext/ldap supporting this function. Set to
-                        <code>true</code> to always use an emulated rename
+                        <constant>TRUE</constant> to always use an emulated rename
                         operation.
                     </entry>
                 </row>
@@ -444,13 +444,13 @@
                         string|Zend_Ldap_Dn $to, boolean $recursively)</code>
                     </entry>
                     <entry>
-                        Copies the entry identified by <code>$from</code> to a
-                        location below <code>$to</code> keeping its <acronym>RDN</acronym> unchanged.
-                        <code>$recursively</code> specifies if the operation will be
-                        carried out recursively (<code>false</code> by default) so that the
-                        entry <code>$from</code> and all its descendants will be copied.
-                        Copying will fail if <code>$recursively</code> is
-                        <code>false</code> and the entry <code>$from</code> is not a leaf
+                        Copies the entry identified by <varname>$from</varname> to a
+                        location below <varname>$to</varname> keeping its <acronym>RDN</acronym> unchanged.
+                        <varname>$recursively</varname> specifies if the operation will be
+                        carried out recursively (<constant>FALSE</constant> by default) so that the
+                        entry <varname>$from</varname> and all its descendants will be copied.
+                        Copying will fail if <varname>$recursively</varname> is
+                        <constant>FALSE</constant> and the entry <varname>$from</varname> is not a leaf
                         entry.
                     </entry>
                 </row>
@@ -460,13 +460,13 @@
                         string|Zend_Ldap_Dn $to, boolean $recursively)</code>
                     </entry>
                     <entry>
-                        Copies the entry identified by <code>$from</code> to
-                        <code>$to</code>. <code>$recursively</code> specifies if the
-                        operation will be carried out recursively (<code>false</code> by
-                        default) so that the entry <code>$from</code> and all its
+                        Copies the entry identified by <varname>$from</varname> to
+                        <varname>$to</varname>. <varname>$recursively</varname> specifies if the
+                        operation will be carried out recursively (<constant>FALSE</constant> by
+                        default) so that the entry <varname>$from</varname> and all its
                         descendants will be copied. Copying will fail if
-                        <code>$recursively</code> is <code>false</code> and the entry
-                        <code>$from</code> is not a leaf entry.
+                        <varname>$recursively</varname> is <constant>FALSE</constant> and the entry
+                        <varname>$from</varname> is not a leaf entry.
                     </entry>
                 </row>
                 <row>
@@ -475,15 +475,15 @@
                         $dn)</code>
                     </entry>
                     <entry>
-                        Returns the entry <code>$dn</code> wrapped in a
-                        <code>Zend_Ldap_Node</code>.
+                        Returns the entry <varname>$dn</varname> wrapped in a
+                        <classname>Zend_Ldap_Node</classname>.
                     </entry>
                 </row>
                 <row>
                     <entry><code>Zend_Ldap_Node getBaseNode()</code></entry>
                     <entry>
-                        Returns the entry for the base DN <code>$baseDn</code>
-                        wrapped in a <code>Zend_Ldap_Node</code>.
+                        Returns the entry for the base DN <varname>$baseDn</varname>
+                        wrapped in a <classname>Zend_Ldap_Node</classname>.
                     </entry>
                 </row>
                 <row>
@@ -502,10 +502,10 @@
         <title>Zend_Ldap_Collection</title>
 
         <para>
-            <code>Zend_Ldap_Collection</code> implements <code>Iterator</code> to
-            allow for item traversal using <code>foreach()</code> and
-            <code>Countable</code> to be able to respond to <code>count()</code>. With its
-            protected <code>_createEntry()</code> method it provides a simple extension
+            <classname>Zend_Ldap_Collection</classname> implements <code>Iterator</code> to
+            allow for item traversal using <methodname>foreach()</methodname> and
+            <code>Countable</code> to be able to respond to <methodname>count()</methodname>. With its
+            protected <methodname>_createEntry()</methodname> method it provides a simple extension
             point for developers needing custom result objects.
         </para>
 
@@ -527,9 +527,9 @@
                     </entry>
                     <entry>
                         Constructor. The constrcutor must be provided by a
-                        <code>Zend_Ldap_Collection_Iterator_Interface</code> which does the
+                        <classname>Zend_Ldap_Collection_Iterator_Interface</classname> which does the
                         real result iteration.
-                        <code>Zend_Ldap_Collection_Iterator_Default</code> is the default
+                        <classname>Zend_Ldap_Collection_Iterator_Default</classname> is the default
                         implementation for iterating ext/ldap results.
                     </entry>
                 </row>
@@ -548,7 +548,7 @@
                     <entry><code>array getFirst()</code></entry>
                     <entry>
                         Returns the first entry in the collection or
-                        <code>null</code> if the collection is empty.
+                        <constant>NULL</constant> if the collection is empty.
                     </entry>
                 </row>
             </tbody></tgroup>

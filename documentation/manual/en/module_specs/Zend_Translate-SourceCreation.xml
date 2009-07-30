@@ -30,7 +30,7 @@
             adapter to get started with translation business.
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 $english = array(
     'message1' => 'message1',
     'message2' => 'message2',
@@ -51,7 +51,7 @@ $translate->addTranslation($deutsch, 'de');
             include it and look for the array. See the following example for details:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // myarray.php
 return array(
     'message1' => 'Nachricht1',
@@ -87,7 +87,7 @@ $translate = new Zend_Translate('array', '/path/to/myarray.php', 'de');
             This tool also supports you during the translation process itself.
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // We accume that we have created the mo files and translated them
 $translate = new Zend_Translate('gettext', '/path/to/english.mo', 'en');
 $translate->addTranslation('/path/to/german.mo', 'de');
@@ -110,7 +110,7 @@ $translate->addTranslation('/path/to/german.mo', 'de');
                  Otherwise you will have problems when using two
                  different source encodings.
                  E.g. one of your source files is encoded
-                 with ISO-8815-11 and another one with CP815.
+                 with <acronym>ISO</acronym>-8815-11 and another one with CP815.
                  You can set only one encoding for your source file,
                  so one of your languages probably will not display correctly.
             </para>
@@ -125,12 +125,12 @@ $translate->addTranslation('/path/to/german.mo', 'de');
             Many gettext editors add adapter informations as empty translation string.
             This is the reason why empty strings are not translated when using the
             gettext adapter. Instead they are erased from the translation table and
-            provided by the <code>getAdapterInfo()</code> method. It will return
+            provided by the <methodname>getAdapterInfo()</methodname> method. It will return
             the adapter informations for all added gettext files as array using the
             filename as key.
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting language="php"><![CDATA[
 // Getting the adapter informations
 $translate = new Zend_Translate('gettext', '/path/to/english.mo', 'en');
 print_r($translate->getAdapterInfo());
@@ -144,7 +144,7 @@ print_r($translate->getAdapterInfo());
 
         <para>
             TMX source files are a new industry standard.
-            They have the advantage of being XML files and so they are
+            They have the advantage of being <acronym>XML</acronym> files and so they are
             readable by every editor and of course by humans.
             You can either create TMX files manually with a text editor,
             or you can use a special tool. But most tools currently available for
@@ -153,7 +153,7 @@ print_r($translate->getAdapterInfo());
 
         <example id="zend.translate.sourcecreation.tmx.example">
             <title>Example TMX file</title>
-            <programlisting role="xml"><![CDATA[
+            <programlisting language="xml"><![CDATA[
 <?xml version="1.0" ?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
@@ -172,7 +172,7 @@ print_r($translate->getAdapterInfo());
   </tu>
 ]]></programlisting>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
 ]]></programlisting>
         </example>
@@ -180,14 +180,14 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
         <para>
             TMX files can have several languages within the same file.
             All other included languages are added automatically,
-            so you do not have to call <code>addLanguage()</code>.
+            so you do not have to call <methodname>addLanguage()</methodname>.
         </para>
 
         <para>
             If you want to have only specified languages from the source translated
             you can set the option '<code>defined_language</code>' to <constant>TRUE</constant>.
             With this option you can add the wished languages explicitly with
-            <code>addLanguage()</code>. The default value for this option is to add all
+            <methodname>addLanguage()</methodname>. The default value for this option is to add all
             languages.
         </para>
     </sect2>
@@ -210,7 +210,7 @@ message1;Nachricht1
 message2;Nachricht2
 ]]></programlisting>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $translate = new Zend_Translate('csv', '/path/to/mytranslation.csv', 'de');
 $translate->addTranslation('path/to/other.csv', 'fr');
 ]]></programlisting>
@@ -249,7 +249,7 @@ message2,"Nachricht,2"
 "message3,",Nachricht3
 ]]></programlisting>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $translate = new Zend_Translate(
     'csv',
     '/path/to/mytranslation.csv',
@@ -277,9 +277,9 @@ $translate->addTranslation('/path/to/other.csv', 'fr');
         <title>Creating INI source files</title>
 
         <para>
-            INI source files are human readable but normally not very small as they also
+            <acronym>INI</acronym> source files are human readable but normally not very small as they also
             include other data beside translations. If you have data which shall be
-            editable by your customers you can use the INI adapter.
+            editable by your customers you can use the <acronym>INI</acronym> adapter.
         </para>
 
         <example id="zend.translate.sourcecreation.ini.example">
@@ -292,14 +292,14 @@ Message_2="Nachricht 2 (de)"
 Message_3="Nachricht :3 (de)"
 ]]></programlisting>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
 $translate = new Zend_Translate('ini', '/path/to/mytranslation.ini', 'de');
 $translate->addTranslation('/path/to/other.ini', 'it');
 ]]></programlisting>
         </example>
 
         <para>
-            INI files have several restrictions. If a value in the ini file contains any
+            <acronym>INI</acronym> files have several restrictions. If a value in the ini file contains any
             non-alphanumeric characters it needs to be enclosed in double-quotes (<code>"</code>).
             There are also reserved words which must not be used as keys for ini files.
             These include: <constant>NULL</constant>, <code>yes</code>, <code>no</code>, <constant>TRUE</constant>,

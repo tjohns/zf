@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 17054 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.filter.set.realpath">
     <title>RealPath</title>
@@ -12,8 +13,8 @@
 
     <para>
         <classname>Zend_Filter_RealPath</classname> retourne <constant>FALSE</constant> en cas d'echec
-        par exemple si le fichier n'existe pas. Sur les systems BSD, 
-        <classname>Zend_Filter_RealPath</classname> n'échoue pas si seule la dernière partie du chemin 
+        par exemple si le fichier n'existe pas. Sur les systems BSD,
+        <classname>Zend_Filter_RealPath</classname> n'échoue pas si seule la dernière partie du chemin
         n'existe pas, les autres systèmes retourneront <constant>FALSE</constant>.
     </para>
 

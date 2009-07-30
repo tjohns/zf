@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17173 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.measure.introduction">
     <title>Introduction</title>
@@ -52,7 +52,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
         <para>
             Le mètre est utilisé pour mesurer des longueurs, ainsi son type constante peut
             être trouvé dans la classe des longueurs. Pour se rapporter à cette unité de mesure, la
-            notation <code>Length::METER</code> doit être utilisée. L'unité de visualisation est
+            notation <constant>Length::METER</constant> doit être utilisée. L'unité de visualisation est
             <code>m</code>.
         </para>
 

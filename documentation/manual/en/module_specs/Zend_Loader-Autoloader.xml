@@ -40,7 +40,7 @@
         <para>
             The first time an instance of the autoloader is retrieved, it
             registers itself with <code>spl_autoload</code>. You retrieve an
-            instance using the <code>getInstance()</code> method:
+            instance using the <methodname>getInstance()</methodname> method:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -51,7 +51,7 @@ $autoloader = Zend_Loader_Autoloader::getInstance();
             By default, the autoloader is configured to match the "Zend_" and
             "ZendX_" namespaces. If you have your own library code that uses
             your own namespace, you may register it with the autoloader using
-            the <code>registerNamespace()</code> method. For instance, if your
+            the <methodname>registerNamespace()</methodname> method. For instance, if your
             library code is prefixed with "My_", you could do so as follows:
         </para>
 
@@ -84,7 +84,7 @@ $autoloader->registerNamespace('My_');
             As an example, you may want to utilize one or more eZcomponents
             components with your Zend Framework application. To use its
             autoloading capabilities, push it onto the autoloader stack using
-            <code>pushAutoloader()</code>:
+            <methodname>pushAutoloader()</methodname>:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -97,17 +97,17 @@ $autoloader->pushAutoloader(array('ezcBase', 'autoload'), 'ezc');
         </para>
 
         <para>
-            You can use the <code>unshiftAutoloader()</code> method to add the
+            You can use the <methodname>unshiftAutoloader()</methodname> method to add the
             autoloader to the beginning of the autoloader chain.
         </para>
 
         <para>
             By default, <classname>Zend_Loader_Autoloader</classname> does no error
             suppression when using its internal autoloader, which utilizes
-            <classname>Zend_Loader::loadClass()</classname>. Most of the time, this is
+            <methodname>Zend_Loader::loadClass()</methodname>. Most of the time, this is
             exactly what you want. However, there may be cases where you want to
             suppress them. You can do this using
-            <code>suppressNotFoundWarnings()</code>:
+            <methodname>suppressNotFoundWarnings()</methodname>:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -119,7 +119,7 @@ $autoloader->suppressNotFoundWarnings(true);
             namespace. For instance, PEAR libraries do not share a common
             namespace, making specifying individual namespaces difficult when
             many PEAR components are in use. You can use the
-            <code>setFallbackAutoloader()</code> method to have the autoloader
+            <methodname>setFallbackAutoloader()</methodname> method to have the autoloader
             act as a catch-all:
         </para>
 
@@ -146,8 +146,8 @@ interface Zend_Loader_Autoloader_Interface
 
         <para>
             When using this interface, you can simply pass a class instance to
-            <classname>Zend_Loader_Autoloader</classname>'s <code>pushAutoloader()</code>
-            and <code>unshiftAutoloader()</code> methods:
+            <classname>Zend_Loader_Autoloader</classname>'s <methodname>pushAutoloader()</methodname>
+            and <methodname>unshiftAutoloader()</methodname> methods:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -179,7 +179,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                 </thead>
                 <tbody>
                     <row>
-                        <entry><code>getInstance()</code></entry>
+                        <entry><methodname>getInstance()</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry>N/A</entry>
                         <entry><para>
@@ -191,7 +191,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>resetInstance()</code></entry>
+                        <entry><methodname>resetInstance()</methodname></entry>
                         <entry><code>void</code></entry>
                         <entry>N/A</entry>
                         <entry><para>
@@ -203,11 +203,11 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>autoload($class)</code></entry>
+                        <entry><methodname>autoload($class)</methodname></entry>
                         <entry><code>string|false</code></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$class</code>, <emphasis>required</emphasis>.
+                                <varname>$class</varname>, <emphasis>required</emphasis>.
                                 A string class name to load.
                             </para></listitem>
                         </itemizedlist></entry>
@@ -218,47 +218,47 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>setDefaultAutoloader($callback)</code></entry>
+                        <entry><methodname>setDefaultAutoloader($callback)</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$callback</code>, <emphasis>required</emphasis>.
+                                <varname>$callback</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
-                            Specify an alternate PHP callback to use for the
+                            Specify an alternate <acronym>PHP</acronym> callback to use for the
                             default autoloader implementation.
                         </para></entry>
                     </row>
 
                     <row>
-                        <entry><code>getDefaultAutoloader()</code></entry>
+                        <entry><methodname>getDefaultAutoloader()</methodname></entry>
                         <entry><code>callback</code></entry>
                         <entry>N/A</entry>
                         <entry><para>
                             Retrieve the default autoloader implementation; by
                             default, this is
-                            <classname>Zend_Loader::loadClass()</classname>.
+                            <methodname>Zend_Loader::loadClass()</methodname>.
                         </para></entry>
                     </row>
 
                     <row>
-                        <entry><code>setAutoloaders(array $autoloaders)</code></entry>
+                        <entry><methodname>setAutoloaders(array $autoloaders)</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$autoloaders</code>, <emphasis>required</emphasis>.
+                                <varname>$autoloaders</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
                             Set a list of concrete autoloaders to use in the
                             autoloader stack. Each item in the autoloaders array
-                            must be a PHP callback.
+                            must be a <acronym>PHP</acronym> callback.
                         </para></entry>
                     </row>
 
                     <row>
-                        <entry><code>getAutoloaders()</code></entry>
+                        <entry><methodname>getAutoloaders()</methodname></entry>
                         <entry><type>Array</type></entry>
                         <entry>N/A</entry>
                         <entry><para>
@@ -267,11 +267,11 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>getNamespaceAutoloaders($namespace)</code></entry>
+                        <entry><methodname>getNamespaceAutoloaders($namespace)</methodname></entry>
                         <entry><type>Array</type></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>required</emphasis>
+                                <varname>$namespace</varname>, <emphasis>required</emphasis>
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
@@ -281,39 +281,39 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>registerNamespace($namespace)</code></entry>
+                        <entry><methodname>registerNamespace($namespace)</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>required</emphasis>.
+                                <varname>$namespace</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
                             Register one or more namespaces with the default
-                            autoloader. If <code>$namespace</code> is a string,
+                            autoloader. If <varname>$namespace</varname> is a string,
                             it registers that namespace; if it's an array of
                             strings, registers each as a namespace.
                         </para></entry>
                     </row>
 
                     <row>
-                        <entry><code>unregisterNamespace($namespace)</code></entry>
+                        <entry><methodname>unregisterNamespace($namespace)</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>required</emphasis>.
+                                <varname>$namespace</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
                             Unregister one or more namespaces from the default
-                            autoloader. If <code>$namespace</code> is a string,
+                            autoloader. If <varname>$namespace</varname> is a string,
                             it unregisters that namespace; if it's an array of
                             strings, unregisters each as a namespace.
                         </para></entry>
                     </row>
 
                     <row>
-                        <entry><code>getRegisteredNamespace()</code></entry>
+                        <entry><methodname>getRegisteredNamespace()</methodname></entry>
                         <entry><type>Array</type></entry>
                         <entry>N/A</entry>
                         <entry><para>
@@ -323,11 +323,11 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>suppressNotFoundWarnings($flag = null)</code></entry>
+                        <entry><methodname>suppressNotFoundWarnings($flag = null)</methodname></entry>
                         <entry><code>boolean|Zend_Loader_Autoloader</code></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$flag</code>, <emphasis>optional</emphasis>.
+                                <varname>$flag</varname>, <emphasis>optional</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
@@ -343,11 +343,11 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>setFallbackAutoloader($flag)</code></entry>
+                        <entry><methodname>setFallbackAutoloader($flag)</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$flag</code>, <emphasis>required</emphasis>.
+                                <varname>$flag</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
@@ -358,7 +358,7 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>isFallbackAutoloader()</code></entry>
+                        <entry><methodname>isFallbackAutoloader()</methodname></entry>
                         <entry><type>Boolean</type></entry>
                         <entry>N/A</entry>
                         <entry><para>
@@ -370,11 +370,11 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>getClassAutoloaders($class)</code></entry>
+                        <entry><methodname>getClassAutoloaders($class)</methodname></entry>
                         <entry><type>Array</type></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$class</code>, <emphasis>required</emphasis>.
+                                <varname>$class</varname>, <emphasis>required</emphasis>.
                             </para></listitem>
                         </itemizedlist></entry>
                         <entry><para>
@@ -386,16 +386,16 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>unshiftAutoloader($callback, $namespace = '')</code></entry>
+                        <entry><methodname>unshiftAutoloader($callback, $namespace = '')</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$callback</code>, <emphasis>required</emphasis>.
-                                A valid PHP callback
+                                <varname>$callback</varname>, <emphasis>required</emphasis>.
+                                A valid <acronym>PHP</acronym> callback
                             </para></listitem>
 
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>optional</emphasis>.
+                                <varname>$namespace</varname>, <emphasis>optional</emphasis>.
                                 A string representing a class prefix namespace.
                             </para></listitem>
                         </itemizedlist></entry>
@@ -409,16 +409,16 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>pushAutoloader($callback, $namespace = '')</code></entry>
+                        <entry><methodname>pushAutoloader($callback, $namespace = '')</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$callback</code>, <emphasis>required</emphasis>.
-                                A valid PHP callback
+                                <varname>$callback</varname>, <emphasis>required</emphasis>.
+                                A valid <acronym>PHP</acronym> callback
                             </para></listitem>
 
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>optional</emphasis>.
+                                <varname>$namespace</varname>, <emphasis>optional</emphasis>.
                                 A string representing a class prefix namespace.
                             </para></listitem>
                         </itemizedlist></entry>
@@ -432,16 +432,16 @@ $autoloader->pushAutoloader($foo, 'Foo_');
                     </row>
 
                     <row>
-                        <entry><code>removeAutoloader($callback, $namespace = '')</code></entry>
+                        <entry><methodname>removeAutoloader($callback, $namespace = '')</methodname></entry>
                         <entry><classname>Zend_Loader_Autoloader</classname></entry>
                         <entry><itemizedlist>
                             <listitem><para>
-                                <code>$callback</code>, <emphasis>required</emphasis>.
-                                A valid PHP callback
+                                <varname>$callback</varname>, <emphasis>required</emphasis>.
+                                A valid <acronym>PHP</acronym> callback
                             </para></listitem>
 
                             <listitem><para>
-                                <code>$namespace</code>, <emphasis>optional</emphasis>.
+                                <varname>$namespace</varname>, <emphasis>optional</emphasis>.
                                 A string representing a class prefix namespace,
                                 or an array of namespace strings.
                             </para></listitem>

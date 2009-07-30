@@ -5,13 +5,13 @@
     <sect2 id="zend.service.amazon.introduction">
         <title>Introduction</title>
         <para>
-            <classname>Zend_Service_Amazon</classname> is a simple API for using Amazon web services.
-            <classname>Zend_Service_Amazon</classname> has two APIs: a more traditional one that follows Amazon's own API, and a
-            simpler "Query API" for constructing even complex search queries easily.
+            <classname>Zend_Service_Amazon</classname> is a simple <acronym>API</acronym> for using Amazon web services.
+            <classname>Zend_Service_Amazon</classname> has two <acronym>API</acronym>s: a more traditional one that follows Amazon's own <acronym>API</acronym>, and a
+            simpler "Query <acronym>API</acronym>" for constructing even complex search queries easily.
         </para>
         <para>
             <classname>Zend_Service_Amazon</classname> enables developers to retrieve information appearing throughout Amazon.com
-            web sites directly through the Amazon Web Services API. Examples include:
+            web sites directly through the Amazon Web Services <acronym>API</acronym>. Examples include:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -41,23 +41,23 @@
             </itemizedlist>
         </para>
         <para>
-            In order to use <classname>Zend_Service_Amazon</classname>, you should already have an Amazon developer API key
+            In order to use <classname>Zend_Service_Amazon</classname>, you should already have an Amazon developer <acronym>API</acronym> key
             aswell as a secret key. To get a key and for more information, please visit the
             <ulink url="http://aws.amazon.com/">Amazon Web Services</ulink> web site. As of August 15th, 2009 you can
-            only use the Amazon Product Advertising API through <classname>Zend_Service_Amazon</classname>, when specifying
+            only use the Amazon Product Advertising <acronym>API</acronym> through <classname>Zend_Service_Amazon</classname>, when specifying
             the additional secret key.
         </para>
         <note>
             <title>Attention</title>
             <para>
-                Your Amazon developer API and secret keys are linked to your Amazon identity,
+                Your Amazon developer <acronym>API</acronym> and secret keys are linked to your Amazon identity,
                 so take appropriate measures to keep them private.
             </para>
         </note>
         <example id="zend.service.amazon.introduction.example.itemsearch">
             <title>Search Amazon Using the Traditional API</title>
             <para>
-                In this example, we search for PHP books at Amazon and loop through the results, printing them.
+                In this example, we search for <acronym>PHP</acronym> books at Amazon and loop through the results, printing them.
             </para>
             <programlisting language="php"><![CDATA[
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'US', 'AMAZON_SECRET_KEY');
@@ -71,7 +71,7 @@ foreach ($results as $result) {
         <example id="zend.service.amazon.introduction.example.query_api">
             <title>Search Amazon Using the Query API</title>
             <para>
-                Here, we also search for PHP books at Amazon, but we instead use the Query API, which
+                Here, we also search for <acronym>PHP</acronym> books at Amazon, but we instead use the Query <acronym>API</acronym>, which
                 resembles the Fluent Interface design pattern.
             </para>
             <programlisting language="php"><![CDATA[
@@ -109,8 +109,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP', 'AMAZON_SECRET_KEY');
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Looking up a Specific Amazon Item by ASIN</title>
         <para>
-            The <code>itemLookup()</code> method provides the ability to fetch a particular Amazon item when
-            the ASIN is known.
+            The <methodname>itemLookup()</methodname> method provides the ability to fetch a particular Amazon item when
+            the <acronym>ASIN</acronym> is known.
         </para>
         <example id="zend.service.amazon.itemlookup.example.asin">
             <title>Looking up a Specific Amazon Item by ASIN</title>
@@ -120,7 +120,7 @@ $item = $amazon->itemLookup('B0000A432X');
 ]]></programlisting>
         </example>
         <para>
-            The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
+            The <methodname>itemLookup()</methodname> method also accepts an optional second parameter for handling search
             options. For full details, including a list of available options, please see the
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
@@ -137,7 +137,7 @@ $item = $amazon->itemLookup('B0000A432X');
         <title>Performing Amazon Item Searches</title>
         <para>
             Searching for items based on any of various available criteria are made simple using the
-            <code>itemSearch()</code> method, as in the following example:
+            <methodname>itemSearch()</methodname> method, as in the following example:
         </para>
         <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Performing Amazon Item Searches</title>
@@ -170,7 +170,7 @@ foreach ($results as $result) {
 ]]></programlisting>
         </example>
         <para>
-            The <code>itemSearch()</code> method accepts a single array parameter for handling search
+            The <methodname>itemSearch()</methodname> method accepts a single array parameter for handling search
             options. For full details, including a list of available options, please see the
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
@@ -187,19 +187,19 @@ foreach ($results as $result) {
         <sect3 id="zend.service.amazon.query.introduction">
             <title>Introduction</title>
             <para>
-                <classname>Zend_Service_Amazon_Query</classname> provides an alternative API for using the Amazon Web Service.
-                The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
+                <classname>Zend_Service_Amazon_Query</classname> provides an alternative <acronym>API</acronym> for using the Amazon Web Service.
+                The alternative <acronym>API</acronym> uses the Fluent Interface pattern. That is, all calls can be made using chained method
                 calls. (e.g., <code>$obj->method()->method2($arg)</code>)
             </para>
             <para>
-                The <classname>Zend_Service_Amazon_Query</classname> API uses overloading to easily set up an item search and then
+                The <classname>Zend_Service_Amazon_Query</classname> <acronym>API</acronym> uses overloading to easily set up an item search and then
                 allows you to search based upon the criteria specified. Each of the options is provided as a method call,
                 and each method's argument corresponds to the named option's value:
             </para>
             <example id="zend.service.amazon.query.introduction.example.basic">
                 <title>Search Amazon Using the Alternative Query API</title>
                 <para>
-                    In this example, the alternative query API is used as a fluent interface to specify options and their
+                    In this example, the alternative query <acronym>API</acronym> is used as a fluent interface to specify options and their
                     respective values:
                 </para>
                 <programlisting language="php"><![CDATA[
@@ -225,9 +225,9 @@ foreach ($results as $result) {
         <title>Zend_Service_Amazon Classes</title>
         <para>
             The following classes are all returned by
-            <link linkend="zend.service.amazon.itemlookup"><classname>Zend_Service_Amazon::itemLookup()</classname></link>
+            <link linkend="zend.service.amazon.itemlookup"><methodname>Zend_Service_Amazon::itemLookup()</methodname></link>
             and
-            <link linkend="zend.service.amazon.itemsearch"><classname>Zend_Service_Amazon::itemSearch()</classname></link>:
+            <link linkend="zend.service.amazon.itemsearch"><methodname>Zend_Service_Amazon::itemSearch()</methodname></link>:
             <itemizedlist>
                 <listitem><para><link linkend="zend.service.amazon.classes.item"><classname>Zend_Service_Amazon_Item</classname></link></para></listitem>
                 <listitem><para><link linkend="zend.service.amazon.classes.image"><classname>Zend_Service_Amazon_Image</classname></link></para></listitem>
@@ -256,13 +256,13 @@ foreach ($results as $result) {
                         <void />
                     </methodsynopsis>
                 </para>
-                <para>Return the original XML for the item</para>
+                <para>Return the original <acronym>XML</acronym> for the item</para>
             </sect4>
             <sect4 id="zend.service.amazon.classes.item.properties">
                 <title>Properties</title>
                 <para>
                     <classname>Zend_Service_Amazon_Item</classname> has a number of properties directly related to their standard
-                    Amazon API counterparts.
+                    Amazon <acronym>API</acronym> counterparts.
                 </para>
                 <table id="zend.service.amazon.classes.item.properties.table-1">
                     <title>Zend_Service_Amazon_Item Properties</title>
@@ -276,7 +276,7 @@ foreach ($results as $result) {
                         </thead>
                         <tbody>
                             <row>
-                                <entry>ASIN</entry>
+                                <entry><acronym>ASIN</acronym></entry>
                                 <entry>string</entry>
                                 <entry>Amazon Item ID</entry>
                             </row>
@@ -371,7 +371,7 @@ foreach ($results as $result) {
                             <row>
                                 <entry>Tracks</entry>
                                 <entry>array</entry>
-                                <entry>An array of track numbers and names for Music CDs and DVDs</entry>
+                                <entry>An array of track numbers and names for Music CDs and <constant>DVD</constant>s</entry>
                             </row>
                             <row>
                                 <entry>ListmaniaLists</entry>
@@ -417,7 +417,7 @@ foreach ($results as $result) {
                             <row>
                                 <entry>Url</entry>
                                 <entry>Zend_Uri</entry>
-                                <entry>Remote URL for the Image</entry>
+                                <entry>Remote <acronym>URL</acronym> for the Image</entry>
                             </row>
                             <row>
                                 <entry>Height</entry>
@@ -448,7 +448,7 @@ foreach ($results as $result) {
                 <title>SeekableIterator</title>
                 <para>
                     Implements the <code>SeekableIterator</code> for easy iteration (e.g. using <code>foreach</code>), as
-                    well as direct access to a specific result using <code>seek()</code>.
+                    well as direct access to a specific result using <methodname>seek()</methodname>.
                 </para>
             </note>
             <sect4 id="zend.service.amazon.classes.resultset.totalresults">
@@ -643,7 +643,7 @@ foreach ($results as $result) {
                         </thead>
                         <tbody>
                             <row>
-                                <entry>ASIN</entry>
+                                <entry><acronym>ASIN</acronym></entry>
                                 <entry>string</entry>
                                 <entry>Products Amazon Unique ID (ASIN)</entry>
                             </row>
@@ -679,7 +679,7 @@ foreach ($results as $result) {
                         </thead>
                         <tbody>
                             <row>
-                                <entry>ASIN</entry>
+                                <entry><acronym>ASIN</acronym></entry>
                                 <entry>string</entry>
                                 <entry>Products Amazon Unique ID (ASIN)</entry>
                             </row>

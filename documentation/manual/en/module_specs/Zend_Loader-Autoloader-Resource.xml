@@ -8,7 +8,7 @@
         follow Zend Framework coding standard guidelines, but which do not have
         a 1:1 mapping between the class name and the directory structure. Their
         primary purpose is to facilitate autoloading application resource code,
-        such as application-specific models, forms, and ACLs.
+        such as application-specific models, forms, and <acronym>ACL</acronym>s.
     </para>
 
     <para>
@@ -76,7 +76,7 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
         <para>
             Now that we have setup the base resource autoloader, we can add some
             components to it to autoload. This is done using the
-            <code>addResourceType()</code> method, which accepts three
+            <methodname>addResourceType()</methodname> method, which accepts three
             arguments: a resource "type", used internally as a reference name;
             the subdirectory path underneath the base path in which these
             resources live; and the component namespace to append to the base
@@ -91,7 +91,7 @@ $resourceLoader->addResourceType('acl', 'acls/', 'Acl')
 
         <para>
             Alternately, you could pass these as an array to
-            <code>addResourceTypes()</code>; the following is equivalent to the
+            <methodname>addResourceTypes()</methodname>; the following is equivalent to the
             above:
         </para>
 
@@ -145,7 +145,7 @@ $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
             Zend Framework ships with a concrete implementation of
             <classname>Zend_Loader_Autoloader_Resource</classname> that contains resource
             type mappings that cover the default recommended directory structure
-            for Zend Framework MVC applications. This loader,
+            for Zend Framework <acronym>MVC</acronym> applications. This loader,
             <classname>Zend_Application_Module_Autoloader</classname>, comes with the
             following mappings:
         </para>

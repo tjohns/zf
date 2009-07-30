@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.test.phpunit.testing">
     <title>Tester vos contrôleurs et vos applications MVC</title>
@@ -12,7 +12,7 @@
 
     <para>
         Premièrement, vous devez distribuer l'URL à tester en utilisant la méthode
-        <code>dispatch()</code> de TestCase :
+        <methodname>dispatch()</methodname> de TestCase :
     </para>
 
     <programlisting language="php"><![CDATA[

@@ -28,9 +28,9 @@
         <title>Using Zend_Db_Table as a concrete class</title>
 
         <para>
-            As of ZF 1.9, you can instantiate Zend_Db_Table.  This added benefit is that
+            As of Zend Framework 1.9, you can instantiate <classname>Zend_Db_Table</classname>. This added benefit is that
             you do not have to extend a base class and configure it to do simple operations
-            such as selecting, inserting, updating and deleteing on a single table.  Below
+            such as selecting, inserting, updating and deleteing on a single table. Below
             is an example of the simplest of use cases.
         </para>
 
@@ -46,10 +46,10 @@ $bugTable = new Zend_Db_Table('bug');
         </example>
 
         <para>
-            The above example represents the simplest of use cases.  Make not of all the
-            options describe below for configuring Zend_Db_Table tables.  If you want to be
+            The above example represents the simplest of use cases. Make not of all the
+            options describe below for configuring <classname>Zend_Db_Table</classname> tables. If you want to be
             able to use the concrete usage case, in addition to the more complex relationhip
-            features, see the Zend_Db_Table_Definition documentation.
+            features, see the <classname>Zend_Db_Table_Definition</classname> documentation.
         </para>
 
     </sect2>
@@ -110,7 +110,7 @@ class bugs extends Zend_Db_Table_Abstract
                 <varname>$_schema</varname>, or with the schema prepended to the table name in the
                 <varname>$_name</varname> property. Any schema specified with the
                 <varname>$_name</varname> property takes precedence over a schema specified with the
-                <varname>$_schema</varname> property. In some RDBMS brands, the term for schema is
+                <varname>$_schema</varname> property. In some <acronym>RDBMS</acronym> brands, the term for schema is
                 "database" or "tablespace," but it is used similarly.
             </para>
 
@@ -213,7 +213,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 If you don't specify the primary key, <classname>Zend_Db_Table_Abstract</classname>
                 tries to discover the primary key based on the information provided by the
-                <code>describeTable()</code>´ method.
+                <methodname>describeTable()</methodname>´ method.
             </para>
 
             <note>
@@ -222,7 +222,7 @@ class Bugs extends Zend_Db_Table_Abstract
                     Every table class must know which column(s) can be used to address rows
                     uniquely. If no primary key column(s) are specified in the table class
                     definition or the table constructor arguments, or discovered in the table
-                    metadata provided by <code>describeTable()</code>, then the table cannot be
+                    metadata provided by <methodname>describeTable()</methodname>, then the table cannot be
                     used with <classname>Zend_Db_Table</classname>.
                 </para>
 
@@ -265,7 +265,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>_setupDatabaseAdapter()</code> checks that an adapter has been
+                        <methodname>_setupDatabaseAdapter()</methodname> checks that an adapter has been
                         provided; gets a default adapter from the registry if needed. By overriding
                         this method, you can set a database adapter from some other source.
                     </para>
@@ -273,7 +273,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <listitem>
                     <para>
-                        <code>_setupTableName()</code> defaults the table name to the name of the
+                        <methodname>_setupTableName()</methodname> defaults the table name to the name of the
                         class. By overriding this method, you can set the table name before this
                         default behavior runs.
                     </para>
@@ -281,18 +281,18 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <listitem>
                     <para>
-                        <code>_setupMetadata()</code> sets the schema if the table name contains
-                        the pattern "schema.table"; calls <code>describeTable()</code> to get
+                        <methodname>_setupMetadata()</methodname> sets the schema if the table name contains
+                        the pattern "schema.table"; calls <methodname>describeTable()</methodname> to get
                         metadata information; defaults the <varname>$_cols</varname> array to the
-                        columns reported by <code>describeTable()</code>. By overriding this method,
+                        columns reported by <methodname>describeTable()</methodname>. By overriding this method,
                         you can specify the columns.
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <code>_setupPrimaryKey()</code> defaults the primary key columns to those
-                        reported by <code>describeTable()</code>; checks that the primary key
+                        <methodname>_setupPrimaryKey()</methodname> defaults the primary key columns to those
+                        reported by <methodname>describeTable()</methodname>; checks that the primary key
                         columns are included in the <varname>$_cols</varname> array. By overriding
                         this method, you can specify the primary key columns.
                     </para>
@@ -307,7 +307,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 If application-specific logic needs to be initialized when a Table class is
-                constructed, you can select to move your tasks to the <code>init()</code> method,
+                constructed, you can select to move your tasks to the <methodname>init()</methodname> method,
                 which is called after all Table metadata has been processed. This is recommended
                 over the <code>__construct</code> method if you do not need to alter the metadata
                 in any programmatic way.
@@ -343,7 +343,7 @@ class Bugs extends Zend_Db_Table_Abstract
             Before you use a Table class, create an instance using its constructor. The
             constructor's argument is an array of options. The most important option to a Table
             constructor is the database adapter instance, representing a live connection to an
-            RDBMS. There are three ways of specifying the database adapter to a Table class, and
+            <acronym>RDBMS</acronym>. There are three ways of specifying the database adapter to a Table class, and
             these three ways are described below:
         </para>
 
@@ -380,7 +380,7 @@ $table = new Bugs(array('db' => $db));
                 object of type <classname>Zend_Db_Adapter_Abstract</classname> to be a default
                 database adapter for all subsequent instances of Tables in your application. You can
                 do this with the static method
-                <classname>Zend_Db_Table_Abstract::setDefaultAdapter()</classname>. The argument is
+                <methodname>Zend_Db_Table_Abstract::setDefaultAdapter()</methodname>. The argument is
                 an object of type <classname>Zend_Db_Adapter_Abstract</classname>.
             </para>
 
@@ -440,7 +440,7 @@ $table = new Bugs(array('db' => 'my_db'));
                 Like setting the default adapter, this gives you the means to ensure that the same
                 adapter instance is used throughout your application. Using the registry is more
                 flexible, because you can store more than one adapter instance. A given adapter
-                instance is specific to a certain RDBMS brand and database instance. If your
+                instance is specific to a certain <acronym>RDBMS</acronym> brand and database instance. If your
                 application needs access to multiple databases or even multiple database brands,
                 then you need to use multiple adapters.
             </para>
@@ -455,7 +455,7 @@ $table = new Bugs(array('db' => 'my_db'));
 
         <para>
             You can use the Table object to insert rows into the database table on which the Table
-            object is based. Use the <code>insert()</code> method of your Table object. The
+            object is based. Use the <methodname>insert()</methodname> method of your Table object. The
             argument is an associative array, mapping column names to values.
         </para>
 
@@ -479,7 +479,7 @@ $table->insert($data);
 
         <para>
             By default, the values in your data array are inserted as literal values, using
-            parameters. If you need them to be treated as SQL expressions, you must make sure they
+            parameters. If you need them to be treated as <acronym>SQL</acronym> expressions, you must make sure they
             are distinct from plain strings. Use an object of type
             <classname>Zend_Db_Expr</classname> to do this.
         </para>
@@ -513,7 +513,7 @@ $data = array(
 
             <para>
                 An auto-incrementing primary key generates a unique integer value for you if you
-                omit the primary key column from your SQL <code>INSERT</code> statement.
+                omit the primary key column from your <acronym>SQL</acronym> <constant>INSERT</constant> statement.
             </para>
 
             <para>
@@ -541,14 +541,14 @@ class Bugs extends Zend_Db_Table_Abstract
             </example>
 
             <para>
-                MySQL, Microsoft SQL Server, and SQLite are examples of RDBMS brands that support
+                MySQL, Microsoft <acronym>SQL</acronym> Server, and SQLite are examples of <acronym>RDBMS</acronym> brands that support
                 auto-incrementing primary keys.
             </para>
 
             <para>
-                PostgreSQL has a <code>SERIAL</code> notation that implicitly defines a sequence
+                PostgreSQL has a <constant>SERIAL</constant> notation that implicitly defines a sequence
                 based on the table and column name, and uses the sequence to generate key values
-                for new rows. IBM DB2 has an <code>IDENTITY</code> notation that works similarly.
+                for new rows. IBM DB2 has an <constant>IDENTITY</constant> notation that works similarly.
                 If you use either of these notations, treat your
                 <classname>Zend_Db_Table</classname> class as having an auto-incrementing column
                 with respect to declaring the <varname>$_sequence</varname> member as
@@ -570,7 +570,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 If you define <varname>$_sequence</varname> to be a string, then
                 <classname>Zend_Db_Table_Abstract</classname> assumes the string to name a sequence
                 object in the database. The sequence is invoked to generate a new value, and this
-                value is used in the <code>INSERT</code> operation.
+                value is used in the <constant>INSERT</constant> operation.
             </para>
 
             <example id="zend.db.table.insert.key-sequence.example">
@@ -589,7 +589,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </example>
 
             <para>
-                Oracle, PostgreSQL, and IBM DB2 are examples of RDBMS brands that support sequence
+                Oracle, PostgreSQL, and IBM DB2 are examples of <acronym>RDBMS</acronym> brands that support sequence
                 objects in the database.
             </para>
 
@@ -616,7 +616,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 If you define the <varname>$_sequence</varname> to be the Boolean value
                 <constant>FALSE</constant>, then <classname>Zend_Db_Table_Abstract</classname>
                 assumes that the table has a natural primary key. You must provide values for the
-                primary key columns in the array of data to the <code>insert()</code> method, or
+                primary key columns in the array of data to the <methodname>insert()</methodname> method, or
                 else this method throws a <classname>Zend_Db_Table_Exception</classname>.
             </para>
 
@@ -638,7 +638,7 @@ class BugStatus extends Zend_Db_Table_Abstract
             <note>
 
                 <para>
-                    All RDBMS brands support tables with natural keys. Examples of tables that are
+                    All <acronym>RDBMS</acronym> brands support tables with natural keys. Examples of tables that are
                     often declared as having natural keys are lookup tables, intersection tables in
                     many-to-many relationships, or most tables with compound primary keys.
                 </para>
@@ -656,9 +656,9 @@ class BugStatus extends Zend_Db_Table_Abstract
         <para>
             You can update rows in a database table using the <code>update</code> method of a Table
             class. This method takes two arguments: an associative array of columns to change and
-            new values to assign to these columns; and an SQL expression that is used in a
-            <code>WHERE</code> clause, as criteria for the rows to change in the
-            <code>UPDATE</code> operation.
+            new values to assign to these columns; and an <acronym>SQL</acronym> expression that is used in a
+            <constant>WHERE</constant> clause, as criteria for the rows to change in the
+            <constant>UPDATE</constant> operation.
         </para>
 
         <example id="zend.db.table.update.example">
@@ -681,19 +681,19 @@ $table->update($data, $where);
         </example>
 
         <para>
-            Since the table <code>update()</code> method proxies to the database adapter
-            <link linkend="zend.db.adapter.write.update"><code>update()</code></link> method, the
-            second argument can be an array of SQL expressions. The expressions are combined as
-            Boolean terms using an <code>AND</code> operator.
+            Since the table <methodname>update()</methodname> method proxies to the database adapter
+            <link linkend="zend.db.adapter.write.update"><methodname>update()</methodname></link> method, the
+            second argument can be an array of <acronym>SQL</acronym> expressions. The expressions are combined as
+            Boolean terms using an <constant>AND</constant> operator.
         </para>
 
         <note>
 
             <para>
-                The values and identifiers in the SQL expression are not quoted for you. If you
+                The values and identifiers in the <acronym>SQL</acronym> expression are not quoted for you. If you
                 have values or identifiers that require quoting, you are responsible for doing
-                this. Use the <code>quote()</code>, <code>quoteInto()</code>, and
-                <code>quoteIdentifier()</code> methods of the database adapter.
+                this. Use the <methodname>quote()</methodname>, <methodname>quoteInto()</methodname>, and
+                <methodname>quoteIdentifier()</methodname> methods of the database adapter.
             </para>
 
         </note>
@@ -705,9 +705,9 @@ $table->update($data, $where);
         <title>Deleting Rows from a Table</title>
 
         <para>
-            You can delete rows from a database table using the <code>delete()</code> method. This
-            method takes one argument, which is an SQL expression that is used in a
-            <code>WHERE</code> clause, as criteria for the rows to delete.
+            You can delete rows from a database table using the <methodname>delete()</methodname> method. This
+            method takes one argument, which is an <acronym>SQL</acronym> expression that is used in a
+            <constant>WHERE</constant> clause, as criteria for the rows to delete.
         </para>
 
         <example id="zend.db.table.delete.example">
@@ -725,19 +725,19 @@ $table->delete($where);
         </example>
 
         <para>
-            Since the table <code>delete()</code> method proxies to the database adapter
-            <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link> method, the
-            argument can also be an array of SQL expressions. The expressions are combined as
-            Boolean terms using an <code>AND</code> operator.
+            Since the table <methodname>delete()</methodname> method proxies to the database adapter
+            <link linkend="zend.db.adapter.write.delete"><methodname>delete()</methodname></link> method, the
+            argument can also be an array of <acronym>SQL</acronym> expressions. The expressions are combined as
+            Boolean terms using an <constant>AND</constant> operator.
         </para>
 
         <note>
 
             <para>
-                The values and identifiers in the SQL expression are not quoted for you. If you
+                The values and identifiers in the <acronym>SQL</acronym> expression are not quoted for you. If you
                 have values or identifiers that require quoting, you are responsible for doing
-                this. Use the <code>quote()</code>, <code>quoteInto()</code>, and
-                <code>quoteIdentifier()</code> methods of the database adapter.
+                this. Use the <methodname>quote()</methodname>, <methodname>quoteInto()</methodname>, and
+                <methodname>quoteIdentifier()</methodname> methods of the database adapter.
             </para>
 
         </note>
@@ -750,7 +750,7 @@ $table->delete($where);
 
         <para>
             You can query the database table for rows matching specific values in the primary key,
-            using the <code>find()</code> method. The first argument of this method is either a
+            using the <methodname>find()</methodname> method. The first argument of this method is either a
             single value or an array of values to match against the primary key of the table.
         </para>
 
@@ -780,16 +780,16 @@ $rows = $table->find(array(1234, 5678));
         </para>
 
         <para>
-            The <code>find()</code> method might return fewer rows than the number of values you
+            The <methodname>find()</methodname> method might return fewer rows than the number of values you
             specify for the primary key, if some of the values don't match any rows in the database
             table. The method even may return zero rows. Because the number of rows returned is
-            variable, the <code>find()</code> method returns an object of type
+            variable, the <methodname>find()</methodname> method returns an object of type
             <classname>Zend_Db_Table_Rowset_Abstract</classname>.
         </para>
 
         <para>
             If the primary key is a compound key, that is, it consists of multiple columns, you can
-            specify the additional columns as additional arguments to the <code>find()</code>
+            specify the additional columns as additional arguments to the <methodname>find()</methodname>
             method. You must provide as many arguments as the number of columns in the table's
             primary key.
         </para>
@@ -807,7 +807,7 @@ $rows = $table->find(array(1234, 5678));
             <title>Example of finding rows by compound primary key values</title>
 
             <para>
-                The call to <code>find()</code> below to match multiple rows can match two rows in
+                The call to <methodname>find()</methodname> below to match multiple rows can match two rows in
                 the database. The first row must have primary key value (1234, 'ABC'), and the
                 second row must have primary key value (5678, 'DEF').
             </para>
@@ -847,10 +847,10 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
                 <warning>
 
                     <para>
-                        The API for fetch operations has been superseded to allow a
+                        The <acronym>API</acronym> for fetch operations has been superseded to allow a
                         <classname>Zend_Db_Table_Select</classname> object to modify the query.
-                        However, the deprecated usage of the <code>fetchRow()</code> and
-                        <code>fetchAll()</code> methods will continue to work without modification.
+                        However, the deprecated usage of the <methodname>fetchRow()</methodname> and
+                        <methodname>fetchAll()</methodname> methods will continue to work without modification.
                     </para>
 
                     <para>
@@ -916,7 +916,7 @@ $row = $table->fetchRow(
                         rowset will be <property>readOnly</property> and cannot be used for save()
                         operations. A <classname>Zend_Db_Table_Row</classname> with
                         <property>readOnly</property> status will throw an exception if a
-                        <code>save()</code> operation is attempted.
+                        <methodname>save()</methodname> operation is attempted.
                     </para>
                 </listitem>
 
@@ -930,7 +930,7 @@ $row = $table->fetchRow(
                 <listitem>
                     <para>
                         You <emphasis>can not</emphasis> specify columns from a JOINed tabled to be
-                        returned in a row/rowset. Doing so will trigger a PHP error. This was done
+                        returned in a row/rowset. Doing so will trigger a <acronym>PHP</acronym> error. This was done
                         to ensure the integrity of the <classname>Zend_Db_Table</classname> is
                         retained. i.e. A <classname>Zend_Db_Table_Row</classname> should only
                         reference columns derived from its parent table.
@@ -987,7 +987,7 @@ $rows =
 
             <para>
                 You can query for a set of rows using any criteria other than the primary key
-                values, using the <code>fetchAll()</code> method of the Table class. This method
+                values, using the <methodname>fetchAll()</methodname> method of the Table class. This method
                 returns an object of type <classname>Zend_Db_Table_Rowset_Abstract</classname>.
             </para>
 
@@ -1008,8 +1008,8 @@ $rows = $table->fetchAll($select);
             <para>
                 You may also pass sorting criteria in an <code>ORDER BY</code> clause, as well as
                 count and offset integer values, used to make the query return a specific subset of
-                rows. These values are used in a <code>LIMIT</code> clause, or in equivalent logic
-                for RDBMS brands that do not support the <code>LIMIT</code> syntax.
+                rows. These values are used in a <constant>LIMIT</constant> clause, or in equivalent logic
+                for <acronym>RDBMS</acronym> brands that do not support the <constant>LIMIT</constant> syntax.
             </para>
 
             <example id="zend.db.table.fetch-all.example2">
@@ -1163,7 +1163,8 @@ $rows = $table->fetchAll($select);
                 <programlisting language="php"><![CDATA[
 $table = new Bugs();
 
-$select = $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)->setIntegrityCheck(false);
+$select = $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                ->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
        ->join('accounts',
               'accounts.account_name = bugs.reported_by',
@@ -1185,7 +1186,7 @@ $rows = $table->fetchAll($select);
 
         <para>
             You can query for a single row using criteria similar to that of the
-            <code>fetchAll()</code> method.
+            <methodname>fetchAll()</methodname> method.
         </para>
 
         <example id="zend.db.table.fetch-row.example1">
@@ -1206,7 +1207,7 @@ $row = $table->fetchRow($select);
         <para>
             This method returns an object of type <classname>Zend_Db_Table_Row_Abstract</classname>.
             If the search criteria you specified match no rows in the database table, then
-            <code>fetchRow()</code> returns PHP's <constant>NULL</constant> value.
+            <methodname>fetchRow()</methodname> returns <acronym>PHP</acronym>'s <constant>NULL</constant> value.
         </para>
 
     </sect2>
@@ -1217,7 +1218,7 @@ $row = $table->fetchRow($select);
 
         <para>
             The <classname>Zend_Db_Table_Abstract</classname> class provides some information about
-            its metadata. The <code>info()</code> method returns an array structure with information
+            its metadata. The <methodname>info()</methodname> method returns an array structure with information
             about the table, its columns and primary key, and other metadata.
         </para>
 
@@ -1236,7 +1237,7 @@ echo "The table name is " . $info['name'] . "\n";
         </example>
 
         <para>
-            The keys of the array returned by the <code>info()</code> method are described below:
+            The keys of the array returned by the <methodname>info()</methodname> method are described below:
         </para>
 
         <itemizedlist>
@@ -1264,7 +1265,7 @@ echo "The table name is " . $info['name'] . "\n";
                 <para>
                     <emphasis>metadata</emphasis> => an associative array, mapping
                     column names to information about the columns. This is the information returned
-                    by the <code>describeTable()</code> method.
+                    by the <methodname>describeTable()</methodname> method.
                 </para>
             </listitem>
 
@@ -1319,16 +1320,16 @@ echo "The table name is " . $info['name'] . "\n";
             underlying database for <link linkend="zend.db.table.info">table
                 metadata</link> whenever that data is needed to perform table
             operations. The table object fetches the table metadata from the
-            database using the adapter's <code>describeTable()</code> method.
+            database using the adapter's <methodname>describeTable()</methodname> method.
             Operations requiring this introspection include:
         </para>
 
         <itemizedlist>
-            <listitem><para><code>insert()</code></para></listitem>
+            <listitem><para><methodname>insert()</methodname></para></listitem>
 
-            <listitem><para><code>find()</code></para></listitem>
+            <listitem><para><methodname>find()</methodname></para></listitem>
 
-            <listitem><para><code>info()</code></para></listitem>
+            <listitem><para><methodname>info()</methodname></para></listitem>
         </itemizedlist>
 
         <para>
@@ -1346,7 +1347,7 @@ echo "The table name is " . $info['name'] . "\n";
                 <listitem>
                     <para>
                         <emphasis>Call
-                        <classname>Zend_Db_Table_Abstract::setDefaultMetadataCache()</classname></emphasis>
+                        <methodname>Zend_Db_Table_Abstract::setDefaultMetadataCache()</methodname></emphasis>
                         - This allows a developer to once set the default cache object to be used
                         for all table classes.
                     </para>
@@ -1355,7 +1356,7 @@ echo "The table name is " . $info['name'] . "\n";
                 <listitem>
                     <para>
                         <emphasis>Configure
-                        <classname>Zend_Db_Table_Abstract::__construct()</classname></emphasis> -
+                        <methodname>Zend_Db_Table_Abstract::__construct()</methodname></emphasis> -
                         This allows a developer to set the cache object to be used for a particular
                         table class instance.
                     </para>
@@ -1580,8 +1581,8 @@ $rows = $table->fetchAll($where);
             </example>
 
             <para>
-                You can change the classes by specifying them with the <code>setRowClass()</code>
-                and <code>setRowsetClass()</code> methods. This applies to rows and rowsets created
+                You can change the classes by specifying them with the <methodname>setRowClass()</methodname>
+                and <methodname>setRowsetClass()</methodname> methods. This applies to rows and rowsets created
                 subsequently; it does not change the class of any row or rowset objects you have
                 created previously.
             </para>
@@ -1623,7 +1624,7 @@ $rowsCustom = $table->fetchAll($where);
             <title>Defining Custom Logic for Insert, Update, and Delete</title>
 
             <para>
-                You can override the <code>insert()</code> and <code>update()</code> methods in
+                You can override the <methodname>insert()</methodname> and <methodname>update()</methodname> methods in
                 your Table class. This gives you the opportunity to implement custom code that is
                 executed before performing the database operation. Be sure to call the parent class
                 method when you are done.
@@ -1661,7 +1662,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </example>
 
             <para>
-                You can also override the <code>delete()</code> method.
+                You can also override the <methodname>delete()</methodname> method.
             </para>
 
         </sect3>
@@ -1673,7 +1674,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <para>
                 You can implement custom query methods in your Table class, if you have frequent
                 need to do queries against this table with specific criteria. Most queries can be
-                written using <code>fetchAll()</code>, but this requires that you duplicate code to
+                written using <methodname>fetchAll()</methodname>, but this requires that you duplicate code to
                 form the query conditions if you need to run the query in several places in your
                 application. Therefore it can be convenient to implement a method in the Table
                 class to perform frequently-used queries against this table.
@@ -1705,7 +1706,7 @@ class Bugs extends Zend_Db_Table_Abstract
             <title>Define Inflection in Zend_Db_Table</title>
 
             <para>
-                Some people prefer that the table class name match a table name in the RDBMS by
+                Some people prefer that the table class name match a table name in the <acronym>RDBMS</acronym> by
                 using a string transformation called <emphasis>inflection</emphasis>.
             </para>
 
@@ -1732,14 +1733,14 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 It is inappropriate to transform identifiers from the database, because this can
-                lead to ambiguity or make some identifiers inaccessible. Using the SQL identifiers
+                lead to ambiguity or make some identifiers inaccessible. Using the <acronym>SQL</acronym> identifiers
                 exactly as they appear in the database makes
                 <classname>Zend_Db_Table_Abstract</classname> both simpler and more flexible.
             </para>
 
             <para>
                 If you prefer to use inflection, then you must implement the transformation
-                yourself, by overriding the <code>_setupTableName()</code> method in your Table
+                yourself, by overriding the <methodname>_setupTableName()</methodname> method in your Table
                 classes. One way to do this is to define an abstract class that extends
                 <classname>Zend_Db_Table_Abstract</classname>, and then the rest of your tables
                 extend your new abstract class.

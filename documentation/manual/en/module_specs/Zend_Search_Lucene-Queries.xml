@@ -4,7 +4,7 @@
     <title>Query Construction API</title>
 
     <para>
-        In addition to parsing a string query automatically it's also possible to construct them with the query API.
+        In addition to parsing a string query automatically it's also possible to construct them with the query <acronym>API</acronym>.
     </para>
 
     <para>
@@ -49,10 +49,10 @@ try {
             Starting in 1.5, query parsing exceptions are suppressed by default. If query doesn't conform query language,
             then it's tokenized using current default analyzer and all tokenized terms are used for searching.
 
-            Use <classname>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</classname> method
+            Use <methodname>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</methodname> method
             to turn exceptions on.
-            <classname>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</classname> and
-            <classname>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</classname> methods are also
+            <methodname>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</methodname> and
+            <methodname>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</methodname> methods are also
             intended to manage exceptions handling behavior.
 
         </para>
@@ -75,7 +75,7 @@ word1
         <para>or</para>
 
         <para>
-        Query construction by API:
+        Query construction by <acronym>API</acronym>:
         </para>
         <programlisting language="php"><![CDATA[
 $term  = new Zend_Search_Lucene_Index_Term('word1', 'field1');
@@ -165,7 +165,7 @@ $hits  = $index->find($query);
         <para>or</para>
 
         <para>
-        Query construction by API:
+        Query construction by <acronym>API</acronym>:
         </para>
         <programlisting language="php"><![CDATA[
 $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
@@ -193,7 +193,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            The <code>$signs</code> array contains information about the term type:
+            The <varname>$signs</varname> array contains information about the term type:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -285,7 +285,7 @@ $hits  = $index->find($query);
         <para>or</para>
 
         <para>
-        Query construction by API:
+        Query construction by <acronym>API</acronym>:
         </para>
         <programlisting language="php"><![CDATA[
 $query = new Zend_Search_Lucene_Search_Query_Boolean();
@@ -323,7 +323,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            The <code>$signs</code> array contains information about the subquery type:
+            The <varname>$signs</varname> array contains information about the subquery type:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -501,7 +501,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             A phrase query can be constructed in one step with a class constructor or step by step with
-            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> method calls.
+            <methodname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</methodname> method calls.
         </para>
 
         <para>
@@ -514,17 +514,17 @@ Zend_Search_Lucene_Search_Query_Phrase(
 ]]></programlisting>
 
         <para>
-            The <code>$terms</code> parameter is an array of strings that contains a set of phrase terms.
+            The <varname>$terms</varname> parameter is an array of strings that contains a set of phrase terms.
             If it's omitted or equal to null, then an empty query is constructed.
         </para>
 
         <para>
-            The <code>$offsets</code> parameter is an array of integers that contains offsets of terms in a phrase.
+            The <varname>$offsets</varname> parameter is an array of integers that contains offsets of terms in a phrase.
             If it's omitted or equal to null, then the terms' positions are assumed to be sequential with no gaps.
         </para>
 
         <para>
-            The <code>$field</code> parameter is a string that indicates the document field to search.
+            The <varname>$field</varname> parameter is a string that indicates the document field to search.
             If it's omitted or equal to null, then the default field is searched.
         </para>
 
@@ -560,7 +560,7 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> takes two arguments, a
+            <methodname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</methodname> takes two arguments, a
             required <classname>Zend_Search_Lucene_Index_Term</classname> object and an optional position:
         </para>
         <programlisting language="php"><![CDATA[
@@ -570,11 +570,11 @@ Zend_Search_Lucene_Search_Query_Phrase::addTerm(
 ]]></programlisting>
 
         <para>
-            The <code>$term</code> parameter describes the next term in the phrase. It must indicate the same field as previous terms, or an exception will be thrown.
+            The <varname>$term</varname> parameter describes the next term in the phrase. It must indicate the same field as previous terms, or an exception will be thrown.
         </para>
 
         <para>
-            The <code>$position</code> parameter indicates the term position in the phrase.
+            The <varname>$position</varname> parameter indicates the term position in the phrase.
         </para>
 
         <para>

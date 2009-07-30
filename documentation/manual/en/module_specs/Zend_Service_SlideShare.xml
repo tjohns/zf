@@ -19,7 +19,7 @@
             In order to use the <classname>Zend_Service_SlideShare</classname> component you must first create an account
             on the slideshare.net servers (more information can be found
             <ulink url="http://www.slideshare.net/developers/">here</ulink>) in order to receive an
-            API key, username, password and shared secret value -- all of which are needed in order
+            <acronym>API</acronym> key, username, password and shared secret value -- all of which are needed in order
             to use the <classname>Zend_Service_SlideShare</classname> component.
         </para>
 
@@ -212,7 +212,7 @@ class Zend_Service_SlideShare_SlideShow {
         <para>
             The simplest usage of the <classname>Zend_Service_SlideShare</classname> component is the
             retrieval of a single slide show by slide show ID provided by the slideshare.net
-            application and is done by calling the <code>getSlideShow()</code> method of a
+            application and is done by calling the <methodname>getSlideShow()</methodname> method of a
             <classname>Zend_Service_SlideShare</classname> object and using the resulting
             <classname>Zend_Service_SlideShare_SlideShow</classname> object as shown.
         </para>
@@ -249,7 +249,7 @@ print "Number of views: {$slideshow->getNumViews()}<br/>\n";
 
                 <para>
                     You can retrieve slide shows from a specific account by using the
-                    <code>getSlideShowsByUsername()</code> method and providing the username from
+                    <methodname>getSlideShowsByUsername()</methodname> method and providing the username from
                     which the slide shows should be retrieved
                 </para>
             </listitem>
@@ -347,7 +347,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
         <title>Changing the behavior of the HTTP Client</title>
 
         <para>
-            If for whatever reason you would like to change the behavior of the HTTP client when
+            If for whatever reason you would like to change the behavior of the <acronym>HTTP</acronym> client when
             making the web service request, you can do so by creating your own instance of the
             <classname>Zend_Http_Client</classname> object (see <xref linkend="zend.http" />). This is useful
             for instance when it is desirable to set the timeout for the connection to something

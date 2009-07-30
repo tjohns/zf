@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17133 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.dojo.view" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Les aides de vues Dojo</title>
@@ -25,7 +25,7 @@
         <para>
             Pour utiliser les aides de vues Dojo, vous devrez informer votre objet de vue de
             leur localisation. Vous pouvez faire ceci en appelant
-            <code>addHelperPath()</code>&#160;:
+            <methodname>addHelperPath()</methodname>&#160;:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -34,7 +34,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper/',
 ]]></programlisting>
 
         <para>
-            De manière alternative, vous pouvez utiliser la méthode <code>enableView()</code>
+            De manière alternative, vous pouvez utiliser la méthode <methodname>enableView()</methodname>
             de <classname>Zend_Dojo</classname> qui le fait pour vous&#160;:
         </para>
 

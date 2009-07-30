@@ -5,7 +5,7 @@
 
     <para>
         The HTML <code>&lt;style&gt;</code> element is used to include
-        CSS stylesheets inline in the HTML <code>&lt;head&gt;</code> element.
+        <acronym>CSS</acronym> stylesheets inline in the HTML <code>&lt;head&gt;</code> element.
     </para>
 
     <note>
@@ -36,8 +36,8 @@
     </itemizedlist>
 
     <para>
-        In all cases, <code>$content</code> is the actual CSS declarations.
-        <code>$attributes</code> are any additional attributes you wish to provide to the
+        In all cases, <varname>$content</varname> is the actual <acronym>CSS</acronym> declarations.
+        <varname>$attributes</varname> are any additional attributes you wish to provide to the
         <code>style</code> tag: lang, title, media, or dir are all permissible.
     </para>
 
@@ -47,7 +47,7 @@
         <para>
             <code>HeadStyle</code> allows you to wrap the style tag in conditional comments,
             which allows you to hide it from specific browsers. To add the conditional
-            tags, pass the conditional value as part of the <code>$attributes</code> parameter in
+            tags, pass the conditional value as part of the <varname>$attributes</varname> parameter in
             the method calls.
         </para>
 
@@ -68,18 +68,18 @@ $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
     </para>
 
     <para>
-        Finally, you can also use the <code>headStyle()</code> method to
+        Finally, you can also use the <methodname>headStyle()</methodname> method to
         quickly add declarations elements; the signature for this is
-        <code>headStyle($content$placement = 'APPEND', $attributes = array())</code>.
-        <code>$placement</code> should be either 'APPEND', 'PREPEND', or 'SET'.
+        <methodname>headStyle($content$placement = 'APPEND', $attributes = array())</methodname>.
+        <varname>$placement</varname> should be either 'APPEND', 'PREPEND', or 'SET'.
     </para>
 
     <para>
-        <code>HeadStyle</code> overrides each of <code>append()</code>,
-        <code>offsetSet()</code>, <code>prepend()</code>, and <code>set()</code>
+        <code>HeadStyle</code> overrides each of <methodname>append()</methodname>,
+        <methodname>offsetSet()</methodname>, <methodname>prepend()</methodname>, and <methodname>set()</methodname>
         to enforce usage of the special methods as listed above. Internally, it
         stores each item as a <code>stdClass</code> token, which it later
-        serializes using the <code>itemToString()</code> method. This allows you
+        serializes using the <methodname>itemToString()</methodname> method. This allows you
         to perform checks on the items in the stack, and optionally modify these
         items by simply modifying the object returned.
     </para>
@@ -103,7 +103,7 @@ $this->headStyle()->appendStyle($styles);
 ]]></programlisting>
 
         <para>
-            Order is very important with CSS; you may need to ensure that
+            Order is very important with <acronym>CSS</acronym>; you may need to ensure that
             declarations are loaded in a specific order due to the order of the
             cascade; use the various append, prepend, and offsetSet directives
             to aid in this task:
@@ -136,10 +136,10 @@ $this->headStyle()->prependStyle($firstStyles);
         <title>Capturing Style Declarations Using the HeadStyle Helper</title>
 
         <para>
-            Sometimes you need to generate CSS style declarations
+            Sometimes you need to generate <acronym>CSS</acronym> style declarations
             programmatically. While you could use string concatenation,
             heredocs, and the like, often it's easier just to do so by creating
-            the styles and sprinkling in PHP tags. <code>HeadStyle</code> lets
+            the styles and sprinkling in <acronym>PHP</acronym> tags. <code>HeadStyle</code> lets
             you do just that, capturing it to the stack:
         </para>
 
@@ -160,13 +160,13 @@ body {
                     The style declarations will be appended to the stack. If you
                     wish for them to replace the stack or be added to the top,
                     you will need to pass 'SET' or 'PREPEND', respectively, as
-                    the first argument to <code>captureStart()</code>.
+                    the first argument to <methodname>captureStart()</methodname>.
             </para></listitem>
 
             <listitem><para>
                     If you wish to specify any additional attributes for the
                     <code>&lt;style&gt;</code> tag, pass them in an array as
-                    the second argument to <code>captureStart()</code>.
+                    the second argument to <methodname>captureStart()</methodname>.
             </para></listitem>
         </itemizedlist>
     </example>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>L'aide de vue Doctype</title>
 
     <para>
-        Les documents HTML et XHTML valides doivent inclure une déclaration
-        <code>DOCTYPE</code>. Sans compter qu'ils sont difficiles à garder en mémoire, ceux-ci
+        Les documents HTML et <acronym>XHTML</acronym> valides doivent inclure une déclaration
+        <constant>DOCTYPE</constant>. Sans compter qu'ils sont difficiles à garder en mémoire, ceux-ci
         peuvent aussi affecter la façon dont certains éléments du document peuvent être rendus (par
         exemple, les échappements CDATA dans <code>&lt;script&gt;</code> et les éléments
         <code>&lt;style&gt;</code>.
@@ -16,39 +16,39 @@
 
     <itemizedlist>
         <listitem>
-            <para><code>XHTML11</code></para>
+            <para><constant>XHTML11</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>XHTML1_STRICT</code></para>
+            <para><constant>XHTML1_STRICT</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>XHTML1_TRANSITIONAL</code></para>
+            <para><constant>XHTML1_TRANSITIONAL</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>XHTML1_FRAMESET</code></para>
+            <para><constant>XHTML1_FRAMESET</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>XHTML_BASIC1</code></para>
+            <para><constant>XHTML_BASIC1</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>HTML4_STRICT</code></para>
+            <para><constant>HTML4_STRICT</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>HTML4_LOOSE</code></para>
+            <para><constant>HTML4_LOOSE</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>HTML4_FRAMESET</code></para>
+            <para><constant>HTML4_FRAMESET</constant></para>
         </listitem>
 
         <listitem>
-            <para><code>HTML5</code></para>
+            <para><constant>HTML5</constant></para>
         </listitem>
     </itemizedlist>
 
@@ -89,7 +89,7 @@ $doctypeHelper->doctype('XHTML1_STRICT');
 
         <para>
             Si vous avez besoin du doctype, vous pouvez le récupérer par l'appel de
-            <code>getDoctype()</code> sur l'objet.
+            <methodname>getDoctype()</methodname> sur l'objet.
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -97,8 +97,8 @@ $doctype = $view->doctype()->getDoctype();
 ]]></programlisting>
 
         <para>
-            Typiquement, vous pouvez simplement vouloir savoir si le doctype est XHTML ou non
-            ; pour ceci, la méthode <code>isXhtml()</code> vous suffira :
+            Typiquement, vous pouvez simplement vouloir savoir si le doctype est <acronym>XHTML</acronym> ou non
+            ; pour ceci, la méthode <methodname>isXhtml()</methodname> vous suffira :
         </para>
 
         <programlisting language="php"><![CDATA[

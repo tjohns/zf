@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.rest.server">
     <title>Zend_Rest_Server</title>
@@ -113,7 +113,7 @@ $server->handle();
         <title>Renvoyer une réponse XML personnalisée</title>
 
         <para>
-            Si vous voulez retourner du XML personnalisé, retournez simplement un objet
+            Si vous voulez retourner du <acronym>XML</acronym> personnalisé, retournez simplement un objet
             <code>DOMDocument</code>, <code>DOMElement</code> ou
             <code>SimpleXMLElement</code>.
         </para>
@@ -134,7 +134,7 @@ function ditBonjour($qui, $quand)
     $xml ='<?xml version="1.0" encoding="ISO-8859-1"?>
 <mysite>
     <value>Salut $qui! J\'espère que tu passes une bonne $when</value>
-    <code>200</code>
+    <constant>200</constant>
 </mysite>';
 
     $xml = simplexml_load_string($xml);

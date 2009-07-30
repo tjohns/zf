@@ -6,15 +6,15 @@
     <para>The following methods are available on all vendor-specific subclasses.</para>
 
     <para>
-        <code>Zend_Ldap_Node_RootDse</code> includes the magic propery accessors
-        <code>__get()</code> and <code>__isset()</code> to access the attributes by their
-        name. They proxy to <code>Zend_Ldap_Node_RootDse::getAttribute()</code> and
-        <code>Zend_Ldap_Node_RootDse::existsAttribute()</code> respectively.
-        <code>__set()</code> and <code>__unset()</code> are also implemented but they throw
+        <classname>Zend_Ldap_Node_RootDse</classname> includes the magic propery accessors
+        <methodname>__get()</methodname> and <methodname>__isset()</methodname> to access the attributes by their
+        name. They proxy to <methodname>Zend_Ldap_Node_RootDse::getAttribute()</methodname> and
+        <methodname>Zend_Ldap_Node_RootDse::existsAttribute()</methodname> respectively.
+        <methodname>__set()</methodname> and <methodname>__unset()</methodname> are also implemented but they throw
         a <code>BadMethodCallException</code> as modifications are not allowed on RootDSE
         nodes. Furthermore the class implements <code>ArrayAccess</code> for
-        array-style-access to the attributes. <code>offsetSet()</code> and
-        <code>offsetUnset()</code> also throw a <code>BadMethodCallException</code> due ro
+        array-style-access to the attributes. <methodname>offsetSet()</methodname> and
+        <methodname>offsetUnset()</methodname> also throw a <code>BadMethodCallException</code> due ro
         obvious reasons.
     </para>
 
@@ -57,14 +57,14 @@
                     <entry><code>string toString()</code></entry>
                     <entry>
                         Returns the DN of the current node - proxies to
-                        <code>Zend_Ldap_Dn::getDnString()</code>.
+                        <methodname>Zend_Ldap_Dn::getDnString()</methodname>.
                     </entry>
                 </row>
                 <row>
                     <entry><code>string __toString()</code></entry>
                     <entry>
                         Casts to string representation - proxies to
-                        <code>Zend_Ldap_Dn::toString()</code>.
+                        <methodname>Zend_Ldap_Dn::toString()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -74,10 +74,10 @@
                     </entry>
                     <entry>
                         Returns an array representation of the current node. If
-                        <code>$includeSystemAttributes</code> is <code>false</code>
-                        (defaults to <code>true</code>) the system specific attributes are
+                        <varname>$includeSystemAttributes</varname> is <constant>FALSE</constant>
+                        (defaults to <constant>TRUE</constant>) the system specific attributes are
                         stripped from the array. Unlike
-                        <code>Zend_Ldap_Node_RootDse::getAttributes()</code> the resulting
+                        <methodname>Zend_Ldap_Node_RootDse::getAttributes()</methodname> the resulting
                         array contains the DN with key <code>'dn'</code>.
                     </entry>
                 </row>
@@ -88,7 +88,7 @@
                     </entry>
                     <entry>
                         Returns a <acronym>JSON</acronym> representation of the current node using
-                        <code>Zend_Ldap_Node_RootDse::toArray()</code>.
+                        <methodname>Zend_Ldap_Node_RootDse::toArray()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -108,11 +108,11 @@
                     </entry>
                     <entry>
                         Checks whether a given attribute exists. If
-                        <code>$emptyExists</code> is <code>false</code> empty attributes
+                        <varname>$emptyExists</varname> is <constant>FALSE</constant> empty attributes
                         (containing only array()) are treated as non-existent returning
-                        <code>false</code>. If <code>$emptyExists</code> is true empty
-                        attributes are treated as existent returning <code>true</code>. In
-                        this case teh method returns <code>false</code> only if the
+                        <constant>FALSE</constant>. If <varname>$emptyExists</varname> is true empty
+                        attributes are treated as existent returning <constant>TRUE</constant>. In
+                        this case teh method returns <constant>FALSE</constant> only if the
                         attribute name is missing in the key-collection.
                     </entry>
                 </row>
@@ -123,8 +123,8 @@
                     </entry>
                     <entry>
                         Checks if the given value(s) exist in the attribute. The
-                        method returns <code>true</code> only if all values in
-                        <code>$value</code> are present in the attribute. Comparison is
+                        method returns <constant>TRUE</constant> only if all values in
+                        <varname>$value</varname> are present in the attribute. Comparison is
                         done strictly (respecting the data type).
                     </entry>
                 </row>
@@ -142,7 +142,7 @@
                     </entry>
                     <entry>
                         Gets a <acronym>LDAP</acronym> attribute. Data conversion is applied using
-                        <code>Zend_Ldap_Attribute::getAttribute()</code>.
+                        <methodname>Zend_Ldap_Attribute::getAttribute()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -152,8 +152,8 @@
                     </entry>
                     <entry>
                         Gets all attributes of node. If
-                        <code>$includeSystemAttributes</code> is <code>false</code>
-                        (defaults to <code>true</code>) the system specific attributes are
+                        <varname>$includeSystemAttributes</varname> is <constant>FALSE</constant>
+                        (defaults to <constant>TRUE</constant>) the system specific attributes are
                         stripped from the array.
                     </entry>
                 </row>
@@ -165,7 +165,7 @@
                     <entry>
                         Gets a <acronym>LDAP</acronym> date/time attribute. Data conversion is applied
                         using
-                        <code>Zend_Ldap_Attribute::getDateTimeAttribute()</code>.
+                        <methodname>Zend_Ldap_Attribute::getDateTimeAttribute()</methodname>.
                     </entry>
                 </row>
                 <row>
@@ -174,7 +174,7 @@
                         $ldap)</code>
                     </entry>
                     <entry>
-                        Reloads the current node's attributes from the given LDAP
+                        Reloads the current node's attributes from the given <acronym>LDAP</acronym>
                         server.
                     </entry>
                 </row>
@@ -214,25 +214,25 @@
                         <variablelist>
                             <varlistentry>
                                 <term>
-                                <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_GENERIC</code></term>
+                                <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_GENERIC</constant></term>
                                 <listitem><para>for unknown <acronym>LDAP</acronym> servers</para></listitem>
                             </varlistentry>
 
                             <varlistentry>
                                 <term>
-                                <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_OPENLDAP</code></term>
+                                <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_OPENLDAP</constant></term>
                                 <listitem><para>for OpenLDAP servers</para></listitem>
                             </varlistentry>
 
                             <varlistentry>
                                 <term>
-                                <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_ACTIVEDIRECTORY</code></term>
+                                <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_ACTIVEDIRECTORY</constant></term>
                                 <listitem><para>for Microsoft ActiveDirectory servers</para></listitem>
                             </varlistentry>
 
                             <varlistentry>
                                 <term>
-                                <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_EDIRECTORY</code></term>
+                                <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_EDIRECTORY</constant></term>
                                 <listitem><para>For Novell eDirectory servers</para></listitem>
                             </varlistentry>
                         </variablelist>
@@ -253,7 +253,7 @@
 
         <para>
             Additionally the common methods above apply to instances of
-            <code>Zend_Ldap_Node_RootDse_OpenLdap</code>.
+            <classname>Zend_Ldap_Node_RootDse_OpenLdap</classname>.
         </para>
 
         <note>
@@ -280,7 +280,7 @@
                         <entry><code>integer getServerType()</code></entry>
                         <entry>
                             Gets the server type. Returns
-                            <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_OPENLDAP</code>
+                            <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_OPENLDAP</constant>
                         </entry>
                     </row>
                     <row>
@@ -322,7 +322,7 @@
 
         <para>
             Additionally the common methods above apply to instances of
-            <code>Zend_Ldap_Node_RootDse_ActiveDirectory</code>.
+            <classname>Zend_Ldap_Node_RootDse_ActiveDirectory</classname>.
         </para>
 
         <note>
@@ -349,7 +349,7 @@
                         <entry><code>integer getServerType()</code></entry>
                         <entry>
                             Gets the server type. Returns
-                            <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_ACTIVEDIRECTORY</code>
+                            <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_ACTIVEDIRECTORY</constant>
                         </entry>
                     </row>
                     <row>
@@ -497,7 +497,7 @@
                         <entry><code>integer getServerType()</code></entry>
                         <entry>
                             Gets the server type. Returns
-                            <code>Zend_Ldap_Node_RootDse::SERVER_TYPE_EDIRECTORY</code>
+                            <constant>Zend_Ldap_Node_RootDse::SERVER_TYPE_EDIRECTORY</constant>
                         </entry>
                     </row>
                     <row>

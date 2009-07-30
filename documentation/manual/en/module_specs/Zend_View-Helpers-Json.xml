@@ -4,14 +4,14 @@
     <title>JSON Helper</title>
 
     <para>
-        When creating views that return JSON, it's important to also set the
-        appropriate response header. The JSON view helper does exactly that. In
+        When creating views that return <acronym>JSON</acronym>, it's important to also set the
+        appropriate response header. The <acronym>JSON</acronym> view helper does exactly that. In
         addition, by default, it disables layouts (if currently enabled), as
-        layouts generally aren't used with JSON responses.
+        layouts generally aren't used with <acronym>JSON</acronym> responses.
     </para>
 
     <para>
-        The JSON helper sets the following header:
+        The <acronym>JSON</acronym> helper sets the following header:
     </para>
 
     <programlisting language="text"><![CDATA[
@@ -19,12 +19,12 @@ Content-Type: application/json
 ]]></programlisting>
 
     <para>
-        Most AJAX libraries look for this header when parsing responses to
+        Most <acronym>AJAX</acronym> libraries look for this header when parsing responses to
         determine how to handle the content.
     </para>
 
     <para>
-        Usage of the JSON helper is very straightforward:
+        Usage of the <acronym>JSON</acronym> helper is very straightforward:
     </para>
 
     <programlisting language="php"><![CDATA[
@@ -35,10 +35,10 @@ Content-Type: application/json
         <title>Keeping layouts and enabling encoding using Zend_Json_Expr</title>
 
         <para>
-            Each method in the JSON helper accepts a second, optional argument.
+            Each method in the <acronym>JSON</acronym> helper accepts a second, optional argument.
             This second argument can be a boolean flag to enable or disable
             layouts, or an array of options that will be passed to
-            <classname>Zend_Json::encode()</classname> and used internally to encode data.
+            <methodname>Zend_Json::encode()</methodname> and used internally to encode data.
         </para>
 
         <para>
@@ -57,7 +57,7 @@ echo $this->json($this->data, array('keepLayouts' => true));
 ]]></programlisting>
 
         <para>
-            <classname>Zend_Json::encode</classname> allows the encoding of native JSON
+            <classname>Zend_Json::encode</classname> allows the encoding of native <acronym>JSON</acronym>
             expressions using <classname>Zend_Json_Expr</classname> objects. This option
             is disabled by default. To enable this option, pass a boolean
             <constant>TRUE</constant> to the <code>enableJsonExprFinder</code> key of

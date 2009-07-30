@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 16658 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.controller.dispatcher">
     <title>Le distributeur</title>
@@ -16,8 +16,8 @@
             défaut pour eux. <classname>Zend_Controller_Dispatcher_Standard</classname> indique
             <code>index</code> pour le contrôleur et l'action par défaut et <code>default</code>
             pour le module par défaut, mais permet au développeur de changer ces valeurs par défaut
-            pour chacun en utilisant les méthodes respectives <code>setDefaultController()</code>,
-            <code>setDefaultAction()</code>, et <code>setDefaultModule()</code>.
+            pour chacun en utilisant les méthodes respectives <methodname>setDefaultController()</methodname>,
+            <methodname>setDefaultAction()</methodname>, et <methodname>setDefaultModule()</methodname>.
         </para>
 
         <note>
@@ -27,7 +27,7 @@
                 voulez aussi que votre module par défaut ait son espace de noms (dans la
                 configuration par défaut, le module "<code>default</code>"
                 <emphasis>n'a pas</emphasis> d'espace de noms). A partir de la version 1.5.0, vous
-                pouvez spécifier le paramètre <code>prefixDefaultModule</code> à <code>true</code>
+                pouvez spécifier le paramètre <code>prefixDefaultModule</code> à <constant>TRUE</constant>
                 soit dans le contrôleur frontal soit dans le distributeur&#160;:
             </para>
             <programlisting language="php"><![CDATA[
@@ -62,7 +62,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
 
         <para>
             La méthode du contrôleur d'action qui contrôle cette distribution est
-            <code>_forward()</code>&#160;; appelez cette méthode à partir de
+            <methodname>_forward()</methodname>&#160;; appelez cette méthode à partir de
             <code>pre/postDispatch()</code> ou d'une méthode d'action, en fournissant une action,
             un contrôleur, un module, et optionnellement des paramètres additionnels que vous
             souhaitez passer à la nouvelle action&#160;:
@@ -105,7 +105,7 @@ public function bazAction()
             Le distributeur a besoin de plusieurs données afin de réaliser son travail - il
             doit connaître le format des noms d'actions et de contrôleur, où chercher les fichiers
             de classe des contrôleurs, savoir si le nom de module fourni est valide, et il a besoin
-            d'une API pour déterminer si une requête donnée est distribuable suivant les
+            d'une <acronym>API</acronym> pour déterminer si une requête donnée est distribuable suivant les
             informations disponibles.
         </para>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15157 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.search.lucene.charset">
     <title>Jeu de caractères</title>
@@ -40,11 +40,11 @@
 
         <para>
             Cependant, l'analyseur de texte par défaut (aussi utilisé par l'analyseur de
-            requête) utilise <code>ctype_alpha()</code>.
+            requête) utilise <methodname>ctype_alpha()</methodname>.
         </para>
 
         <para>
-            <code>ctype_alpha()</code> n'est pas compatible UTF-8, donc l'analyseur convertit
+            <methodname>ctype_alpha()</methodname> n'est pas compatible UTF-8, donc l'analyseur convertit
             le texte vers "ASCII//TRANSLIT" avant l'indexation. Le même processus est utilisé de
             manière transparente lors du requêtage. <footnote>
                 <para>
@@ -103,8 +103,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         <para>
             Tous ces analyseurs nécessitent que la libraire PCRE (Perl-compatible regular
             expressions) soit compilée avec le support d'UTF-8. Ce support d'UTF-8 pour PCRE est
-            activé par défaut dans les sources des libraires PCRE livrées avec PHP, mais si vous
-            avez utilisé des librairies partagées pour la compilation de PHP, alors le support
+            activé par défaut dans les sources des libraires PCRE livrées avec <acronym>PHP</acronym>, mais si vous
+            avez utilisé des librairies partagées pour la compilation de <acronym>PHP</acronym>, alors le support
             d'UTF-8 peut dépendre de l'OS.
         </para>
 

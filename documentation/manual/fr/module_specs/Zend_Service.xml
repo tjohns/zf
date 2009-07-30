@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15103 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.introduction">
     <title>Introduction</title>
 
     <para>
         <classname>Zend_Service</classname> est une classe abstraite qui sert de fondation
-        à l'implémentation des services Web, comme SOAP ou REST.
+        à l'implémentation des services Web, comme <acronym>SOAP</acronym> ou REST.
     </para>
 
     <para>

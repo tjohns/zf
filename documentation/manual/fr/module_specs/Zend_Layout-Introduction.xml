@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15103 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.layout.introduction">
     <title>Introduction</title>
@@ -17,7 +17,7 @@
         <listitem>
             <para>
                 Automatiser le rendu des layouts lorsqu'ils sont utilisés avec les composants
-                MVC de Zend Framework.
+                <acronym>MVC</acronym> de Zend Framework.
             </para>
         </listitem>
 
@@ -52,7 +52,7 @@
 
         <listitem>
             <para>
-                Une intégration sous forme d'aides/plugin dans le modèle MVC de Zend
+                Une intégration sous forme d'aides/plugin dans le modèle <acronym>MVC</acronym> de Zend
                 Framework.
             </para>
         </listitem>

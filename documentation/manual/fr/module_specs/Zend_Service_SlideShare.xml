@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.slideshare">
     <title>Introduction</title>
@@ -209,7 +209,7 @@ class Zend_Service_SlideShare_SlideShow {
             La manière la plus simple d'utiliser
             <classname>Zend_Service_SlideShare</classname> est la récupération d'un diaporama depuis
             son ID, fournit par le service slideshare.net, ceci est effectué via la méthode
-            <code>getSlideShow()</code> de l'objet <classname>Zend_Service_SlideShare</classname>.
+            <methodname>getSlideShow()</methodname> de l'objet <classname>Zend_Service_SlideShare</classname>.
             Le résultat de cette méthode est un objet de type
             <classname>Zend_Service_SlideShare_SlideShow</classname>.
         </para>
@@ -242,7 +242,7 @@ print "Nombre de diapositives : {$slideshow->getNumViews()}<br/>\n";
                 <para><emphasis>Diaporamas depuis un compte spécifique</emphasis></para>
 
                 <para>
-                    La méthode <code>getSlideShowsByUsername()</code> va retourner tous les
+                    La méthode <methodname>getSlideShowsByUsername()</methodname> va retourner tous les
                     diaporamas depuis un compte utilisateur.
                 </para>
             </listitem>
@@ -328,7 +328,7 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 
         <para>
             Si pour une raison quelconque vous souhaitez changer le comportement de l'objet
-            client HTTP utilisé pour interroger le service Web, vous pouvez créer votre propre
+            client <acronym>HTTP</acronym> utilisé pour interroger le service Web, vous pouvez créer votre propre
             instance de <classname>Zend_Http_Client</classname> (voyez <xref
             linkend="zend.http" />). Ceci peut être utile par exemple pour spécifier un timeout ou
             toute autre chose :

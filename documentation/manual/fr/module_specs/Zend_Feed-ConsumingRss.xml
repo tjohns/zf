@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17232 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.feed.consuming-rss">
     <title>Consommer un flux RSS</title>
 
     <para>
-        Lire un flux RSS se résume à instancier un objet <classname>Zend_Feed_Rss</classname>
+        Lire un flux <acronym>RSS</acronym> se résume à instancier un objet <classname>Zend_Feed_Rss</classname>
         en passant l'URL du flux&#160;:
     </para>
 
@@ -19,8 +19,8 @@ $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
     </para>
 
     <para>
-        Une fois que vous disposez d'un objet "flux RSS", vous pouvez accéder aux propriétés
-        RSS standard du canal, et ce directement à partir de l'objet&#160;:
+        Une fois que vous disposez d'un objet "flux <acronym>RSS</acronym>", vous pouvez accéder aux propriétés
+        <acronym>RSS</acronym> standard du canal, et ce directement à partir de l'objet&#160;:
     </para>
 
     <programlisting language="php"><![CDATA[
@@ -30,7 +30,7 @@ echo $canal->title();
     <para>
         Notez la syntaxe utilisée&#160;: un appel de fonction.
         <classname>Zend_Feed</classname> utilise une convention selon laquelle les propriétés sont
-        traitées comme des objets XML si elles sont demandées au moyen de la syntaxe
+        traitées comme des objets <acronym>XML</acronym> si elles sont demandées au moyen de la syntaxe
         <code>$obj-&gt;propriété</code> et comme des chaînes si elles sont demandées au moyen de la
         syntaxe <code>$obj-&gt;propriété()</code>. Ceci permet d'accéder à la totalité du contenu
         textuel d'un nœud particulier tout comme à l'ensemble des enfants de ce nœud.
@@ -38,7 +38,7 @@ echo $canal->title();
 
     <para>
         Si les propriétés du canal possèdent des attributs, ils sont accessibles à l'aide de
-        l'indexage PHP&#160;:
+        l'indexage <acronym>PHP</acronym>&#160;:
     </para>
 
     <programlisting language="php"><![CDATA[
@@ -46,7 +46,7 @@ echo $canal->category['domain'];
 ]]></programlisting>
 
     <para>
-        Comme les attributs XML ne peuvent avoir des enfants, la syntaxe
+        Comme les attributs <acronym>XML</acronym> ne peuvent avoir des enfants, la syntaxe
         <code>$obj-&gt;propriété['attribut']()</code> n'est pas nécessaire pour accéder aux valeurs
         des attributs.
     </para>
@@ -54,7 +54,7 @@ echo $canal->category['domain'];
     <para>
         La plupart du temps vous voudrez itérer sur le flux et réaliser quelque chose avec
         ses entrées. <classname>Zend_Feed_Abstract</classname> implémente l'interface
-        <code>iterator</code> de PHP, ce qui résume au code suivant l'affichage des titres de tous
+        <code>iterator</code> de <acronym>PHP</acronym>, ce qui résume au code suivant l'affichage des titres de tous
         les articles du canal&#160;:
     </para>
 
@@ -65,8 +65,8 @@ foreach ($canal as $element) {
 ]]></programlisting>
 
     <para>
-        Si vous n'êtes pas un familier de RSS, voici les éléments standard associés au
-        canal RSS et à ses éléments pris séparément (les entrées).
+        Si vous n'êtes pas un familier de <acronym>RSS</acronym>, voici les éléments standard associés au
+        canal <acronym>RSS</acronym> et à ses éléments pris séparément (les entrées).
     </para>
 
     <para>Les éléments requis pour les canaux sont&#160;:</para>
@@ -98,7 +98,7 @@ foreach ($canal as $element) {
             <listitem>
                 <para>
                     <code>pubDate</code> (date de publication)&#160;: la date de publication de
-                    l'ensemble, au format RFC 822
+                    l'ensemble, au format <acronym>RFC</acronym> 822
                 </para>
             </listitem>
 
@@ -119,7 +119,7 @@ foreach ($canal as $element) {
     </para>
 
     <para>
-        Les éléments RSS <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier.
+        Les éléments <acronym>RSS</acronym> <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier.
         Cependant soit <code>title</code> soit <code>description</code> doivent être
         présents.
     </para>
@@ -161,7 +161,7 @@ foreach ($canal as $element) {
             <listitem>
                 <para>
                     <code>pubDate</code> (date de publication)&#160;: la date à laquelle l'élément
-                    a été publié, au format RFC 822
+                    a été publié, au format <acronym>RFC</acronym> 822
                 </para>
             </listitem>
         </itemizedlist>
@@ -180,12 +180,12 @@ if ($element->nomPropriete()) {
 
     <para>
         Si vous utilisez à la place de la condition <code>$element-&gt;nomPropriete</code>,
-        vous obtiendrez toujours un objet qui, même vide, sera évalué comme <code>TRUE</code>, donc
+        vous obtiendrez toujours un objet qui, même vide, sera évalué comme <constant>TRUE</constant>, donc
         le test échouera.
     </para>
 
     <para>
-        Pour plus d'informations, la spécification RSS 2.0 officielle est disponible à
+        Pour plus d'informations, la spécification <acronym>RSS</acronym> 2.0 officielle est disponible à
         l'adresse&#160;: <ulink url="http://blogs.law.harvard.edu/tech/rss">
         http://blogs.law.harvard.edu/tech/rss</ulink>
     </para>

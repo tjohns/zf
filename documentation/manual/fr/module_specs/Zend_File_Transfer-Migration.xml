@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.file.transfer.migration">
     <title>Migrer à partir des versions précédentes</title>
@@ -8,7 +8,7 @@
         L'API de <classname>Zend_File_Transfer</classname> a changé au cours du temps. Si vous
         avez commencé à utiliser <classname>Zend_File_Transfer</classname> et ses sous-composants
         avec les versions précédentes, suivez les lignes directrices ci-dessous pour migrer vos
-        scripts et ainsi utiliser la nouvelle API.
+        scripts et ainsi utiliser la nouvelle <acronym>API</acronym>.
     </para>
 
     <sect2 id="zend.file.transfer.migration.fromonesixtooneseven">
@@ -28,7 +28,7 @@
                 De plus, tous les filtres et validateurs de
                 <classname>Zend_File_Transfer</classname> ont été réécrits. Même si les anciennes
                 signatures continuent à fonctionner, elles ont été marqués comme dépréciées et
-                émettent une notice PHP vous informant de faire le changement.
+                émettent une notice <acronym>PHP</acronym> vous informant de faire le changement.
             </para>
 
             <para>
@@ -42,18 +42,18 @@
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Filter_File_Rename($oldfile,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Filter_File_Rename($oldfile,
                             $newfile, $overwrite)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Filter_File_Rename($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes :
-                            <emphasis>source</emphasis> est équivalent à <code>$oldfile</code>,
-                            <emphasis>target</emphasis> est équivalent à <code>$newfile</code>,
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Filter_File_Rename($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes :
+                            <emphasis>source</emphasis> est équivalent à <varname>$oldfile</varname>,
+                            <emphasis>target</emphasis> est équivalent à <varname>$newfile</varname>,
                             <emphasis>overwrite</emphasis> est équivalent à
                             <code>$overwrite.</code>
                         </para>
@@ -85,18 +85,18 @@ $upload->addFilter('Rename',
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_Count($min,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_Count($min,
                             $max)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_Count($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes :
-                            <emphasis>min</emphasis> est équivalent à <code>$min</code>,
-                            <emphasis>max</emphasis> est équivalent à <code>$max</code>.
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_Count($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes :
+                            <emphasis>min</emphasis> est équivalent à <varname>$min</varname>,
+                            <emphasis>max</emphasis> est équivalent à <varname>$max</varname>.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -126,19 +126,19 @@ $upload->addValidator('Count',
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_Extension($extension,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_Extension($extension,
                             $case)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_Extension($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes :
-                            <emphasis>*</emphasis> est équivalent à <code>$extension</code> et peut
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_Extension($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes :
+                            <emphasis>*</emphasis> est équivalent à <varname>$extension</varname> et peut
                             avoir tout autre clé, <emphasis>case</emphasis> est équivalent à
-                            <code>$case</code>.
+                            <varname>$case</varname>.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -168,30 +168,30 @@ $upload->addValidator('Extension',
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_FilesSize($min, $max,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_FilesSize($min, $max,
                             $bytestring)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_FilesSize($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes :
-                            <emphasis>min</emphasis> est équivalent à <code>$min</code>,
-                            <emphasis>max</emphasis> est équivalent à <code>$max</code>,
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_FilesSize($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes :
+                            <emphasis>min</emphasis> est équivalent à <varname>$min</varname>,
+                            <emphasis>max</emphasis> est équivalent à <varname>$max</varname>,
                             <emphasis>bytestring</emphasis> est équivalent à
-                            <code>$bytestring</code>.
+                            <varname>$bytestring</varname>.
                         </para>
                     </listitem>
                 </itemizedlist>
 
                 <para>
-                    De plus la signature de la méthode <code>useByteString()</code> a changé.
+                    De plus la signature de la méthode <methodname>useByteString()</methodname> a changé.
                     Elle peut être seulement utilisée pour tester si le validateur prévoie
                     d'utiliser les chaînes lisibles ou la valeur brute dans les messages générées.
                     Pour paramétrer la valeur de cette option, utilisez la méthode
-                    <code>setUseByteString()</code>.
+                    <methodname>setUseByteString()</methodname>.
                 </para>
 
                 <example id="zend.file.transfer.migration.fromonesixonetooneseven.validators.filessize.example">
@@ -226,19 +226,19 @@ $upload->setUseByteSting(true); // set flag
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_Hash($hash,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_Hash($hash,
                             $algorithm)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_Hash($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes :
-                            <emphasis>*</emphasis> est équivalent à <code>$hash</code> et peut avoir
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_Hash($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes :
+                            <emphasis>*</emphasis> est équivalent à <varname>$hash</varname> et peut avoir
                             tout autre clé, <emphasis>algorithm</emphasis> est équivalent à
-                            <code>$algorithm</code>.
+                            <varname>$algorithm</varname>.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -268,21 +268,21 @@ $upload->addValidator('Hash',
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_ImageSize($minwidth,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_ImageSize($minwidth,
                             $minheight, $maxwidth, $maxheight)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_FilesSize($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes&#160;:
-                            <emphasis>minwidth</emphasis> est équivalent à <code>$minwidth</code>,
-                            <emphasis>maxwidth</emphasis> est équivalent à <code>$maxwidth</code>,
-                            <emphasis>minheight</emphasis> est équivalent à <code>$minheight</code>,
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_FilesSize($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes&#160;:
+                            <emphasis>minwidth</emphasis> est équivalent à <varname>$minwidth</varname>,
+                            <emphasis>maxwidth</emphasis> est équivalent à <varname>$maxwidth</varname>,
+                            <emphasis>minheight</emphasis> est équivalent à <varname>$minheight</varname>,
                             <emphasis>maxheight</emphasis> est équivalent à
-                            <code>$maxheight</code>.
+                            <varname>$maxheight</varname>.
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -314,20 +314,20 @@ $upload->addValidator('ImageSize',
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Ancienne API&#160;: <classname>Zend_Validate_File_Size($min, $max,
+                            Ancienne <acronym>API</acronym>&#160;: <classname>Zend_Validate_File_Size($min, $max,
                             $bytestring)</classname>
                         </para>
                     </listitem>
 
                     <listitem>
                         <para>
-                            Nouvelle API&#160;:
-                            <classname>Zend_Validate_File_Size($options)</classname> où
-                            <code>$options</code> accepte un tableau avec les clés suivantes&#160;:
-                            <emphasis>min</emphasis> est équivalent à <code>$min</code>,
-                            <emphasis>max</emphasis> est équivalent à <code>$max</code>,
+                            Nouvelle <acronym>API</acronym>&#160;:
+                            <methodname>Zend_Validate_File_Size($options)</methodname> où
+                            <varname>$options</varname> accepte un tableau avec les clés suivantes&#160;:
+                            <emphasis>min</emphasis> est équivalent à <varname>$min</varname>,
+                            <emphasis>max</emphasis> est équivalent à <varname>$max</varname>,
                             <emphasis>bytestring</emphasis> est équivalent à
-                            <code>$bytestring</code>
+                            <varname>$bytestring</varname>
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -377,22 +377,22 @@ $upload->addValidator('Size',
             <itemizedlist>
                 <listitem>
                     <para>
-                        Ancienne API&#160;: <code>addValidator($validator, $options,
+                        Ancienne <acronym>API</acronym>&#160;: <code>addValidator($validator, $options,
                         $files)</code>.
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        Nouvelle API&#160;: <code>addValidator($validator, $breakChainOnFailure,
+                        Nouvelle <acronym>API</acronym>&#160;: <code>addValidator($validator, $breakChainOnFailure,
                         $options, $files)</code>.
                     </para>
                 </listitem>
             </itemizedlist>
 
             <para>
-                Pour migrer vos scripts vers la nouvelle API, ajoutez simplement un a
-                <code>false</code> après voir défini le validateur souhaité.
+                Pour migrer vos scripts vers la nouvelle <acronym>API</acronym>, ajoutez simplement un a
+                <constant>FALSE</constant> après voir défini le validateur souhaité.
             </para>
 
             <example id="zend.file.transfer.migration.fromonesixonetoonesixtwo.example">

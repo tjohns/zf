@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            Zend_Rest_Server is intended as a fully-featured REST server.
+            <classname>Zend_Rest_Server</classname> is intended as a fully-featured REST server.
         </para>
     </sect2>
 
@@ -117,7 +117,7 @@ $server->handle();
         <title>Returning Custom XML Responses</title>
 
         <para>
-            If you wish to return custom XML, simply return a
+            If you wish to return custom <acronym>XML</acronym>, simply return a
             <code>DOMDocument</code>, <code>DOMElement</code> or
             <code>SimpleXMLElement</code> object.
         </para>

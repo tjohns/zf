@@ -29,7 +29,7 @@ if ($validator->isValid($email)) {
 }
 ]]></programlisting>
 
-        This will match the email address <code>$email</code> and on failure populate
+        This will match the email address <varname>$email</varname> and on failure populate
         <code>$validator->getMessages()</code> with useful error messages.
     </para>
 
@@ -39,7 +39,7 @@ if ($validator->isValid($email)) {
 
     <para>
         <classname>Zend_Validate_EmailAddress</classname> will match any valid email address
-        according to RFC2822. For example, valid emails include <code>bob@domain.com</code>,
+        according to <acronym>RFC</acronym>2822. For example, valid emails include <code>bob@domain.com</code>,
         <code>bob+jones@domain.us</code>, <code>"bob@jones"@domain.com</code> and
         <code>"bob jones"@domain.com</code>
     </para>
@@ -129,7 +129,7 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
 $validator->hostnameValidator->setValidateIdn(false);
 ]]></programlisting>
 
-        More information on the usage of <code>setValidateIdn()</code> appears in the
+        More information on the usage of <methodname>setValidateIdn()</methodname> appears in the
         <classname>Zend_Validate_Hostname</classname> documentation.
     </para>
 
@@ -151,7 +151,7 @@ $validator->hostnameValidator->setValidateIdn(false);
 $validator->hostnameValidator->setValidateTld(false);
 ]]></programlisting>
 
-        More information on the usage of <code>setValidateTld()</code> appears in the
+        More information on the usage of <methodname>setValidateTld()</methodname> appears in the
         <classname>Zend_Validate_Hostname</classname> documentation.
     </para>
 

@@ -4,7 +4,7 @@
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        <classname>Zend_Service_StrikeIron</classname> provides a PHP 5 client to StrikeIron
+        <classname>Zend_Service_StrikeIron</classname> provides a <acronym>PHP</acronym> 5 client to StrikeIron
         web services. See the following sections:
     </para>
 
@@ -32,8 +32,8 @@
         </para>
 
         <para>
-          Each StrikeIron web service shares a standard SOAP (and REST)
-          API, making it easy to integrate and manage multiple services.
+          Each StrikeIron web service shares a standard <acronym>SOAP</acronym> (and REST)
+          <acronym>API</acronym>, making it easy to integrate and manage multiple services.
           StrikeIron also manages customer billing for all services in a single
           account, making it perfect for solution providers. Get
           started with free web services at
@@ -42,16 +42,16 @@
 
         <para>
           StrikeIron's services may be used through the
-          <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
-          However, using StrikeIron this way does not give an ideal PHP-like interface.
+          <ulink url="http://us.php.net/soap">PHP 5 <acronym>SOAP</acronym> extension</ulink> alone.
+          However, using StrikeIron this way does not give an ideal <acronym>PHP</acronym>-like interface.
           The <classname>Zend_Service_StrikeIron</classname> component provides a lightweight layer on
-          top of the SOAP extension for working with StrikeIron services in a
-          more convenient, PHP-like manner.
+          top of the <acronym>SOAP</acronym> extension for working with StrikeIron services in a
+          more convenient, <acronym>PHP</acronym>-like manner.
         </para>
 
         <note>
           <para>
-            The PHP 5 SOAP extension must be installed and enabled to use
+            The <acronym>PHP</acronym> 5 <acronym>SOAP</acronym> extension must be installed and enabled to use
             <classname>Zend_Service_StrikeIron</classname>.
           </para>
         </note>
@@ -77,7 +77,7 @@
             <listitem>
               <para>
                 The ability to use any StrikeIron service from its WSDL without
-                creating a PHP wrapper class, and the option of creating a wrapper for
+                creating a <acronym>PHP</acronym> wrapper class, and the option of creating a wrapper for
                 a more convenient interface.
               </para>
             </listitem>
@@ -158,8 +158,8 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
       </para>
 
       <para>
-        The <code>getService()</code> method will return a client for any
-        StrikeIron service by the name of its PHP wrapper class. In this case,
+        The <methodname>getService()</methodname> method will return a client for any
+        StrikeIron service by the name of its <acronym>PHP</acronym> wrapper class. In this case,
         the name <code>SalesUseTaxBasic</code> refers to the wrapper class
         <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname>. Wrappers are
         included for three services and described in
@@ -167,8 +167,8 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
       </para>
 
       <para>
-        The <code>getService()</code> method can also return a client for
-        a StrikeIron service that does not yet have a PHP wrapper. This is
+        The <methodname>getService()</methodname> method can also return a client for
+        a StrikeIron service that does not yet have a <acronym>PHP</acronym> wrapper. This is
         explained in
         <link linkend="zend.service.strikeiron.advanced-uses.services-by-wsdl">Using Services by WSDL</link>.
       </para>
@@ -178,7 +178,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
       <title>Making Your First Query</title>
 
       <para>
-        Once you have used the <code>getService()</code> method to get a client
+        Once you have used the <methodname>getService()</methodname> method to get a client
         for a particular StrikeIron service, you can utilize that client
         by calling methods on it just like any other PHP object.
 
@@ -196,22 +196,22 @@ echo $rateInfo->abbreviation;
 echo $rateInfo->GST;
 ]]></programlisting>
 
-        In the example above, the <code>getService()</code> method is used
+        In the example above, the <methodname>getService()</methodname> method is used
         to return a client to the
         <link linkend="zend.service.strikeiron.bundled-services.sales-use-tax-basic">Sales &amp; Use Tax Basic</link> service.
-        The client object is stored in <code>$taxBasic</code>.
+        The client object is stored in <varname>$taxBasic</varname>.
       </para>
 
       <para>
-        The <code>getTaxRateCanada()</code> method is then called on the
+        The <methodname>getTaxRateCanada()</methodname> method is then called on the
         service. An associative array is used to supply keyword parameters to
         the method. This is the way that all StrikeIron methods are called.
       </para>
 
       <para>
-        The result from <code>getTaxRateCanada()</code> is stored in
-        <code>$rateInfo</code> and has properties like <code>province</code>
-        and <code>GST</code>.
+        The result from <methodname>getTaxRateCanada()</methodname> is stored in
+        <varname>$rateInfo</varname> and has properties like <code>province</code>
+        and <constant>GST</constant>.
       </para>
 
       <para>
@@ -263,19 +263,19 @@ Zend_Service_StrikeIron_Decorator Object
       </para>
 
       <para>
-        In the output above, we see that the decorator (<code>$rateInfo</code>) wraps an object
-        named <code>GetTaxRateCanadaResult</code>, the result of the call to <code>getTaxRateCanada()</code>.
+        In the output above, we see that the decorator (<varname>$rateInfo</varname>) wraps an object
+        named <code>GetTaxRateCanadaResult</code>, the result of the call to <methodname>getTaxRateCanada()</methodname>.
       </para>
 
       <para>
-        This means that <code>$rateInfo</code> has public properties like <code>abbreviation</code>,
-        <code>province</code>, and <code>GST</code>. These are accessed like <code>$rateInfo->province</code>.
+        This means that <varname>$rateInfo</varname> has public properties like <code>abbreviation</code>,
+        <code>province</code>, and <constant>GST</constant>. These are accessed like <code>$rateInfo->province</code>.
       </para>
 
       <tip>
         <para>
           StrikeIron result properties sometimes start with an uppercase
-          letter such as <code>Foo</code> or <code>Bar</code> where most PHP object
+          letter such as <code>Foo</code> or <code>Bar</code> where most <acronym>PHP</acronym> object
           properties normally start with a lowercase letter as in <code>foo</code> or
           <code>bar</code>. The decorator will automatically do this inflection so you
           may read a property <code>Foo</code> as <code>foo</code>.
@@ -284,7 +284,7 @@ Zend_Service_StrikeIron_Decorator Object
 
       <para>
         If you ever need to get the original object or its name out of the decorator, use the
-        respective methods <code>getDecoratedObject()</code> and <code>getDecoratedObjectName()</code>.
+        respective methods <methodname>getDecoratedObject()</methodname> and <methodname>getDecoratedObjectName()</methodname>.
       </para>
     </sect2>
 
@@ -328,7 +328,7 @@ try {
         <emphasis>exceptional</emphasis> conditions, such as
         the network going down or your subscription expiring.
         Failed method calls that are a common occurrence,
-        such as <code>getTaxRateCanada()</code> not finding the
+        such as <methodname>getTaxRateCanada()</methodname> not finding the
         <code>province</code> you supplied, will not result an in exception.
       </para>
 
@@ -355,7 +355,7 @@ try {
       <para>
         Each StrikeIron client returned by the <code>getService</code> method
         has the ability to check the subscription status for that service using
-        the <code>getSubscriptionInfo()</code> method of the client:
+        the <methodname>getSubscriptionInfo()</methodname> method of the client:
 
         <programlisting language="php"><![CDATA[
 // Get a client for the Sales & Use Tax Basic service
@@ -371,7 +371,7 @@ echo $subscription->remainingHits;
       </para>
 
       <para>
-        The <code>getSubscriptionInfo()</code> method will return an object
+        The <methodname>getSubscriptionInfo()</methodname> method will return an object
         that typically has a <code>remainingHits</code> property. It's
         important to check the status on each service that you are using. If
         a method call is made to StrikeIron after the remaining hits have been
@@ -382,10 +382,10 @@ echo $subscription->remainingHits;
         Checking your subscription to a service does not use any remaining
         hits to the service. Each time any method call to the service is made,
         the number of hits remaining will be cached and this cached value will
-        be returned by <code>getSubscriptionInfo()</code> without connecting
-        to the service again. To force <code>getSubscriptionInfo()</code>
+        be returned by <methodname>getSubscriptionInfo()</methodname> without connecting
+        to the service again. To force <methodname>getSubscriptionInfo()</methodname>
         to override its cache and query the subscription information again, use
-        <code>getSubscriptionInfo(true)</code>.
+        <methodname>getSubscriptionInfo(true)</methodname>.
       </para>
     </sect2>
 </sect1>

@@ -6,15 +6,15 @@
 
     <para>
         <classname>Zend_Version</classname> provides a class constant
-        <classname>Zend_Version::VERSION</classname> that contains a string
+        <constant>Zend_Version::VERSION</constant> that contains a string
         identifying the version number of your Zend Framework installation.
-        <classname>Zend_Version::VERSION</classname> might contain "1.7.4", for example.
+        <constant>Zend_Version::VERSION</constant> might contain "1.7.4", for example.
     </para>
 
     <para>
-        The static method <classname>Zend_Version::compareVersion($version)</classname>
-        is based on the PHP function
-        <ulink url="http://php.net/version_compare"><code>version_compare()</code></ulink>.
+        The static method <methodname>Zend_Version::compareVersion($version)</methodname>
+        is based on the <acronym>PHP</acronym> function
+        <ulink url="http://php.net/version_compare"><methodname>version_compare()</methodname></ulink>.
         This method returns -1 if the specified version
         is older than the installed Zend Framework version, 0 if they are the same
         and +1 if the specified version is newer than the

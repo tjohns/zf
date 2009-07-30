@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 15617 -->
+<!-- EN-Revision: 17175 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout, utilisation avancée</title>
@@ -24,7 +24,7 @@
             <para>
                 <emphasis>Plugin contrôleur frontal personnalisé.</emphasis>
                 <classname>Zend_Layout</classname> est livré avec un plugin qui rend le layout
-                automatiquement avant de renvoyer la réponse (utilisation MVC). Vous pouvez injecter
+                automatiquement avant de renvoyer la réponse (utilisation <acronym>MVC</acronym>). Vous pouvez injecter
                 votre propre plugin.
             </para>
         </listitem>
@@ -56,8 +56,8 @@
             <classname>Zend_Layout</classname> accepte des objets de vue implémentant
             <classname>Zend_View_Interface</classname> ou étendant
             <classname>Zend_View_Abstract</classname> pour le rendu du script de layout. Passez le
-            en paramètre au constructeur ou à <code>startMvc()</code>, ou utilisez l'accesseur
-            <code>setView()</code> :
+            en paramètre au constructeur ou à <methodname>startMvc()</methodname>, ou utilisez l'accesseur
+            <methodname>setView()</methodname> :
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -83,7 +83,7 @@ $layout->setView($view);
                 qui ne supporte pas ces aides de vue, vous devrez alors trouver un moyen de passer
                 les variables du layout à la vue. Par exemple, en étendant l'objet
                 <classname>Zend_Layout</classname> et en rédéfinissant la méthode
-                <code>render()</code> en passant des variables à la vue. Aussi, vous pouvez créer
+                <methodname>render()</methodname> en passant des variables à la vue. Aussi, vous pouvez créer
                 votre propre plugin qui s'occupe de passer ces variables avant le rendu du
                 layout.
             </para>
@@ -107,11 +107,11 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')
         <title>Plugin de contrôleur frontal personnalisé</title>
 
         <para>
-            Lorsqu'utilisé avec les composants MVC, <classname>Zend_Layout</classname>
+            Lorsqu'utilisé avec les composants <acronym>MVC</acronym>, <classname>Zend_Layout</classname>
             enregistre un plugin de contrôleur frontal qui se charge du rendu du layout juste avant
             la fin de la boucle de distribution. Ceci convient à la majorité des cas, si cependant
             vous avez besoin de construire votre propre plugin, passez son nom dans l'option
-            <code>pluginClass</code> de la méthode <code>startMvc()</code>.
+            <code>pluginClass</code> de la méthode <methodname>startMvc()</methodname>.
         </para>
 
         <para>
@@ -130,7 +130,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')
         <title>Aide d'action personnalisée</title>
 
         <para>
-            Si les composants MVC sont utilisés, alors <classname>Zend_Layout</classname>
+            Si les composants <acronym>MVC</acronym> sont utilisés, alors <classname>Zend_Layout</classname>
             enregistre une classe d'aide d'action dans le gestionnaire d'aides (helper broker). Par
             défaut, il s'agit de <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>.
             Cette aide agit comme un proxy vers l'instance de <classname>Zend_Layout</classname> et
@@ -141,7 +141,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')
             Si vous voulez utiliser votre propre classe, celle-ci devra alors étendre
             <classname>Zend_Controller_Action_Helper_Abstract</classname>. Passez le nom de la
             classe dans l'option <code>helperClass</code> de la méthode
-            <code>startMvc()</code>.
+            <methodname>startMvc()</methodname>.
         </para>
     </sect2>
 
@@ -171,7 +171,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')
             cible et/ou le suffixe grâce à des accesseurs dans <classname>Zend_Layout</classname> ;
             Modifier les règles de l'inflecteur associé à <classname>Zend_Layout</classname> ; Ou
             encore créer votre propre inflecteur et le passer à
-            <classname>Zend_Layout::setInflector()</classname>.
+            <methodname>Zend_Layout::setInflector()</methodname>.
         </para>
 
         <example id="zend.layout.advanced.inflector.accessors">
@@ -241,7 +241,7 @@ $layout->setInflector($inflector);
             <para>
                 L'inflecteur peut être désactivé si vous spécifiez, par exemple, un chemin
                 absolu pour un script utilisé par <classname>Zend_Layout</classname>. Les méthodes
-                <code>enableInflection()</code> et <code>disableInflection()</code> vous y
+                <methodname>enableInflection()</methodname> et <methodname>disableInflection()</methodname> vous y
                 aideront.
             </para>
         </note>

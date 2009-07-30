@@ -28,11 +28,11 @@
     </itemizedlist>
 
     <para>
-        The <code>$media</code> value defaults to 'screen', but may be any valid
-        media value. <code>$conditionalStylesheet</code> is a string or boolean false,
+        The <varname>$media</varname> value defaults to 'screen', but may be any valid
+        media value. <varname>$conditionalStylesheet</varname> is a string or boolean false,
         and will be used at rendering time to determine if special comments should be
         included to prevent loading of the stylesheet on certain platforms.
-        <code>$extras</code> is an array of any extra values that you want to be added
+        <varname>$extras</varname> is an array of any extra values that you want to be added
         to the tag.
     </para>
 
@@ -53,7 +53,7 @@
     </itemizedlist>
 
     <para>
-        The <code>headLink()</code> helper method allows specifying all
+        The <methodname>headLink()</methodname> helper method allows specifying all
         attributes necessary for a <code>&lt;link&gt;</code> element, and allows
         you to also specify placement -- whether the new element replaces all
         others, prepends (top of stack), or appends (end of stack).

@@ -52,7 +52,7 @@ if (!$server->hasUser(TEST_ID)) {
             from OpenID-enabled sites (for association and authentication). Both of
             them are handled by the same method:
             <classname>Zend_OpenId_Provider::handle</classname>. The two arguments to the
-            <classname>Zend_OpenId_Provider</classname> constructor are URLs of login and trust pages, which
+            <classname>Zend_OpenId_Provider</classname> constructor are <acronym>URL</acronym>s of login and trust pages, which
             ask for input from the end user.
         </para>
 
@@ -60,7 +60,7 @@ if (!$server->hasUser(TEST_ID)) {
             On success, the method <classname>Zend_OpenId_Provider::handle</classname>
             returns a string that should be passed back to the OpenID-enabled site. On
             failure, it returns <constant>FALSE</constant>. This example will return an
-            HTTP 403 response if <classname>Zend_OpenId_Provider::handle</classname> fails. You will get this response if you open this script with a
+            <acronym>HTTP</acronym> 403 response if <classname>Zend_OpenId_Provider::handle</classname> fails. You will get this response if you open this script with a
             web browser, because it sends a non-OpenID conforming request.
         </para>
 
@@ -241,7 +241,7 @@ is your identity URL.
         <title>Combined Provide Scripts</title>
         <para>
             It is possible to combine all provider functionality in one script. In
-            this case login and trust URLs are omitted, and
+            this case login and trust <acronym>URL</acronym>s are omitted, and
             <classname>Zend_OpenId_Provider</classname> assumes that they point to the same page
             with the additional "openid.action" GET argument.
         </para>
@@ -289,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         <para>
             If you compare this example with previous examples split in to
             separate pages, you will see only the one
-            difference besides the dispatch code: <code>unset($_GET['openid_action'])</code>. This
+            difference besides the dispatch code: <methodname>unset($_GET['openid_action'])</methodname>. This
             call to <code>unset</code> is necessary to route the next request to main
             handler.
         </para>
@@ -347,16 +347,16 @@ if (!$server->hasUser(TEST_ID)) {
             This script is a variation of the script in the "Everything Together" example. It uses the
             same automatic login mechanism, but doesn't contain any code for a trust
             page. The user already trusts the example scripts forever. This trust was
-            established by calling the <classname>Zend_OpenId_Provider::allowSite()</classname> method in the identity
-            script. The same method associates the profile with the trusted URL. This
+            established by calling the <methodname>Zend_OpenId_Provider::allowSite()</methodname> method in the identity
+            script. The same method associates the profile with the trusted <acronym>URL</acronym>. This
             profile will be returned automatically for a request from the trusted
-            URL.
+            <acronym>URL</acronym>.
         </para>
 
         <para>
             To make Simple Registration Extension work, you must simply
             pass an instance of <classname>Zend_OpenId_Extension_Sreg</classname> as the second
-            argument to the <classname>Zend_OpenId_Provider::handle()</classname> method.
+            argument to the <methodname>Zend_OpenId_Provider::handle()</methodname> method.
         </para>
 
         <example id="zend.openid.provider.example-7">

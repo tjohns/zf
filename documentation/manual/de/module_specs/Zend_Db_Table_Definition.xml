@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 16943 -->
+<!-- EN-Revision: 17110 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.db.table.definition">
 
@@ -90,7 +90,6 @@ $definition = new Zend_Db_Table_Definition(array(
             Datenmodell korrespondieren:
         </para>
 
-
         <example id="zend.db.table.definition.example2">
 
             <title>Mit der beschriebenen Definition interagieren</title>
@@ -100,12 +99,18 @@ $authorTable = new Zend_Db_Table('author', $definition);
 $authors = $authorTable->fetchAll();
 
 foreach ($authors as $author) {
-    echo $author->id . ': ' . $author->first_name . ' ' . $author->last_name . PHP_EOL;
+    echo $author->id
+       . ': '
+       . $author->first_name
+       . ' '
+       . $author->last_name
+       . PHP_EOL;
     $books = $author->findDependentRowset('book');
     foreach ($books as $book) {
         echo '    Buch: ' . $book->title . PHP_EOL;
         $genreOutputArray = array();
-        foreach ($book->findManyToManyRowset('genre', 'book_to_genre') as $genreRow) {
+        $genres = $book->findManyToManyRowset('genre', 'book_to_genre');
+        foreach ($genres as $genreRow) {
             $genreOutputArray[] = $genreRow->name;
         }
         echo '        Genre: ' . implode(', ', $genreOutputArray) . PHP_EOL;
@@ -114,7 +119,6 @@ foreach ($authors as $author) {
 ]]></programlisting>
 
         </example>
-
 
     </sect2>
 
@@ -180,18 +184,23 @@ $authorTable = new Zend_Db_Table('author', $definition);
 $authors = $authorTable->fetchAll();
 
 foreach ($authors as $author) {
-    echo $author->id . ': ' . $author->first_name . ' ' . $author->last_name . PHP_EOL;
+    echo $author->id
+       . ': '
+       . $author->first_name
+       . ' '
+       . $author->last_name
+       . PHP_EOL;
     $books = $author->findDependentRowset(new MyBook());
     foreach ($books as $book) {
         echo '    Buch: ' . $book->title . PHP_EOL;
         $genreOutputArray = array();
-        foreach ($book->findManyToManyRowset('genre', 'book_to_genre') as $genreRow) {
+        $genres = $book->findManyToManyRowset('genre', 'book_to_genre');
+        foreach ($genres as $genreRow) {
             $genreOutputArray[] = $genreRow->name;
         }
         echo '        Genre: ' . implode(', ', $genreOutputArray) . PHP_EOL;
     }
 }
-
 ]]></programlisting>
 
         </example>
