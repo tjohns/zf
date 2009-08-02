@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
+class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
 {
     public function testLoaderInitializesSelect()
     {
@@ -8,7 +8,7 @@ class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
         $select = $this->getSelectMock();
         $loader = $this->getLoaderMock($select);
 
-        $query = new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $em);
+        $query = new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
     }
 
     public function getSelectMock()
@@ -16,7 +16,7 @@ class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
         $select = $this->getMock('Zend_Entity_Mapper_Select', array(), array(), '', false);
         $select->expects($this->any())
                ->method('query')
-               ->will($this->returnValue(new Zend_Test_DbStatementMock()));
+               ->will($this->returnValue(new Zend_Test_DbStatement()));
         return $select;
     }
 
@@ -29,7 +29,7 @@ class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
         $loader = $this->getLoaderMock($select);
         $this->addProcessResultsetExpectation($loader, $fixtureReturnValue, $em);
 
-        $query = new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $em);
+        $query = new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
         $result = $query->getResultList();
 
         $this->assertEquals($fixtureReturnValue, $result);
@@ -79,7 +79,7 @@ class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
         $loader = $this->getLoaderMock($select);
         $this->addProcessResultsetExpectation($loader, $fixtureReturnValue, $em);
 
-        $query = new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $em);
+        $query = new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
 
         return $query->getSingleResult();
     }
@@ -143,7 +143,7 @@ class Zend_Entity_Mapper_DbSelectQueryTest extends Zend_Entity_TestCase
         $loader = $this->getLoaderMock($select);
         $em = $this->createTestingEntityManager();
 
-        return new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $em);
+        return new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
     }
 
     public function getLoaderMock($initializeSelect)

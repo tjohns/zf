@@ -6,7 +6,7 @@ require_once dirname(__FILE__)."/../../TestHelper.php";
 require_once "Loader/AllTests.php";
 require_once "Persister/AllTests.php";
 require_once "SelectTest.php";
-require_once "DbSelectQueryTest.php";
+require_once "NativeQueryTest.php";
 require_once "MapperTest.php";
 
 class Zend_Entity_Mapper_AllTests
@@ -18,7 +18,7 @@ class Zend_Entity_Mapper_AllTests
         $suite->addTest(Zend_Entity_Mapper_Persister_AllTests::suite());
         $suite->addTestSuite('Zend_Entity_Mapper_SelectTest');
         $suite->addTestSuite('Zend_Entity_Mapper_MapperTest');
-        $suite->addTestSuite('Zend_Entity_Mapper_DbSelectQueryTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_NativeQueryTest');
 
         return $suite;
     }

@@ -19,7 +19,7 @@ class Zend_Entity_LazyLoad_CollectionTest extends PHPUnit_Framework_TestCase
     public function testIsNotLoadedByDefault()
     {
         $collection = new Zend_Entity_LazyLoad_Collection('substr', array());
-        $this->assertFalse($collection->wasLoadedFromDatabase());
+        $this->assertFalse($collection->__ze_wasLoadedFromDatabase());
     }
 
     public function testValidCallbackReturningNonCollectionThrowsException()
@@ -55,10 +55,8 @@ class Zend_Entity_LazyLoad_CollectionTest extends PHPUnit_Framework_TestCase
             array('offsetGet', array('foo')),
             array('offsetSet', array('foo', 'bar')),
             array('offsetUnset', array('foo')),
-            array('add', array(1)),
-            array('remove', array(1)),
-            array('getAdded'),
-            array('getRemoved'),
+            array('__ze_getAdded'),
+            array('__ze_getRemoved'),
         );
     }
 

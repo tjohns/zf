@@ -1,29 +1,50 @@
 TODO
 
-* Type Casting: Test it
-* Implement support for Custom Collection Classes
-* Remove Zend_Entity_Interface typehint everywhere
+Dependent on Tasks:
+* Zend_Db_Adapter needs abstraction for ANSI-SQL functions - http://framework.zend.com/issues/browse/ZF-5686
+* Zend_Db_Select needs abstraction for complex and/or queries (using combine()) - http://framework.zend.com/issues/browse/ZF-7444
+
+Tasks:
+* Extend Object and Array Hydration to include multiple entity loading at once.
+* Implement Scalar Hydration Mode that can be used for Aggregate and Single Result queries, code it into query object.
+* Type Casting: Test it and maybe be split up Property Definition into different types if this is a bottleneck
+* Collections: Add difference between Set, Map and List. Add ordering mechanism and allow to set own implementations.
+* Remove Zend_Entity_Interface typehint everywhere (Talk to matthew about that)
+* Move a method "loadAssociation($entity, $associationName)" onto Entity Manager and implement LOAD_EXPLICIT mechanism.
 * Query API: Query Object in Domain Speak translating all properties and foreign entity access to internal SQL.
-* EventDispatcher: prePersist(), postPersist(), preRemove(), postRemove(), preUpdate(), postUpdate(), postLoad()
+* Implement StateTransformer with ReflectionProperty and PHP 5.3 setAccesible()
 * EntityManager: Decouple Zend_Db_Adapter into the Mapper
-* Definitions: Initializing of Loader and Persister and fetching of relations should be done lazy
 * Definitions: Add compound keys through a PrimaryKey object.
-* Definitions: Entity - Add Namespace argument for entities to write less on Subnamespaced entities when referencing them.
-* Definitions: Add Entity-Name Configuration Option
-* Collections: Add difference between Set, Map and List ?! May even add Ordered Lists via callback or own implementation
-* Lazy Load Entities: Class has to be overwritable to implement the Entity interface that fakes identity.
+* Lazy Load Entities: Class has to be overwritable to implement the Entity interface that fakes identity. (See Providers)
 * Mapper: Save and Delete
     * Implement Cascading Persisters
+* Persister/Loader: Handle Bi-directional relationsships according to EJB standard.
+    * How to handle one to many relations only? (Idea: Owning a ManyToMany with Unique foreign key)
+    * Other idea: Require a connection table which works much like many to many (EJB way)
+    * Add Cascading options for Orphans and such
+* Zend Tool Providers:
+    * Code-Generation for LazyLoad Proxies
+        * Give path to metadata definitions
+        * Give Path to directory
+        * Create lazy load proxies from the current entity classes
+    * Metadata to SQL Generation
+        * Give Metadata definitions
+        * Generate SQL DDL statements
+        * Intermediate format (ezComponents DbSchema?) which allows to generate diffs between metadata versions.
+    * SQL to Metadata Generation
+        * Give SQL database structure (ezComponents DbSchema?)
+        * Create superficial Metadata definitions (programmatic)
+* Configuration Metadata via XML?
+
+Version 1.1
 * Mapper: merge/refresh() method needs specific API method on the loader to be useful
+* Mapper: Implement new loaders and persisters for Inheritence mapping
+* Unit Of Work Session Decorator
+  * Force entities to implement interface "Footprint", which has to be userland implemented to notify unit of work of changes
+  * On commit, walk over all entities that are in the context and compare footprint to the original one.
 * EntityManager: Implement Second Level Cache into IdentityMap - Zend_Cache holds objects in Cache for a lifetime, re-cached on each change
     * Easy: Cachable are only the Database representations of an object, not the object itsself. This way all the objects are saved on their own
     * Dependency: Implement Registry or Factory for EntityManager, allowing to serialize/deserialize Lazy Load collections corretcly
-* Persister/Loader: Handle Bi-directional relationsships according to EJB standard.
-
-Version 1.1
-Unit Of Work Session Decorator
- * Force entities to implement interface "Footprint", which has to be userland implemented to notify unit of work of changes
- * On commit, walk over all entities that are in the context and compare footprint to the original one.
 
 
 Workable Tests:

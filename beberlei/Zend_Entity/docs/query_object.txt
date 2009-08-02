@@ -1,0 +1,85 @@
+Which API is better for the Query Object of Zend_Entity?
+=========================================================
+
+1. Requirements:
+    1. Should only be concered with terms of the domain, i.e. Entities and their Properties
+    2. Should abstract SQL more than Zend_Db_Select
+    3. Should allow for powerful criteria selection
+    4. Should allow to decide on the mode of hydration (Scalars, Entities, and such)
+
+2. Problems with Abstraction of Database/SQL Query Object:
+
+    There is definately a problem with abstracting the database away at this stage. Using the Entity Manager
+    createNativeQuery() and createQuery() methods has to offer a SQL like view on the data, since that is what
+    people are familiar with and which is powerful for use with RDBMS.
+
+    If Zend_Entity does not allow to use a large subset of ANSI-SQL 92 its quite useless. In contrast for CouchDB
+    to implementing a complex domain model that behaves like one that is saved in a RMDBS takes quite different steps
+    which are not interoperable with SQL. You need to save specific views in CouchDb that allow you to retrieve data
+    and there exists no way to generate queries from outside the database. This is comparable to using Stored Procedures
+    for data retrieval.
+
+    Also Webservices or Key-Value storages usually only offer retrieval by key or of predefined methods which return
+    arrays of data. Additionally people probably don't want to implement a complete mapper for any other storage,
+    just a tailored to their needs implementation with many Primary Key queries and occassional retrieval of predefined
+    collections of entities.
+
+    This leads to the requirement of adding a "createNamedQuery($queryName)" on the entity manager, which allows
+    to hide the internal query method from the user by only returning a "binding" object which allows to bind some
+    parameters and then execute the query.
+
+    Possible API Example for $em->createNamedQuery():
+
+    class MyApp_NamedQueries_Foo extends Zend_Entity_Query_NamedQueryAbstract
+    {
+        public function execute()
+        {
+            $query = $this->entityManager->createQuery("Foo");
+            $query->join("Bar")->where(array("Foo", "baz"), "eq", $this->_getParam('searchPattern'));
+            return $query;
+        }
+    }
+
+    $options = array('namedQueries' => array('MyApp_NamedQueries' => 'MyApp/NamedQueries')); // builds a Plugin Loader
+    $em = new Zend_Entity_Manager($options);
+
+    $q = $em->createNamedQuery("Foo"); // Named query wrapped into a Zend_Entity_Query_QueryAbstract object.
+    $q->bindParam(1, "myPattern");
+    $entities = $q->getResultList();
+
+3. Possibilities for the Database Query Object API:
+
+    1. Clone of Zend_Db_Select with some derivations
+    2. Query Object with Criterions/Restrictions API
+
+    1. Complex "And" Examples (Non-Fluent, but Fluent Interface supported also):
+    -------------------------------------------------------------------------
+
+    Zend_Db_Select Clone:
+
+    $query = $em->createQuery("University_Course");
+    $query->join("University_Student");
+    $query->join("University_Teacher");
+    $query->where("University_Teacher.name", "Platon");
+    $query->where("University_Student.age", "between", array(20, 25));
+    $query->where("University_Student.country", "in", array("DE", "AT"));
+    $query->where("University_Student.phone", "like", "01234%");
+
+    Query/Criteria Object:
+
+    $query = $em->createQuery("University_Course");
+    $query->join("University_Student");
+    $query->join("University_Teacher");
+    $query->where($query->expr->equals("University_Teacher.name"), "Aristoteles"));
+    $query->where($query->expr->between("University_Student.age", 20, 25));
+    $query->where($query->expr->in("University_Student.country"), array("DE", "AT"));
+    $query->where($query->expr->like("University_Student.phone"), "012345%");
+
+4. Shortcomings of Zend_Db_Select
+=========================================
+
+Currently Zend_Db_Select has shortcomings for complex criteria. A solution would
+be to adopt the API of sfPropelFinderPlugin, which adds a "combine" method which
+aggregates several condition into OR/AND relations.
+
+http://www.symfony-project.org/plugins/sfPropelFinderPlugin

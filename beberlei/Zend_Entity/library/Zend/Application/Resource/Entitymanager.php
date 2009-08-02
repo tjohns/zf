@@ -42,12 +42,14 @@ class Zend_Application_Resource_Entitymanager extends Zend_Application_Resource_
             $options = $this->getOptions();
 
             if(isset($options['metadataDefinitionPath'])) {
-                $resourceMap = new Zend_Entity_MetadataFactory_Code($options['metadataDefinitionPath']);
+                $metadataFactory = new Zend_Entity_MetadataFactory_Code($options['metadataDefinitionPath']);
             } else {
-                throw new Zend_Application_Resource_Exception("Entity Manager needs 'metadataDefinitionPath' option.");
+                throw new Zend_Application_Resource_Exception(
+                    "Entity Manager needs 'metadataDefinitionPath' option."
+                );
             }
 
-            $this->_entityManager = new Zend_Entity_Manager($dbAdapter, array('resource' => $resourceMap));
+            $this->_entityManager = new Zend_Entity_Manager($dbAdapter, array('metadataFactory' => $metadataFactory));
         }
         return $this->_entityManager;
     }

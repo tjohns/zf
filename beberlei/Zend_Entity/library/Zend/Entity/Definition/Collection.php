@@ -35,7 +35,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
     /**
      * @var Zend_Entity_Definition_AbstractRelation
      */
-    protected $relation;
+    protected $relation = null;
 
     /**
      * @var string
@@ -71,6 +71,11 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
      * @var boolean
      */
     protected $_inverse = false;
+
+    /**
+     * @var string
+     */
+    protected $_fetch = null;
 
     /**
      * Construct Collection Definition
@@ -199,10 +204,17 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
      *
      * This option is only relevant for collection maps, not for lists. It defaults to the primary key.
      *
-     * @param Zend_Entity_Definition_Property $mapKey
+     * @param string $mapKey
      */
-    public function setMapKey(Zend_Entity_Definition_Property $mapKey)
+    public function setMapKey($mapKey)
     {
+        if(!is_string($mapKey)) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "Map-Key option is required to be a string."
+            );
+        }
+
         $this->_collectionType = self::COLLECTION_ELEMENTS;
         $this->_mapKey = $mapKey;
     }
@@ -220,11 +232,18 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
     /**
      * Set the element property for a map-element collection.
      *
-     * @param Zend_Entity_Definition_Property $element
+     * @param string $element
      * @return void
      */
-    public function setElement(Zend_Entity_Definition_Property $element)
+    public function setElement($element)
     {
+        if(!is_string($element)) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "Element option is required to be a string."
+            );
+        }
+
         $this->_collectionType = self::COLLECTION_ELEMENTS;
         $this->_element = $element;
     }
@@ -268,6 +287,25 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
     public function setInverse($inverse)
     {
         $this->_inverse = $inverse;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFetch()
+    {
+        return $this->_fetch;
+    }
+
+    /**
+     *
+     * @param string $fetch
+     */
+    public function setFetch($fetch)
+    {
+        $this->_fetch = $fetch;
+        return $this;
     }
 
     /**
@@ -289,6 +327,10 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
                 );
             }
 
+            if($this->_fetch === null) {
+                $this->_fetch = $relation->getFetch();
+            }
+
             if($this->getTable() == null) {
                 $foreignDef = $map->getDefinitionByEntityName($relation->getClass());
                 $this->setTable($foreignDef->getTable());
@@ -296,25 +338,31 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
             
             $relation->compile($entityDef, $map);
         } else if($this->getCollectionType() == self::COLLECTION_ELEMENTS) {
+            if($this->_fetch === null) {
+                $this->_fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
+            }
+
             if($this->getElement() == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
-                    "No element option was set in collection '".$this->getPropertyName()."' ".
+                    "No 'element' option was set in collection '".$this->getPropertyName()."' ".
                     "of entity '".$entityDef->getClass()."'"
                 );
-            } elseif($this->getTable() == null) {
+            }
+            if($this->getTable() == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
                     "The table field is required in collections ".
                     "definition of entity '".$entityDef->getClass()."'."
                 );
             }
-
-            $mapKey = $this->getMapKey();
-            if($mapKey !== null) {
-                $mapKey->compile($entityDef, $map);
+            if($this->getMapKey() == null) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "No 'mapKey' option was set in collection '".$this->getPropertyName()."' ".
+                    "of entity '".$entityDef->getClass()."'"
+                );
             }
-            $this->getElement()->compile($entityDef, $map);
         }
 
         if($this->getKey() == null) {

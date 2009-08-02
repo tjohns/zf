@@ -76,7 +76,7 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
 
         $collection = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ENTITIES);
 
-        $this->assertTrue($collection instanceof Zend_Entity_Collection);
+        $this->assertType('array', $collection);
         $this->assertEquals(1, count($collection));
 
         $entity = $collection[0];

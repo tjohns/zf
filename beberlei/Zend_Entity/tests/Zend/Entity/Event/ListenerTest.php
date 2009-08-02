@@ -113,4 +113,15 @@ class Zend_Entity_Event_ListenerTest extends PHPUnit_Framework_TestCase
 
         $this->listener->registerCallback("postLoad", "invalidCallback");
     }
+
+    public function testEventOnlyRegisteredOnce()
+    {
+        $event = $this->getMock('Zend_Entity_Event_EventAbstract');
+        $event->expects($this->once())
+              ->method('preInsert');
+
+        $this->listener->registerEvent($event);
+        $this->listener->registerEvent($event);
+        $this->listener->preInsert(new Zend_TestEntity1());
+    }
 }

@@ -86,4 +86,15 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
             (string)$select
         );
     }
+
+    public function testLoadRow_ReturnsCollection()
+    {
+        $def = $this->fixture->getEntityDefinition('Zend_TestEntity1');
+        $def->getPropertyByName('manytomany')->setFetch('select');
+
+        $entityState = $this->loadEntityAAndGetState();
+        $elements = $entityState[Zend_Entity_Fixture_ManyToManyDefs::TEST_A_MANYTOMANY];
+
+        $this->assertType('Zend_Entity_Collection', $elements);
+    }
 }

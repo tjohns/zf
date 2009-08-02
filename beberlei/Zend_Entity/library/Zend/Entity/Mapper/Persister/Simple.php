@@ -35,6 +35,11 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     protected $_toManyCascadeRelations = array();
 
     /**
+     * @var array
+     */
+    protected $_elementCollections = array();
+
+    /**
      * @var string
      */
     protected $_class;
@@ -83,6 +88,8 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         foreach($entityDef->getExtensions() AS $collection) {
             if($this->isCascadingToManyCollection($collection)) {
                 $this->_toManyCascadeRelations[] = $collection;
+            } elseif($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
+                $this->_elementCollections[] = $collection;
             }
         }
         $this->_class            = $entityDef->getClass();
@@ -146,7 +153,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         }
 
         if($relatedCollection instanceof Zend_Entity_Collection_Interface
-            && $relatedCollection->wasLoadedFromDatabase() == true) {
+            && $relatedCollection->__ze_wasLoadedFromDatabase() == true) {
             /* @var $relatedCollection Zend_Entity_Definition_AbstractRelation */
             switch($collectionDef->getRelation()->getCascade()) {
                 case Zend_Entity_Definition_Property::CASCADE_ALL:
@@ -164,13 +171,13 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
 
             $key = $collectionDef->getKey();
             $foreignKey = $collectionDef->getRelation()->getColumnName();
-            foreach($relatedCollection->getAdded() AS $relatedEntity) {
+            foreach($relatedCollection->__ze_getAdded() AS $relatedEntity) {
                 $db->insert($collectionDef->getTable(), array(
                     $key => $keyValue,
                     $foreignKey => $identityMap->getPrimaryKey($relatedEntity),
                 ));
             }
-            foreach($relatedCollection->getRemoved() AS $relatedEntity) {
+            foreach($relatedCollection->__ze_getRemoved() AS $relatedEntity) {
                 $db->delete($collectionDef->getTable(), 
                     $db->quoteIdentifier($key)." = ".$db->quote($keyValue)." AND ".
                     $db->quoteIdentifier($foreignKey)." = ".$db->quote($identityMap->getPrimaryKey($relatedEntity))
@@ -205,6 +212,36 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
             $relatedCollection = $entityState[$collectionDef->getPropertyName()];
 
             $this->evaluateRelatedCollection($key, $relatedCollection, $collectionDef, $entityManager);
+        }
+        foreach($this->_elementCollections AS $elementDef) {
+            $elementHashMap = $entityState[$elementDef->getPropertyName()];
+            $db = $entityManager->getAdapter();
+            if($elementHashMap instanceof Zend_Entity_Collection_ElementHashMap) {
+                /* @var $elementHashMap Zend_Entity_Collection_ElementHashMap */
+                foreach($elementHashMap->__ze_getRemoved() AS $k => $v) {
+                    $db->delete(
+                        $elementDef->getTable(),
+                        implode(" AND ", array(
+                            $db->quoteInto($elementDef->getKey()." = ?", $key),
+                            $db->quoteInto($elementDef->getMapKey()." = ?", $k)
+                        ))
+                    );
+                }
+
+                foreach($elementHashMap->__ze_getAdded() AS $k => $v) {
+                    $db->insert(
+                        $elementDef->getTable(),
+                        array(
+                            $elementDef->getKey() => $key,
+                            $elementDef->getMapKey() => $k,
+                            $elementDef->getElement() => $v,
+                        )
+                    );
+                }
+            } else {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception();
+            }
         }
     }
 

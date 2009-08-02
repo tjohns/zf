@@ -396,4 +396,74 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $persister = $this->createPersister();
         $persister->delete($entity, $em);
     }
+
+    public function testUpdateCollections_ElementHashMap_DeleteRemovedElements()
+    {
+        $fixtureId = 1;
+        $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
+
+        $elements = new Zend_Entity_Collection_ElementHashMap(array("foo" => "bar"));
+        unset($elements["foo"]);
+        $entityState = array('elements' => $elements);
+
+        $dbMock = $this->createDatabaseConnectionMock();
+        $dbMock->expects($this->at(0))
+               ->method('quoteInto')
+               ->with($this->equalTo('fk_id = ?'), $this->equalTo(1))
+               ->will($this->returnValue('fk_id = 1'));
+        $dbMock->expects($this->at(1))
+               ->method('quoteInto')
+               ->with($this->equalTo('col_key = ?'), $this->equalTo("foo"))
+               ->will($this->returnValue("col_key = 'foo'"));
+        $dbMock->expects($this->at(2))
+               ->method('delete')
+               ->with($this->equalTo('entities_elements'), $this->equalTo("fk_id = 1 AND col_key = 'foo'"));
+
+        $em = $this->createTestingEntityManager(null, null, null, $dbMock);
+
+        $persister = $this->createPersister();
+        $persister->updateCollections($fixtureId, $entityState, $em);
+    }
+
+    public function testUpdateCollections_ElementHashMap_InsertAddedElements()
+    {
+        $fixtureId = 1;
+        $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
+
+        $expectedInsertData = array(
+            'fk_id' => $fixtureId,
+            'col_key' => 'foo',
+            'col_name' => 'bar'
+        );
+
+        $elements = new Zend_Entity_Collection_ElementHashMap();
+        $elements["foo"] = "bar";
+        
+        $entityState = array('elements' => $elements);
+
+        $dbMock = $this->createDatabaseConnectionMock();
+        $dbMock->expects($this->at(0))
+               ->method('insert')
+               ->with($this->equalTo('entities_elements'), $expectedInsertData);
+
+        $em = $this->createTestingEntityManager(null, null, null, $dbMock);
+
+        $persister = $this->createPersister();
+        $persister->updateCollections($fixtureId, $entityState, $em);
+    }
+
+    public function testUpdateCollections_NoElementHashMap_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $fixtureId = 1;
+        $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
+
+        $entityState = array('elements' => null);
+
+        $em = $this->createTestingEntityManager();
+
+        $persister = $this->createPersister();
+        $persister->updateCollections($fixtureId, $entityState, $em);
+    }
 }

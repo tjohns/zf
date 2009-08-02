@@ -3,9 +3,9 @@
 class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
 {
     /**
-     * @var array
+     * @var SplObjectStorage
      */
-    protected $_events = array();
+    protected $_events = null;
 
     /**
      * @var array
@@ -20,13 +20,18 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
         'postLoad' => array(),
     );
 
+    public function __construct()
+    {
+        $this->_events = new SplObjectStorage();
+    }
+
     /**
      * @param Zend_Entity_Event $event
      * @return boolean
      */
     public function registerEvent(Zend_Entity_Event_EventAbstract $event)
     {
-        $this->_events[] = $event;
+        $this->_events->attach($event);
     }
 
     /**

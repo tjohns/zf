@@ -144,7 +144,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
         $this->_entityManager->save($student);
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable("university_students_semester_courses");
 
         $this->assertDataSetsEqual(
@@ -166,7 +166,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
         $this->_entityManager->save($student);
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable("university_students");
         $ds->addTable("university_students_semester_courses");
 
@@ -183,7 +183,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
         $this->_entityManager->save($student);
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable("university_students");
         $ds->addTable("university_students_semester_courses");
 
@@ -243,7 +243,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
         $student = $this->_entityManager->load("ZendEntity_Student", 1);
         $this->_entityManager->delete($student);
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable("university_students");
 
         $this->assertDataSetsEqual(

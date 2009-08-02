@@ -54,10 +54,6 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
             }
             $collection[] = $entity;
         }
-
-        if($fetchMode == Zend_Entity_Manager::FETCH_ENTITIES) {
-            $collection = new Zend_Entity_Collection($collection);
-        }
         return $collection;
     }
 }

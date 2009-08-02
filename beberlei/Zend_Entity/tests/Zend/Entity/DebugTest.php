@@ -77,7 +77,7 @@ array(1) {
     public function createLazyLoadCollectionExpectingWasLoadedFromDbWithFalse()
     {
         $lazyLoadCollection = $this->getMock('Zend_Entity_Collection_Interface');
-        $lazyLoadCollection->expects($this->once())->method('wasLoadedFromDatabase')->will($this->returnValue(false));
+        $lazyLoadCollection->expects($this->once())->method('__ze_wasLoadedFromDatabase')->will($this->returnValue(false));
         return $lazyLoadCollection;
     }
 

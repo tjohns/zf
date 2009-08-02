@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__)."/../../TestHelper.php";
+
 require_once "Clinic/Entities/Clinic_Bed.php";
 require_once "Clinic/Entities/Clinic_Occupancy.php";
 require_once "Clinic/Entities/Clinic_Patient.php";
@@ -57,17 +59,16 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
         $query->where("name = ?", "John Doe");
 
         $patients = $query->getResultList();
-        $this->assertTrue($patients instanceof Zend_Entity_Collection, "EntityManager::find() has to return an Entity Collection");
-        $this->assertFalse($patients instanceof Zend_Entity_LazyLoad_Collection, "EntityManager::find() never returns a lazy load collection as root node.");
+        $this->assertType('array', $patients, "AbstractQuery::getResultList() has to return an array as collection");
 
         $this->assertEquals(1, count($patients), "Database contains exactly 1 patient in its unmodified state.");
 
-        $patient = $patients->current();
+        $patient = $patients[0];
 
         $this->assertTrue($patient instanceof Zend_Entity_Interface, "Collection has to return Entities.");
-        $this->assertEquals(1,            $patient->getId());
+        $this->assertEquals(1, $patient->getId());
         $this->assertEquals("John Doe", $patient->getName());
-        $this->assertEquals("123456789",  $patient->getSocialSecurityNumber());
+        $this->assertEquals("123456789", $patient->getSocialSecurityNumber());
         $this->assertEquals("1972-01-01", $patient->getBirthDate());
     }
 
@@ -101,7 +102,7 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
         $this->_entityManager->save($patient);
         $this->assertEquals($newPatientId, $patient->getId());
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable('patients', 'SELECT * FROM patients');
 
         $this->assertDataSetsEqual(
@@ -112,13 +113,14 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
 
     public function testDeletePatient()
     {
-        $this->markTestSkipped();
+        #$this->markTestSkipped();
+        
         $patient = $this->_entityManager->load("Clinic_Patient", 1);
         $this->_entityManager->delete($patient);
 
         $this->assertNull($patient->getId());
 
-        $ds = new Zend_Test_PHPUnit_Database_DataSet_QueryDataSet($this->getConnection());
+        $ds = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet($this->getConnection());
         $ds->addTable('patients', 'SELECT * FROM patients');
 
         $this->assertDataSetsEqual(

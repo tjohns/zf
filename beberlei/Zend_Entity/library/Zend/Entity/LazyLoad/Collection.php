@@ -83,6 +83,8 @@ class Zend_Entity_LazyLoad_Collection implements Zend_Entity_Collection_Interfac
             $collection = call_user_func_array($this->_callback, $this->_callbackArguments);
             if($collection instanceof Zend_Entity_Collection_Interface) {
                 $this->_collection = $collection;
+            } else if(is_array($collection)) {
+                $this->_collection = new Zend_Entity_Collection($collection);
             } else {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
@@ -95,24 +97,14 @@ class Zend_Entity_LazyLoad_Collection implements Zend_Entity_Collection_Interfac
         return $this->_collection;
     }
 
-    public function add($entity)
+    public function __ze_getRemoved()
     {
-        $this->getInnerCollection()->add($entity);
+        return $this->getInnerCollection()->__ze_getRemoved();
     }
 
-    public function remove($index)
+    public function __ze_getAdded()
     {
-        $this->getInnerCollection()->remove($index);
-    }
-
-    public function getRemoved()
-    {
-        return $this->getInnerCollection()->getRemoved();
-    }
-
-    public function getAdded()
-    {
-        return $this->getInnerCollection()->getAdded();
+        return $this->getInnerCollection()->__ze_getAdded();
     }
 
     public function current()
@@ -165,11 +157,11 @@ class Zend_Entity_LazyLoad_Collection implements Zend_Entity_Collection_Interfac
         $this->getInnerCollection()->offsetUnset($offset);
     }
 
-    public function wasLoadedFromDatabase()
+    public function __ze_wasLoadedFromDatabase()
     {
         if($this->_collection === null) {
             return false;
         }
-        return $this->_collection->wasLoadedFromDatabase();
+        return $this->_collection->__ze_wasLoadedFromDatabase();
     }
 }

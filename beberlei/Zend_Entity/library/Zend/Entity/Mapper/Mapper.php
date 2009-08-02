@@ -19,5 +19,5 @@
 
 class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
 {
-    
+
 }

@@ -130,7 +130,7 @@ class Clinic_Station implements Zend_Entity_Interface
         for($i = 0; $i  < $byCount; $i++) {
             $bed = new Clinic_Bed();
             $bed->setStation($this);
-            $this->beds->add($bed);
+            $this->beds[] = $bed;
         }
         return $this->getBeds();
     }

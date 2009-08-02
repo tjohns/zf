@@ -60,20 +60,6 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
     }
 
     /**
-     * Add new entity to collection.
-     *
-     * @param Zend_Entity_Interface $entity
-     * @return void
-     */
-    public function add($entity)
-    {
-        $this->assertEntityIsOfCorrectType($entity);
-
-        $this->_added[]      = $entity;
-        $this->_collection[] = $entity;
-    }
-
-    /**
      * Is this entity of the correct type?
      * 
      * @param mixed $entity
@@ -87,24 +73,6 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
                 "expects '".$this->_entityClassType."'"
             );
         }
-    }
-
-    public function remove($index)
-    {
-        if(isset($this->_collection[$index])) {
-            $this->_removed[] = $this->_collection[$index];
-            unset($this->_collection[$index]);
-        }
-    }
-
-    public function getRemoved()
-    {
-        return $this->_removed;
-    }
-
-    public function getAdded()
-    {
-        return $this->_added;
     }
 
     public function current()
@@ -155,15 +123,33 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
         $this->assertEntityIsOfCorrectType($entity);
 
         $this->_added[] = $entity;
-        $this->_collection[$offset] = $entity;
+        // $col[] syntax leads to $offset == null => 0
+        if($offset !== null) {
+            $this->_collection[$offset] = $entity;
+        } else {
+            $this->_collection[] = $entity;
+        }
     }
     
     public function offsetUnset($offset)
     {
-        $this->remove($offset);
+        if(isset($this->_collection[$offset])) {
+            $this->_removed[] = $this->_collection[$offset];
+            unset($this->_collection[$offset]);
+        }
     }
 
-    public function wasLoadedFromDatabase()
+    public function __ze_getRemoved()
+    {
+        return $this->_removed;
+    }
+
+    public function __ze_getAdded()
+    {
+        return $this->_added;
+    }
+
+    public function __ze_wasLoadedFromDatabase()
     {
         return true;
     }

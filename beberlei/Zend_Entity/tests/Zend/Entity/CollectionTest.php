@@ -53,19 +53,19 @@ class Zend_Entity_CollectionTest extends PHPUnit_Framework_TestCase
         $data = array("foo", "bar", "baz");
         $collection = new Zend_Entity_Collection($data);
 
-        $collection->remove(0);
+        unset($collection[0]);
         $this->assertEquals(2, count($collection));
         foreach($collection AS $element) {
             $this->assertNotEquals("foo", $element);
         }
-        $this->assertEquals(array("foo"), $collection->getRemoved());
+        $this->assertEquals(array("foo"), $collection->__ze_getRemoved());
     }
 
     public function testAddItemToCollectionRaisesCount()
     {
         $entity = $this->getMock('Zend_Entity_Interface');
         $collection = new Zend_Entity_Collection();
-        $collection->add($entity);
+        $collection[] = $entity;
 
         $this->assertEquals(1, count($collection));
     }
@@ -74,9 +74,9 @@ class Zend_Entity_CollectionTest extends PHPUnit_Framework_TestCase
     {
         $entity = $this->getMock('Zend_Entity_Interface');
         $collection = new Zend_Entity_Collection();
-        $collection->add($entity);
+        $collection[] = $entity;
 
-        $addedItems = $collection->getAdded();
+        $addedItems = $collection->__ze_getAdded();
 
         $this->assertTrue(isset($addedItems[0]));
         $this->assertEquals($entity, $addedItems[0]);
@@ -88,6 +88,6 @@ class Zend_Entity_CollectionTest extends PHPUnit_Framework_TestCase
 
         $otherClassType = $this->getMock('Zend_Entity_Interface');
         $collection = new Zend_Entity_Collection(array(), "someClassType");
-        $collection->add($otherClassType);
+        $collection[] = $otherClassType;
     }
 }

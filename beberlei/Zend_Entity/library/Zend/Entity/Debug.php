@@ -11,7 +11,7 @@ class Zend_Entity_Debug
             $object = $object->getState();
             $state = array();
             foreach($object AS $k => $v) {
-                if($v instanceof Zend_Entity_Collection_Interface && $v->wasLoadedFromDatabase() == false) {
+                if($v instanceof Zend_Entity_Collection_Interface && $v->__ze_wasLoadedFromDatabase() == false) {
                     $v = "*LAZYLOADCOLLECTION*";
                 } else if($v instanceof Zend_Entity_LazyLoad_Entity) {
                     $v = "*LAZYLOADENTITY*";
@@ -20,7 +20,7 @@ class Zend_Entity_Debug
             }
             var_dump($state);
         } else if($object instanceof Zend_Entity_Collection_Interface) {
-            if($object->wasLoadedFromDatabase() == false) {
+            if($object->__ze_wasLoadedFromDatabase() == false) {
                 var_dump("*LAZYLOADCOLLECTION*");
             } else {
                 foreach($object AS $k => $v) {

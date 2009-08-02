@@ -2,13 +2,9 @@
 
 interface Zend_Entity_Collection_Interface extends Iterator, Countable, ArrayAccess
 {
-    public function add($entity);
+    public function __ze_getRemoved();
 
-    public function remove($index);
+    public function __ze_getAdded();
 
-    public function getRemoved();
-
-    public function getAdded();
-
-    public function wasLoadedFromDatabase();
+    public function __ze_wasLoadedFromDatabase();
 }

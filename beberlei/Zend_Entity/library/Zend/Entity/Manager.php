@@ -58,7 +58,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected $_eventListener = null;
 
     /**
-     * Construct new model factory.
+     * Construct new Entity Manager instance
      *
      * @param Zend_Db_Adapter_Abstract $db
      * @param Zend_Entity_EventDispatcher $dispatcher
@@ -200,9 +200,9 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     protected function loadEntityMapper($entityClassName)
     {
-        $resourceMap = $this->getMetadataFactory();
-        $entityDefinition = $resourceMap->getDefinitionByEntityName($entityClassName);
-        $mapper = new Zend_Entity_Mapper_Mapper($this->getAdapter(), $entityDefinition, $resourceMap);
+        $metadataFactory = $this->getMetadataFactory();
+        $entityDefinition = $metadataFactory->getDefinitionByEntityName($entityClassName);
+        $mapper = new Zend_Entity_Mapper_Mapper($this->getAdapter(), $entityDefinition, $metadataFactory);
         $this->_entityMappers[$entityClassName] = $mapper;
     }
 
@@ -217,7 +217,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             $loader = $mapper->getLoader();
             $select = $mapper->select();
 
-            return new Zend_Entity_Mapper_DbSelectQuery($select, $loader, $this);
+            return new Zend_Entity_Mapper_NativeQuery($select, $loader, $this);
         } else {
             throw new Exception("Missing Native Query Parser/Builder/Whatever!");
         }

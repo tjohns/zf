@@ -78,7 +78,7 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
 
     public function testSetGetMapKey()
     {
-        $key = new Zend_Entity_Definition_Property(self::TEST_PROPERTY2);
+        $key = "keyName";
 
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
         $colDef->setMapKey($key);
@@ -88,7 +88,7 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
 
     public function testSetGetElement()
     {
-        $element = new Zend_Entity_Definition_Property(self::TEST_PROPERTY2);
+        $element = "elementName";
 
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
         $colDef->setElement($element);
@@ -102,7 +102,7 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
     }
 
-    public function testCompileElementCollectionWithoutTableNameThrowsException()
+    public function testCompileElementCollection_WithoutTableName_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
@@ -111,16 +111,49 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
     }
 
-    public function testCompileElementCollectionWithoutElementThrowsException()
+    public function testCompileElementCollection_WithoutElement_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
+        $mapKey = "keyName";
+
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
         $colDef->setTable(self::TEST_TABLE);
-        $colDef->setMapKey(new Zend_Entity_Definition_Property(self::TEST_PROPERTY2));
+        $colDef->setMapKey($mapKey);
         $colDef->setKey(self::TEST_PROPERTY2);
 
         $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
+
+    public function testCompileElementCollection_WithoutMapKey_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $element = "keyName";
+
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setTable(self::TEST_TABLE);
+        $colDef->setElement($element);
+        $colDef->setKey(self::TEST_PROPERTY2);
+
+        $colDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+    }
+
+    public function testGetFetch_Default()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $this->assertNull($colDef->getFetch());
+    }
+
+    public function testSetFetch()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setFetch(Zend_Entity_Definition_Property::FETCH_SELECT);
+
+        $this->assertEquals(
+            Zend_Entity_Definition_Property::FETCH_SELECT,
+            $colDef->getFetch()
+        );
     }
 
     public function testGetDefaultInverse()
@@ -136,6 +169,22 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $colDef->setInverse(true);
 
         $this->assertTrue($colDef->getInverse());
+    }
+
+    public function testSetMapKey_NonString_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setMapKey(new stdClass());
+    }
+
+    public function testSetElement_NonString_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setElement(new stdClass());
     }
 
     /**
@@ -158,8 +207,8 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
     {
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
         $colDef->setTable(self::TEST_TABLE);
-        $colDef->setMapKey(new Zend_Entity_Definition_Property(self::TEST_PROPERTY2));
-        $colDef->setElement(new Zend_Entity_Definition_Property(self::TEST_PROPERTY2));
+        $colDef->setMapKey("mapKey");
+        $colDef->setElement("element");
         $colDef->setKey(self::TEST_PROPERTY2);
 
         return $colDef;

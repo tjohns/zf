@@ -4,6 +4,11 @@ class Zend_TestEntity1 implements Zend_Entity_Interface
 {
     protected $state;
 
+    public function __get($name)
+    {
+        return $this->state[$name];
+    }
+
     public function getState()
     {
         return $this->state;

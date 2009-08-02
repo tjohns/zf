@@ -68,7 +68,7 @@ class Clinic_Bed implements Zend_Entity_Interface
 
             // TODO: check if this does not collide with already "booked" occupancies
 
-            $this->occupancyPlan->add($occupancy);
+            $this->occupancyPlan[] = $occupancy;
             return $occupancy;
         }
         return null;
