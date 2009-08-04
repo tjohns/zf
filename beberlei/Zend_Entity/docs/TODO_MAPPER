@@ -5,6 +5,8 @@ Dependent on Tasks:
 * Zend_Db_Select needs abstraction for complex and/or queries (using combine()) - http://framework.zend.com/issues/browse/ZF-7444
 
 Tasks:
+* Remove Loader and Persister Class Definitions in EntityDef, Implement Visitor Definition Mapper usage
+  and their usage in Loader and Persister
 * Extend Object and Array Hydration to include multiple entity loading at once.
 * Implement Scalar Hydration Mode that can be used for Aggregate and Single Result queries, code it into query object.
 * Type Casting: Test it and maybe be split up Property Definition into different types if this is a bottleneck

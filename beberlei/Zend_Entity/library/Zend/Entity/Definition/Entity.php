@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
+class Zend_Entity_Definition_Entity
 {
     /**
      * @var string
@@ -30,14 +30,14 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     protected $_entityName = null;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $_extensions = array();
+    protected $_tableName;
 
     /**
      * @var array
      */
-    protected $_relations = array();
+    protected $_properties = array();
 
     /**
      * @var Zend_Entity_Definition_PrimaryKey
@@ -83,7 +83,14 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     public function __construct($className=null, $options=array())
     {
         $this->setClass($className);
-        parent::__construct($className, $options);
+        $this->setTable($className);
+
+        foreach($options AS $k => $v) {
+            $method = "set".ucfirst($k);
+            if(method_exists($this, $method)) {
+                call_user_func_array(array($this, $method), array($v));
+            }
+        }
     }
 
     /**
@@ -104,6 +111,29 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     public function setClass($className)
     {
         $this->_className = $className;
+    }
+
+    /**
+     * Get current tablename
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        if($this->_tableName == null) {
+            throw new Exception("No table has been set for the definition.");
+        }
+        return $this->_tableName;
+    }
+
+    /**
+     * Set table
+     *
+     * @param string $tableName
+     */
+    public function setTable($tableName)
+    {
+        $this->_tableName = $tableName;
     }
 
     /**
@@ -134,11 +164,7 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
      */
     public function hasProperty($propertyName)
     {
-        return (
-            isset($this->_properties[$propertyName])
-            || isset($this->_relations[$propertyName])
-            || isset($this->_extensions[$propertyName])
-        );
+        return isset($this->_properties[$propertyName]);
     }
 
     /**
@@ -157,19 +183,6 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
         }
         $property = Zend_Entity_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
 
-        // Warum die Unterscheidung??? Das sind doch alles Properties!
-        /*if($property instanceof Zend_Entity_Definition_Table) {
-            $this->_extensions[$propertyName] = $property;
-        } elseif($property instanceof Zend_Entity_Definition_AbstractRelation) {
-            $this->_relations[$propertyName] = $property;
-        } elseif($property instanceof Zend_Entity_Definition_Property_Abstract) {
-            if($property instanceof Zend_Entity_Definition_PrimaryKey) {
-                $this->_id = $property;
-            } else if($property instanceof Zend_Entity_Definition_Version) {
-                $this->_version = $property;
-            }
-            $this->_properties[$propertyName] = $property;
-        }*/
         if($property instanceof Zend_Entity_Definition_PrimaryKey) {
             $this->_id = $property;
         } else if($property instanceof Zend_Entity_Definition_Version) {
@@ -177,6 +190,55 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
         }
         $this->_properties[$propertyName] = $property;
         return $property;
+    }
+
+    public function addInstance($property)
+    {
+        $propertyName = $property->getPropertyName();
+        $this->_properties[$propertyName] = $property;
+        return $this;
+    }
+
+    /**
+     * Add new property via magic __call()
+     *
+     * @param  string $method
+     * @param  array $args
+     * @return object
+     */
+    public function __call($method, $args)
+    {
+        if(substr($method, 0, 3) == "add") {
+            $propertyType = substr($method, 3);
+
+            if(!isset($args[0]) || !is_string($args[0])) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "First argument of '".$propertyType."' has to be a Property Name of type string."
+                );
+            } else {
+                $propertyName = $args[0];
+            }
+            if(!isset($args[1]) || !is_array($args[1])) {
+                $options = array();
+            } else {
+                $options = $args[1];
+            }
+            return $this->add($propertyType, $propertyName, $options);
+        } else {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception("Unknown method '".$method."' called.");
+        }
+    }
+
+    /**
+     * Get all current properties of table
+     *
+     * @return array
+     */
+    public function getProperties()
+    {
+        return $this->_properties;
     }
 
     /**
@@ -189,36 +251,10 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
     {
         if(isset($this->_properties[$propertyName])) {
             return $this->_properties[$propertyName];
-        } else if(isset($this->_relations[$propertyName])) {
-            return $this->_relations[$propertyName];
-        } else if(isset($this->_extensions[$propertyName])) {
-            return $this->_extensions[$propertyName];
         } else {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception("No Property found!");
         }
-    }
-
-    /**
-     * Return all relations
-     *
-     * @return Zend_Entity_Definition_AbstractRelation[]
-     */
-    public function getRelations()
-    {
-        return $this->_relations;
-    }
-
-    /**
-     * Extensions are fields that are not derived from a column but extend the state.
-     *
-     * Falling under this category are collections and subjoin elements.
-     *
-     * @return Zend_Entity_Definition_Table[]
-     */
-    public function getExtensions()
-    {
-        return $this->_extensions;
     }
 
     /**
@@ -353,14 +389,6 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
         foreach($this->_properties AS $property) {
             $property->compile($this, $map);
             $propertyNames[] = $property->getPropertyName();
-        }
-        foreach($this->_relations AS $relation) {
-            $relation->compile($this, $map);
-            $propertyNames[] = $relation->getPropertyName();
-        }
-        foreach($this->_extensions AS $extension) {
-            $extension->compile($this, $map);
-            $propertyNames[] = $extension->getPropertyName();
         }
 
         if(class_exists($this->_stateTransformerClass)) {

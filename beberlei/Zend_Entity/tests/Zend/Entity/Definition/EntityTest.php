@@ -194,7 +194,7 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
                   ->method('compile');
 
         $entityDef->setPrimaryKey("propA", $propertyA);
-        $entityDef->addElement("propB", $propertyB);
+        $entityDef->addInstance($propertyB);
 
         $entityDef->compile($metadataFactoryMock);
     }
@@ -211,7 +211,7 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $relation->expects($this->once())
                   ->method('compile');
 
-        $entityDef->addRelation("propA", $relation);
+        $entityDef->addInstance($relation);
 
         $entityDef->compile($metadataFactoryMock);
     }
@@ -228,7 +228,7 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $extension->expects($this->once())
                   ->method('compile');
 
-        $entityDef->addExtension("propA", $extension);
+        $entityDef->addInstance($extension);
 
         $entityDef->compile($metadataFactoryMock);
     }

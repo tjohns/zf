@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
+class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_Abstract
 {
     const COLLECTION_RELATION = 'relation';
     const COLLECTION_ELEMENTS = 'elements';
@@ -86,7 +86,13 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Table
     public function __construct($propertyName, array $options=array())
     {
         $this->setPropertyName($propertyName);
-        parent::__construct(null, $options);
+
+        foreach($options AS $k => $v) {
+            $method = "set".ucfirst($k);
+            if(method_exists($this, $method)) {
+                call_user_func_array(array($this, $method), array($v));
+            }
+        }
     }
 
     /**
