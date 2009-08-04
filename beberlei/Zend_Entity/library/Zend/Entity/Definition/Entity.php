@@ -158,7 +158,7 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
         $property = Zend_Entity_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
 
         // Warum die Unterscheidung??? Das sind doch alles Properties!
-        if($property instanceof Zend_Entity_Definition_Table) {
+        /*if($property instanceof Zend_Entity_Definition_Table) {
             $this->_extensions[$propertyName] = $property;
         } elseif($property instanceof Zend_Entity_Definition_AbstractRelation) {
             $this->_relations[$propertyName] = $property;
@@ -169,7 +169,13 @@ class Zend_Entity_Definition_Entity extends Zend_Entity_Definition_Table
                 $this->_version = $property;
             }
             $this->_properties[$propertyName] = $property;
+        }*/
+        if($property instanceof Zend_Entity_Definition_PrimaryKey) {
+            $this->_id = $property;
+        } else if($property instanceof Zend_Entity_Definition_Version) {
+            $this->_version = $property;
         }
+        $this->_properties[$propertyName] = $property;
         return $property;
     }
 

@@ -75,23 +75,24 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     {
         $properties = array();
         foreach($entityDef->getProperties() AS $property) {
-            if(!($property instanceof Zend_Entity_Definition_Formula)) {
-                $properties[] = $property;
+            if($property instanceof Zend_Entity_Definition_AbstractRelation) {
+                if($property->isOwning()) {
+                    $this->_toOneRelations[$property->getPropertyName()] = $property;
+                }
+            } elseif($property instanceof Zend_Entity_Definition_Collection) {
+                if($this->isCascadingToManyCollection($property)) {
+                    $this->_toManyCascadeRelations[] = $property;
+                } elseif($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
+                    $this->_elementCollections[] = $property;
+                }
+            } else {
+                if(!($property instanceof Zend_Entity_Definition_Formula)) {
+                    $properties[] = $property;
+                }
             }
         }
         $this->_properties = $properties;
-        foreach($entityDef->getRelations() AS $relation) {
-            if($relation->isOwning()) {
-                $this->_toOneRelations[$relation->getPropertyName()] = $relation;
-            }
-        }
-        foreach($entityDef->getExtensions() AS $collection) {
-            if($this->isCascadingToManyCollection($collection)) {
-                $this->_toManyCascadeRelations[] = $collection;
-            } elseif($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-                $this->_elementCollections[] = $collection;
-            }
-        }
+
         $this->_class            = $entityDef->getClass();
         $this->_primaryKey       = $entityDef->getPrimaryKey();
         $this->_table            = $entityDef->getTable();

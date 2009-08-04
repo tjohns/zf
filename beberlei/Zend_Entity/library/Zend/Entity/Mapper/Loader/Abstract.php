@@ -102,30 +102,27 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
         $propertyNames = array();
         foreach($entityDefinition->getProperties() AS $property) {
-            // TODO: Implement Lazy Load Properties
-            $columnName = $property->getColumnName();
-            $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
-            $this->_columnNameToProperty[$columnName] = $property;
-            $propertyNames[] = $property->getPropertyName();
-        }
-        foreach($entityDefinition->getRelations() AS $relation) {
-            // Setup retrieval of the foreign key value
-            $columnName = $relation->getColumnName();
-            $this->_sqlColumnAliasMap[$columnName] = $relation->getColumnSqlName();
-            $this->_columnNameToProperty[$columnName] = $relation;
+            if($property instanceof Zend_Entity_Definition_AbstractRelation) {
+                // Setup retrieval of the foreign key value
+                $columnName = $property->getColumnName();
+                $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
+                $this->_columnNameToProperty[$columnName] = $property;
 
-            $this->_relations[] = $relation;
-            $propertyNames[] = $relation->getPropertyName();
-        }
-        foreach($entityDefinition->getExtensions() AS $extension) {
-            if($extension instanceof Zend_Entity_Definition_Collection) {
-                if($extension->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
-                    $this->_collections[] = $extension;
-                } else if($extension->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-                    $this->_elementsCollection[] = $extension;
+                $this->_relations[] = $property;
+                $propertyNames[] = $property->getPropertyName();
+            } elseif($property instanceof Zend_Entity_Definition_Collection) {
+                if($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
+                    $this->_collections[] = $property;
+                } else if($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
+                    $this->_elementsCollection[] = $property;
                 }
+                $propertyNames[] = $property->getPropertyName();
+            } else {
+                $columnName = $property->getColumnName();
+                $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
+                $this->_columnNameToProperty[$columnName] = $property;
+                $propertyNames[] = $property->getPropertyName();
             }
-            $propertyNames[] = $extension->getPropertyName();
         }
 
         $this->_stateTransformer = $entityDefinition->getStateTransformer();

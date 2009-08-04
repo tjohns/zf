@@ -91,15 +91,15 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $this->assertEquals(self::TEST_CLASS2, $entityDef->getPersisterClass());
     }
 
-    public function testAddRelationAccessibleWithGetRelations()
+    public function testAddRelationAccessibleWithGetProperties()
     {
         $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
         $entityDef->addOneToOneRelation(self::TEST_PROPERTY);
 
-        $relation = $entityDef->getRelations();
-        $this->assertEquals(1, count($relation));
-        $this->assertTrue(isset($relation[self::TEST_PROPERTY]));
-        $relationPropertyName = $relation[self::TEST_PROPERTY]->getPropertyName();
+        $properties = $entityDef->getProperties();
+        $this->assertEquals(1, count($properties));
+        $this->assertTrue(isset($properties[self::TEST_PROPERTY]));
+        $relationPropertyName = $properties[self::TEST_PROPERTY]->getPropertyName();
         $this->assertEquals(self::TEST_PROPERTY, $relationPropertyName);
     }
 
@@ -123,7 +123,7 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
     public function testAddTableExtensionAccessibleByPropertyName()
     {
         $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
-        $entityDef->addJoin(self::TEST_TABLE);
+        $entityDef->addCollection(self::TEST_TABLE);
 
         $extension = $entityDef->getPropertyByName(self::TEST_TABLE);
     }

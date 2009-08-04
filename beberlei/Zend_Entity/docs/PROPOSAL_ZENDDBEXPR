@@ -1,0 +1,224 @@
+{zone-template-instance:ZFPROP:Proposal Zone Template}
+{composition-setup}
+
+{zone-data:component-name}
+Zend_Db_Expr Function Abstraction
+{zone-data}
+
+{zone-data:proposer-list}
+[Benjamin Eberlei|mailto:kontakt@beberlei.de]
+{zone-data}
+
+{zone-data:liaison}
+TBD
+{zone-data}
+
+{zone-data:revision}
+1.0 - 3 August 2009: Initial Draft.
+{zone-data}
+
+{zone-data:overview}
+Currently Zend_Db_Select does not allow to write completly portable applications when it comes to
+abstraction of SQL functions. This proposal aims to close the gap as much as possible by offering
+an Expression object inside Zend_Db_Select and Zend_Db_Adapter_Abstract. The largest possible
+subset of functions between all the current supported vendors is integrated. Additionally a
+"non" compatible modus will be included that abstracts as much functions from each vendor as possible.
+
+Each implemented Expression/SQL Function will enforce the escaping of values.
+{zone-data}
+
+{zone-data:references}
+* [SQL Functions programmers reference|http://books.google.de/books?id=D-HWK7iX9xAC&pg=PA37&lpg=PA37&dq=common+build+in+functions+in+sql&source=bl&ots=loagIXxYNZ&sig=4Xmt9vCFFyS7T8CNFm6XKy-LpD4&hl=de&ei=BiN3SqeXBaGOnQOcvJCWDA&sa=X&oi=book_result&ct=result&resnum=2#v=onepage&q=&f=true]
+* [ezComponents Query Expression Object API|http://ezcomponents.org/docs/api/trunk/Database/ezcQueryExpression.html]
+{zone-data}
+
+{zone-data:requirements}
+* This component *MUST* abstract as much SQL functions as possible that are common between: MySQL, PgSql, SqLite, Oracle, IBM Db2, SqlSrv
+* This component *MUST* be nested inside each Zend_Db_Select instance and globally inside the Adapter
+    * The Adapter *SHOULD* enforce the expression object to be created only once.
+* This component *WILL* offer a non-compliant modus where additional vendor-specific functions are nested in
+* This component *WILL* enforce escaping of all variables and columns in each expression.
+{zone-data}
+
+{zone-data:dependencies}
+* Zend_Db_Adapter_Abstract
+* Zend_Db_Select
+{zone-data}
+
+{zone-data:operation}
+You can use the Query Expression object to generate Zend_Db_Expr instances with specific supported functions.
+
+The question is, how would this query expression object be available to the consumer? There are several possible APIs:
+
+{code}
+$select->e()->upper("columnName");
+$select->fn()->upper("columnName");
+$select->expr()->upper("columnName");
+$select->func()->upper("columnName");
+$select->e->upper("columnName");
+$select->fn->upper("columnName");
+//...
+{code}
+
+I opt for a simple syntax, which makes the usage as non-verbose as possible.
+{zone-data}
+
+{zone-data:milestones}
+* Milestone 1: Community Review
+* Milestone 2: Zend Acceptance
+* Milestone 3: Implementation & Documentation
+{zone-data}
+
+{zone-data:class-list}
+* Zend_Db_Expr_ExpressionAbstract
+* Zend_Db_Expr_Mysql
+* Zend_Db_Expr_Sqlite
+* Zend_Db_Expr_Oracle
+* Zend_Db_Expr_IbmDb2
+* Zend_Db_Expr_PgSql
+* Zend_Db_Expr_MsSqlServer
+{zone-data}
+
+{zone-data:use-cases}
+
+{deck:id=UseCaseBasic}
+
+{card:label=Use-Case 1: Comparison Operators}
+{code}
+$select->fn()->eq("foo", $var, Zend_Db::PARAM_INT); // $db->quoteInto("foo = ?", $var, Zend_Db::PARAM_INT);
+$select->fn()->lt("foo", $var); // $db->quoteInto("foo < ?", $var);
+$select->fn()->gt("foo", $var); // $db->quoteInto("foo > ?", $var);
+$select->fn()->lte("foo", $var); // $db->quoteInto("foo <= ?", $var);
+$select->fn()->gte("foo", $var); // $db->quoteInto("foo >= ?", $var);
+{code}
+{card}
+
+{card:label=Use-Case 2: String Functions}
+{code}
+$select->fn()->upper("foo"); // new Zend_Db_Expr("UPPER(".$db->quoteIdentifier("foo").")");
+$select->fn()->lower("foo"); // new Zend_Db_Expr("LOWER(".$db->quoteIdentifier("foo").")");
+$select->fn()->trim("foo"); // new Zend_Db_Expr("RTRIM(LTRIM(".$db->quoteIdentifier("foo")."))");
+$select->fn()->substr("foo", 0, 2);
+$select->fn()->length("foo");
+$select->fn()->strpos("foobar", "bar");
+{code}
+{card}
+
+{card:label=Use-Case 3: Group Functions}
+{code}
+$select->fn()->avg("foo");
+$select->fn()->sum("foo");
+$select->fn()->count("foo");
+$select->fn()->min("foo");
+$select->fn()->max("foo");
+{code}
+{card}
+
+{card:label=Use Case 4: Math Functions}
+{code}
+$select->fn()->exp(5);
+$select->fn()->ln(100);
+$select->fn()->abs(-20);
+$select->fn()->sqrt(4);
+$select->fn()->floor(123.4);
+$select->fn()->ceil(12.2);
+$select->fn()->round(1234);
+{code}
+{card}
+{deck}
+
+{deck:id=UseCase2}
+
+{card:label=Use-Case 5: Range Operations}
+{code}
+$select->fn()->in("column", array("foo", "bar", "baz"));
+$select->fn()->between("column", 1000, 2000, Zend_Db::PARAM_INT);
+{code}
+{card}
+
+{card:label=Use-Case 5: NULL Operations}
+{code}
+$select->fn()->eqNull("column"); // $db->quoteIdentifier("column")." IS NULL";
+$select->fn()->notEqNull("column");
+{code}
+{deck}
+
+{card:label=Use-Case 6: Conditional Functions}
+{code}
+$select->fn()->if( $select->fn()->eq("foo", 42), "a", "b");
+$select->fn()->ifnull($var, "1234", Zend_Db::PARAM_INT);
+$select->fn()->case(
+    array(), array(), ...
+);
+{code}
+{card}
+
+{card:label=Use-Case 7: Date and Time Functions}
+{code}
+$select->fn()->now();
+$select->fn()->unixTimestamp("property");
+{code}
+{card}
+{deck}
+
+{deck:id=UseCase3}
+{card:label=Use-Case 8: Aggregation Example}
+{code}
+$select->columns(array("country", $select->fn()->sum("population")))
+       ->from('cities')
+       ->group('country');
+
+// SELECT cities.country, SUM(cities.population)
+// FROM cities
+// GROUP BY cities.country
+{code}
+{card}
+
+{card:label=Use-Case 9: String Example}
+{code}
+$select->columns($select->fn()->substr("firstname", 0, 1), $select->fn()->count())
+       ->from('persons');
+       ->group($select->fn()->substr("firstname", 0, 1));
+
+// SELECT SUBSTRING(persons.firstname, 0, 1), count(*)
+// FROM persons
+// GROUP BY SUBSTRING(persons.firstname, 0, 1)
+{code}
+{card}
+
+{card:label=Use-Case 10: Comparison Operators}
+{code}
+$name = 'Foo';
+$greaterThanAge = 20;
+$select->from("persons")
+       ->where($select->fn()->eq("name", $name))
+       ->where($select->fn()->gt("age", $greaterThanAge, Zend_Db::PARAM_INT))
+       ->where($select->fn()->in("eyeColor", array("blue", "green"))
+       ->where($select->fn()->between("salary", 20000, 50000);
+
+// SELECT persons.* FROM persons
+// WHERE name = 'Foo' AND
+//      age > 20 AND
+//      eyeColor IN ('blue', 'green') AND
+//      salary BETWEEN 20000, 50000;
+{card}
+
+{card:label=Low-Verbosity UC-10}
+{code}
+// Low Verbosity:
+$fn = $q->fn();
+$q->from("persons");
+   ->where($fn->eq("name", $name))
+   ->where($fn->gt("age", $greaterThanAge, Zend_Db::PARAM_INT))
+   ->where($fn->in("eyeColor", array("blue", "green"))
+   ->where($fn->between("salary", 20000, 50000);
+{code}
+{card}
+{deck}
+
+{zone-data}
+
+{zone-data:skeletons}
+
+{zone-data}
+{zone-template-instance}

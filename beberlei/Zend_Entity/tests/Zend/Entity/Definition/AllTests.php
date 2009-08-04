@@ -7,7 +7,6 @@ require_once "TestCase.php";
 require_once "FormulaTest.php";
 require_once "PropertyTest.php";
 require_once "EntityTest.php";
-require_once "JoinTest.php";
 require_once "PrimaryKeyTest.php";
 require_once "CollectionTest.php";
 require_once "UtilityTest.php";
@@ -24,7 +23,6 @@ class Zend_Entity_Definition_AllTests
         $suite->addTestSuite('Zend_Entity_Definition_EntityTest');
         $suite->addTestSuite('Zend_Entity_Definition_FormulaTest');
         $suite->addTestSuite('Zend_Entity_Definition_PropertyTest');
-        $suite->addTestSuite('Zend_Entity_Definition_JoinTest');
         $suite->addTestSuite('Zend_Entity_Definition_PrimaryKeyTest');
         $suite->addTestSuite('Zend_Entity_Definition_CollectionTest');
         $suite->addTestSuite('Zend_Entity_Definition_UtilityTest');
