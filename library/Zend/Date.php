@@ -136,11 +136,23 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function __construct($date = null, $part = null, $locale = null)
     {
-        if (($date !== null) and !($date instanceof Zend_TimeSync_Protocol) and (Zend_Locale::isLocale($date, true, false))) {
+        if (is_object($date) and !($date instanceof Zend_TimeSync_Protocol) and
+            !($date instanceof Zend_Date)) {
+            if ($locale instanceof Zend_Locale) {
+                $locale = $date;
+                $date   = null;
+                $part   = null;
+            } else {
+                $date = (string) $date;
+            }
+        }
+
+        if (($date !== null) and !is_array($date) and !($date instanceof Zend_TimeSync_Protocol) and
+            !($date instanceof Zend_Date) and !defined($date) and Zend_Locale::isLocale($date, true, false)) {
             $locale = $date;
-            $date = null;
-            $part = null;
-        } else if (($part !== null) and (Zend_Locale::isLocale($part, null, false))) {
+            $date   = null;
+            $part   = null;
+        } else if (($part !== null) and !defined($part) and Zend_Locale::isLocale($date, true, false)) {
             $locale = $part;
             $part   = null;
         }
@@ -394,12 +406,32 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function toString($format = null, $type = null, $locale = null)
     {
-        if ((strlen($format) != 2) and ($format !== null) and (Zend_Locale::isLocale($format, null, false))) {
+        if (is_object($format)) {
+            if ($format instanceof Zend_Locale) {
+                $locale = $format;
+                $format = null;
+            } else {
+                $format = (string) $format;
+            }
+        }
+
+        if (is_object($type)) {
+            if ($type instanceof Zend_Locale) {
+                $locale = $type;
+                $type   = null;
+            } else {
+                $type = (string) $type;
+            }
+        }
+
+        if (($format !== null) and !defined($format) and
+            ($format != 'ee') and ($format != 'ss') and Zend_Locale::isLocale($format, null, false)) {
             $locale = $format;
             $format = null;
         }
 
-        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
+        if (($type !== null) and ($type != 'php') and ($type != 'iso') and
+            Zend_Locale::isLocale($type, null, false)) {
             $locale = $type;
             $type = null;
         }
@@ -4525,11 +4557,13 @@ class Zend_Date extends Zend_Date_DateObject
             return false;
         }
 
+print "\n1:";var_dump($date);var_dump($format);var_dump($locale);
         if (($format !== null) and (Zend_Locale::isLocale($format, null, false))) {
             $locale = $format;
             $format = null;
         }
 
+print "\n2:";var_dump($date);var_dump($format);var_dump($locale);
         $locale = Zend_Locale::findLocale($locale);
 
         if ($format === null) {
@@ -4538,7 +4572,9 @@ class Zend_Date extends Zend_Date_DateObject
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
+print "\n3:";var_dump($date);var_dump($format);var_dump($locale);
         $format = self::_getLocalizedToken($format, $locale);
+print "\n4:";var_dump($date);var_dump($format);var_dump($locale);
         try {
             $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale,
                                                   'date_format' => $format, 'format_type' => 'iso',
@@ -4548,6 +4584,7 @@ class Zend_Date extends Zend_Date_DateObject
             return false;
         }
 
+print "\n5:";var_dump($date);var_dump($format);var_dump($locale);var_dump($parsed);
         if (((strpos($format, 'Y') !== false) or (strpos($format, 'y') !== false)) and
             (!isset($parsed['year']))) {
             // Year expected but not found
@@ -4611,39 +4648,50 @@ class Zend_Date extends Zend_Date_DateObject
             $parsed['year'] = 1971;
         }
 
+print "\n6:";var_dump($date);var_dump($format);var_dump($locale);var_dump($parsed);
         $date      = new self($parsed, null, $locale);
         $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                    $parsed['month'], $parsed['day'], $parsed['year']);
+print "\n7:";var_dump($date);var_dump($format);var_dump($locale);var_dump($parsed);
+
         if ($parsed['year'] != $date->date('Y', $timestamp)) {
             // Given year differs from parsed year
+print "\nxx1";
             return false;
         }
 
         if ($parsed['month'] != $date->date('n', $timestamp)) {
             // Given month differs from parsed month
+print "\nxx2";
             return false;
         }
 
         if ($parsed['day'] != $date->date('j', $timestamp)) {
             // Given day differs from parsed day
+print "\nxx3";
             return false;
         }
 
+print "\nP:".$parsed['hour'] . "___" . $date->date('G', $timestamp);
         if ($parsed['hour'] != $date->date('G', $timestamp)) {
             // Given hour differs from parsed hour
+print "\nxx4";
             return false;
         }
 
         if ($parsed['minute'] != $date->date('i', $timestamp)) {
             // Given minute differs from parsed minute
+print "\nxx5";
             return false;
         }
 
         if ($parsed['second'] != $date->date('s', $timestamp)) {
             // Given second differs from parsed second
+print "\nxx6";
             return false;
         }
 
+print "\n8:";var_dump($date);var_dump($format);var_dump($locale);
         return true;
     }
 
