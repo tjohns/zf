@@ -17,7 +17,6 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -40,7 +39,6 @@ require_once 'Zend/Cache.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Locale
  */
 class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 {
@@ -715,6 +713,14 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
             Zend_LocaleTestHelper::setDefault('de', 90);
             $locale = new Zend_LocaleTestHelper();
             $this->assertTrue($locale instanceof Zend_Locale); // should defer to 'de' or any other standard locale
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
+        }
+
+        try {
+            Zend_LocaleTestHelper::setDefault('de-AT', 90);
+            $locale = new Zend_LocaleTestHelper();
+            $this->assertTrue($locale instanceof Zend_Locale);
         } catch (Zend_Locale_Exception $e) {
             $this->fail();
         }
