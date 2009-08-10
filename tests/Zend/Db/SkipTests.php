@@ -136,6 +136,14 @@ class Zend_Db_Skip_OracleTest extends Zend_Db_Skip_CommonTest
     }
 }
 
+class Zend_Db_Skip_SqlsrvTest extends Zend_Db_Skip_CommonTest
+{
+    public function getDriver()
+    {
+        return 'Sqlsrv';
+    }
+}
+
 /**
  * @category   Zend
  * @package    Zend_Db
