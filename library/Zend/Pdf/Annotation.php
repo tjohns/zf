@@ -227,3 +227,4 @@ abstract class Zend_Pdf_Annotation
         /** @todo implementation */
     }
 }
+
