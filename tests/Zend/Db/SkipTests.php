@@ -136,6 +136,14 @@ class Zend_Db_Skip_OracleTest extends Zend_Db_Skip_CommonTest
     }
 }
 
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @group      Zend_Db
+ */
 class Zend_Db_Skip_SqlsrvTest extends Zend_Db_Skip_CommonTest
 {
     public function getDriver()
