@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 17508 -->
+<sect1 id="zend.queue.adapters">
+    <title>アダプタ</title>
+
+    <para>
+        <classname>Zend_Queue</classname>は、
+        インターフェース<classname>Zend_Queue_Adapter_AdapterInterface</classname>を実装する
+        すべての待ち行列をサポートします。
+        以下のメッセージ待ち行列サービスがサポートされます:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <ulink url="http://activemq.apache.org/">Apache ActiveMQ</ulink>.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <classname>Zend_Db</classname>を経たデータベースによる待ち行列
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <classname>Memcache</classname>による
+                <ulink url="http://memcachedb.org/memcacheq/">MemcacheQ</ulink>待ち行列
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <ulink url="http://www.zend.com/en/products/platform/">Zend Platform</ulink>
+                のジョブキュー。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                内部配列。ユニットテストに役立ちます。
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <note id="zend.queue.adapters.limitations">
+        <title>限定事項</title>
+
+        <para>
+            メッセージ・トランザクション処理は、サポートされません。
+        </para>
+    </note>
+
+    <sect2 id="zend.queue.adapters.configuration">
+        <title>固有のアダプタ - 設定の構成</title>
+
+        <para>
+            デフォルトの設定が示される場合は、パラメータは任意です。
+            デフォルトの設定が指定されない場合は、パラメータが必要です。
+        </para>
+
+        <sect3 id="zend.queue.adapters.configuration.activemq">
+            <title>Apache ActiveMQ - Zend_Queue_Adapter_Activemq</title>
+
+            <para>
+                ここでリストされたオプションは、既知の必須条件です。
+                すべてのメッセージ発信サーバが、
+                ユーザー名またはパスワードを必要とするというわけではありません。
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <emphasis>$options['name'] = '/temp/queue1';</emphasis>
+                    </para>
+
+                    <para>
+                        これは、使い始めたい待ち行列の名前です。（必須）
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['host'] = 'host.domain.tld';</emphasis>
+                    </para>
+
+                    <para>
+                        <emphasis>$options['driverOptions']['host'] = '127.0.0.1';</emphasis>
+                    </para>
+
+                    <para>
+                        ホストをIPアドレスまたはホスト名にセットするかもしれません。
+                    </para>
+
+                    <para>
+                        ホストのデフォルトの設定は '127.0.0.1' です。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['port'] = 61613;</emphasis>
+                    </para>
+
+                    <para>ポートのデフォルトの設定は 61613 です。</para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                         <emphasis>$options['driverOptions']['username'] = 'username';</emphasis>
+                    </para>
+
+                    <para>
+                        一部のメッセージ発信サーバのために選択できます。
+                        メッセージ発信サーバのためのマニュアルを読んでください。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['password'] = 'password';</emphasis>
+                    </para>
+
+                    <para>
+                        一部のメッセージ発信サーバのために選択できます。
+                        メッセージ発信サーバのためのマニュアルを読んでください。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['timeout_sec'] = 2;</emphasis>
+                    </para>
+
+                    <para>
+                        <emphasis>$options['driverOptions']['timeout_usec'] = 0;</emphasis>
+                    </para>
+
+                    <para>
+                        これは、<classname>Zend_Queue_Adapter_Activemq</classname>がメッセージを返さない前に
+                        ソケットで読み取り活動を待つ時間です。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.configuration.Db">
+            <title>Db - Zend_Queue_Adapter_Db</title>
+
+            <para>
+                ドライバオプションは、多少の必須のオプションのためにチェックされます。
+                （例えば<emphasis>type</emphasis>、<emphasis>host</emphasis>、<emphasis>username</emphasis>、
+                <emphasis>password</emphasis>と<emphasis>dbname</emphasis>）
+                <varname>$options['driverOptions']</varname>でパラメータとして、
+                <methodname>Zend_DB::factory()</methodname>のために付加パラメータに沿って渡すかもしれません。
+                ここでは一覧に示されていませんが、
+                渡すことができる付加的なオプションは<emphasis>port</emphasis>でしょう。
+            </para>
+
+            <programlisting language="php"><![CDATA[
+$options = array(
+    'driverOptions' => array(
+        'host'      => 'db1.domain.tld',
+        'username'  => 'my_username',
+        'password'  => 'my_password',
+        'dbname'    => 'messaging',
+        'type'      => 'pdo_mysql',
+        'port'      => 3306, // optional parameter.
+    ),
+    'options' => array(
+        // 更新のためにZend_Db_Selectを使います。
+        // 全てのデータベースがこのフィーチャをサポートできるわけではありません。
+        Zend_Db_Select::FOR_UPDATE => true
+    )
+);
+
+// データベース待ち行列を作成
+$queue = Zend_Queue::factory('Db', $options);
+]]></programlisting>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <emphasis>$options['name'] = 'queue1';</emphasis>
+                    </para>
+
+                    <para>
+                        これは、使い始めたい待ち行列の名前です。（必須）
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['type'] = 'Pdo';</emphasis>
+                    </para>
+
+                    <para>
+                        <emphasis>type</emphasis>は、
+                        <methodname>Zend_Db::factory()</methodname>を
+                        使ってもらいたいアダプタです。
+                        これは、<methodname>Zend_Db::factory()</methodname>
+                        クラス・メソッド呼び出しの最初のパラメータです。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['host'] = 'host.domain.tld';</emphasis>
+                    </para>
+
+                    <para>
+                        <emphasis>$options['driverOptions']['host'] = '127.0.0.1';</emphasis>
+                    </para>
+
+                    <para>ホストをIPアドレスまたはホスト名にセットするかもしれません。</para>
+
+                    <para>ホストのデフォルトの設定は '127.0.0.1' です。</para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                         <emphasis>$options['driverOptions']['username'] = 'username';</emphasis>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['password'] = 'password';</emphasis>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['dbname'] = 'dbname';</emphasis>
+                    </para>
+
+                    <para>
+                        必須のテーブルを作成したデータベース名。
+                        下記の注意部分を見てください。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.configuration.memcacheq">
+            <title>MemcacheQ - Zend_Queue_Adapter_Memcacheq</title>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <emphasis>$options['name'] = 'queue1';</emphasis>
+                    </para>
+
+                    <para>
+                        これは、使い始めたい待ち行列の名前です。（必須）
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                         <emphasis>$options['driverOptions']['host'] = 'host.domain.tld';</emphasis>
+                    </para>
+
+                    <para>
+                         <emphasis>$options['driverOptions']['host'] = '127.0.0.1;'</emphasis>
+                    </para>
+
+                    <para>ホストをIPアドレスまたはホスト名にセットするかもしれません。</para>
+
+                    <para>ホストのデフォルトの設定は '127.0.0.1' です。</para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis>$options['driverOptions']['port'] = 22201;</emphasis>
+                    </para>
+
+                    <para>ポートのデフォルトの設定は 22201 です。</para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+<!-- TODO: to be translated -->
+        <sect3 id="zend.queue.adapters.configuration.platformjq">
+            <title>Zend Platform Job Queue - Zend_Queue_Adapter_PlatformJobQueue</title>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <emphasis>$options['daemonOptions']['host'] = '127.0.0.1:10003';</emphasis>
+                    </para>
+
+                    <para>
+                        The hostname and port corresponding to the Zend Platform Job Queue daemon
+                        you will use. (Required)
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                         <emphasis>$options['daemonOptions']['password'] = '1234';</emphasis>
+                    </para>
+
+                    <para>
+                        The password required for accessing the Zend Platform Job Queue daemon.
+                        (Required)
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.configuration.array">
+            <title>配列 - Zend_Queue_Adapter_Array</title>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <emphasis>$options['name'] = 'queue1';</emphasis>
+                    </para>
+
+                    <para>
+                        これは、使い始めたい待ち行列の名前です。（必須）
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+
+    <sect2 id="zend.queue.adapters.notes">
+        <title>アダプタ固有の注意</title>
+
+        <para>下記のアダプタには注意があります:</para>
+
+        <sect3 id="zend.queue.adapters.notes.activemq">
+            <title>Apache ActiveMQ</title>
+
+            <para>
+                <classname>Zend_Queue_Adapter_Activemq</classname>のための可視性期間は利用できません。
+            </para>
+
+            <para>
+                ApacheのActiveMQが複数のサブスクリプションをサポートするのに対して、
+                <classname>Zend_Queue</classname>はそうしません。
+                それぞれのサブスクリプションのために
+                新しい<classname>Zend_Queue</classname>オブジェクトを作成しなければなりません。
+            </para>
+
+            <para>
+                ActiveMQの待ち行列または項目の名前は下記のうちの一つで始めなくてはいけません:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <filename>/queue/</filename>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <filename>/topic/</filename>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <filename>/temp-queue/</filename>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <filename>/temp-topic/</filename>
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                例えば: <filename>/queue/testing</filename>
+            </para>
+
+            <para>
+                下記の関数はサポートされません:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                         <methodname>create()</methodname> - 待ち行列の作成。
+                         この関数を呼ぶと例外を発生します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>delete()</methodname> - 待ち行列の削除。
+                         この関数を呼ぶと例外を発生します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>getQueues()</methodname> - 待ち行列の一覧。
+                         この関数を呼ぶと例外を発生します。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.notes.zend_db">
+            <title>Zend_Db</title>
+
+            <para>
+                データベース<emphasis>CREATE TABLE ( ... )</emphasis> <acronym>SQL</acronym>
+                文が<filename>Zend/Queue/Adapter/Db/queue.sql</filename>にあります。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.notes.memcacheQ">
+            <title>MemcacheQ</title>
+
+            <para>
+                Memcacheは<ulink
+                    url="http://www.danga.com/memcached/">http://www.danga.com/memcached/</ulink>
+                からダウンロードできます。
+            </para>
+
+            <para>
+                MemcacheQは<ulink
+                    url="http://memcachedb.org/memcacheq/">http://memcachedb.org/memcacheq/</ulink>
+                からダウンロードできます。
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <methodname>deleteMessage()</methodname> - 
+                        メッセージは、待ち行列から受信と同時に削除されます。
+                        この関数を呼んでも効果がありません。
+                        この関数を呼ぶとエラーを発生します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>count()</methodname>または<methodname>count($adapter)</methodname>
+                        - MemcacheQは、待ち行列で件数を数えるためのメソッドをサポートしません。
+                        この関数を呼ぶとエラーを発生します。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+<!-- TODO: to be translated -->
+        <sect3 id="zend.queue.adapters.notes.platformjq">
+            <title>Zend Platform Job Queue</title>
+
+            <para>
+                Job Queue is a feature of Zend Platform's Enterprise Solution offering. It is not a
+                traditional message queue, and instead allows you to queue a script to execute,
+                along with the parameters you wish to pass to it. You can find out more about Job
+                Queue <ulink url="http://www.zend.com/en/products/platform/">on the zend.com
+                    website</ulink>.
+            </para>
+
+            <para>
+                The following is a list of methods where this adapter's behavior diverges from the
+                standard offerings:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <methodname>create()</methodname> - Zend Platform does not have the concept
+                        of discrete queues; instead, it allows administrators to provide scripts for
+                        processing jobs. Since adding new scripts is restricted to the
+                        administration interface, this method simply throws an exception indicating
+                        the action is forbidden.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>isExists()</methodname> - Just like
+                        <methodname>create()</methodname>, since Job Queue does not have a notion of
+                        named queues, this method throws an exception when invoked.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>delete()</methodname> - similar to
+                        <methodname>create()</methodname>, deletion of JQ scripts is not possible
+                        except via the admin interface; this method raises an exception.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>getQueues()</methodname> - Zend Platform does not allow
+                        introspection into the attached job handling scripts via the API. This
+                        method throws an exception.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>count()</methodname> - returns the total number of jobs
+                        currently active in the Job Queue.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>send()</methodname> - this method is perhaps the one method that
+                        diverges most from other adapters. The <varname>$message</varname> argument
+                        may be one of three possible types, and will operate differently based on
+                        the value passed:
+                    </para>
+
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <acronym>string</acronym> - the name of a script registered with Job
+                                Queue to invoke. If passed in this way, no arguments are provided to
+                                the script.
+                            </para>
+                        </listitem>
+
+                        <listitem>
+                            <para>
+                                <acronym>array</acronym> - an array of values with which to
+                                configure a <classname>ZendApi_Job</classname> object. These may
+                                include the following:
+                            </para>
+
+                            <itemizedlist>
+                                <listitem>
+                                    <para>
+                                        <varname>script</varname> - the name of the Job Queue script
+                                        to invoke. (Required)
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>priority</varname> - the job priority to use when
+                                        registering with the queue.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>name</varname> - a short string describing the job.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>predecessor</varname> - the ID of a job on which
+                                        this one depends, and which must be executed before this one
+                                        may begin.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>preserved</varname> - whether or not to retain the
+                                        job within the Job Queue history. By default, off; pass a
+                                        true value to retain it.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>user_variables</varname> - an associative array of
+                                        all variables you wish to have in scope during job execution
+                                        (similar to named arguments).
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>interval</varname> - how often, in seconds, the job
+                                        should run. By default, this is set to 0, indicating it
+                                        should run once, and once only.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>end_time</varname> - an expiry time, past which the
+                                        job should not run. If the job was set to run only once,
+                                        and <varname>end_time</varname> has passed, then the job
+                                        will not be executed. If the job was set to run on an
+                                        interval, it will not execute again once
+                                        <varname>end_time</varname> has passed.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>schedule_time</varname> - a <acronym>UNIX</acronym>
+                                        timestamp indicating when to run the job; by default, 0,
+                                        indicating the job should run as soon as possible.
+                                    </para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        <varname>application_id</varname> - the application
+                                        identifier of the job. By default, this is null, indicating
+                                        that one will be automatically assigned by the queue, if the
+                                        queue was assigned an application ID.
+                                    </para>
+                                </listitem>
+                            </itemizedlist>
+
+                            <para>
+                                As noted, only the <varname>script</varname> argument is required;
+                                all others are simply available to allow passing more fine-grained
+                                detail on how and when to run the job.
+                            </para>
+                        </listitem>
+
+                        <listitem>
+                            <para>
+                                <classname>ZendApi_Job</classname> - finally, you may simply pass a
+                                <classname>ZendApi_Job</classname> instance, and it will be passed
+                                along to Platform's Job Queue.
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+
+                    <para>
+                        In all instances, <methodname>send()</methodname> returns a
+                        <classname>Zend_Queue_Message_PlatformJob</classname> object, which provides
+                        access to the <classname>ZendApi_Job</classname> object used to communicate
+                        with Job Queue.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>receive()</methodname> - retrieves a list of active jobs from
+                        Job Queue. Each job in the returned set will be an instance of
+                        <classname>Zend_Queue_Message_PlatformJob</classname>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <methodname>deleteMessage()</methodname> - since this adapter only works
+                        with Job Queue, this method expects the provided <varname>$message</varname>
+                        to be a <classname>Zend_Queue_Message_PlatformJob</classname> instance, and
+                        will throw an exception otherwise.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.queue.adapters.notes.array">
+            <title>配列 (内部)</title>
+
+            <para>
+                配列待ち行列はローカルメモリ上の<acronym>PHP</acronym> <methodname>array()</methodname>です。
+                <classname>Zend_Queue_Adapter_Array</classname>はユニットテスト用に適しています。
+            </para>
+        </sect3>
+    </sect2>
+</sect1>
