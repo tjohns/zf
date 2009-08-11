@@ -545,7 +545,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     public static function cookieWithExpiredFlagProvider()
     {
         return array(
-            array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() + 15), false),
+            array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() +  12 * 3600), false),
             array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() - 15), true),
             array('cookie=foo;domain=example.com;', false),
             array('cookie=foo;domain=example.com;expires=Fri, 01-Mar-2109 00:19:21 GMT', false),
@@ -553,3 +553,4 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
         );
     }
 }
+
