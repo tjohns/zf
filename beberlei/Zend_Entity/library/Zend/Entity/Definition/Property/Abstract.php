@@ -165,7 +165,7 @@ abstract class Zend_Entity_Definition_Property_Abstract
      * @param  mixed $propertyValue
      * @return mixed
      */
-    public function castPropertyToSqlType($propertyValue)
+    public function castPropertyToStorageType($propertyValue)
     {
         // TODO: Nullable
         if($propertyValue === null) {

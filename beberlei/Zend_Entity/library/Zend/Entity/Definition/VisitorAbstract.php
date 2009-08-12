@@ -33,15 +33,28 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Entity_Definition_Visitor_Interface
+abstract class Zend_Entity_Definition_VisitorAbstract
 {
     /**
+     * Accept an entity definition
+     *
      * @param Zend_Entity_Definition_Entity $entity
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    public function acceptEntity(Zend_Entity_Definition_Entity $entity);
+    abstract public function acceptEntity(Zend_Entity_Definition_Entity $entity, Zend_Entity_MetadataFactory_Interface $metadataFactory);
 
     /**
+     * Accept a property definition
+     *
      * @param Zend_Entity_Definition_Property_Abstract $property
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    public function acceptProperty(Zend_Entity_Definition_Property_Abstract $property);
+    abstract public function acceptProperty(Zend_Entity_Definition_Property_Abstract $property, Zend_Entity_MetadataFactory_Interface $metadataFactory);
+
+    /**
+     * Helper function that finalizes the visitor process.
+     *
+     * @return void
+     */
+    abstract public function finalize();
 }

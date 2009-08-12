@@ -169,10 +169,30 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $this->assertEquals(self::TEST_CLASS2, $entityDef->getEntityName());
     }
 
-    public function testHasPropertyOnProperty()
+    public function testVisitEntityDefinition()
     {
-        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
-        #$entityDef->d
+        $entityDef = new Zend_Entity_Definition_TestingEntity(self::TEST_CLASS);
+
+        $propertyA = new Zend_Entity_Definition_Property("foo");
+        $propertyB = new Zend_Entity_Definition_Property("bar");
+
+        $entityDef->addElement("foo", $propertyA);
+        $entityDef->addElement("bar", $propertyB);
+
+        $visitorMock = $this->getMock('Zend_Entity_Definition_VisitorAbstract', array('acceptProperty', 'acceptEntity', 'finalize'));
+        $visitorMock->expects($this->at(0))
+                    ->method('acceptEntity')
+                    ->with($this->equalTo($entityDef));
+        $visitorMock->expects($this->at(1))
+                    ->method('acceptProperty')
+                    ->with($this->equalTo($propertyA));
+        $visitorMock->expects($this->at(2))
+                    ->method('acceptProperty')
+                    ->with($this->equalTo($propertyB));
+        $visitorMock->expects($this->at(3))
+                    ->method('finalize');
+
+        $entityDef->visit($visitorMock, $this->getMock('Zend_Entity_MetadataFactory_Interface'));
     }
 
     private function getMetadataFactoryMock()

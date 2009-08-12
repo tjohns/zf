@@ -51,21 +51,6 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     /**
      * @var array
      */
-    protected $_lateSelectedRelations   = array();
-
-    /**
-     * @var array
-     */
-    protected $_lateSelectedCollections = array();
-
-    /**
-     * @var boolean
-     */
-    protected $_hasLateLoadingObjects   = false;
-
-    /**
-     * @var array
-     */
     protected $_relations   = array();
 
     /**

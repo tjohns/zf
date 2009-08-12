@@ -39,6 +39,11 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected $_entityMappers = array();
 
     /**
+     * @var Zend_Entity_MapperAbstract
+     */
+    protected $_mapper = null;
+
+    /**
      * Object identity map
      * 
      * @var Zend_Entity_IdentityMap
@@ -170,40 +175,14 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * Return concrete mapper implementation of the given Entity Type
-     * 
-     * @param  string|Zend_Entity_Interface $entity
-     * @return Zend_Entity_MapperAbstract
+     * @return Zend_Entity_Mapper_Mapper
      */
-    public function getMapperByEntity($entity)
+    protected function getMapper()
     {
-        //TODO: Inheritence is not covered by this
-        if($entity instanceof Zend_Entity_LazyLoad_Entity) {
-            $className = $entity->__ze_getClassName();
-        } else if($entity instanceof Zend_Entity_Interface) {
-            $className = get_class($entity);
-        } else {
-            $className = $entity;
+        if($this->_mapper == null) {
+            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory);
         }
-
-        if(!isset($this->_entityMappers[$className])) {
-            $this->loadEntityMapper($className);
-        }
-        return $this->_entityMappers[$className];
-    }
-
-    /**
-     * Load Entity Mapper
-     * 
-     * @param string $entityClassName
-     * @return void
-     */
-    protected function loadEntityMapper($entityClassName)
-    {
-        $metadataFactory = $this->getMetadataFactory();
-        $entityDefinition = $metadataFactory->getDefinitionByEntityName($entityClassName);
-        $mapper = new Zend_Entity_Mapper_Mapper($this->getAdapter(), $entityDefinition, $metadataFactory);
-        $this->_entityMappers[$entityClassName] = $mapper;
+        return $this->_mapper;
     }
 
     /**
@@ -213,8 +192,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     public function createNativeQuery($input)
     {
         if(in_array($input, $this->getMetadataFactory()->getDefinitionEntityNames())) {
-            $mapper = $this->getMapperByEntity($input);
-            $loader = $mapper->getLoader();
+            $mapper = $this->getMapper();
+            $loader = $mapper->getLoader($input);
             $select = $mapper->select();
 
             return new Zend_Entity_Mapper_NativeQuery($select, $loader, $this);
@@ -244,16 +223,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
         if($this->getIdentityMap()->hasObject($entityName, $keyValue)) {
             $object = $this->getIdentityMap()->getObject($entityName, $keyValue);
         } else {
-            $mapper = $this->getMapperByEntity($entityName);
-            $def = $mapper->getDefinition();
-
-            $tableName = $def->getTable();
-            $key = $def->getPrimaryKey()->getColumnName();
-            $select =  $this->createNativeQuery($def->getClass());
-            $cond = $this->getAdapter()->quoteIdentifier($tableName.".".$key);
-            $select->where($cond." = ?", $keyValue);
-
-            $object = $select->getSingleResult();
+            $mapper = $this->getMapper();
+            $object = $mapper->load($entityName, $this, $keyValue);
         }
         return $object;
     }
@@ -266,7 +237,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function save(Zend_Entity_Interface $entity)
     {
-        $mapper = $this->getMapperByEntity($entity);
+        $mapper = $this->getMapper();
         $mapper->save($entity, $this);
     }
 
@@ -285,7 +256,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             );
         }
 
-        $mapper = $this->getMapperByEntity($entity);
+        $mapper = $this->getMapper();
         $mapper->delete($entity, $this);
     }
 

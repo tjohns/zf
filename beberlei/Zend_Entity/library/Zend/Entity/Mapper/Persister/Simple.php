@@ -258,7 +258,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         foreach($this->_properties AS $property) {
             $propertyName = $property->getPropertyName();
             $columnName   = $property->getColumnName();
-            $propertyValue = $property->castPropertyToSqlType($entityState[$propertyName]);
+            $propertyValue = $property->castPropertyToStorageType($entityState[$propertyName]);
             $dbState[$columnName] = $propertyValue;
         }
         foreach($this->_toOneRelations AS $relation) {

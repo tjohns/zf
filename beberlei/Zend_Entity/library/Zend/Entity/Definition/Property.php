@@ -87,9 +87,9 @@ class Zend_Entity_Definition_Property extends Zend_Entity_Definition_Property_Ab
      * Compile this property state.
      * 
      * @param Zend_Entity_Definition_Entity $entityDef
-     * @param Zend_Entity_MetadataFactory_Interface $map
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
+    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
         if($this->getColumnName() == null) {
             $this->setColumnName(($this->getPropertyName()));

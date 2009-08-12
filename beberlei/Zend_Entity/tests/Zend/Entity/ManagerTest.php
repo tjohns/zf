@@ -77,43 +77,6 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->assertSame($listener, $manager->getEventListener());
     }
 
-    public function testGetMapperByEntityStringNameReturnsMapperOnValidCall()
-    {
-        $entityName = "Zend_TestEntity1";
-        $metadataFactory = $this->createMetadataFactory($entityName);
-        $manager = $this->createEntityManager(null, $metadataFactory);
-        $mapper  = $manager->getMapperByEntity($entityName);
-        
-        $this->assertTrue($mapper instanceof Zend_Entity_Mapper_Mapper);
-    }
-
-
-    public function testGetMapperByEntity_OfLazyLoadClasses_CorrectlyDeterminesMapper()
-    {
-        $className = "Foo";
-
-        $entity = new Zend_Entity_LazyLoad_Entity('trim', array('foo', 1), $className);
-
-        $mapperMock = $this->createMapperMock();
-        $manager = $this->createTestingEntityManager();
-        $manager->addMapper($className, $mapperMock);
-
-        $m = $manager->getMapperByEntity($entity);
-
-        $this->assertEquals($mapperMock, $m);
-    }
-
-    public function testGetMapperByEntityClassNameReturnsMapperOnValidCall()
-    {
-        $entity = new Zend_TestEntity1();
-        $entityName = "Zend_TestEntity1";
-        $metadataFactory = $this->createMetadataFactory($entityName);
-        $manager = $this->createEntityManager(null, $metadataFactory);
-        $mapper  = $manager->getMapperByEntity($entity);
-        
-        $this->assertTrue($mapper instanceof Zend_Entity_Mapper_Mapper);
-    }
-
     public function testManagerShouldDelegateBeginTransactionToAdapter()
     {
         $db = $this->getMock('Zend_Entity_DbAdapterMock');

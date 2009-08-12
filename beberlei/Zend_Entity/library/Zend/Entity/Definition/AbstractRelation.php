@@ -165,7 +165,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function isInverse()
     {
-        return (!$this->isOwning());
+        return ($this->_inverse==true);
     }
 
     /**

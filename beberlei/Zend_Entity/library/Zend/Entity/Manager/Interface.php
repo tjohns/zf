@@ -3,14 +3,6 @@
 interface Zend_Entity_Manager_Interface
 {
     /**
-     * Return concrete mapper implementation of the given Entity Type
-     *
-     * @param  string|Zend_Entity_Interface $entity
-     * @return Zend_Db_Mapper_Interface
-     */
-    public function getMapperByEntity($entity);
-
-    /**
      * @param string $entityName
      * @return Zend_Entity_Mapper_Select
      */

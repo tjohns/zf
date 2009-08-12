@@ -19,13 +19,6 @@
 
 class Zend_Entity_Definition_ManyToOneRelation extends Zend_Entity_Definition_AbstractRelation
 {
-    protected $_foreignKeyPropertyName = null;
-
-    public function getForeignKeyPropertyName()
-    {
-        return $this->_foreignKeyPropertyName;
-    }
-
     /**
      * @return boolean
      */
@@ -51,15 +44,6 @@ class Zend_Entity_Definition_ManyToOneRelation extends Zend_Entity_Definition_Ab
     public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
     {
         parent::compile($entityDef, $map);
-
-        $foreignDef = $map->getDefinitionByEntityName($this->getClass());
-
-        $foreignKey = $foreignDef->getPrimaryKey();
-        if($foreignKey !== null) {
-            $this->_foreignKeyPropertyName = $foreignKey->getPropertyName();
-        } else {
-            throw new Zend_Entity_Exception();
-        }
 
         if($this->getColumnName() == null) {
             $this->setColumnName(($this->getPropertyName()));

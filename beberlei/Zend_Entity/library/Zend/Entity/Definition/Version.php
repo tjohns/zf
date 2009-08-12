@@ -12,7 +12,7 @@ class Zend_Entity_Definition_Version extends Zend_Entity_Definition_Property
         return false;
     }
 
-    public function castPropertyToSqlType($propertyValue)
+    public function castPropertyToStorageType($propertyValue)
     {
         return (int)$propertyValue;
     }

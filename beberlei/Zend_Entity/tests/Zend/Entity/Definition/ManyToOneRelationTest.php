@@ -44,11 +44,11 @@ class Zend_Entity_Definition_ManyToOneRelationTest extends Zend_Entity_Definitio
     public function testCompileManyToOneSetsColumnIfUnset()
     {
         $relatedDef = $this->getMock('Zend_Entity_Definition_Entity');
-        $relatedDef->expects($this->exactly(2))
+        $relatedDef->expects($this->exactly(1))
                    ->method('getPrimaryKey')
                    ->will($this->returnValue(new Zend_Entity_Definition_PrimaryKey("foo")));
         $resourceMock = $this->createEntityResourceMock();
-        $resourceMock->expects($this->exactly(2))
+        $resourceMock->expects($this->exactly(1))
                      ->method('getDefinitionByEntityName')
                      ->with(self::TEST_CLASS)
                      ->will($this->returnValue($relatedDef));

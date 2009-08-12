@@ -403,4 +403,17 @@ class Zend_Entity_Definition_Entity
 
         $this->setPersisterClass("Zend_Entity_Mapper_Persister_Simple");
     }
+
+    /**
+     * @param Zend_Entity_Definition_VisitorAbstract $visitor
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
+     */
+    public function visit(Zend_Entity_Definition_VisitorAbstract $visitor, Zend_Entity_MetadataFactory_Interface $metadataFactory)
+    {
+        $visitor->acceptEntity($this, $metadataFactory);
+        foreach($this->getProperties() AS $property) {
+            $visitor->acceptProperty($property, $metadataFactory);
+        }
+        $visitor->finalize();
+    }
 }

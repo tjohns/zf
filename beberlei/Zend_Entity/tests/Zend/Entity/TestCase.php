@@ -15,12 +15,12 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      *
      * @param Zend_Db_Adapter_Abstract $db
      * @param Zend_Entity_Definition_Entity $entityDefinition
-     * @param Zend_Entity_MetadataFactory_Interface $resourceMap
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      * @param Zend_Entity_Mapper_Loader_Interface $loader
      * @param Zend_Entity_Mapper_Persister_Interface $persister
      * @return Zend_Entity_Mapper
      */
-    public function createMapper($db=null, $entityDefinition=null, $resourceMap=null, $loader=null, $persister=null)
+    public function createMapper($db=null, $entityDefinition=null, $metadataFactory=null, $loader=null, $persister=null)
     {
         if($db == null) {
             $db = $this->getDatabaseConnection();
@@ -28,32 +28,29 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         if($entityDefinition == null) {
             $entityDefinition = $this->createSampleEntityDefinition();
         }
-        if($resourceMap == null) {
-            $resourceMap = $this->createResourceMapMock();
+        if($metadataFactory == null) {
+            $metadataFactory = new Zend_Entity_MetadataFactory_Testing();
         }
-        $mapper = new Zend_Entity_TestMapper($db, $entityDefinition, $resourceMap);
+        if($metadataFactory instanceof Zend_Entity_MetadataFactory_Testing) {
+            $metadataFactory->addDefinition($entityDefinition);
+        }
+
+        $mapper = new Zend_Entity_TestMapper($db, $metadataFactory);
         if($loader !== null) {
             $mapper->setLoader($loader);
         }
-        if($persister !== null) {
-            $mapper->setPersister($persister);
+        if($persister !== null && $entityDefinition !== null) {
+            $mapper->setPersister($entityDefinition->getClass(), $persister);
         }
 
         return $mapper;
     }
 
-    public function createMapperMock($db=null, $entityDefinition=null, $resourceMap=null, $loader=null, $persister=null)
+    public function createMapperMock()
     {
-        if($db == null) {
-            $db = $this->getDatabaseConnection();
-        }
-        if($entityDefinition == null) {
-            $entityDefinition = $this->createSampleEntityDefinition();
-        }
-        if($resourceMap == null) {
-            $resourceMap = $this->createResourceMapMock();
-        }
-        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $entityDefinition, $resourceMap));
+        $db = $this->getDatabaseConnection();
+        $metadataFactory = $this->createResourceMapMock();
+        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $metadataFactory));
     }
 
     /**
@@ -90,9 +87,9 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         return $this->getMock('Zend_Entity_MetadataFactory_Interface');
     }
 
-    public function createSampleEntityDefinition()
+    public function createSampleEntityDefinition($sampleEntityName="Sample")
     {
-        $entityDefinition = new Zend_Entity_Definition_Entity("Sample");
+        $entityDefinition = new Zend_Entity_Definition_Entity($sampleEntityName);
         $entityDefinition->setTable("sample");
         $entityDefinition->addPrimaryKey("id");
         $entityDefinition->addProperty("test");

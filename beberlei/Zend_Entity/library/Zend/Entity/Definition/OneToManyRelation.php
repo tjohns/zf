@@ -34,15 +34,4 @@ class Zend_Entity_Definition_OneToManyRelation extends Zend_Entity_Definition_Ab
     {
         return true;
     }
-
-    /**
-     * Compile OneToOne Relation Element
-     *
-     * @param Zend_Entity_Definition_Entity $entityDef
-     * @param Zend_Entity_MetadataFactory_Interface $map
-     */
-    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
-    {
-        parent::compile($entityDef, $map);
-    }
 }

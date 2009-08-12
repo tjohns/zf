@@ -13,6 +13,7 @@ require_once "UtilityTest.php";
 require_once "OneToOneRelationTest.php";
 require_once "ManyToOneRelationTest.php";
 require_once "ManyToManyRelationTest.php";
+require_once "VersionTest.php";
 require_once "Id/AllTests.php";
 
 class Zend_Entity_Definition_AllTests
@@ -26,6 +27,7 @@ class Zend_Entity_Definition_AllTests
         $suite->addTestSuite('Zend_Entity_Definition_PrimaryKeyTest');
         $suite->addTestSuite('Zend_Entity_Definition_CollectionTest');
         $suite->addTestSuite('Zend_Entity_Definition_UtilityTest');
+        $suite->addTestSuite('Zend_Entity_Definition_VersionTest');
         $suite->addTestSuite('Zend_Entity_Definition_OneToOneRelationTest');
         $suite->addTestSuite('Zend_Entity_Definition_ManyToOneRelationTest');
         $suite->addTestSuite('Zend_Entity_Definition_ManyToManyRelationTest');

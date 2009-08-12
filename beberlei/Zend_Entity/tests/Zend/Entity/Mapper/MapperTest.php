@@ -2,14 +2,6 @@
 
 class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
 {
-    public function testGetDefinition()
-    {
-        $entityDefinition = $this->createSampleEntityDefinition();
-        $mapper = $this->createMapper(null, $entityDefinition);
-
-        $this->assertEquals($entityDefinition, $mapper->getDefinition());
-    }
-
     public function testSelectType()
     {
         $entityDefinition = new Zend_Entity_Definition_Entity('foo');
@@ -20,78 +12,43 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $this->assertType('Zend_Entity_Mapper_Select', $select);
     }
 
-    public function testPassedAdapterIsUsedForQuerying()
+    public function testLoadEntity()
     {
-        $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->once())
-           ->method('query')
-           ->will($this->returnValue(new Zend_Entity_DbStatementMock));
+        $fixtureId = 1;
+        $fixtureEntity = "foo";
 
-        $mapper = $this->createMapper($db);
-        $select = $mapper->select();
-        $mapper->find($select, $this->createEntityManager());
-    }
+        $entityDefinition = new Zend_Entity_Definition_Entity($fixtureEntity);
+        $entityDefinition->setTable("bar");
+        $entityDefinition->addPrimaryKey("id", array("columnName" => "col_id"));
 
-    public function testFindOneThrowsExceptionIfOtherThanOneFound()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
+        $metadataFactory = new Zend_Entity_MetadataFactory_Testing();
+        $metadataFactory->addDefinition($entityDefinition);
 
-        $resultWithTwoEntries = array(1, 2);
+        $dbMock = $this->getMock('Zend_Test_DbAdapter');
+        $dbMock->expects($this->once())
+               ->method('quoteIdentifier')
+               ->with($this->equalTo('bar.col_id'))
+               ->will($this->returnValue('bar.col_id'));
+               
+        $mapper = $this->createMapper($dbMock, null, $metadataFactory);
 
-        $loader = $this->createLoaderMockThatReturnsProccessedResultset($resultWithTwoEntries);
-        $mapper = $this->createMapper(null, null, null, $loader);
+        $queryMock = $this->getMock('Zend_Entity_Mapper_NativeQuery', array('select', 'where', 'getSingleResult'), array(), '', false);
+        $queryMock->expects($this->at(0))
+                  ->method('where')
+                  ->with($this->equalTo('bar.col_id = ?'), $this->equalTo($fixtureId));
+        $queryMock->expects($this->at(1))
+                  ->method('getSingleResult');
 
-        $select = $mapper->select();
-        $mapper->findOne($select, $this->createEntityManager());
+        $emMock = $this->getMock('Zend_Entity_Manager_Interface');
+        $emMock->expects($this->once())
+               ->method('createNativeQuery')
+               ->with($fixtureEntity)
+               ->will($this->returnValue($queryMock));
+
+        $mapper->load($fixtureEntity, $emMock, $fixtureId);
     }
 
     const TEST_KEY_VALUE = 1;
-
-    public function testloadWithoutIdentityMapMatchHitsDatabaseAdapterForQuery()
-    {
-        $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->once())
-           ->method('query')
-           ->will($this->returnValue(new Zend_Entity_DbStatementMock));
-           $loader = $this->createLoaderMockThatReturnsProccessedResultset(array(1));
-
-        $mapper = $this->createMapper($db, null, null, $loader);
-        $mapper->load(self::TEST_KEY_VALUE, $this->createEntityManager());
-    }
-
-    public function testloadWithoutIdentityMapMatchThrowsExceptionIfNotExactlyOneIsFound()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->once())
-           ->method('query')
-           ->will($this->returnValue(new Zend_Entity_DbStatementMock));
-        $loader = $this->createLoaderMockThatReturnsProccessedResultset(array(1, 2));
-
-        $mapper = $this->createMapper($db, null, null, $loader);
-        $mapper->load(self::TEST_KEY_VALUE, $this->createEntityManager());
-    }
-
-    public function testloadWithIdentityMapMatchReturnsWithoutHittingDatabase()
-    {
-        $expectedObject = new stdClass();
-
-        $db = $this->createDatabaseConnectionMock();
-        $db->expects($this->never())
-           ->method('query')
-           ->will($this->returnValue(new Zend_Entity_DbStatementMock));
-        $identityMap = $this->createIdentityMapMock(0);
-        $identityMap->expects($this->once())->method('hasObject')->will($this->returnValue(true));
-        $identityMap->expects($this->once())->method('getObject')->will($this->returnValue($expectedObject));
-
-        $entityManager = $this->createEntityManager(null, null, $identityMap);
-        $mapper = $this->createMapper($db);
-
-        $actualObject = $mapper->load(self::TEST_KEY_VALUE, $entityManager);
-
-        $this->assertEquals($expectedObject, $actualObject);
-    }
 
     public function testSaveNonLoadedLazyLoadProxy_IsDelegatedToPersister()
     {
@@ -107,27 +64,44 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
             false
         );
         $lazyEntity->expects($this->never())->method('entityWasLoaded');
+        $lazyEntity->expects($this->once())->method('__ze_getClassName')->will($this->returnValue('Sample'));
 
         $mapper->save($lazyEntity, $this->createEntityManager());
     }
 
-    public function testSaveNonLazyNonCleanEntityIsDelegatedToPersister()
+    public function testSaveNonLazyNonCleanEntity_IsDelegatedToPersister()
     {
         $persister = $this->createPersisterMock();
         $persister->expects($this->once())->method('save');
         $entity = $this->getMock('Zend_Entity_Interface');
+        $className = get_class($entity);
 
-        $mapper = $this->createMapper(null, null, null, null, $persister);
+        $mapper = $this->createMapper(null, $this->createSampleEntityDefinition($className), null, null, $persister);
         $mapper->save($entity, $this->createEntityManager());
     }
 
-    public function testDeleteEntityThatIsNotCleanOrNewIsDelegatedToPersister()
+    public function testDeleteEntity_ThatIsNotCleanOrNew_IsDelegatedToPersister()
     {
         $persister = $this->createPersisterMock();
         $persister->expects($this->once())->method('delete');
         $entity = $this->getMock('Zend_Entity_Interface');
+        $className = get_class($entity);
 
-        $mapper = $this->createMapper(null, null, null, null, $persister);
+        $mapper = $this->createMapper(null, $this->createSampleEntityDefinition($className), null, null, $persister);
+        $mapper->delete($entity, $this->createEntityManager());
+    }
+
+    public function testDeleteLazyEntity_ThatIsNotCleanOrNew_IsDelegatedToPersister()
+    {
+        $persister = $this->createPersisterMock();
+        $persister->expects($this->once())->method('delete');
+        $entity = $this->getMock('Zend_Entity_LazyLoad_Entity', array(), array(), '', false);
+        $className = get_class($entity);
+        $entity->expects($this->once())
+              ->method('__ze_getClassName')
+              ->will($this->returnValue($className));
+
+        $mapper = $this->createMapper(null, $this->createSampleEntityDefinition($className), null, null, $persister);
         $mapper->delete($entity, $this->createEntityManager());
     }
 }
