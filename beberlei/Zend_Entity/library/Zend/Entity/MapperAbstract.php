@@ -47,18 +47,23 @@ abstract class Zend_Entity_MapperAbstract
      */
     protected $_persister = null;
 
+    /**
+     * @var Zend_Entity_Mapper_MappingInstruction[]
+     */
     protected $_mappingInstructions = array();
 
     /**
      * Construct DataMapper
      *
      * @param  Zend_Db_Adapter_Abstract  $db
-     * @param  Zend_Entity_MetadataFactory_Interface $map
+     * @param  Zend_Entity_MetadataFactory_Interface $metadataFactory
+     * @param  Zend_Entity_Mapper_MappingInstruction[] $mappingInstructions
      */
-    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_MetadataFactory_Interface $map)
+    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_MetadataFactory_Interface $metadataFactory, array $mappingInstructions=array())
     {
         $this->_db = $db;
-        $this->_metadataFactory = $map;
+        $this->_metadataFactory = $metadataFactory;
+        $this->_mappingInstructions = $mappingInstructions;
     }
 
     /**
@@ -150,7 +155,7 @@ abstract class Zend_Entity_MapperAbstract
             $entityDef = $this->_metadataFactory->getDefinitionByEntityName($className);
             $persisterClassName = $entityDef->getPersisterClass();
             $this->_persister[$className] = new $persisterClassName();
-            $this->_persister[$className]->initialize($entityDef, $this->_metadataFactory);
+            $this->_persister[$className]->initialize($entityDef, $this->_mappingInstructions[$className]);
         }
 
         return $this->_persister[$className];
@@ -164,7 +169,10 @@ abstract class Zend_Entity_MapperAbstract
     public function getLoader($className)
     {
         if(!isset($this->_loader[$className])) {
-            $this->_loader[$className] = new Zend_Entity_Mapper_Loader_Basic($this->_metadataFactory->getDefinitionByEntityName($className));
+            $this->_loader[$className] = new Zend_Entity_Mapper_Loader_Basic(
+                $this->_metadataFactory->getDefinitionByEntityName($className),
+                $this->_mappingInstructions[$className]
+            );
         }
         return $this->_loader[$className];
     }

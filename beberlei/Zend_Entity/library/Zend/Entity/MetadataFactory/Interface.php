@@ -34,4 +34,11 @@ interface Zend_Entity_MetadataFactory_Interface
      * @return Zend_Entity_Definition_Entity
      */
     public function getDefinitionByEntityName($entityName);
+
+    /**
+     *
+     * @param  string $visitorClass
+     * @return Zend_Entity_Definition_VisitorAbstract[]
+     */
+    public function transform($visitorClass);
 }

@@ -53,7 +53,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Definition Map
      *
-     * @var Zend_Entity_Mapper_DefinitionMap
+     * @var Zend_Entity_MetadataFactory_Interface
      */
     protected $_metadataFactory = null;
 
@@ -180,7 +180,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected function getMapper()
     {
         if($this->_mapper == null) {
-            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory);
+            $visitorMap = $this->_metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
+            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory, $visitorMap);
         }
         return $this->_mapper;
     }

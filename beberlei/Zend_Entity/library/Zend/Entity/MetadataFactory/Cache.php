@@ -79,4 +79,20 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
         
         return $entityDef;
     }
+
+    /**
+     *
+     * @param  string $visitorClass
+     * @return Zend_Entity_Definition_VisitorAbstract[]
+     */
+    public function transform($visitorClass)
+    {
+        $visitorMap = array();
+        foreach($this->getDefinitionEntityNames() AS $entityName) {
+            $visitor = new $visitorClass;
+            $this->getDefinitionByEntityName($entityName)->visit($visitor, $this);
+            $visitorMap[$entityName] = $visitor;
+        }
+        return $visitorMap;
+    }
 }

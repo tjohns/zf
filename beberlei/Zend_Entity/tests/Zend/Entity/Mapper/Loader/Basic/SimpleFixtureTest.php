@@ -2,23 +2,9 @@
 
 class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
-    /**
-     * @var Zend_Entity_Fixture_SimpleFixtureDefs
-     */
-    protected $fixture;
-
     public function setUp()
     {
         $this->fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
-    }
-
-    /**
-     * @param Zend_Entity_Definition_Entity $def
-     * @return Zend_Entity_Mapper_Loader_Basic
-     */
-    public function createLoader(Zend_Entity_Definition_Entity $def)
-    {
-        return new Zend_Entity_Mapper_Loader_Basic($def);
     }
 
     public function getLoader()
@@ -28,6 +14,7 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
 
     public function testCreateSimpleEntityFromRow()
     {
+        $this->assertType('Zend_Entity_Fixture_SimpleFixtureDefs', $this->fixture);
         $loader = $this->getLoader();
 
         $row = $this->fixture->getDummyDataRow();

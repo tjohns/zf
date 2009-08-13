@@ -35,7 +35,9 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
             $metadataFactory->addDefinition($entityDefinition);
         }
 
-        $mapper = new Zend_Entity_TestMapper($db, $metadataFactory);
+        $visitorMap = $metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
+
+        $mapper = new Zend_Entity_TestMapper($db, $metadataFactory, $visitorMap);
         if($loader !== null) {
             $mapper->setLoader($loader);
         }

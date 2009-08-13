@@ -73,13 +73,17 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
      */
     protected $_versionProperty = null;
 
+    protected $_mappingInstruction = null;
+
     /**
      * Construct new Loader based on an entity definition.
      * 
      * @param Zend_Entity_Definition_Entity $entityDefinition
      */
-    public function __construct(Zend_Entity_Definition_Entity $entityDefinition)
+    public function __construct(Zend_Entity_Definition_Entity $entityDefinition, Zend_Entity_Mapper_MappingInstruction $mappingInstruction)
     {
+        $this->_mappingInstruction = $mappingInstruction;
+
         $this->_table = $entityDefinition->getTable();
         $this->_class = $entityDefinition->getClass();
         $this->_primaryKey = $entityDefinition->getPrimaryKey();

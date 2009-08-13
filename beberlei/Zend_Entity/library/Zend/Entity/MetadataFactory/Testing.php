@@ -43,4 +43,19 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
 
         return $this->_defMap[$entityName];
     }
+
+    /**
+     * @param  string $visitorClass
+     * @return Zend_Entity_Definition_VisitorAbstract[]
+     */
+    public function transform($visitorClass)
+    {
+        $visitorMap = array();
+        foreach($this->getDefinitionEntityNames() AS $entityName) {
+            $visitor = new $visitorClass;
+            $this->getDefinitionByEntityName($entityName)->visit($visitor, $this);
+            $visitorMap[$entityName] = $visitor;
+        }
+        return $visitorMap;
+    }
 }

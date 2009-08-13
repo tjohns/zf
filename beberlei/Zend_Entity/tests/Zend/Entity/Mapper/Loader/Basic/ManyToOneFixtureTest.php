@@ -2,18 +2,11 @@
 
 class Zend_Entity_Mapper_Loader_Basic_ManyToOneFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
-    public $fixture = null;
-
     public function setUp()
     {
         parent::setUp();
         $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $this->resourceMap = $this->fixture->getResourceMap();
-    }
-
-    public function createLoader($def)
-    {
-        return new Zend_Entity_Mapper_Loader_Basic($def);
     }
 
     public function testLoadRowCreatesLazyLoadEntity()

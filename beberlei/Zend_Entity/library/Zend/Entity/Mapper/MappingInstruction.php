@@ -70,6 +70,11 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
     /**
      * @var array
      */
+    public $properties = array();
+
+    /**
+     * @var array
+     */
     public $toOneRelations = array();
 
     /**
@@ -292,6 +297,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
                 $this->versionProperty = $property;
             }
             if(!($property instanceof Zend_Entity_Definition_Formula)) {
+                $this->properties[] = $property;
                 $this->tableColumns[$propertyName] = $property;
             }
             $columnName = $property->getColumnName();

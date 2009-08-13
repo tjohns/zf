@@ -11,8 +11,8 @@ abstract class Zend_Entity_Mapper_Loader_SimpleFixtureTestCase extends Zend_Enti
 
     public function setUp()
     {
-        $this->resourceMap = new Zend_Entity_MetadataFactory_Testing();
-        $this->resourceMap->addDefinition( $this->createClassADefinition() );
+        $this->fixture = new Zend_Entity_MetadataFactory_Testing();
+        $this->fixture->addDefinition( $this->createClassADefinition() );
     }
 
     public function createClassADefinition()
@@ -26,11 +26,9 @@ abstract class Zend_Entity_Mapper_Loader_SimpleFixtureTestCase extends Zend_Enti
         return $def;
     }
 
-    abstract public function createLoader(Zend_Entity_Definition_Entity $def);
-
     public function getLoader()
     {
-        return $this->createLoader($this->resourceMap->getDefinitionByEntityName(self::TEST_A_CLASS));
+        return $this->createLoader($this->fixture->getDefinitionByEntityName(self::TEST_A_CLASS));
     }
 
     const DUMMY_DATA_ID = 1;

@@ -56,7 +56,8 @@ class Zend_Entity_Fixture_ManyToOneDefs extends Zend_Entity_Fixture_Abstract
     
     public function createLoader($def)
     {
-        return new Zend_Entity_Mapper_Loader_Basic($def);
+        $mi = $this->resourceMap->transform('Zend_Entity_Mapper_MappingInstruction');
+        return new Zend_Entity_Mapper_Loader_Basic($def, $mi[$def->getClass()]);
     }
 
 

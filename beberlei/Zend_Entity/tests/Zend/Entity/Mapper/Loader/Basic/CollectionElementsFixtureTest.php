@@ -2,16 +2,13 @@
 
 class Zend_Entity_Mapper_Loader_Basic_CollectionElementsFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
-    /**
-     * @var Zend_Entity_Fixture_SimpleFixtureDefs
-     */
-    protected $fixture;
-
     public function setUp()
     {
         $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
+        $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
         $this->loader = new Zend_Entity_Mapper_Loader_Basic(
-            $this->fixture->getEntityDefinition('Zend_TestEntity1')
+            $this->fixture->getEntityDefinition('Zend_TestEntity1'),
+            $mi["Zend_TestEntity1"]
         );
     }
 

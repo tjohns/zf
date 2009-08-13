@@ -21,9 +21,10 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
         $entityDef = $this->fixture->getEntityDefinition('Zend_TestEntity1');
         $defMap = $this->fixture->getResourceMap();
+        $mappingInstructionMap = $defMap->transform('Zend_Entity_Mapper_MappingInstruction');
 
         $persister = new Zend_Entity_Mapper_Persister_Simple();
-        $persister->initialize($entityDef, $defMap);
+        $persister->initialize($entityDef, $mappingInstructionMap["Zend_TestEntity1"]);
 
         return $persister;
     }

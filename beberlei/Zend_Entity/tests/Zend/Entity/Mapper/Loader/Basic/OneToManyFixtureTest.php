@@ -5,17 +5,6 @@ class Zend_Entity_Mapper_Loader_Basic_OneToManyFixtureTest extends Zend_Entity_M
     protected $entityManager = null;
 
     /**
-     *
-     * @var Zend_Entity_Fixture_OneToManyDefs
-     */
-    protected $fixture;
-
-    public function createLoader($def)
-    {
-        return new Zend_Entity_Mapper_Loader_Basic($def);
-    }
-
-    /**
      * @return Zend_Entity_Mapper_Loader_Interface
      */
     public function getClassALoader()

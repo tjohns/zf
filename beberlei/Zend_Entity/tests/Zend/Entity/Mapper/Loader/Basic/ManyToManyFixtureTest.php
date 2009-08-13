@@ -1,17 +1,7 @@
 <?php
 
 class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
-{
-    /**
-     * @var Zend_Entity_Fixture_ManyToManyDefs
-     */
-    private $fixture = null;
-
-    public function createLoader($def)
-    {
-        return new Zend_Entity_Mapper_Loader_Basic($def);
-    }
-
+{    
     /**
      * @return Zend_Entity_Mapper_Loader_Interface
      */

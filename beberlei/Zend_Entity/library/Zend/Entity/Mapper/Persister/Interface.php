@@ -23,10 +23,10 @@ interface Zend_Entity_Mapper_Persister_Interface
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      * 
      * @param  Zend_Entity_Definition_Entity $entityDef
-     * @param  Zend_Entity_MetadataFactory_Interface     $defMap
+     * @param  Zend_Entity_Mapper_MappingInstruction[] $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $defMap);
+    public function initialize(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_Mapper_MappingInstruction $mappingInstruction=null);
 
     /**
      * Save entity into persistence based on the persisters scope

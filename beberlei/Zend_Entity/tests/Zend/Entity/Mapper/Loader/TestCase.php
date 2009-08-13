@@ -8,9 +8,9 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     protected $entityManager = null;
 
     /**
-     * @var Zend_Entity_MetadataFactory_Testing
+     * @var Zend_Entity_Fixture_Abstract
      */
-    protected $resourceMap = null;
+    protected $fixture = null;
 
     /**
      * @var Zend_Entity_IdentityMap
@@ -23,9 +23,18 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     protected $unitOfWork = null;
 
 
+    public function createLoader(Zend_Entity_Definition_Entity $def)
+    {
+        $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
+        return new Zend_Entity_Mapper_Loader_Basic(
+            $def,
+            $mi[$def->getClass()]
+        );
+    }
+
     public function createEntityManager()
     {
-        $this->entityManager = parent::createEntityManager($this->unitOfWork, $this->resourceMap, $this->identityMap);
+        $this->entityManager = parent::createEntityManager($this->unitOfWork, $this->fixture->getResourceMap(), $this->identityMap);
         return $this->entityManager;
     }
 

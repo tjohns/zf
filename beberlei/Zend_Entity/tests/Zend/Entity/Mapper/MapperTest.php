@@ -5,6 +5,8 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
     public function testSelectType()
     {
         $entityDefinition = new Zend_Entity_Definition_Entity('foo');
+        $entityDefinition->addPrimaryKey("id");
+
         $mapper = $this->createMapper(null, $entityDefinition);
 
         $select = $mapper->select();
