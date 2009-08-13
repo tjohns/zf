@@ -26,7 +26,7 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
      */
     public function initSelect(Zend_Db_Select $select)
     {
-        $select->from($this->_table);
+        $select->from($this->_mappingInstruction->table);
     }
 
     /**
@@ -34,7 +34,7 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
      */
     public function initColumns(Zend_Db_Select $select)
     {
-        $select->columns($this->_sqlColumnAliasMap);
+        $select->columns($this->_mappingInstruction->sqlColumnAliasMap);
     }
 
     /**

@@ -73,6 +73,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
      */
     protected $_versionProperty = null;
 
+    /**
+     * @var Zend_Entity_Mapper_MappingInstruction
+     */
     protected $_mappingInstruction = null;
 
     /**
@@ -83,44 +86,12 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     public function __construct(Zend_Entity_Definition_Entity $entityDefinition, Zend_Entity_Mapper_MappingInstruction $mappingInstruction)
     {
         $this->_mappingInstruction = $mappingInstruction;
-
-        $this->_table = $entityDefinition->getTable();
-        $this->_class = $entityDefinition->getClass();
-        $this->_primaryKey = $entityDefinition->getPrimaryKey();
-        $this->_versionProperty = $entityDefinition->getVersionProperty();
-
-        $propertyNames = array();
-        foreach($entityDefinition->getProperties() AS $property) {
-            if($property instanceof Zend_Entity_Definition_AbstractRelation) {
-                // Setup retrieval of the foreign key value
-                $columnName = $property->getColumnName();
-                $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
-                $this->_columnNameToProperty[$columnName] = $property;
-
-                $this->_relations[] = $property;
-                $propertyNames[] = $property->getPropertyName();
-            } elseif($property instanceof Zend_Entity_Definition_Collection) {
-                if($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
-                    $this->_collections[] = $property;
-                } else if($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-                    $this->_elementsCollection[] = $property;
-                }
-                $propertyNames[] = $property->getPropertyName();
-            } else {
-                $columnName = $property->getColumnName();
-                $this->_sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
-                $this->_columnNameToProperty[$columnName] = $property;
-                $propertyNames[] = $property->getPropertyName();
-            }
-        }
-
-        $this->_stateTransformer = $entityDefinition->getStateTransformer();
     }
 
     protected function renameAndCastColumnToPropertyKeys($row)
     {
         $state = array();
-        foreach($this->_columnNameToProperty AS $columnName => $property) {
+        foreach($this->_mappingInstruction->columnNameToProperty AS $columnName => $property) {
             if(!array_key_exists($columnName, $row)) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
@@ -135,13 +106,13 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     public function createEntityFromRow(array $row, Zend_Entity_Manager_Interface $entityManager)
     {
         $identityMap = $entityManager->getIdentityMap();
-        $key = $this->_primaryKey->retrieveKeyValuesFromProperties($row);
-        if($identityMap->hasObject($this->_class, $key) == true) {
-            $entity = $identityMap->getObject($this->_class, $key);
+        $key = $this->_mappingInstruction->primaryKey->retrieveKeyValuesFromProperties($row);
+        if($identityMap->hasObject($this->_mappingInstruction->class, $key) == true) {
+            $entity = $identityMap->getObject($this->_mappingInstruction->class, $key);
         } else {
             $versionId = null;
-            if($this->_versionProperty !== null) {
-                $versionColumnName = $this->_versionProperty->getColumnName();
+            if($this->_mappingInstruction->versionProperty !== null) {
+                $versionColumnName = $this->_mappingInstruction->versionProperty->getColumnName();
                 if(isset($row[$versionColumnName])) {
                     $versionId = $row[$versionColumnName];
                 } else {
@@ -153,7 +124,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
             $entity = $this->createEntity($row);
             // Set this before loadRelationsIntoEntity() to circumvent infinite loop on backreferences and stuff
-            $identityMap->addObject($this->_class, $key, $entity, $versionId);
+            $identityMap->addObject($this->_mappingInstruction->class, $key, $entity, $versionId);
 
             $this->loadRow($entity, $row, $entityManager);
         }
@@ -162,7 +133,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     protected function createEntity(array $row)
     {
-        $entityClass = $this->_class;
+        $entityClass = $this->_mappingInstruction->class;
         return new $entityClass();
     }
 
@@ -172,14 +143,14 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         unset($row);
 
         $state = $this->initializeRelatedObjects($state, $entityManager);
-        $this->_stateTransformer->setState($entity, $state);
+        $this->_mappingInstruction->stateTransformer->setState($entity, $state);
         
         $entityManager->getEventListener()->postLoad($entity);
     }
     
     protected function initializeRelatedObjects(array $entityState, Zend_Entity_Manager $entityManager)
     {
-        foreach($this->_relations AS $relation) {
+        foreach($this->_mappingInstruction->toOneRelations AS $relation) {
             /* @var $relation Zend_Entity_Definition_AbstractRelation */
             $propertyName = $relation->getPropertyName();
             if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
@@ -188,12 +159,12 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 $entityState[$propertyName] = $entityManager->load($relation->getClass(), $entityState[$propertyName]);
             }
         }
-        foreach($this->_collections AS $collectionDef) {
+        foreach($this->_mappingInstruction->toManyRelations AS $collectionDef) {
             /* @var $collectionDef Zend_Entity_Definition_Collection */
             $relation   = $collectionDef->getRelation();
             $foreignDefinition = $entityManager->getMetadataFactory()->getDefinitionByEntityName($relation->getClass());
 
-            $keyValue = $entityState[$this->_primaryKey->getPropertyName()];
+            $keyValue = $entityState[$this->_mappingInstruction->primaryKey->getPropertyName()];
 
             $db = $entityManager->getAdapter();
             $query = $entityManager->createNativeQuery($relation->getClass());
@@ -227,9 +198,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                 $entityState[$propertyName] = new Zend_Entity_Collection($query->getResultList());
             }
         }
-        foreach($this->_elementsCollection AS $elementDef) {
+        foreach($this->_mappingInstruction->elementCollections AS $elementDef) {
             $propertyName = $elementDef->getPropertyName();
-            $pk = $this->_primaryKey->getPropertyName();
+            $pk = $this->_mappingInstruction->primaryKey->getPropertyName();
 
             /* @var $elementDef Zend_Entity_Definition_Collection */
             $db = $entityManager->getAdapter();
