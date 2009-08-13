@@ -24,56 +24,6 @@ require_once "Interface.php";
 abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_Loader_Interface
 {
     /**
-     * @var string
-     */
-    protected $_table;
-
-    /**
-     * @var string
-     */
-    protected $_class;
-
-    /**
-     * @var Zend_Entity_Definition_PrimaryKey
-     */
-    protected $_primaryKey;
-
-    /**
-     * @var array
-     */
-    protected $_sqlColumnAliasMap = array();
-
-    /**
-     * @var array
-     */
-    protected $_columnNameToProperty = array();
-
-    /**
-     * @var array
-     */
-    protected $_relations   = array();
-
-    /**
-     * @var array
-     */
-    protected $_collections = array();
-
-    /**
-     * @var array
-     */
-    protected $_elementsCollection = array();
-
-    /**
-     * @var Zend_Entity_StateTransformer_Abstract
-     */
-    protected $_stateTransformer = null;
-
-    /**
-     * @var Zend_Entity_Definition_Property
-     */
-    protected $_versionProperty = null;
-
-    /**
      * @var Zend_Entity_Mapper_MappingInstruction
      */
     protected $_mappingInstruction = null;

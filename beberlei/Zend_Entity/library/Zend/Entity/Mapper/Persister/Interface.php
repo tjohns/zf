@@ -26,7 +26,7 @@ interface Zend_Entity_Mapper_Persister_Interface
      * @param  Zend_Entity_Mapper_MappingInstruction[] $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_Mapper_MappingInstruction $mappingInstruction=null);
+    public function initialize(Zend_Entity_Mapper_MappingInstruction $mappingInstruction);
 
     /**
      * Save entity into persistence based on the persisters scope

@@ -20,51 +20,6 @@
 class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persister_Interface
 {
     /**
-     * @var array
-     */
-    protected $_properties = array();
-
-    /**
-     * @var array
-     */
-    protected $_toOneRelations = array();
-
-    /**
-     * @var array
-     */
-    protected $_toManyCascadeRelations = array();
-
-    /**
-     * @var array
-     */
-    protected $_elementCollections = array();
-
-    /**
-     * @var string
-     */
-    protected $_class;
-
-    /**
-     * @var Zend_Entity_Definition_PrimaryKey
-     */
-    protected $_primaryKey;
-
-    /**
-     * @var string
-     */
-    protected $_table;
-
-    /**
-     * @var Zend_Entity_StateTransformer_Abstract
-     */
-    protected $_stateTransformer = null;
-
-    /**
-     * @var Zend_Entity_Definition_Version
-     */
-    protected $_versionProperty = null;
-
-    /**
      * @var Zend_Entity_Mapper_MappingInstruction
      */
     protected $_mappingInstruction = null;
@@ -72,11 +27,10 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
-     * @param  Zend_Entity_Definition_Entity $entityDef
      * @param  Zend_Entity_Mapper_MappingInstruction $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_Mapper_MappingInstruction $mappingInstruction=null)
+    public function initialize(Zend_Entity_Mapper_MappingInstruction $mappingInstruction)
     {
         $this->_mappingInstruction = $mappingInstruction;
     }
@@ -316,7 +270,6 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * Remove entity from persistence based on the persisters scope
      *
-     * @ignore
      * @param  Zend_Entity_Interface $entity
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void

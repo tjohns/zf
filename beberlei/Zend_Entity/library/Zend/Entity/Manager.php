@@ -180,8 +180,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected function getMapper()
     {
         if($this->_mapper == null) {
-            $visitorMap = $this->_metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
-            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory, $visitorMap);
+            $mappingInstructionMap = $this->_metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
+            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory, $mappingInstructionMap);
         }
         return $this->_mapper;
     }

@@ -75,11 +75,11 @@ abstract class Zend_Entity_MapperAbstract
      */
     public function load($entityName, $entityManager, $keyValue)
     {
-        $def = $this->_metadataFactory->getDefinitionByEntityName($entityName);
+        $mi = $this->_mappingInstructions[$entityName];
 
-        $tableName = $def->getTable();
-        $key = $def->getPrimaryKey()->getColumnName();
-        $query = $entityManager->createNativeQuery($def->getClass());
+        $tableName = $mi->table;
+        $key = $mi->primaryKey->getColumnName();
+        $query = $entityManager->createNativeQuery($mi->class);
         $cond = $this->_db->quoteIdentifier($tableName.".".$key);
         $query->where($cond." = ?", $keyValue);
 
@@ -152,10 +152,8 @@ abstract class Zend_Entity_MapperAbstract
     protected function getPersister($className)
     {
         if(!isset($this->_persister[$className])) {
-            $entityDef = $this->_metadataFactory->getDefinitionByEntityName($className);
-            $persisterClassName = $entityDef->getPersisterClass();
-            $this->_persister[$className] = new $persisterClassName();
-            $this->_persister[$className]->initialize($entityDef, $this->_mappingInstructions[$className]);
+            $this->_persister[$className] = new Zend_Entity_Mapper_Persister_Simple();
+            $this->_persister[$className]->initialize($this->_mappingInstructions[$className]);
         }
 
         return $this->_persister[$className];
