@@ -19,13 +19,5 @@
 
 class Zend_Entity_Definition_ManyToManyRelation extends Zend_Entity_Definition_AbstractRelation
 {
-    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
-    {
-        parent::compile($entityDef, $map);
-
-        if($this->getColumnName() == null) {
-            $foreignDef = $map->getDefinitionByEntityName($this->getClass());
-            $this->setColumnName($foreignDef->getPrimaryKey()->getColumnName());
-        }
-    }
+    
 }

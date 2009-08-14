@@ -31,37 +31,32 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
     /**
      * @var string
      */
-    protected $_class = null;
+    public $class = null;
 
     /**
      * @var string
      */
-    protected $_fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
+    public $fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
 
     /**
      * @var string
      */
-    protected $_cascade = Zend_Entity_Definition_Property::CASCADE_NONE;
+    public $cascade = Zend_Entity_Definition_Property::CASCADE_NONE;
 
     /**
      * @var string
      */
-    protected $_notFound = Zend_Entity_Definition_Property::NOTFOUND_EXCEPTION;
-
-    /**
-     * @var string
-     */
-    protected $_columnName = null;
+    public $notFound = Zend_Entity_Definition_Property::NOTFOUND_EXCEPTION;
 
     /**
      * @var boolean
      */
-    protected $_inverse = false;
+    public $inverse = false;
 
     /**
      * @var string
      */
-    protected $_mappedBy = null;
+    public $mappedBy = null;
 
     /**
      * Return class name of the related entity
@@ -70,7 +65,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function getClass()
     {
-        return $this->_class;
+        return $this->class;
     }
 
     /**
@@ -80,7 +75,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function setClass($class)
     {
-        $this->_class = $class;
+        $this->class = $class;
     }
 
     /**
@@ -88,7 +83,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function getFetch()
     {
-        return $this->_fetch;
+        return $this->fetch;
     }
 
     /**
@@ -97,7 +92,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
     public function setFetch($fetch)
     {
         if(in_array($fetch, self::$_allowedFetchValues)) {
-            $this->_fetch = $fetch;
+            $this->fetch = $fetch;
         } else {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
@@ -115,7 +110,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function getCascade()
     {
-        return $this->_cascade;
+        return $this->cascade;
     }
 
     /**
@@ -133,7 +128,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
                 "definition '".$this->getPropertyName()."'."
             );
         }
-        $this->_cascade = $cascade;
+        $this->cascade = $cascade;
     }
 
     /**
@@ -149,7 +144,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
             );
         }
 
-        $this->_notFound = $notFound;
+        $this->notFound = $notFound;
     }
 
     /**
@@ -157,7 +152,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function getNotFound()
     {
-        return $this->_notFound;
+        return $this->notFound;
     }
 
     /**
@@ -165,7 +160,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function isInverse()
     {
-        return ($this->_inverse==true);
+        return ($this->inverse==true);
     }
 
     /**
@@ -173,7 +168,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function isOwning()
     {
-        return ($this->_inverse==false);
+        return ($this->inverse==false);
     }
 
     /**
@@ -182,7 +177,7 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function setInverse($inverse)
     {
-        $this->_inverse = $inverse;
+        $this->inverse = $inverse;
     }
 
     /**
@@ -190,12 +185,12 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function setMappedBy($mapByPropertyName)
     {
-        $this->_mappedBy = $mapByPropertyName;
+        $this->mappedBy = $mapByPropertyName;
     }
 
     public function getMappedBy()
     {
-        return $this->_mappedBy;
+        return $this->mappedBy;
     }
 
     /**
@@ -206,40 +201,11 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
      */
     public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
     {
-        if($this->getClass() == null) {
+        if($this->class == null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
                 "Cannot compile relation due to missing class reference for property: ".$this->getPropertyName()
             );
-        }
-
-        $foreignDef = $map->getDefinitionByEntityName( $this->getClass() );
-        if($this->isInverse() == true) {
-            if($this->getMappedBy() == null) {
-                throw new Zend_Entity_Exception(
-                    "The inverse relation '".$this->getPropertyName()."' in ".
-                    "'".$entityDef->getEntityName()."' has to specify a 'mappedBy' element."
-                );
-            }
-
-            if($foreignDef->hasProperty( $this->getMappedBy() ) == false) {
-                throw new Zend_Entity_Exception(
-                    "The mappedBy property '".$this->getMappedBy()."' of the releation ".
-                    "'".$this->getPropertyName()."' on entity '".$entityDef->getEntityName()."' ".
-                    "does not exist on foreign entity '".$foreignDef->getClass()."'."
-                );
-            }
-        } else {
-            if($this->getMappedBy() == null) {
-                $primaryKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
-                $this->_mappedBy = $primaryKeyPropertyName;
-            } elseif(!$foreignDef->hasProperty($this->_mappedBy)) {
-                throw new Zend_Entity_Exception(
-                    "The owing relation '".$this->getPropertyName()."' in ".
-                    "'".$entityDef->getEntityName()."' has to specify a valid 'mappedBy' element, ".
-                    "but '".$this->_mappedBy."' is unknown."
-                );
-            }
         }
     }
 }

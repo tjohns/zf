@@ -91,8 +91,6 @@ class Zend_Entity_Definition_Property extends Zend_Entity_Definition_Property_Ab
      */
     public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
-        if($this->getColumnName() == null) {
-            $this->setColumnName(($this->getPropertyName()));
-        }
+
     }
 }

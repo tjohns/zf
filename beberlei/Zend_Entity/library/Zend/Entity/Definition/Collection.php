@@ -25,57 +25,52 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
     /**
      * @var string
      */
-    protected $_propertyName = null;
-
-    /**
-     * @var string
-     */
-    protected $_collectionType = self::COLLECTION_RELATION;
+    public $type = self::COLLECTION_RELATION;
 
     /**
      * @var Zend_Entity_Definition_AbstractRelation
      */
-    protected $relation = null;
+    public $relation = null;
 
     /**
      * @var string
      */
-    protected $table;
+    public $table;
 
     /**
      * @var string
      */
-    protected $key;
+    public $key;
 
     /**
      * @var string
      */
-    protected $_additionalWhereCondition = null;
+    public $whereRestriction = null;
 
     /**
      * @var string
      */
-    protected $_orderByCondition = null;
+    public $orderByRestriction = null;
 
     /**
      * @var Zend_Entity_Definition_Property
      */
-    protected $_mapKey = null;
+    public $mapKey = null;
 
     /**
      * @var Zend_Entity_Definition_Property
      */
-    protected $_element = null;
+    public $element = null;
 
     /**
      * @var boolean
      */
-    protected $_inverse = false;
+    public $inverse = false;
 
     /**
      * @var string
      */
-    protected $_fetch = null;
+    public $fetch = null;
 
     /**
      * Construct Collection Definition
@@ -93,22 +88,6 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
                 call_user_func_array(array($this, $method), array($v));
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getPropertyName()
-    {
-        return $this->_propertyName;
-    }
-
-    /**
-     * @param string $propertyName
-     */
-    public function setPropertyName($propertyName)
-    {
-        $this->_propertyName = $propertyName;
     }
 
     /**
@@ -150,7 +129,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function setWhere($additionalWhereCondition)
     {
-        $this->_additionalWhereCondition = $additionalWhereCondition;
+        $this->whereRestriction = $additionalWhereCondition;
     }
 
     /**
@@ -160,7 +139,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getWhere()
     {
-        return $this->_additionalWhereCondition;
+        return $this->whereRestriction;
     }
 
     /**
@@ -180,7 +159,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function setRelation(Zend_Entity_Definition_AbstractRelation $relation)
     {
-        $this->_collectionType = self::COLLECTION_RELATION;
+        $this->type = self::COLLECTION_RELATION;
         $this->relation = $relation;
     }
 
@@ -192,7 +171,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function setOrderBy($orderByCondition)
     {
-        $this->_orderByCondition = $orderByCondition;
+        $this->orderByRestriction = $orderByCondition;
     }
 
     /**
@@ -202,7 +181,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getOrderBy()
     {
-        return $this->_orderByCondition;
+        return $this->orderByRestriction;
     }
 
     /**
@@ -221,8 +200,8 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
             );
         }
 
-        $this->_collectionType = self::COLLECTION_ELEMENTS;
-        $this->_mapKey = $mapKey;
+        $this->type = self::COLLECTION_ELEMENTS;
+        $this->mapKey = $mapKey;
     }
 
     /**
@@ -232,7 +211,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getMapKey()
     {
-        return $this->_mapKey;
+        return $this->mapKey;
     }
 
     /**
@@ -250,8 +229,8 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
             );
         }
 
-        $this->_collectionType = self::COLLECTION_ELEMENTS;
-        $this->_element = $element;
+        $this->type = self::COLLECTION_ELEMENTS;
+        $this->element = $element;
     }
 
     /**
@@ -261,7 +240,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getElement()
     {
-        return $this->_element;
+        return $this->element;
     }
 
     /**
@@ -271,7 +250,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getCollectionType()
     {
-        return $this->_collectionType;
+        return $this->type;
     }
 
     /**
@@ -281,7 +260,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getInverse()
     {
-        return $this->_inverse;
+        return $this->inverse;
     }
 
     /**
@@ -292,7 +271,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function setInverse($inverse)
     {
-        $this->_inverse = $inverse;
+        $this->inverse = $inverse;
         return $this;
     }
 
@@ -301,7 +280,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function getFetch()
     {
-        return $this->_fetch;
+        return $this->fetch;
     }
 
     /**
@@ -310,7 +289,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
      */
     public function setFetch($fetch)
     {
-        $this->_fetch = $fetch;
+        $this->fetch = $fetch;
         return $this;
     }
 
@@ -333,8 +312,8 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
                 );
             }
 
-            if($this->_fetch === null) {
-                $this->_fetch = $relation->getFetch();
+            if($this->fetch === null) {
+                $this->fetch = $relation->getFetch();
             }
 
             if($this->getTable() == null) {
@@ -344,8 +323,8 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_Property_
             
             $relation->compile($entityDef, $map);
         } else if($this->getCollectionType() == self::COLLECTION_ELEMENTS) {
-            if($this->_fetch === null) {
-                $this->_fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
+            if($this->fetch === null) {
+                $this->fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
             }
 
             if($this->getElement() == null) {

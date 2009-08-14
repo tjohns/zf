@@ -45,7 +45,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
     public function buildWhereCondition(Zend_Db_Adapter_Abstract $db, $tableName, $key)
     {
         $whereCondition = $db->quoteInto(
-            sprintf('%s.%s = ?', $tableName, $this->getKey()),
+            sprintf('%s.%s = ?', $tableName, $this->columnName),
             $key
         );
 

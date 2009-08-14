@@ -25,6 +25,14 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $this->assertEquals(self::TEST_TABLE, $colDef->getTable());
     }
 
+    public function testTablePublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setTable(self::TEST_TABLE);
+
+        $this->assertEquals(self::TEST_TABLE, $colDef->table);
+    }
+
     public function testSetGetKey()
     {
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
@@ -33,12 +41,28 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $this->assertEquals(self::TEST_PROPERTY2, $colDef->getKey());
     }
 
+    public function testKeyPublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setKey(self::TEST_PROPERTY2);
+
+        $this->assertEquals(self::TEST_PROPERTY2, $colDef->key);
+    }
+
     public function testSetGetWhereClause()
     {
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
         $colDef->setWhere("foo");
 
         $this->assertEquals("foo", $colDef->getWhere());
+    }
+
+    public function testWhereClausePublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setWhere("foo");
+
+        $this->assertEquals("foo", $colDef->whereRestriction);
     }
 
     public function testCollectionCompileRequiresARelationThrowsExceptionOtherwise()
@@ -76,24 +100,44 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $this->assertEquals("foo", $colDef->getOrderBy());
     }
 
+    public function testOrderByPublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setOrderBy("foo");
+
+        $this->assertEquals("foo", $colDef->orderByRestriction);
+    }
+
     public function testSetGetMapKey()
     {
-        $key = "keyName";
-
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
-        $colDef->setMapKey($key);
+        $colDef->setMapKey("keyName");
 
-        $this->assertEquals($key, $colDef->getMapKey());
+        $this->assertEquals("keyName", $colDef->getMapKey());
+    }
+
+    public function testMapKeyPublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setMapKey("keyName");
+
+        $this->assertEquals("keyName", $colDef->mapKey);
     }
 
     public function testSetGetElement()
     {
-        $element = "elementName";
-
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
-        $colDef->setElement($element);
+        $colDef->setElement("elementName");
 
-        $this->assertEquals($element, $colDef->getElement());
+        $this->assertEquals("elementName", $colDef->getElement());
+    }
+
+    public function testElementPublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+        $colDef->setElement("elementName");
+
+        $this->assertEquals("elementName", $colDef->element);
     }
 
     public function testCompileElementCollection()
@@ -156,6 +200,15 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         );
     }
 
+    public function testFetchPublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+
+        $this->assertNull($colDef->fetch);
+        $colDef->setFetch(Zend_Entity_Definition_Property::FETCH_SELECT);
+        $this->assertEquals(Zend_Entity_Definition_Property::FETCH_SELECT, $colDef->fetch);
+    }
+
     public function testGetDefaultInverse()
     {
         $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
@@ -169,6 +222,15 @@ class Zend_Entity_Definition_CollectionTest extends Zend_Entity_Definition_TestC
         $colDef->setInverse(true);
 
         $this->assertTrue($colDef->getInverse());
+    }
+
+    public function testInversePublicProperty()
+    {
+        $colDef = new Zend_Entity_Definition_Collection(self::TEST_PROPERTY);
+
+        $this->assertFalse($colDef->inverse);
+        $colDef->setInverse(true);
+        $this->assertTrue($colDef->inverse);
     }
 
     public function testSetMapKey_NonString_ThrowsException()

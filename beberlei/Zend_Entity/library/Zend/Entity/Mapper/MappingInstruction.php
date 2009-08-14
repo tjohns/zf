@@ -105,7 +105,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
         $this->class = $entity->getClass();
         $this->table = $entity->getTable();
         
-        $this->primaryKey = $entity->getPrimaryKey();
+        $this->primaryKey = $entity->primaryKey;
         if($this->primaryKey == null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
@@ -143,41 +143,40 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
                 "Cannot compile relation due to missing class reference for ".
-                "property '".$relation->getPropertyName()."' in entity '".$this->class."'"
+                "property '".$relation->propertyName."' in entity '".$this->class."'"
             );
         }
 
-        $foreignDef = $metadataFactory->getDefinitionByEntityName($relation->getClass());
-        if($relation->isInverse() == true) {
-            if($relation->getMappedBy() == null) {
+        $foreignDef = $metadataFactory->getDefinitionByEntityName($relation->class);
+        if($relation->inverse == true) {
+            if($relation->mappedBy == null) {
                 throw new Zend_Entity_Exception(
-                    "The inverse relation '".$relation->getPropertyName()."' in ".
+                    "The inverse relation '".$relation->propertyName."' in ".
                     "'".$this->class."' has to specify a 'mappedBy' element."
                 );
             }
 
-            if($foreignDef->hasProperty( $relation->getMappedBy() ) == false) {
+            if($foreignDef->hasProperty( $relation->mappedBy ) == false) {
                 throw new Zend_Entity_Exception(
-                    "The mappedBy property '".$relation->getMappedBy()."' of the releation ".
-                    "'".$relation->getPropertyName()."' on entity '".$this->class."' ".
+                    "The mappedBy property '".$relation->mappedBy."' of the releation ".
+                    "'".$relation->propertyName."' on entity '".$this->class."' ".
                     "does not exist on foreign entity '".$foreignDef->getClass()."'."
                 );
             }
         } else {
-            if($relation->getMappedBy() == null) {
-                $primaryKeyPropertyName = $foreignDef->getPrimaryKey()->getPropertyName();
-                $relation->setMappedBy($primaryKeyPropertyName);
-            } elseif(!$foreignDef->hasProperty($relation->getMappedBy())) {
+            if($relation->mappedBy == null) {
+                $relation->mappedBy = $foreignDef->getPrimaryKey()->propertyName;
+            } elseif(!$foreignDef->hasProperty($relation->mappedBy)) {
                 throw new Zend_Entity_Exception(
-                    "The owing relation '".$relation->getPropertyName()."' in ".
+                    "The owing relation '".$relation->propertyName."' in ".
                     "'".$this->class."' has to specify a valid 'mappedBy' element, ".
-                    "but '".$relation->getMappedBy()."' is unknown."
+                    "but '".$relation->mappedBy."' is unknown."
                 );
             }
         }
 
-        if($relation instanceof Zend_Entity_Definition_ManyToManyRelation && $relation->getColumnName() == null) {
-            $relation->setColumnName($foreignDef->getPrimaryKey()->getColumnName());
+        if($relation instanceof Zend_Entity_Definition_ManyToManyRelation && $relation->columnName == null) {
+            $relation->columnName = $foreignDef->getPrimaryKey()->columnName;
         }
     }
 
@@ -202,58 +201,58 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
     protected function _acceptCollection($collection, $metadataFactory)
     {
         if($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
-            $relation = $collection->getRelation();
-            if($relation == null) {
+            $relation = $collection->relation;
+            if($collection->relation == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
-                    "No relation option was set in collection '".$collection->getPropertyName()."'."
+                    "No relation option was set in collection '".$collection->propertyName."'."
                 );
             }
 
-            if($collection->getFetch() === null) {
-                $collection->setFetch($relation->getFetch());
+            if($collection->fetch === null) {
+                $collection->fetch = $relation->fetch;
             }
 
-            if($collection->getTable() == null) {
-                $foreignDef = $metadataFactory->getDefinitionByEntityName($relation->getClass());
+            if($collection->table == null) {
+                $foreignDef = $metadataFactory->getDefinitionByEntityName($relation->class);
                 $collection->setTable($foreignDef->getTable());
             }
 
             $this->_acceptRelation($relation, $metadataFactory);
         } else if($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-            if($collection->getFetch() === null) {
-                $collection->setFetch(Zend_Entity_Definition_Property::FETCH_LAZY);
+            if($collection->fetch === null) {
+                $collection->fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
             }
 
-            if($collection->getElement() == null) {
+            if($collection->element == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
-                    "No 'element' option was set in collection '".$collection->getPropertyName()."' ".
+                    "No 'element' option was set in collection '".$collection->propertyName."' ".
                     "of entity '".$this->class."'"
                 );
             }
-            if($collection->getTable() == null) {
+            if($collection->table == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
                     "The table field is required in collections ".
                     "definition of entity '".$this->class."'."
                 );
             }
-            if($collection->getMapKey() == null) {
+            if($collection->mapKey == null) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
-                    "No 'mapKey' option was set in collection '".$collection->getPropertyName()."' ".
+                    "No 'mapKey' option was set in collection '".$collection->propertyName."' ".
                     "of entity '".$this->class."'"
                 );
             }
         }
 
-        if($collection->getKey() == null) {
+        if($collection->key == null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
                 "The 'key' field is required in collection ".
                 "definition of entity '".$this->class."' property ".
-                "'".$collection->getPropertyName()."'"
+                "'".$collection->propertyName."'"
             );
         }
     }
@@ -272,24 +271,24 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
             $this->_acceptCollection($property, $metadataFactory);
         }
 
-        if($property->getColumnName() == null) {
-            $property->setColumnName($property->getPropertyName());
+        if($property->columnName == null) {
+            $property->columnName = $property->propertyName;
         }
 
-        $propertyName = $property->getPropertyName();
+        $propertyName = $property->propertyName;
         $this->propertyNames[] = $propertyName;
         if($property instanceof Zend_Entity_Definition_AbstractRelation) {
-            if($property->isOwning()) {
+            if($property->inverse == false) {
                 $this->toOneRelations[$propertyName] = $property;
                 
-                $columnName = $property->getColumnName();
+                $columnName = $property->columnName;
                 $this->columnNameToProperty[$columnName] = $property;
-                $this->sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
+                $this->sqlColumnAliasMap[$columnName] = $property->columnName;
             }
         } elseif($property instanceof Zend_Entity_Definition_Collection) {
-            if($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
+            if($property->type == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
                 $this->toManyRelations[$propertyName] = $property;
-            } elseif($property->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
+            } elseif($property->type == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
                 $this->elementCollections[$propertyName] = $property;
             }
         } else {
@@ -300,9 +299,9 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
                 $this->properties[] = $property;
                 $this->tableColumns[$propertyName] = $property;
             }
-            $columnName = $property->getColumnName();
+            $columnName = $property->columnName;
             $this->columnNameToProperty[$columnName] = $property;
-            $this->sqlColumnAliasMap[$columnName] = $property->getColumnSqlName();
+            $this->sqlColumnAliasMap[$columnName] = $columnName;
         }
     }
 

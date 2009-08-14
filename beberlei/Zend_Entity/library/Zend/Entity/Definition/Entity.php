@@ -22,7 +22,17 @@ class Zend_Entity_Definition_Entity
     /**
      * @var string
      */
-    protected $_className;
+    public $class;
+
+    /**
+     * @var string
+     */
+    public $table;
+
+    /**
+     * @var Zend_Entity_Definition_PrimaryKey
+     */
+    public $primaryKey = null;
 
     /**
      * @var string
@@ -30,19 +40,9 @@ class Zend_Entity_Definition_Entity
     protected $_entityName = null;
 
     /**
-     * @var string
-     */
-    protected $_tableName;
-
-    /**
      * @var array
      */
     protected $_properties = array();
-
-    /**
-     * @var Zend_Entity_Definition_PrimaryKey
-     */
-    protected $_id = null;
 
     /**
      * @var string
@@ -100,7 +100,7 @@ class Zend_Entity_Definition_Entity
      */
     public function getClass()
     {
-        return $this->_className;
+        return $this->class;
     }
 
     /**
@@ -110,7 +110,7 @@ class Zend_Entity_Definition_Entity
      */
     public function setClass($className)
     {
-        $this->_className = $className;
+        $this->class = $className;
     }
 
     /**
@@ -120,10 +120,10 @@ class Zend_Entity_Definition_Entity
      */
     public function getTable()
     {
-        if($this->_tableName == null) {
+        if($this->table == null) {
             throw new Exception("No table has been set for the definition.");
         }
-        return $this->_tableName;
+        return $this->table;
     }
 
     /**
@@ -133,7 +133,7 @@ class Zend_Entity_Definition_Entity
      */
     public function setTable($tableName)
     {
-        $this->_tableName = $tableName;
+        $this->table = $tableName;
     }
 
     /**
@@ -143,7 +143,7 @@ class Zend_Entity_Definition_Entity
     public function getEntityName()
     {
         if($this->_entityName == null) {
-            return $this->_className;
+            return $this->class;
         } else {
             return $this->_entityName;
         }
@@ -184,7 +184,7 @@ class Zend_Entity_Definition_Entity
         $property = Zend_Entity_Definition_Utility::loadDefinition($propertyType, $propertyName, $options);
 
         if($property instanceof Zend_Entity_Definition_PrimaryKey) {
-            $this->_id = $property;
+            $this->primaryKey = $property;
         } else if($property instanceof Zend_Entity_Definition_Version) {
             $this->_version = $property;
         }
@@ -264,7 +264,7 @@ class Zend_Entity_Definition_Entity
      */
     public function getPrimaryKey()
     {
-        return $this->_id;
+        return $this->primaryKey;
     }
 
     /**
@@ -375,33 +375,19 @@ class Zend_Entity_Definition_Entity
     }
 
     /**
-     * @param Zend_Entity_MetadataFactory_Interface $map
+     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    protected function _compile(Zend_Entity_MetadataFactory_Interface $map)
+    protected function _compile(Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
-        if($this->_id === null) {
+        if($this->primaryKey === null) {
             throw new Zend_Entity_Exception(
                 "No primary key was set for entity '".$this->getClass()."' but is a required attribute."
             );
         }
 
-        $propertyNames = array();
         foreach($this->_properties AS $property) {
-            $property->compile($this, $map);
-            $propertyNames[] = $property->getPropertyName();
+            $property->compile($this, $metadataFactory);
         }
-
-        if(class_exists($this->_stateTransformerClass)) {
-            $this->_stateTransformer = new $this->_stateTransformerClass();
-            $this->_stateTransformer->setPropertyNames($propertyNames);
-        } else {
-            throw new Zend_Entity_Exception(
-                "Invalid State Transformer Class '".$this->_stateTransformerClass."' ".
-                "name given in '".$this->getClass()."' entity definition."
-            );
-        }
-
-        $this->setPersisterClass("Zend_Entity_Mapper_Persister_Simple");
     }
 
     /**

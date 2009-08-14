@@ -22,17 +22,17 @@ abstract class Zend_Entity_Definition_Property_Abstract
     /**
      * @var string
      */
-    protected $propertyName;
+    public $propertyName;
 
     /**
      * @var string
      */
-    protected $columnName = null;
+    public $columnName = null;
 
     /**
      * @var string
      */
-    protected $propertyType = Zend_Entity_Definition_Property::TYPE_STRING;
+    public $propertyType = Zend_Entity_Definition_Property::TYPE_STRING;
 
     /**
      * @var boolean
@@ -96,7 +96,7 @@ abstract class Zend_Entity_Definition_Property_Abstract
      */
     public function getColumnSqlName()
     {
-        return $this->getColumnName();
+        return $this->columnName;
     }
 
     /**
@@ -167,8 +167,7 @@ abstract class Zend_Entity_Definition_Property_Abstract
      */
     public function castPropertyToStorageType($propertyValue)
     {
-        // TODO: Nullable
-        if($propertyValue === null) {
+        if($propertyValue === null && $this->_isNullable) {
             return $propertyValue;
         }
 
@@ -207,8 +206,7 @@ abstract class Zend_Entity_Definition_Property_Abstract
 
     public function castColumnToPhpType($columnValue)
     {
-        // TODO: Nullable
-        if($columnValue === null) {
+        if($columnValue === null && $this->_isNullable) {
             return $columnValue;
         }
 

@@ -38,6 +38,11 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         $this->_mappingInstruction = $mappingInstruction;
     }
 
+    /**
+     * @todo Gah Code duplication
+     * @param <type> $row
+     * @return <type>
+     */
     protected function renameAndCastColumnToPropertyKeys($row)
     {
         $state = array();
@@ -48,7 +53,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
                     "In rename column to property the column '".$columnName."' does not exist in resultset."
                 );
             }
-            $state[$property->getPropertyName()] = $property->castColumnToPhpType($row[$columnName]);
+            $state[$property->propertyName] = $property->castColumnToPhpType($row[$columnName]);
         }
         return $state;
     }
@@ -62,7 +67,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
         } else {
             $versionId = null;
             if($this->_mappingInstruction->versionProperty !== null) {
-                $versionColumnName = $this->_mappingInstruction->versionProperty->getColumnName();
+                $versionColumnName = $this->_mappingInstruction->versionProperty->columnName;
                 if(isset($row[$versionColumnName])) {
                     $versionId = $row[$versionColumnName];
                 } else {
@@ -89,7 +94,16 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     public function loadRow(Zend_Entity_Interface $entity, array $row, Zend_Entity_Manager_Interface $entityManager)
     {
-        $state = $this->renameAndCastColumnToPropertyKeys($row);
+        $state = array();
+        foreach($this->_mappingInstruction->columnNameToProperty AS $columnName => $property) {
+            if(!array_key_exists($columnName, $row)) {
+                require_once "Zend/Entity/Exception.php";
+                throw new Zend_Entity_Exception(
+                    "In rename column to property the column '".$columnName."' does not exist in resultset."
+                );
+            }
+            $state[$property->propertyName] = $property->castColumnToPhpType($row[$columnName]);
+        }
         unset($row);
 
         $state = $this->initializeRelatedObjects($state, $entityManager);
@@ -102,61 +116,61 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     {
         foreach($this->_mappingInstruction->toOneRelations AS $relation) {
             /* @var $relation Zend_Entity_Definition_AbstractRelation */
-            $propertyName = $relation->getPropertyName();
-            if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
-                $entityState[$propertyName] = $entityManager->getReference($relation->getClass(), $entityState[$propertyName]);
-            } else if($relation->getFetch() == Zend_Entity_Definition_Property::FETCH_SELECT) {
-                $entityState[$propertyName] = $entityManager->load($relation->getClass(), $entityState[$propertyName]);
+            $propertyName = $relation->propertyName;
+            if($relation->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
+                $entityState[$propertyName] = $entityManager->getReference($relation->class, $entityState[$propertyName]);
+            } else if($relation->fetch == Zend_Entity_Definition_Property::FETCH_SELECT) {
+                $entityState[$propertyName] = $entityManager->load($relation->class, $entityState[$propertyName]);
             }
         }
         foreach($this->_mappingInstruction->toManyRelations AS $collectionDef) {
             /* @var $collectionDef Zend_Entity_Definition_Collection */
-            $relation   = $collectionDef->getRelation();
-            $foreignDefinition = $entityManager->getMetadataFactory()->getDefinitionByEntityName($relation->getClass());
+            $relation = $collectionDef->relation;
+            $foreignDefinition = $entityManager->getMetadataFactory()->getDefinitionByEntityName($relation->class);
 
-            $keyValue = $entityState[$this->_mappingInstruction->primaryKey->getPropertyName()];
+            $keyValue = $entityState[$this->_mappingInstruction->primaryKey->propertyName];
 
             $db = $entityManager->getAdapter();
-            $query = $entityManager->createNativeQuery($relation->getClass());
+            $query = $entityManager->createNativeQuery($relation->class);
 
-            $intersectTable = $collectionDef->getTable();
-            if($foreignDefinition->getTable() !== $collectionDef->getTable()) {
+            $intersectTable = $collectionDef->table;
+            if($foreignDefinition->getTable() !== $collectionDef->table) {
                 
-                $foreignPrimaryKey = $foreignDefinition->getPrimaryKey()->getKey();
+                $foreignPrimaryKey = $foreignDefinition->getPrimaryKey()->columnName;
 
-                $intersectOnLhs = $db->quoteIdentifier($intersectTable.".".$relation->getColumnName());
+                $intersectOnLhs = $db->quoteIdentifier($intersectTable.".".$relation->columnName);
                 $intersectOnRhs = $db->quoteIdentifier($foreignDefinition->getTable().".".$foreignPrimaryKey);
                 $intersectOn = $intersectOnLhs." = ".$intersectOnRhs;
                 $query->join($intersectTable, $intersectOn, array());
             }
-            $query->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->getKey())." = ?", $keyValue);
+            $query->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->key)." = ?", $keyValue);
 
             if($collectionDef->getOrderBy() !== null) {
-                $query->order($collectionDef->getOrderBy());
+                $query->order($collectionDef->orderByRestriction);
             }
 
             if($collectionDef->getWhere() !== null) {
-                $query->where($collectionDef->getWhere());
+                $query->where($collectionDef->whereRestriction);
             }
 
-            $propertyName = $collectionDef->getPropertyName();
+            $propertyName = $collectionDef->propertyName;
 
-            if($collectionDef->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
+            if($collectionDef->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 $callback = array($query, "getResultList");
                 $entityState[$propertyName] = new Zend_Entity_LazyLoad_Collection($callback, array());
-            } else if($collectionDef->getFetch() == Zend_Entity_Definition_Property::FETCH_SELECT) {
+            } else if($collectionDef->fetch == Zend_Entity_Definition_Property::FETCH_SELECT) {
                 $entityState[$propertyName] = new Zend_Entity_Collection($query->getResultList());
             }
         }
         foreach($this->_mappingInstruction->elementCollections AS $elementDef) {
-            $propertyName = $elementDef->getPropertyName();
-            $pk = $this->_mappingInstruction->primaryKey->getPropertyName();
+            $propertyName = $elementDef->propertyName;
+            $pk = $this->_mappingInstruction->primaryKey->propertyName;
 
             /* @var $elementDef Zend_Entity_Definition_Collection */
             $db = $entityManager->getAdapter();
             $select = $db->select();
-            $select->from($elementDef->getTable());
-            $select->where($elementDef->getKey()." = ?", $entityState[$pk]);
+            $select->from($elementDef->table);
+            $select->where($elementDef->key." = ?", $entityState[$pk]);
 
             if($elementDef->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 $entityState[$propertyName] = new Zend_Entity_LazyLoad_ElementHashMap($select);
@@ -165,7 +179,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
                 $elements = array();
                 foreach($stmt->fetchAll() AS $row) {
-                    $elements[$row[$elementDef->getMapKey()]] = $row[$elementDef->getElement()];
+                    $elements[$row[$elementDef->mapKey]] = $row[$elementDef->element];
                 }
 
                 $entityState[$propertyName] = new Zend_Entity_Collection_ElementHashMap($elements);

@@ -8,6 +8,12 @@ class Zend_Entity_Definition_PropertyTest extends Zend_Entity_Definition_TestCas
         $this->assertEquals("name1", $property->getPropertyName());
     }
 
+    public function testPropertyNamePublicProperty()
+    {
+        $property = new Zend_Entity_Definition_Property("name1");
+        $this->assertEquals("name1", $property->propertyName);
+    }
+
     public function testResetPropertyNameWithMethod()
     {
         $property = new Zend_Entity_Definition_Property("name1");
@@ -22,10 +28,26 @@ class Zend_Entity_Definition_PropertyTest extends Zend_Entity_Definition_TestCas
         $this->assertEquals("name2", $property->getColumnName());
     }
 
+    public function testColumnNamePublicProperty()
+    {
+        $property = new Zend_Entity_Definition_Property("name1");
+
+        $this->assertEquals(null, $property->columnName);
+        $property->setColumnName("name2");
+        $this->assertEquals("name2", $property->columnName);
+    }
+
     public function testSetColumnNameConstructor()
     {
         $property = new Zend_Entity_Definition_Property("name1", array("columnName" => "name2"));
         $this->assertEquals("name2", $property->getColumnName());
+    }
+
+    public function testGetDefaultPropertyType()
+    {
+        $property = new Zend_Entity_Definition_Property("name1");
+        $this->assertEquals(Zend_Entity_Definition_Property::TYPE_STRING, $property->propertyType);
+        $this->assertEquals(Zend_Entity_Definition_Property::TYPE_STRING, $property->getPropertyType());
     }
 
     public function testSetGetPropertyType()
@@ -33,6 +55,14 @@ class Zend_Entity_Definition_PropertyTest extends Zend_Entity_Definition_TestCas
         $property = new Zend_Entity_Definition_Property("name1");
         $property->setPropertyType("asfd");
         $this->assertEquals("asfd", $property->getPropertyType());
+    }
+
+    public function testPropertyTypePublicProperty()
+    {
+        $property = new Zend_Entity_Definition_Property("name1");
+        $property->setPropertyType("asfd");
+
+        $this->assertEquals("asfd", $property->propertyType);
     }
 
     public function testSetPropertyTypeConstructor()
@@ -76,20 +106,19 @@ class Zend_Entity_Definition_PropertyTest extends Zend_Entity_Definition_TestCas
         $this->assertFalse($property->isUnique());
     }
 
-    public function testCompilePropertySetsNameToColumnNameIfNull()
+    public function testConvertPropertyType_ReturnsNull_IfNullable()
     {
         $property = new Zend_Entity_Definition_Property("name1");
-        $property->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+        $property->setNullable(true);
 
-        $this->assertEquals("name1", $property->getColumnName());
+        $this->assertNull($property->castPropertyToStorageType(null));
     }
 
-    public function testCompilePropertyNotSetsNameToColumnNameIfNotNull()
+    public function testConvertStorageType_ReturnsNull_IfNullable()
     {
         $property = new Zend_Entity_Definition_Property("name1");
-        $property->setColumnName("name2");
-        $property->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
+        $property->setNullable(true);
 
-        $this->assertEquals("name2", $property->getColumnName());
+        $this->assertNull($property->castColumnToPhpType(null));
     }
 }

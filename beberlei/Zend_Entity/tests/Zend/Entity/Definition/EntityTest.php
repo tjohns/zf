@@ -195,110 +195,6 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $entityDef->visit($visitorMock, $this->getMock('Zend_Entity_MetadataFactory_Interface'));
     }
 
-    private function getMetadataFactoryMock()
-    {
-        return $this->getMock('Zend_Entity_MetadataFactory_Interface');
-    }
-
-    public function testCompileEntityDef_CompilesProperties()
-    {
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-
-        $entityDef = new Zend_Entity_Definition_TestingEntity("classA");
-
-        $propertyA = $this->getMock('Zend_Entity_Definition_PrimaryKey', array(), array('propA'));
-        $propertyA->expects($this->once())
-                  ->method('compile');
-        $propertyB = $this->getMock('Zend_Entity_Definition_Property', array(), array('propB'));
-        $propertyB->expects($this->once())
-                  ->method('compile');
-
-        $entityDef->setPrimaryKey("propA", $propertyA);
-        $entityDef->addInstance($propertyB);
-
-        $entityDef->compile($metadataFactoryMock);
-    }
-
-    public function testCompileEntityDef_CompilesRelations()
-    {
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-
-        $entityDef = new Zend_Entity_Definition_TestingEntity("classA");
-        $propertyA = $this->getMock('Zend_Entity_Definition_PrimaryKey', array(), array('propA'));
-        $entityDef->setPrimaryKey("propA", $propertyA);
-
-        $relation = $this->getMock('Zend_Entity_Definition_AbstractRelation', array(), array('propA'));
-        $relation->expects($this->once())
-                  ->method('compile');
-
-        $entityDef->addInstance($relation);
-
-        $entityDef->compile($metadataFactoryMock);
-    }
-
-    public function testCompileEntityDef_CompilesExtensions()
-    {
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-
-        $entityDef = new Zend_Entity_Definition_TestingEntity("classA");
-        $propertyA = $this->getMock('Zend_Entity_Definition_PrimaryKey', array(), array('propA'));
-        $entityDef->setPrimaryKey("propA", $propertyA);
-
-        $extension = $this->getMock('Zend_Entity_Definition_Collection', array(), array('propA'));
-        $extension->expects($this->once())
-                  ->method('compile');
-
-        $entityDef->addInstance($extension);
-
-        $entityDef->compile($metadataFactoryMock);
-    }
-
-    public function testCompileEntityDef_SetsStateTransformerProperties()
-    {
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-
-        $entityDef = new Zend_Entity_Definition_TestingEntity("classA");
-
-        $propertyA = new Zend_Entity_Definition_PrimaryKey('propA');
-        $propertyB = new Zend_Entity_Definition_Property('propB');
-        $propertyC = new Zend_Entity_Definition_Property('propC');
-
-        $entityDef->setPrimaryKey("propA", $propertyA);
-        $entityDef->addElement("propB", $propertyB);
-        $entityDef->addElement("propC", $propertyC);
-
-        $entityDef->compile($metadataFactoryMock);
-
-        $propertyNames = $this->readAttribute($entityDef->getStateTransformer(), '_propertyNames');
-        $this->assertEquals(array("propA", "propB", "propC"), $propertyNames);
-    }
-
-    public function testCompileEntityDef_StateTransformerClassNotExists_ThrowsException()
-    {
-        $this->setExpectedException('Zend_Entity_Exception');
-
-        $entityDef = new Zend_Entity_Definition_Entity("classA");
-        $propertyA = new Zend_Entity_Definition_PrimaryKey('propA');
-        $entityDef->addPrimaryKey("propA", $propertyA);
-
-        $entityDef->setStateTransformerClass('ZendEntity_NonExistantStateTransformer');
-
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-        $entityDef->compile($metadataFactoryMock);
-    }
-
-    public function testCompileEntityDef_ThrowsException_IfNoPrimaryKeyIsset()
-    {
-        $this->setExpectedException('Zend_Entity_Exception');
-
-        $entityDef = new Zend_Entity_Definition_Entity("classA");
-        $propertyA = new Zend_Entity_Definition_PrimaryKey('propA');
-        $entityDef->addProperty("propA", $propertyA);
-
-        $metadataFactoryMock = $this->getMetadataFactoryMock();
-        $entityDef->compile($metadataFactoryMock);
-    }
-
     public function testSetGetStateTransformer()
     {
         $stateTransformer = new Zend_Entity_StateTransformer_Array();
@@ -327,7 +223,7 @@ class Zend_Entity_Definition_TestingEntity extends Zend_Entity_Definition_Entity
 {
     public function setPrimaryKey($propertyName, Zend_Entity_Definition_PrimaryKey $pk)
     {
-        $this->_id = $pk;
+        $this->primaryKey = $pk;
         $this->_properties[$propertyName] = $pk;
     }
 

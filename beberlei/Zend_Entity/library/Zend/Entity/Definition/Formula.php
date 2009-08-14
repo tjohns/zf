@@ -26,16 +26,16 @@ class Zend_Entity_Definition_Formula extends Zend_Entity_Definition_Property
         if( !($sql instanceof Zend_Db_Expr) ) {
             $sql = new Zend_Db_Expr($sql);
         }
-        $this->sqlExpr = $sql;
+        $this->columnName = $sql;
     }
 
     public function getSqlExpr()
     {
-        return $this->sqlExpr;
+        return $this->columnName;
     }
 
     public function getColumnSqlName()
     {
-        return $this->getSqlExpr();
+        return $this->columnName;
     }
 }
