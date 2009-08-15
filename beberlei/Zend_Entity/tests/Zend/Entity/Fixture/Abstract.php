@@ -20,9 +20,6 @@ abstract class Zend_Entity_Fixture_Abstract
             $this->resourceMap->addDefinition($definition);
             $definitions[] = $definition;
         }
-        foreach($definitions AS $def) {
-            $def->compile($this->resourceMap);
-        }
     }
 
     /**
@@ -45,7 +42,7 @@ abstract class Zend_Entity_Fixture_Abstract
     /**
      * @param string $entityName
      * @param string $propertyName
-     * @return Zend_Entity_Definition_Property_Abstract
+     * @return Zend_Entity_Definition_Property
      */
     public function getEntityPropertyDef($entityName, $propertyName)
     {

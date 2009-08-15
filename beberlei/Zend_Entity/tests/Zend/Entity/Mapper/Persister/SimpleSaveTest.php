@@ -246,7 +246,6 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         );
     }
 
-
     public function testSaveEntity_WithPersistCascadeSave_DelegatesToEntityManager()
     {
         $this->doTestSaveEntityWithCascade("save");
@@ -257,9 +256,13 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $this->doTestSaveEntityWithCascade("all");
     }
 
-    public function testSaveEntity_WithPersistCascadeDeleteAndNone()
+    public function testSaveEntity_WithPersistCascadeDelete()
     {
         $this->doTestSaveEntityWithCascade("delete", false);
+    }
+
+    public function testSaveEntity_WithPersistCascadeNone()
+    {
         $this->doTestSaveEntityWithCascade("none", false);
     }
 
@@ -273,24 +276,18 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         $entityB = new Zend_TestEntity2();
         $entityB->setState($this->fixture->getDummyDataStateClassB());
 
-        // Make sure $identityMap->getPrimaryKey() returns a value on this $entityB
-        $identityMap = new Zend_Entity_IdentityMap();
-        $identityMap->addObject("Zend_TestEntity2", "1", $entityB);
-
         $em = $this->getMock('Zend_Entity_Manager_Interface');
-        $em->expects($this->once())
-           ->method('getIdentityMap')
-           ->will($this->returnValue($identityMap));
         if($delegates == true) {
             $em->expects($this->once())
                ->method('save')
-               ->with($entityB);
+               ->with($this->equalTo($entityB));
         } else {
-            $em->expects($this->never())->method('save');
+            $em->expects($this->never())
+               ->method('save');
         }
 
         $persister = $this->createPersister();
-        $persister->evaluateRelatedObject($entityB, $relationDef, $em);
+        $persister->updateCollections(1, array('manytoone' => $entityB), $em);
     }
 
     public function testSaveEntity_WithRelatedCascading_OneToManyCollection()

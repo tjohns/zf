@@ -49,8 +49,6 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
         $def->addPrimaryKey(self::TEST_IDPROPERTY);
         $def->addManyToOneRelation(self::TEST_PROPERTY_B, array('class' => self::TEST_CLASS, 'foreignKey' => self::TEST_PROPERTY_A));
 
-        $def->compile($this->createResourceMapMock());
-
         return $this->createLoader($def);
     }
 
@@ -64,8 +62,6 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
 
         $def->addPrimaryKey(self::TEST_IDPROPERTY, array('columnName' => self::TEST_IDCOLUMN));
         $def->addProperty(self::TEST_PROPERTY_A, array('columnName' => self::TEST_COLUMN_A));
-
-        $def->compile($this->createResourceMapMock());
 
         return $this->createLoader($def);
     }
@@ -87,8 +83,6 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
                 'foreignKey' => self::TEST_PROPERTY_A
             ))
         ));
-
-        $def->compile($this->createResourceMapMock());
 
         return $this->createLoader($def);
     }

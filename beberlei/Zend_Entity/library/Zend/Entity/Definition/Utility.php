@@ -80,7 +80,7 @@ class Zend_Entity_Definition_Utility
             self::$definitionClassNames[$definitionShortname] = $class;
             $definition = new $class($propertyName, $options);
 
-            if(!($definition instanceof Zend_Entity_Definition_Property_Abstract)) {
+            if(!($definition instanceof Zend_Entity_Definition_Property)) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
                     "Definition ".$definitionShortname." resolved to class ".$class." which does not implement ".

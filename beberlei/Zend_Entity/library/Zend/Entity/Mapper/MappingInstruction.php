@@ -102,8 +102,15 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
      */
     public function acceptEntity(Zend_Entity_Definition_Entity $entity, Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
-        $this->class = $entity->getClass();
-        $this->table = $entity->getTable();
+        $this->class = $entity->class;
+        if(!is_string($this->class) || strlen($this->class) == 0) {
+            throw new Zend_Entity_Exception("Invalid Class name given for an Entity.");
+        }
+
+        $this->table = $entity->table;
+        if(!is_string($this->table) || strlen($this->table) == 0) {
+            throw new Zend_Entity_Exception("Invalid table name given for entity '".$this->class."'.");
+        }
         
         $this->primaryKey = $entity->primaryKey;
         if($this->primaryKey == null) {
@@ -139,7 +146,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
      */
     protected function _acceptRelation($relation, $metadataFactory)
     {
-        if($relation->getClass() == null) {
+        if($relation->class == null) {
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception(
                 "Cannot compile relation due to missing class reference for ".
@@ -220,31 +227,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
 
             $this->_acceptRelation($relation, $metadataFactory);
         } else if($collection->getCollectionType() == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-            if($collection->fetch === null) {
-                $collection->fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
-            }
 
-            if($collection->element == null) {
-                require_once "Zend/Entity/Exception.php";
-                throw new Zend_Entity_Exception(
-                    "No 'element' option was set in collection '".$collection->propertyName."' ".
-                    "of entity '".$this->class."'"
-                );
-            }
-            if($collection->table == null) {
-                require_once "Zend/Entity/Exception.php";
-                throw new Zend_Entity_Exception(
-                    "The table field is required in collections ".
-                    "definition of entity '".$this->class."'."
-                );
-            }
-            if($collection->mapKey == null) {
-                require_once "Zend/Entity/Exception.php";
-                throw new Zend_Entity_Exception(
-                    "No 'mapKey' option was set in collection '".$collection->propertyName."' ".
-                    "of entity '".$this->class."'"
-                );
-            }
         }
 
         if($collection->key == null) {
@@ -257,25 +240,73 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
         }
     }
 
+    public function _acceptArray($array)
+    {
+        /* @var $array Zend_Entity_Definition_Array */
+        if($array->fetch === null) {
+            $array->fetch = Zend_Entity_Definition_Property::FETCH_LAZY;
+        }
+
+        if($array->element == null) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "No 'element' option was set in collection '".$array->propertyName."' ".
+                "of entity '".$this->class."'"
+            );
+        }
+        if($array->table == null) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "The table field is required in collections ".
+                "definition of entity '".$this->class."'."
+            );
+        }
+        if($array->mapKey == null) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "No 'mapKey' option was set in collection '".$array->propertyName."' ".
+                "of entity '".$this->class."'"
+            );
+        }
+
+        if($array->key == null) {
+            require_once "Zend/Entity/Exception.php";
+            throw new Zend_Entity_Exception(
+                "The 'key' field is required in collection ".
+                "definition of entity '".$this->class."' property ".
+                "'".$array->propertyName."'"
+            );
+        }
+    }
+
     /**
-     * @param Zend_Entity_Definition_Property_Abstract $property
+     * @param Zend_Entity_Definition_Property $property
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    public function acceptProperty(Zend_Entity_Definition_Property_Abstract $property, Zend_Entity_MetadataFactory_Interface $metadataFactory)
+    public function acceptProperty(Zend_Entity_Definition_Property $property, Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
+        $propertyName = $property->propertyName;
+
+        if(!is_string($propertyName) || strlen($propertyName) == 0) {
+            throw new Zend_Entity_Exception(
+                "No name was given to a property in entity definition '".$this->class."'."
+            );
+        }
+
         if($property instanceof Zend_Entity_Definition_PrimaryKey) {
             $this->_acceptPrimaryKey($property, $metadataFactory);
         } elseif($property instanceof Zend_Entity_Definition_AbstractRelation) {
             $this->_acceptRelation($property, $metadataFactory);
         } elseif($property instanceof Zend_Entity_Definition_Collection) {
             $this->_acceptCollection($property, $metadataFactory);
+        } else if($property instanceof Zend_Entity_Definition_Array) {
+            $this->_acceptArray($property);
         }
 
         if($property->columnName == null) {
-            $property->columnName = $property->propertyName;
+            $property->columnName = $propertyName;
         }
 
-        $propertyName = $property->propertyName;
         $this->propertyNames[] = $propertyName;
         if($property instanceof Zend_Entity_Definition_AbstractRelation) {
             if($property->inverse == false) {
@@ -286,11 +317,9 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
                 $this->sqlColumnAliasMap[$columnName] = $property->columnName;
             }
         } elseif($property instanceof Zend_Entity_Definition_Collection) {
-            if($property->type == Zend_Entity_Definition_Collection::COLLECTION_RELATION) {
-                $this->toManyRelations[$propertyName] = $property;
-            } elseif($property->type == Zend_Entity_Definition_Collection::COLLECTION_ELEMENTS) {
-                $this->elementCollections[$propertyName] = $property;
-            }
+            $this->toManyRelations[$propertyName] = $property;
+        } elseif($property instanceof Zend_Entity_Definition_Array) {
+            $this->elementCollections[$propertyName] = $property;
         } else {
             if($property instanceof Zend_Entity_Definition_Version) {
                 $this->versionProperty = $property;

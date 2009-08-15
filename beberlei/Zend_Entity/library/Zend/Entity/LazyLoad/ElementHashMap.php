@@ -10,28 +10,28 @@ class Zend_Entity_LazyLoad_ElementHashMap extends Zend_Entity_Collection_Element
     /**
      * @var callable
      */
-    protected $_callback = null;
+    protected $_select = null;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $_callbackArgs = array();
+    protected $_mapKey = null;
+
+    /**
+     * @var string
+     */
+    protected $_element = null;
 
     /**
      *
      * @param string $callback
      * @param array  $callbackArgs
      */
-    public function __construct($callback, array $callbackArgs=array())
+    public function __construct(Zend_Db_Select $select, $mapKey, $element)
     {
-        if(!is_callable($callback)) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "Invalid callback given to Element Hash Map Lazy Load container."
-            );
-        }
-        $this->_callback = $callback;
-        $this->_callbackArgs = $callbackArgs;
+        $this->_select = $select;
+        $this->_mapKey = $mapKey;
+        $this->_element = $element;
     }
 
     /**
@@ -41,12 +41,14 @@ class Zend_Entity_LazyLoad_ElementHashMap extends Zend_Entity_Collection_Element
      */
     protected function _loadData()
     {
-        if($this->_elements == null) {
-            $this->_elements = call_user_func_array(
-                $this->_callback, $this->_callbackArgs
-            );
-            $this->_callback = null;
-            $this->_callbackArgs = null;
+        if($this->_elements === null) {
+            $stmt = $this->_select->query();
+
+            $this->_elements = array();
+            foreach($stmt->fetchAll() AS $row) {
+                $this->_elements[$row[$this->_mapKey]] = $row[$this->_element];
+            }
+            $this->_select = null;
         }
     }
 

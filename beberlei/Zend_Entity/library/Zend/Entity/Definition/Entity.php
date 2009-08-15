@@ -120,9 +120,6 @@ class Zend_Entity_Definition_Entity
      */
     public function getTable()
     {
-        if($this->table == null) {
-            throw new Exception("No table has been set for the definition.");
-        }
         return $this->table;
     }
 
@@ -190,13 +187,6 @@ class Zend_Entity_Definition_Entity
         }
         $this->_properties[$propertyName] = $property;
         return $property;
-    }
-
-    public function addInstance($property)
-    {
-        $propertyName = $property->getPropertyName();
-        $this->_properties[$propertyName] = $property;
-        return $this;
     }
 
     /**
@@ -358,36 +348,6 @@ class Zend_Entity_Definition_Entity
     public function getVersionProperty()
     {
         return $this->_version;
-    }
-
-    /**
-     * Compile Entity Definition
-     * 
-     * @param Zend_Entity_MetadataFactory_Interface $map
-     * @return void
-     */
-    final public function compile(Zend_Entity_MetadataFactory_Interface $map)
-    {
-        if($this->_isCompiled == false) {
-            $this->_isCompiled = true;
-            $this->_compile($map);
-        }
-    }
-
-    /**
-     * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
-     */
-    protected function _compile(Zend_Entity_MetadataFactory_Interface $metadataFactory)
-    {
-        if($this->primaryKey === null) {
-            throw new Zend_Entity_Exception(
-                "No primary key was set for entity '".$this->getClass()."' but is a required attribute."
-            );
-        }
-
-        foreach($this->_properties AS $property) {
-            $property->compile($this, $metadataFactory);
-        }
     }
 
     /**

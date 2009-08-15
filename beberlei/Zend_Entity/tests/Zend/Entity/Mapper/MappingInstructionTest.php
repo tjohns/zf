@@ -103,6 +103,14 @@ class Zend_Entity_Mapper_MappingInstructionTest extends PHPUnit_Framework_TestCa
         $this->assertEquals(array("id"), $this->mapping->stateTransformer->_propertyNames);
     }
 
+    public function testAcceptProperty_WithEmptyName_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $property = new Zend_Entity_Definition_Property(array());
+        $this->mapping->acceptProperty($property, $this->metadataFactory);
+    }
+
     public function testAcceptProperty_AddToPropertyNames()
     {
         $property = new Zend_Entity_Definition_Property("foo");
@@ -313,91 +321,73 @@ class Zend_Entity_Mapper_MappingInstructionTest extends PHPUnit_Framework_TestCa
         $this->mapping->acceptProperty($collection, $this->metadataFactory);
     }
 
-    public function testAcceptElementHashMap_NoFetch_SetLazy()
+    public function testAcceptArray_NoKey_ThrowsException()
     {
-        $collection = new Zend_Entity_Definition_Collection("foo", array(
-            "relation" => new Zend_Entity_Definition_OneToManyRelation("bar", array(
-                "class" => "Bar",
-            )),
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $array = new Zend_Entity_Definition_Array("foo", array(
             "table" => "elements",
+            "mapkey" => "key",
+            "element" => "value",
+            "fetch" => null,
+        ));
+
+        $this->mapping->acceptProperty($array, $this->metadataFactory);
+    }
+
+    public function testAcceptArray_NoFetch_SetLazy()
+    {
+        $array = new Zend_Entity_Definition_Array("foo", array(
+            "table" => "elements",
+            "mapkey" => "key",
+            "key" => "foo_id",
+            "element" => "value",
+            "fetch" => null,
+        ));
+
+        $this->assertNull($array->fetch);
+        $this->mapping->acceptProperty($array, $this->metadataFactory);
+
+        $this->assertEquals("lazy", $array->fetch);
+    }
+
+    public function testAcceptArray_WithoutTable_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $array = new Zend_Entity_Definition_Array("foo", array(
             "mapkey" => "key",
             "key" => "foo_id",
             "element" => "value"
         ));
 
-        $foreignDef = new Zend_Entity_Definition_Entity("Bar");
-        $foreignDef->addPrimaryKey("foo");
-
-        $this->assertNull($collection->getFetch());
-        $this->mapping->acceptProperty($collection, $this->metadataFactory);
-
-        $this->assertEquals("lazy", $collection->getFetch());
+        $this->mapping->acceptProperty($array, $this->metadataFactory);
     }
 
-    public function testAcceptElementHashMap_WithoutTable_ThrowsException()
+    public function testAcceptArray_WithoutMapKey_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $collection = new Zend_Entity_Definition_Collection("foo", array(
-            "relation" => new Zend_Entity_Definition_OneToManyRelation("bar", array(
-                "class" => "Bar",
-            )),
-            "mapkey" => "key",
-            "key" => "foo_id",
-            "element" => "value"
-        ));
-
-        $foreignDef = new Zend_Entity_Definition_Entity("Bar");
-        $foreignDef->addPrimaryKey("foo");
-
-        $this->assertNull($collection->getFetch());
-        $this->mapping->acceptProperty($collection, $this->metadataFactory);
-
-        $this->assertEquals("lazy", $collection->getFetch());
-    }
-
-    public function testAcceptElementHashMap_WithoutMapKey_ThrowsException()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $collection = new Zend_Entity_Definition_Collection("foo", array(
-            "relation" => new Zend_Entity_Definition_OneToManyRelation("bar", array(
-                "class" => "Bar",
-            )),
+        $array = new Zend_Entity_Definition_Array("foo", array(
             "table" => "elements",
             "key" => "foo_id",
             "element" => "value"
         ));
 
-        $foreignDef = new Zend_Entity_Definition_Entity("Bar");
-        $foreignDef->addPrimaryKey("foo");
-
-        $this->assertNull($collection->getFetch());
-        $this->mapping->acceptProperty($collection, $this->metadataFactory);
-
-        $this->assertEquals("lazy", $collection->getFetch());
+        $this->mapping->acceptProperty($array, $this->metadataFactory);
     }
 
-    public function testAcceptElementHashMap_WithoutElement_ThrowsException()
+    public function testAcceptArray_WithoutElement_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $collection = new Zend_Entity_Definition_Collection("foo", array(
-            "relation" => new Zend_Entity_Definition_OneToManyRelation("bar", array(
-                "class" => "Bar",
-            )),
+        $array = new Zend_Entity_Definition_Array("foo", array(
             "table" => "elements",
             "mapKey" => "key",
             "key" => "foo_id",
         ));
 
-        $foreignDef = new Zend_Entity_Definition_Entity("Bar");
-        $foreignDef->addPrimaryKey("foo");
-
-        $this->assertNull($collection->getFetch());
-        $this->mapping->acceptProperty($collection, $this->metadataFactory);
-
-        $this->assertEquals("lazy", $collection->getFetch());
+        $this->mapping->acceptProperty($array, $this->metadataFactory);
     }
 
     public function attachDefinitionToMetadataFactory($entityDef)

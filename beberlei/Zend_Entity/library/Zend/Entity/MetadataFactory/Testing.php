@@ -39,8 +39,6 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
             require_once "Zend/Entity/Exception.php";
             throw new Zend_Entity_Exception("No Definition for the Entity '".$entityName."' was set.");
         }
-        $this->_defMap[$entityName]->compile($this);
-
         return $this->_defMap[$entityName];
     }
 

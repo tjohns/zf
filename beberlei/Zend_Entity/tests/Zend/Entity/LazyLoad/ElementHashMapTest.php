@@ -4,14 +4,19 @@ class Zend_Entity_LazyLoad_ElementHashMapTest extends Zend_Entity_Collection_Ele
 {
     public function createElementHashMap()
     {
-        return new Zend_Entity_LazyLoad_ElementHashMap(
-            array('Zend_Entity_LazyLoad_ElementHashMapTest', 'dataLazyCallback')
+        $data = array(
+            array("key" => "foo", "value" => "bar"),
+            array("key" => "bar", "value" => "baz"),
         );
-    }
 
-    static public function dataLazyCallback()
-    {
-        return array("foo" => "bar", "bar" => "baz");
+        $select = $this->getMock('Zend_Db_Select', array(), array(), '', false);
+        $select->expects($this->any())
+               ->method('query')
+               ->will($this->returnValue(Zend_Test_DbStatement::createSelectStatement($data)));
+
+        return new Zend_Entity_LazyLoad_ElementHashMap(
+            $select, "key", "value"
+        );
     }
 
     public function testWasLoadedFromDatabase()
@@ -19,14 +24,7 @@ class Zend_Entity_LazyLoad_ElementHashMapTest extends Zend_Entity_Collection_Ele
         $hashMap = $this->createElementHashMap();
         $this->assertFalse($hashMap->__ze_wasLoadedFromDatabase());
         
-        $foo = $hashMap["foo"];
+        $this->assertEquals("baz", $hashMap["bar"]);
         $this->assertTrue($hashMap->__ze_wasLoadedFromDatabase());
-    }
-
-    public function testInvalidCallbackGivenThrowsException()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $hashMap = new Zend_Entity_LazyLoad_ElementHashMap("invalidCallback");
     }
 }

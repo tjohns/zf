@@ -173,7 +173,9 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $select->where($elementDef->key." = ?", $entityState[$pk]);
 
             if($elementDef->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
-                $entityState[$propertyName] = new Zend_Entity_LazyLoad_ElementHashMap($select);
+                $entityState[$propertyName] = new Zend_Entity_LazyLoad_ElementHashMap(
+                    $select, $elementDef->mapKey, $elementDef->element
+                );
             } else {
                 $stmt = $select->query();
 

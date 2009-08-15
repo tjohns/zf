@@ -4,6 +4,7 @@ require_once dirname(__FILE__)."/../../../TestHelper.php";
 
 require_once "TestCase.php";
 
+require_once "ArrayTest.php";
 require_once "FormulaTest.php";
 require_once "PropertyTest.php";
 require_once "EntityTest.php";
@@ -21,6 +22,7 @@ class Zend_Entity_Definition_AllTests
     static public function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend_Entity_Mapper_Definition Tests');
+        $suite->addTestSuite('Zend_Entity_Definition_ArrayTest');
         $suite->addTestSuite('Zend_Entity_Definition_EntityTest');
         $suite->addTestSuite('Zend_Entity_Definition_FormulaTest');
         $suite->addTestSuite('Zend_Entity_Definition_PropertyTest');

@@ -49,12 +49,12 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         } else if($relatedObject instanceof Zend_Entity_Interface) {
             $foreignKeyPropertyName = $relationDef->mappedBy;
 
-            switch($relationDef->cascade) {
+            /*switch($relationDef->cascade) {
                 case Zend_Entity_Definition_Property::CASCADE_ALL:
                 case Zend_Entity_Definition_Property::CASCADE_SAVE:
                     $entityManager->save($relatedObject);
                     break;
-            }
+            }*/
 
             $value = $entityManager->getIdentityMap()->getPrimaryKey($relatedObject);
         } else {
@@ -132,6 +132,18 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function updateCollections($key, $entityState, $entityManager)
     {
+        foreach($this->_mappingInstruction->toOneRelations AS $relation) {
+            switch($relation->cascade) {
+                case Zend_Entity_Definition_Property::CASCADE_ALL:
+                case Zend_Entity_Definition_Property::CASCADE_SAVE:
+                    $propertyName = $relation->propertyName;
+                    $relatedObject = $entityState[$propertyName];
+
+                    $entityManager->save($relatedObject);
+                    break;
+            }
+        }
+
         foreach($this->_mappingInstruction->toManyRelations AS $collectionDef) {
             $relatedCollection = $entityState[$collectionDef->propertyName];
 

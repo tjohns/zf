@@ -1,6 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Definition_Property_Abstract
+abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Definition_Property
 {
     /**
      * @var array
@@ -191,21 +191,5 @@ abstract class Zend_Entity_Definition_AbstractRelation extends Zend_Entity_Defin
     public function getMappedBy()
     {
         return $this->mappedBy;
-    }
-
-    /**
-     * Compile Abstract Relation Element
-     *
-     * @param Zend_Entity_Definition_Entity $entityDef
-     * @param Zend_Entity_MetadataFactory_Interface $map
-     */
-    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
-    {
-        if($this->class == null) {
-            require_once "Zend/Entity/Exception.php";
-            throw new Zend_Entity_Exception(
-                "Cannot compile relation due to missing class reference for property: ".$this->getPropertyName()
-            );
-        }
     }
 }

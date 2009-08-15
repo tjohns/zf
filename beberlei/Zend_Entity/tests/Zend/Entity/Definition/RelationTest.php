@@ -93,16 +93,6 @@ abstract class Zend_Entity_Definition_RelationTest extends Zend_Entity_Definitio
         $relDef->setCascade("foo");
     }
 
-    public function testCompileRelationWithoutClassThrowsException()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $relDef = $this->createRelation();
-        $relDef->setClass(null);
-
-        $relDef->compile($this->createEntityDefinitionMock(), $this->createEntityResourceMock());
-    }
-
     public function testSetGetColumnName()
     {
         $relDef = $this->createRelation();

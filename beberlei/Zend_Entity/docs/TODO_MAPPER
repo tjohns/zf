@@ -6,14 +6,10 @@ Dependent on Tasks:
 
 Tasks:
 * Refactoring to Definition Visitor to decouple RMDBS storage from common metadata definitions.
-* Evaluate Related Object has to be done after saving the original entity to ensure aggregate consistency.
-* Allow syntax with array as first parameter of Property, also check for 'propertyName' not set and throw exception.
-* Named Query Support
-* Factory for EntityManager
 * Implement Handling of NotFound property
+* Extend EventListener to get more context related information
 * Mapper Refactoring + EntityManager: Decouple Zend_Db_Adapter into the Mapper
 * Add Property Change Listener strategy variables, add "EXPLICIT" as only implementation for now (using save() and delete())
-* Decouple Element HashMap from "Collection" Definition and add an Array Definition instead.
 * Extend Object and Array Hydration to include multiple entity loading at once.
 * Implement Scalar Hydration Mode that can be used for Aggregate and Single Result queries, code it into query object.
 * Type Casting: Test it and maybe be split up Property Definition into different types if this is a bottleneck
@@ -21,9 +17,9 @@ Tasks:
 * Remove Zend_Entity_Interface typehint everywhere
 * Query API: Query Object in Domain Speak translating all properties and foreign entity access to internal SQL.
 * Implement StateTransformer with ReflectionProperty and PHP 5.3 setAccessible()
+* Evaluate Related Object has to be done after saving the original entity to ensure aggregate consistency. (Done, Tests please!!)
 * Definitions: Add "component" property and RMDBS storage implementation
 * Definitions: Add compound keys through a PrimaryKey object.
-* Investigate if decoupling Property into its own Types gives large performance gains
 * Proxy Option for Entities:
     * Possible values "generic", "dynamic, "static"?
     * Class has to be overwritable to implement the Entity interface that fakes identity. (See Providers)

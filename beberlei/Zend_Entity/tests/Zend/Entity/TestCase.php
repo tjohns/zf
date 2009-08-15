@@ -95,7 +95,6 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         $entityDefinition->setTable("sample");
         $entityDefinition->addPrimaryKey("id");
         $entityDefinition->addProperty("test");
-        $entityDefinition->compile($this->createResourceMapMock());
         return $entityDefinition;
     }
 

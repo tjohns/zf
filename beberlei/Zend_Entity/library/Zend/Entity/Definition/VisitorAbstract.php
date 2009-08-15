@@ -46,10 +46,10 @@ abstract class Zend_Entity_Definition_VisitorAbstract
     /**
      * Accept a property definition
      *
-     * @param Zend_Entity_Definition_Property_Abstract $property
+     * @param Zend_Entity_Definition_Property $property
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    abstract public function acceptProperty(Zend_Entity_Definition_Property_Abstract $property, Zend_Entity_MetadataFactory_Interface $metadataFactory);
+    abstract public function acceptProperty(Zend_Entity_Definition_Property $property, Zend_Entity_MetadataFactory_Interface $metadataFactory);
 
     /**
      * Helper function that finalizes the visitor process.

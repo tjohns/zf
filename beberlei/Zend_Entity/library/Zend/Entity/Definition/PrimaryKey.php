@@ -73,23 +73,6 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
     }
 
     /**
-     * Compile Primary Key
-     *
-     * @param Zend_Entity_Definition_Entity $entityDef
-     * @param Zend_Entity_MetadataFactory_Interface $map
-     */
-    public function compile(Zend_Entity_Definition_Entity $entityDef, Zend_Entity_MetadataFactory_Interface $map)
-    {
-        if($this->getColumnName() === null) {
-            $this->setColumnName($this->getPropertyName());
-        }
-
-        if($this->getGenerator() === null) {
-            $this->setGenerator(new Zend_Entity_Definition_Id_AutoIncrement());
-        }
-    }
-
-    /**
      * Apply the net sequence id as column of the entities database state.
      * 
      * @param  Zend_Db_Adapter_Abstract $db

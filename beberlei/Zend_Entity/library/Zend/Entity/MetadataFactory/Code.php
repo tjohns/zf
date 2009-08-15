@@ -66,10 +66,6 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
                     $this->_entityNames[] = $entityName;
                 }
             }
-
-            foreach($this->_maps AS $definition) {
-                $definition->compile($this);
-            }
         }
     }
 
