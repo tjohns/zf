@@ -52,7 +52,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     {
         $db = $this->getDatabaseConnection();
         $metadataFactory = $this->createResourceMapMock();
-        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $metadataFactory));
+        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $metadataFactory, array()));
     }
 
     /**
@@ -128,9 +128,10 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         if($db == null) {
             $db = $this->getDatabaseConnection();
         }
-
+        
         $options = $this->generateEntityManagerOptions($unitOfWork, $metadataFactory, $identityMap);
-        return new Zend_Entity_Manager($db, $options);
+        $options['adapter'] = $db;
+        return new Zend_Entity_Manager($options);
     }
 
     /**
@@ -146,9 +147,11 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         if($db==null) {
             $db = $this->getDatabaseConnection();
         }
-
+        
         $options = $this->generateEntityManagerOptions($unitOfWork, $metadataFactory, $identityMap);
-        return new Zend_Entity_TestManagerMock($db, $options);
+        $options['adapter'] = $db;
+        
+        return new Zend_Entity_TestManagerMock($options);
     }
 
     private function generateEntityManagerOptions($unitOfWork=null, $metadataFactory=null, $identityMap=null)
@@ -159,6 +162,9 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
         );
         if($metadataFactory === null) {
             $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
+            $metadataFactory->expects($this->any())
+                            ->method('transform')
+                            ->will($this->returnValue(array()));
         }
         $options['metadataFactory'] = $metadataFactory;
         return $options;

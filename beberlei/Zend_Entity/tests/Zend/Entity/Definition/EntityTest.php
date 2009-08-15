@@ -8,6 +8,12 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $this->assertEquals(self::TEST_CLASS, $entityDef->getClass());
     }
 
+    public function testEntityClassNamePublicProperty()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
+        $this->assertEquals(self::TEST_CLASS, $entityDef->class);
+    }
+
     public function testSetEntityClassWithMethod()
     {
         $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
@@ -29,6 +35,15 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $entityDef->setTable(self::TEST_TABLE);
         
         $this->assertEquals(self::TEST_TABLE, $entityDef->getTable());
+    }
+
+    public function testTablePublicProperty()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
+        
+        $this->assertEquals(self::TEST_CLASS, $entityDef->table);
+        $entityDef->setTable(self::TEST_TABLE);
+        $this->assertEquals(self::TEST_TABLE, $entityDef->table);
     }
 
     public function testAddPropertyViaCallIntercept()

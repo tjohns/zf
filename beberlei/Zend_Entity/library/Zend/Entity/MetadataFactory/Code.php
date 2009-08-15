@@ -54,6 +54,7 @@ class Zend_Entity_MetadataFactory_Code implements Zend_Entity_MetadataFactory_In
             }
 
             $this->_maps = array();
+            $this->_entityNames = array();
             foreach(scandir($this->_path) AS $item) {
                 if( ($pos = strpos($item, ".php")) !== false) {
                     $entityName = substr($item, 0, $pos);

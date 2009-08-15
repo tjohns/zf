@@ -53,18 +53,12 @@ abstract class Zend_Entity_MapperAbstract
     protected $_mappingInstructions = array();
 
     /**
-     * Construct DataMapper
+     * Factory method to create a mapper
      *
-     * @param  Zend_Db_Adapter_Abstract  $db
-     * @param  Zend_Entity_MetadataFactory_Interface $metadataFactory
-     * @param  Zend_Entity_Mapper_MappingInstruction[] $mappingInstructions
+     * @param array $options
+     * @return Zend_Entity_MapperAbstract
      */
-    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_MetadataFactory_Interface $metadataFactory, array $mappingInstructions=array())
-    {
-        $this->_db = $db;
-        $this->_metadataFactory = $metadataFactory;
-        $this->_mappingInstructions = $mappingInstructions;
-    }
+    abstract static public function create(array $options);
 
     /**
      *
@@ -174,4 +168,25 @@ abstract class Zend_Entity_MapperAbstract
         }
         return $this->_loader[$className];
     }
+
+    /**
+     * @param Zend_Entity_Query_NamedQueryAbstract $namedQuery
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    public function createNamedQuery(Zend_Entity_Query_NamedQueryAbstract $namedQuery)
+    {
+        return $namedQuery->create();
+    }
+
+    /**
+     * @return Zend_Entity_Transaction
+     */
+    abstract public function getTransaction();
+
+    /**
+     * Close the current connection context.
+     *
+     * @return void
+     */
+    abstract public function closeConnection();
 }

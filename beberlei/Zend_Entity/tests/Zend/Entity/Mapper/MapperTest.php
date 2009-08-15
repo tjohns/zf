@@ -2,6 +2,22 @@
 
 class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
 {
+    public function testCreateFactory_WithoutDbKey_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+        
+        $mapper = Zend_Entity_Mapper_Mapper::create(array());
+    }
+
+    public function testCreateFactory_WithoutMetadtaFactoryKey_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $options = array('db' => new Zend_Test_DbAdapter());
+
+        $mapper = Zend_Entity_Mapper_Mapper::create($options);
+    }
+
     public function testSelectType()
     {
         $entityDefinition = new Zend_Entity_Definition_Entity('foo');

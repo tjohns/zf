@@ -30,14 +30,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
-
-    /**
-     * Interface to Mapper hashmap
-     * 
-     * @var array
-     */
-    protected $_entityMappers = array();
-
     /**
      * @var Zend_Entity_MapperAbstract
      */
@@ -63,15 +55,27 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected $_eventListener = null;
 
     /**
+     * @var Zend_Loader_PluginLoader
+     */
+    protected $_namedQueryLoader = null;
+
+    /**
+     * @var array
+     */
+    protected $_namedQueries = array();
+
+    /**
+     * @var Zend_Entity_Transaction
+     */
+    protected $_transaction = null;
+
+    /**
      * Construct new Entity Manager instance
      *
-     * @param Zend_Db_Adapter_Abstract $db
-     * @param Zend_Entity_EventDispatcher $dispatcher
+     * @param array $options
      */
-    public function __construct(Zend_Db_Adapter_Abstract $db, $options = array())
-    {
-        $this->setAdapter($db);
-        
+    public function __construct($options = array())
+    {        
         if(!isset($options['identityMap'])) {
             $options['identityMap'] = new Zend_Entity_IdentityMap();
         }
@@ -175,20 +179,35 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * @return Zend_Entity_Mapper_Mapper
+     * @return Zend_Entity_MapperAbstract
      */
-    protected function getMapper()
+    public function getMapper()
     {
         if($this->_mapper == null) {
-            $mappingInstructionMap = $this->_metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
-            $this->_mapper = new Zend_Entity_Mapper_Mapper($this->_db, $this->_metadataFactory, $mappingInstructionMap);
+            $options = array(
+                'db' => $this->_db,
+                'metadataFactory' => $this->_metadataFactory,
+            );
+            $this->_mapper = Zend_Entity_Mapper_Mapper::create($options);
+            $this->_transaction = $this->_mapper->getTransaction();
         }
         return $this->_mapper;
     }
 
     /**
+     * @param  Zend_Entity_Mapper_Abstract $mapper
+     * @return Zend_Entity_Manager
+     */
+    public function setMapper(Zend_Entity_MapperAbstract $mapper)
+    {
+        $this->_mapper = $mapper;
+        $this->_transaction = $this->_mapper->getTransaction();
+        return $this;
+    }
+
+    /**
      * @param string|object $input
-     * @return Zend_Entity_Mapper_Select
+     * @return Zend_Entity_Query_QueryAbstract
      */
     public function createNativeQuery($input)
     {
@@ -205,11 +224,46 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 
     /**
      * @param string $entityName
-     * @return Zend_Entity_Mapper_Query
+     * @return Zend_Entity_Query_QueryAbstract
      */
     public function createQuery($entityName)
     {
         throw new Exception("not implemented yet");
+    }
+
+    /**
+     * @param string $queryName
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    public function createNamedQuery($queryName)
+    {
+        if(preg_match('/([^A-Za-z0-9]+)/', $queryName)) {
+            throw new Zend_Entity_Exception("Invalid named query identifier. Only chars and numbers are allowed.");
+        }
+
+        if($this->_namedQueryLoader == null) {
+            throw new Zend_Entity_Exception("No named query loader was initialized with this entity manager.");
+        }
+        
+        if(!isset($this->_namedQueries[$queryName])) {
+            $queryClassName = $this->_namedQueryLoader->getClassName($queryName);
+            if(!class_exists($queryClassName)) {
+                throw new Zend_Entity_Exception(
+                    "A named query class with name '".$queryClassName."' does not exist!"
+                );
+            }
+
+            $this->_namedQueries[$queryName] = new $queryClassName;
+
+            if(!($this->_namedQueries[$queryName] instanceof Zend_Entity_Query_NamedQueryAbstract)) {
+                throw new Zend_Entity_Exception(
+                    "Named query plugin has to be of type 'Zend_Entity_Query_NamedQueryAbstract', but ".
+                    "'".get_class($this->_namedQueries[$queryName])."' was given."
+                );
+            }
+            $this->_namedQueries[$queryName]->setEntityManager($this);
+        }
+        return $this->_namedQueries[$queryName]->create();
     }
 
     /**
@@ -221,8 +275,8 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function load($entityName, $keyValue)
     {
-        if($this->getIdentityMap()->hasObject($entityName, $keyValue)) {
-            $object = $this->getIdentityMap()->getObject($entityName, $keyValue);
+        if($this->_identityMap->hasObject($entityName, $keyValue)) {
+            $object = $this->_identityMap->getObject($entityName, $keyValue);
         } else {
             $mapper = $this->getMapper();
             $object = $mapper->load($entityName, $this, $keyValue);
@@ -296,33 +350,22 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * Tell Unit Of work to begin transaction
+     * Begin a transaction
      *
-     * @retun void
+     * @retun Zend_Entity_Transaction
      */
     public function beginTransaction()
     {
-        $this->_db->beginTransaction();
+        $this->_transaction->begin();
+        return $this->_transaction;
     }
 
     /**
-     * Tell Unit of Work to commit transaction.
-     *
-     * @return void
+     * @return Zend_Entity_Transaction
      */
-    public function commit()
+    public function getTransaction()
     {
-        $this->_db->commit();
-    }
-
-    /**
-     * Tell Unit of Work to roll back current transaction.
-     *
-     * @return void
-     */
-    public function rollBack()
-    {
-        $this->_db->rollBack();
+        return $this->_transaction;
     }
 
     /**
@@ -343,6 +386,27 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     public function close()
     {
         $this->clear();
-        $this->_db->closeConnection();
+        if($this->_transaction->isActive()) {
+            $this->_transaction->commit();
+        }
+        $this->_mapper->closeConnection();
+    }
+
+    /**
+     * @param Zend_Loader_PluginLoader $loader
+     * @return Zend_Entity_Manager
+     */
+    public function setNamedQueryLoader(Zend_Loader_PluginLoader $loader)
+    {
+        $this->_namedQueryLoader = $loader;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Loader_PluginLoader
+     */
+    public function getNamedQueryLoader()
+    {
+        return $this->_namedQueryLoader;
     }
 }

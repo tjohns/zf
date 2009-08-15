@@ -40,7 +40,7 @@ class Zend_Entity_Mapper_Loader_Basic_CollectionElementsFixtureTest extends Zend
                ->method('select')
                ->will($this->returnValue($selectMock));
 
-        $em = new Zend_Entity_Manager($dbMock);
+        $em = new Zend_Entity_Manager(array('adapter' => $dbMock));
 
         $row = array("id" => 1);
 

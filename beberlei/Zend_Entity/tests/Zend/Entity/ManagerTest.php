@@ -31,7 +31,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     public function testSettingNoResourceMapThrowsExceptionOnGet()
     {
         $this->setExpectedException("Zend_Entity_Exception");
-        $manager = new Zend_Entity_Manager($this->getDatabaseConnection());
+        $manager = new Zend_Entity_Manager(array('adapter' => $this->getDatabaseConnection()));
         
         $manager->getMetadataFactory();
     }
@@ -70,11 +70,23 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     public function testSetEventListener_ThroughConstructorOptions()
     {
         $listener = $this->getMock('Zend_Entity_Event_EventAbstract');
-        $options = array('eventListener' => $listener);
-        $manager = new Zend_Entity_Manager($this->getDatabaseConnection(), $options);
+        $options = array('eventListener' => $listener, 'adapter' => $this->getDatabaseConnection());
+        $manager = new Zend_Entity_Manager($options);
 
         $manager->setEventListener($listener);
         $this->assertSame($listener, $manager->getEventListener());
+    }
+
+    public function testGetTransaction()
+    {
+        $db = $this->getMock('Zend_Entity_DbAdapterMock');
+        $manager = $this->createEntityManager(null, null, null, $db);
+        $manager->getMapper(); // initialize transaction
+
+        $transaction = $manager->beginTransaction();
+        $transaction2 = $manager->getTransaction();
+
+        $this->assertSame($transaction, $transaction2);
     }
 
     public function testManagerShouldDelegateBeginTransactionToAdapter()
@@ -83,27 +95,12 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $db->expects($this->once())
            ->method('beginTransaction');
         $manager = $this->createEntityManager(null, null, null, $db);
+        $manager->getMapper(); // initialize transaction
 
-        $manager->beginTransaction();
-    }
+        $transaction = $manager->beginTransaction();
+        $transaction2 = $manager->getTransaction();
 
-    public function testManagerShouldDelegateCommitToAdapter()
-    {
-        $db = $this->getMock('Zend_Entity_DbAdapterMock');
-        $db->expects($this->once())
-           ->method('commit');
-        $manager = $this->createEntityManager(null, null, null, $db);
-        
-        $manager->commit();
-    }
-    public function testManagerShouldDelegateRollbackToAdapter()
-    {
-        $db = $this->getMock('Zend_Entity_DbAdapterMock');
-        $db->expects($this->once())
-           ->method('rollBack');
-        $manager = $this->createEntityManager(null, null, null, $db);
-        
-        $manager->rollBack();
+        $this->assertSame($transaction, $transaction2);
     }
 
     public function testManagerContainsProxyToIdentityMap()
@@ -134,7 +131,8 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $db->expects($this->once())
            ->method('closeConnection')
            ->will($this->returnValue(true));
-        $manager = new Zend_Entity_Manager($db);
+        $manager = $this->createEntityManager(null, null, null, $db);
+        $manager->getMapper();
         
         $manager->close();
     }
@@ -321,15 +319,88 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->markTestIncomplete();
     }
 
-    private function createMetadataFactory($entityName)
+    public function testCreateNamedQuery_UsesNamedQueryName_ForLoadingPlugin()
     {
-        $definitionMock = $this->getMock('Zend_Entity_Definition_Entity');
-        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
-        $metadataFactory->expects($this->once())
-                    ->method('getDefinitionByEntityName')
-                    ->with($this->equalTo($entityName))
-                    ->will($this->returnValue($definitionMock));
-        return $metadataFactory;
+        $loaderMock = $this->getMock('Zend_Loader_PluginLoader');
+        $loaderMock->expects($this->any())
+                   ->method('getClassName')
+                   ->with($this->equalTo('ANamedQuery'))
+                   ->will($this->returnValue('Zend_Entity_TestNamedQuery'));
+
+        $em = $this->createEntityManager();
+        $em->setNamedQueryLoader($loaderMock);
+
+        $em->createNamedQuery("ANamedQuery");
+    }
+
+    public function testCreateNamedQuery_ThrowsException_IfNameDoesContainNonCharOrNumbers()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $loaderMock = $this->getMock('Zend_Loader_PluginLoader');
+
+        $em = $this->createEntityManager();
+        $em->setNamedQueryLoader($loaderMock);
+
+        $em->createNamedQuery("$!&$");
+    }
+
+    public function testCreateNamedQuery_ThrowsException_IfNoNamedQueryLoader_IsInitialized()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $em = $this->createEntityManager();
+
+        $em->createNamedQuery("ANamedQuery");
+    }
+
+    public function testCreateNamedQuery_ThrowsException_IfLoaderClassIsInvalid()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $loaderMock = $this->getMock('Zend_Loader_PluginLoader');
+        $loaderMock->expects($this->any())
+                   ->method('getClassName')
+                   ->with($this->equalTo('ANamedQuery'))
+                   ->will($this->returnValue('InvalidClassName'));
+
+        $em = $this->createEntityManager();
+        $em->setNamedQueryLoader($loaderMock);
+
+        $em->createNamedQuery("ANamedQuery");
+    }
+
+    public function testCreateNamedQuery_PluginIsStateless_OnlyInitializedOnce()
+    {
+        $loaderMock = $this->getMock('Zend_Loader_PluginLoader');
+        $loaderMock->expects($this->once())
+                   ->method('getClassName')
+                   ->with($this->equalTo('ANamedQuery'))
+                   ->will($this->returnValue('Zend_Entity_TestNamedQuery'));
+
+        $em = $this->createEntityManager();
+        $em->setNamedQueryLoader($loaderMock);
+
+        $q1 = $em->createNamedQuery("ANamedQuery");
+        $q2 = $em->createNamedQuery("ANamedQuery");
+
+        $this->assertNotSame($q1, $q2);
+    }
+
+    public function testCreateNamedQuery_NotANamedQueryAbstractImplementation_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $loaderMock = $this->getMock('Zend_Loader_PluginLoader');
+        $loaderMock->expects($this->once())
+                   ->method('getClassName')
+                   ->with($this->equalTo('ANamedQuery'))
+                   ->will($this->returnValue('stdClass'));
+
+        $em = $this->createEntityManager();
+        $em->setNamedQueryLoader($loaderMock);
+
+        $em->createNamedQuery("ANamedQuery");
     }
 
     public function createEntityManagerWithMapper($select)
@@ -349,5 +420,13 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
 
         return $manager;
+    }
+}
+
+class Zend_Entity_TestNamedQuery extends Zend_Entity_Query_NamedQueryAbstract
+{    
+    public function create()
+    {
+        return new stdClass();
     }
 }

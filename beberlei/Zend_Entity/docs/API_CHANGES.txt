@@ -1,5 +1,10 @@
 Documentation of larger API changes
 
+15. August, 2009
+
+* Broke Zend_Entity_Manager constructor to decouple from Zend_Db_Mapper storage implementation, use Zend_Entity_ManagerFactory
+  to create Entity Manager in a consistent way from now on.
+
 12. July, 2009
 
 * Removed find(), findOne(), select() from Entity Manager Interface. Run the following replaces to make code work:

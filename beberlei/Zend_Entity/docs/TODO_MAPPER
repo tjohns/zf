@@ -6,6 +6,8 @@ Dependent on Tasks:
 
 Tasks:
 * Refactoring to Definition Visitor to decouple RMDBS storage from common metadata definitions.
+* Evaluate Related Object has to be done after saving the original entity to ensure aggregate consistency.
+* Allow syntax with array as first parameter of Property, also check for 'propertyName' not set and throw exception.
 * Named Query Support
 * Factory for EntityManager
 * Implement Handling of NotFound property

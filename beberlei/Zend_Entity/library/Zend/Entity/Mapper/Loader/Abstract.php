@@ -40,8 +40,8 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
 
     /**
      * @todo Gah Code duplication
-     * @param <type> $row
-     * @return <type>
+     * @param  array $row
+     * @return array
      */
     protected function renameAndCastColumnToPropertyKeys($row)
     {
@@ -78,7 +78,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             }
 
             $entity = $this->createEntity($row);
-            // Set this before loadRelationsIntoEntity() to circumvent infinite loop on backreferences and stuff
+            // Set this before loading relations to circumvent infinite loop on backreferences and stuff
             $identityMap->addObject($this->_mappingInstruction->class, $key, $entity, $versionId);
 
             $this->loadRow($entity, $row, $entityManager);
@@ -145,11 +145,11 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             }
             $query->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->key)." = ?", $keyValue);
 
-            if($collectionDef->getOrderBy() !== null) {
+            if($collectionDef->orderByRestriction !== null) {
                 $query->order($collectionDef->orderByRestriction);
             }
 
-            if($collectionDef->getWhere() !== null) {
+            if($collectionDef->whereRestriction !== null) {
                 $query->where($collectionDef->whereRestriction);
             }
 
@@ -172,7 +172,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             $select->from($elementDef->table);
             $select->where($elementDef->key." = ?", $entityState[$pk]);
 
-            if($elementDef->getFetch() == Zend_Entity_Definition_Property::FETCH_LAZY) {
+            if($elementDef->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 $entityState[$propertyName] = new Zend_Entity_LazyLoad_ElementHashMap($select);
             } else {
                 $stmt = $select->query();

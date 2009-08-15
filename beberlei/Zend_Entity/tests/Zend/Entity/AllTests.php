@@ -10,6 +10,7 @@ require_once "Event/AllTests.php";
 require_once "CollectionTest.php";
 require_once "Collection/ElementHashMapTest.php";
 require_once "IdentityMapTest.php";
+require_once "ManagerFactoryTest.php";
 require_once "ManagerTest.php";
 require_once "MetadataFactory/AllTests.php";
 require_once "StateTransformer/AllTests.php";
@@ -29,6 +30,7 @@ class Zend_Entity_AllTests
         $suite->addTestSuite('Zend_Entity_DebugTest');
         $suite->addTest(Zend_Entity_LazyLoad_AllTests::suite());
         $suite->addTestSuite('Zend_Entity_IdentityMapTest');
+        $suite->addTestSuite('Zend_Entity_ManagerFactoryTest');
         $suite->addTestSuite('Zend_Entity_ManagerTest');
         $suite->addTestSuite('Zend_Entity_MetadataFactory_AllTests');
         $suite->addTest(Zend_Entity_StateTransformer_AllTests::suite());

@@ -59,7 +59,7 @@ class Zend_Entity_Mapper_NativeQuery extends Zend_Entity_Query_QueryAbstract
 
     public function getResultList()
     {
-        $stmt = $this->_select->query(); // TODO: Fetch Mmode and Bind!
+        $stmt = $this->_select->query(null, $this->getParameters());
         $resultSet = $stmt->fetchAll();
         $stmt->closeCursor();
 

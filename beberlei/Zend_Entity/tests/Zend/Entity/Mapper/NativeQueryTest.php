@@ -11,15 +11,6 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         $query = new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
     }
 
-    public function getSelectMock()
-    {
-        $select = $this->getMock('Zend_Entity_Mapper_Select', array(), array(), '', false);
-        $select->expects($this->any())
-               ->method('query')
-               ->will($this->returnValue(new Zend_Test_DbStatement()));
-        return $select;
-    }
-
     public function testGetResultList_DelegatesToLoader_ProcessResultset()
     {
         $fixtureReturnValue = "foo";
@@ -138,8 +129,46 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         $result = $query->getItems(30, 30);
     }
 
-    public function createDbSelectQuery($select)
+    public function testGetDefaultParamaterValue_IsNull()
     {
+        $query = $this->createDbSelectQuery();
+        $this->assertNull($query->getParameter('foo'));
+    }
+
+    public function testSetParameter()
+    {
+        $query = $this->createDbSelectQuery();
+        $query->setParameter('foo', 'bar');
+
+        $this->assertEquals('bar', $query->getParameter('foo'));
+        $this->assertEquals(array('foo' => 'bar'), $query->getParameters());
+    }
+
+    public function testSetParameters()
+    {
+        $query = $this->createDbSelectQuery();
+        $query->setParameters(array('foo' => 'bar', 'bar' => 'baz'));
+
+        $this->assertEquals('bar', $query->getParameter('foo'));
+        $this->assertEquals('baz', $query->getParameter('bar'));
+        $this->assertEquals(array('foo' => 'bar', 'bar' => 'baz'), $query->getParameters());
+    }
+
+    public function testSetParametersDoesNotResetBindings()
+    {
+        $query = $this->createDbSelectQuery();
+        $query->setParameter('baz', 'foo');
+        $query->setParameters(array('foo' => 'bar', 'bar' => 'baz'));
+
+        $this->assertEquals(array('baz' => 'foo', 'foo' => 'bar', 'bar' => 'baz'), $query->getParameters());
+    }
+
+    public function createDbSelectQuery($select=null)
+    {
+        if($select == null) {
+            $select = $this->getSelectMock();
+        }
+
         $loader = $this->getLoaderMock($select);
         $em = $this->createTestingEntityManager();
 
@@ -152,5 +181,14 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         $loader->expects($this->at(0))->method('initSelect')->with($initializeSelect);
         $loader->expects($this->at(1))->method('initColumns')->with($initializeSelect);
         return $loader;
+    }
+
+    public function getSelectMock()
+    {
+        $select = $this->getMock('Zend_Entity_Mapper_Select', array(), array(), '', false);
+        $select->expects($this->any())
+               ->method('query')
+               ->will($this->returnValue(new Zend_Test_DbStatement()));
+        return $select;
     }
 }

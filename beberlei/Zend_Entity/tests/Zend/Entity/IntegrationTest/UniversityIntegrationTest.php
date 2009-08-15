@@ -36,7 +36,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
         $path = dirname(__FILE__)."/University/Definitions/";
         $dbAdapter = $this->getAdapter();
-        $this->_entityManager = new Zend_Entity_Manager($dbAdapter, array('metadataFactory' => new Zend_Entity_MetadataFactory_Code($path)));
+        $this->_entityManager = new Zend_Entity_Manager(array('adapter' => $dbAdapter, 'metadataFactory' => new Zend_Entity_MetadataFactory_Code($path)));
     }
 
     /**

@@ -9,6 +9,7 @@ require_once "SelectTest.php";
 require_once "MappingInstructionTest.php";
 require_once "NativeQueryTest.php";
 require_once "MapperTest.php";
+require_once "TransactionTest.php";
 
 class Zend_Entity_Mapper_AllTests
 {
@@ -21,6 +22,7 @@ class Zend_Entity_Mapper_AllTests
         $suite->addTestSuite('Zend_Entity_Mapper_SelectTest');
         $suite->addTestSuite('Zend_Entity_Mapper_MapperTest');
         $suite->addTestSuite('Zend_Entity_Mapper_NativeQueryTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_TransactionTest');
 
         return $suite;
     }
