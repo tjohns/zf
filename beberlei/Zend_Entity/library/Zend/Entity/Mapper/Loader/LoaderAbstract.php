@@ -1,27 +1,35 @@
 <?php
 /**
+ * Zend Framework
+ *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.
+ * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://www.opensource.org/licenses/bsd-license.php
+ * http://framework.zend.com/license/new-bsd
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so we can send you a copy immediately.
+ * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend_Entity
- * @package    Mapper
- * @subpackage Loader
- * @copyright  Copyright (c) 2005-2009 Benjamin Eberlei
- * @license    http://www.opensource.org/licenses/bsd-license.php     New BSD License
- * @author     Benjamin Eberlei (kontakt@beberlei.de)
+ * @category   Zend
+ * @package    Db
+ * @subpackage Mapper
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-
-require_once "Interface.php";
-
-abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_Loader_Interface
+/**
+ * Abstract Loader
+ *
+ * @category   Zend
+ * @package    Db
+ * @subpackage Mapper
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
 {
     /**
      * @var Zend_Entity_Mapper_MappingInstruction
@@ -37,6 +45,24 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     {
         $this->_mappingInstruction = $mappingInstruction;
     }
+
+    /**
+     * @param Zend_Db_Select $select
+     */
+    abstract public function initSelect(Zend_Db_Select $select);
+
+    /**
+     * @param Zend_Db_Select $select
+     */
+    abstract public function initColumns(Zend_Db_Select $select);
+
+    /**
+     * @param  array $resultSet
+     * @param  Zend_Entity_Manager $entityManager
+     * @param  string $fetchMode
+     * @return Zend_Entity_Collection_Interface
+     */
+    abstract public function processResultset($resultSet, Zend_Entity_Manager $entityManager);
 
     /**
      * @todo Gah Code duplication
@@ -115,7 +141,7 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
     protected function initializeRelatedObjects(array $entityState, Zend_Entity_Manager $entityManager)
     {
         foreach($this->_mappingInstruction->toOneRelations AS $relation) {
-            /* @var $relation Zend_Entity_Definition_AbstractRelation */
+            /* @var $relation Zend_Entity_Definition_RelationAbstract */
             $propertyName = $relation->propertyName;
             if($relation->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 $entityState[$propertyName] = $entityManager->getReference(

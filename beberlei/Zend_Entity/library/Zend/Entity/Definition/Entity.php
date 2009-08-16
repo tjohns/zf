@@ -258,48 +258,6 @@ class Zend_Entity_Definition_Entity
     }
 
     /**
-     * Get the loader class name
-     * 
-     * @return string
-     */
-    public function getLoaderClass()
-    {
-        return $this->_loaderClass;
-    }
-
-    /**
-     * Set the loader class name
-     * 
-     * @param string $loaderClass
-     * @return void
-     */
-    public function setLoaderClass($loaderClass)
-    {
-        $this->_loaderClass = $loaderClass;
-    }
-
-    /**
-     * Get the persister class name
-     *
-     * @return string
-     */
-    public function getPersisterClass()
-    {
-        return $this->_persisterClass;
-    }
-
-    /**
-     * Set persister class name
-     *
-     * @param string $persisterClass
-     * @return void
-     */
-    public function setPersisterClass($persisterClass)
-    {
-        $this->_persisterClass = $persisterClass;
-    }
-
-    /**
      * @return string
      */
     public function getStateTransformerClass()

@@ -1,0 +1,483 @@
+Index: tests/Zend/Entity/IntegrationTest/Clinic/Config/definitions.xml
+===================================================================
+--- tests/Zend/Entity/IntegrationTest/Clinic/Config/definitions.xml	(revision 0)
++++ tests/Zend/Entity/IntegrationTest/Clinic/Config/definitions.xml	(revision 0)
+@@ -0,0 +1,118 @@
++<?xml version="1.0"?>
++<definitions>
++    <Clinic_Bed>
++        <table>beds</table>
++        <properties>
++            <id>
++                <type>PrimaryKey</type>
++            </id>
++            
++            <station>
++                <type>ManyToOneRelation</type>
++                <class>Clinic_Station</class>
++                <columnName>station_id</columnName>
++                <propertyRef>id</propertyRef>
++                <load>directly</load>
++            </station>
++            
++            <occupancyPlan>
++                <type>Collection</type>
++                <key>bed_id</key>
++                <relation>
++                    <type>OneToManyRelation</type>
++                    <class>Clinic_Occupancy</class>
++                    <mappedBy>bed</mappedBy>
++                </relation>
++            </occupancyPlan>
++        </properties>
++    </Clinic_Bed>
++    
++    <Clinic_Occupancy>
++        <table>occupancies</table>
++        <properties>
++            <id>
++                <type>PrimaryKey</type>
++            </id>
++        
++            <patient>
++                <type>ManyToOneRelation</type>
++                <columnName>patient_id</columnName>
++                <propertyRef>patient</propertyRef>
++                <class>Clinic_Patient</class>
++                <cascade>save</cascade>
++            </patient>
++        
++            <bed>
++                <type>ManyToOneRelation</type>
++                <columnName>bed_id</columnName>
++                <class>Clinic_Bed</class>
++            </bed>
++        
++            <station>
++                <type>ManyToOneRelation</type>
++                <columnName>station_id</columnName>
++                <class>Clinic_Station</class>
++            </station>
++            
++            <occupiedFrom />
++            <occupiedTo />
++        </properties>
++    </Clinic_Occupancy>
++    
++    <Clinic_Patient>
++        <table>patients</table>
++        <properties>
++            <id>
++                <type>PrimaryKey</type>
++            </id>
++            
++            <name />
++            <socialSecurityNumber />
++            <birthDate />
++            
++            <occupancies>
++                <type>Collection</type>
++                <key>occupancy_id</key>
++                <relation>
++                    <type>OneToManyRelation</type>
++                    <class>Clinic_Occupancy</class>
++                    <mappedBy>patient</mappedBy>
++                </relation>
++            </occupancies>
++        </properties>
++    </Clinic_Patient>
++    
++    <Clinic_Station>
++        <table>stations</table>
++        <properties>
++            <id>
++                <type>PrimaryKey</type>
++            </id>
++            
++            <name />
++            
++            <beds>
++                <type>Collection</type>
++                <key>station_id</key>
++                <relation>
++                    <type>OneToManyRelation</type>
++                    <class>Clinic_Bed</class>
++                    <cascade>save</cascade>
++                    <mappedBy>station</mappedBy>
++                </relation>
++            </beds>
++            
++            <currentOccupancies>
++                <type>Collection</type>
++                <key>station_id</key>
++                <relation>
++                    <type>OneToManyRelation</type>
++                    <propertyName>id</propertyName>
++                    <class>Clinic_Occupancy</class>
++                    <mappedBy>station</mappedBy>
++                </relation>
++                <where><![CDATA[(occupancies.occupiedFrom >= NOW() AND occupancies.occupiedTo <= NOW())]]></where>
++            </currentOccupancies>
++        </properties>
++    </Clinic_Station>
++</definitions>
+\ No newline at end of file
+Index: tests/Zend/Entity/IntegrationTest/University/Config/definitions.xml
+===================================================================
+--- tests/Zend/Entity/IntegrationTest/University/Config/definitions.xml	(revision 0)
++++ tests/Zend/Entity/IntegrationTest/University/Config/definitions.xml	(revision 0)
+@@ -0,0 +1,77 @@
++<?xml version="1.0"?>
++<definitions>
++    <ZendEntity_Course>
++        <table>university_courses</table>
++        <properties>
++            <id type="PrimaryKey">
++                <columnName>course_id</columnName>
++                <propertyType>int</propertyType>
++            </id>
++            
++            <name>
++                <columnName>course_name</columnName>
++                <propertyType>string</propertyType>
++            </name>
++            
++            <teacher type="ManyToOneRelation">
++                <columnName>teacher_id</columnName>
++                <class>ZendEntity_Professor</class>
++                <cascade>save</cascade>
++            </teacher>
++        </properties>
++    </ZendEntity_Course>
++    
++    <ZendEntity_Professor>
++        <table>university_professors</table>
++        <properties>
++            <id type="PrimaryKey">
++                <columnName>professor_id</columnName>
++                <propertyType>int</propertyType>
++            </id>
++            
++            <name />
++            
++            <salary>
++                <propertyType>int</propertyType>
++            </salary>
++            
++            <teachingCourses type="Collection">
++                <key>teacher_id</key>
++                <relation type="OneToManyRelation">
++                    <class>ZendEntity_Course</class>
++                    <cascade>save</cascade>
++                    <mappedBy>teacher</mappedBy>
++                </relation>
++            </teachingCourses>
++        </properties>
++    </ZendEntity_Professor>
++    
++    <ZendEntity_Student>
++        <table>university_students</table>
++        <properties>
++            <id type="PrimaryKey">
++                <columnName>student_id</columnName>
++                <propertyType>int</propertyType>
++            </id>
++            
++            <name>
++                <columnName>student_name</columnName>
++                <propertyType>string</propertyType>
++            </name>
++            
++            <studentId>
++                <columnName>student_campus_id</columnName>
++                <propertyType>int</propertyType>
++            </studentId>
++            
++            <currentCourses type="Collection">
++                <table>university_students_semester_courses</table>
++                <key>student_id</key>
++                <relation type="ManyToManyRelation">
++                    <class>ZendEntity_Course</class>
++                    <cascade>save</cascade>
++                </relation>
++            </currentCourses>
++        </properties>
++    </ZendEntity_Student>
++</definitions>
+\ No newline at end of file
+Index: tests/Zend/Entity/MetadataFactory/_files/empty/EmptyDefinition.xml
+===================================================================
+--- tests/Zend/Entity/MetadataFactory/_files/empty/EmptyDefinition.xml	(revision 0)
++++ tests/Zend/Entity/MetadataFactory/_files/empty/EmptyDefinition.xml	(revision 0)
+@@ -0,0 +1,4 @@
++<?xml version="1.0"?>
++<definition>
++    <EmptyEntityDefinition />
++</definition>
+\ No newline at end of file
+Index: tests/Zend/Entity/MetadataFactory/AllTests.php
+===================================================================
+--- tests/Zend/Entity/MetadataFactory/AllTests.php	(revision 17632)
++++ tests/Zend/Entity/MetadataFactory/AllTests.php	(working copy)
+@@ -5,6 +5,7 @@
+ require_once "CodeTest.php";
+ require_once "TestingTest.php";
+ require_once "CacheTest.php";
++require_once "ConfigTest.php";
+ 
+ class Zend_Entity_MetadataFactory_AllTests
+ {
+@@ -14,7 +15,8 @@
+         $suite->addTestSuite('Zend_Entity_MetadataFactory_CodeTest');
+         $suite->addTestSuite('Zend_Entity_MetadataFactory_TestingTest');
+         $suite->addTestSuite('Zend_Entity_MetadataFactory_CacheTest');
+-
++        $suite->addTestSuite('Zend_Entity_MetadataFactory_ConfigTest');
++        
+         return $suite;
+     }
+ }
+Index: tests/Zend/Entity/MetadataFactory/ConfigTest.php
+===================================================================
+--- tests/Zend/Entity/MetadataFactory/ConfigTest.php	(revision 0)
++++ tests/Zend/Entity/MetadataFactory/ConfigTest.php	(revision 0)
+@@ -0,0 +1,68 @@
++<?php
++
++require_once dirname(__FILE__)."/../../TestHelper.php";
++
++class Zend_Entity_MetadataFactory_ConfigTest extends PHPUnit_Framework_TestCase
++{
++    public function testUnknownEntityDefinitionFile_ThrowsException()
++    {
++        $this->setExpectedException(
++            'Zend_Entity_InvalidEntityException', 
++            "The entity 'UnknownEntity' is unknown."
++        );
++        
++        $config = new Zend_Config_Xml(dirname(__FILE__) . '/_files/empty/EmptyDefinition.xml');
++        $metadataFactory = new Zend_Entity_MetadataFactory_Config($config);
++        $metadataFactory->getDefinitionByEntityName('UnknownEntity');
++    }
++    
++    public function testCorrectDefinitionFileShouldReturnDefinitionObject()
++    {
++        $config = new Zend_Config_Xml(dirname(__FILE__) . '/_files/empty/EmptyDefinition.xml');
++        $metadataFactory = new Zend_Entity_MetadataFactory_Config($config);
++        $definition = $metadataFactory->getDefinitionByEntityName("EmptyEntityDefinition");
++        $this->assertTrue($definition instanceof Zend_Entity_Definition_Entity);
++    }
++    
++    public function testGetDefinitionNames()
++    {
++        $entityNames = array(
++            'Clinic_Bed', 
++            'Clinic_Occupancy', 
++            'Clinic_Patient', 
++            'Clinic_Station'
++        );
++        
++        $config = new Zend_Config_Xml(dirname(__FILE__) . '/../IntegrationTest/Clinic/Config/definitions.xml');
++        $metadataFactory = new Zend_Entity_MetadataFactory_Config($config);
++        
++        $this->assertEquals($entityNames, $metadataFactory->getDefinitionEntityNames());
++    }
++    
++    /**
++     * @dataProvider dataDefinitionComparisonPaths
++     */
++    public function testCompareWithCodeDefinition($codePath, $configPath)
++    {
++        $config = new Zend_Config_Xml($configPath);
++        $configMetadataFactory = new Zend_Entity_MetadataFactory_Config($config);
++        $codeMetadataFactory = new Zend_Entity_MetadataFactory_Code($codePath);
++        
++        foreach ($codeMetadataFactory->getDefinitionEntityNames() as $entityName) {
++            $this->assertEquals(
++                $codeMetadataFactory->getDefinitionByEntityName($entityName), 
++                $configMetadataFactory->getDefinitionByEntityName($entityName)
++            );
++        }
++    }
++    
++    public static function dataDefinitionComparisonPaths()
++    {
++        $integrationTests = dirname(__FILE__) . '/../IntegrationTest';
++
++        return array(
++            array($integrationTests . '/Clinic/Definition/', $integrationTests . '/Clinic/Config/definitions.xml'),
++            array($integrationTests . '/University/Definitions/', $integrationTests . '/University/Config/definitions.xml'),
++        );
++    }
++}
+Index: library/Zend/Entity/MetadataFactory/Config.php
+===================================================================
+--- library/Zend/Entity/MetadataFactory/Config.php	(revision 0)
++++ library/Zend/Entity/MetadataFactory/Config.php	(revision 0)
+@@ -0,0 +1,165 @@
++<?php
++/**
++ * Mapper
++ *
++ * LICENSE
++ *
++ * This source file is subject to the new BSD license that is bundled
++ * with this package in the file LICENSE.
++ * 
++ * If you did not receive a copy of the license and are unable to
++ * obtain it through the world-wide-web, please send an email
++ * to kontakt@beberlei.de so we can send you a copy immediately.
++ *
++ * @category   Zend
++ * @category   Zend_Entity
++ * @copyright  Copyright (c) 2009 Tom Graham
++ * @license    New BSD License
++ */
++
++class Zend_Entity_MetadataFactory_Config implements Zend_Entity_MetadataFactory_Interface
++{
++    /**
++     * Config containing the entity definitions
++     *
++     * @var Zend_Config
++     */
++    protected $_config;
++    
++    /**
++     * Loaded entity definitions
++     *
++     * @var array
++     */
++    protected $_maps = null;
++    
++    /**
++     * The names of all entities found in the definition config
++     *
++     * @var array
++     */
++    protected $_entityNames = null;
++    
++    /**
++     * @param Zend_Config $config 
++     */
++    public function __construct(Zend_Config $config)
++    {
++        $this->_config = $config;
++    }
++    
++    /**
++     * Loads entity definitions from the given Zend_Config object.
++     *
++     * @return void
++     */
++    protected function _loadEntityDefinitions()
++    {
++        if ($this->_maps === null) {
++            $config = $this->_config->toArray();
++            foreach ($config as $entityName => $entityOptions) {
++                $this->_loadEntityDefinition($entityName, $entityOptions);
++            }
++        }
++    }
++    
++    /**
++     * Load a single entity definition
++     *
++     * @param string $entityName 
++     * @param array $entityOptions 
++     * @return void
++     */
++    protected function _loadEntityDefinition($entityName, $entityOptions)
++    {
++        if (!is_array($entityOptions)) {
++            $entityOptions = array();
++        }
++        
++        if (isset($entityOptions['properties'])) {
++            // Extract the properties from the entity options
++            $properties = $entityOptions['properties'];
++            unset($entityOptions['properties']);
++        }
++        
++        $definition = new Zend_Entity_Definition_Entity($entityName, $entityOptions);
++        
++        // Add each of the properties to the definition
++        if ($properties && is_array($properties)) {
++            foreach ($properties as $propertyName => $propertyOptions) {
++                if (isset($propertyOptions['type'])) {
++                    // Extract the property type from the property definition
++                    $propertyType = $propertyOptions['type'];
++                    unset($propertyOptions['type']);
++                } else {
++                    $propertyType = 'Property';
++                }
++                
++                if ($propertyType == 'Collection') {
++                    if (isset($propertyOptions['relation'])) {
++                        $relationType = $propertyOptions['relation']['type'];
++                        unset($propertyOptions['relation']['type']);
++                        
++                        if (isset($propertyOptions['relation']['propertyName'])) {
++                            $relationPropertyName = $propertyOptions['relation']['propertyName'];
++                        } else {
++                            $relationPropertyName = $propertyName;
++                        }
++                        
++                        $propertyOptions['relation'] = Zend_Entity_Definition_Utility::loadDefinition(
++                            $relationType, $relationPropertyName, $propertyOptions['relation']
++                        );
++                    }
++                }
++                
++                $definition->add($propertyType, $propertyName, $propertyOptions);
++            }
++        }
++        
++        $this->_maps[$entityName] = $definition;
++        $this->_entityNames[] = $entityName;
++    }
++    
++    /**
++     * Retrieve an array of all definitions by name.
++     *
++     * @return array
++     */
++    public function getDefinitionEntityNames()
++    {
++        $this->_loadEntityDefinitions();
++        return $this->_entityNames;
++    }
++
++    /**
++     * Get an Entity Mapper Definition by the name of the Entity
++     *
++     * @param  string $entityName
++     * @throws Zend_Entity_InvalidEntityException
++     * @return Zend_Entity_Definition_Entity
++     */
++    public function getDefinitionByEntityName($entityName)
++    {
++        $this->_loadEntityDefinitions();
++        if(!isset($this->_maps[$entityName])) {
++            throw new Zend_Entity_InvalidEntityException("The entity '".$entityName."' is unknown.");
++        }
++        return $this->_maps[$entityName];
++    }
++
++    /**
++     *
++     * @param  string $visitorClass
++     * @return Zend_Entity_Definition_VisitorAbstract[]
++     */
++    public function transform($visitorClass)
++    {
++        $visitorMap = array();
++        foreach ($this->getDefinitionEntityNames() as $entityName) {
++            $visitor = new $visitorClass;
++            $this->getDefinitionByEntityName($entityName)->visit($visitor, $this);
++            $visitorMap[$entityName] = $visitor;
++        }
++        return $visitorMap;
++    }
++}
+\ No newline at end of file

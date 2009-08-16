@@ -215,15 +215,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function createNativeQuery($input)
     {
-        if(in_array($input, $this->getMetadataFactory()->getDefinitionEntityNames())) {
-            $mapper = $this->getMapper();
-            $loader = $mapper->getLoader($input);
-            $select = $mapper->select();
-
-            return new Zend_Entity_Mapper_NativeQuery($select, $loader, $this);
-        } else {
-            throw new Exception("Missing Native Query Parser/Builder/Whatever!");
-        }
+        return $this->getMapper()->createNativeQuery($input, $this);
     }
 
     /**
@@ -232,7 +224,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function createQuery($entityName)
     {
-        throw new Exception("not implemented yet");
+        return $this->getMapper()->createQuery($entityName, $this);
     }
 
     /**

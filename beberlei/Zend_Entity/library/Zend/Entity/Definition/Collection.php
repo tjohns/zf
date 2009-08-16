@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_AbstractArray
+class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_ArrayAbstract
 {
     const COLLECTION_RELATION = 'relation';
     const COLLECTION_ELEMENTS = 'elements';
@@ -28,7 +28,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_AbstractA
     public $type = self::COLLECTION_RELATION;
 
     /**
-     * @var Zend_Entity_Definition_AbstractRelation
+     * @var Zend_Entity_Definition_RelationAbstract
      */
     public $relation = null;
 
@@ -85,7 +85,7 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_AbstractA
     /**
      * What type of relation is this collection?
      *
-     * @return Zend_Entity_Definition_AbstractRelation
+     * @return Zend_Entity_Definition_RelationAbstract
      */
     public function getRelation()
     {
@@ -95,9 +95,9 @@ class Zend_Entity_Definition_Collection extends Zend_Entity_Definition_AbstractA
     /**
      * Set type of relation of this collection.
      *
-     * @param Zend_Entity_Definition_AbstractRelation $relation
+     * @param Zend_Entity_Definition_RelationAbstract $relation
      */
-    public function setRelation(Zend_Entity_Definition_AbstractRelation $relation)
+    public function setRelation(Zend_Entity_Definition_RelationAbstract $relation)
     {
         $this->type = self::COLLECTION_RELATION;
         $this->relation = $relation;

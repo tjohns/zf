@@ -140,7 +140,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
     }
 
     /**
-     * @param Zend_Entity_Definition_AbstractRelation $relation
+     * @param Zend_Entity_Definition_RelationAbstract $relation
      * @param Zend_Entity_MetadataFactory_Interface
      * @return void
      */
@@ -295,7 +295,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
 
         if($property instanceof Zend_Entity_Definition_PrimaryKey) {
             $this->_acceptPrimaryKey($property, $metadataFactory);
-        } elseif($property instanceof Zend_Entity_Definition_AbstractRelation) {
+        } elseif($property instanceof Zend_Entity_Definition_RelationAbstract) {
             $this->_acceptRelation($property, $metadataFactory);
         } elseif($property instanceof Zend_Entity_Definition_Collection) {
             $this->_acceptCollection($property, $metadataFactory);
@@ -308,7 +308,7 @@ class Zend_Entity_Mapper_MappingInstruction extends Zend_Entity_Definition_Visit
         }
 
         $this->propertyNames[] = $propertyName;
-        if($property instanceof Zend_Entity_Definition_AbstractRelation) {
+        if($property instanceof Zend_Entity_Definition_RelationAbstract) {
             if($property->inverse == false) {
                 $this->toOneRelations[$propertyName] = $property;
                 

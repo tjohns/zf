@@ -1,0 +1,6 @@
+<?php
+
+define('ZEND_ENTITY_MYSQL_HOSTNAME', '');
+define('ZEND_ENTITY_MYSQL_USERNAME', '');
+define('ZEND_ENTITY_MYSQL_PASSWORD', '');
+define('ZEND_ENTITY_MYSQL_DATABASE', '');

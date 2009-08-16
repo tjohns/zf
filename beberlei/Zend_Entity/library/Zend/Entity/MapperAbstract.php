@@ -36,9 +36,9 @@ abstract class Zend_Entity_MapperAbstract
     /**
      * Loader
      *
-     * @var Zend_Entity_Mapper_Loader_Interface
+     * @var array
      */
-    protected $_loader = null;
+    protected $_loaders = null;
 
     /**
      * Persister
@@ -157,27 +157,32 @@ abstract class Zend_Entity_MapperAbstract
     /**
      * Return Resultprocessor and Object Loader
      * 
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
-    public function getLoader($className)
+    public function getLoader($fetchMode, $className)
     {
-        if(!isset($this->_loader[$className])) {
-            $this->_loader[$className] = new Zend_Entity_Mapper_Loader_Basic(
+        if(!isset($this->_loaders[$className])) {
+            $this->_loaders[$className] = new Zend_Entity_Mapper_Loader_Entity(
                 $this->_metadataFactory->getDefinitionByEntityName($className),
                 $this->_mappingInstructions[$className]
             );
         }
-        return $this->_loader[$className];
+        return $this->_loaders[$className];
     }
 
     /**
-     * @param Zend_Entity_Query_NamedQueryAbstract $namedQuery
+     * @param string $input
+     * @param Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function createNamedQuery(Zend_Entity_Query_NamedQueryAbstract $namedQuery)
-    {
-        return $namedQuery->create();
-    }
+    abstract public function createNativeQuery($input, $entityManager);
+
+    /**
+     * @param string $input
+     * @param Zend_Entity_Manager_Interface $entityManager
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    abstract public function createQuery($entityName, $entityManager);
 
     /**
      * @return Zend_Entity_Transaction

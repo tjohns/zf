@@ -22,14 +22,14 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
      */
     protected $unitOfWork = null;
 
+    abstract public function getLoaderClassName();
 
     public function createLoader(Zend_Entity_Definition_Entity $def)
     {
+        $loaderClassName = $this->getLoaderClassName();
         $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
-        return new Zend_Entity_Mapper_Loader_Basic(
-            $def,
-            $mi[$def->getClass()]
-        );
+        
+        return new $loaderClassName($def, $mi[$def->getClass()]);
     }
 
     public function createEntityManager()
@@ -39,7 +39,7 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderWithIdAndManyToOneProperty()
     {
@@ -53,7 +53,7 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderWithIdAndPropertyWithDifferentColumnNames()
     {
@@ -67,7 +67,7 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderWithIdAndManyToManyProperty()
     {

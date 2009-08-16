@@ -38,7 +38,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
     /**
      * @ignore
      * @param Zend_Entity_Interface $relatedObject
-     * @param Zend_Entity_Definition_AbstractRelation $relationDef
+     * @param Zend_Entity_Definition_RelationAbstract $relationDef
      * @param Zend_Entity_Manager_Interface $entityManager
      * @return mixed
      */
@@ -78,7 +78,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
 
         if($relatedCollection instanceof Zend_Entity_Collection_Interface
             && $relatedCollection->__ze_wasLoadedFromDatabase() == true) {
-            /* @var $relatedCollection Zend_Entity_Definition_AbstractRelation */
+            /* @var $relatedCollection Zend_Entity_Definition_RelationAbstract */
             switch($collectionDef->relation->cascade) {
                 case Zend_Entity_Definition_Property::CASCADE_ALL:
                 case Zend_Entity_Definition_Property::CASCADE_SAVE:

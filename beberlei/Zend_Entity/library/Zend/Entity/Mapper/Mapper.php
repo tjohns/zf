@@ -57,6 +57,22 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
         $this->_mappingInstructions = $mappingInstructions;
     }
 
+    public function createNativeQuery($input, $entityManager)
+    {
+        $q = new Zend_Entity_Mapper_NativeQuery($this, $entityManager);
+        if(in_array($input, $this->_metadataFactory->getDefinitionEntityNames())) {
+            $q->with($input);
+        } else {
+            throw new Exception("Missing Native Query Parser/Builder/Whatever!");
+        }
+        return $q;
+    }
+
+    public function createQuery($entityName, $entityManager)
+    {
+        throw new Exception("not implemented yet");
+    }
+
     /**
      * @return Zend_Entity_Transaction
      */

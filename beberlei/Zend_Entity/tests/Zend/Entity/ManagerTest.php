@@ -276,42 +276,18 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     const UNKNOWN_ENTITY_CLASS = 'UnknownEntityClass';
     const KNOWN_ENTITY_CLASS = 'KnownEntityClass';
 
-    public function testCreateNativeQuery_FromUnknownEntityMapper_ThrowsException()
-    {
-        $this->setExpectedException("Exception");
-        $e = new Exception();
-
-        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
-        $metadataFactory->expects($this->once())
-                        ->method('getDefinitionEntityNames')
-                        ->will($this->returnValue(array(self::KNOWN_ENTITY_CLASS)));
-        $manager = $this->createEntityManager(null, $metadataFactory);
-
-        $manager->createNativeQuery(self::UNKNOWN_ENTITY_CLASS);
-    }
-
     public function testCreateNativeQuery()
     {
-        $metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
-        $metadataFactory->expects($this->once())
-                        ->method('getDefinitionEntityNames')
-                        ->will($this->returnValue(array(self::KNOWN_ENTITY_CLASS)));
-
-        $manager = $this->createTestingEntityManager(null, $metadataFactory);
-        $select = $this->createDbSelect(self::KNOWN_ENTITY_CLASS);
+        $manager = $this->createTestingEntityManager();
 
         $mapper = $this->createMapperMock();
-        $mapper->expects($this->any())
-               ->method('select')
-               ->will($this->returnValue($select));
         $mapper->expects($this->once())
-               ->method('getLoader')
-               ->will($this->returnValue($this->getMock('Zend_Entity_Mapper_Loader_Interface')));
+               ->method('createNativeQuery')
+               ->with($this->equalTo(self::KNOWN_ENTITY_CLASS), $this->equalTo($manager));
+
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
 
         $query = $manager->createNativeQuery(self::KNOWN_ENTITY_CLASS);
-
-        $this->assertType('Zend_Entity_Query_QueryAbstract', $query);
     }
 
     public function testCreateQuery()
@@ -401,25 +377,6 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $em->setNamedQueryLoader($loaderMock);
 
         $em->createNamedQuery("ANamedQuery");
-    }
-
-    public function createEntityManagerWithMapper($select)
-    {
-        $manager = $this->createTestingEntityManager();
-
-        $loader = $this->getMock('Zend_Entity_Mapper_Loader_Interface');
-        $loader->expects($this->once())
-               ->method('processResultset');
-
-        $mapper = $this->createMapperMock();
-        $mapper->expects($this->any())->method('select')->will($this->returnValue($select));
-        $mapper->expects($this->once())
-               ->method('getLoader')
-               ->will($this->returnValue($loader));
-
-        $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
-
-        return $manager;
     }
 }
 

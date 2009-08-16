@@ -74,7 +74,7 @@ class Zend_Entity_Mapper_Query extends Zend_Entity_Query_QueryAbstract
     }
     public function getResultList() {
     }
-    public function count() {
+    public function getPaginatorAdapter() {
         
     }
 }

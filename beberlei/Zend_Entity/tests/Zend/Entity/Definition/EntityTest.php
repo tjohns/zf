@@ -90,22 +90,6 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $this->assertEquals(self::TEST_PROPERTY, $primaryKey->getPropertyName());
     }
 
-    public function testSetGetLoaderClass()
-    {
-        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
-        $entityDef->setLoaderClass(self::TEST_CLASS2);
-
-        $this->assertEquals(self::TEST_CLASS2, $entityDef->getLoaderClass());
-    }
-
-    public function testSetGetPersisterClass()
-    {
-        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
-        $entityDef->setPersisterClass(self::TEST_CLASS2);
-
-        $this->assertEquals(self::TEST_CLASS2, $entityDef->getPersisterClass());
-    }
-
     public function testAddRelationAccessibleWithGetProperties()
     {
         $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
@@ -231,6 +215,14 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $entityDef->addVersion("foo");
 
         $this->assertType('Zend_Entity_Definition_Version', $entityDef->getVersionProperty());
+    }
+
+    public function testAddProperty_FirstArgumentNotString_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $entityDef = new Zend_Entity_Definition_Entity("classA");
+        $entityDef->addProperty(array());
     }
 }
 

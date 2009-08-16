@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Entity_Definition_AbstractArray extends Zend_Entity_Definition_Property
+abstract class Zend_Entity_Definition_ArrayAbstract extends Zend_Entity_Definition_Property
 {
     /**
      * @var string

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter_Interface
+abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_AdapterAggregate
 {
     /**
      * @var array
@@ -41,18 +41,6 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
     abstract public function setFirstResult($offset);
 
     abstract public function setMaxResults($itemCountPerPage);
-
-    /**
-     * @param int $offset
-     * @param int $itemCountPerPage
-     */
-    public function getItems($offset, $itemCountPerPage)
-    {
-        $this->setMaxResults($itemCountPerPage);
-        $this->setFirstResult($offset);
-        
-        return $this->getResultList();
-    }
 
     /**
      * @param  string|int $name

@@ -17,9 +17,7 @@
  * @license    New BSD License
  */
 
-require_once "Abstract.php";
-
-class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
+class Zend_Entity_Mapper_Loader_Entity extends Zend_Entity_Mapper_Loader_LoaderAbstract
 {
     /**
      * @param Zend_Db_Select $select
@@ -43,16 +41,11 @@ class Zend_Entity_Mapper_Loader_Basic extends Zend_Entity_Mapper_Loader_Abstract
      * @param  string $fetchMode
      * @return Zend_Entity_Collection_Interface
      */
-    public function processResultset($resultSet, Zend_Entity_Manager $entityManager, $fetchMode=Zend_Entity_Manager::FETCH_ENTITIES)
+    public function processResultset($resultSet, Zend_Entity_Manager $entityManager)
     {
         $collection = array();
         foreach($resultSet AS $row) {
-            if($fetchMode == Zend_Entity_Manager::FETCH_ARRAY) {
-                $entity = $this->renameAndCastColumnToPropertyKeys($row);
-            } else {
-                $entity = $this->createEntityFromRow($row, $entityManager);
-            }
-            $collection[] = $entity;
+            $collection[] = $this->createEntityFromRow($row, $entityManager);
         }
         return $collection;
     }

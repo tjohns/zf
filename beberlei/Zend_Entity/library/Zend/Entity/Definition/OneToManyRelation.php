@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Definition_OneToManyRelation extends Zend_Entity_Definition_AbstractRelation
+class Zend_Entity_Definition_OneToManyRelation extends Zend_Entity_Definition_RelationAbstract
 {
     /**
      * @return boolean

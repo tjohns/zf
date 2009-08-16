@@ -16,7 +16,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      * @param Zend_Db_Adapter_Abstract $db
      * @param Zend_Entity_Definition_Entity $entityDefinition
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
-     * @param Zend_Entity_Mapper_Loader_Interface $loader
+     * @param Zend_Entity_Mapper_Loader_LoaderAbstract $loader
      * @param Zend_Entity_Mapper_Persister_Interface $persister
      * @return Zend_Entity_Mapper
      */
@@ -56,16 +56,16 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderMock()
     {
-        $loader = $this->getMock('Zend_Entity_Mapper_Loader_Interface');
+        $loader = $this->getMock('Zend_Entity_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
         return $loader;
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderMockThatReturnsProccessedResultset($result)
     {
@@ -170,7 +170,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Zend_Entity_Mapper_Loader_Interface $loader
+     * @param Zend_Entity_Mapper_Loader_LoaderAbstract $loader
      * @return Zend_Entity_Mapper_Select
      */
     protected function createDbSelect()
