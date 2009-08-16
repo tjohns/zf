@@ -84,6 +84,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             $options['identityMap'] = new Zend_Entity_IdentityMap();
         }
 
+        if(isset($options['db'])) {
+            $this->setAdapter($options['db']);
+        }
+
         foreach($options AS $k => $v) {
             $method = 'set'.ucfirst($k);
             if(method_exists($this, $method)) {
