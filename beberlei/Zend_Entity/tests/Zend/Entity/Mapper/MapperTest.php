@@ -63,7 +63,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
                ->with($fixtureEntity)
                ->will($this->returnValue($queryMock));
 
-        $mapper->load($fixtureEntity, $emMock, $fixtureId);
+        $mapper->load($emMock, $fixtureEntity, $fixtureId);
     }
 
     const TEST_KEY_VALUE = 1;

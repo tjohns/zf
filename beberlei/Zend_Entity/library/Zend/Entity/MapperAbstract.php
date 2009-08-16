@@ -62,12 +62,13 @@ abstract class Zend_Entity_MapperAbstract
 
     /**
      *
-     * @param  string $entityName
      * @param  Zend_Entity_Manager_Interface $entityManager
+     * @param  string $entityName
      * @param  mixed $keyValue
+     * @param  string $notFound
      * @return object
      */
-    public function load($entityName, $entityManager, $keyValue)
+    public function load($entityManager, $entityName, $keyValue, $notFound=Zend_Entity_Manager::NOTFOUND_NULL)
     {
         $mi = $this->_mappingInstructions[$entityName];
 

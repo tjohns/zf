@@ -118,9 +118,13 @@ abstract class Zend_Entity_Mapper_Loader_Abstract implements Zend_Entity_Mapper_
             /* @var $relation Zend_Entity_Definition_AbstractRelation */
             $propertyName = $relation->propertyName;
             if($relation->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
-                $entityState[$propertyName] = $entityManager->getReference($relation->class, $entityState[$propertyName]);
+                $entityState[$propertyName] = $entityManager->getReference(
+                    $relation->class, $entityState[$propertyName]
+                );
             } else if($relation->fetch == Zend_Entity_Definition_Property::FETCH_SELECT) {
-                $entityState[$propertyName] = $entityManager->load($relation->class, $entityState[$propertyName]);
+                $entityState[$propertyName] = $entityManager->load(
+                    $relation->class, $entityState[$propertyName], $relation->notFound
+                );
             }
         }
         foreach($this->_mappingInstruction->toManyRelations AS $collectionDef) {

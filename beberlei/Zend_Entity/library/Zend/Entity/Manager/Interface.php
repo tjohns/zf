@@ -33,15 +33,21 @@ interface Zend_Entity_Manager_Interface
 {
     /**
      * @param string $entityName
-     * @return Zend_Entity_Mapper_Select
+     * @return Zend_Entity_Query_QueryAbstract
      */
     public function createNativeQuery($entityName);
 
     /**
      * @param string $entityName
-     * @return Zend_Entity_Mapper_Query
+     * @return Zend_Entity_Query_QueryAbstract
      */
     public function createQuery($entityName);
+
+    /**
+     * @param string $queryName
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    public function createNamedQuery($queryName);
 
     /**
      * Find by primary key

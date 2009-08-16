@@ -38,7 +38,8 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
     {
         $fixtureReturnValue = array( array("foo" => "bar") );
 
-        $result = $this->executeSingleResultQueryWithResult($fixtureReturnValue);
+        $query = $this->createQueryWithResultExpectation($fixtureReturnValue);
+        $result = $query->getSingleResult();
 
         $this->assertEquals(
             array("foo" => "bar"), $result
@@ -47,32 +48,41 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
 
     public function testGetSingleResult_ThrowException_WhenMoreThanOneResult()
     {
-        $this->setExpectedException("Zend_Entity_Exception");
+        $this->setExpectedException("Zend_Entity_NonUniqueResultException");
 
         $fixtureReturnValue = array( array("foo" => "bar"), array("foo" => "baz") );
 
-        $this->executeSingleResultQueryWithResult($fixtureReturnValue);
+        $query = $this->createQueryWithResultExpectation($fixtureReturnValue);
+        $query->getSingleResult();
     }
 
     public function testGetSingleResult_ThrowException_WhenNoResult()
     {
-        $this->setExpectedException("Zend_Entity_Exception");
+        $this->setExpectedException("Zend_Entity_NoResultException");
 
         $fixtureReturnValue = array();
 
-        $this->executeSingleResultQueryWithResult($fixtureReturnValue);
+        $query = $this->createQueryWithResultExpectation($fixtureReturnValue);
+        $query->getSingleResult();
     }
 
-    public function executeSingleResultQueryWithResult($fixtureReturnValue)
+    public function testGetSingleResult_ReturnNull_WhenNoResult_AndHintIsSet()
+    {
+        $fixtureReturnValue = array();
+
+        $query = $this->createQueryWithResultExpectation($fixtureReturnValue);
+        $query->setHint("singleResultNotFound", Zend_Entity_Manager::NOTFOUND_NULL);
+        $this->assertNull($query->getSingleResult());
+    }
+
+    public function createQueryWithResultExpectation($fixtureReturnValue)
     {
         $em = $this->createTestingEntityManager();
         $select = $this->getSelectMock();
         $loader = $this->getLoaderMock($select);
         $this->addProcessResultsetExpectation($loader, $fixtureReturnValue, $em);
 
-        $query = new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
-
-        return $query->getSingleResult();
+        return new Zend_Entity_Mapper_NativeQuery($select, $loader, $em);
     }
 
     public function testSetMaxResults()
@@ -161,6 +171,29 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         $query->setParameters(array('foo' => 'bar', 'bar' => 'baz'));
 
         $this->assertEquals(array('baz' => 'foo', 'foo' => 'bar', 'bar' => 'baz'), $query->getParameters());
+    }
+
+    public function testGetUnknownHint()
+    {
+        $query = $this->createDbSelectQuery();
+
+        $this->assertFalse($query->getHint("foo"));
+    }
+
+    public function testSetGetHint()
+    {
+        $query = $this->createDbSelectQuery();
+        $query->setHint("foo", "bar");
+
+        $this->assertEquals("bar", $query->getHint("foo"));
+    }
+
+    public function testSetHint_IsFluent()
+    {
+        $query = $this->createDbSelectQuery();
+        $q = $query->setHint("foo", "bar");
+
+        $this->assertSame($q, $query);
     }
 
     public function createDbSelectQuery($select=null)

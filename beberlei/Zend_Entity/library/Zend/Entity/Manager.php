@@ -24,6 +24,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     const FETCH_ENTITIES        = 1;
     const FETCH_ARRAY           = 2;
 
+
+    const NOTFOUND_EXCEPTION = "exception";
+    const NOTFOUND_NULL = "null";
+
     /**
      * Db Handler
      *
@@ -273,13 +277,13 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param string $key
      * @return Zend_Entity_Interface
      */
-    public function load($entityName, $keyValue)
+    public function load($entityName, $keyValue, $notFound=self::NOTFOUND_NULL)
     {
         if($this->_identityMap->hasObject($entityName, $keyValue)) {
             $object = $this->_identityMap->getObject($entityName, $keyValue);
         } else {
             $mapper = $this->getMapper();
-            $object = $mapper->load($entityName, $this, $keyValue);
+            $object = $mapper->load($this, $entityName, $keyValue, $notFound);
         }
         return $object;
     }
@@ -342,7 +346,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
             $reference = $identityMap->getObject($class, $id);
         } else {
             $callback = array($this, "load");
-            $callbackArguments = array($class, $id);
+            $callbackArguments = array($class, $id, self::NOTFOUND_EXCEPTION);
             $reference = new Zend_Entity_LazyLoad_Entity($callback, $callbackArguments, $class);
             $identityMap->addObject($class, $id, $reference);
         }

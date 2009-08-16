@@ -6,13 +6,12 @@ Dependent on Tasks:
 
 Tasks:
 * Refactoring to Definition Visitor to decouple RMDBS storage from common metadata definitions.
-* Implement Handling of NotFound property
+* Loader: Only one loader per mapped entity, extend Object and Array Hydration to include multiple entity loading at once (with())
 * Extend EventListener to get more context related information
 * Mapper Refactoring + EntityManager: Decouple Zend_Db_Adapter into the Mapper
-* Add Property Change Listener strategy variables, add "EXPLICIT" as only implementation for now (using save() and delete())
-* Extend Object and Array Hydration to include multiple entity loading at once.
+* Add Property Change Listener strategy variables, add "EXPLICIT" as only implementation for now (using save() and delete()),
+  add entity manager flush modes and implement only FLUSH_INSTANT.
 * Implement Scalar Hydration Mode that can be used for Aggregate and Single Result queries, code it into query object.
-* Type Casting: Test it and maybe be split up Property Definition into different types if this is a bottleneck
 * Collections: Add difference between Set, Map and List. Add ordering mechanism and allow to set own implementations.
 * Remove Zend_Entity_Interface typehint everywhere
 * Query API: Query Object in Domain Speak translating all properties and foreign entity access to internal SQL.
