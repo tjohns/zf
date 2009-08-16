@@ -1,7 +1,12 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_ManyToOneFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
+    public function getLoaderClassName()
+    {
+        return "Zend_Entity_Mapper_Loader_Entity";
+    }
+
     public function setUp()
     {
         parent::setUp();

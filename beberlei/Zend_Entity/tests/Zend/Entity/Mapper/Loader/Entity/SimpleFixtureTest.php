@@ -1,7 +1,12 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
+    public function getLoaderClassName()
+    {
+        return "Zend_Entity_Mapper_Loader_Entity";
+    }
+
     public function setUp()
     {
         $this->fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
@@ -68,22 +73,6 @@ class Zend_Entity_Mapper_Loader_Basic_SimpleFixtureTest extends Zend_Entity_Mapp
 
         $entity = $collection[0];
         $this->assertEquals($state, $entity->getState());
-    }
-
-    public function testProcessResultsetInArrayMode()
-    {
-        $loader = $this->getLoader();
-        $row = $this->fixture->getDummyDataRow();
-        $state = $this->fixture->getDummyDataState();
-
-        $resultSet = array($row);
-
-        $array = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ARRAY);
-
-        $this->assertTrue(is_array($array));
-        $this->assertEquals(1, count($array));
-
-        $this->assertEquals($state, $array[0]);
     }
 
     public function testLoadRowWithMissingColumnsThrowsException()

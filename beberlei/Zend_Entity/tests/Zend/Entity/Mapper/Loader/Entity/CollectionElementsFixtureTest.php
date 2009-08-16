@@ -1,12 +1,17 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_CollectionElementsFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_Mapper_Loader_Entity_CollectionElementsFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
 {
+    public function getLoaderClassName()
+    {
+        return "Zend_Entity_Mapper_Loader_Entity";
+    }
+
     public function testLoadRow_LazyCollectionElementsHydration()
     {
         $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
         $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
-        $this->loader = new Zend_Entity_Mapper_Loader_Basic(
+        $this->loader = new Zend_Entity_Mapper_Loader_Entity(
             $this->fixture->getEntityDefinition('Zend_TestEntity1'),
             $mi["Zend_TestEntity1"]
         );
@@ -55,7 +60,7 @@ class Zend_Entity_Mapper_Loader_Basic_CollectionElementsFixtureTest extends Zend
         $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
         $mi["Zend_TestEntity1"]->elementCollections["elements"]->fetch = "select";
         
-        $this->loader = new Zend_Entity_Mapper_Loader_Basic(
+        $this->loader = new Zend_Entity_Mapper_Loader_Entity(
             $this->fixture->getEntityDefinition('Zend_TestEntity1'),
             $mi["Zend_TestEntity1"]
         );

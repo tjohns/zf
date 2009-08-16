@@ -1,9 +1,14 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
-{    
+class Zend_Entity_Mapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
+{
+    public function getLoaderClassName()
+    {
+        return "Zend_Entity_Mapper_Loader_Entity";
+    }
+
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function getClassALoader()
     {
@@ -11,7 +16,7 @@ class Zend_Entity_Mapper_Loader_Basic_ManyToManyFixtureTest extends Zend_Entity_
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_Interface
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function getClassBLoader()
     {
