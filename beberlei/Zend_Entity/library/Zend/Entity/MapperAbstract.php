@@ -58,7 +58,10 @@ abstract class Zend_Entity_MapperAbstract
      * @param array $options
      * @return Zend_Entity_MapperAbstract
      */
-    abstract static public function create(array $options);
+    static public function create(array $options)
+    {
+        throw new Zend_Entity_Exception("Mapper does not support creation through factory method ::create().");
+    }
 
     /**
      *
