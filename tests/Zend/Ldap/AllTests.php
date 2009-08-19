@@ -35,7 +35,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Ldap
  */
 class Zend_Ldap_AllTests
 {
@@ -125,14 +124,6 @@ class Zend_Ldap_AllTests
     }
 }
 
-/**
- * @category   Zend
- * @package    Zend_Ldap
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Ldap
- */
 class Zend_Ldap_SkipOnlineTests extends PHPUnit_Framework_TestCase
 {
     public function setUp()
@@ -140,9 +131,6 @@ class Zend_Ldap_SkipOnlineTests extends PHPUnit_Framework_TestCase
         $this->markTestSkipped('Zend_Ldap online tests not enabled in TestConfiguration.php');
     }
 
-    /**
-     * @group      Zend_Ldap
-     */
     public function testNothing()
     {
     }
