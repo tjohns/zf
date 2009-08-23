@@ -222,6 +222,20 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());
     }
 
+    public function testMarshalStringFromDefault()
+    {
+        $native = 'foo';
+        $xml = "<string>$native</string>";
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('string', $val);
+        $this->assertEquals('string', $val->getType());
+        $this->assertSame($native, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+    }
+
     //Nil
 
     public function testFactoryAutodetectsNil()
@@ -245,7 +259,6 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $xml = '<value><nil/></value>';
         $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
                                     Zend_XmlRpc_Value::XML_STRING);
-
         $this->assertXmlRpcType('nil', $val);
         $this->assertEquals('nil', $val->getType());
         $this->assertSame(NULL, $val->getValue());
@@ -305,6 +318,17 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertSame($native, $value->getValue());
     }
 
+    public function testArrayMustContainDataElement()
+    {
+        $native = array();
+        $xml    = '<value><array/></value>';
+
+        $this->setExpectedException('Zend_XmlRpc_Value_Exception',
+            'Invalid XML for XML-RPC native array type: ARRAY tag must contain DATA tag');
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                    Zend_XmlRpc_Value::XML_STRING);
+    }
+
     /**
      * @group ZF-5405
      */
@@ -349,6 +373,44 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $native = array('foo' => 0);
         $xml = '<value><struct><member><name>foo</name><value><int>0</int>'
              . '</value></member></struct></value>';
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('struct', $val);
+        $this->assertEquals('struct', $val->getType());
+        $this->assertSame($native, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+    }
+
+    public function testMarshallingStructWithMemberWithoutValue()
+    {
+        $native = array('foo' => 0, 'bar' => 1);
+        $xml = '<value><struct>'
+             . '<member><name>foo</name><value><int>0</int></value></member>'
+             . '<member><name>foo</name><bar/></member>'
+             . '<member><name>bar</name><value><int>1</int></value></member>'
+             . '</struct></value>';
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('struct', $val);
+        $this->assertEquals('struct', $val->getType());
+        $this->assertSame($native, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+    }
+
+    public function testMarshallingStructWithMemberWithoutName()
+    {
+        $native = array('foo' => 0, 'bar' => 1);
+        $xml = '<value><struct>'
+             . '<member><name>foo</name><value><int>0</int></value></member>'
+             . '<member><value><string>foo</string></value></member>'
+             . '<member><name>bar</name><value><int>1</int></value></member>'
+             . '</struct></value>';
 
         $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
                                     Zend_XmlRpc_Value::XML_STRING);
@@ -422,6 +484,13 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $received);
     }
 
+    public function testMarshalDateTimeFromInvalidString()
+    {
+        $this->setExpectedException('Zend_XmlRpc_Value_Exception',
+            "Cannot convert given value 'foobarbaz' to a timestamp");
+        Zend_XmlRpc_Value::getXmlRpcValue('foobarbaz', Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME);
+    }
+
     public function testMarshalDateTimeFromNativeInteger()
     {
         $native = strtotime('1997-07-16T19:20+01:00');
@@ -486,6 +555,22 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertContains($encoded, $xml);
     }
 
+    /**
+     * @group ZF-3862
+     */
+    public function testMarshalSerializedObjectAsBase64()
+    {
+        $o = new Zend_XmlRpc_SerializableTestClass();
+        $o->setProperty('foobar');
+        $serialized = serialize($o);
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($serialized,
+                                    Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+
+        $this->assertXmlRpcType('base64', $val);
+        $o2 = unserialize($val->getValue());
+        $this->assertSame('foobar', $o2->getProperty());
+    }
+
     // Exceptions
 
     public function testFactoryThrowsWhenInvalidTypeSpecified()
@@ -509,6 +594,20 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     public function wrapXml($xml)
     {
         return "<?xml version=\"1.0\"?>\n$xml\n";
+    }
+}
+
+class Zend_XmlRpc_SerializableTestClass
+{
+    protected $_property;
+    public function setProperty($property)
+    {
+        $this->_property = $property;
+    }
+
+    public function getProperty()
+    {
+        return $this->_property;
     }
 }
 

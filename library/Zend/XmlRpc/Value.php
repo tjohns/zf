@@ -257,17 +257,17 @@ abstract class Zend_XmlRpc_Value
     /**
      * Transform an XML string into a XML-RPC native value
      *
-     * @param string|SimpleXMLElement $simple_xml A SimpleXMLElement object represent the XML string
+     * @param string|SimpleXMLElement $xml A SimpleXMLElement object represent the XML string
      *                                            It can be also a valid XML string for convertion
      *
      * @return Zend_XmlRpc_Value
      * @static
      */
-    private static function _xmlStringToNativeXmlRpc($simple_xml)
+    private static function _xmlStringToNativeXmlRpc($xml)
     {
-        if (!$simple_xml instanceof SimpleXMLElement) {
+        if (!$xml instanceof SimpleXMLElement) {
             try {
-                $simple_xml = @new SimpleXMLElement($simple_xml);
+                $xml = @new SimpleXMLElement($xml);
             } catch (Exception $e) {
                 // The given string is not a valid XML
                 require_once 'Zend/XmlRpc/Value/Exception.php';
@@ -276,7 +276,7 @@ abstract class Zend_XmlRpc_Value
         }
 
         // Get the key (tag name) and value from the simple xml object and convert the value to an XML-RPC native value
-        list($type, $value) = each($simple_xml);
+        list($type, $value) = each($xml);
         if (!$type) {    // If no type was specified, the default is string
             $type = self::XMLRPC_TYPE_STRING;
         }
@@ -313,12 +313,6 @@ abstract class Zend_XmlRpc_Value
                 $xmlrpc_val = new Zend_XmlRpc_Value_Nil();
                 break;
             case self::XMLRPC_TYPE_ARRAY:
-                // If the XML is valid, $value must be an SimpleXML element and contain the <data> tag
-                if (!$value instanceof SimpleXMLElement) {
-                    require_once 'Zend/XmlRpc/Value/Exception.php';
-                    throw new Zend_XmlRpc_Value_Exception('XML string is invalid for XML-RPC native '. self::XMLRPC_TYPE_ARRAY .' type');
-                }
-
                 // PHP 5.2.4 introduced a regression in how empty($xml->value)
                 // returns; need to look for the item specifically
                 $data = null;
@@ -343,18 +337,13 @@ abstract class Zend_XmlRpc_Value
                 $xmlrpc_val = new Zend_XmlRpc_Value_Array($values);
                 break;
             case self::XMLRPC_TYPE_STRUCT:
-                // If the XML is valid, $value must be an SimpleXML
-                if ((!$value instanceof SimpleXMLElement)) {
-                    require_once 'Zend/XmlRpc/Value/Exception.php';
-                    throw new Zend_XmlRpc_Value_Exception('XML string is invalid for XML-RPC native '. self::XMLRPC_TYPE_STRUCT .' type');
-                }
                 $values = array();
                 // Parse all the memebers of the struct from the XML string
                 // (simple xml element) to Zend_XmlRpc_Value objects
                 foreach ($value->member as $member) {
                     // @todo? If a member doesn't have a <value> tag, we don't add it to the struct
                     // Maybe we want to throw an exception here ?
-                    if ((!$member->value instanceof SimpleXMLElement)) {
+                    if (!isset($member->value) or !isset($member->name)) {
                         continue;
                         //throw new Zend_XmlRpc_Value_Exception('Member of the '. self::XMLRPC_TYPE_STRUCT .' XML-RPC native type must contain a VALUE tag');
                     }
@@ -368,7 +357,7 @@ abstract class Zend_XmlRpc_Value
                 throw new Zend_XmlRpc_Value_Exception('Value type \''. $type .'\' parsed from the XML string is not a known XML-RPC native type');
                 break;
         }
-        $xmlrpc_val->_setXML($simple_xml->asXML());
+        $xmlrpc_val->_setXML($xml->asXML());
 
         return $xmlrpc_val;
     }

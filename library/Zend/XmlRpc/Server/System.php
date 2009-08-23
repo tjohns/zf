@@ -70,7 +70,8 @@ class Zend_XmlRpc_Server_System
     {
         $table = $this->_server->getDispatchTable();
         if (!$table->hasMethod($method)) {
-            throw new Zend_Server_Exception('Method "' . $method . '"does not exist', 640);
+            require_once 'Zend/XmlRpc/Server/Exception.php';
+            throw new Zend_XmlRpc_Server_Exception('Method "' . $method . '" does not exist', 640);
         }
 
         return $table->getMethod($method)->getMethodHelp();
@@ -86,7 +87,8 @@ class Zend_XmlRpc_Server_System
     {
         $table = $this->_server->getDispatchTable();
         if (!$table->hasMethod($method)) {
-            throw new Zend_Server_Exception('Method "' . $method . '"does not exist', 640);
+            require_once 'Zend/XmlRpc/Server/Exception.php';
+            throw new Zend_XmlRpc_Server_Exception('Method "' . $method . '" does not exist', 640);
         }
         $method = $table->getMethod($method)->toArray();
         return $method['prototypes'];
@@ -135,7 +137,11 @@ class Zend_XmlRpc_Server_System
                     $request->setMethod($method['methodName']);
                     $request->setParams($method['params']);
                     $response = $this->_server->handle($request);
-                    $responses[] = $response->getReturnValue();
+                    if ($response->isFault()) {
+                        $falt = $response;
+                    } else {
+                        $responses[] = $response->getReturnValue();
+                    }
                 } catch (Exception $e) {
                     $fault = $this->_server->fault($e);
                 }
