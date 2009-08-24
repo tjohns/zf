@@ -5,6 +5,10 @@ RELEASE INFORMATION
 Zend Framework 1.9.2 ([INSERT REV NUM HERE]).
 Released on August 25, 2009.
 
+A detailed list of all features and bug fixes in this release may be found at:
+
+    http://framework.zend.com/changelog/1.9.2
+
 NEW FEATURES
 ------------
 * Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
