@@ -21,34 +21,31 @@
  */
 
 /**
- * Array Loader
+ * Database QueryObject an extension of Zend_Db_Select
  *
- * @uses       Zend_Entity_Mapper_Loader_LoaderAbstract
+ * @uses       Zend_Db_Select
  * @category   Zend
  * @package    Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_Loader_Array extends Zend_Entity_Mapper_Loader_LoaderAbstract
+class Zend_Entity_Mapper_QueryObject extends Zend_Db_Select
 {
     /**
-     * @param  array $resultSet
-     * @param  string $fetchMode
-     * @return Zend_Entity_Collection_Interface
+     * Prevents Wildcards to cluster the loaded columns, because Mapper enforces required columns anyways.
+     *
+     * @param string $type
+     * @param string $name
+     * @param string $cond
+     * @param string|array $cols
+     * @param string $schema
      */
-    public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm)
+    protected function _join($type, $name, $cond, $cols, $schema = null)
     {
-        $resultArray = array();
-        foreach($resultSet AS $row) {
-            foreach($rsm->entityResult AS $entityName => $entityDef) {
-                $mapping = $this->_mappings[$entityName];
-                if($entityDef['joined'] == false) {
-                    $resultArray[] = $this->renameAndCastColumnToPropertyKeys($row, $mapping);
-                }
-            }
-            
+        if($cols == Zend_Db_Select::SQL_WILDCARD) {
+            $cols = array();
         }
-        return $resultArray;
+        return parent::_join($type, $name, $cond, $cols, $schema);
     }
 }

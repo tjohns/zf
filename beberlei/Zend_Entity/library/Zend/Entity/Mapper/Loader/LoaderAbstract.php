@@ -32,47 +32,43 @@
 abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
 {
     /**
-     * @var Zend_Entity_Mapper_MappingInstruction
+     * @var Zend_Entity_Mapper_Mapping
      */
-    protected $_mappingInstruction = null;
+    protected $_mappings = null;
+    
+    /**
+     * @var Zend_Entity_Manager_Interface
+     */
+    protected $_em;
 
     /**
      * Construct new Loader based on an entity definition.
      * 
-     * @param Zend_Entity_Definition_Entity $entityDefinition
+     * @param Zend_Entity_Manager_Interface $em
+     * @param Zend_Entity_Mapper_Mapping[] $mappings
      */
-    public function __construct(Zend_Entity_Definition_Entity $entityDefinition, Zend_Entity_Mapper_MappingInstruction $mappingInstruction)
+    public function __construct(Zend_Entity_Manager_Interface $em, array $mappings)
     {
-        $this->_mappingInstruction = $mappingInstruction;
+        $this->_em = $em;
+        $this->_mappings = $mappings;
     }
 
     /**
-     * @param Zend_Db_Select $select
-     */
-    abstract public function initSelect(Zend_Db_Select $select);
-
-    /**
-     * @param Zend_Db_Select $select
-     */
-    abstract public function initColumns(Zend_Db_Select $select);
-
-    /**
      * @param  array $resultSet
-     * @param  Zend_Entity_Manager $entityManager
      * @param  string $fetchMode
      * @return Zend_Entity_Collection_Interface
      */
-    abstract public function processResultset($resultSet, Zend_Entity_Manager $entityManager);
+    abstract public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm);
 
     /**
      * @todo Gah Code duplication
      * @param  array $row
      * @return array
      */
-    protected function renameAndCastColumnToPropertyKeys($row)
+    protected function renameAndCastColumnToPropertyKeys($row, $mapping)
     {
         $state = array();
-        foreach($this->_mappingInstruction->columnNameToProperty AS $columnName => $property) {
+        foreach($mapping->columnNameToProperty AS $columnName => $property) {
             if(!array_key_exists($columnName, $row)) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
@@ -84,16 +80,16 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
         return $state;
     }
 
-    public function createEntityFromRow(array $row, Zend_Entity_Manager_Interface $entityManager)
+    public function createEntityFromRow(array $row, $mapping)
     {
-        $identityMap = $entityManager->getIdentityMap();
-        $key = $this->_mappingInstruction->primaryKey->retrieveKeyValuesFromProperties($row);
-        if($identityMap->hasObject($this->_mappingInstruction->class, $key) == true) {
-            $entity = $identityMap->getObject($this->_mappingInstruction->class, $key);
+        $identityMap = $this->_em->getIdentityMap();
+        $key = $mapping->primaryKey->retrieveKeyValuesFromProperties($row);
+        if($identityMap->hasObject($mapping->class, $key) == true) {
+            $entity = $identityMap->getObject($mapping->class, $key);
         } else {
             $versionId = null;
-            if($this->_mappingInstruction->versionProperty !== null) {
-                $versionColumnName = $this->_mappingInstruction->versionProperty->columnName;
+            if($mapping->versionProperty !== null) {
+                $versionColumnName = $mapping->versionProperty->columnName;
                 if(isset($row[$versionColumnName])) {
                     $versionId = $row[$versionColumnName];
                 } else {
@@ -103,25 +99,25 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
                 }
             }
 
-            $entity = $this->createEntity($row);
+            $entity = $this->createEntity($row, $mapping);
             // Set this before loading relations to circumvent infinite loop on backreferences and stuff
-            $identityMap->addObject($this->_mappingInstruction->class, $key, $entity, $versionId);
+            $identityMap->addObject($mapping->class, $key, $entity, $versionId);
 
-            $this->loadRow($entity, $row, $entityManager);
+            $this->loadRow($entity, $row, $mapping);
         }
         return $entity;
     }
 
-    protected function createEntity(array $row)
+    protected function createEntity(array $row, $mapping = null)
     {
-        $entityClass = $this->_mappingInstruction->class;
+        $entityClass = $mapping->class;
         return new $entityClass();
     }
 
-    public function loadRow(Zend_Entity_Interface $entity, array $row, Zend_Entity_Manager_Interface $entityManager)
+    public function loadRow(Zend_Entity_Interface $entity, array $row, $mapping)
     {
         $state = array();
-        foreach($this->_mappingInstruction->columnNameToProperty AS $columnName => $property) {
+        foreach($mapping->columnNameToProperty AS $columnName => $property) {
             if(!array_key_exists($columnName, $row)) {
                 require_once "Zend/Entity/Exception.php";
                 throw new Zend_Entity_Exception(
@@ -132,15 +128,16 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
         }
         unset($row);
 
-        $state = $this->initializeRelatedObjects($state, $entityManager);
-        $this->_mappingInstruction->stateTransformer->setState($entity, $state);
+        $state = $this->initializeRelatedObjects($state, $mapping);
+        $mapping->stateTransformer->setState($entity, $state);
         
-        $entityManager->getEventListener()->postLoad($entity);
+        $this->_em->getEventListener()->postLoad($entity);
     }
     
-    protected function initializeRelatedObjects(array $entityState, Zend_Entity_Manager $entityManager)
+    protected function initializeRelatedObjects(array $entityState, $mapping)
     {
-        foreach($this->_mappingInstruction->toOneRelations AS $relation) {
+        $entityManager = $this->_em;
+        foreach($mapping->toOneRelations AS $relation) {
             /* @var $relation Zend_Entity_Definition_RelationAbstract */
             $propertyName = $relation->propertyName;
             if($relation->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
@@ -153,12 +150,12 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
                 );
             }
         }
-        foreach($this->_mappingInstruction->toManyRelations AS $collectionDef) {
+        foreach($mapping->toManyRelations AS $collectionDef) {
             /* @var $collectionDef Zend_Entity_Definition_Collection */
             $relation = $collectionDef->relation;
             $foreignDefinition = $entityManager->getMetadataFactory()->getDefinitionByEntityName($relation->class);
 
-            $keyValue = $entityState[$this->_mappingInstruction->primaryKey->propertyName];
+            $keyValue = $entityState[$mapping->primaryKey->propertyName];
 
             $db = $entityManager->getAdapter();
             $query = $entityManager->createNativeQuery($relation->class);
@@ -192,9 +189,9 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
                 $entityState[$propertyName] = new Zend_Entity_Collection($query->getResultList());
             }
         }
-        foreach($this->_mappingInstruction->elementCollections AS $elementDef) {
+        foreach($mapping->elementCollections AS $elementDef) {
             $propertyName = $elementDef->propertyName;
-            $pk = $this->_mappingInstruction->primaryKey->propertyName;
+            $pk = $mapping->primaryKey->propertyName;
 
             /* @var $elementDef Zend_Entity_Definition_Collection */
             $db = $entityManager->getAdapter();

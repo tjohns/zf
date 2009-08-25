@@ -7,14 +7,14 @@ class Zend_Entity_Mapper_Loader_Entity_CollectionElementsFixtureTest extends Zen
         return "Zend_Entity_Mapper_Loader_Entity";
     }
 
+    public function getFixtureClassName()
+    {
+        return "Zend_Entity_Fixture_CollectionElementDefs";
+    }
+
     public function testLoadRow_LazyCollectionElementsHydration()
     {
-        $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
-        $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
-        $this->loader = new Zend_Entity_Mapper_Loader_Entity(
-            $this->fixture->getEntityDefinition('Zend_TestEntity1'),
-            $mi["Zend_TestEntity1"]
-        );
+        $this->loader = $this->createLoader();
 
         $rows = array(
             array("col_key" => "foo", "col_name" => "bar"),
@@ -48,22 +48,18 @@ class Zend_Entity_Mapper_Loader_Entity_CollectionElementsFixtureTest extends Zen
 
         $entity = new Zend_TestEntity1();
 
-        $this->loader->loadRow($entity, $row, $em);
+        $this->loader->loadRow($entity, $row, $this->mappings["Zend_TestEntity1"]);
 
+        $this->assertType("Zend_Entity_LazyLoad_ElementHashMap", $entity->elements);
+        $this->assertType("Zend_Entity_Collection_ElementHashMap", $entity->elements);
         $this->assertEquals("bar", $entity->elements["foo"]);
         $this->assertEquals("baz", $entity->elements["bar"]);
     }
 
     public function testLoadRow_SelectCollectionElementsHydration()
     {
-        $this->fixture = new Zend_Entity_Fixture_CollectionElementDefs();
-        $mi = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_MappingInstruction');
-        $mi["Zend_TestEntity1"]->elementCollections["elements"]->fetch = "select";
-        
-        $this->loader = new Zend_Entity_Mapper_Loader_Entity(
-            $this->fixture->getEntityDefinition('Zend_TestEntity1'),
-            $mi["Zend_TestEntity1"]
-        );
+        $this->mappings["Zend_TestEntity1"]->elementCollections["elements"]->fetch = "select";
+        $this->loader = $this->createLoader();
 
         $rows = array(
             array("col_key" => "foo", "col_name" => "bar"),
@@ -97,8 +93,10 @@ class Zend_Entity_Mapper_Loader_Entity_CollectionElementsFixtureTest extends Zen
 
         $entity = new Zend_TestEntity1();
 
-        $this->loader->loadRow($entity, $row, $em);
+        $this->loader->loadRow($entity, $row, $this->mappings["Zend_TestEntity1"]);
 
+        $this->assertNotType("Zend_Entity_LazyLoad_ElementHashMap", $entity->elements);
+        $this->assertType("Zend_Entity_Collection_ElementHashMap", $entity->elements);
         $this->assertEquals("bar", $entity->elements["foo"]);
         $this->assertEquals("baz", $entity->elements["bar"]);
     }

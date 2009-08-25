@@ -282,7 +282,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
         $mapper = $this->createMapperMock();
         $mapper->expects($this->once())
-               ->method('createNativeQuery')
+               ->method('createNativeQueryBuilder')
                ->with($this->equalTo(self::KNOWN_ENTITY_CLASS), $this->equalTo($manager));
 
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);

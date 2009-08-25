@@ -38,7 +38,7 @@ interface Zend_Entity_MetadataFactory_Interface
     /**
      *
      * @param  string $visitorClass
-     * @return Zend_Entity_Definition_VisitorAbstract[]
+     * @return Zend_Entity_Definition_MappingVisitor[]
      */
     public function transform($visitorClass);
 }

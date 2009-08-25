@@ -1,16 +1,16 @@
 <?php
 
-class Zend_Entity_Mapper_MappingInstructionTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_Mapper_MappingTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Entity_Mapper_MappingInstruction
+     * @var Zend_Entity_Mapper_Mapping
      */
     private $mapping = null;
     private $metadataFactory = null;
 
     public function setUp()
     {
-        $this->mapping = new Zend_Entity_Mapper_MappingInstruction();
+        $this->mapping = new Zend_Entity_Mapper_Mapping();
         $this->metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
     }
 

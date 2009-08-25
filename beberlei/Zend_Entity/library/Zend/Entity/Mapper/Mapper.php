@@ -38,9 +38,9 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
 
         $db = $options['db'];
         $metadataFactory = $options['metadataFactory'];
-        $mappingInstructions = $metadataFactory->transform('Zend_Entity_Mapper_MappingInstruction');
+        $mappings = $metadataFactory->transform('Zend_Entity_Mapper_Mapping');
 
-        return new self($db, $metadataFactory, $mappingInstructions);
+        return new self($db, $metadataFactory, $mappings);
     }
 
     /**
@@ -48,29 +48,44 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
      *
      * @param  Zend_Db_Adapter_Abstract  $db
      * @param  Zend_Entity_MetadataFactory_Interface $metadataFactory
-     * @param  Zend_Entity_Mapper_MappingInstruction[] $mappingInstructions
+     * @param  Zend_Entity_Mapper_Mapping[] $mappingInstructions
      */
-    public function __construct(Zend_Db_Adapter_Abstract $db, Zend_Entity_MetadataFactory_Interface $metadataFactory, array $mappingInstructions=array())
+    public function __construct(Zend_Db_Adapter_Abstract $db, $metadataFactory=null, array $mappingInstructions=array())
     {
         $this->_db = $db;
-        $this->_metadataFactory = $metadataFactory;
-        $this->_mappingInstructions = $mappingInstructions;
+        $this->_mappings = $mappingInstructions;
     }
 
-    public function createNativeQuery($input, $entityManager)
+    /**
+     * @param  string $classOrNull
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @return Zend_Entity_Mapper_QueryObject
+     */
+    public function createNativeQueryBuilder($classOrNull, $entityManager)
     {
-        $q = new Zend_Entity_Mapper_NativeQuery($this, $entityManager);
-        if(in_array($input, $this->_metadataFactory->getDefinitionEntityNames())) {
-            $q->with($input);
-        } else {
-            throw new Exception("Missing Native Query Parser/Builder/Whatever!");
+        $queryObject = new Zend_Entity_Mapper_QueryObject( $this->getAdapter() );
+        $q = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $queryObject);
+        if($classOrNull !== null) {
+            if(isset($this->_mappings[$classOrNull])) {
+                $q->with($classOrNull);
+            } else {
+                throw new Zend_Entity_Exception(
+                    "Cannot prepare the QueryBuilder with instructions to load unknown entity '".$classOrNull."'."
+                );
+            }
         }
         return $q;
     }
 
+    public function createNativeQuery($sqlQuery, $resultSetMapping, $entityManager)
+    {
+        $queryObject = new Zend_Entity_Mapper_QueryObject( $this->getAdapter() );
+        return new Zend_Entity_Mapper_NativeQuery($entityManager, $queryObject);
+    }
+
     public function createQuery($entityName, $entityManager)
     {
-        throw new Exception("not implemented yet");
+        throw new Zend_Entity_Exception("not implemented yet");
     }
 
     /**

@@ -5,9 +5,9 @@ require_once dirname(__FILE__)."/../../TestHelper.php";
 
 require_once "Loader/AllTests.php";
 require_once "Persister/AllTests.php";
-require_once "SelectTest.php";
+require_once "QueryObjectTest.php";
 require_once "MappingInstructionTest.php";
-require_once "NativeQueryTest.php";
+require_once "NativeQueryBuilderTest.php";
 require_once "MapperTest.php";
 require_once "TransactionTest.php";
 
@@ -18,10 +18,10 @@ class Zend_Entity_Mapper_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend_Entity_Mapper Tests');
         $suite->addTest(Zend_Entity_Mapper_Loader_AllTests::suite());
         $suite->addTest(Zend_Entity_Mapper_Persister_AllTests::suite());
-        $suite->addTestSuite('Zend_Entity_Mapper_MappingInstructionTest');
-        $suite->addTestSuite('Zend_Entity_Mapper_SelectTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_MappingTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_QueryObjectTest');
         $suite->addTestSuite('Zend_Entity_Mapper_MapperTest');
-        $suite->addTestSuite('Zend_Entity_Mapper_NativeQueryTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_NativeQueryBuilderTest');
         $suite->addTestSuite('Zend_Entity_Mapper_TransactionTest');
 
         return $suite;

@@ -44,7 +44,7 @@ class Zend_Entity_MetadataFactory_Testing implements Zend_Entity_MetadataFactory
 
     /**
      * @param  string $visitorClass
-     * @return Zend_Entity_Definition_VisitorAbstract[]
+     * @return Zend_Entity_Definition_MappingVisitor[]
      */
     public function transform($visitorClass)
     {

@@ -18,18 +18,6 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $mapper = Zend_Entity_Mapper_Mapper::create($options);
     }
 
-    public function testSelectType()
-    {
-        $entityDefinition = new Zend_Entity_Definition_Entity('foo');
-        $entityDefinition->addPrimaryKey("id");
-
-        $mapper = $this->createMapper(null, $entityDefinition);
-
-        $select = $mapper->select();
-
-        $this->assertType('Zend_Entity_Mapper_Select', $select);
-    }
-
     public function testLoadEntity()
     {
         $fixtureId = 1;
@@ -50,7 +38,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
                
         $mapper = $this->createMapper($dbMock, null, $metadataFactory);
 
-        $queryMock = $this->getMock('Zend_Entity_Mapper_NativeQuery', array('select', 'where', 'getSingleResult'), array(), '', false);
+        $queryMock = $this->getMock('Zend_Entity_Mapper_NativeQueryBuilder', array('select', 'where', 'getSingleResult'), array(), '', false);
         $queryMock->expects($this->at(0))
                   ->method('where')
                   ->with($this->equalTo('bar.col_id = ?'), $this->equalTo($fixtureId));
@@ -59,7 +47,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
 
         $emMock = $this->getMock('Zend_Entity_Manager_Interface');
         $emMock->expects($this->once())
-               ->method('createNativeQuery')
+               ->method('createNativeQueryBuilder')
                ->with($fixtureEntity)
                ->will($this->returnValue($queryMock));
 
@@ -85,6 +73,38 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $lazyEntity->expects($this->once())->method('__ze_getClassName')->will($this->returnValue('Sample'));
 
         $mapper->save($lazyEntity, $this->createEntityManager());
+    }
+
+    public function testCreateNativeQueryBuilder_UnknownClassGiven_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $testAdapter = new Zend_Test_DbAdapter();
+        $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
+
+        $mapper->createNativeQueryBuilder("foo", $this->createEntityManager());
+    }
+
+    public function testCreateQuery_ThrowsException_NotYetImplemented()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $testAdapter = new Zend_Test_DbAdapter();
+        $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
+
+        $mapper->createQuery("foo", $this->createEntityManager());
+    }
+
+    public function testCreateNativeQuery()
+    {
+        $testAdapter = new Zend_Test_DbAdapter();
+        $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
+
+        $resultSetMapping = new Zend_Entity_Mapper_ResultSetMapping();
+        $entityManager = $this->createEntityManager();
+        $q = $mapper->createNativeQuery("select foo", $resultSetMapping, $entityManager);
+
+        $this->assertType('Zend_Entity_Mapper_NativeQuery', $q);
     }
 
     public function testSaveNonLazyNonCleanEntity_IsDelegatedToPersister()

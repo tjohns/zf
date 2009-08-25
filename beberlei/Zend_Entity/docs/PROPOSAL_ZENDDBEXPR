@@ -21,10 +21,7 @@ TBD
 Currently Zend_Db_Select does not allow to write completly portable applications when it comes to
 abstraction of SQL functions. This proposal aims to close the gap as much as possible by offering
 an Expression object inside Zend_Db_Select and Zend_Db_Adapter_Abstract. The largest possible
-subset of functions between all the current supported vendors is integrated. Additionally a
-"non" compatible modus will be included that abstracts as much functions from each vendor as possible.
-
-Each implemented Expression/SQL Function will enforce the escaping of values.
+subset of functions between all the current supported vendors is integrated, possible a subset of ANSI-SQL 92.
 {zone-data}
 
 {zone-data:references}
@@ -37,7 +34,9 @@ Each implemented Expression/SQL Function will enforce the escaping of values.
 * This component *MUST* be nested inside each Zend_Db_Select instance and globally inside the Adapter
     * The Adapter *SHOULD* enforce the expression object to be created only once.
 * This component *WILL* offer a non-compliant modus where additional vendor-specific functions are nested in
+* This component *WILL* use quoting/escaping facilities internally.
 * This component *WILL* enforce escaping of all variables and columns in each expression.
+* Use of this component with Zend_Db_Select is *OPTIONAL*, the old way of implementing expressions stays the same.
 {zone-data}
 
 {zone-data:dependencies}
@@ -46,7 +45,7 @@ Each implemented Expression/SQL Function will enforce the escaping of values.
 {zone-data}
 
 {zone-data:operation}
-You can use the Query Expression object to generate Zend_Db_Expr instances with specific supported functions.
+You can use the Query Expression object to generate Zend_Db_Expr instances with specific supported SQL functions.
 
 The question is, how would this query expression object be available to the consumer? There are several possible APIs:
 
@@ -60,7 +59,26 @@ $select->fn->upper("columnName");
 //...
 {code}
 
-I opt for a simple syntax, which makes the usage as non-verbose as possible.
+I think the expr() method is the best choice although its the longest, because other programming languages like
+C# or Java use Expression as a name for objects that perform actions on values.
+
+Use of it would follow the lines of:
+
+{code}
+$select = $db->select();
+$select->from("table")
+       ->where( $select->expr()->eq("columnName", $value) );
+       ->where( $select->expr()->like("columnName2", $value2."%") );
+       ->where( $select->expr()->notEq($select->expr()->upper("col3", $value3)) );
+{code}
+
+In a first version I would opt to implement a common subset of functions accross all major database vendors, probably
+ANSI SQL 92 is a good start. Additionally if "non" compatible modus will be included that abstracts as much functions
+from each vendor as possible.
+
+Because some functions have conflicting names in different vendor languages, i want to go away from sql naming
+in some cases and use programming language names on some issues. I guess the hardest part of this proposal is the naming
+issue, implementation should be easy if everything is agreed on.
 {zone-data}
 
 {zone-data:milestones}
@@ -86,6 +104,7 @@ I opt for a simple syntax, which makes the usage as non-verbose as possible.
 {card:label=Use-Case 1: Comparison Operators}
 {code}
 $select->fn()->eq("foo", $var, Zend_Db::PARAM_INT); // $db->quoteInto("foo = ?", $var, Zend_Db::PARAM_INT);
+$select->fn()->notEq("foo", $var, Zend_Db::PARAM_INT); // $db->quoteInto("foo != ?", $var, Zend_Db::PARAM_INT);
 $select->fn()->lt("foo", $var); // $db->quoteInto("foo < ?", $var);
 $select->fn()->gt("foo", $var); // $db->quoteInto("foo > ?", $var);
 $select->fn()->lte("foo", $var); // $db->quoteInto("foo <= ?", $var);
@@ -146,7 +165,7 @@ $select->fn()->notEqNull("column");
 {card:label=Use-Case 6: Conditional Functions}
 {code}
 $select->fn()->if( $select->fn()->eq("foo", 42), "a", "b");
-$select->fn()->ifnull($var, "1234", Zend_Db::PARAM_INT);
+$select->fn()->eqNull($var, "1234", Zend_Db::PARAM_INT);
 $select->fn()->case(
     array(), array(), ...
 );
@@ -188,11 +207,9 @@ $select->columns($select->fn()->substr("firstname", 0, 1), $select->fn()->count(
 
 {card:label=Use-Case 10: Comparison Operators}
 {code}
-$name = 'Foo';
-$greaterThanAge = 20;
 $select->from("persons")
        ->where($select->fn()->eq("name", $name))
-       ->where($select->fn()->gt("age", $greaterThanAge, Zend_Db::PARAM_INT))
+       ->where($select->fn()->gt("age", $greaterThanAge))
        ->where($select->fn()->in("eyeColor", array("blue", "green"))
        ->where($select->fn()->between("salary", 20000, 50000);
 
@@ -201,9 +218,11 @@ $select->from("persons")
 //      age > 20 AND
 //      eyeColor IN ('blue', 'green') AND
 //      salary BETWEEN 20000, 50000;
+{code}
 {card}
 
-{card:label=Low-Verbosity UC-10}
+
+{card:label=Non-Verbose UC-10}
 {code}
 // Low Verbosity:
 $fn = $q->fn();
@@ -214,6 +233,7 @@ $q->from("persons");
    ->where($fn->between("salary", 20000, 50000);
 {code}
 {card}
+
 {deck}
 
 {zone-data}

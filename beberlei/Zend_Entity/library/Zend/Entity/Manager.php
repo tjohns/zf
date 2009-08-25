@@ -214,12 +214,27 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * @param string|object $input
+     * @param string|object $sqlQuery
+     * @param string|Zend_Entity_Mapper_ResultSetMapping $classOrResultSetMapping
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function createNativeQuery($input)
+    public function createNativeQuery($sqlQuery, $classOrResultSetMapping=null)
     {
-        return $this->getMapper()->createNativeQuery($input, $this);
+        if(strpos($sqlQuery, " ") === false) {
+            return $this->getMapper()->createNativeQueryBuilder($sqlQuery, $this);
+        } else {
+            return $this->getMapper()->createNativeQuery($sqlQuery, $classOrResultSetMapping, $this);
+        }
+    }
+
+    /**
+     *
+     * @param  string $className
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    public function createNativeQueryBuilder($className=null)
+    {
+        return $this->getMapper()->createNativeQueryBuilder($className, $this);
     }
 
     /**
@@ -273,13 +288,13 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param string $key
      * @return Zend_Entity_Interface
      */
-    public function load($entityName, $keyValue, $notFound=self::NOTFOUND_NULL)
+    public function load($entityName, $key, $notFound="null")
     {
-        if($this->_identityMap->hasObject($entityName, $keyValue)) {
-            $object = $this->_identityMap->getObject($entityName, $keyValue);
+        if($this->_identityMap->hasObject($entityName, $key)) {
+            $object = $this->_identityMap->getObject($entityName, $key);
         } else {
             $mapper = $this->getMapper();
-            $object = $mapper->load($this, $entityName, $keyValue, $notFound);
+            $object = $mapper->load($this, $entityName, $key, $notFound);
         }
         return $object;
     }

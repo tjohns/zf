@@ -178,7 +178,7 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $entityDef->addElement("foo", $propertyA);
         $entityDef->addElement("bar", $propertyB);
 
-        $visitorMock = $this->getMock('Zend_Entity_Definition_VisitorAbstract', array('acceptProperty', 'acceptEntity', 'finalize'));
+        $visitorMock = $this->getMock('Zend_Entity_Definition_MappingVisitor', array('acceptProperty', 'acceptEntity', 'finalize'));
         $visitorMock->expects($this->at(0))
                     ->method('acceptEntity')
                     ->with($this->equalTo($entityDef));
@@ -237,15 +237,5 @@ class Zend_Entity_Definition_TestingEntity extends Zend_Entity_Definition_Entity
     public function addElement($propertyName, Zend_Entity_Definition_Property $property)
     {
         $this->_properties[$propertyName] = $property;
-    }
-
-    public function addRelation($relationName, Zend_Entity_Definition_AbstractRelation $relation)
-    {
-        $this->_relations[$relationName] = $relation;
-    }
-
-    public function addExtension($extName, $extension)
-    {
-        $this->_extensions[$extName] = $extension;
     }
 }

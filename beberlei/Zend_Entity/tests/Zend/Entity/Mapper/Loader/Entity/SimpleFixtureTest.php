@@ -7,9 +7,9 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
         return "Zend_Entity_Mapper_Loader_Entity";
     }
 
-    public function setUp()
+    public function getFixtureClassName()
     {
-        $this->fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        return "Zend_Entity_Fixture_SimpleFixtureDefs";
     }
 
     public function getLoader()
@@ -25,7 +25,7 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
         $row = $this->fixture->getDummyDataRow();
         $state = $this->fixture->getDummyDataState();
 
-        $entity = $loader->createEntityFromRow($row, $this->createEntityManager());
+        $entity = $loader->createEntityFromRow($row, $this->mappings["Zend_TestEntity1"]);
 
         $this->assertEquals($state, $entity->getState());
     }
@@ -37,7 +37,7 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
         $row = $this->fixture->getDummyDataRow();
         $state = $this->fixture->getDummyDataState();
 
-        $loader->loadRow($entity, $row, $this->createEntityManager());
+        $loader->loadRow($entity, $row, $this->mappings["Zend_TestEntity1"]);
 
         $this->assertEquals($state, $entity->getState());
     }
@@ -47,15 +47,13 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
         $loader = $this->getLoader();
         $row = $this->fixture->getDummyDataRow();
 
-        $this->identityMap = $this->createIdentityMapMock(0);
-        $this->identityMap->expects($this->once())->method('hasObject')->will($this->returnValue(true));
-        $this->identityMap->expects($this->once())->method('getObject')->will($this->returnValue('foo'));
-        
-        $entityManager = $this->createEntityManager();
+        $entity = new Zend_TestEntity1();
 
-        $entity = $loader->createEntityFromRow($row, $entityManager);
+        $this->identityMap->addObject("Zend_TestEntity1", 1, $entity);
 
-        $this->assertEquals('foo', $entity);
+        $createdEntity = $loader->createEntityFromRow($row, $this->mappings["Zend_TestEntity1"]);
+
+        $this->assertSame($entity, $createdEntity);
     }
 
     public function testProcessResultsetInEntityMode()
@@ -66,7 +64,12 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
 
         $resultSet = array($row);
 
-        $collection = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ENTITIES);
+        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm->addEntity(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS, "a");
+        $rsm->addProperty("a", "a_id", "id");
+        $rsm->addProperty("a", "a_property", "property");
+
+        $collection = $loader->processResultset($resultSet, $rsm);
 
         $this->assertType('array', $collection);
         $this->assertEquals(1, count($collection));
@@ -83,7 +86,7 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
         $loader = $this->getLoader();
         $rowMissingColumn = array(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_ID_COLUMN => 1);
 
-        $loader->loadRow($entity, $rowMissingColumn, $this->createEntityManager());
+        $loader->loadRow($entity, $rowMissingColumn, $this->mappings["Zend_TestEntity1"]);
     }
 
     public function testLoadRow_VersionedField_AddedToIdentityMap()
@@ -97,10 +100,8 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
 
         $row = array('a_id' => 1, 'a_property' => 'foo', 'a_version' => $versionFixture);
 
-        $em = $this->createEntityManager();
-
-        $entity = $loader->createEntityFromRow($row, $em);
-        $this->assertEquals($versionFixture, $em->getIdentityMap()->getVersion($entity));
+        $entity = $loader->createEntityFromRow($row, $this->mappings["Zend_TestEntity1"]);
+        $this->assertEquals($versionFixture, $this->identityMap->getVersion($entity));
     }
 
 
@@ -120,8 +121,6 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
 
         $row = array('a_id' => 1, 'a_property' => 'foo');
 
-        $em = $this->createEntityManager();
-
-        $loader->createEntityFromRow($row, $em);
+        $loader->createEntityFromRow($row, $this->mappings["Zend_TestEntity1"]);
     }
 }

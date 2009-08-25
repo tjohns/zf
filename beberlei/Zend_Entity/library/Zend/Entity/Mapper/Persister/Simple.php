@@ -20,17 +20,17 @@
 class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persister_Interface
 {
     /**
-     * @var Zend_Entity_Mapper_MappingInstruction
+     * @var Zend_Entity_Mapper_Mapping
      */
     protected $_mappingInstruction = null;
 
     /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
-     * @param  Zend_Entity_Mapper_MappingInstruction $mappingInstruction
+     * @param  Zend_Entity_Mapper_Mapping $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Mapper_MappingInstruction $mappingInstruction)
+    public function initialize(Zend_Entity_Mapper_Mapping $mappingInstruction)
     {
         $this->_mappingInstruction = $mappingInstruction;
     }

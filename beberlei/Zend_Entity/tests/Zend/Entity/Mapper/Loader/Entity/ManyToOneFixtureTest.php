@@ -7,11 +7,9 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
         return "Zend_Entity_Mapper_Loader_Entity";
     }
 
-    public function setUp()
+    public function getFixtureClassName()
     {
-        parent::setUp();
-        $this->fixture = new Zend_Entity_Fixture_ManyToOneDefs();
-        $this->resourceMap = $this->fixture->getResourceMap();
+        return "Zend_Entity_Fixture_ManyToOneDefs";
     }
 
     public function testLoadRowCreatesLazyLoadEntity()
@@ -53,11 +51,9 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
 
     public function testLoadRowWithLateBoundFetching()
     {
-        $entityManager = $this->createEntityManager();
-
-        $relatedFetchStmtResult = new Zend_Entity_DbStatementMock();
-        $relatedFetchStmtResult->appendToFetchStack($this->fixture->getDummyDataRowClassB());
-        $entityManager->getAdapter()->appendStatementToStack($relatedFetchStmtResult);
+        $relatedFetchStmtResult = new Zend_Test_DbStatement();
+        $relatedFetchStmtResult->append($this->fixture->getDummyDataRowClassB());
+        $this->adapter->appendStatementToStack($relatedFetchStmtResult);
 
         $entityDefinition = $this->resourceMap->getDefinitionByEntityName(Zend_Entity_Fixture_ManyToOneDefs::TEST_A_CLASS);
         $entityDefinition->getPropertyByName(Zend_Entity_Fixture_ManyToOneDefs::TEST_A_MANYTOONE)->setFetch("select");
@@ -73,16 +69,11 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
     protected function doLoadManyToOneFixtureRowEntity()
     {
         $entity = new Zend_TestEntity1;
-        $loader = $this->fixture->getClassALoader();
+        $def = $this->fixture->getEntityDefinition('Zend_TestEntity1');
+        $loader = $this->createLoader($def);
         $row = $this->fixture->getDummyDataRowClassA();
 
-        if($this->entityManager !== null) {
-            $entityManager = $this->entityManager;
-        } else {
-            $entityManager = $this->createEntityManager();
-        }
-
-        $loader->loadRow($entity, $row, $entityManager);
+        $loader->loadRow($entity, $row, $this->mappings["Zend_TestEntity1"]);
         return $entity;
     }
 }

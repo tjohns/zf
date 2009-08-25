@@ -35,7 +35,14 @@ interface Zend_Entity_Manager_Interface
      * @param string $entityName
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function createNativeQuery($entityName);
+    public function createNativeQuery($sqlQuery, $classOrResultSetMapping=null);
+
+    /**
+     *
+     * @param string $className
+     * @return Zend_Entity_Query_QueryAbstract
+     */
+    public function createNativeQueryBuilder($className=null);
 
     /**
      * @param string $entityName
@@ -54,9 +61,10 @@ interface Zend_Entity_Manager_Interface
      *
      * @param string $entityName
      * @param string $key
+     * @param string $notFound
      * @return Zend_Entity_Interface
      */
-    public function load($entityName, $key);
+    public function load($entityName, $key, $notFound="null");
 
     /**
      * Save entity by registering it with UnitOfWork or hitting the database mapper.
@@ -136,4 +144,9 @@ interface Zend_Entity_Manager_Interface
      * @return Zend_Entity_MetadataFactory_Interface
      */
     public function getMetadataFactory();
+
+    /**
+     * @return Zend_Entity_MapperAbstract
+     */
+    public function getMapper();
 }

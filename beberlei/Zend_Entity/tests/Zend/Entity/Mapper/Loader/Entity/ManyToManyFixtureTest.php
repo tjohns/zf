@@ -7,25 +7,17 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity
         return "Zend_Entity_Mapper_Loader_Entity";
     }
 
+    public function getFixtureClassName()
+    {
+        return "Zend_Entity_Fixture_ManyToManyDefs";
+    }
+
     /**
      * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
     public function getClassALoader()
     {
         return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_ManyToManyDefs::TEST_A_CLASS));
-    }
-
-    /**
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
-     */
-    public function getClassBLoader()
-    {
-        return $this->createLoader($this->fixture->getEntityDefinition(Zend_Entity_Fixture_ManyToManyDefs::TEST_B_CLASS));
-    }
-
-    public function setUp()
-    {
-        $this->fixture = new Zend_Entity_Fixture_ManyToManyDefs();
     }
 
     /**
@@ -36,12 +28,8 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity
         $entity = new Zend_TestEntity1;
         $loader = $this->getClassALoader();
         $row = array(Zend_Entity_Fixture_ManyToManyDefs::TEST_A_ID_COLUMN => 1);
-
-        $this->entityManager = $this->createEntityManager();
-        $this->entityManager->setMetadataFactory(
-            $this->fixture->getResourceMap()
-        );
-        $loader->loadRow($entity, $row, $this->entityManager);
+        
+        $loader->loadRow($entity, $row, $this->mappings["Zend_TestEntity1"]);
         $entityState = $entity->getState();
 
         return $entityState;

@@ -27,13 +27,6 @@ abstract class Zend_Entity_MapperAbstract
     protected $_db;
 
     /**
-     * Entity Resource Map (of all the other entities)
-     *
-     * @var Zend_Entity_MetadataFactory_Interface
-     */
-    protected $_metadataFactory = null;
-
-    /**
      * Loader
      *
      * @var array
@@ -48,9 +41,9 @@ abstract class Zend_Entity_MapperAbstract
     protected $_persister = null;
 
     /**
-     * @var Zend_Entity_Mapper_MappingInstruction[]
+     * @var Zend_Entity_Mapper_Mapping[]
      */
-    protected $_mappingInstructions = array();
+    protected $_mappings = array();
 
     /**
      * Factory method to create a mapper
@@ -73,15 +66,23 @@ abstract class Zend_Entity_MapperAbstract
      */
     public function load($entityManager, $entityName, $keyValue, $notFound=Zend_Entity_Manager::NOTFOUND_NULL)
     {
-        $mi = $this->_mappingInstructions[$entityName];
+        $mi = $this->_mappings[$entityName];
 
         $tableName = $mi->table;
         $key = $mi->primaryKey->getColumnName();
-        $query = $entityManager->createNativeQuery($mi->class);
+        $query = $entityManager->createNativeQueryBuilder($mi->class);
         $cond = $this->_db->quoteIdentifier($tableName.".".$key);
         $query->where($cond." = ?", $keyValue);
 
         return $query->getSingleResult();
+    }
+
+    /**
+     * @return Zend_Entity_Definition_MappingVisitor[]
+     */
+    public function getStorageMappings()
+    {
+        return $this->_mappings;
     }
 
     /**
@@ -120,16 +121,6 @@ abstract class Zend_Entity_MapperAbstract
 
         $this->getPersister($className)->delete($entity, $entityManager);
     }
-
-    /**
-     * Return select statement object
-     *
-     * @return Zend_Db_Select
-     */
-    public function select()
-    {
-        return new Zend_Entity_Mapper_Select( $this->getAdapter() );
-    }
     
     /**
      * Return DB Adapter
@@ -151,7 +142,7 @@ abstract class Zend_Entity_MapperAbstract
     {
         if(!isset($this->_persister[$className])) {
             $this->_persister[$className] = new Zend_Entity_Mapper_Persister_Simple();
-            $this->_persister[$className]->initialize($this->_mappingInstructions[$className]);
+            $this->_persister[$className]->initialize($this->_mappings[$className]);
         }
 
         return $this->_persister[$className];
@@ -162,15 +153,21 @@ abstract class Zend_Entity_MapperAbstract
      * 
      * @return Zend_Entity_Mapper_Loader_LoaderAbstract
      */
-    public function getLoader($fetchMode, $className)
+    public function getLoader($fetchMode, $em)
     {
-        if(!isset($this->_loaders[$className])) {
-            $this->_loaders[$className] = new Zend_Entity_Mapper_Loader_Entity(
-                $this->_metadataFactory->getDefinitionByEntityName($className),
-                $this->_mappingInstructions[$className]
-            );
+        if(!isset($this->_loaders[$fetchMode])) {
+            switch($fetchMode) {
+                case Zend_Entity_Manager::FETCH_ENTITIES:
+                    $loader = new Zend_Entity_Mapper_Loader_Entity($em, $this->_mappings);
+                    break;
+                case Zend_Entity_Manager::FETCH_ARRAY:
+                    $loader = new Zend_Entity_Mapper_Loader_Array($em, $this->_mappings);
+                    break;
+            }
+
+            $this->_loaders[$fetchMode] = $loader;
         }
-        return $this->_loaders[$className];
+        return $this->_loaders[$fetchMode];
     }
 
     /**
@@ -178,7 +175,9 @@ abstract class Zend_Entity_MapperAbstract
      * @param Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Entity_Query_QueryAbstract
      */
-    abstract public function createNativeQuery($input, $entityManager);
+    abstract public function createNativeQuery($sqlQuery, $resultSetMapping, $entityManager);
+
+    abstract public function createNativeQueryBuilder($classOrNull, $entityManager);
 
     /**
      * @param string $input

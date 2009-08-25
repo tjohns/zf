@@ -83,7 +83,7 @@ class Zend_Entity_MetadataFactory_Cache implements Zend_Entity_MetadataFactory_I
     /**
      *
      * @param  string $visitorClass
-     * @return Zend_Entity_Definition_VisitorAbstract[]
+     * @return Zend_Entity_Definition_MappingVisitor[]
      */
     public function transform($visitorClass)
     {

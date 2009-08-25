@@ -1,25 +1,23 @@
 <?php
 
-class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
+class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 {
     /**
      *
-     * @param <type> $select
+     * @param <type> $queryObject
      * @param <type> $loader
      * @param <type> $em
      * @return Zend_Entity_Mapper_NativeQuery 
      */
-    public function createNativeQuery($select, $loader, $em)
+    public function createNativeQueryBuilder($queryObject, $loader, $em)
     {
         $mapper = $this->getMock('Zend_Entity_TestMapper', array(), array(), '', false);
         $mapper->expects($this->any())
                ->method('getLoader')
                ->will($this->returnValue($loader));
-        $mapper->expects($this->any())
-               ->method('select')
-               ->will($this->returnValue($select));
+        $em->setMapper($mapper);
         
-        return new Zend_Entity_Mapper_NativeQuery($mapper, $em);
+        return new Zend_Entity_Mapper_NativeQueryBuilder($em, $queryObject);
     }
 
     public function testGetResultList_DelegatesToLoader_ProcessResultset()
@@ -27,11 +25,11 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         $fixtureReturnValue = "foo";
 
         $em = $this->createTestingEntityManager();
-        $select = $this->getSelectMock();
+        $select = $this->createQueryObjectMock();
         $loader = $this->getLoaderMock($select);
         $this->addProcessResultsetExpectation($loader, $fixtureReturnValue, $em);
 
-        $query = $this->createNativeQuery($select, $loader, $em);
+        $query = $this->createNativeQueryBuilder($select, $loader, $em);
         $result = $query->getResultList();
 
         $this->assertEquals($fixtureReturnValue, $result);
@@ -41,7 +39,7 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
     {
         $loader->expects($this->once())
                ->method('processResultset')
-               ->with($this->isType('array'), $this->equalTo($em))
+               ->with($this->isType('array'), $this->isInstanceOf('Zend_Entity_Mapper_ResultSetMapping'))
                ->will($this->returnValue($returnValue));
     }
 
@@ -89,16 +87,16 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
     public function createQueryWithResultExpectation($fixtureReturnValue)
     {
         $em = $this->createTestingEntityManager();
-        $select = $this->getSelectMock();
+        $select = $this->createQueryObjectMock();
         $loader = $this->getLoaderMock($select);
         $this->addProcessResultsetExpectation($loader, $fixtureReturnValue, $em);
 
-        return $this->createNativeQuery($select, $loader, $em);
+        return $this->createNativeQueryBuilder($select, $loader, $em);
     }
 
     public function testSetMaxResults()
     {
-        $select = $this->getSelectMock();
+        $select = $this->createQueryObjectMock();
         $select->expects($this->once())
                ->method('limit')
                ->with(30, null);
@@ -111,7 +109,7 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
 
     public function testSetFirstResult()
     {
-        $select = $this->getSelectMock();
+        $select = $this->createQueryObjectMock();
         $select->expects($this->once())
                ->method('limit')
                ->with(null, 30);
@@ -124,7 +122,7 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
 
     public function testSetMaxAndFirstResult()
     {
-        $select = $this->getSelectMock();
+        $select = $this->createQueryObjectMock();
         $select->expects($this->at(0))
                ->method('limit')
                ->with(30, null);
@@ -196,13 +194,13 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
     public function createDbSelectQuery($select=null)
     {
         if($select == null) {
-            $select = $this->getSelectMock();
+            $select = $this->createQueryObjectMock();
         }
 
         $loader = $this->getLoaderMock($select);
         $em = $this->createTestingEntityManager();
 
-        return $this->createNativeQuery($select, $loader, $em);
+        return $this->createNativeQueryBuilder($select, $loader, $em);
     }
 
     public function getLoaderMock()
@@ -210,9 +208,9 @@ class Zend_Entity_Mapper_NativeQueryTest extends Zend_Entity_TestCase
         return $this->getMock('Zend_Entity_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
     }
 
-    public function getSelectMock()
+    public function createQueryObjectMock()
     {
-        $select = $this->getMock('Zend_Entity_Mapper_Select', array(), array(), '', false);
+        $select = $this->getMock('Zend_Entity_Mapper_QueryObject', array(), array(), '', false);
         $select->expects($this->any())
                ->method('query')
                ->will($this->returnValue(new Zend_Test_DbStatement()));

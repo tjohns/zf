@@ -309,10 +309,10 @@ class Zend_Entity_Definition_Entity
     }
 
     /**
-     * @param Zend_Entity_Definition_VisitorAbstract $visitor
+     * @param Zend_Entity_Definition_MappingVisitor $visitor
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
      */
-    public function visit(Zend_Entity_Definition_VisitorAbstract $visitor, Zend_Entity_MetadataFactory_Interface $metadataFactory)
+    public function visit(Zend_Entity_Definition_MappingVisitor $visitor, Zend_Entity_MetadataFactory_Interface $metadataFactory)
     {
         $visitor->acceptEntity($this, $metadataFactory);
         foreach($this->getProperties() AS $property) {

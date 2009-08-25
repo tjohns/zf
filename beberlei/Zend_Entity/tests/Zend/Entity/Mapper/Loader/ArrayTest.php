@@ -7,9 +7,9 @@ class Zend_Entity_Mapper_Loader_ArrayTest extends Zend_Entity_Mapper_Loader_Test
         return "Zend_Entity_Mapper_Loader_Array";
     }
 
-    public function setUp()
+    public function getFixtureClassName()
     {
-        $this->fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        return "Zend_Entity_Fixture_SimpleFixtureDefs";
     }
 
     public function getLoader()
@@ -25,7 +25,12 @@ class Zend_Entity_Mapper_Loader_ArrayTest extends Zend_Entity_Mapper_Loader_Test
 
         $resultSet = array($row);
 
-        $array = $loader->processResultset($resultSet, $this->createEntityManager(), Zend_Entity_Manager::FETCH_ARRAY);
+        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm->addEntity(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS, "a");
+        $rsm->addProperty("a", "a_id", "id");
+        $rsm->addProperty("a", "a_property", "property");
+
+        $array = $loader->processResultset($resultSet, $rsm);
 
         $this->assertTrue(is_array($array));
         $this->assertEquals(1, count($array));
