@@ -39,12 +39,22 @@ class Zend_Entity_Mapper_ResultSetMapping
     /**
      * @var array
      */
-    public $joinedEntityRelation = array();
+    public $joinedEntity = array();
+
+    /**
+     * @var array
+     */
+    public $rootEntity = array();
 
     /**
      * @var array
      */
     public $scalarResult = array();
+
+    /**
+     * @var array
+     */
+    public $storageFieldEntity = array();
 
     /**
      * @var array
@@ -66,6 +76,7 @@ class Zend_Entity_Mapper_ResultSetMapping
             $alias = $entityName;
         }
 
+        $this->rootEntity[] = $entityName;
         $this->_aliasToEntity[$alias] = $entityName;
         $this->entityResult[$entityName] = array(
             'properties' => array(),
@@ -90,7 +101,7 @@ class Zend_Entity_Mapper_ResultSetMapping
             $alias = $entityName;
         }
 
-        $this->joinedEntityRelation[$alias] = array('parentEntity' => $parentEntity, 'parentProperty' => $parentEntityProperty);
+        $this->joinedEntity[$entityName] = array('parentEntity' => $parentEntity, 'parentProperty' => $parentEntityProperty);
         $this->_aliasToEntity[$alias] = $entityName;
         $this->entityResult[$entityName] = array(
             'properties' => array(),
@@ -102,20 +113,23 @@ class Zend_Entity_Mapper_ResultSetMapping
     /**
      * Add a new entity proprty to the result.
      * 
-     * @param string $entityOrAlias
+     * @param string $alias
      * @param string $storageFieldName
      * @param string $propertyName
+     * @return Zend_Entity_Mapper_ResultSetMapping
      */
-    public function addProperty($entityOrAlias, $storageFieldName, $propertyName)
+    public function addProperty($alias, $storageFieldName, $propertyName)
     {
-        if(isset($this->_aliasToEntity[$entityOrAlias])) {
-            $entityName = $this->_aliasToEntity[$entityOrAlias];
+        if(isset($this->_aliasToEntity[$alias])) {
+            $entityName = $this->_aliasToEntity[$alias];
         } else {
             throw new Zend_Entity_Exception(
-                "No valid alias or entity name '".$entityOrAlias."' was given to add property '".$propertyName."' to."
+                "No valid alias or entity name '".$alias."' was given to add property '".$propertyName."' to."
             );
         }
         $this->entityResult[$entityName]['properties'][$storageFieldName] = $propertyName;
+        $this->storageFieldEntity[$storageFieldName] = $entityName;
+        return $this;
     }
 
     /**

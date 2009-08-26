@@ -22,16 +22,43 @@ class Zend_Entity_Mapper_Loader_Entity extends Zend_Entity_Mapper_Loader_LoaderA
     /**
      * @param  array $resultSet
      * @param  string $fetchMode
-     * @return Zend_Entity_Collection_Interface
+     * @return array
      */
     public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm)
     {
+        $hasEntity = count($rsm->entityResult)>0;
+
+        if(!$hasEntity) {
+            throw new Zend_Entity_Exception("Cannot load by entity strategy when no entity is part of the ResultSetMapping.");
+        }
+
+        $hasScalar = count($rsm->scalarResult)>0;
+
         $result = array();
         foreach($resultSet AS $row) {
-            foreach($rsm->entityResult AS $entityName => $entityDef) {
+            $data = array();
+            $scalars = array();
+            foreach($row AS $k => $v) {
+                if(in_array($k, $rsm->scalarResult)) {
+                    $scalars[$k] = $v;
+                } else {
+                    $entityName = $rsm->storageFieldEntity[$k];
+                    $propertyName = $rsm->entityResult[$entityName]['properties'][$k];
+                    $data[$entityName][$propertyName] = $v;
+                }
+            }
+            foreach($rsm->joinedEntity AS $joinedEntity => $joinedEntityData) {
+                $mapping = $this->_mappings[$joinedEntity];
+                $this->createEntityFromRow($row, $mapping);
+            }
+            foreach($rsm->rootEntity AS $entityName) {
                 $mapping = $this->_mappings[$entityName];
-                if($entityDef['joined'] == false) {
-                    $result[] = $this->createEntityFromRow($row, $mapping);
+
+                $entity = $this->createEntityFromRow($row, $mapping);
+                if($hasScalar) {
+                    $result[] = array_merge(array($entity), $scalars);
+                } else {
+                    $result[] = $entity;
                 }
             }
         }

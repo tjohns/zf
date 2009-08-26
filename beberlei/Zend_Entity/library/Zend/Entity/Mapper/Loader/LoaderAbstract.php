@@ -140,6 +140,12 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
         foreach($mapping->toOneRelations AS $relation) {
             /* @var $relation Zend_Entity_Definition_RelationAbstract */
             $propertyName = $relation->propertyName;
+
+            // it seems the object was deeply created already
+            if(is_object($entityState[$propertyName])) {
+                continue;
+            }
+
             if($relation->fetch == Zend_Entity_Definition_Property::FETCH_LAZY) {
                 $entityState[$propertyName] = $entityManager->getReference(
                     $relation->class, $entityState[$propertyName]

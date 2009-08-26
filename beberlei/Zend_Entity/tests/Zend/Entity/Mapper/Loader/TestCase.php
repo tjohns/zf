@@ -50,6 +50,10 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
 
     abstract public function getLoaderClassName();
 
+    /**
+     *
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     */
     public function createLoader()
     {
         if($this->loader == null) {
