@@ -71,7 +71,8 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      * Empty constructor to make it parameterless.
      */
     public function __construct()
-    {        
+    {
+        $this->setProfiler(false);
     }
 
     /**
@@ -257,7 +258,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      */
     protected function _commit()
     {
-        
+        return;
     }
 
     /**
