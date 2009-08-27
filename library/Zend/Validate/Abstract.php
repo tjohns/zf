@@ -142,12 +142,17 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     {
         if ($messageKey === null) {
             $keys = array_keys($this->_messageTemplates);
-            $messageKey = current($keys);
+            foreach($keys as $key) {
+                $this->setMessage($messageString, $key);
+            }
+            return $this;
         }
+
         if (!isset($this->_messageTemplates[$messageKey])) {
             require_once 'Zend/Validate/Exception.php';
             throw new Zend_Validate_Exception("No message template exists for key '$messageKey'");
         }
+
         $this->_messageTemplates[$messageKey] = $messageString;
         return $this;
     }
@@ -246,11 +251,11 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
-     * @param  string $messageKey OPTIONAL
+     * @param  string $messageKey
      * @param  string $value      OPTIONAL
      * @return void
      */
-    protected function _error($messageKey = null, $value = null)
+    protected function _error($messageKey, $value = null)
     {
         if ($messageKey === null) {
             $keys = array_keys($this->_messageTemplates);
