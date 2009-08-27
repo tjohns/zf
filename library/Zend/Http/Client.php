@@ -267,11 +267,6 @@ class Zend_Http_Client
             throw new Zend_Http_Client_Exception('Passed parameter is not a valid HTTP URI.');
         }
 
-        // Set auth if username and password has been specified in the uri
-        if ($uri->getUsername() && $uri->getPassword()) {
-            $this->setAuth($uri->getUsername(), $uri->getPassword());
-        }
-
         // We have no ports, set the defaults
         if (! $uri->getPort()) {
             $uri->setPort(($uri->getScheme() == 'https' ? 443 : 80));
@@ -541,9 +536,6 @@ class Zend_Http_Client
         if ($user === false || $user === null) {
             $this->auth = null;
 
-            // Clear the auth information in the uri instance as well
-            $this->getUri()->setUsername('');
-            $this->getUri()->setPassword('');
         // Else, set up authentication
         } else {
             // Check we got a proper authentication type
