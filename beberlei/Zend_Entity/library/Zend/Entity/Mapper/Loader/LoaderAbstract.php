@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Db
+ * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -24,7 +24,7 @@
  * Abstract Loader
  *
  * @category   Zend
- * @package    Db
+ * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -137,6 +137,7 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
     protected function initializeRelatedObjects(array $entityState, $mapping)
     {
         $entityManager = $this->_em;
+        $db = $entityManager->getMapper()->getAdapter();
         foreach($mapping->toOneRelations AS $relation) {
             /* @var $relation Zend_Entity_Definition_RelationAbstract */
             $propertyName = $relation->propertyName;
@@ -163,8 +164,9 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
 
             $keyValue = $entityState[$mapping->primaryKey->propertyName];
 
-            $db = $entityManager->getAdapter();
-            $query = $entityManager->createNativeQuery($relation->class);
+            $query = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager);
+            $query->from($this->_mappings[$relation->class]->table)
+                  ->with($relation->class);
 
             $intersectTable = $collectionDef->table;
             if($foreignDefinition->getTable() !== $collectionDef->table) {
@@ -200,7 +202,6 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
             $pk = $mapping->primaryKey->propertyName;
 
             /* @var $elementDef Zend_Entity_Definition_Collection */
-            $db = $entityManager->getAdapter();
             $select = $db->select();
             $select->from($elementDef->table);
             $select->where($elementDef->key." = ?", $entityState[$pk]);

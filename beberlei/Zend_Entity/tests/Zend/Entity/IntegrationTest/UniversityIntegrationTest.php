@@ -62,6 +62,20 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
         );
     }
 
+    public function testLoadStudent_NotFoundNull()
+    {
+        $student = $this->_entityManager->load("ZendEntity_Student", 100, Zend_Entity_Manager::NOTFOUND_NULL);
+
+        $this->assertNull($student);
+    }
+
+    public function testLoadStudent_NotFoundException()
+    {
+        $this->setExpectedException("Zend_Entity_NoResultException");
+
+        $student = $this->_entityManager->load("ZendEntity_Student", 100, Zend_Entity_Manager::NOTFOUND_EXCEPTION);
+    }
+
     /**
      * @dataProvider dataCourses
      * @param int $id
@@ -107,30 +121,43 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
         );
     }
 
-    public function testGetStudent_ConditionalOnCourseId()
+    protected function createStudentQueryConditionalOnCourseId($courseId)
     {
-        $select = $this->_entityManager->createNativeQuery("ZendEntity_Student");
-        $select->joinInner(
-            "university_students_semester_courses",
-            "university_students_semester_courses.student_id = university_students.student_id"
-        )->where("university_students_semester_courses.course_id = 1");
+        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query->from("university_students")
+            ->with("ZendEntity_Student")
+            ->joinInner(
+                "university_students_semester_courses",
+                "university_students_semester_courses.student_id = university_students.student_id"
+            )
+            ->where("university_students_semester_courses.course_id = :courseId")
+            ->bindParam(':courseId', $courseId);
+        return $query;
+    }
 
-        $students = $select->getResultList();
+    public function testStudentGetResultList_ConditionalOnCourseId()
+    {
+        $query = $this->createStudentQueryConditionalOnCourseId(1);
+        $students = $query->getResultList();
 
         $this->assertEquals(2, count($students));
         $this->assertEquals(1, $students[0]->id);
         $this->assertEquals(2, $students[1]->id);
     }
 
-    public function testFindOneStudent_ConditionalOnCourseId()
+    public function testStudentGetSingleResult_ForMultipleResults_ThrowsException()
     {
-        $select = $this->_entityManager->createNativeQuery("ZendEntity_Student");
-        $select->joinInner(
-            "university_students_semester_courses",
-            "university_students_semester_courses.student_id = university_students.student_id"
-        )->where("university_students_semester_courses.course_id = 3");
+        $query = $this->createStudentQueryConditionalOnCourseId(1);
 
-        $student = $select->getSingleResult();
+        $this->setExpectedException("Zend_Entity_NonUniqueResultException");
+        $students = $query->getSingleResult();
+    }
+
+    public function testStudentGetSingleResult_ConditionalOnCourseId()
+    {
+        $query = $this->createStudentQueryConditionalOnCourseId(3);
+
+        $student = $query->getSingleResult();
 
         $this->assertEquals(2, $student->id);
         $this->assertEquals("Ludwig von Mises", $student->name);

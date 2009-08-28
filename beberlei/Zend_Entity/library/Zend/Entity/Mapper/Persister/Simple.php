@@ -90,7 +90,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         }
 
         if($collectionDef->relation instanceof Zend_Entity_Definition_ManyToManyRelation) {
-            $db = $entityManager->getAdapter();
+            $db = $entityManager->getMapper()->getAdapter();
             $identityMap = $entityManager->getIdentityMap();
 
             $key = $collectionDef->key;
@@ -151,7 +151,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         }
         foreach($this->_mappingInstruction->elementCollections AS $elementDef) {
             $elementHashMap = $entityState[$elementDef->propertyName];
-            $db = $entityManager->getAdapter();
+            $db = $entityManager->getMapper()->getAdapter();
             if($elementHashMap instanceof Zend_Entity_Collection_ElementHashMap) {
                 /* @var $elementHashMap Zend_Entity_Collection_ElementHashMap */
                 foreach($elementHashMap->__ze_getRemoved() AS $k => $v) {
@@ -216,7 +216,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
      */
     public function doPerformSave($entity, $dbState, $entityManager)
     {
-        $dbAdapter = $entityManager->getAdapter();
+        $db = $entityManager->getMapper()->getAdapter();
         $pk = $this->_mappingInstruction->primaryKey;
         $tableName = $this->_mappingInstruction->table;
         $identityMap = $entityManager->getIdentityMap();
@@ -232,10 +232,10 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
 
             $dbState = array_merge(
                 $dbState,
-                $pk->applyNextSequenceId($dbAdapter, $dbState)
+                $pk->applyNextSequenceId($db, $dbState)
             );
-            $dbAdapter->insert($tableName, $dbState);
-            $key = $pk->lastSequenceId($dbAdapter, $dbState);
+            $db->insert($tableName, $dbState);
+            $key = $pk->lastSequenceId($db, $dbState);
             $this->_mappingInstruction->stateTransformer->setId($entity, $pk->propertyName, $key);
 
             $identityMap->addObject(
@@ -250,7 +250,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
 
             $key = $identityMap->getPrimaryKey($entity);
             $where = $pk->buildWhereCondition(
-                $dbAdapter,
+                $db,
                 $tableName,
                 $identityMap->getPrimaryKey($entity)
             );
@@ -259,13 +259,13 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
                 $versionColumnName = $this->_mappingInstruction->versionProperty->columnName;
                 $versionId = $identityMap->getVersion($entity);
                 $dbState[$versionColumnName] = $versionId+1;
-                $where .= " AND ".$dbAdapter->quoteInto(
+                $where .= " AND ".$db->quoteInto(
                     $tableName.".".$versionColumnName." = ?", $versionId
                 );
             }
 
             $dbState = $pk->removeSequenceFromState($dbState);
-            $rows = $dbAdapter->update($tableName, $dbState, $where);
+            $rows = $db->update($tableName, $dbState, $where);
 
             if($this->_mappingInstruction->versionProperty !== null) {
                 if($rows == 0) {
@@ -294,7 +294,7 @@ class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persiste
         }
 
         $identityMap = $entityManager->getIdentityMap();
-        $db          = $entityManager->getAdapter();
+        $db = $entityManager->getMapper()->getAdapter();
         
         $tableName   = $this->_mappingInstruction->table;
         $whereClause = $this->_mappingInstruction->primaryKey

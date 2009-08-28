@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Manager
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -24,7 +24,7 @@
  * An Entity Manager handles the lifecycle of entity objects.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Manager
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -33,22 +33,10 @@ interface Zend_Entity_Manager_Interface
 {
     /**
      * @param string $entityName
+     * @param Zend_Entity_Mapper_ResultSetMapping
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function createNativeQuery($sqlQuery, $classOrResultSetMapping=null);
-
-    /**
-     *
-     * @param string $className
-     * @return Zend_Entity_Query_QueryAbstract
-     */
-    public function createNativeQueryBuilder($className=null);
-
-    /**
-     * @param string $entityName
-     * @return Zend_Entity_Query_QueryAbstract
-     */
-    public function createQuery($entityName);
+    public function createNativeQuery($nativeInput, $resultSetMapping=null);
 
     /**
      * @param string $queryName
@@ -100,13 +88,6 @@ interface Zend_Entity_Manager_Interface
      * @return boolean
      */
     public function contains(Zend_Entity_Interface $entity);
-
-    /**
-     * Retrieve the underyling datasource adapter
-     *
-     * @return object
-     */
-    public function getAdapter();
 
     /**
      * Begin new transaction and return the Zend_Entity_Transaction instance

@@ -2,6 +2,139 @@
 
 class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 {
+    public function testWith_ForInvalidEntityName_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_InvalidEntityException");
+
+        $em = $this->createEntityManager();
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->with("UnknownEntityName");
+    }
+
+    public function testWith_AddsColumnsToResultSetMap_ByUsingMappings()
+    {
+        $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table')->with('Zend_TestEntity1');
+
+        $rsm = $qb->getResultSetMapping();
+
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertEquals(
+            array('a_id' => 'id', 'a_property' => 'property'),
+            $rsm->entityResult['Zend_TestEntity1']['properties']
+        );
+    }
+
+    public function testWith_AddsColumnsToQueryObject_ByUsingMappings()
+    {
+        $fixtureTable = "table";
+
+        $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = $this->getMock('Zend_Entity_Mapper_QueryObject', array(), array(), '', false);
+        $qo->expects($this->at(0))
+           ->method('from')
+           ->with($this->equalTo($fixtureTable));
+        $qo->expects($this->at(1))
+            ->method('columns')
+            ->with($this->equalTo(array('a_id' => 'a_id', 'a_property' => 'a_property')));
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table')->with('Zend_TestEntity1');
+    }
+
+    public function testWithForJoinTable_UseCorrelationToRefer_CreatesTwoRootEntitiesInResultSetMap()
+    {
+        $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table_a')->with('Zend_TestEntity1')
+           ->join('table_b', 'table_a.manytoone = table_b.id')->with('Zend_TestEntity2', 'table_b');
+
+        $rsm = $qb->getResultSetMapping();
+
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity2']));
+        $this->assertEquals(array('Zend_TestEntity1', 'Zend_TestEntity2'), $rsm->rootEntity);
+    }
+
+    public function testJoinWith_AddAsJoinedResult()
+    {
+        $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table_a')->with('Zend_TestEntity1')
+           ->joinWith('table_b', 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
+
+        $rsm = $qb->getResultSetMapping();
+
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity2']));
+        $this->assertEquals(array('Zend_TestEntity1'), $rsm->rootEntity);
+        $this->assertEquals(
+            array('Zend_TestEntity2' => array('parentEntity' => '', 'parentProperty' => '')),
+            $rsm->joinedEntity
+        );
+    }
+
+    public function testJoinWith_UseArrayCorrelationNameTableReference()
+    {
+        $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table_a')->with('Zend_TestEntity1')
+           ->joinWith(array('b' => 'table_b'), 'table_a.manytoone = b.id', 'Zend_TestEntity2');
+
+        $rsm = $qb->getResultSetMapping();
+
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity2']));
+        $this->assertEquals(array('Zend_TestEntity1'), $rsm->rootEntity);
+        $this->assertEquals(
+            array('Zend_TestEntity2' => array('parentEntity' => '', 'parentProperty' => '')),
+            $rsm->joinedEntity
+        );
+    }
+
+    public function testJoinWith_UseArrayNumericTableReference()
+    {
+        $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
+        $em = $fixture->createTestEntityManager();
+
+        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+
+        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb->from('table_a')->with('Zend_TestEntity1')
+           ->joinWith(array('table_b'), 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
+
+        $rsm = $qb->getResultSetMapping();
+
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity2']));
+        $this->assertEquals(array('Zend_TestEntity1'), $rsm->rootEntity);
+        $this->assertEquals(
+            array('Zend_TestEntity2' => array('parentEntity' => '', 'parentProperty' => '')),
+            $rsm->joinedEntity
+        );
+    }
+
     /**
      *
      * @param <type> $queryObject
@@ -137,35 +270,35 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
     public function testGetDefaultParamaterValue_IsNull()
     {
         $query = $this->createDbSelectQuery();
-        $this->assertNull($query->getParameter('foo'));
+        $this->assertNull($query->getParam('foo'));
     }
 
     public function testSetParameter()
     {
         $query = $this->createDbSelectQuery();
-        $query->setParameter('foo', 'bar');
+        $query->bindParam('foo', 'bar');
 
-        $this->assertEquals('bar', $query->getParameter('foo'));
-        $this->assertEquals(array('foo' => 'bar'), $query->getParameters());
+        $this->assertEquals('bar', $query->getParam('foo'));
+        $this->assertEquals(array('foo' => 'bar'), $query->getParams());
     }
 
     public function testSetParameters()
     {
         $query = $this->createDbSelectQuery();
-        $query->setParameters(array('foo' => 'bar', 'bar' => 'baz'));
+        $query->bindParams(array('foo' => 'bar', 'bar' => 'baz'));
 
-        $this->assertEquals('bar', $query->getParameter('foo'));
-        $this->assertEquals('baz', $query->getParameter('bar'));
-        $this->assertEquals(array('foo' => 'bar', 'bar' => 'baz'), $query->getParameters());
+        $this->assertEquals('bar', $query->getParam('foo'));
+        $this->assertEquals('baz', $query->getParam('bar'));
+        $this->assertEquals(array('foo' => 'bar', 'bar' => 'baz'), $query->getParams());
     }
 
     public function testSetParametersDoesNotResetBindings()
     {
         $query = $this->createDbSelectQuery();
-        $query->setParameter('baz', 'foo');
-        $query->setParameters(array('foo' => 'bar', 'bar' => 'baz'));
+        $query->bindParam('baz', 'foo');
+        $query->bindParams(array('foo' => 'bar', 'bar' => 'baz'));
 
-        $this->assertEquals(array('baz' => 'foo', 'foo' => 'bar', 'bar' => 'baz'), $query->getParameters());
+        $this->assertEquals(array('baz' => 'foo', 'foo' => 'bar', 'bar' => 'baz'), $query->getParams());
     }
 
     public function testGetUnknownHint()

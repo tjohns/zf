@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Query
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -25,7 +25,7 @@
  *
  * @uses       Zend_Paginator_AdapterAggregate
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Query
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -69,7 +69,7 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
      *
      * @throws Zend_Entity_NonUniqueResultException
      * @throws Zend_Entity_NoResultException
-     * @return Zend_Entity_Interface
+     * @return object
      */
     public function getSingleResult()
     {
@@ -98,7 +98,7 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
      * @param  mixed $value
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function setParameter($name, $value)
+    public function bindParam($name, $value)
     {
         $this->_params[$name] = $value;
         return $this;
@@ -109,10 +109,10 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
      * @param  array $params
      * @return Zend_Entity_Query_QueryAbstract
      */
-    public function setParameters($params)
+    public function bindParams($params)
     {
         foreach($params AS $k => $v) {
-            $this->setParameter($k, $v);
+            $this->bindParam($k, $v);
         }
         return $this;
     }
@@ -121,7 +121,7 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
      * @param  string $name
      * @return mixed
      */
-    public function getParameter($name)
+    public function getParam($name)
     {
         if(isset($this->_params[$name])) {
             return $this->_params[$name];
@@ -156,7 +156,7 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
     /**
      * @return array
      */
-    public function getParameters()
+    public function getParams()
     {
         return $this->_params;
     }

@@ -53,10 +53,12 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
         $this->assertEquals("1972-01-01", $patient->getBirthDate());
     }
 
-    public function testFindByQuery()
+    public function testPatientGetResultList()
     {
-        $query = $this->_entityManager->createNativeQuery("Clinic_Patient");
-        $query->where("name = ?", "John Doe");
+        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query->from("patients")
+              ->with("Clinic_Patient")
+              ->where("name = ?", "John Doe");
 
         $patients = $query->getResultList();
         $this->assertType('array', $patients, "AbstractQuery::getResultList() has to return an array as collection");
@@ -72,10 +74,12 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
         $this->assertEquals("1972-01-01", $patient->getBirthDate());
     }
 
-    public function testFindOneByQuery()
+    public function testPatientGetSingleResult()
     {
-        $query = $this->_entityManager->createNativeQuery("Clinic_Patient");
-        $query->where("name = ?", "John Doe");
+        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query->from("patients")
+              ->with("Clinic_Patient")
+              ->where("name = ?", "John Doe");
 
         $patient = $query->getSingleResult();
 
@@ -112,9 +116,7 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
     }
 
     public function testDeletePatient()
-    {
-        #$this->markTestSkipped();
-        
+    {        
         $patient = $this->_entityManager->load("Clinic_Patient", 1);
         $this->_entityManager->delete($patient);
 

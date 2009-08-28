@@ -1,47 +1,40 @@
 <?php
 /**
- * Mapper
+ * Zend Framework
  *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.
- * 
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so we can send you a copy immediately.
+ * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @category   Zend_Entity
- * @copyright  Copyright (c) 2009 Benjamin Eberlei
- * @license    New BSD License
+ * @package    Zend_Entity
+ * @subpackage Mapper
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+
+/**
+ * Abstract Storage Engine Mapper which allows access to CRUD behaviour for the underlying entities.
+ *
+ * @category   Zend
+ * @package    Zend_Entity
+ * @subpackage Mapper
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 abstract class Zend_Entity_MapperAbstract
 {
     /**
-     * Zend Database adapter
-     * 
-     * @var Zend_Db_Adapter_Abstract
-     */
-    protected $_db;
-
-    /**
-     * Loader
-     *
-     * @var array
-     */
-    protected $_loaders = null;
-
-    /**
-     * Persister
-     *
-     * @var Zend_Entity_Mapper_Persister_Interface
-     */
-    protected $_persister = null;
-
-    /**
-     * @var Zend_Entity_Mapper_Mapping[]
+     * @var Zend_Entity_Definition_MappingVisitor[]
      */
     protected $_mappings = array();
 
@@ -66,16 +59,29 @@ abstract class Zend_Entity_MapperAbstract
      */
     public function load($entityManager, $entityName, $keyValue, $notFound=Zend_Entity_Manager::NOTFOUND_NULL)
     {
-        $mi = $this->_mappings[$entityName];
+        if(!isset($this->_mappings[$entityName])) {
+            throw new Zend_Entity_InvalidEntityException($entityName);
+        }
 
-        $tableName = $mi->table;
-        $key = $mi->primaryKey->getColumnName();
-        $query = $entityManager->createNativeQueryBuilder($mi->class);
-        $cond = $this->_db->quoteIdentifier($tableName.".".$key);
-        $query->where($cond." = ?", $keyValue);
-
-        return $query->getSingleResult();
+        $query = $this->_doLoad($entityManager, $entityName, $keyValue);
+        if($notFound == Zend_Entity_Manager::NOTFOUND_NULL) {
+            try {
+                return $query->getSingleResult();
+            } catch(Zend_Entity_NoResultException $e) {
+                return null;
+            }
+        } else {
+            return $query->getSingleResult();
+        }
     }
+
+    /**
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @param  string $entityName
+     * @param  mixed $keyValue
+     * @return object
+     */
+    abstract protected function _doLoad($entityManager, $entityName, $keyValue);
 
     /**
      * @return Zend_Entity_Definition_MappingVisitor[]
@@ -88,86 +94,64 @@ abstract class Zend_Entity_MapperAbstract
     /**
      * Save a entity into persistence.
      *
-     * @throws Exception
-     * @param  array $entity
+     * @param  object $entity
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager)
+    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
     {
-        if($entity instanceof Zend_Entity_LazyLoad_Entity) {
-            $className = $entity->__ze_getClassName();
-        } else if($entity instanceof Zend_Entity_Interface) {
-            $className = get_class($entity);
-        }
-
-        $persister = $this->getPersister($className);
-        $persister->save($entity, $entityManager);
+        $entityName = $this->_getEntityName($entity);
+        $this->_doSave($entity, $entityName, $entityManager);
     }
+
+    /**
+     * @param string $entity
+     * @param string $entityName
+     * @param Zend_Entity_Manager_Interface $entityManager
+     * @return void
+     */
+    abstract protected function _doSave($entity, $entityName, $entityManager);
 
     /**
      * Delete a entity from persistence
      *
-     * @throws Exception
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
+     * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager $entityManager )
+    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
+    {
+        $entityName = $this->_getEntityName($entity);
+        $this->_doDelete($entity, $entityName, $entityManager);
+    }
+
+    /**
+     *
+     * @param object $entity
+     * @param string $entityName
+     * @param Zend_Entity_Manager_Interface $entityManager
+     */
+    abstract protected function _doDelete($entity, $entityName, $entityManager);
+
+    /**
+     * @param  object $entity
+     * @return string
+     */
+    protected function _getEntityName($entity)
     {
         if($entity instanceof Zend_Entity_LazyLoad_Entity) {
-            $className = $entity->__ze_getClassName();
-        } else if($entity instanceof Zend_Entity_Interface) {
-            $className = get_class($entity);
+            $entityName = $entity->__ze_getClassName();
+        } else if(is_object($entity)) {
+            $entityName = get_class($entity);
+        } else {
+            throw new Zend_Entity_InvalidEntityException();
         }
 
-        $this->getPersister($className)->delete($entity, $entityManager);
-    }
-    
-    /**
-     * Return DB Adapter
-     *
-     * @return Zend_Db_Adapter_Abstract
-     */
-    protected function getAdapter()
-    {
-        return $this->_db;
-    }
-
-    /**
-     * Return responsible Persister class
-     *
-     * @param string $className
-     * @return Zend_Entity_Mapper_Persister_Interface
-     */
-    protected function getPersister($className)
-    {
-        if(!isset($this->_persister[$className])) {
-            $this->_persister[$className] = new Zend_Entity_Mapper_Persister_Simple();
-            $this->_persister[$className]->initialize($this->_mappings[$className]);
+        if(!isset($this->_mappings[$entityName])) {
+            throw new Zend_Entity_InvalidEntityException($entityName);
         }
 
-        return $this->_persister[$className];
-    }
-
-    /**
-     * Return Resultprocessor and Object Loader
-     * 
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
-     */
-    public function getLoader($fetchMode, $em)
-    {
-        if(!isset($this->_loaders[$fetchMode])) {
-            switch($fetchMode) {
-                case Zend_Entity_Manager::FETCH_ENTITIES:
-                    $loader = new Zend_Entity_Mapper_Loader_Entity($em, $this->_mappings);
-                    break;
-                case Zend_Entity_Manager::FETCH_ARRAY:
-                    $loader = new Zend_Entity_Mapper_Loader_Array($em, $this->_mappings);
-                    break;
-            }
-
-            $this->_loaders[$fetchMode] = $loader;
-        }
-        return $this->_loaders[$fetchMode];
+        return $entityName;
     }
 
     /**
@@ -176,15 +160,6 @@ abstract class Zend_Entity_MapperAbstract
      * @return Zend_Entity_Query_QueryAbstract
      */
     abstract public function createNativeQuery($sqlQuery, $resultSetMapping, $entityManager);
-
-    abstract public function createNativeQueryBuilder($classOrNull, $entityManager);
-
-    /**
-     * @param string $input
-     * @param Zend_Entity_Manager_Interface $entityManager
-     * @return Zend_Entity_Query_QueryAbstract
-     */
-    abstract public function createQuery($entityName, $entityManager);
 
     /**
      * @return Zend_Entity_Transaction

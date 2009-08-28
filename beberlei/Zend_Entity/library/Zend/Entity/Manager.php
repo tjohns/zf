@@ -1,24 +1,35 @@
 <?php
 /**
- * Mapper
+ * Zend Framework
  *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.
- * 
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so we can send you a copy immediately.
+ * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @category   Zend_Entity
- * @copyright  Copyright (c) 2009 Benjamin Eberlei
- * @license    New BSD License
+ * @package    Zend_Entity
+ * @subpackage Manager
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-require_once "Manager/Interface.php";
-
+/**
+ * Entity Manager
+ *
+ * @uses       Zend_Entity_Manager_Interface
+ * @category   Zend
+ * @package    Zend_Entity
+ * @subpackage Manager
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 {
     const FETCH_ENTITIES        = 1;
@@ -157,16 +168,6 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
-     * Return Adapter
-     *
-     * @return Zend_Db_Adapter_Abstract
-     */
-    public function getAdapter()
-    {
-        return $this->_db;
-    }
-
-    /**
      * @return Zend_Entity_Event_EventAbstract
      */
     public function getEventListener()
@@ -220,30 +221,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function createNativeQuery($sqlQuery, $classOrResultSetMapping=null)
     {
-        if(strpos($sqlQuery, " ") === false) {
-            return $this->getMapper()->createNativeQueryBuilder($sqlQuery, $this);
-        } else {
-            return $this->getMapper()->createNativeQuery($sqlQuery, $classOrResultSetMapping, $this);
-        }
-    }
-
-    /**
-     *
-     * @param  string $className
-     * @return Zend_Entity_Query_QueryAbstract
-     */
-    public function createNativeQueryBuilder($className=null)
-    {
-        return $this->getMapper()->createNativeQueryBuilder($className, $this);
-    }
-
-    /**
-     * @param string $entityName
-     * @return Zend_Entity_Query_QueryAbstract
-     */
-    public function createQuery($entityName)
-    {
-        return $this->getMapper()->createQuery($entityName, $this);
+        return $this->getMapper()->createNativeQuery($sqlQuery, $classOrResultSetMapping, $this);
     }
 
     /**

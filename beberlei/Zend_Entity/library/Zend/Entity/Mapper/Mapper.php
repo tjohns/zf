@@ -20,6 +20,27 @@
 class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
 {
     /**
+     * Zend Database adapter
+     *
+     * @var Zend_Db_Adapter_Abstract
+     */
+    protected $_db;
+
+    /**
+     * Persister
+     *
+     * @var Zend_Entity_Mapper_Persister_Interface[]
+     */
+    protected $_persister = array();
+
+    /**
+     * Loader
+     *
+     * @var array
+     */
+    protected $_loaders = null;
+    
+    /**
      * Factory method to create the database mapper.
      * 
      * @param array $options
@@ -57,16 +78,60 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
     }
 
     /**
+     *
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @param  string $entityName
+     * @param  mixed $keyValue
+     * @return object
+     */
+    protected function _doLoad($entityManager, $entityName, $keyValue)
+    {
+        $mapping = $this->_mappings[$entityName];
+
+        $tableName = $mapping->table;
+        $key = $mapping->primaryKey->getColumnName();
+        $query = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $this->createSqlQueryObject());
+        $query->from($mapping->table);
+        $query->with($entityName);
+
+        $cond = $this->_db->quoteIdentifier($tableName.".".$key);
+        return $query->where($cond." = ?", $keyValue);
+    }
+
+    /**
+     * @param string $entity
+     * @param string $entityName
+     * @param Zend_Entity_Manager_Interface $entityManager
+     * @return void
+     */
+    protected function _doSave($entity, $entityName, $entityManager)
+    {
+        $persister = $this->getPersister($entityName);
+        $persister->save($entity, $entityManager);
+    }
+
+    /**
+     * @param string $entity
+     * @param string $entityName
+     * @param Zend_Entity_Manager_Interface $entityManager
+     * @return void
+     */
+    protected function _doDelete($entity, $entityName, $entityManager)
+    {
+        $this->getPersister($entityName)->delete($entity, $entityManager);
+    }
+
+    /**
      * @param  string $classOrNull
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Entity_Mapper_QueryObject
      */
     public function createNativeQueryBuilder($classOrNull, $entityManager)
     {
-        $queryObject = new Zend_Entity_Mapper_QueryObject( $this->getAdapter() );
-        $q = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $queryObject);
+        $q = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $this->createSqlQueryObject());
         if($classOrNull !== null) {
             if(isset($this->_mappings[$classOrNull])) {
+                $q->from($this->_mappings[$classOrNull]->table);
                 $q->with($classOrNull);
             } else {
                 throw new Zend_Entity_Exception(
@@ -77,15 +142,15 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
         return $q;
     }
 
+    /**
+     * @param  string $sqlQuery
+     * @param  Zend_Entity_Mapper_ResultSetMapping $resultSetMapping
+     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @return Zend_Entity_Mapper_SqlQuery
+     */
     public function createNativeQuery($sqlQuery, $resultSetMapping, $entityManager)
     {
-        $queryObject = new Zend_Entity_Mapper_QueryObject( $this->getAdapter() );
-        return new Zend_Entity_Mapper_NativeQuery($entityManager, $queryObject);
-    }
-
-    public function createQuery($entityName, $entityManager)
-    {
-        throw new Zend_Entity_Exception("not implemented yet");
+        return new Zend_Entity_Mapper_SqlQuery($entityManager, $sqlQuery, $resultSetMapping);
     }
 
     /**
@@ -104,5 +169,58 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
     public function closeConnection()
     {
         $this->_db->closeConnection();
+    }
+
+    /**
+     * Return DB Adapter
+     *
+     * @return Zend_Db_Adapter_Abstract
+     */
+    public function getAdapter()
+    {
+        return $this->_db;
+    }
+
+    /**
+     * Return responsible Persister class
+     *
+     * @param string $className
+     * @return Zend_Entity_Mapper_Persister_Interface
+     */
+    protected function getPersister($className)
+    {
+        if(!isset($this->_persister[$className])) {
+            $this->_persister[$className] = new Zend_Entity_Mapper_Persister_Simple();
+            $this->_persister[$className]->initialize($this->_mappings[$className]);
+        }
+
+        return $this->_persister[$className];
+    }
+
+    public function createSqlQueryObject()
+    {
+        return new Zend_Entity_Mapper_QueryObject($this->_db);
+    }
+
+    /**
+     * Return Resultprocessor and Object Loader
+     *
+     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     */
+    public function getLoader($fetchMode, $em)
+    {
+        if(!isset($this->_loaders[$fetchMode])) {
+            switch($fetchMode) {
+                case Zend_Entity_Manager::FETCH_ENTITIES:
+                    $loader = new Zend_Entity_Mapper_Loader_Entity($em, $this->_mappings);
+                    break;
+                case Zend_Entity_Manager::FETCH_ARRAY:
+                    $loader = new Zend_Entity_Mapper_Loader_Array($em, $this->_mappings);
+                    break;
+            }
+
+            $this->_loaders[$fetchMode] = $loader;
+        }
+        return $this->_loaders[$fetchMode];
     }
 }

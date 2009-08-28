@@ -5,13 +5,6 @@ require_once "TestCase.php";
 
 class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 {
-    public function testConstructingManagerRequiresDatabaseConnection()
-    {
-        $manager = $this->createEntityManager();
-
-        $this->assertEquals($this->getDatabaseConnection(), $manager->getAdapter());
-    }
-
     public function testGetDefaultIdentityMap()
     {
         $manager = $this->createEntityManager();
@@ -31,7 +24,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     public function testSettingNoResourceMapThrowsExceptionOnGet()
     {
         $this->setExpectedException("Zend_Entity_Exception");
-        $manager = new Zend_Entity_Manager(array('adapter' => $this->getDatabaseConnection()));
+        $manager = new Zend_Entity_Manager(array());
         
         $manager->getMetadataFactory();
     }
@@ -278,21 +271,17 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
     public function testCreateNativeQuery()
     {
-        $manager = $this->createTestingEntityManager();
+        $fixtureSql = "select foo";
+        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
 
+        $manager = $this->createTestingEntityManager();
         $mapper = $this->createMapperMock();
         $mapper->expects($this->once())
-               ->method('createNativeQueryBuilder')
-               ->with($this->equalTo(self::KNOWN_ENTITY_CLASS), $this->equalTo($manager));
-
+               ->method('createNativeQuery')
+               ->with($this->equalTo($fixtureSql), $this->equalTo($rsm), $this->equalTo($manager));
         $manager->addMapper(self::KNOWN_ENTITY_CLASS, $mapper);
 
-        $query = $manager->createNativeQuery(self::KNOWN_ENTITY_CLASS);
-    }
-
-    public function testCreateQuery()
-    {
-        $this->markTestIncomplete();
+        $query = $manager->createNativeQuery($fixtureSql, $rsm);
     }
 
     public function testCreateNamedQuery_UsesNamedQueryName_ForLoadingPlugin()

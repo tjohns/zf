@@ -6,6 +6,10 @@ abstract class Zend_Entity_Fixture_Abstract
 
     protected $definitionCreationMethods = array();
 
+    public $identityMap = null;
+
+    public $testAdapter = null;
+
     public function __construct()
     {
         $this->setUp();
@@ -20,6 +24,19 @@ abstract class Zend_Entity_Fixture_Abstract
             $this->resourceMap->addDefinition($definition);
             $definitions[] = $definition;
         }
+    }
+
+    public function createTestEntityManager()
+    {
+        $this->identityMap = new Zend_Entity_IdentityMap();
+        $this->testAdapter = new Zend_Test_DbAdapter();
+
+        $mapper = Zend_Entity_Mapper_Mapper::create(array('db' => $this->testAdapter, 'metadataFactory' => $this->resourceMap));
+
+        $em = new Zend_Entity_Manager(array('db' => $this->testAdapter, 'identityMap' => $this->identityMap));
+        $em->setMetadataFactory($this->resourceMap);
+        $em->setMapper($mapper);
+        return $em;
     }
 
     /**

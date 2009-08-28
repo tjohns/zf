@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Manager
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -24,7 +24,7 @@
  * Entity Manager Factory which creates Entity Managers with their dependencies.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Manager
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License

@@ -11,6 +11,7 @@ require_once "NativeQueryBuilderTest.php";
 require_once "MapperTest.php";
 require_once "TransactionTest.php";
 require_once "ResultSetMappingTest.php";
+require_once "SqlQueryTest.php";
 
 class Zend_Entity_Mapper_AllTests
 {
@@ -24,6 +25,7 @@ class Zend_Entity_Mapper_AllTests
         $suite->addTestSuite('Zend_Entity_Mapper_QueryObjectTest');
         $suite->addTestSuite('Zend_Entity_Mapper_MapperTest');
         $suite->addTestSuite('Zend_Entity_Mapper_NativeQueryBuilderTest');
+        $suite->addTestSuite('Zend_Entity_Mapper_SqlQueryTest');
         $suite->addTestSuite('Zend_Entity_Mapper_TransactionTest');
 
         return $suite;

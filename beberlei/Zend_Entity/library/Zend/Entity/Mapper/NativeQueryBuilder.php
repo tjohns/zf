@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Db
+ * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -25,22 +25,17 @@
  *
  * @uses       Zend_Entity_Query_QueryAbstract
  * @category   Zend
- * @package    Db
+ * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstract
+class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbstract
 {
     /**
      * @var Zend_Entity_Manager_Interface
      */
     protected $_entityManager = null;
-
-    /**
-     * @var string
-     */ 
-    protected $_entityName = null;
 
     /**
      * @var Zend_Entity_Mapper_ResultSetMapping
@@ -62,6 +57,9 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstr
      */
     protected $_queryObject = null;
 
+    /**
+     * @var array
+     */
     protected $_mappings = array();
 
     /**
@@ -69,28 +67,45 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstr
      * @param Zend_Entity_Manager_Interface $manager
      * @param Zend_Entity_Mapper_QueryObject $queryObject
      */
-    public function __construct(Zend_Entity_Manager_Interface $manager, Zend_Entity_Mapper_QueryObject $queryObject)
+    public function __construct(Zend_Entity_Manager_Interface $manager, Zend_Entity_Mapper_QueryObject $queryObject=null)
     {
-        $this->_mappings = $manager->getMapper()->getStorageMappings();
+        $mapper = $manager->getMapper();
+        if(!($mapper instanceof Zend_Entity_Mapper_Mapper)) {
+            throw new Zend_Entity_StorageMissmatchException("SqlQueryBuilder only works with Zend_Db_Mapper storage engine");
+        }
+
+        if($queryObject == null) {
+            $queryObject = $mapper->createSqlQueryObject();
+        }
+
+        $this->_mappings = $mapper->getStorageMappings();
         $this->_entityManager = $manager;
         $this->_queryObject = $queryObject;
         $this->_rsm = new Zend_Entity_Mapper_ResultSetMapping();
     }
 
-    public function with($entityName)
+    /**
+     *
+     * @param  string $entityName
+     * @param  string $correlationName
+     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     */
+    public function with($entityName, $correlationName = null, $joined = false)
     {
         if(!isset($this->_mappings[$entityName])) {
-            throw new Zend_Entity_Exception("Invalid entity name given to ->with().");
+            throw new Zend_Entity_InvalidEntityException("Invalid entity name '".$entityName."' given to ->with().");
         }
 
-        $this->_rsm->addEntity($entityName);
+        if($joined) {
+            $this->_rsm->addJoinedEntity($entityName);
+        } else {
+            $this->_rsm->addEntity($entityName);
+        }
         foreach($this->_mappings[$entityName]->columnNameToProperty AS $columnName => $property) {
             $this->_rsm->addProperty($entityName, $columnName, $property->getPropertyName());
         }
 
-        $this->_entityName = $entityName;
-        $this->_queryObject->from($this->_mappings[$entityName]->table);
-        $this->_queryObject->columns($this->_mappings[$entityName]->sqlColumnAliasMap);
+        $this->_queryObject->columns($this->_mappings[$entityName]->sqlColumnAliasMap, $correlationName);
         return $this;
     }
 
@@ -102,25 +117,9 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstr
         return $this->_queryObject;
     }
 
-    public function getResultList()
+    protected function _doExecute()
     {
-        return $this->_execute(Zend_Entity_Manager::FETCH_ENTITIES);
-    }
-
-    public function getResultArray()
-    {
-        return $this->_execute(Zend_Entity_Manager::FETCH_ARRAY);
-    }
-
-    protected function _execute($fetchMode)
-    {
-        $stmt = $this->getQueryObject()->query(null, $this->getParameters());
-        $resultSet = $stmt->fetchAll();
-        $stmt->closeCursor();
-
-        return $this->_entityManager->getMapper()
-            ->getLoader($fetchMode, $this->_entityManager)
-            ->processResultset($resultSet, $this->_rsm);
+        return $this->getQueryObject()->query(null, $this->getParams()); // null = $fetchMode
     }
 
     public function setFirstResult($offset)
@@ -138,18 +137,45 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstr
     }
 
     /**
-     * @return Zend_Paginator_Adapter_DbSelect
+     *
+     * @param  string $table
+     * @param  string $correlationName
+     * @return Zend_Entity_Mapper_NativeQueryBuilder
      */
-    public function getPaginatorAdapter()
+    public function from($table, $correlationName=null)
     {
-        return new Zend_Paginator_Adapter_DbSelect($this->getQueryObject());
+        $this->_queryObject->from($table, $correlationName);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string|array $table
+     * @param string $onCondition
+     * @param string $joinedEntityName
+     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     */
+    public function joinWith($table, $onCondition, $joinedEntityName)
+    {
+        if(is_string($table)) {
+            $correlationName = $table;
+            $tableName = $table;
+        } else {
+            $correlationName = key($table);
+            if(is_numeric($correlationName)) {
+                $correlationName = current($table);
+            }
+            $tableName = current($table);
+        }
+        $this->_queryObject->join($table, $onCondition);
+        return $this->with($joinedEntityName, $correlationName, true);
     }
 
     /**
      *
      * @param  string $method
      * @param  array $args
-     * @return Zend_Entity_Mapper_NativeQuery
+     * @return Zend_Entity_Mapper_NativeQueryBuilder
      */
     public function __call($method, $args)
     {
@@ -157,7 +183,7 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Query_QueryAbstr
         return $this;
     }
 
-    public function __toString()
+    public function toSql()
     {
         return $this->getQueryObject()->assemble();
     }

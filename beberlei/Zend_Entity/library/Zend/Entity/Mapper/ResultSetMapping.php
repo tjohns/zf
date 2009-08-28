@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Query
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -24,7 +24,7 @@
  * Description of how a storage result is mapped to an entity result
  *
  * @category   Zend
- * @package    Entity
+ * @package    Zend_Entity
  * @subpackage Query
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -80,7 +80,6 @@ class Zend_Entity_Mapper_ResultSetMapping
         $this->_aliasToEntity[$alias] = $entityName;
         $this->entityResult[$entityName] = array(
             'properties' => array(),
-            'joined' => false,
         );
         return $this;
     }
@@ -95,7 +94,7 @@ class Zend_Entity_Mapper_ResultSetMapping
      * @param  string $alias
      * @return Zend_Entity_Mapper_ResultSetMapping
      */
-    public function addJoinedEntity($entityName, $alias, $parentEntity, $parentEntityProperty)
+    public function addJoinedEntity($entityName, $alias=null, $parentEntity=null, $parentEntityProperty=null)
     {
         if($alias == null) {
             $alias = $entityName;
@@ -105,7 +104,6 @@ class Zend_Entity_Mapper_ResultSetMapping
         $this->_aliasToEntity[$alias] = $entityName;
         $this->entityResult[$entityName] = array(
             'properties' => array(),
-            'joined' => true,
         );
         return $this;
     }

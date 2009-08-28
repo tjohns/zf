@@ -13,39 +13,22 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Db
- * @subpackage Mapper
+ * @package    Zend_Entity
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
 /**
- * Array Loader
+ * Exception indicating that a storage missmatch happend using features of different storage engines.
  *
- * @uses       Zend_Entity_Mapper_Loader_LoaderAbstract
+ * @uses       Zend_Entity_Exception
  * @category   Zend
- * @package    Zend_Db
- * @subpackage Mapper
+ * @package    Zend_Entity
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_Loader_Array extends Zend_Entity_Mapper_Loader_LoaderAbstract
+class Zend_Entity_StorageMissmatchException extends Zend_Entity_Exception
 {
-    /**
-     * @param  array $resultSet
-     * @param  string $fetchMode
-     * @return Zend_Entity_Collection_Interface
-     */
-    public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm)
-    {
-        $resultArray = array();
-        foreach($resultSet AS $row) {
-            foreach($rsm->entityResult AS $entityName => $entityDef) {
-                $mapping = $this->_mappings[$entityName];
-                $resultArray[] = $this->renameAndCastColumnToPropertyKeys($row, $mapping);
-            }
-        }
-        return $resultArray;
-    }
+    
 }
