@@ -33,7 +33,7 @@ interface Zend_Entity_Manager_Interface
 {
     /**
      * @param string $entityName
-     * @param Zend_Entity_Mapper_ResultSetMapping
+     * @param Zend_Entity_Query_ResultSetMapping
      * @return Zend_Entity_Query_QueryAbstract
      */
     public function createNativeQuery($nativeInput, $resultSetMapping=null);

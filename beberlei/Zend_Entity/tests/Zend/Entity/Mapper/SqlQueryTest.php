@@ -16,7 +16,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
     {
         $sqlFixture = "SELECT foo FROM bar WHERE baz = 1";
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
         $query = new Zend_Entity_Mapper_SqlQuery($em, $sqlFixture, $rsm);
 
@@ -27,7 +27,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
         $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
 
@@ -38,7 +38,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("Zend_Entity_Exception");
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
         $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
 
@@ -49,7 +49,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException("Zend_Entity_StorageMissmatchException");
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->getMock('Zend_Entity_Manager_Interface');
 
         $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
@@ -75,7 +75,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
            ->method('getMapper')
            ->will($this->returnValue($mapper));
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
 
         $query = new Zend_Entity_Mapper_SqlQuery($em, $fixtureSql, $rsm);
         $query->bindParams($fixtureParams);

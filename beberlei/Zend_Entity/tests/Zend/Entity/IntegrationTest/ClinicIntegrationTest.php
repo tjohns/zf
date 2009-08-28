@@ -55,7 +55,7 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
 
     public function testPatientGetResultList()
     {
-        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query = new Zend_Entity_Mapper_SqlQueryBuilder($this->_entityManager);
         $query->from("patients")
               ->with("Clinic_Patient")
               ->where("name = ?", "John Doe");
@@ -76,7 +76,7 @@ class Zend_Entity_IntegrationTest_ClinicIntegrationTest extends Zend_Test_PHPUni
 
     public function testPatientGetSingleResult()
     {
-        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query = new Zend_Entity_Mapper_SqlQueryBuilder($this->_entityManager);
         $query->from("patients")
               ->with("Clinic_Patient")
               ->where("name = ?", "John Doe");

@@ -58,7 +58,7 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
      * @param  string $fetchMode
      * @return Zend_Entity_Collection_Interface
      */
-    abstract public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm);
+    abstract public function processResultset($resultSet, Zend_Entity_Query_ResultSetMapping $rsm);
 
     /**
      * @todo Gah Code duplication
@@ -164,7 +164,7 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
 
             $keyValue = $entityState[$mapping->primaryKey->propertyName];
 
-            $query = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager);
+            $query = new Zend_Entity_Mapper_SqlQueryBuilder($entityManager);
             $query->from($this->_mappings[$relation->class]->table)
                   ->with($relation->class);
 

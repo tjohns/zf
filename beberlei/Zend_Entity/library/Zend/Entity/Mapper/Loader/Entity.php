@@ -24,7 +24,7 @@ class Zend_Entity_Mapper_Loader_Entity extends Zend_Entity_Mapper_Loader_LoaderA
      * @param  string $fetchMode
      * @return array
      */
-    public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm)
+    public function processResultset($resultSet, Zend_Entity_Query_ResultSetMapping $rsm)
     {
         $hasEntity = count($rsm->entityResult)>0;
 

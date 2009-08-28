@@ -90,7 +90,7 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
 
         $tableName = $mapping->table;
         $key = $mapping->primaryKey->getColumnName();
-        $query = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $this->createSqlQueryObject());
+        $query = new Zend_Entity_Mapper_SqlQueryBuilder($entityManager, $this->createSqlQueryObject());
         $query->from($mapping->table);
         $query->with($entityName);
 
@@ -128,7 +128,7 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
      */
     public function createNativeQueryBuilder($classOrNull, $entityManager)
     {
-        $q = new Zend_Entity_Mapper_NativeQueryBuilder($entityManager, $this->createSqlQueryObject());
+        $q = new Zend_Entity_Mapper_SqlQueryBuilder($entityManager, $this->createSqlQueryObject());
         if($classOrNull !== null) {
             if(isset($this->_mappings[$classOrNull])) {
                 $q->from($this->_mappings[$classOrNull]->table);
@@ -144,7 +144,7 @@ class Zend_Entity_Mapper_Mapper extends Zend_Entity_MapperAbstract
 
     /**
      * @param  string $sqlQuery
-     * @param  Zend_Entity_Mapper_ResultSetMapping $resultSetMapping
+     * @param  Zend_Entity_Query_ResultSetMapping $resultSetMapping
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Entity_Mapper_SqlQuery
      */

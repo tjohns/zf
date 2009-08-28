@@ -1,6 +1,6 @@
 <?php
 
-class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
+class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
 {
     public function testWith_ForInvalidEntityName_ThrowsException()
     {
@@ -9,7 +9,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
         $em = $this->createEntityManager();
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->with("UnknownEntityName");
     }
 
@@ -20,7 +20,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table')->with('Zend_TestEntity1');
 
         $rsm = $qb->getResultSetMapping();
@@ -47,7 +47,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
             ->method('columns')
             ->with($this->equalTo(array('a_id' => 'a_id', 'a_property' => 'a_property')));
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table')->with('Zend_TestEntity1');
     }
 
@@ -58,7 +58,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->join('table_b', 'table_a.manytoone = table_b.id')->with('Zend_TestEntity2', 'table_b');
 
@@ -76,7 +76,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith('table_b', 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
 
@@ -98,7 +98,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith(array('b' => 'table_b'), 'table_a.manytoone = b.id', 'Zend_TestEntity2');
 
@@ -120,7 +120,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
 
         $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_NativeQueryBuilder($em, $qo);
+        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith(array('table_b'), 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
 
@@ -150,7 +150,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
                ->will($this->returnValue($loader));
         $em->setMapper($mapper);
         
-        return new Zend_Entity_Mapper_NativeQueryBuilder($em, $queryObject);
+        return new Zend_Entity_Mapper_SqlQueryBuilder($em, $queryObject);
     }
 
     public function testGetResultList_DelegatesToLoader_ProcessResultset()
@@ -172,7 +172,7 @@ class Zend_Entity_Mapper_NativeQueryBuilderTest extends Zend_Entity_TestCase
     {
         $loader->expects($this->once())
                ->method('processResultset')
-               ->with($this->isType('array'), $this->isInstanceOf('Zend_Entity_Mapper_ResultSetMapping'))
+               ->with($this->isType('array'), $this->isInstanceOf('Zend_Entity_Query_ResultSetMapping'))
                ->will($this->returnValue($returnValue));
     }
 

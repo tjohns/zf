@@ -37,7 +37,7 @@ class Zend_Entity_Mapper_Loader_Array extends Zend_Entity_Mapper_Loader_LoaderAb
      * @param  string $fetchMode
      * @return Zend_Entity_Collection_Interface
      */
-    public function processResultset($resultSet, Zend_Entity_Mapper_ResultSetMapping $rsm)
+    public function processResultset($resultSet, Zend_Entity_Query_ResultSetMapping $rsm)
     {
         $resultArray = array();
         foreach($resultSet AS $row) {

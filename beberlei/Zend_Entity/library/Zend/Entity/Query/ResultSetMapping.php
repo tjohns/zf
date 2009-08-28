@@ -29,7 +29,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_ResultSetMapping
+class Zend_Entity_Query_ResultSetMapping
 {
     /**
      * @var array
@@ -68,7 +68,7 @@ class Zend_Entity_Mapper_ResultSetMapping
      *
      * @param  string $entityName
      * @param  string $alias
-     * @return Zend_Entity_Mapper_ResultSetMapping
+     * @return Zend_Entity_Query_ResultSetMapping
      */
     public function addEntity($entityName, $alias=null)
     {
@@ -92,7 +92,7 @@ class Zend_Entity_Mapper_ResultSetMapping
      *
      * @param  string $entityName
      * @param  string $alias
-     * @return Zend_Entity_Mapper_ResultSetMapping
+     * @return Zend_Entity_Query_ResultSetMapping
      */
     public function addJoinedEntity($entityName, $alias=null, $parentEntity=null, $parentEntityProperty=null)
     {
@@ -114,7 +114,7 @@ class Zend_Entity_Mapper_ResultSetMapping
      * @param string $alias
      * @param string $storageFieldName
      * @param string $propertyName
-     * @return Zend_Entity_Mapper_ResultSetMapping
+     * @return Zend_Entity_Query_ResultSetMapping
      */
     public function addProperty($alias, $storageFieldName, $propertyName)
     {
@@ -134,7 +134,7 @@ class Zend_Entity_Mapper_ResultSetMapping
      * A Scalar result is a single
      *
      * @param  string $scalarName
-     * @return Zend_Entity_Mapper_ResultSetMapping
+     * @return Zend_Entity_Query_ResultSetMapping
      */
     public function addScalar($scalarName)
     {

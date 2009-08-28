@@ -43,12 +43,12 @@ abstract class Zend_Entity_Query_QueryAbstract implements Zend_Paginator_Adapter
     protected $_hints = array();
 
     /**
-     * @var Zend_Entity_Mapper_ResultSetMapping
+     * @var Zend_Entity_Query_ResultSetMapping
      */
     protected $_rsm = null;
 
     /**
-     * @return Zend_Entity_Mapper_ResultSetMapping
+     * @return Zend_Entity_Query_ResultSetMapping
      */
     public function getResultSetMapping()
     {

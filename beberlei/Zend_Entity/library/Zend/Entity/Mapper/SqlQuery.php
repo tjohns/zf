@@ -21,7 +21,7 @@
  */
 
 /**
- * Native SQL Query whose result is mapped using a {@link Zend_Entity_Mapper_ResultSetMapping}.
+ * Native SQL Query whose result is mapped using a {@link Zend_Entity_Query_ResultSetMapping}.
  *
  * @uses       Zend_Entity_Mapper_SqlQueryAbstract
  * @category   Zend
@@ -41,9 +41,9 @@ class Zend_Entity_Mapper_SqlQuery extends Zend_Entity_Mapper_SqlQueryAbstract
      *
      * @param Zend_Entity_Manager_Interface $em
      * @param string $sqlQuery
-     * @param Zend_Entity_Mapper_ResultSetMapping $rsm
+     * @param Zend_Entity_Query_ResultSetMapping $rsm
      */
-    public function __construct(Zend_Entity_Manager_Interface $em, $sqlQuery, Zend_Entity_Mapper_ResultSetMapping $rsm)
+    public function __construct(Zend_Entity_Manager_Interface $em, $sqlQuery, Zend_Entity_Query_ResultSetMapping $rsm)
     {
         $mapper = $em->getMapper();
         if(!($mapper instanceof Zend_Entity_Mapper_Mapper)) {

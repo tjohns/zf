@@ -53,7 +53,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
                
         $mapper = $this->createMapper($dbMock, null, $metadataFactory);
 
-        $queryMock = $this->getMock('Zend_Entity_Mapper_NativeQueryBuilder', array('select', 'where', 'getSingleResult'), array(), '', false);
+        $queryMock = $this->getMock('Zend_Entity_Mapper_SqlQueryBuilder', array('select', 'where', 'getSingleResult'), array(), '', false);
         $queryMock->expects($this->at(0))
                   ->method('where')
                   ->with($this->equalTo('bar.col_id = ?'), $this->equalTo($fixtureId));
@@ -134,7 +134,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $testAdapter = new Zend_Test_DbAdapter();
         $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
 
-        $resultSetMapping = new Zend_Entity_Mapper_ResultSetMapping();
+        $resultSetMapping = new Zend_Entity_Query_ResultSetMapping();
         $entityManager = $this->createEntityManager();
         $entityManager->setMapper($mapper);
         

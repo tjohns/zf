@@ -64,7 +64,7 @@ class Zend_Entity_Mapper_Loader_Entity_SimpleFixtureTest extends Zend_Entity_Map
 
         $resultSet = array($row);
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $rsm->addEntity(Zend_Entity_Fixture_SimpleFixtureDefs::TEST_A_CLASS, "a");
         $rsm->addProperty("a", "a_id", "id");
         $rsm->addProperty("a", "a_property", "property");

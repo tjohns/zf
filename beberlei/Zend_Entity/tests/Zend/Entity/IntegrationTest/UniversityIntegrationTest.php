@@ -123,7 +123,7 @@ class Zend_Entity_IntegrationTest_UniversityIntegrationTest extends Zend_Test_PH
 
     protected function createStudentQueryConditionalOnCourseId($courseId)
     {
-        $query = new Zend_Entity_Mapper_NativeQueryBuilder($this->_entityManager);
+        $query = new Zend_Entity_Mapper_SqlQueryBuilder($this->_entityManager);
         $query->from("university_students")
             ->with("ZendEntity_Student")
             ->joinInner(

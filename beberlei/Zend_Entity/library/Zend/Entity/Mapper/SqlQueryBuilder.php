@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbstract
+class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbstract
 {
     /**
      * @var Zend_Entity_Manager_Interface
@@ -38,7 +38,7 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryA
     protected $_entityManager = null;
 
     /**
-     * @var Zend_Entity_Mapper_ResultSetMapping
+     * @var Zend_Entity_Query_ResultSetMapping
      */
     protected $_rsm = null;
 
@@ -81,14 +81,14 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryA
         $this->_mappings = $mapper->getStorageMappings();
         $this->_entityManager = $manager;
         $this->_queryObject = $queryObject;
-        $this->_rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $this->_rsm = new Zend_Entity_Query_ResultSetMapping();
     }
 
     /**
      *
      * @param  string $entityName
      * @param  string $correlationName
-     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     * @return Zend_Entity_Mapper_SqlQueryBuilder
      */
     public function with($entityName, $correlationName = null, $joined = false)
     {
@@ -140,7 +140,7 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryA
      *
      * @param  string $table
      * @param  string $correlationName
-     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     * @return Zend_Entity_Mapper_SqlQueryBuilder
      */
     public function from($table, $correlationName=null)
     {
@@ -153,7 +153,7 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryA
      * @param string|array $table
      * @param string $onCondition
      * @param string $joinedEntityName
-     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     * @return Zend_Entity_Mapper_SqlQueryBuilder
      */
     public function joinWith($table, $onCondition, $joinedEntityName)
     {
@@ -175,7 +175,7 @@ class Zend_Entity_Mapper_NativeQueryBuilder extends Zend_Entity_Mapper_SqlQueryA
      *
      * @param  string $method
      * @param  array $args
-     * @return Zend_Entity_Mapper_NativeQueryBuilder
+     * @return Zend_Entity_Mapper_SqlQueryBuilder
      */
     public function __call($method, $args)
     {

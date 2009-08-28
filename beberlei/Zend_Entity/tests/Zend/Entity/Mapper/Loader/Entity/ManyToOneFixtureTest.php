@@ -79,7 +79,7 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
 
     public function testProcessResultSet_JoinedEntityConstructed_AlongsideRootEntity()
     {
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $rsm->addEntity('Zend_TestEntity1', 'a')
             ->addProperty('a', 'a_id', 'id')
             ->addProperty('a', 'a_property', 'property')
@@ -122,7 +122,7 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
 
     public function testProcessResultSet_WithScalars()
     {
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $rsm->addEntity('Zend_TestEntity1', 'a')
             ->addProperty('a', 'a_id', 'id')
             ->addProperty('a', 'a_property', 'property')
@@ -170,7 +170,7 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToOneFixtureTest extends Zend_Entity_
     {
         $this->setExpectedException('Zend_Entity_Exception');
 
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
         $rows = array();
 
         $loader = $this->createLoader();

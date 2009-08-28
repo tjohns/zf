@@ -272,7 +272,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
     public function testCreateNativeQuery()
     {
         $fixtureSql = "select foo";
-        $rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $rsm = new Zend_Entity_Query_ResultSetMapping();
 
         $manager = $this->createTestingEntityManager();
         $mapper = $this->createMapperMock();

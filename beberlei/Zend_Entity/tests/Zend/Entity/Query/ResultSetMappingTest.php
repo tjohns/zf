@@ -1,15 +1,15 @@
 <?php
 
-class Zend_Entity_Mapper_ResultSetMappingTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_Query_ResultSetMappingTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Entity_Mapper_ResultSetMapping
+     * @var Zend_Entity_Query_ResultSetMapping
      */
     protected $rsm;
 
     public function setUp()
     {
-        $this->rsm = new Zend_Entity_Mapper_ResultSetMapping();
+        $this->rsm = new Zend_Entity_Query_ResultSetMapping();
     }
 
     public function testAddEntity()

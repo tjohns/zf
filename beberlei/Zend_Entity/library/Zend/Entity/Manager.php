@@ -216,7 +216,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 
     /**
      * @param string|object $sqlQuery
-     * @param string|Zend_Entity_Mapper_ResultSetMapping $classOrResultSetMapping
+     * @param string|Zend_Entity_Query_ResultSetMapping $classOrResultSetMapping
      * @return Zend_Entity_Query_QueryAbstract
      */
     public function createNativeQuery($sqlQuery, $classOrResultSetMapping=null)
