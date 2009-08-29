@@ -119,17 +119,7 @@ class Zend_Entity_DbMapper_MapperTest extends Zend_Entity_TestCase
         $mapper->save($lazyEntity, $this->createEntityManager());
     }
 
-    public function testCreateNativeQueryBuilder_UnknownClassGiven_ThrowsException()
-    {
-        $this->setExpectedException("Zend_Entity_Exception");
-
-        $testAdapter = new Zend_Test_DbAdapter();
-        $mapper = new Zend_Db_Mapper_Mapper($testAdapter, null, array());
-
-        $mapper->createNativeQueryBuilder("foo", $this->createEntityManager());
-    }
-
-    public function testCreateNativeQuery()
+    public function testCreateNativeQuery_WithResultSetMapping()
     {
         $testAdapter = new Zend_Test_DbAdapter();
         $mapper = new Zend_Db_Mapper_Mapper($testAdapter, null, array());
@@ -141,6 +131,44 @@ class Zend_Entity_DbMapper_MapperTest extends Zend_Entity_TestCase
         $q = $mapper->createNativeQuery("select foo", $resultSetMapping, $entityManager);
 
         $this->assertType('Zend_Db_Mapper_SqlQuery', $q);
+    }
+
+    public function testCreateNativeQuery_WithEntityName_CreatesRsmOnTheFly()
+    {
+        $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        $em = $fixture->createTestEntityManager();
+        $mapper = $em->getMapper();
+
+        $q = $mapper->createNativeQuery("select foo", "Zend_TestEntity1", $em);
+
+        $this->assertType('Zend_Db_Mapper_SqlQuery', $q);
+
+        $rsm = $q->getResultSetMapping();
+        $this->assertTrue(isset($rsm->entityResult['Zend_TestEntity1']));
+        $this->assertEquals(
+            array("a_id" => "id", "a_property" => "property"),
+            $rsm->entityResult['Zend_TestEntity1']['properties']
+        );
+    }
+
+    public function testCreateNativeQuery_WithUnknownEntityName_ThrowsException()
+    {
+        $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        $em = $fixture->createTestEntityManager();
+        $mapper = $em->getMapper();
+
+        $this->setExpectedException("Zend_Entity_InvalidEntityException");
+        $q = $mapper->createNativeQuery("select foo", "anUnknownEntity", $em);
+    }
+
+    public function testCreateNativeQuery_WithInvalidInput_ThrowsException()
+    {
+        $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
+        $em = $fixture->createTestEntityManager();
+        $mapper = $em->getMapper();
+
+        $this->setExpectedException("Zend_Entity_Exception");
+        $q = $mapper->createNativeQuery("select foo", 1234, $em);
     }
 
     public function testSaveNonLazyNonCleanEntity_IsDelegatedToPersister()

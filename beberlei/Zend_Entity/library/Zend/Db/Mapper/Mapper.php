@@ -122,35 +122,31 @@ class Zend_Db_Mapper_Mapper extends Zend_Entity_MapperAbstract
     }
 
     /**
-     * @param  string $classOrNull
-     * @param  Zend_Entity_Manager_Interface $entityManager
-     * @return Zend_Db_Mapper_QueryObject
-     */
-    public function createNativeQueryBuilder($classOrNull, $entityManager)
-    {
-        $q = new Zend_Db_Mapper_SqlQueryBuilder($entityManager, $this->createSqlQueryObject());
-        if($classOrNull !== null) {
-            if(isset($this->_mappings[$classOrNull])) {
-                $q->from($this->_mappings[$classOrNull]->table);
-                $q->with($classOrNull);
-            } else {
-                throw new Zend_Entity_Exception(
-                    "Cannot prepare the QueryBuilder with instructions to load unknown entity '".$classOrNull."'."
-                );
-            }
-        }
-        return $q;
-    }
-
-    /**
      * @param  string $sqlQuery
-     * @param  Zend_Entity_Query_ResultSetMapping $resultSetMapping
+     * @param  string|Zend_Entity_Query_ResultSetMapping $entityNameOrResultSetMapping
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return Zend_Db_Mapper_SqlQuery
      */
-    public function createNativeQuery($sqlQuery, $resultSetMapping, $entityManager)
+    public function createNativeQuery($sqlQuery, $entityNameOrResultSetMapping, $entityManager)
     {
-        return new Zend_Db_Mapper_SqlQuery($entityManager, $sqlQuery, $resultSetMapping);
+        if(is_string($entityNameOrResultSetMapping)) {
+            $entityName = $entityNameOrResultSetMapping;
+            if(!isset($this->_mappings[$entityName])) {
+                throw new Zend_Entity_InvalidEntityException($entityName);
+            }
+
+            $rsm = new Zend_Entity_Query_ResultSetMapping();
+            $rsm->addEntity($entityName);
+            foreach($this->_mappings[$entityName]->columnNameToProperty AS $columnName => $property) {
+                $rsm->addProperty($entityName, $columnName, $property->getPropertyName());
+            }
+        } else if($entityNameOrResultSetMapping instanceof Zend_Entity_Query_ResultSetMapping) {
+            $rsm = $entityNameOrResultSetMapping;
+        } else {
+            throw new Zend_Entity_Exception();
+        }
+
+        return new Zend_Db_Mapper_SqlQuery($entityManager, $sqlQuery, $rsm);
     }
 
     /**

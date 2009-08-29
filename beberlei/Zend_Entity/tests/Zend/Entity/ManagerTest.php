@@ -5,6 +5,30 @@ require_once "TestCase.php";
 
 class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 {
+    public function testGetDefaultFlushMode_IsImmediate()
+    {
+        $manager = $this->createEntityManager();
+
+        $this->assertEquals(Zend_Entity_Manager::FLUSHMODE_IMMEDIATE, $manager->getFlushMode());
+    }
+
+    public function testSetUnknownFlushMode_ThrowsException()
+    {
+        $manager = $this->createEntityManager();
+
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $manager->setFlushMode("foo");
+    }
+
+    public function testSetFlushMode()
+    {
+        $manager = $this->createEntityManager();
+        $manager->setFlushMode(Zend_Entity_Manager::FLUSHMODE_IMMEDIATE);
+
+        $this->assertEquals(Zend_Entity_Manager::FLUSHMODE_IMMEDIATE, $manager->getFlushMode());
+    }
+
     public function testGetDefaultIdentityMap()
     {
         $manager = $this->createEntityManager();

@@ -32,9 +32,22 @@
  */
 class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
 {
+    /**
+     * @var int
+     */
     const FETCH_ENTITIES        = 1;
+
+    /**
+     * @var int
+     */
     const FETCH_ARRAY           = 2;
 
+    /**
+     * Immediately flush persist, save and delete operations.
+     *
+     * @var int
+     */
+    const FLUSHMODE_IMMEDIATE   = 1;
 
     const NOTFOUND_EXCEPTION = "exception";
     const NOTFOUND_NULL = "null";
@@ -85,6 +98,11 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     protected $_transaction = null;
 
     /**
+     * @var int
+     */
+    protected $_flushMode = self::FLUSHMODE_IMMEDIATE;
+
+    /**
      * Construct new Entity Manager instance
      *
      * @param array $options
@@ -105,6 +123,29 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
                 $this->$method($v);
             }
         }
+    }
+
+    /**
+     *
+     * @param int $mode
+     * @throws Zend_Entity_Exception
+     * @return Zend_Entity_Manager
+     */
+    public function setFlushMode($mode)
+    {
+        if(in_array($mode, array(self::FLUSHMODE_IMMEDIATE))) {
+            $this->_flushMode = $mode;
+        } else {
+            throw new Zend_Entity_Exception("Invalid flush-mode specified.");
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getFlushMode()
+    {
+        return $this->_flushMode;
     }
 
     /**
@@ -297,7 +338,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function delete(Zend_Entity_Interface $entity)
     {
-        if($this->getIdentityMap()->contains($entity) == false) {
+        if($this->_identityMap->contains($entity) == false) {
             require_once "Zend/Entity/IllegalStateException.php";
             throw new Zend_Entity_IllegalStateException(
                 "Cannot delete entity with unknown primary id from database."
