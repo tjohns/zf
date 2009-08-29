@@ -1,16 +1,16 @@
 <?php
 
-class Zend_Entity_Mapper_MappingTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_DbMapper_MappingTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Zend_Entity_Mapper_Mapping
+     * @var Zend_Db_Mapper_Mapping
      */
     private $mapping = null;
     private $metadataFactory = null;
 
     public function setUp()
     {
-        $this->mapping = new Zend_Entity_Mapper_Mapping();
+        $this->mapping = new Zend_Db_Mapper_Mapping();
         $this->metadataFactory = $this->getMock('Zend_Entity_MetadataFactory_Interface');
     }
 
@@ -93,7 +93,7 @@ class Zend_Entity_Mapper_MappingTest extends PHPUnit_Framework_TestCase
     public function testFinalize_PassPropertyNames_ToStateTransformer()
     {
         $entity = new Zend_Entity_Definition_Entity("foo", array(
-            "stateTransformerClass" => "Zend_Entity_Mapper_TestStateTransformer"
+            "stateTransformerClass" => "Zend_Entity_DbMapper_TestStateTransformer"
         ));
         $entity->addPrimaryKey("id");
         $this->mapping->acceptProperty($entity->getPropertyByName("id"), $this->metadataFactory);
@@ -399,7 +399,7 @@ class Zend_Entity_Mapper_MappingTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class Zend_Entity_Mapper_TestStateTransformer extends Zend_Entity_StateTransformer_Array
+class Zend_Entity_DbMapper_TestStateTransformer extends Zend_Entity_StateTransformer_Array
 {
     public $_propertyNames = array();
 }

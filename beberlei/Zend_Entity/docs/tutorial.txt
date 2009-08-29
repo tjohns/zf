@@ -74,7 +74,7 @@ files Route.php and Station.php and put them into a "config/definitions/railways
 
 Route.php
 
-    $def = new Zend_Entity_Mapper_Definition_Entity("Route", array("table" => "routes"));
+    $def = new Zend_Db_Mapper_Definition_Entity("Route", array("table" => "routes"));
     $def->addPrimaryKey("routeId", array(
         'columnName' => 'id',
     ));
@@ -94,12 +94,12 @@ Route.php
 
 Station.php
 
-    $def = new Zend_Entity_Mapper_Definition_Entity("Station", array("table" => "stations"));
+    $def = new Zend_Db_Mapper_Definition_Entity("Station", array("table" => "stations"));
     $def->addPrimaryKey("stationId", array("columnName" => "id"));
     $def->addProperty("stationName", array('columnName' => 'station_name'));
 
     $def->addCollection("startingRoutes", array(
-        'relation' => new Zend_Entity_Mapper_Definition_OneToManyRelation(
+        'relation' => new Zend_Db_Mapper_Definition_OneToManyRelation(
             'origin_station_id',
             array(
                 'class' => 'Route',

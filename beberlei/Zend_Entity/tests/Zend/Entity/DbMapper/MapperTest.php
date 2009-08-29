@@ -1,12 +1,12 @@
 <?php
 
-class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
+class Zend_Entity_DbMapper_MapperTest extends Zend_Entity_TestCase
 {
     public function testCreateFactory_WithoutDbKey_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_Exception");
         
-        $mapper = Zend_Entity_Mapper_Mapper::create(array());
+        $mapper = Zend_Db_Mapper_Mapper::create(array());
     }
 
     public function testCreateFactory_WithoutMetadtaFactoryKey_ThrowsException()
@@ -15,7 +15,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
 
         $options = array('db' => new Zend_Test_DbAdapter());
 
-        $mapper = Zend_Entity_Mapper_Mapper::create($options);
+        $mapper = Zend_Db_Mapper_Mapper::create($options);
     }
 
     public function testLoadEntity_InvalidEntity_ThrowsException()
@@ -23,7 +23,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $metadataFactory = new Zend_Entity_MetadataFactory_Testing();
         $options = array('db' => new Zend_Test_DbAdapter(), 'metadataFactory' => $metadataFactory);
 
-        $mapper = Zend_Entity_Mapper_Mapper::create($options);
+        $mapper = Zend_Db_Mapper_Mapper::create($options);
         $emMock = $this->getMock('Zend_Entity_Manager_Interface');
 
         $this->setExpectedException('Zend_Entity_InvalidEntityException');
@@ -53,7 +53,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
                
         $mapper = $this->createMapper($dbMock, null, $metadataFactory);
 
-        $queryMock = $this->getMock('Zend_Entity_Mapper_SqlQueryBuilder', array('select', 'where', 'getSingleResult'), array(), '', false);
+        $queryMock = $this->getMock('Zend_Db_Mapper_SqlQueryBuilder', array('select', 'where', 'getSingleResult'), array(), '', false);
         $queryMock->expects($this->at(0))
                   ->method('where')
                   ->with($this->equalTo('bar.col_id = ?'), $this->equalTo($fixtureId));
@@ -79,7 +79,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $metadataFactory = new Zend_Entity_MetadataFactory_Testing();
         $options = array('db' => new Zend_Test_DbAdapter(), 'metadataFactory' => $metadataFactory);
 
-        $mapper = Zend_Entity_Mapper_Mapper::create($options);
+        $mapper = Zend_Db_Mapper_Mapper::create($options);
         $emMock = $this->getMock('Zend_Entity_Manager_Interface');
 
         $this->setExpectedException("Zend_Entity_InvalidEntityException");
@@ -92,7 +92,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $metadataFactory = new Zend_Entity_MetadataFactory_Testing();
         $options = array('db' => new Zend_Test_DbAdapter(), 'metadataFactory' => $metadataFactory);
 
-        $mapper = Zend_Entity_Mapper_Mapper::create($options);
+        $mapper = Zend_Db_Mapper_Mapper::create($options);
         $emMock = $this->getMock('Zend_Entity_Manager_Interface');
 
         $this->setExpectedException("Zend_Entity_InvalidEntityException");
@@ -124,7 +124,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         $this->setExpectedException("Zend_Entity_Exception");
 
         $testAdapter = new Zend_Test_DbAdapter();
-        $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
+        $mapper = new Zend_Db_Mapper_Mapper($testAdapter, null, array());
 
         $mapper->createNativeQueryBuilder("foo", $this->createEntityManager());
     }
@@ -132,7 +132,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
     public function testCreateNativeQuery()
     {
         $testAdapter = new Zend_Test_DbAdapter();
-        $mapper = new Zend_Entity_Mapper_Mapper($testAdapter, null, array());
+        $mapper = new Zend_Db_Mapper_Mapper($testAdapter, null, array());
 
         $resultSetMapping = new Zend_Entity_Query_ResultSetMapping();
         $entityManager = $this->createEntityManager();
@@ -140,7 +140,7 @@ class Zend_Entity_Mapper_MapperTest extends Zend_Entity_TestCase
         
         $q = $mapper->createNativeQuery("select foo", $resultSetMapping, $entityManager);
 
-        $this->assertType('Zend_Entity_Mapper_SqlQuery', $q);
+        $this->assertType('Zend_Db_Mapper_SqlQuery', $q);
     }
 
     public function testSaveNonLazyNonCleanEntity_IsDelegatedToPersister()

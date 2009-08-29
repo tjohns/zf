@@ -1,10 +1,10 @@
 <?php
 
-class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
+class Zend_Entity_DbMapper_SqlQueryTest extends PHPUnit_Framework_TestCase
 {
     public function createDbEntityManager()
     {
-        $mapper = $this->getMock('Zend_Entity_Mapper_Mapper', array(), array(), '', false);
+        $mapper = $this->getMock('Zend_Db_Mapper_Mapper', array(), array(), '', false);
         $em = $this->getMock('Zend_Entity_Manager_Interface');
         $em->expects($this->any())
            ->method('getMapper')
@@ -18,7 +18,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
 
         $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
-        $query = new Zend_Entity_Mapper_SqlQuery($em, $sqlFixture, $rsm);
+        $query = new Zend_Db_Mapper_SqlQuery($em, $sqlFixture, $rsm);
 
         $this->assertEquals($sqlFixture, $query->toSql());
     }
@@ -29,7 +29,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
 
         $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
-        $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
+        $query = new Zend_Db_Mapper_SqlQuery($em, "sql", $rsm);
 
         $query->setMaxResults(20);
     }
@@ -40,7 +40,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
 
         $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->createDbEntityManager();
-        $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
+        $query = new Zend_Db_Mapper_SqlQuery($em, "sql", $rsm);
 
         $query->setFirstResult(20);
     }
@@ -52,7 +52,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
         $rsm = new Zend_Entity_Query_ResultSetMapping();
         $em = $this->getMock('Zend_Entity_Manager_Interface');
 
-        $query = new Zend_Entity_Mapper_SqlQuery($em, "sql", $rsm);
+        $query = new Zend_Db_Mapper_SqlQuery($em, "sql", $rsm);
     }
 
     public function testExecuteQuery_IsDelegatedToMapperAdapter()
@@ -63,13 +63,13 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
         $adapterMock = new Zend_Test_DbAdapter();
         $adapterMock->appendStatementToStack(Zend_Test_DbStatement::createSelectStatement(array()));
 
-        $mapper = $this->getMock('Zend_Entity_Mapper_Mapper', array(), array(), '', false);
+        $mapper = $this->getMock('Zend_Db_Mapper_Mapper', array(), array(), '', false);
         $mapper->expects($this->once())
                ->method('getAdapter')
                ->will($this->returnValue($adapterMock));
         $mapper->expects($this->once())
                ->method('getLoader')
-               ->will($this->returnValue($this->getMock('Zend_Entity_Mapper_Loader_LoaderAbstract', array('processResultSet'), array(), '', false)));
+               ->will($this->returnValue($this->getMock('Zend_Db_Mapper_Loader_LoaderAbstract', array('processResultSet'), array(), '', false)));
         $em = $this->getMock('Zend_Entity_Manager_Interface');
         $em->expects($this->exactly(3))
            ->method('getMapper')
@@ -77,7 +77,7 @@ class Zend_Entity_Mapper_SqlQueryTest extends PHPUnit_Framework_TestCase
 
         $rsm = new Zend_Entity_Query_ResultSetMapping();
 
-        $query = new Zend_Entity_Mapper_SqlQuery($em, $fixtureSql, $rsm);
+        $query = new Zend_Db_Mapper_SqlQuery($em, $fixtureSql, $rsm);
         $query->bindParams($fixtureParams);
         $query->getResultArray();
     }

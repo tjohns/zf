@@ -1,6 +1,6 @@
 <?php
 
-abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
+abstract class Zend_Entity_DbMapper_Loader_TestCase extends Zend_Entity_TestCase
 {
     /**
      * @var Zend_Entity_Manager
@@ -52,13 +52,13 @@ abstract class Zend_Entity_Mapper_Loader_TestCase extends Zend_Entity_TestCase
 
     /**
      *
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     * @return Zend_Db_Mapper_Loader_LoaderAbstract
      */
     public function createLoader()
     {
         if($this->loader == null) {
             $loaderClassName = $this->getLoaderClassName();
-            $this->mappings = $this->fixture->getResourceMap()->transform('Zend_Entity_Mapper_Mapping');
+            $this->mappings = $this->fixture->getResourceMap()->transform('Zend_Db_Mapper_Mapping');
 
             $this->loader = new $loaderClassName($this->entityManager, $this->mappings);
         }

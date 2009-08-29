@@ -1,10 +1,10 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_ArrayTest extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_DbMapper_Loader_ArrayTest extends Zend_Entity_DbMapper_Loader_TestCase
 {
     public function getLoaderClassName()
     {
-        return "Zend_Entity_Mapper_Loader_Array";
+        return "Zend_Db_Mapper_Loader_Array";
     }
 
     public function getFixtureClassName()

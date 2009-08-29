@@ -1,15 +1,15 @@
 <?php
 
-class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
+class Zend_Entity_DbMapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
 {
     public function testWith_ForInvalidEntityName_ThrowsException()
     {
         $this->setExpectedException("Zend_Entity_InvalidEntityException");
 
         $em = $this->createEntityManager();
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->with("UnknownEntityName");
     }
 
@@ -18,9 +18,9 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table')->with('Zend_TestEntity1');
 
         $rsm = $qb->getResultSetMapping();
@@ -39,7 +39,7 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_SimpleFixtureDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = $this->getMock('Zend_Entity_Mapper_QueryObject', array(), array(), '', false);
+        $qo = $this->getMock('Zend_Db_Mapper_QueryObject', array(), array(), '', false);
         $qo->expects($this->at(0))
            ->method('from')
            ->with($this->equalTo($fixtureTable));
@@ -47,7 +47,7 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
             ->method('columns')
             ->with($this->equalTo(array('a_id' => 'a_id', 'a_property' => 'a_property')));
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table')->with('Zend_TestEntity1');
     }
 
@@ -56,9 +56,9 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->join('table_b', 'table_a.manytoone = table_b.id')->with('Zend_TestEntity2', 'table_b');
 
@@ -74,9 +74,9 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith('table_b', 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
 
@@ -96,9 +96,9 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith(array('b' => 'table_b'), 'table_a.manytoone = b.id', 'Zend_TestEntity2');
 
@@ -118,9 +118,9 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
         $fixture = new Zend_Entity_Fixture_ManyToOneDefs();
         $em = $fixture->createTestEntityManager();
 
-        $qo = new Zend_Entity_Mapper_QueryObject(new Zend_Test_DbAdapter());
+        $qo = new Zend_Db_Mapper_QueryObject(new Zend_Test_DbAdapter());
 
-        $qb = new Zend_Entity_Mapper_SqlQueryBuilder($em, $qo);
+        $qb = new Zend_Db_Mapper_SqlQueryBuilder($em, $qo);
         $qb->from('table_a')->with('Zend_TestEntity1')
            ->joinWith(array('table_b'), 'table_a.manytoone = table_b.id', 'Zend_TestEntity2');
 
@@ -140,7 +140,7 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
      * @param <type> $queryObject
      * @param <type> $loader
      * @param <type> $em
-     * @return Zend_Entity_Mapper_NativeQuery 
+     * @return Zend_Db_Mapper_NativeQuery 
      */
     public function createNativeQueryBuilder($queryObject, $loader, $em)
     {
@@ -150,7 +150,7 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
                ->will($this->returnValue($loader));
         $em->setMapper($mapper);
         
-        return new Zend_Entity_Mapper_SqlQueryBuilder($em, $queryObject);
+        return new Zend_Db_Mapper_SqlQueryBuilder($em, $queryObject);
     }
 
     public function testGetResultList_DelegatesToLoader_ProcessResultset()
@@ -338,12 +338,12 @@ class Zend_Entity_Mapper_SqlQueryBuilderTest extends Zend_Entity_TestCase
 
     public function getLoaderMock()
     {
-        return $this->getMock('Zend_Entity_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
+        return $this->getMock('Zend_Db_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
     }
 
     public function createQueryObjectMock()
     {
-        $select = $this->getMock('Zend_Entity_Mapper_QueryObject', array(), array(), '', false);
+        $select = $this->getMock('Zend_Db_Mapper_QueryObject', array(), array(), '', false);
         $select->expects($this->any())
                ->method('query')
                ->will($this->returnValue(new Zend_Test_DbStatement()));

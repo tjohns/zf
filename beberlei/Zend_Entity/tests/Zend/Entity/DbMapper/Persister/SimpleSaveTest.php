@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__)."/../../../../TestHelper.php";
 
-class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
+class Zend_Entity_DbMapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 {
     /**
      * @var Zend_Entity_Fixture_Abstract
@@ -11,7 +11,7 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
 
     /**
      *
-     * @return Zend_Entity_Mapper_Persister_Simple
+     * @return Zend_Db_Mapper_Persister_Simple
      */
     public function createPersister()
     {
@@ -20,9 +20,9 @@ class Zend_Entity_Mapper_Persister_SimpleSaveTest extends Zend_Entity_TestCase
         }
 
         $defMap = $this->fixture->getResourceMap();
-        $mappingInstructionMap = $defMap->transform('Zend_Entity_Mapper_Mapping');
+        $mappingInstructionMap = $defMap->transform('Zend_Db_Mapper_Mapping');
 
-        $persister = new Zend_Entity_Mapper_Persister_Simple();
+        $persister = new Zend_Db_Mapper_Persister_Simple();
         $persister->initialize($mappingInstructionMap["Zend_TestEntity1"]);
 
         return $persister;

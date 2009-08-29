@@ -34,7 +34,7 @@ class Zend_Entity_ManagerFactoryTest extends PHPUnit_Framework_TestCase
         $em = Zend_Entity_ManagerFactory::createEntityManager('Db', $options);
 
         $this->assertType('Zend_Entity_Manager', $em);
-        $this->assertType('Zend_Entity_Mapper_Mapper', $em->getMapper());
+        $this->assertType('Zend_Db_Mapper_Mapper', $em->getMapper());
     }
 
     public function testCreateMapper_WithNamedQueries()

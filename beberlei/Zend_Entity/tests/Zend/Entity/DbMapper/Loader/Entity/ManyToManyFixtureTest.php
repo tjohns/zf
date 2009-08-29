@@ -1,10 +1,10 @@
 <?php
 
-class Zend_Entity_Mapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity_Mapper_Loader_TestCase
+class Zend_Entity_DbMapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity_DbMapper_Loader_TestCase
 {
     public function getLoaderClassName()
     {
-        return "Zend_Entity_Mapper_Loader_Entity";
+        return "Zend_Db_Mapper_Loader_Entity";
     }
 
     public function getFixtureClassName()
@@ -13,7 +13,7 @@ class Zend_Entity_Mapper_Loader_Entity_ManyToManyFixtureTest extends Zend_Entity
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     * @return Zend_Db_Mapper_Loader_LoaderAbstract
      */
     public function getClassALoader()
     {

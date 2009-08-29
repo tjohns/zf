@@ -31,7 +31,7 @@ abstract class Zend_Entity_Fixture_Abstract
         $this->identityMap = new Zend_Entity_IdentityMap();
         $this->testAdapter = new Zend_Test_DbAdapter();
 
-        $mapper = Zend_Entity_Mapper_Mapper::create(array('db' => $this->testAdapter, 'metadataFactory' => $this->resourceMap));
+        $mapper = Zend_Db_Mapper_Mapper::create(array('db' => $this->testAdapter, 'metadataFactory' => $this->resourceMap));
 
         $em = new Zend_Entity_Manager(array('db' => $this->testAdapter, 'identityMap' => $this->identityMap));
         $em->setMetadataFactory($this->resourceMap);

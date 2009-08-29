@@ -1,5 +1,15 @@
 Documentation of larger API changes
 
+28./29. August, 2009
+* Moved Zend_Entity_Mapper_* to Zend_Db_Mapper_* "namespace".
+* Removed possibility to retrieve query object from Entity Manager to a more explicit way:
+    $query = $entityManager->createNativeQueryBuilder("WithClass");
+    becomes:
+    $query = new Zend_Db_Mapper_SqlQueryBuilder($entityManager);
+    $query->from("table")->with("WithClass");
+* Zend_Entity_Manager::createNativeQuery does not return a query object anymore if only a class name was given.
+  It only accepts SQL for the Database Mapper now and a Zend_Entity_Query_ResultSetMapping instance.
+
 15. August, 2009
 
 * Broke Zend_Entity_Manager constructor to decouple from Zend_Db_Mapper storage implementation, use Zend_Entity_ManagerFactory

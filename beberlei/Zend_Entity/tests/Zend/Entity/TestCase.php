@@ -16,8 +16,8 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
      * @param Zend_Db_Adapter_Abstract $db
      * @param Zend_Entity_Definition_Entity $entityDefinition
      * @param Zend_Entity_MetadataFactory_Interface $metadataFactory
-     * @param Zend_Entity_Mapper_Loader_LoaderAbstract $loader
-     * @param Zend_Entity_Mapper_Persister_Interface $persister
+     * @param Zend_Db_Mapper_Loader_LoaderAbstract $loader
+     * @param Zend_Db_Mapper_Persister_Interface $persister
      * @return Zend_Entity_Mapper
      */
     public function createMapper($db=null, $entityDefinition=null, $metadataFactory=null, $loader=null, $persister=null)
@@ -35,7 +35,7 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
             $metadataFactory->addDefinition($entityDefinition);
         }
 
-        $visitorMap = $metadataFactory->transform('Zend_Entity_Mapper_Mapping');
+        $visitorMap = $metadataFactory->transform('Zend_Db_Mapper_Mapping');
 
         $mapper = new Zend_Entity_TestMapper($db, $metadataFactory, $visitorMap);
         if($loader !== null) {
@@ -52,20 +52,20 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     {
         $db = $this->getDatabaseConnection();
         $metadataFactory = $this->createResourceMapMock();
-        return $this->getMock('Zend_Entity_Mapper_Mapper', array(), array($db, $metadataFactory, array()));
+        return $this->getMock('Zend_Db_Mapper_Mapper', array(), array($db, $metadataFactory, array()));
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     * @return Zend_Db_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderMock()
     {
-        $loader = $this->getMock('Zend_Entity_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
+        $loader = $this->getMock('Zend_Db_Mapper_Loader_LoaderAbstract', array(), array(), '', false);
         return $loader;
     }
 
     /**
-     * @return Zend_Entity_Mapper_Loader_LoaderAbstract
+     * @return Zend_Db_Mapper_Loader_LoaderAbstract
      */
     public function createLoaderMockThatReturnsProccessedResultset($result)
     {
@@ -77,11 +77,11 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Zend_Entity_Mapper_Persister_Interface
+     * @return Zend_Db_Mapper_Persister_Interface
      */
     public function createPersisterMock()
     {
-        return $this->getMock('Zend_Entity_Mapper_Persister_Interface');
+        return $this->getMock('Zend_Db_Mapper_Persister_Interface');
     }
 
     public function createResourceMapMock()
@@ -170,12 +170,12 @@ abstract class Zend_Entity_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param Zend_Entity_Mapper_Loader_LoaderAbstract $loader
-     * @return Zend_Entity_Mapper_Select
+     * @param Zend_Db_Mapper_Loader_LoaderAbstract $loader
+     * @return Zend_Db_Mapper_Select
      */
     protected function createDbSelect()
     {
-        return new Zend_Entity_Mapper_Select($this->getDatabaseConnection());
+        return new Zend_Db_Mapper_Select($this->getDatabaseConnection());
     }
 
     const UOW_MOCK_BEGINTRANSACTION = 1;
