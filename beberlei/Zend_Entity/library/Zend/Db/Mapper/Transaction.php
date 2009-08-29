@@ -50,6 +50,11 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
     protected $_isActive = false;
 
     /**
+     * @var int
+     */
+    protected $_nestingLevelCounter = 0;
+
+    /**
      * @param Zend_Db_Adapter_Abstract $db
      */
     public function __construct(Zend_Db_Adapter_Abstract $db)
@@ -64,13 +69,10 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
      */
     public function begin()
     {
-        if($this->_isActive == true) {
-            require_once "Zend/Entity/IllegalStateException.php";
-            throw new Zend_Entity_IllegalStateException();
+        if($this->isActive() == false) {
+            $this->_db->beginTransaction();
         }
-
-        $this->_db->beginTransaction();
-        $this->_isActive = true;
+        $this->_nestingLevelCounter++;
     }
 
     /**
@@ -80,14 +82,20 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
      */
     public function commit()
     {
-        if($this->_isActive == false) {
+        if($this->isActive() == false) {
             require_once "Zend/Entity/IllegalStateException.php";
             throw new Zend_Entity_IllegalStateException();
         }
 
-        $this->_db->commit();
-        $this->_rollbackOnly = false;
-        $this->_isActive = false;
+        if($this->_nestingLevelCounter == 1) {
+            if($this->_rollbackOnly == true) {
+                $this->_db->rollBack();
+            } else {
+                $this->_db->commit();
+            }
+            $this->_rollbackOnly = false;
+        }
+        $this->_nestingLevelCounter--;
     }
 
     /**
@@ -97,14 +105,18 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
      */
     public function rollback()
     {
-        if($this->_isActive == false) {
+        if($this->isActive() == false) {
             require_once "Zend/Entity/IllegalStateException.php";
             throw new Zend_Entity_IllegalStateException();
         }
 
-        $this->_db->rollBack();
-        $this->_rollbackOnly = false;
-        $this->_isActive = false;
+        if($this->_nestingLevelCounter == 1) {
+            $this->_db->rollBack();
+            $this->_rollbackOnly = false;
+        } else {
+            $this->_rollbackOnly = true;
+        }
+        $this->_nestingLevelCounter--;
     }
 
     /**
@@ -124,7 +136,7 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
      */
     public function getRollbackOnly()
     {
-        if($this->_isActive == false) {
+        if($this->isActive() == false) {
             require_once "Zend/Entity/IllegalStateException.php";
             throw new Zend_Entity_IllegalStateException();
         }
@@ -139,6 +151,6 @@ class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
      */
     public function isActive()
     {
-        return $this->_isActive;
+        return ($this->_nestingLevelCounter>0);
     }
 }

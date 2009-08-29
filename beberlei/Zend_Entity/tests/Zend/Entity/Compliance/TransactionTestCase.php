@@ -55,13 +55,31 @@ abstract class Zend_Entity_Compliance_TransactionTestCase extends PHPUnit_Framew
         $t->rollback();
     }
 
-    public function testBeginTwice_ThrowsException()
+    public function testBeginTwice_IncrementsNestedCounter()
     {
-        $this->setExpectedException("Zend_Entity_IllegalStateException");
-
         $t = $this->createTransaction();
         $t->begin();
         $t->begin();
+
+        $this->assertTrue($t->isActive());
+        $t->commit();
+        $this->assertTrue($t->isActive());
+        $t->commit();
+        $this->assertFalse($t->isActive());
+    }
+
+    public function testNestedRollback()
+    {
+        $t = $this->createTransaction();
+        $t->begin();
+        $t->begin();
+
+        $this->assertTrue($t->isActive());
+        $t->rollback();
+        $this->assertTrue($t->isActive());
+        $this->assertTrue($t->getRollbackOnly());
+        $t->commit();
+        $this->assertFalse($t->isActive());
     }
 
     public function testIsNotRollback_ThrowsException_IfIsActiveIsFalse()
