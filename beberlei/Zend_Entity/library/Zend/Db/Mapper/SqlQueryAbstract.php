@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Entity_Mapper_SqlQueryAbstract extends Zend_Entity_Query_QueryAbstract
+abstract class Zend_Db_Mapper_SqlQueryAbstract extends Zend_Entity_Query_QueryAbstract
 {
     /**
      * @var Zend_Entity_Manager_Interface

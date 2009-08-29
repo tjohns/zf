@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_QueryObject extends Zend_Db_Select
+class Zend_Db_Mapper_QueryObject extends Zend_Db_Select
 {
     /**
      * Prevents Wildcards to cluster the loaded columns, because Mapper enforces required columns anyways.

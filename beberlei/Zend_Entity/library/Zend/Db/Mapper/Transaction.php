@@ -32,7 +32,7 @@ require_once "Zend/Entity/Transaction.php";
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_Transaction implements Zend_Entity_Transaction
+class Zend_Db_Mapper_Transaction implements Zend_Entity_Transaction
 {
     /**
      * @var Zend_Db_Adapter_Abstract

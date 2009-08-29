@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbstract
+class Zend_Db_Mapper_SqlQueryBuilder extends Zend_Db_Mapper_SqlQueryAbstract
 {
     /**
      * @var Zend_Entity_Manager_Interface
@@ -53,7 +53,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
     protected $_itemCountPerPage = null;
 
     /**
-     * @var Zend_Entity_Mapper_QueryObject
+     * @var Zend_Db_Mapper_QueryObject
      */
     protected $_queryObject = null;
 
@@ -65,12 +65,12 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
     /**
      *
      * @param Zend_Entity_Manager_Interface $manager
-     * @param Zend_Entity_Mapper_QueryObject $queryObject
+     * @param Zend_Db_Mapper_QueryObject $queryObject
      */
-    public function __construct(Zend_Entity_Manager_Interface $manager, Zend_Entity_Mapper_QueryObject $queryObject=null)
+    public function __construct(Zend_Entity_Manager_Interface $manager, Zend_Db_Mapper_QueryObject $queryObject=null)
     {
         $mapper = $manager->getMapper();
-        if(!($mapper instanceof Zend_Entity_Mapper_Mapper)) {
+        if(!($mapper instanceof Zend_Db_Mapper_Mapper)) {
             throw new Zend_Entity_StorageMissmatchException("SqlQueryBuilder only works with Zend_Db_Mapper storage engine");
         }
 
@@ -88,7 +88,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
      *
      * @param  string $entityName
      * @param  string $correlationName
-     * @return Zend_Entity_Mapper_SqlQueryBuilder
+     * @return Zend_Db_Mapper_SqlQueryBuilder
      */
     public function with($entityName, $correlationName = null, $joined = false)
     {
@@ -110,7 +110,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
     }
 
     /**
-     * @return Zend_Entity_Mapper_Select
+     * @return Zend_Db_Mapper_Select
      */
     protected function getQueryObject()
     {
@@ -140,7 +140,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
      *
      * @param  string $table
      * @param  string $correlationName
-     * @return Zend_Entity_Mapper_SqlQueryBuilder
+     * @return Zend_Db_Mapper_SqlQueryBuilder
      */
     public function from($table, $correlationName=null)
     {
@@ -153,7 +153,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
      * @param string|array $table
      * @param string $onCondition
      * @param string $joinedEntityName
-     * @return Zend_Entity_Mapper_SqlQueryBuilder
+     * @return Zend_Db_Mapper_SqlQueryBuilder
      */
     public function joinWith($table, $onCondition, $joinedEntityName)
     {
@@ -175,7 +175,7 @@ class Zend_Entity_Mapper_SqlQueryBuilder extends Zend_Entity_Mapper_SqlQueryAbst
      *
      * @param  string $method
      * @param  array $args
-     * @return Zend_Entity_Mapper_SqlQueryBuilder
+     * @return Zend_Db_Mapper_SqlQueryBuilder
      */
     public function __call($method, $args)
     {

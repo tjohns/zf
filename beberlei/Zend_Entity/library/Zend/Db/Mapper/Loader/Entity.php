@@ -17,7 +17,7 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Mapper_Loader_Entity extends Zend_Entity_Mapper_Loader_LoaderAbstract
+class Zend_Db_Mapper_Loader_Entity extends Zend_Db_Mapper_Loader_LoaderAbstract
 {
     /**
      * @param  array $resultSet

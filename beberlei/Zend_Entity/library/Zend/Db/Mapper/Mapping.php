@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_Mapping implements Zend_Entity_Definition_MappingVisitor
+class Zend_Db_Mapper_Mapping implements Zend_Entity_Definition_MappingVisitor
 {
     /**
      * @var string

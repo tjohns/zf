@@ -23,14 +23,14 @@
 /**
  * Array Loader
  *
- * @uses       Zend_Entity_Mapper_Loader_LoaderAbstract
+ * @uses       Zend_Db_Mapper_Loader_LoaderAbstract
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_Loader_Array extends Zend_Entity_Mapper_Loader_LoaderAbstract
+class Zend_Db_Mapper_Loader_Array extends Zend_Db_Mapper_Loader_LoaderAbstract
 {
     /**
      * @param  array $resultSet

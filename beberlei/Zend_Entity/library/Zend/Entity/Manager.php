@@ -197,14 +197,14 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
                 'db' => $this->_db,
                 'metadataFactory' => $this->_metadataFactory,
             );
-            $this->_mapper = Zend_Entity_Mapper_Mapper::create($options);
+            $this->_mapper = Zend_Db_Mapper_Mapper::create($options);
             $this->_transaction = $this->_mapper->getTransaction();
         }
         return $this->_mapper;
     }
 
     /**
-     * @param  Zend_Entity_Mapper_Abstract $mapper
+     * @param  Zend_Db_Mapper_Abstract $mapper
      * @return Zend_Entity_Manager
      */
     public function setMapper(Zend_Entity_MapperAbstract $mapper)

@@ -17,20 +17,20 @@
  * @license    New BSD License
  */
 
-class Zend_Entity_Mapper_Persister_Simple implements Zend_Entity_Mapper_Persister_Interface
+class Zend_Db_Mapper_Persister_Simple implements Zend_Db_Mapper_Persister_Interface
 {
     /**
-     * @var Zend_Entity_Mapper_Mapping
+     * @var Zend_Db_Mapper_Mapping
      */
     protected $_mappingInstruction = null;
 
     /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      *
-     * @param  Zend_Entity_Mapper_Mapping $mappingInstruction
+     * @param  Zend_Db_Mapper_Mapping $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Mapper_Mapping $mappingInstruction)
+    public function initialize(Zend_Db_Mapper_Mapping $mappingInstruction)
     {
         $this->_mappingInstruction = $mappingInstruction;
     }

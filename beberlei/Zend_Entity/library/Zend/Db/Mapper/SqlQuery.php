@@ -23,14 +23,14 @@
 /**
  * Native SQL Query whose result is mapped using a {@link Zend_Entity_Query_ResultSetMapping}.
  *
- * @uses       Zend_Entity_Mapper_SqlQueryAbstract
+ * @uses       Zend_Db_Mapper_SqlQueryAbstract
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Mapper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Entity_Mapper_SqlQuery extends Zend_Entity_Mapper_SqlQueryAbstract
+class Zend_Db_Mapper_SqlQuery extends Zend_Db_Mapper_SqlQueryAbstract
 {
     /**
      * @var string
@@ -46,7 +46,7 @@ class Zend_Entity_Mapper_SqlQuery extends Zend_Entity_Mapper_SqlQueryAbstract
     public function __construct(Zend_Entity_Manager_Interface $em, $sqlQuery, Zend_Entity_Query_ResultSetMapping $rsm)
     {
         $mapper = $em->getMapper();
-        if(!($mapper instanceof Zend_Entity_Mapper_Mapper)) {
+        if(!($mapper instanceof Zend_Db_Mapper_Mapper)) {
             throw new Zend_Entity_StorageMissmatchException("SqlQuery only works with Zend_Db_Mapper storage engine");
         }
 

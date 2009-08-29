@@ -55,7 +55,7 @@ class Zend_Entity_ManagerFactory
 
         switch($mapperName) {
             case 'Db':
-                $mapperName = 'Zend_Entity_Mapper_Mapper';
+                $mapperName = 'Zend_Db_Mapper_Mapper';
                 break;
         }
 

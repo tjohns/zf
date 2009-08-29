@@ -17,16 +17,16 @@
  * @license    New BSD License
  */
 
-interface Zend_Entity_Mapper_Persister_Interface
+interface Zend_Db_Mapper_Persister_Interface
 {
     /**
      * Initialize is called once on each persister to gather information on how to perform the persist operation.
      * 
      * @param  Zend_Entity_Definition_Entity $entityDef
-     * @param  Zend_Entity_Mapper_Mapping[] $mappingInstruction
+     * @param  Zend_Db_Mapper_Mapping[] $mappingInstruction
      * @return void
      */
-    public function initialize(Zend_Entity_Mapper_Mapping $mappingInstruction);
+    public function initialize(Zend_Db_Mapper_Mapping $mappingInstruction);
 
     /**
      * Save entity into persistence based on the persisters scope

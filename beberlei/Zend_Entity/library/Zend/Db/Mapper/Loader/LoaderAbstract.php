@@ -29,10 +29,10 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
+abstract class Zend_Db_Mapper_Loader_LoaderAbstract
 {
     /**
-     * @var Zend_Entity_Mapper_Mapping
+     * @var Zend_Db_Mapper_Mapping
      */
     protected $_mappings = null;
     
@@ -45,7 +45,7 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
      * Construct new Loader based on an entity definition.
      * 
      * @param Zend_Entity_Manager_Interface $em
-     * @param Zend_Entity_Mapper_Mapping[] $mappings
+     * @param Zend_Db_Mapper_Mapping[] $mappings
      */
     public function __construct(Zend_Entity_Manager_Interface $em, array $mappings)
     {
@@ -164,7 +164,7 @@ abstract class Zend_Entity_Mapper_Loader_LoaderAbstract
 
             $keyValue = $entityState[$mapping->primaryKey->propertyName];
 
-            $query = new Zend_Entity_Mapper_SqlQueryBuilder($entityManager);
+            $query = new Zend_Db_Mapper_SqlQueryBuilder($entityManager);
             $query->from($this->_mappings[$relation->class]->table)
                   ->with($relation->class);
 
