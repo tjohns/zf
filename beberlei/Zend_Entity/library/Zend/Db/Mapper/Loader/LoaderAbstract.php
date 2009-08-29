@@ -176,7 +176,7 @@ abstract class Zend_Db_Mapper_Loader_LoaderAbstract
                 $intersectOnLhs = $db->quoteIdentifier($intersectTable.".".$relation->columnName);
                 $intersectOnRhs = $db->quoteIdentifier($foreignDefinition->getTable().".".$foreignPrimaryKey);
                 $intersectOn = $intersectOnLhs." = ".$intersectOnRhs;
-                $query->join($intersectTable, $intersectOn, array());
+                $query->join($intersectTable, $intersectOn);
             }
             $query->where( $db->quoteIdentifier($intersectTable.".".$collectionDef->key)." = ?", $keyValue);
 

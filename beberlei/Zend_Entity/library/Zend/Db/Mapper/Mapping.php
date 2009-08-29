@@ -43,6 +43,11 @@ class Zend_Db_Mapper_Mapping implements Zend_Entity_Definition_MappingVisitor
     public $table;
 
     /**
+     * @var string
+     */
+    public $schema;
+
+    /**
      * @var Zend_Entity_Definition_PrimaryKey
      */
     public $primaryKey;
@@ -111,6 +116,7 @@ class Zend_Db_Mapper_Mapping implements Zend_Entity_Definition_MappingVisitor
         if(!is_string($this->table) || strlen($this->table) == 0) {
             throw new Zend_Entity_Exception("Invalid table name given for entity '".$this->class."'.");
         }
+        $this->schema = $entity->schema;
         
         $this->primaryKey = $entity->primaryKey;
         if($this->primaryKey == null) {

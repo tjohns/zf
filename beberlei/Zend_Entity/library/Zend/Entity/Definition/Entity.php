@@ -19,6 +19,9 @@
 
 class Zend_Entity_Definition_Entity
 {
+    const CHANGEPOLICY_PASSTHROUGH_EXPLICIT = 'passthrough_explicit';
+    const CHANGEPOLICY_PASSTHROUGH_IMPLICIT = 'passthrough_implicit';
+
     /**
      * @var string
      */
@@ -28,6 +31,11 @@ class Zend_Entity_Definition_Entity
      * @var string
      */
     public $table;
+
+    /**
+     * @var string
+     */
+    public $schema = null;
 
     /**
      * @var Zend_Entity_Definition_PrimaryKey
@@ -65,14 +73,14 @@ class Zend_Entity_Definition_Entity
     protected $_stateTransformer = null;
 
     /**
-     * @var boolean
-     */
-    private $_isCompiled = false;
-
-    /**
      * @var Zend_Entity_Defintion_Version
      */
-    private $_version = null;
+    protected $_version = null;
+
+    /**
+     * @var string
+     */
+    protected $_changePolicy = self::CHANGEPOLICY_PASSTHROUGH_EXPLICIT;
 
     /**
      * Construct entity
@@ -131,6 +139,26 @@ class Zend_Entity_Definition_Entity
     public function setTable($tableName)
     {
         $this->table = $tableName;
+    }
+
+    /**
+     * Get schema
+     *
+     * @return string
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    /**
+     * Set schema of this entity.
+     * 
+     * @param string $schema
+     */
+    public function setSchema($schema)
+    {
+        $this->schema = $schema;
     }
 
     /**
@@ -306,6 +334,22 @@ class Zend_Entity_Definition_Entity
     public function getVersionProperty()
     {
         return $this->_version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChangePolicy()
+    {
+        return $this->_changePolicy;
+    }
+
+    /**
+     * @param string $changePolicy
+     */
+    public function setChangePolicy($changePolicy)
+    {
+        $this->_changePolicy = $changePolicy;
     }
 
     /**

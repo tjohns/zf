@@ -50,6 +50,15 @@ class Zend_Entity_DbMapper_MappingTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("bar", $this->mapping->table);
     }
 
+    public function testAcceptEntity_KeepsSchema()
+    {
+        $entity = new Zend_Entity_Definition_Entity("foo", array("table" => "bar", "schema" => "baz"));
+        $entity->addPrimaryKey("id");
+        $this->mapping->acceptEntity($entity, $this->metadataFactory);
+
+        $this->assertEquals("baz", $this->mapping->schema);
+    }
+
     public function testAcceptEntity_InstantiatesStateTransformerClass()
     {
         $stateTransformerMock = $this->getMock(

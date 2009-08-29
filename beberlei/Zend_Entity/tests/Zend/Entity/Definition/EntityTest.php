@@ -37,6 +37,22 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
         $this->assertEquals(self::TEST_TABLE, $entityDef->getTable());
     }
 
+    public function testGetDefaultSchema()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
+
+        $this->assertNull($entityDef->schema);
+    }
+
+    public function testSetGetSchema()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
+        $entityDef->setSchema("foo");
+
+        $this->assertEquals("foo", $entityDef->schema);
+        $this->assertEquals("foo", $entityDef->getSchema());
+    }
+
     public function testTablePublicProperty()
     {
         $entityDef = new Zend_Entity_Definition_Entity(self::TEST_CLASS);
@@ -223,6 +239,21 @@ class Zend_Entity_Definition_EntityTest extends Zend_Entity_Definition_TestCase
 
         $entityDef = new Zend_Entity_Definition_Entity("classA");
         $entityDef->addProperty(array());
+    }
+
+    public function testGetDefaultChangePolicy_IsPassthrough()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity("classA");
+
+        $this->assertEquals(Zend_Entity_Definition_Entity::CHANGEPOLICY_PASSTHROUGH_EXPLICIT, $entityDef->getChangePolicy());
+    }
+
+    public function testSetGetChangePolicy()
+    {
+        $entityDef = new Zend_Entity_Definition_Entity("classA");
+
+        $entityDef->setChangePolicy(Zend_Entity_Definition_Entity::CHANGEPOLICY_PASSTHROUGH_EXPLICIT);
+        $this->assertEquals(Zend_Entity_Definition_Entity::CHANGEPOLICY_PASSTHROUGH_EXPLICIT, $entityDef->getChangePolicy());
     }
 }
 
