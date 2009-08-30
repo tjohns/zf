@@ -305,7 +305,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      *
      * @param string $entityName
      * @param string $key
-     * @return Zend_Entity_Interface
+     * @return object
      */
     public function load($entityName, $key, $notFound="null")
     {
@@ -321,10 +321,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Save entity by registering it with UnitOfWork or hitting the database mapper.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity)
+    public function save($entity)
     {
         $mapper = $this->getMapper();
         $mapper->save($entity, $this);
@@ -333,10 +333,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Try to delete entity by checking with UnitOfWork or directly going to mapper.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity)
+    public function delete($entity)
     {
         if($this->_identityMap->contains($entity) == false) {
             require_once "Zend/Entity/IllegalStateException.php";
@@ -352,10 +352,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     /**
      * Check if entity instance belongs to the persistence context.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return boolean
      */
-    public function contains(Zend_Entity_Interface $entity)
+    public function contains($entity)
     {
         return $this->_identityMap->contains($entity);
     }

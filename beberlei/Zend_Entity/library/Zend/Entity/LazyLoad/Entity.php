@@ -30,7 +30,7 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
     protected $_callbackArguments;
 
     /**
-     * @var Zend_Entity_Interface
+     * @var object
      */
     protected $_object;
 
@@ -63,7 +63,7 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
     /**
      * Retrieve the original object from the database if not already done so.
      * 
-     * @return Zend_Entity_Interface
+     * @return object
      */
     public function getObject()
     {

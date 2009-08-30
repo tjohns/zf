@@ -49,7 +49,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function preInsert($entity)
@@ -67,7 +67,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function postInsert($entity)
@@ -84,7 +84,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function preUpdate($entity)
@@ -101,7 +101,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function postUpdate($entity)
@@ -118,7 +118,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function preDelete($entity)
@@ -135,7 +135,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function postDelete($entity)
@@ -152,7 +152,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return boolean
      */
     public function postLoad($entity)
@@ -170,7 +170,7 @@ class Zend_Entity_Event_Listener extends Zend_Entity_Event_EventAbstract
 
     /**
      * @param  string $eventType
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return boolean
      */
     protected function _executeCallbacks($eventType, $entity)

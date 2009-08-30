@@ -114,7 +114,7 @@ abstract class Zend_Db_Mapper_Loader_LoaderAbstract
         return new $entityClass();
     }
 
-    public function loadRow(Zend_Entity_Interface $entity, array $row, $mapping)
+    public function loadRow($entity, array $row, $mapping)
     {
         $state = array();
         foreach($mapping->columnNameToProperty AS $columnName => $property) {

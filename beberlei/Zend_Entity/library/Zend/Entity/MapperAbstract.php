@@ -98,7 +98,7 @@ abstract class Zend_Entity_MapperAbstract
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
+    public function save($entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $entityName = $this->_getEntityName($entity);
         $this->_doSave($entity, $entityName, $entityManager);
@@ -116,10 +116,10 @@ abstract class Zend_Entity_MapperAbstract
      * Delete a entity from persistence
      *
      * @param  object $entity
-     * @param  Zend_Entity_Manager_Interface $entityManager
+     * @param  object $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
+    public function delete($entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $entityName = $this->_getEntityName($entity);
         $this->_doDelete($entity, $entityName, $entityManager);

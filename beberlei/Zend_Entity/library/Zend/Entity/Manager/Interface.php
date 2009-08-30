@@ -50,25 +50,25 @@ interface Zend_Entity_Manager_Interface
      * @param string $entityName
      * @param string $key
      * @param string $notFound
-     * @return Zend_Entity_Interface
+     * @return object
      */
     public function load($entityName, $key, $notFound="null");
 
     /**
      * Save entity by registering it with UnitOfWork or hitting the database mapper.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity);
+    public function save($entity);
 
     /**
      * Try to delete entity by checking with UnitOfWork or directly going to mapper.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity);
+    public function delete($entity);
 
     /**
      * Get a reference of an object.
@@ -84,10 +84,10 @@ interface Zend_Entity_Manager_Interface
     /**
      * Check if entity instance belongs to the persistence context.
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return boolean
      */
-    public function contains(Zend_Entity_Interface $entity);
+    public function contains($entity);
 
     /**
      * Begin new transaction and return the Zend_Entity_Transaction instance

@@ -20,18 +20,34 @@
  * @version    $Id$
  */
 
+/**
+ * StateTransformer working with ReflectionProperty instances.
+ *
+ * @uses       Zend_Entity_StateTransformer_Abstract
+ * @category   Zend
+ * @package    Zend_Entity
+ * @subpackage StateTransformer
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Entity_StateTransformer_Property extends Zend_Entity_StateTransformer_Abstract
 {
-    protected $_reflClass = null;
-
+    /**
+     * @var array
+     */
     protected $_reflProperties = array();
 
+    /**
+     *
+     * @param string $class
+     * @param array $propertyNames
+     */
     public function setTargetClass($class, $propertyNames)
     {
         try {
-            $this->_reflClass = new ReflectionClass($class);
+            $reflClass = new ReflectionClass($class);
             foreach($propertyNames AS $propertyName) {
-                $this->_reflProperties[$propertyName] = $this->_reflClass->getProperty($propertyName);
+                $this->_reflProperties[$propertyName] = $reflClass->getProperty($propertyName);
 
                 if($this->_reflProperties[$propertyName]->isPrivate() || $this->_reflProperties[$propertyName]->isProtected()) {
                     if (version_compare(PHP_VERSION, '5.3.0') === 1) {
@@ -44,7 +60,6 @@ class Zend_Entity_StateTransformer_Property extends Zend_Entity_StateTransformer
         } catch(ReflectionException $e) {
             throw new Zend_Entity_StateTransformer_Exception($e->getMessage());
         }
-        parent::setTargetClass($class, $propertyNames);
     }
 
     /**

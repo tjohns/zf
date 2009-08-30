@@ -294,6 +294,23 @@ class Zend_Entity_Definition_Entity
     }
 
     /**
+     *
+     * @param string $accessStrategy
+     */
+    public function setAccess($accessStrategy)
+    {
+        $this->setStateTransformerClass($accessStrategy);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccess()
+    {
+        return $this->getStateTransformerClass();
+    }
+
+    /**
      * @param string $stateTransformerClass
      */
     public function setStateTransformerClass($stateTransformerClass)

@@ -37,16 +37,17 @@ class Zend_Db_Mapper_Persister_Simple implements Zend_Db_Mapper_Persister_Interf
 
     /**
      * @ignore
-     * @param Zend_Entity_Interface $relatedObject
+     * @param object $relatedObject
      * @param Zend_Entity_Definition_RelationAbstract $relationDef
      * @param Zend_Entity_Manager_Interface $entityManager
      * @return mixed
      */
     public function evaluateRelatedObject($relatedObject, $relationDef, $entityManager)
     {
+        // TODO: Is this still required? THe id of the lazy entity should be in the identity map also!
         if($relatedObject instanceof Zend_Entity_LazyLoad_Entity && $relatedObject->entityWasLoaded() == false) {
             $value = $relatedObject->getLazyLoadEntityId();
-        } else if($relatedObject instanceof Zend_Entity_Interface) {
+        } else if(is_object($relatedObject)) {
             $foreignKeyPropertyName = $relationDef->mappedBy;
 
             /*switch($relationDef->cascade) {
@@ -113,11 +114,11 @@ class Zend_Db_Mapper_Persister_Simple implements Zend_Db_Mapper_Persister_Interf
     /**
      * Save entity into persistence based on the persisters scope
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
+    public function save($entity, Zend_Entity_Manager_Interface $entityManager)
     {
         $entityState = $this->_mappingInstruction->stateTransformer->getState($entity);
         $dbState = $this->transformEntityToDbState($entityState, $entityManager);
@@ -209,7 +210,7 @@ class Zend_Db_Mapper_Persister_Simple implements Zend_Db_Mapper_Persister_Interf
 
     /**
      * @ignore
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @param array $dbState
      * @param Zend_Entity_Manager_Interface $entityManager
      * @return int|string
@@ -283,11 +284,11 @@ class Zend_Db_Mapper_Persister_Simple implements Zend_Db_Mapper_Persister_Interf
     /**
      * Remove entity from persistence based on the persisters scope
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager)
+    public function delete($entity, Zend_Entity_Manager_Interface $entityManager)
     {
         if($entityManager->getEventListener()->preDelete($entity) == false) {
             return;

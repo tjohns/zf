@@ -52,10 +52,10 @@ class Zend_Entity_IdentityMap
     /**
      * @param string $entityInterface
      * @param string $key
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @param int $version
      */
-    public function addObject($entityInterface, $key, Zend_Entity_Interface $entity, $version = null)
+    public function addObject($entityInterface, $key, $entity, $version = null)
     {
         $h = spl_object_hash($entity);
         $this->_primaryKeys[$h] = $key;
@@ -106,7 +106,7 @@ class Zend_Entity_IdentityMap
      *
      * @param  string $entityInterface
      * @param  string $key
-     * @return Zend_Entity_Interface
+     * @return object
      */
     public function getObject($entityInterface, $key)
     {
@@ -114,19 +114,19 @@ class Zend_Entity_IdentityMap
     }
 
     /**
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return boolean
      */
-    public function contains(Zend_Entity_Interface $entity)
+    public function contains($entity)
     {
         return isset($this->_primaryKeys[spl_object_hash($entity)]);
     }
 
     /**
      * @param string $entityInterface
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      */
-    public function remove($entityInterface, Zend_Entity_Interface $entity)
+    public function remove($entityInterface, $entity)
     {
         $hash = spl_object_hash($entity);
         unset($this->_loadedObjects[$entityInterface][$this->_primaryKeys[$hash]]);
@@ -134,10 +134,10 @@ class Zend_Entity_IdentityMap
     }
 
     /**
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @return string
      */
-    public function getPrimaryKey(Zend_Entity_Interface $entity)
+    public function getPrimaryKey($entity)
     {
         $hash = spl_object_hash($entity);
         if(isset($this->_primaryKeys[$hash])) {
@@ -152,10 +152,10 @@ class Zend_Entity_IdentityMap
     }
 
     /**
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @param int $versionId
      */
-    public function setVersion(Zend_Entity_Interface $entity, $versionId)
+    public function setVersion($entity, $versionId)
     {
         $this->_versions[spl_object_hash($entity)] = $versionId;
     }
@@ -163,10 +163,10 @@ class Zend_Entity_IdentityMap
     /**
      * Return version of an entity the current context works with.
      * 
-     * @param Zend_Entity_Interface $entity
+     * @param object $entity
      * @return int|boolean
      */
-    public function getVersion(Zend_Entity_Interface $entity)
+    public function getVersion($entity)
     {
         $hash = spl_object_hash($entity);
         if(isset($this->_versions[$hash])) {
@@ -184,5 +184,15 @@ class Zend_Entity_IdentityMap
     {
         $this->_primaryKeys = array();
         $this->_loadedObjects = array();
+    }
+
+    /**
+     *
+     * @param  string $entityName
+     * @return array
+     */
+    public function getLoadedObjects($entityName)
+    {
+        return $this->_loadedObjects[$entityName];
     }
 }

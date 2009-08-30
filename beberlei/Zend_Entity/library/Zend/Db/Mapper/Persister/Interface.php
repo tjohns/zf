@@ -31,18 +31,18 @@ interface Zend_Db_Mapper_Persister_Interface
     /**
      * Save entity into persistence based on the persisters scope
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function save(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager);
+    public function save($entity, Zend_Entity_Manager_Interface $entityManager);
 
     /**
      * Remove entity from persistence based on the persisters scope
      *
-     * @param  Zend_Entity_Interface $entity
+     * @param  object $entity
      * @param  Zend_Entity_Manager_Interface $entityManager
      * @return void
      */
-    public function delete(Zend_Entity_Interface $entity, Zend_Entity_Manager_Interface $entityManager);
+    public function delete($entity, Zend_Entity_Manager_Interface $entityManager);
 }

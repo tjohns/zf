@@ -50,7 +50,7 @@ class Zend_Entity_Collection implements Zend_Entity_Collection_Interface
     /**
      * Create a new collection.
      * 
-     * @param Zend_Entity_Interface[] $collection
+     * @param object[] $collection
      * @param string $entityClassType
      */
     public function __construct(array $collection=array(), $entityClassType=null)
