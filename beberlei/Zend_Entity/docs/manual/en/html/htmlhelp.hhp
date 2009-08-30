@@ -1,0 +1,22 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Zend_Framework_EN.chm
+Contents file=toc.hhc
+Default Window=Main
+Default topic=./index.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x0409 English (UNITED STATES)
+Title=Programmer's Reference Guide
+Enhanced decompilation=No
+
+[WINDOWS]
+Main="Programmer's Reference Guide","toc.hhc",,"./index.html","./index.html",,,,,0x2520,,0x603006,,,,,,,,0
+
+
+[FILES]
+./index.html
+./zend.entity.html
+./zend.entity.quickstart.html
+./zend.entity.general.html
+./zend.entity.metadata.html
