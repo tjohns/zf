@@ -21,13 +21,13 @@ class Zend_Entity_StateTransformer_ArrayTest extends PHPUnit_Framework_TestCase
         $this->transformer->getState(new stdClass);
     }
 
-    public function testGetStatePropertyNotExists()
+    public function testGetState_PropertyNotExistsOnGivenEntity()
     {
         $this->setExpectedException(
             "Zend_Entity_StateTransformer_Exception"
         );
 
-        $this->transformer->setPropertyNames(array("foo"));
+        $this->transformer->setTargetClass("Zend_Entity_Interface", array("foo"));
 
         $entityMock = $this->getMock('Zend_Entity_Interface');
         $entityMock->expects($this->once())
@@ -39,7 +39,7 @@ class Zend_Entity_StateTransformer_ArrayTest extends PHPUnit_Framework_TestCase
 
     public function testGetStateFromObject()
     {
-        $this->transformer->setPropertyNames(array("foo"));
+        $this->transformer->setTargetClass("Zend_Entity_Interface", array("foo"));
 
         $entityMock = $this->getMock('Zend_Entity_Interface');
         $entityMock->expects($this->once())
@@ -56,7 +56,7 @@ class Zend_Entity_StateTransformer_ArrayTest extends PHPUnit_Framework_TestCase
 
     public function testGetStateOnlyReturnsRegisteredProperties()
     {
-        $this->transformer->setPropertyNames(array("foo"));
+        $this->transformer->setTargetClass("Zend_Entity_Interface", array("foo"));
 
         $entityMock = $this->getMock('Zend_Entity_Interface');
         $entityMock->expects($this->once())

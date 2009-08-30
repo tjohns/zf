@@ -99,17 +99,17 @@ class Zend_Entity_DbMapper_MappingTest extends PHPUnit_Framework_TestCase
         $this->mapping->acceptEntity($entity, $this->metadataFactory);
     }
 
-    public function testFinalize_PassPropertyNames_ToStateTransformer()
+    public function testFinalize_PassTargetClassDetails_ToStateTransformer()
     {
-        $entity = new Zend_Entity_Definition_Entity("foo", array(
-            "stateTransformerClass" => "Zend_Entity_DbMapper_TestStateTransformer"
-        ));
-        $entity->addPrimaryKey("id");
-        $this->mapping->acceptProperty($entity->getPropertyByName("id"), $this->metadataFactory);
-        $this->mapping->acceptEntity($entity, $this->metadataFactory);
-        $this->mapping->finalize();
+        $stateTransformer = $this->getMock('Zend_Entity_StateTransformer_Abstract');
+        $stateTransformer->expects($this->once())
+                         ->method('setTargetClass')
+                         ->with($this->equalTo('Foo'), $this->equalTo(array('bar', 'baz')));
 
-        $this->assertEquals(array("id"), $this->mapping->stateTransformer->_propertyNames);
+        $this->mapping->class = "Foo";
+        $this->mapping->stateTransformer = $stateTransformer;
+        $this->mapping->propertyNames = array('bar', 'baz');
+        $this->mapping->finalize();
     }
 
     public function testAcceptProperty_WithEmptyName_ThrowsException()
@@ -406,9 +406,4 @@ class Zend_Entity_DbMapper_MappingTest extends PHPUnit_Framework_TestCase
                               ->with($this->equalTo($entityDef->getClass()))
                               ->will($this->returnValue($entityDef));
     }
-}
-
-class Zend_Entity_DbMapper_TestStateTransformer extends Zend_Entity_StateTransformer_Array
-{
-    public $_propertyNames = array();
 }

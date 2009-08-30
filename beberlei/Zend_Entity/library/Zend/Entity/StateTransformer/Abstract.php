@@ -6,16 +6,20 @@
 
 abstract class Zend_Entity_StateTransformer_Abstract
 {
+    protected $_className = null;
+
     /**
      * @var array
      */
     protected $_propertyNames = array();
 
     /**
+     * @param string $className
      * @param array $propertyNames
      */
-    public function setPropertyNames(array $propertyNames)
+    public function setTargetClass($className, array $propertyNames)
     {
+        $this->_className = $className;
         $this->_propertyNames = $propertyNames;
     }
 

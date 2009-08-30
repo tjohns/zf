@@ -342,6 +342,6 @@ class Zend_Db_Mapper_Mapping implements Zend_Entity_Definition_MappingVisitor
 
     public function finalize()
     {
-        $this->stateTransformer->setPropertyNames($this->propertyNames);
+        $this->stateTransformer->setTargetClass($this->class, $this->propertyNames);
     }
 }
