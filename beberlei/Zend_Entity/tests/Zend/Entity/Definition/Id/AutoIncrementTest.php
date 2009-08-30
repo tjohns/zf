@@ -20,4 +20,10 @@ class Zend_Entity_Definition_Id_AutoIncrementTest extends Zend_Entity_TestCase
 
         $this->assertEquals($lastInsertId, $idGenerator->lastSequenceId($db));
     }
+
+    public function testIsNotPrePersistGenerator()
+    {
+        $idGenerator = new Zend_Entity_Definition_Id_AutoIncrement();
+        $this->assertFalse($idGenerator->isPrePersistGenerator());
+    }
 }

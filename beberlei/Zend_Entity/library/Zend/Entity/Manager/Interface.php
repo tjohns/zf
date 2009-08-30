@@ -71,6 +71,22 @@ interface Zend_Entity_Manager_Interface
     public function delete($entity);
 
     /**
+     * Merge the state of a detached entity which has an identity back into the persistence context.
+     * 
+     * @param object $entity
+     * @return void
+     */
+    public function merge($entity);
+
+    /**
+     * Refresh the state of an entity.
+     * 
+     * @param object $entity
+     * @return void
+     */
+    public function refresh($entity);
+
+    /**
      * Get a reference of an object.
      *
      * A reference is either a LazyLoad entity of the type {@see Zend_Entity_LazyLoad_Entity}
@@ -80,6 +96,13 @@ interface Zend_Entity_Manager_Interface
      * @param int|string $id
      */
     public function getReference($class, $id);
+
+    /**
+     * Detach entity from persistence context, so that it will become unmanaged. Any unflushed changes will be lost.
+     *
+     * @param object $entity
+     */
+    public function detach($entity);
 
     /**
      * Check if entity instance belongs to the persistence context.

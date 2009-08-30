@@ -120,7 +120,7 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $this->assertSame($transaction, $transaction2);
     }
 
-    public function testManagerContainsProxyToIdentityMap()
+    public function testContains_ProxyToIdentityMap()
     {
         $identityMap = $this->getMock('Zend_Entity_IdentityMap');
         $identityMap->expects($this->once())
@@ -132,6 +132,20 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
         $manager = $this->createEntityManager(null, null, $identityMap);
 
         $this->assertTrue($manager->contains($entity));
+    }
+
+    public function testDetach_ProxyToIdentityMap()
+    {
+        $entity = new Zend_TestEntity1;
+
+        $identityMap = $this->getMock('Zend_Entity_IdentityMap');
+        $identityMap->expects($this->once())
+                    ->method('remove')
+                    ->with($this->equalTo('Zend_TestEntity1'), $this->equalTo($entity));
+
+        $manager = $this->createEntityManager(null, null, $identityMap);
+
+        $manager->detach($entity);
     }
 
     public function testManagerClearCallsIdentityMapClear()

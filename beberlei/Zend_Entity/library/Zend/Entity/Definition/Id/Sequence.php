@@ -14,37 +14,32 @@
  *
  * @category   Zend
  * @package    Zend_Entity
- * @subpackage Mapper
+ * @subpackage Definition
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
-class Zend_Entity_Definition_Id_UUID implements Zend_Entity_Definition_Id_Interface
+/**
+ * Sequence Id Generator
+ *
+ * @uses       Zend_Entity_Definition_Interface
+ * @category   Zend
+ * @package    Zend_Entity
+ * @subpackage Definition
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Entity_Definition_Id_Sequence implements Zend_Entity_Definition_Id_Interface
 {
-    /**
-     * @var string
-     */
-    protected $_prefix = '';
+    protected $_sequenceName = null;
 
     /**
-     * @var boolean
+     * @param string $sequenceName
      */
-    protected $_moreEntropy = false;
-
-    /**
-     * @var string
-     */
-    protected $_lastSequenceId = null;
-
-    /**
-     * @param boolean $moreEntropy
-     * @param string $prefix
-     */
-    public function __construct($moreEntropy=false, $prefix='')
+    public function __construct($sequenceName)
     {
-        $this->_prefix = $prefix;
-        $this->_moreEntropy = $moreEntropy;
+        $this->_sequenceName = $sequenceName;
     }
 
     /**
@@ -61,7 +56,7 @@ class Zend_Entity_Definition_Id_UUID implements Zend_Entity_Definition_Id_Interf
      */
     public function nextSequenceId(Zend_Db_Adapter_Abstract $db)
     {
-        return uniqid($this->_prefix, $this->_moreEntropy);
+        return $db->nextSequenceId($this->_sequenceName);
     }
 
     /**

@@ -20,6 +20,14 @@
 class Zend_Entity_Definition_Id_AutoIncrement implements Zend_Entity_Definition_Id_Interface
 {
     /**
+     * @return bool
+     */
+    public function isPrePersistGenerator()
+    {
+        return false;
+    }
+
+    /**
      * Returns null
      *
      * @param Zend_Db_Adapter_Abstract $db

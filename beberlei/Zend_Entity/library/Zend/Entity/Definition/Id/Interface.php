@@ -20,6 +20,11 @@
 interface Zend_Entity_Definition_Id_Interface
 {
     /**
+     * @return bool
+     */
+    public function isPrePersistGenerator();
+
+    /**
      * @param Zend_Db_Adapter_Abstract $db
      * @return int|null Sequence Number or null if none generated
      */

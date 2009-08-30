@@ -59,6 +59,15 @@ class Zend_Entity_LazyLoad_EntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ClassName', $entity->__ze_getClassName());
     }
 
+    public function testSerializeNonLoaded_LazyLoadEntity_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_Exception");
+
+        $entity = new Zend_Entity_LazyLoad_Entity('strlen', array('foo', 1));
+
+        serialize($entity);
+    }
+
     public function createLazyLoadEntity($method)
     {
         $callback = array($this, 'createEntityExpectingMethodOnce');

@@ -131,4 +131,14 @@ class Zend_Entity_LazyLoad_Entity implements Zend_Entity_Interface
     {
         return $this->_className;
     }
+
+    /**
+     * Do not allow to serialize non-loaded entities.
+     */
+    public function __sleep()
+    {
+        if($this->_object == null) {
+            throw new Zend_Entity_Exception("Cannot serialize a non-loaded entity.");
+        }
+    }
 }

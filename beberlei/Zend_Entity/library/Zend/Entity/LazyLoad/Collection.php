@@ -164,4 +164,11 @@ class Zend_Entity_LazyLoad_Collection implements Zend_Entity_Collection_Interfac
         }
         return $this->_collection->__ze_wasLoadedFromDatabase();
     }
+
+    public function __sleep()
+    {
+        if($this->_collection === null) {
+            throw new Zend_Entity_Exception("Cannot serialize non-loaded collection.");
+        }
+    }
 }

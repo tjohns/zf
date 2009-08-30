@@ -22,7 +22,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
     /**
      * @var Zend_Entity_Definition_Id_Interface
      */
-    protected $_generator;
+    public $generator;
 
     /**
      * Get Key String identifier
@@ -59,7 +59,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
      */
     public function getGenerator()
     {
-        return $this->_generator;
+        return $this->generator;
     }
 
     /**
@@ -69,7 +69,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
      */
     public function setGenerator(Zend_Entity_Definition_Id_Interface $generator)
     {
-        $this->_generator = $generator;
+        $this->generator = $generator;
     }
 
     /**
@@ -82,7 +82,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
     public function applyNextSequenceId(Zend_Db_Adapter_Abstract $db, array $entityDatabaseState)
     {
         return array(
-            $this->getColumnName() => $this->_generator->nextSequenceId($db)
+            $this->getColumnName() => $this->generator->nextSequenceId($db)
         );
     }
 
@@ -94,7 +94,7 @@ class Zend_Entity_Definition_PrimaryKey extends Zend_Entity_Definition_Property
      */
     public function lastSequenceId(Zend_Db_Adapter_Abstract $db, array $entityDatabaseState)
     {
-        return $this->_generator->lastSequenceId($db);
+        return $this->generator->lastSequenceId($db);
     }
 
     /**

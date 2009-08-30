@@ -356,6 +356,43 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
     }
 
     /**
+     * Merge the state of a detached entity which has an identity back into the persistence context.
+     *
+     * @param object $entity
+     * @return void
+     */
+    public function merge($entity)
+    {
+        throw new Zend_Entity_Exception("not implemented yet");
+    }
+
+    /**
+     * Refresh the state of an entity.
+     *
+     * @param object $entity
+     * @return void
+     */
+    public function refresh($entity)
+    {
+        throw new Zend_Entity_Exception("not implemented yet");
+    }
+
+    /**
+     * Detach entity from persistence context, so that it will become unmanaged. Any unflushed changes will be lost.
+     * 
+     * @param object $entity
+     */
+    public function detach($entity)
+    {
+        if(!is_object($entity)) {
+            throw new Zend_Entity_InvalidEntityException();
+        }
+
+        // TODO: wah, i need a method to get the entity name of a class fast!
+        $this->_identityMap->remove(get_class($entity), $entity);
+    }
+
+    /**
      * Check if entity instance belongs to the persistence context.
      *
      * @param  object $entity
