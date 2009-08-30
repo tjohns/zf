@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="zend.entity.general">
+    <title>General Considerations &amp; Architecture</title>
+
+    <sect2 id="zend.entity.general.entities">
+        <title>Entities</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.general.entitymanager">
+        <title>Entity Manager API</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.general.events">
+        <title>Entity Lifecycle Events</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.general.uowidentitymap">
+        <title>Unit of Work &amp; Identity Map</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.general.transactions">
+        <title>Transactions</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.general.mappingbackend">
+        <title>Mapping Backends</title>
+
+    </sect2>
+
+</sect1>

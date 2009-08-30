@@ -1,0 +1,639 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>1.2. </title>
+<link rel="stylesheet" href="http://framework.zend.com/css/manual.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="zend.entity.html" title="Chapter 1. Zend_Entity">
+<link rel="prev" href="zend.entity.html" title="Chapter 1. Zend_Entity">
+<link rel="next" href="zend.entity.general.html" title="1.3. General Considerations &amp; Architecture">
+<link rel="chapter" href="zend.entity.html" title="Chapter 1. Zend_Entity">
+<link rel="index" href="the.index.html" title="Index">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.entity" title="1.2.1. Entities">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.model" title="1.2.2. An Example Model: Bug Tracker">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.ddd" title="1.2.3. A domain driven design">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.metadata" title="1.2.4. Metadata for Entities">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.entitymanager" title="1.2.5. Creating an Entity Manager and Mapping Backend">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.querying" title="1.2.6. Queries for Application Use-Cases">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.persistence" title="1.2.7. Making changes peristent">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.proxies" title="1.2.8. Generating Lazy Load Proxies">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.php52" title="1.2.9. Property Access Strategies for PHP 5.2">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">1.2. </th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="zend.entity.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 1. Zend_Entity</th>
+<td width="20%" align="right"> <a accesskey="n" href="zend.entity.general.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"></div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.entity"></a>1.2.1. Entities</h3></div></div></div>
+<p>
+            Entities are leightweight PHP Objects that don't need to extend any abstract base class
+            or interface. An entity must be instantiable with no additional constructor arguments
+            and may not have any public final method.
+        </p>
+<p>
+            An entity contains persistable properties. A persistable property is an instance variable
+            of the entity that contains the data which is persistet and retrieved by the data mapper.
+            Depending on the access strategy that is chosen to inject and retrieve these persistent
+            properties certain set and get strategies have to be implemented, which are discussed
+            in more detail at a later stage.
+        </p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.model"></a>1.2.2. An Example Model: Bug Tracker</h3></div></div></div>
+<p>
+            For this quickstart into the Zend_Entity we will re-implement the Bug Tracker domain model from the
+            Zend_Db_Table documentation. For storage the Database Mapper is used in conjunction with 
+            Zend Entity. We will begin by stating the requirements:
+        </p>
+<div class="itemizedlist"><ul type="disc">
+<li>A Bugs has a description, creation date, status, reporter and engineer</li>
+<li>A bug can occour on different products (platforms)</li>
+<li>Products have a name.</li>
+<li>Bug Reporter and Engineers are both Users of the System.</li>
+<li>A user can create new bugs.</li>
+<li>The assigned engineer can close a bug.</li>
+<li>A user can see all his reported or assigned bugs.</li>
+<li>Bugs can be paginated through a list-view.</li>
+</ul></div>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.ddd"></a>1.2.3. A domain driven design</h3></div></div></div>
+<p>
+           A first simplified design for this domain model might look like the following set of classes:
+        </p>
+<pre class="programlisting">
+class Bug
+{
+    public $id;
+    public $description;
+    public $created;
+    public $status;
+    public $products = array();
+    public $reporter;
+    public $engineer;
+}
+class Product
+{
+    public $id;
+    public $name;
+}
+class User
+{
+    public $id;
+    public $name;
+    public $reportedBugs = array();
+    public $assignedBugs = array();
+}
+
+        </pre>
+<p>
+            Because we will focus on the mapping aspect, no effort is being made to encapsulate the business logic.
+            All peristable properties are being made public. The Data Mapper can use the access strategy "Property"
+            to set and get values, which is an approach using ReflectionProperty::setValue() and ReflectionProperty::getValue().
+            If you are on PHP 5.3 this access strategy would still work if the properties are set to private or
+            protected at a later revision of our domain model.
+        </p>
+<p>
+            There are several references between objects in this domain model, whose semantics are discussed case
+            by case at this point to explain how Zend Entity handles them. In general each OneToOne or ManyToOne Relation
+            in the Database is replaced by an instance of the related object in the domain model. Each OneToMany or
+            ManyToMany Relation is replaced by a collection of instances in the domain model. Given our domain model
+            this would lead to the whole database being loaded into memory upon retrieval of an entity. However by
+            default Zend_Entity uses or generates LazyLoad implementations of entities or collections. To be able
+            to use lazyload with collections, simple PHP arrays have to be replaced with the use of a generic collection
+            class <code class="classname">Zend_Entity_Collection</code> which tries to act as array as much as possible
+            using <code class="classname">ArrayAccess</code>, <code class="classname">Iterator</code> and <code class="classname">Countable</code>
+            interfaces. We have to clear up our domain model to cope with the assumptions about related collections:
+        </p>
+<pre class="programlisting">
+class Bug
+{
+    public $products = null;
+
+    public function __construct()
+    {
+        $this-&gt;products = new Zend_Entity_Collection();
+    }
+}
+
+class User
+{
+    public $reportedBugs = null;
+    public $assignedBugs = null;
+
+    public function __construct()
+    {
+        $this-&gt;reportedBugs = new Zend_Entity_Collection();
+        $this-&gt;assignedBugs = new Zend_Entity_Collection();
+    }
+}
+
+        </pre>
+<p>
+            Whenever an entity is recreated from persistence, a collection is also injected instead of an array.
+        </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                The Lazy load proxies always contain an instance of the Entity Manager and all its dependencies.
+                Therefore a var_dump() will try to dump a very large recursive structure which is impossible
+                to read. Use a debugger like Zend Debugger or XDebug to check for variable content.
+            </p></td></tr>
+</table></div>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                Don't exchange the underlying collection classes between recreation and persistence. Zend Entity
+                keeps track of the specific collections using <code class="code">spl_object_hash()</code> and throws an Exception
+                if the collection created from persistence is not the same like the one being persistet. This mechanism
+                is for security, so that you don't accidently delete references and related objects.
+            </p></td></tr>
+</table></div>
+<p>
+            Because we only work with collections for the references we must be careful to
+            implement a bidirectional reference in the domain model. The concept of owning or inverse side of a relation
+            is central to this notion and should always be kept in mind. The following assumptions are made about
+            relations and have to be followed to be able to work with the Database Mapper. These assumptions are
+            not unique to Zend Entity and the Database Mapper but are best practices in handling database relations
+            and Object-Relational Mapping.
+        </p>
+<div class="itemizedlist"><ul type="disc">
+<li>Changes to Collections are saved or updated, when the entity on the owning side of the collection is saved or updated.</li>
+<li>Saving an Entity at the inverse side of a relation never triggers a persist operation to changes to the collection.</li>
+<li>In a one-to-one relation the entity persisting the foreign key of the related entity is the owning side of the relation.</li>
+<li>In a many-to-many relation, both sides can be the owning side of the relation. However even in a bi-directional many-tomany relation only one should be.</li>
+<li>In a many-to-one relation the Many-side is the owning side by default, because it holds the foreign key.</li>
+<li>
+                The OneToMany side of a relation is inverse by default, since the foreign key is saved on the Many side.
+                This can only be reversed by the use a third additional table holding the primary keys of each entity,
+                like in the many to many case, utilizing a UNIQUE constraint on the id of the ToOne entity.
+                Using this approach the foreign key on the many side is not required anymore. Rendering it the inverse
+                side of the relation.
+            </li>
+</ul></div>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                Consistency of bi-directional references on the inverse side of a relation have to be managed
+                in userland application code. Zend Entity cannot magically update your collections to be consistent.
+            </p></td></tr>
+</table></div>
+<p>
+            In the case of Users and Bugs we have references back and forth to the assigned and reported bugs from a user, making this relation
+            bi-directional. We have to change the code to ensure consistency of the bi-directional reference:
+        </p>
+<pre class="programlisting">
+class Bug
+{
+    protected $engineer;
+    protected $reporter;
+
+    public function setEngineer($engineer)
+    {
+        $engineer-&gt;assignedToBug($this);
+        $this-&gt;engineer = $engineer;
+    }
+
+    public function setReporter($reporter)
+    {
+        $reporter-&gt;addReportedBug($bug);
+        $this-&gt;reporter = $reporter;
+    }
+
+    public function getEngineer()
+    {
+        return $this-&gt;engineer;
+    }
+
+    public function getReporter()
+    {
+        return $this-&gt;reporter;
+    }
+}
+class User
+{
+    public function addReportedBug($bug)
+    {
+        $this-&gt;reportedBugs[] = $bug;
+    }
+
+    public function assignedToBug($bug)
+    {
+        $this-&gt;assignedBugs[] = $bug;
+    }
+}
+
+        </pre>
+<p>
+            I chose to name the inverse methods in past-tense, which should indicate that the actual assigning
+            has already taken place and the methods are only used for ensuring consistency of the references.
+            You can see from <code class="code">User::addReportedBug()</code> and <code class="code">User::assignedToBug()</code>
+            that using this method in userland alone would not add the Bug
+            to the collection of the owning side in <code class="code">Bug::$reporter</code> or <code class="code">Bug::$engineer</code>.
+            Only using <code class="code">Bug::setEngineer()</code> or <code class="code">Bug::setReporter</code> correctly
+            saves the relation information. You may also realize that when setting both collection instance variables
+            to protected, our chosen access strategy "Property" now requires PHP 5.3 to be able to use Reflection against
+            the protected properties.
+        </p>
+<p>
+            The <code class="code">Bug::$reporter</code> and <code class="code">Bug::$engineer</code> properties are qualified Many-To-One relations,
+            which point to a User. In the relational model the foreign key is saved on the Bug's table, hence the Bug
+            is at the owning side of the relation. Thinking about our use-cases this direction of the relation is also
+            the important for our domain model. Whenever a new bug is saved or an engineer is assigned, we don't want to
+            save the User to persist the reference, but the Bug. This is the case with the Bug being at the owning side
+            of the relation.
+        </p>
+<p>
+            Bugs reference Products by a uni-directional ManyToMany relation in the database that points from
+            from Bugs to Products.
+        </p>
+<pre class="programlisting">
+class Bug
+{
+    protected $products = null; // Make protected for encapsulation
+
+    public function assignToProduct($product)
+    {
+        $this-&gt;products[] = $product;
+    }
+
+    public function getProducts()
+    {
+        return $this-&gt;products;
+    }
+}
+
+        </pre>
+<p>
+            We are now finished with the domain model. From the public property only model we had to do
+            quite some work to get to a model where we encapsulated the relational data to ensure a consistent
+            state. However up to now the assumptions we have to follow are not restricting us much in our
+            domain modelling capabilities, because we would have encapsulated access to all the properties
+            anyways by applying object-oriented best-practices.
+        </p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.metadata"></a>1.2.4. Metadata for Entities</h3></div></div></div>
+<p>
+            The next step to persisting our domain model is to describe the structure of it to Zend Entity
+            using a metadata language. This metadata language describes how entities, their properties and
+            references should be persisted and what constraints should be applied to them. The metadata
+            description is independent of the underyling storage, although parts of the naming reflect
+            the intend to use Zend Entity with a relational database management system. However the metadata
+            can be used by any mapping backend, the visitor pattern allows to transform the defined metadata
+            into a structure that is useful for the mapping implementation at hand. In our example we
+            will keep implementing the domain model for the Database mapper.
+        </p>
+<p>
+            Metadata for entities are loaded using a <code class="classname">Zend_Entity_MetadataFactory_Interface</code>
+            implementation. We will use a programmatic implementation using PHP Code here.
+        </p>
+<pre class="programlisting">
+$pathToMetadataDirectory = "/path/to";
+$metadataFactory = new Zend_Entity_MetadataFactory_Code($pathToMetadataDirectory);
+
+        </pre>
+<p>
+            This programmatic implementation now requires the files Bug.php, Product.php and User.php inside
+            the given metadata directory. We begin by specifying the definition of a Bug:
+        </p>
+<pre class="programlisting">
+$def = new Zend_Entity_Definition_Entity("Bug");
+$def-&gt;setTable("zfbugs");
+$def-&gt;setAccess("Property");
+
+$def-&gt;addPrimaryKey("id", array(
+    "columnName" =&gt; "bug_id",
+    "generator" =&gt; new Zend_Entity_Definition_Id_AutoIncrement()
+));
+
+$def-&gt;addProperty("description", array("columnName" =&gt; "bug_description"));
+$def-&gt;addProperty("created", array(
+    "columnName" =&gt; "bug_created",
+    "propertyType" =&gt; Zend_Entity_Definition_Property::TYPE_DATETIME,
+));
+$def-&gt;addProperty("status", array(
+    "columnName" =&gt; "bug_status",
+));
+
+$def-&gt;addManyToOneRelation("reporter", array(
+    "columnName" =&gt; "reported_by",
+    "class" =&gt; "User",
+));
+
+$def-&gt;addManyToOneRelation("engineer", array(
+    "columnName" =&gt; "assigned_to",
+    "class" =&gt; "User",
+));
+
+$def-&gt;addCollection("products", array(
+    "relation" =&gt; new Zend_Entity_Definition_ManyToManyRelation(array(
+        "class" =&gt; "Product",
+        "columnName" =&gt; "product_id", // Join Column Product Key
+        "inverse" =&gt; false, // Mark as owning
+    )),
+    "table" =&gt; "zfbugs_products", // Join Table Name
+    "key" =&gt; "bug_id", // Join Table Bug Key
+));
+
+return $def;
+
+        </pre>
+<p>
+            The toplevel entity definition gets information about the classname, its table
+            and what access strategy is chosen to get and set values. All the properties are
+            then defined. <code class="code">$def-&gt;addProperty($propertyName, $options)</code> creates a simple
+            property that translates to a single column in the database. The column names are
+            used from the <code class="classname">Zend_Db_Table</code> examples and have different names
+            than the properties. Additionally for the "created" field it is specified that it is
+            of the Type "DATETIME", which translates the YYYY-mm-dd HH:mm:ss Database format
+            into a PHP <code class="classname">Datetime</code> instance and back.
+        </p>
+<p>
+            After that the two qualified references to the user entity are given. They are created
+            by calling <code class="code">$def-&gt;addManyToOneRelation($propertyName, $options);</code>. The
+            class name of the related entity has to be specified, which is enough for the database
+            mapper to guess foreign-table, foreign-key and identity key to make built a correct
+            query statement.
+        </p>
+<p>
+            The last defined property is the collection of products a bug is occuring on.
+            It is explicitly defined as collection by calling <code class="code">$def-&gt;addCollection($propertyName, $options);</code>.
+            Then the underyling relation has to be specified as instance of
+            <code class="classname">Zend_Entity_Definition_ManyToManyRelation</code>. The collection defines the name
+            of the join table and the join table key of the bug, the options of the
+            many to many relation specify the related class and its join table key.
+            As discussed the relation is marked as owning by setting inverse to false.
+        </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+                Note how with the Code MetadataFactory the Definition has to be returned from the "Bug.php" file.
+                Otherwise an exception is thrown that the definition cannot be found.
+            </p></td></tr>
+</table></div>
+<p>The next discussed definition will be for the Product</p>
+<pre class="programlisting">
+$def = new Zend_Entity_Definition_Entity("Product");
+$def-&gt;setTable("zfproducts");
+$def-&gt;setAccess("Property");
+
+$def-&gt;addPrimaryKey("id", array(
+    "columnName" =&gt; "product_id",
+    "generator" =&gt; new Zend_Entity_Definition_Id_AutoIncrement(),
+));
+
+$def-&gt;addProperty("name", array(
+    "columnName" =&gt; "product_name",
+));
+
+return $def;
+
+        </pre>
+<p>
+            The only new detail in this definition is the inverse many-to-many
+            specification, which has inverse set to true and because of this is required
+            to set the "mappedBy" option to the property on Bug, which holds the owning side
+            of the collection.
+        </p>
+<p>The last missing definition is that of the User entity:</p>
+<pre class="programlisting">
+$def = new Zend_Entity_Definition_Entity("User");
+$def-&gt;setTable("zfaccounts");
+$def-&gt;setAccess("Property");
+
+$def-&gt;addPrimaryKey("id", array(
+    "columnName" =&gt; "account_id",
+    "generator" =&gt; new Zend_Entity_Definition_Id_AutoIncrement(),
+));
+
+$def-&gt;addProperty("name", array(
+    "columnName" =&gt; "account_name",
+));
+
+$def-&gt;addCollection("reportedBugs", array(
+    "relation" =&gt; new Zend_Entity_Definition_OneToManyRelation(array(
+        "class" =&gt; "Bug",
+        "inverse" =&gt; true,
+        "mappedBy" =&gt; "reporter"
+    )),
+    "key" =&gt; "reported_by",
+));
+
+$def-&gt;addCollection("assignedBugs", array(
+    "relation" =&gt; new Zend_Entity_Definition_OneToManyRelation(array(
+        "class" =&gt; "Bug",
+        "inverse" =&gt; true,
+        "mappedBy" =&gt; "engineer"
+    )),
+    "key" =&gt; "assigned_to",
+));
+
+return $def;
+
+        </pre>
+<p>
+            Here the only new detail is the definition of a OneToMany collection.
+            Since this collection is the inverse side of the relation we don't need
+            to specifiy the table option key in comparison to the ManyToMany example,
+            since the table can be inferred from the given "Bug" class to construct
+            queries for that collection internally.
+        </p>
+<p>
+            This example has a fair overview of the most basic features of the metadata
+            definition language. In the section "Extending the Example Model: Advanced Features"
+            the more advanced properties that will be introduced in the manual will be put
+            to practice by extending this example model.
+        </p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.entitymanager"></a>1.2.5. Creating an Entity Manager and Mapping Backend</h3></div></div></div>
+<p>
+            Now that we have defined our Domain model and written all the metadata definitions
+            we can create the <code class="classname">Zend_Entity_Manager</code> which offers a public
+            interface to the mapping process between persistence and object model. The Entity
+            Manager handles all the lifecycle actions of an entity from initial persistence,
+            updating and removing.
+        </p>
+<p>
+            We will now instantiate the Entity Manager in the context of the database mapper.
+            First we need a Database Adapter, the Metadata Factory and create the Database Mapper,
+            all of which can then be used to instantiate the Entity Manager:
+        </p>
+<pre class="programlisting">
+$db = Zend_Db::factory($dbConfig);
+$metadataFactory = new Zend_Entity_MetadataFactory_Code($metadataPath);
+$mapper = Zend_Db_Mapper_Mapper::create(array('db' =&gt; $db, 'metdataFactory' =&gt; $metadataFactory));
+
+$entityManager = new Zend_Entity_Manager(array('mapper' =&gt; $mapper, 'metadataFactory' =&gt; $metadataFactory));
+
+        </pre>
+<p>
+            There is currently a factory which does this, but it will probably be heavily rewritten,
+            so this manual way has to suffice.
+        </p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.querying"></a>1.2.6. Queries for Application Use-Cases</h3></div></div></div>
+<p>
+            Now that we have a running Entity Manager instance, we can discuss how to query the underlying
+            mapper for the required data. When opening the application, bugs can be paginated through a
+            list-view, which is the first use-case:
+        </p>
+<pre class="programlisting">
+$sqlQueryBuilder = new Zend_Db_Mapper_SqlQueryBuilder($entityManager);
+$sqlQueryBuilder-&gt;fromEntity("Bug")
+                -&gt;order("bug_created DESC");
+
+$bugs = $sqlQueryBuilder-&gt;getResultList();
+
+foreach($bugs AS $bug) {
+    echo $bug-&gt;description." - ".$bug-&gt;created-&gt;format('d.m.Y')."\n";
+    echo "    Reported by: ".$bug-&gt;getReporter()-&gt;name."\n";
+    echo "    Assigned to: ".$bug-&gt;getEngineer()-&gt;name."\n";
+    foreach($bug-&gt;getProducts() AS $product) {
+        echo "    Platform: ".$product-&gt;name."\n";
+    }
+    echo "\n";
+}
+
+        </pre>
+<p>
+            The SQL Query Builder is a hybrid Query Object which makes allows you to build
+            a query very much like using <code class="classname">Zend_Db_Select</code> however requires
+            some references to which Entity is actually retrieved from the built SQL. This can be
+            confusing on the first glance, but allows very powerful and flexible queries as we will see
+            in a second.
+        </p>
+<p>
+            What happends in the first Use-Case query is that the call to <code class="code">$sqlQueryBuilder-&gt;fromEntity($className);</code>
+            adds "Bug" as entity to retrieve, internally detects that it needs to add the table "zfbugs" to the FROM clause
+            and all of the Entities required columns to the SELECT clause of the query. For the order clause
+            however the database column name has to be specified, no internal rewriting from property to column name
+            happens here. In general one can say using the SqlQueryBuilder all the methods with the Suffix "Entity"
+            can do some inference on how to translate the data into SQL, whereas all the other methods need raw SQL.
+        </p>
+<p>
+            So what if the query above is given as a stored procedure inside the database already? No problem:
+            We can execute arbitrary SQL statements and map the resulting columns to entities and scalar values
+            using the ResultSet Mapping pattern:
+        </p>
+<pre class="programlisting">
+$rsm = new Zend_Entity_Query_ResultSetMapping();
+$rsm-&gt;addEntity("Bug", "b")
+    -&gt;addProperty("b", "bug_id", "id")
+    -&gt;addProperty("b", "bug_description", "description")
+    -&gt;addProperty("b", "bug_created", "created")
+    -&gt;addProperty("b", "reported_by", "reporter")
+    -&gt;addProperty("b", "assigned_to", "engineer");
+
+$sql = "CALL GetBugs();";
+
+$query = $entityManager-&gt;createNativeQuery($sql, $rsm);
+$bugs = $query-&gt;getResultList();
+
+foreach($bugs AS $bug) {
+    echo $bug-&gt;description." - ".$bug-&gt;created-&gt;format('d.m.Y')."\n";
+    echo "    Reported by: ".$bug-&gt;getReporter()-&gt;name."\n";
+    echo "    Assigned to: ".$bug-&gt;getEngineer()-&gt;name."\n";
+    foreach($bug-&gt;getProducts() AS $product) {
+        echo "    Platform: ".$product-&gt;name."\n";
+    }
+    echo "\n";
+}
+
+        </pre>
+<p>
+            This yields exactly the same result as the query before. Although its definately more verbose
+            to use this way of querying the database, you can see that its way more flexible, giving you
+            the possibility to transform almost every query into resulting entities. This example is
+            also far from showing all the capabilities of the ResultSetMapping as we will see later.
+        </p>
+<p>
+            The next Use-Case is displaying a Bug by primary key. This could be done by restricing the examples
+            with a where clause, however there is a convenience method on the Entity Manager that handles
+            loading by primary key:
+        </p>
+<pre class="programlisting">
+$bug = $entityManager-&gt;load("Bug", (int)$theBugId);
+
+        </pre>
+<p>
+            The method <code class="code">load($entityName, $key, $notFound="exception")</code> throws an
+            <code class="classname">Zend_Entity_NoResultException</code> if the entity does not exist.
+            However if you specifiy <code class="code">$notFound="null"</code> it can also return null.
+        </p>
+<p>
+            The dashboard of the applicaton should also show all the reported or assigned bugs:
+        </p>
+<pre class="programlisting">
+$sqlQueryBuilder = new Zend_Db_Mapper_SqlQueryBuilder($entityManager);
+$sqlQueryBuilder-&gt;fromEntity("Bug");
+    -&gt;where("assigned_to = ?", (int)$myUserId)
+    -&gt;orWhere("reported_by = ?", (int)$myUserId);
+
+$myBugs = $sqlQueryBuilder-&gt;getResultList();
+
+        </pre>
+<p>
+            More complex queries and possibilities to create several entities from a single query are
+            shown in the specific Query API sections of the Database storage later in this manual.
+        </p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.persistence"></a>1.2.7. Making changes peristent</h3></div></div></div>
+<p>
+            
+        </p>
+</div>
+<div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.proxies"></a>1.2.8. Generating Lazy Load Proxies</h3></div></div></div></div>
+<div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title">
+<a name="zend.entity.quickstart.php52"></a>1.2.9. Property Access Strategies for PHP 5.2</h3></div></div></div></div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="zend.entity.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="zend.entity.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="zend.entity.general.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 1. Zend_Entity </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 1.3. General Considerations &amp; Architecture</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

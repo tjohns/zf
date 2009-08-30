@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="zend.entity.metadata">
+    <title>Entity Metadata Definitions</title>
+
+    <sect2 id="zend.entity.metadata.factories">
+        <title>Metadata Factories</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.metadata.entity">
+        <title>The Entity Definition</title>
+
+    </sect2>
+
+    <sect2 id="zend.entity.metadata.properties">
+        <title>Entity Property Definitions</title>
+
+        <sect3 id="zend.entity.metadata.properties.property">
+            <title>Property</title>
+
+        </sect3>
+
+        <sect3 id="zend.entity.metadata.properties.primarykey">
+            <title>Primary Key</title>
+
+        </sect3>
+
+        <sect3 id="zend.entity.metadata.properties.array">
+            <title>Array</title>
+
+        </sect3>
+    </sect2>
+</sect1>

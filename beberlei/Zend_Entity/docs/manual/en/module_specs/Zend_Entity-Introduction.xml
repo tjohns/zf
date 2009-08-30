@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sect1 id="zend.entity.introduction">
+    <title>Introduction</title>
+
+    <para>
+        Zend Entity is a component that aims to handle the persistence of the
+        domain model in a non-interfering way. The Data Mapper pattern is at the heart
+        of this component, trying to completely seperate the domain/business logic from
+        the persistence. The benefit of Zend_Entity for the user is the possibility
+        to focus soley on the domain and worry about persistence only as a secondary task.
+    </para>
+
+    <para>
+        Most of the public API of Zend_Entity such as Identity Map, Change Tracking through
+        UnitOfWork, Metadata and Entity Transformations are seperated from the underlying storage
+        mechanism. Implementing your own mapping storage is therefore not an impossible task,
+        although the details may be tricky. By default a very complex mapper for
+        relational database management systems is included that supports full object-relational
+        mapping.
+    </para>
+
+    <warning>
+        <para>
+            Although this warning might be premature optimization, Zend Entity and Database Mapper
+            are meant to be used in conjunction with applications that utilize the domain model
+            pattern, giving access to small units of the data to the users of an application.
+        </para>
+
+        <para>
+            Zend Entity and Database Mapper are probably not a good choice for large data
+            processing tasks or high traffic applications. Furthermore Zend Entity is probably
+            overkill for small document oriented websites like blogs, guestbooks or something alike.
+        </para>
+    </warning>
+
+</sect1>

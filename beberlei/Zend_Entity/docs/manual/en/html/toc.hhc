@@ -1,0 +1,93 @@
+<HTML>
+<HEAD><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></HEAD>
+<BODY>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Programmer's Reference Guide">
+<param name="Local" value="./index.html"></OBJECT></LI>
+<UL><LI><OBJECT type="text/sitemap">
+<param name="Name" value="Zend_Entity">
+<param name="Local" value="./zend.entity.html"></OBJECT></LI>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Introduction">
+<param name="Local" value="./zend.entity.html#zend.entity.introduction"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="">
+<param name="Local" value="./zend.entity.quickstart.html"></OBJECT></LI>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entities">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.entity"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="An Example Model: Bug Tracker">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.model"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="A domain driven design">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.ddd"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Metadata for Entities">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.metadata"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Creating an Entity Manager and Mapping Backend">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.entitymanager"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Queries for Application Use-Cases">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.querying"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Making changes peristent">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.persistence"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Generating Lazy Load Proxies">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.proxies"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Property Access Strategies for PHP 5.2">
+<param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.php52"></OBJECT></LI>
+</UL><LI><OBJECT type="text/sitemap">
+<param name="Name" value="General Considerations &amp; Architecture">
+<param name="Local" value="./zend.entity.general.html"></OBJECT></LI>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entities">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.entities"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entity Manager API">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.entitymanager"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entity Lifecycle Events">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.events"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Unit of Work &amp; Identity Map">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.uowidentitymap"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Transactions">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.transactions"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Mapping Backends">
+<param name="Local" value="./zend.entity.general.html#zend.entity.general.mappingbackend"></OBJECT></LI>
+</UL><LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entity Metadata Definitions">
+<param name="Local" value="./zend.entity.metadata.html"></OBJECT></LI>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Metadata Factories">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.factories"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="The Entity Definition">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.entity"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Entity Property Definitions">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.properties"></OBJECT></LI>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Property">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.properties.property"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Primary Key">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.properties.primarykey"></OBJECT></LI>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Array">
+<param name="Local" value="./zend.entity.metadata.html#zend.entity.metadata.properties.array"></OBJECT></LI>
+</UL></UL></UL></UL>
+</UL>
+</BODY></HTML>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "@DOCBOOK_DTD@"
+[
+    <!ENTITY % xinclude SYSTEM "xinclude.mod">
+    %xinclude;
+]>
+<book id="manual" lang="en">
+    <bookinfo>
+        <title>Programmer's Reference Guide</title>
+        <subtitle>Zend Framework - Extras Library</subtitle>
+        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <copyright>
+            <year>2005-<?dbtimestamp format="Y"?></year>
+            <holder>
+                Zend Technologies Inc.
+                (<ulink url="http://www.zend.com" />)
+            </holder>
+        </copyright>
+        <!--
+        A Title page graphic can be included like this
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../web/images/foo.jpg"/>
+              </imageobject>
+            </mediaobject>
+        -->
+    </bookinfo>
+
+    <chapter id="zend.entity">
+        <title>Zend_Entity</title>
+        <xi:include href="module_specs/Zend_Entity-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Entity-Quickstart.xml" />
+        <xi:include href="module_specs/Zend_Entity-General.xml" />
+        <xi:include href="module_specs/Zend_Entity-Metadata.xml" />
+    </chapter>
+
+    <index id="the.index" />
+</book>
+<!--
+vim:se ts=4 sw=4 et:
+-->
