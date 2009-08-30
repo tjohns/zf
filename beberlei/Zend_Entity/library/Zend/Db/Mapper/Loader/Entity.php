@@ -41,10 +41,12 @@ class Zend_Db_Mapper_Loader_Entity extends Zend_Db_Mapper_Loader_LoaderAbstract
             foreach($row AS $k => $v) {
                 if(in_array($k, $rsm->scalarResult)) {
                     $scalars[$k] = $v;
-                } else {
+                } elseif(isset($rsm->storageFieldEntity[$k])) {
                     $entityName = $rsm->storageFieldEntity[$k];
                     $propertyName = $rsm->entityResult[$entityName]['properties'][$k];
                     $data[$entityName][$propertyName] = $v;
+                } else {
+                    // unrecognized field! ignore?
                 }
             }
             foreach($rsm->joinedEntity AS $joinedEntity => $joinedEntityData) {

@@ -307,7 +307,7 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      * @param string $key
      * @return object
      */
-    public function load($entityName, $key, $notFound="null")
+    public function load($entityName, $key, $notFound="exception")
     {
         if($this->_identityMap->hasObject($entityName, $key)) {
             $object = $this->_identityMap->getObject($entityName, $key);
