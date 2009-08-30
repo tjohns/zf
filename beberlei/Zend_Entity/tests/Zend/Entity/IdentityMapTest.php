@@ -61,7 +61,7 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($entity, $identityMap->getObject("Zend_TestEntity1", "1"));
     }
 
-    public function testAddedObjectIsContained()
+    public function testContains_KnownObject()
     {
         $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();
@@ -71,7 +71,16 @@ class Zend_Entity_IdentityMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($identityMap->contains($entity));
     }
 
-    public function testUnknownObjectIsNotContained()
+    public function testContains_NonObject_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_InvalidEntityException");
+
+        $identityMap = new Zend_Entity_IdentityMap();
+
+        $identityMap->contains("foo");
+    }
+
+    public function testContains_UnknownObject_ReturnFalse()
     {
         $identityMap = new Zend_Entity_IdentityMap();
         $entity = new Zend_TestEntity1();

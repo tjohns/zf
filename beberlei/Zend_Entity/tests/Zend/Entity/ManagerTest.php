@@ -391,6 +391,22 @@ class Zend_Entity_ManagerTest extends Zend_Entity_TestCase
 
         $em->createNamedQuery("ANamedQuery");
     }
+
+    public function testSaveNonObject_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_InvalidEntityException");
+
+        $em = $this->createEntityManager();
+        $em->save("string");
+    }
+
+    public function testDeleteNonObject_ThrowsException()
+    {
+        $this->setExpectedException("Zend_Entity_InvalidEntityException");
+
+        $em = $this->createEntityManager();
+        $em->delete("string");
+    }
 }
 
 class Zend_Entity_TestNamedQuery extends Zend_Entity_Query_NamedQueryAbstract

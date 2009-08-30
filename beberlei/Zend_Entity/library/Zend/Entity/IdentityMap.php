@@ -119,6 +119,10 @@ class Zend_Entity_IdentityMap
      */
     public function contains($entity)
     {
+        if(!is_object($entity)) {
+            throw new Zend_Entity_InvalidEntityException();
+        }
+
         return isset($this->_primaryKeys[spl_object_hash($entity)]);
     }
 

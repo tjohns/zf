@@ -326,6 +326,10 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function save($entity)
     {
+        if(!is_object($entity)) {
+            throw new Zend_Entity_InvalidEntityException();
+        }
+
         $mapper = $this->getMapper();
         $mapper->save($entity, $this);
     }
@@ -338,7 +342,9 @@ class Zend_Entity_Manager implements Zend_Entity_Manager_Interface
      */
     public function delete($entity)
     {
-        if($this->_identityMap->contains($entity) == false) {
+        if(!is_object($entity)) {
+            throw new Zend_Entity_InvalidEntityException();
+        } else if($this->_identityMap->contains($entity) == false) {
             require_once "Zend/Entity/IllegalStateException.php";
             throw new Zend_Entity_IllegalStateException(
                 "Cannot delete entity with unknown primary id from database."
