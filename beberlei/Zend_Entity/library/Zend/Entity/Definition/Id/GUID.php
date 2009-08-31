@@ -52,9 +52,6 @@ class Zend_Entity_Definition_Id_GUID implements Zend_Entity_Definition_Id_Interf
             $stmt = $db->query("SELECT newid()");
         } elseif($db instanceof Zend_Db_Adapter_Oracle || $db instanceof Zend_Db_Adapter_Pdo_Oci) {
             $stmt = $db->query("SELECT sys_guid() FROM dual");
-        } else if($db instanceof Zend_Db_Adapter_Pdo_Pgsql) {
-            // pgsql has its own uuid field type which does this for us!
-            return null;
         } else {
             throw new Zend_Entity_Exception("Invalid Database adapter for GUID Generator.");
         }

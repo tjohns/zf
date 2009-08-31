@@ -11,7 +11,7 @@
 
         <para>
             An entity contains persistable properties. A persistable property is an instance variable
-            of the entity that contains the data which is persistet and retrieved by the data mapper.
+            of the entity that contains the data which is persisted and retrieved by the data mapper.
             Depending on the access strategy that is chosen to inject and retrieve these persistent
             properties certain set and get strategies have to be implemented, which are discussed
             in more detail at a later stage.
@@ -135,7 +135,7 @@ class User
             <para>
                 Don't exchange the underlying collection classes between recreation and persistence. Zend Entity
                 keeps track of the specific collections using <code>spl_object_hash()</code> and throws an Exception
-                if the collection created from persistence is not the same like the one being persistet. This mechanism
+                if the collection created from persistence is not the same like the one being persisted. This mechanism
                 is for security, so that you don't accidently delete references and related objects.
             </para>
         </important>
@@ -622,7 +622,7 @@ $myBugs = $sqlQueryBuilder->getResultList();
         <title>Making changes persistent</title>
 
         <para>
-            Two requirements need changes to be persistet to the database again. Persistence mechanisms in
+            Two requirements need changes to be persisted to the database again. Persistence mechanisms in
             Zend Entity are quite complex and depending on the options can work quite differently. This
             depends on two different options.
         </para>
@@ -690,6 +690,12 @@ $entityManager->save($bug);
 ]]>
         </programlisting>
 
+    </sect2>
+
+    <sect2 id="zend.entity.quickstart.transactions">
+        <title>Using Transactions</title>
+
+        
     </sect2>
 
     <sect2 id="zend.entity.quickstart.proxies">

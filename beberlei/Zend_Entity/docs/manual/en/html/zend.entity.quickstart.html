@@ -16,7 +16,7 @@
 <link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.metadata" title="1.2.4. Metadata for Entities">
 <link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.entitymanager" title="1.2.5. Creating an Entity Manager and Mapping Backend">
 <link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.querying" title="1.2.6. Queries for Application Use-Cases">
-<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.persistence" title="1.2.7. Making changes peristent">
+<link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.persistence" title="1.2.7. Making changes persistent">
 <link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.proxies" title="1.2.8. Generating Lazy Load Proxies">
 <link rel="subsection" href="zend.entity.quickstart.html#zend.entity.quickstart.php52" title="1.2.9. Property Access Strategies for PHP 5.2">
 </head>
@@ -218,7 +218,7 @@ class Bug
 
     public function setReporter($reporter)
     {
-        $reporter-&gt;addReportedBug($bug);
+        $reporter-&gt;addReportedBug($this);
         $this-&gt;reporter = $reporter;
     }
 
@@ -610,10 +610,68 @@ $myBugs = $sqlQueryBuilder-&gt;getResultList();
 </div>
 <div class="sect2" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="zend.entity.quickstart.persistence"></a>1.2.7. Making changes peristent</h3></div></div></div>
+<a name="zend.entity.quickstart.persistence"></a>1.2.7. Making changes persistent</h3></div></div></div>
 <p>
-            
+            Two requirements need changes to be persistet to the database again. Persistence mechanisms in
+            Zend Entity are quite complex and depending on the options can work quite differently. This
+            depends on two different options.
         </p>
+<div class="itemizedlist"><ul type="disc">
+<li>
+                Entity Manager Flush Mode: By default the Flush Mode is set to <code class="code">Zend_Entity_Manager::FLUSHMODE_IMMEDIATE</code>
+                which means that any call to <code class="code">$entityManager-&gt;save($entityInstance)</code> or
+                <code class="code">$entityManager-&gt;delete($entityInstance)</code> will directly flush the action to the database.
+                However the flush operation can also be deferred to a later stage and will then be executed
+                by <code class="code">$entityManager-&gt;flush()</code>.
+            </li>
+<li>
+                Entity Change Policy: By default the change policy is set to
+                <code class="code">Zend_Entity_Definition_Entity::EXPLICIT_PASSTHROUGH</code> which means that the Entity
+                Manager requires an explicit call to <code class="code">$entityManager-&gt;save()</code> or
+                <code class="code">$entityManager-&gt;delete()</code> to be registered and passthrough means, that
+                no check will be made if persistent properties of the entity have actually changed or not.
+            </li>
+</ul></div>
+<p>
+            Other strategies with regard to the flush mode or change policy are described in the specific sections.
+        </p>
+<p>
+            The first use-case with regard to persistence is the saving of a new bug by a user:
+        </p>
+<pre class="programlisting">
+$product = $entityManager-&gt;load("Product", $theProductId);
+$reporter = $entityManager-&gt;load("User", $theReporterId);
+$engineer = $entityManager-&gt;load("User", $theDefaultEngineerId);
+
+$bug = new Bug();
+$bug-&gt;description = "Something does not work!";
+$bug-&gt;addProduct($product);
+$bug-&gt;setEngineer($engineer);
+$bug-&gt;created = new DateTime("now");
+$bug-&gt;status = "NEW";
+
+$entityManager-&gt;save($bug);
+echo "My Bug Id: ".$bug-&gt;id."\n";
+
+        </pre>
+<p>
+            The Entity Manager detects if the entity has to be saved or updated by checking in the identity map,
+            if the entity has been retrieved from the database before or not. If the Entity was retrieved before
+            it is in the identity map and has to be updated. If not it will be inserted into the database.
+            However sometimes you want to save an entity which has an identity (id) but was detached from
+            the persistence context for various reasons (sending to a remote server for example).
+            You can merge any possible changes by calling <code class="code">$entityManager-&gt;merge($entityInstance)</code>.
+            (merge() is not implemented yet!!)
+        </p>
+<p>
+            The next use-case is the changing of the status of a bug to CLOSED.
+        </p>
+<pre class="programlisting">
+$bug = $entityManager-&gt;load("Bug", $theBugId);
+$bug-&gt;status = "CLOSED";
+$entityManager-&gt;save($bug);
+
+        </pre>
 </div>
 <div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title">
 <a name="zend.entity.quickstart.proxies"></a>1.2.8. Generating Lazy Load Proxies</h3></div></div></div></div>

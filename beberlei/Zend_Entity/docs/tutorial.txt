@@ -19,7 +19,7 @@ This documentation will use a consistent example of the ElePHPhant Railways Coor
 a system to represent their railways operation that sells tickets to train routes to their customers. This topic
 is rather complex for a documentation example, but we will implement it by requirement and update each implementation
 accordingly. We begin with the "Route". Currently the ERC does not have stopovers between its origin and destination,
-such that a the implementation of a Route might look like:
+such that a the implementation of a Route might look like::
 
     class Route {
         /**
@@ -65,14 +65,14 @@ the business we are in currently. How do we persist this representation? Zend En
 entity object that describe how the object structure should be persisted into a database.
 
 Introduction to Persistence Metadata: Routes and Stations
-----------------------------
+---------------------------------------------------------
 
 By default metadata are of entities are described using a programmatic PHP description language. These are called
 Resources and can generally be described by YAML, XML or even Annotations as long as they can translate into the
 generic object notation. To describe the <code>Route</code> and <code>Station</code> classes we create two new
 files Route.php and Station.php and put them into a "config/definitions/railways" folder somewhere into the application.
 
-Route.php
+Route.php::
 
     $def = new Zend_Db_Mapper_Definition_Entity("Route", array("table" => "routes"));
     $def->addPrimaryKey("routeId", array(
@@ -92,7 +92,7 @@ Route.php
 
     return $def;
 
-Station.php
+Station.php::
 
     $def = new Zend_Db_Mapper_Definition_Entity("Station", array("table" => "stations"));
     $def->addPrimaryKey("stationId", array("columnName" => "id"));
@@ -115,7 +115,7 @@ Many defaults are assumed in this example on how the two entities relate to each
 of the entities is quite expressive and by starring just a little on the code examples one can guess what is going
 on behind the scenes.
 
-This metadata requires the following SQL statements (MySQL dialect) to communicate successfully with the database:
+This metadata requires the following SQL statements (MySQL dialect) to communicate successfully with the database::
 
     CREATE TABLE IF NOT EXISTS `routes` (
       `id` int(10) unsigned NOT NULL auto_increment,
@@ -134,7 +134,7 @@ This metadata requires the following SQL statements (MySQL dialect) to communica
     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 Now the only thing that is missing is the extension of <code>Route</code> and <code>Station</code> with a generic
-interface that is required to make the entities reveal their state to the EntityManager Persistence Context:
+interface that is required to make the entities reveal their state to the EntityManager Persistence Context::
 
     class Route implements Zend_Entity_Interface {
         // ...
@@ -178,7 +178,7 @@ interface that is required to make the entities reveal their state to the Entity
     }
 
 Creating the EntityManager Persistence Context
----------------------
+----------------------------------------------
 
 Zend Entity has a simple API offered via a facade of the <code>Zend_Entity_Manager_Interface type</code>. To create a new
 persistence context session the only required dependencies are a <code>Zend_Db_Adapter_Abstract</code> and a

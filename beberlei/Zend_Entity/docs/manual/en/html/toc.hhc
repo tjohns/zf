@@ -35,7 +35,7 @@
 <param name="Name" value="Queries for Application Use-Cases">
 <param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.querying"></OBJECT></LI>
 <LI><OBJECT type="text/sitemap">
-<param name="Name" value="Making changes peristent">
+<param name="Name" value="Making changes persistent">
 <param name="Local" value="./zend.entity.quickstart.html#zend.entity.quickstart.persistence"></OBJECT></LI>
 <LI><OBJECT type="text/sitemap">
 <param name="Name" value="Generating Lazy Load Proxies">
