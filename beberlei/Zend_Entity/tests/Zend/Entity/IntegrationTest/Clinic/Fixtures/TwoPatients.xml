@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<dataset>
-  <patients id="1" name="John Doe" socialSecurityNumber="123456789" birthDate="1972-01-01" />
-  <patients id="2" name="Daniel Daniellson" socialSecurityNumber="9027498" birthDate="1980-01-15" />
-</dataset>

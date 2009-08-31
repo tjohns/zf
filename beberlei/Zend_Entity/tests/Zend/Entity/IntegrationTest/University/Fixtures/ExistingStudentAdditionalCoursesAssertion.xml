@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<dataset>
-    <university_students_semester_courses student_id="1" course_id="1" />
-    <university_students_semester_courses student_id="1" course_id="2" />
-    <university_students_semester_courses student_id="2" course_id="1" />
-    <university_students_semester_courses student_id="2" course_id="2" />
-    <university_students_semester_courses student_id="2" course_id="3" />
-    <university_students_semester_courses student_id="3" course_id="2" />
-</dataset>
