@@ -37,6 +37,12 @@
 
     <part id="learning">
         <title>Learning Zend Framework</title>
+
+        <chapter id="learning.quickstart">
+            <title>Zend Framework Quick Start</title>
+            <xi:include href="tutorials/quickstart-intro-mvc.xml" />
+            <xi:include href="tutorials/quickstart-create-project.xml" />
+        </chapter>
         <!--
         Include new tutorials like this:
         <chapter id="learning.foo">
