@@ -725,9 +725,8 @@ Guestbook Entries: <br />
         </para>
 
         <para>
-            <!-- @todo COPY IMAGE FROM CURRENT QUICKSTART AND UPDATE -->
-            <inlinegraphic width="" scale="" align="center" valign="middle"
-                fileref="figures/" format="" />
+            <inlinegraphic width="525" scale="100" align="center" valign="middle"
+                fileref="figures/learning.quickstart.create-model.png" format="PNG" />
         </para>
     </note>
 

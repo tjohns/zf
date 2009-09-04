@@ -44,6 +44,8 @@
             <xi:include href="tutorials/quickstart-create-project.xml" />
             <xi:include href="tutorials/quickstart-create-layout.xml" />
             <xi:include href="tutorials/quickstart-create-model.xml" />
+            <xi:include href="tutorials/quickstart-create-form.xml" />
+            <xi:include href="tutorials/quickstart-conclusion.xml" />
         </chapter>
         <!--
         Include new tutorials like this:
