@@ -10,7 +10,7 @@ class Zend_Image
     /**
      * Adapter: Imagemick
      */
-    const ADAPTER_IMAGEMICK = 'Imagemick';
+    const ADAPTER_IMAGEMAGICK = 'ImageMagick';
 
     /*
 *
@@ -86,8 +86,8 @@ class Zend_Image
     {
         if (function_exists('gd_info')) {
             return self::ADAPTER_GD;
-        } elseif(false) {
-            return self::ADAPTER_IMAGEMICK;
+        } elseif(class_exists('Imagick')) {
+            return self::ADAPTER_IMAGEMAGICK;
         }
         
         return null;
@@ -179,4 +179,17 @@ class Zend_Image
     {
 		return $this->render();
     }
+
+    public function getHeight(){
+        return $this->_adapter->getHeight();
+    }
+
+    public function getWidth(){
+        return $this->_adapter->getWidth();
+    }
+
+    public function getImageLength(){
+        return $this->_adapter->getImageLength();
+    }
+    
 }
