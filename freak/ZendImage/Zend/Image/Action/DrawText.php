@@ -3,12 +3,12 @@ require_once 'Zend/Image/Action/Abstract.php';
 require_once 'Zend/Image/Point.php';
 
 class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
-    /**
-     * Position of the text
-     *
-     * @var integer _position
-     */
-	protected $_position = null;
+/**
+ * Position of the text
+ *
+ * @var integer _position
+ */
+    protected $_position = null;
 
     /**
      * The color of the line (hex)
@@ -66,36 +66,36 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      */
     protected $_offsetY = 0;
 
-	/**
-	 * The name of this action
-	 */
-	const NAME  = 'DrawArc';
+    /**
+     * The name of this action
+     */
+    const NAME  = 'DrawText';
 
-	/**
+    /**
      * Parse the inital options for the line
      *
      * @param  array $options An array with the options of the line
      */
-	public function __construct($options=array()) {
-		$this->_pointCenter = new Zend_Image_Point();
+    public function __construct($options=array()) {
+        $this->_pointCenter = new Zend_Image_Point();
 
         foreach($options as $key => $value) {
-			switch($key) {
-			    case 'offsetX':
-			        $this->setOffsetX($value);
-			        break;
-			    case 'offsetY':
-			        $this->setOffsetY($value);
-			        break;
-			    case 'text':
-			        $this->setText($value);
-			        break;
-			    case 'size':
-			        $this->setSize($value);
-			        break;
-			    case 'position':
-			        $this->setPosition($value);
-			        break;
+            switch($key) {
+                case 'offsetX':
+                    $this->setOffsetX($value);
+                    break;
+                case 'offsetY':
+                    $this->setOffsetY($value);
+                    break;
+                case 'text':
+                    $this->setText($value);
+                    break;
+                case 'size':
+                    $this->setSize($value);
+                    break;
+                case 'position':
+                    $this->setPosition($value);
+                    break;
                 case 'font':
                     $this->setFont($value);
                     break;
@@ -106,47 +106,47 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
                     $this->setRotation($value);
                     break;
                 case 'color':
-			        $this->setColor($value);
-			        break;
-			    default:
-			         require_once 'Zend/Image/Exception.php';
-			         throw new Zend_Image_Exception("Unknown option given: $key");
-			         break;
-			}
-		}
-	}
+                    $this->setColor($value);
+                    break;
+                default:
+                    require_once 'Zend/Image/Exception.php';
+                    throw new Zend_Image_Exception("Unknown option given: $key");
+                    break;
+            }
+        }
+    }
 
-	/**
+    /**
      * Set the position of the text
      *
      * @param string $position The position of the text
      * @return this
      * @todo implement check given value = valid
      */
-	public function setPosition($position){
+    public function setPosition($position) {
         $this->_position = $position;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * Set the X-offset of the text
      *
      * @param integer $x The X-offset
      * @return this
      */
-	public function setOffsetX($x) {
-	   $this->_offsetX = $x;
-	   return $this;
-	}
+    public function setOffsetX($x) {
+        $this->_offsetX = $x;
+        return $this;
+    }
 
-	/**
-	 * Get the X-offset of the text
-	 *
-	 * @return integer offsetX
-	 */
-	public function getOffsetX() {
-	    return $this->_offsetX;
-	}
+    /**
+     * Get the X-offset of the text
+     *
+     * @return integer offsetX
+     */
+    public function getOffsetX() {
+        return $this->_offsetX;
+    }
 
     /**
      * Set the Y-offset of the text
@@ -155,8 +155,8 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return this
      */
     public function setOffsetY($y) {
-       $this->_offsetY = $y;
-       return $this;
+        $this->_offsetY = $y;
+        return $this;
     }
 
     /**
@@ -174,10 +174,10 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @param integer $alpha The alpha channel
      * @return this
      */
-	public function setAlpha($alpha) {
-		$this->_alpha = $alpha;
-		return $this;
-	}
+    public function setAlpha($alpha) {
+        $this->_alpha = $alpha;
+        return $this;
+    }
 
     /**
      * Get the position of the text
@@ -185,7 +185,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return integer Position
      */
     public function getPosition() {
-       return $this->_position;
+        return $this->_position;
     }
 
     /**
@@ -194,7 +194,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return int alpha channel
      */
     public function getAlpha() {
-       return $this->_alpha;
+        return $this->_alpha;
     }
 
     /**
@@ -204,8 +204,8 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return this
      */
     public function setColor($color) {
-       $this->_color = $color;
-       return $this;
+        $this->_color = $color;
+        return $this;
     }
 
 
@@ -215,7 +215,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return string Color
      */
     public function getColor() {
-       return $this->_color;
+        return $this->_color;
     }
 
     /**
@@ -245,7 +245,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @throw Zend_Image_Exception
      * @return this
      */
-     public function setFont($fontPath) {
+    public function setFont($fontPath) {
         if(!file_exists($fontPath)) {
             require_once 'Zend/Image/Exception.php';
             throw new Zend_Image_Exception('Incorrect font');
@@ -308,6 +308,6 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
      * @return self::NAME
      */
     public function getName() {
-		return self::NAME;
-	}
+        return self::NAME;
+    }
 }
