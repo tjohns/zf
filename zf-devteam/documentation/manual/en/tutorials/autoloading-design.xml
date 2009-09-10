@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.autoloading.design">
+    <title>Goals and Design</title>
+
+    <para>
+        Zend Framework's autoloading support, provided primarily via
+        <classname>Zend_Loader_Autoloader</classname>, has the following goals and design elements:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <emphasis role="strong">Provide namespace matching.</emphasis> If the class
+                namespace prefix is not in a list of registered namespaces, return false
+                immediately. This allows for more optimistic matching, as well as fallback to other
+                autoloaders.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <emphasis role="strong">Allow the autoloader to act as a fallback
+                    autoloader.</emphasis> In the case where a team may be widely distributed, or
+                using an undetermined set of namespace prefixes, the autoloader should still be
+                configurable such that it will attempt to match any namespace prefix. It will be
+                noted, however, that this practice is not recommended, as it can lead to unnecessary
+                lookups.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <emphasis role="strong">Allow toggling error suppression.</emphasis> We feel -- and
+                the greater PHP community does as well -- that error suppression is a bad idea. It's
+                expensive, and it masks very real application problems. So, by default, it should be
+                off. However, if a developer <emphasis>insists</emphasis> that it be on, we allow
+                toggling it on.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <emphasis role="strong">Allow specifying custom callbacks for
+                    autoloading.</emphasis> Some developers don't want to use
+                <methodname>Zend_Loader::loadClass()</methodname> for autoloading, but still want to
+                make use of ZF's mechanisms. <classname>Zend_Loader_Autoloader</classname> allows
+                specyfing an alternate callback for autoloading.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <emphasis role="strong">Allow manipulation of the SPL autoload callback
+                    chain.</emphasis> The purpose of this is to allow specifying additional
+                autoloaders -- for instance, resource loaders for classes that don't have a 1:1
+                mapping to the filesystem -- to be registered before or after the primary ZF
+                autoloader.
+            </para>
+        </listitem>
+    </itemizedlist>
+</sect1>

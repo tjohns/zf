@@ -47,6 +47,16 @@
             <xi:include href="tutorials/quickstart-create-form.xml" />
             <xi:include href="tutorials/quickstart-conclusion.xml" />
         </chapter>
+
+        <chapter id="learning.autoloading">
+            <title>Autoloading in Zend Framework</title>
+            <xi:include href="tutorials/autoloading-intro.xml" />
+            <xi:include href="tutorials/autoloading-design.xml" />
+            <xi:include href="tutorials/autoloading-usage.xml" />
+            <xi:include href="tutorials/autoloading-resources.xml" />
+            <xi:include href="tutorials/autoloading-conclusion.xml" />
+        </chapter>
+
         <!--
         Include new tutorials like this:
         <chapter id="learning.foo">
