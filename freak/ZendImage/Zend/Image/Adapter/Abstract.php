@@ -1,9 +1,11 @@
 <?php
-class Zend_Image_Adapter_Abstract
+require_once 'Zend/Image/Adapter/Interface.php';
+
+abstract class Zend_Image_Adapter_Abstract
+    implements Zend_Image_Adapter_Interface
 {
 
     /*
-*
      * Names of Actions available
      */
     const LINE = 'DrawLine';
@@ -28,7 +30,6 @@ class Zend_Image_Adapter_Abstract
             $this->setConfig($config);
         }
     }
-    
     
     /**
      * Set Adapter state from Zend_Config object
@@ -87,8 +88,10 @@ class Zend_Image_Adapter_Abstract
                 require_once 'Zend/Image/Exception.php';
                 throw new Zend_Image_Exception('Image path does not exist.');
             }
+            
             $this->_adapter->setPath($this->_imagePath);
         }
+        
         return $this;
     }
 
@@ -141,6 +144,6 @@ class Zend_Image_Adapter_Abstract
 
     public function getImageLength ()
     {
-        return $this->_length;
+        return $this->_length; 
     }
 }

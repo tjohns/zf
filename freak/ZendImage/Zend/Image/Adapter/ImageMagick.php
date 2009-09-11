@@ -14,7 +14,7 @@ class Zend_Image_Adapter_ImageMagick extends Zend_Image_Adapter_Abstract {
      */
     protected $_handle;
 
-    public function isAvailable() {
+    public static function isAvailable() {
         return class_exists('Imagick');
     }
 

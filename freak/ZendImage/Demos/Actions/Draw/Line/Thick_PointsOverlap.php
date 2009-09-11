@@ -8,6 +8,6 @@ $line->from(10,15)
 	 ->setFilled(true)
 	 ->setThickness(5);
 	 
-$image = new Zend_Image('../../../_data/white_400_400.png');
+$image = Zend_Image::factory('../../../_data/white_400_400.png');
 $image->drawLine($line);
 $image->display();

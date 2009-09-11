@@ -7,6 +7,6 @@ $line->from(10,15)
 	 ->to(new Zend_Image_Point(50,125))
 	 ->setFilled(true);
 	 
-$image = new Zend_Image('../../../_data/white_400_400.png');
+$image = Zend_Image::factory(array('path' =>'../../../_data/white_400_400.png','adapters' => 'ImageMagick','adapters_force' => true));
 $image->drawLine($line);
 $image->display();

@@ -26,7 +26,7 @@ class Zend_Image
     {
         $adapters = (array) $adapters;
         if (! $force) {
-            $adapters = $adapters + array(self::ADAPTER_GD , self::ADAPTER_IMAGEMAGICK);
+            $adapters = array_unique(array_merge($adapters, array(self::ADAPTER_GD , self::ADAPTER_IMAGEMAGICK)));
         }
         
         $name = null;
@@ -36,11 +36,13 @@ class Zend_Image
                     $name = $adapter;
                     break;
                 }
+                
             } elseif (Zend_Loader_Autoloader::autoload('Zend_Image_Adapter_' . $adapter)) {
                 if (call_user_func('Zend_Image_Adapter_' . $adapter . '::isAvailable')) {
                     $name = 'Zend_Image_Adapter_' . $adapter;
                     break;
                 }
+                
             } else {
                 require_once 'Zend/Image/Exception.php';
                 throw new Zend_Image_Exception("Could not find adapter '" . $adapter . "'");
@@ -49,17 +51,18 @@ class Zend_Image
         
         if ($name) {
             self::$_adapterToUse = $name;
-        } else {
-	        require_once 'Zend/Image/Exception.php';
-	        throw new Zend_Image_Exception('Was not able to detect an available adapter');
+            return $name;
         }
-    }
 
+        require_once 'Zend/Image/Exception.php';
+	    throw new Zend_Image_Exception('Was not able to detect an available adapter');
+    }
+    
     public static function factory ($options = null)
     {
-        if ($options instanceof Zend_Image_Adapter_Abstract) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
-        } elseif (! is_array($options)) {
+        } elseif(!is_array($options)) {
             $options = array('path' => (string) $options);
         }
         
@@ -70,6 +73,7 @@ class Zend_Image
             } else {
                 self::setAdapter($options['adapters']);
             }
+            
             unset($options['adapters']);
         } elseif (self::$_adapterToUse == null) {
             self::setAdapter();

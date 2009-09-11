@@ -11,6 +11,6 @@ $options = array(
 	'endX' => 50,
 	'endY' => 125);
 
-$image = new Zend_Image('../../../_data/white_400_400.png');
+$image = Zend_Image::factory('../../../_data/white_400_400.png');
 $image->drawLine($options);
 $image->display();

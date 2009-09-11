@@ -31,8 +31,7 @@ class Zend_Image_Adapter_ImageMagick_Action_DrawLine {
                 $lineObject->getPointEnd()->getX(),
                 $lineObject->getPointEnd()->getY());
 
-        }else {
-
+        } else {
             require_once 'Zend/Image/Point.php';
             require_once 'Zend/Image/Action/DrawPolygon.php';
             require_once 'Zend/Image/Adapter/Gd/Action/DrawPolygon.php';
