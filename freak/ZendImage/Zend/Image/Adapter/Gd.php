@@ -70,29 +70,49 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract
      *
      * @return boolean True if GD is available
      */
-	public function isAvailable() {
+	static function isAvailable() {
 		return function_exists ( 'gd_info' );
 	}
 
-	/**
-	 * Applies an action on the image
-	 *
-     * @param Zend_Image_Action_Abstract $object The object that is applied on the image
-	 */
-	public function apply($object) {
-		$name = __CLASS__. '_Action_' . $object->getName ();
-		Zend_Loader::loadClass ( $name );
+    /**
+     * Perform an action on the image
+     * @param mixed $param1
+     * @param array $options Options that will be parsed on to the action
+     * @return Zend_Image
+     * @todo: use plugin loader.
+     */
+    public function apply ($param1, $param2 = null)
+    {
+        if ($param2 instanceof Zend_Image_Action_Abstract) {
+            $object = $param2;
+        } elseif ($param1 instanceof Zend_Image_Action_Abstract) {
+            $object = $param1;
+        } else {
+            $name = 'Zend_Image_Action_' . ucfirst($param1);
+            Zend_Loader::loadClass($name);
+            $object = new $name($param2);
+        }
+        
+        if(!$object instanceof Zend_Image_Action_Abstract) {
+            require_once 'Zend/Image/Exception.php';
+            throw new Zend_Image_Exception('Action specified does not inherit from Zend_Image_Action_Abstract');
+        }
+        
+        $name = __CLASS__. '_Action_' . $object->getName ();
+        Zend_Loader::loadClass ( $name );
 
-		if (! $this->_handle) {
-			$this->_loadHandle ();
-		}
+        if (! $this->_handle) {
+            $this->_loadHandle ();
+        }
 
-		$actionObject = new $name ( );
-		$actionObject->perform ( $this, $object );
-	}
+        $actionObject = new $name ( );
+        $actionObject->perform ( $this, $object );
+        return $this;
+    }
 
     /**
      * Create/load the handle of this adapter
+     * @TODO implement new images (height+width available)
      *
      */
 	protected function _loadHandle() {

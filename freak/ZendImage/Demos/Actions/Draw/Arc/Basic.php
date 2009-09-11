@@ -9,6 +9,6 @@ $arc->setHeight(400)
     ->setCutoutEnd(360)
     ->filled(false);     
 
-$image = new Zend_Image('../../../_data/white_400_400.png');
+$image = Zend_Image::factory('../../../_data/white_400_400.png');
 $image->drawLine($arc);
 $image->display();
