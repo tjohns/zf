@@ -53,8 +53,8 @@ class Zend_Validate_NotEmpty extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        if (!is_string($value) && !is_int($value) && !is_float($value) && !is_bool($value) &&
-            !is_array($value)) {
+        if (!is_null($value) && !is_string($value) && !is_int($value) && !is_float($value) &&
+            !is_bool($value) && !is_array($value)) {
             $this->_error(self::INVALID);
             return false;
         }
