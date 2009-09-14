@@ -57,6 +57,13 @@
             <xi:include href="tutorials/autoloading-conclusion.xml" />
         </chapter>
 
+        <chapter id="learning.plugins">
+            <title>Plugins in Zend Framework</title>
+            <xi:include href="tutorials/plugins-intro.xml" />
+            <xi:include href="tutorials/plugins-usage.xml" />
+            <xi:include href="tutorials/plugins-conclusion.xml" />
+        </chapter>
+
         <!--
         Include new tutorials like this:
         <chapter id="learning.foo">
