@@ -12,7 +12,7 @@
         </para>
 
         <para>
-            Zend Framework has borrowed an idea from <url ulink="http://pear.php.net/">PEAR</url>,
+            Zend Framework has borrowed an idea from <ulink url="http://pear.php.net/">PEAR</ulink>,
             whereby class names have a 1:1 relationship with the filesystem. Simply put, the underscore
             character ("_") is replaced by a directory separator in order to resolve the path to the
             file, and then the suffix ".php" is added. For example, the class "Foo_Bar_Baz" would
