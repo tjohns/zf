@@ -310,6 +310,7 @@ abstract class Zend_XmlRpc_Value
                 $xmlrpc_val = new Zend_XmlRpc_Value_Base64($value ,true);
                 break;
             case self::XMLRPC_TYPE_NIL:    // The value should always be NULL
+                require_once 'Zend/XmlRpc/Value/Nil.php';
                 $xmlrpc_val = new Zend_XmlRpc_Value_Nil();
                 break;
             case self::XMLRPC_TYPE_ARRAY:
