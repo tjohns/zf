@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.multiuser.authentication">
+    <title>Building an Authorization System in ZF</title>
+
+    <sect2 id="learning.multiuser.authorization.intro">
+        <title>Introduction to Authorization</title>
+
+        <para>
+            After a user has been identified as being authentic, an application can go about its 
+            business of providing some useful and desirable resources to a consumer.  In many cases, 
+            applications might contain different resource types, with some resources having stricter 
+            rules regarding access.  This process of determining who has access to which resources is 
+            the process of "authorization".  Authorization in its simplest form is the composition of 
+            these elements:
+        </para>
+        
+        <itemizedlist>
+            <listitem>
+                <para>
+                    the identity whom wishes to be granted access
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    the resource the identity is asking permission to consume
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    and optionally, what the identity is privileged to do with the resource
+                </para>
+            </listitem>
+        </itemizedlist>
+        
+        <para>
+            In ZF, the Zend_Acl component handles the task of building a tree of roles, resources and
+            privileges to manage and query authorization requests against.
+        </para>
+        
+    </sect2>
+    
+    <sect2 id="learning.multiuser.authorization.intro">
+        <title>Basic Usage of Zend_Acl</title>
+
+<!-- explain the interaction with a User object, how -->
+        
+        <para>
+            When using Zend_Acl, any models can serve as roles or resources by simply implementing
+            the proper interface.  To be used in a role capacity, the class must implement the 
+            Zend_Acl_Role_Interface, which requires only getRoleId().  To be used in a resource
+            capacity, a class must implement the Zend_Acl_Resource_Interface which similarly requires
+            the class implement the getResourceId() method.
+        </para>
+
+class Default_Model_User implements Zend_Acl_Role_Interface
+{
+    protected $_aclRoleId = null;
+    
+    public function getRoleId()
+    {
+        if ($this->_aclRoleId == null) {
+            return 'guest';
+        }
+        
+        return $this->_aclRoleId;
+    }
+}
+
+class Default_Model_BlogPost implements Zend_Acl_Resource_Interface
+{
+    public function getResourceId()
+    {
+        return 'blogPost';
+    }
+}
+
+<!-- explain the access tree -->
+    <!-- what resources? -->
+
+<!-- setup ACL and store in the application container -->
+
+<!-- query the ACL from within a controller -->
+
+<!-- advanced: MVC integration -->
+
+<!-- assertions -->
+
+    </sect2>
+
+</sect1>
