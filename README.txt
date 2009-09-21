@@ -9,6 +9,13 @@ A detailed list of all features and bug fixes in this release may be found at:
 
     http://framework.zend.com/changelog/1.9.3
 
+This release marks the conclusion of the first monthly Zend Framework
+bug hunt days. As such, the changelog reflects over 100 issues resolved
+in two days by an army of volunteer contributors. If you would like to
+participate in Bug Hunt Days in the future, they occur on the third
+Thursday and Friday of each month; please be sure to have a CLA on file
+before attending.
+
 NEW FEATURES
 ------------
 * Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
