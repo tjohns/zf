@@ -2,12 +2,12 @@ Welcome to the Zend Framework 1.9 Release!
 
 RELEASE INFORMATION
 -------------------
-Zend Framework 1.9.3 ([INSERT REV NUM HERE]).
-Released on September 22, 2009.
+Zend Framework 1.9.3PL1 ([INSERT REV NUM HERE]).
+Released on September 23, 2009.
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-    http://framework.zend.com/changelog/1.9.3
+    http://framework.zend.com/changelog/1.9.3PL1
 
 This release marks the conclusion of the first monthly Zend Framework
 bug hunt days. As such, the changelog reflects over 100 issues resolved
@@ -15,6 +15,9 @@ in two days by an army of volunteer contributors. If you would like to
 participate in Bug Hunt Days in the future, they occur on the third
 Thursday and Friday of each month; please be sure to have a CLA on file
 before attending.
+
+Note: A BC regression in 1.9.3 was identified and patched for this
+release. If you were using 1.9.3, we recommend upgrading to 1.9.3PL1.
 
 NEW FEATURES
 ------------
