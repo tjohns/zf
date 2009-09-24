@@ -49,6 +49,11 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
     protected $_rowCount = 0;
 
     /**
+     * @var Zend_Db_Profiler_Query
+     */
+    protected $_queryProfile = null;
+
+    /**
      * Create a Select statement which returns the given array of rows.
      * 
      * @param array $rows
@@ -110,6 +115,14 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
     }
 
     /**
+     * @param Zend_Db_Profiler_Query $qp
+     */
+    public function setQueryProfile(Zend_Db_Profiler_Query $qp)
+    {
+        $this->_queryProfile = $qp;
+    }
+
+    /**
      * @param int $rowCount
      */
     public function setRowCount($rowCount)
@@ -156,6 +169,9 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
      */
     public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
+        if($this->_queryProfile !== null) {
+            $this->_queryProfile->bindParam($parameter, $variable);
+        }
         return true;
     }
 
@@ -229,6 +245,10 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
      */
     public function execute(array $params = array())
     {
+        if($this->_queryProfile !== null) {
+            $this->_queryProfile->bindParams($params);
+            $this->_queryProfile->end();
+        }
         return true;
     }
 
