@@ -31,6 +31,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/XmlRpc/Value.php';
 require_once 'Zend/XmlRpc/Value/Scalar.php';
+require_once 'Zend/XmlRpc/Value/BigInteger.php';
 require_once 'Zend/XmlRpc/Value/Collection.php';
 require_once 'Zend/XmlRpc/Value/Array.php';
 require_once 'Zend/XmlRpc/Value/Base64.php';
@@ -41,6 +42,7 @@ require_once 'Zend/XmlRpc/Value/Integer.php';
 require_once 'Zend/XmlRpc/Value/String.php';
 require_once 'Zend/XmlRpc/Value/Nil.php';
 require_once 'Zend/XmlRpc/Value/Struct.php';
+require_once 'Zend/Crypt/Math/BigInteger.php';
 
 /**
  * Test case for Zend_XmlRpc_Value
@@ -130,7 +132,6 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         foreach ($xmls as $xml) {
             $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
                                         Zend_XmlRpc_Value::XML_STRING);
-
             $this->assertXmlRpcType('integer', $val);
             $this->assertEquals('int', $val->getType());
             $this->assertSame($native, $val->getValue());
@@ -155,6 +156,48 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Zend_XmlRpc_Value_Exception', 'Overlong integer given');
         Zend_XmlRpc_Value::getXmlRpcValue(PHP_INT_MAX + 1, Zend_XmlRpc_Value::XMLRPC_TYPE_INTEGER);
+    }
+
+    // BigInteger
+
+    /**
+     * @group ZF-6445
+     */
+    public function testMarshalBigIntegerFromFromXmlRpc()
+    {
+        $bigInt = (string)(PHP_INT_MAX + 1);
+        $native = new Zend_Crypt_Math_BigInteger();
+        $native->init($bigInt);
+
+        $xmlStrings = array("<value><i8>$bigInt</i8></value>",
+                            "<value><ex:i8 xmlns:ex=\"http://ws.apache.org/xmlrpc/namespaces/extensions\">$bigInt</ex:i8></value>");
+
+        foreach ($xmlStrings as $xml) {
+            $value = Zend_XmlRpc_Value::getXmlRpcValue($xml, Zend_XmlRpc_Value::XML_STRING);
+            $this->assertEquals($native, $value->getValue());
+            $this->assertEquals('i8', $value->getType());
+            $this->assertType('DOMElement', $value->getAsDOM());
+            $this->assertEquals($this->wrapXml($xml), $value->saveXml());
+        }
+    }
+
+    /**
+     * @group ZF-6445
+     */
+    public function testMarshalBigIntegerFromNative()
+    {
+        $native = (string)(PHP_INT_MAX + 1);
+        $types = array(Zend_XmlRpc_Value::XMLRPC_TYPE_APACHEI8,
+                        Zend_XmlRpc_Value::XMLRPC_TYPE_I8);
+
+        $bigInt = new Zend_Crypt_Math_BigInteger();
+        $bigInt->init($native);
+
+        foreach ($types as $type) {
+            $value = Zend_XmlRpc_Value::getXmlRpcValue($native, $type);
+            $this->assertSame('i8', $value->getType());
+            $this->assertEquals($bigInt, $value->getValue());
+        }
     }
 
     // Double
@@ -262,23 +305,30 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     public function testMarshalNilFromNative()
     {
         $native = NULL;
-        $val = Zend_XmlRpc_Value::getXmlRpcValue($native,
-                                    Zend_XmlRpc_Value::XMLRPC_TYPE_NIL);
+        $types = array(Zend_XmlRpc_Value::XMLRPC_TYPE_NIL,
+                       Zend_XmlRpc_Value::XMLRPC_TYPE_APACHENIL);
+        foreach ($types as $type) {
+            $value = Zend_XmlRpc_Value::getXmlRpcValue($native, $type);
 
-        $this->assertXmlRpcType('nil', $val);
-        $this->assertSame($native, $val->getValue());
+            $this->assertXmlRpcType('nil', $value);
+            $this->assertSame($native, $value->getValue());
+        }
     }
 
     public function testMarshalNilFromXmlRpc()
     {
-        $xml = '<value><nil/></value>';
-        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
-                                    Zend_XmlRpc_Value::XML_STRING);
-        $this->assertXmlRpcType('nil', $val);
-        $this->assertEquals('nil', $val->getType());
-        $this->assertSame(NULL, $val->getValue());
-        $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+        $xmls = array('<value><nil/></value>',
+                     '<value><ex:nil xmlns:ex="http://ws.apache.org/xmlrpc/namespaces/extensions"/></value>');
+
+        foreach ($xmls as $xml) {
+            $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                        Zend_XmlRpc_Value::XML_STRING);
+            $this->assertXmlRpcType('nil', $val);
+            $this->assertEquals('nil', $val->getType());
+            $this->assertSame(NULL, $val->getValue());
+            $this->assertType('DomElement', $val->getAsDOM());
+            $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+        }
     }
 
     // Array
@@ -468,6 +518,26 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+    }
+
+    public function testMarshallingStructWithMultibyteValueFromXmlRpcRetainsMultibyteValue()
+    {
+        $native = array('foo' => 'ß');
+        $xml = '<value><struct><member><name>foo</name>'
+             . '<value><string>&#xDF;</string></value></member></struct></value>';
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml,
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('struct', $val);
+        $this->assertEquals('struct', $val->getType());
+        $this->assertSame($native, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($native, Zend_XmlRpc_Value::XMLRPC_TYPE_STRUCT);
+        $this->assertSame($native, $val->getValue());
+        $this->assertSame($xml . "\n", $val->saveXML());
     }
 
     // DateTime
