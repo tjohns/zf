@@ -90,11 +90,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         if ($this->_doc->encoding === null) {
         	// Document encoding is not recognized
 
-        	/** @todo improve HTML vs HTML fragment recognition */
-        	if (preg_match('/<html>/i', $htmlData, $matches, PREG_OFFSET_CAPTURE)) {
-        		// It's an HTML document
-        		// Add additional HEAD section and recognize document
-        		$htmlTagOffset = $matches[0][1] + strlen($matches[0][1]);
+            /** @todo improve HTML vs HTML fragment recognition */
+            if (preg_match('/<html>/i', $htmlData, $matches, PREG_OFFSET_CAPTURE)) {
+                // It's an HTML document
+                // Add additional HEAD section and recognize document
+                $htmlTagOffset = $matches[0][1] + strlen($matches[0][0]);
 
         		@$this->_doc->loadHTML(iconv($defaultEncoding, 'UTF-8//IGNORE', substr($htmlData, 0, $htmlTagOffset))
                                      . '<head><META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/></head>'
