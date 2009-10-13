@@ -8,12 +8,28 @@
     </para>
 
     <sect2 id="learning.quickstart.create-project.install-zf">
-        <title>Download and Extract Zend Framework</title>
+        <title>Install Zend Framework</title>
 
         <para>
-            <ulink url="http://framework.zend.com/download/latest">Download the latest version of
-                Zend Framework</ulink> and extract the contents; make a note of where you have done
-            so.
+            The easiest way to get Zend Framework along with a complete PHP stack is by installing
+            <ulink url="http://www.zend.com/en/products/server-ce/downloads">Zend Server</ulink>.
+            Zend Server has native installers for Mac OSX, Windows, Fedora Core, and Ubuntu, as well
+            as a universal installation package compatible with most Linux distributions.
+        </para>
+
+        <para> 
+            After you have installed Zend Server, the Framework files may be found
+            under <filename>/Applications/ZendServer/share/ZendFramework</filename> on Mac
+            OSX, <filename>C:\Program Files\Zend\ZendServer\share\ZendFramework</filename> on
+            Windows, and <filename>/usr/local/zend/share/ZendFramework</filename> on Linux.
+            The <constant>include_path</constant> will already be configured to include
+            Zend Framework.
+        </para>
+
+        <para>
+            Alternately, you can <ulink url="http://framework.zend.com/download/latest">Download the
+            latest version of Zend Framework</ulink> and extract the contents; make a note of where
+            you have done so.
         </para>
 
         <para>
