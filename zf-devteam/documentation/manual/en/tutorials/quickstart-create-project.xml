@@ -59,7 +59,7 @@
             <para>
                 Wherever you see references to <filename>zf.sh</filename> or
                 <filename>zf.bat</filename>, please substitute the absolute path to the script. On
-                unix-like systems, you may want to use your shell's alias functionality:
+                Unix-like systems, you may want to use your shell's alias functionality:
                 <command>alias zf.sh=path/to/ZendFramework/bin/zf.sh</command>.
             </para>
 
