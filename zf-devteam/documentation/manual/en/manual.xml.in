@@ -64,6 +64,16 @@
             <xi:include href="tutorials/plugins-conclusion.xml" />
         </chapter>
 
+        <chapter id="learning.form.decorators">
+            <title>Understanding and Using Zend Form Decorators</title>
+            <xi:include href="tutorials/form-decorators-intro.xml" />
+            <xi:include href="tutorials/form-decorators-simplest.xml" />
+            <xi:include href="tutorials/form-decorators-layering.xml" />
+            <xi:include href="tutorials/form-decorators-individual.xml" />
+            <xi:include href="tutorials/form-decorators-composite.xml" />
+            <xi:include href="tutorials/form-decorators-conclusion.xml" />
+        </chapter>
+
         <!--
         Include new tutorials like this:
         <chapter id="learning.foo">
