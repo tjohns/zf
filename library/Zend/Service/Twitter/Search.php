@@ -23,7 +23,12 @@
 /**
  * @see Zend_Http_Client
  */
-require_once 'Zend/Rest/Client.php';
+require_once 'Zend/Http/Client.php';
+
+/**
+ * @see Zend_Uri_Http
+ */
+require_once 'Zend/Uri/Http.php';
 
 /**
  * @see Zend_Json
@@ -43,7 +48,7 @@ require_once 'Zend/Feed.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-class Zend_Service_Twitter_Search extends Zend_Rest_Client
+class Zend_Service_Twitter_Search extends Zend_Http_Client
 {
     /**
      * Return Type
@@ -76,7 +81,7 @@ class Zend_Service_Twitter_Search extends Zend_Rest_Client
     public function __construct($responseType = 'json')
     {
         $this->setResponseType($responseType);
-        $this->setUri("http://search.twitter.com");
+        $this->_uri = Zend_Uri_Http::fromString("http://search.twitter.com");
 
         $this->setHeaders('Accept-Charset', 'ISO-8859-1,utf-8');
     }
@@ -116,7 +121,9 @@ class Zend_Service_Twitter_Search extends Zend_Rest_Client
      */
     public function trends()
     {
-        $response     = $this->restGet('/trends.json');
+        $this->_uri->setPath('/trends.json');
+        $this->setUri($this->_uri);
+        $response     = $this->request();
 
         return Zend_Json::decode($response->getBody());
     }
@@ -128,6 +135,9 @@ class Zend_Service_Twitter_Search extends Zend_Rest_Client
      */
     public function search($query, array $params = array())
     {
+
+        $this->_uri->setPath('/search.' . $this->_responseType);
+        $this->_uri->setQuery(null);
 
         $_query = array();
 
@@ -151,7 +161,10 @@ class Zend_Service_Twitter_Search extends Zend_Rest_Client
             }
         }
 
-        $response = $this->restGet('/search.' . $this->_responseType, $_query);
+        $this->_uri->setQuery($_query);
+
+        $this->setUri($this->_uri);
+        $response     = $this->request();
 
         switch($this->_responseType) {
             case 'json':
