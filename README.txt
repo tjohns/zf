@@ -2,15 +2,15 @@ Welcome to the Zend Framework 1.9 Release!
 
 RELEASE INFORMATION
 -------------------
-Zend Framework 1.9.4 ([INSERT REV NUM HERE]).
-Released on October 12, 2009.
+Zend Framework 1.9.5 ([INSERT REV NUM HERE]).
+Released on October 27, 2009.
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-    http://framework.zend.com/changelog/1.9.4
+    http://framework.zend.com/changelog/1.9.5
 
-NEW FEATURES
-------------
+NEW FEATURES IN 1.9
+-------------------
 * Zend_Queue and Zend_Service_Amazon_Sqs, which provide the ability to
   use local and remote messaging and queue services for offloading
   asynchronous processes. (Contributed by Justin Plock and Daniel Lo)
@@ -76,7 +76,7 @@ the release of 1.8.0!
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-    http://framework.zend.com/changelog/1.9.4
+    http://framework.zend.com/changelog/1.9.5
 
 IMPORTANT CHANGES
 -----------------
