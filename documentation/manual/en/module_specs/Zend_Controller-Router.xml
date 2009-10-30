@@ -164,8 +164,8 @@ $router->addRoute('user',
                 <para><xref linkend="zend.controller.router.routes.regex" /></para>
             </listitem>
             <listitem>
-                 <para><xref linkend="zend.controller.router.routes.hostname" /></para>
-             </listitem>
+                <para><xref linkend="zend.controller.router.routes.hostname" /></para>
+            </listitem>
             <listitem>
                 <para><xref linkend="zend.controller.router.routes.chain" /></para>
             </listitem>
