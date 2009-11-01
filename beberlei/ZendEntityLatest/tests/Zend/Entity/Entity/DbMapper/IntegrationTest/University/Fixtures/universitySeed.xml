@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<dataset>
+    <university_students student_id="1" student_name="Albert Einstein" student_campus_id="1234" />
+    <university_students student_id="2" student_name="Ludwig von Mises" student_campus_id="1078" />
+    <university_students student_id="3" student_name="Adam Smith" student_campus_id="1776" />
+    <university_courses course_id="1" course_name="Human Action" teacher_id="1" />
+    <university_courses course_id="2" course_name="Applied Financial Markets" teacher_id="2" />
+    <university_courses course_id="3" course_name="Liberty and Property" teacher_id="2" />
+    <university_stu_sem_courses student_id="1" course_id="1" />
+    <university_stu_sem_courses student_id="1" course_id="2" />
+    <university_stu_sem_courses student_id="2" course_id="1" />
+    <university_stu_sem_courses student_id="2" course_id="3" />
+    <university_stu_sem_courses student_id="3" course_id="2" />
+    <university_professors professor_id="1" name="John Stuart Mill" salary="36000" />
+    <university_professors professor_id="2" name="Jean Baptist Say" salary="54000" />
+</dataset>

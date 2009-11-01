@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <ze_category category_id="1" name="ELECTRONICS" />
+    <ze_category category_id="2" name="TELEVISIONS" parent="1" />
+    <ze_category category_id="3" name="TUBE" parent="2" />
+    <ze_category category_id="4" name="LCD" parent="2" />
+    <ze_category category_id="5" name="PLASMA" parent="2" />
+    <ze_category category_id="6" name="PORTABLE ELECTRONICS" parent="1" />
+    <ze_category category_id="7" name="MP3 PLAYERS" parent="6" />
+    <ze_category category_id="8" name="FLASH" parent="7" />
+    <ze_category category_id="9" name="CD PLAYERS" parent="6" />
+    <ze_category category_id="10" name="2 WAY RADIOS" parent="6" />
+</dataset>

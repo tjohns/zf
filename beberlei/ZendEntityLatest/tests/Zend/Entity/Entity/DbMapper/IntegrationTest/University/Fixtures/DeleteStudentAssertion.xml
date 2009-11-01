@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<dataset>
+    <university_students student_id="2" student_name="Ludwig von Mises" student_campus_id="1078" />
+    <university_students student_id="3" student_name="Adam Smith" student_campus_id="1776" />
+</dataset>

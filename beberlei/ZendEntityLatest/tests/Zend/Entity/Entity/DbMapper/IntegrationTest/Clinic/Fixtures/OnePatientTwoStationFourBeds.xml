@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+  <zfclinic_patients id="1" name="John Doe" social_security_number="123456789" birth_date="1972-01-01" />
+
+  <zfclinic_stations id="1" name="Heart Deseases" />
+  <zfclinic_stations id="2" name="Lung Deseases" />
+
+  <zfclinic_beds id="1" station_id="1" />
+  <zfclinic_beds id="2" station_id="1" />
+  <zfclinic_beds id="3" station_id="2" />
+  <zfclinic_beds id="4" station_id="2" />
+
+  <zfclinic_occupancies
+    id="1" station_id="1" patient_id="1" bed_id="1"
+    occupied_from="2009-01-01" occupied_to="2009-01-10"
+  />
+</dataset>

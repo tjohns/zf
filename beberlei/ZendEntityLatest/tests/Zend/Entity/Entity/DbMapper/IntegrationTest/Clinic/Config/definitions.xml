@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<definitions>
+    <Clinic_Bed>
+        <table>beds</table>
+        <properties>
+            <id>
+                <type>PrimaryKey</type>
+            </id>
+
+            <station>
+                <type>ManyToOneRelation</type>
+                <class>Clinic_Station</class>
+                <columnName>station_id</columnName>
+                <propertyRef>id</propertyRef>
+                <load>directly</load>
+            </station>
+
+            <occupancyPlan>
+                <type>Collection</type>
+                <key>bed_id</key>
+                <relation>
+                    <type>OneToManyRelation</type>
+                    <class>Clinic_Occupancy</class>
+                    <mappedBy>bed</mappedBy>
+                </relation>
+            </occupancyPlan>
+        </properties>
+    </Clinic_Bed>
+
+    <Clinic_Occupancy>
+        <table>occupancies</table>
+        <properties>
+            <id>
+                <type>PrimaryKey</type>
+            </id>
+
+            <patient>
+                <type>ManyToOneRelation</type>
+                <columnName>patient_id</columnName>
+                <propertyRef>patient</propertyRef>
+                <class>Clinic_Patient</class>
+                <cascade>save</cascade>
+            </patient>
+
+            <bed>
+                <type>ManyToOneRelation</type>
+                <columnName>bed_id</columnName>
+                <class>Clinic_Bed</class>
+            </bed>
+
+            <station>
+                <type>ManyToOneRelation</type>
+                <columnName>station_id</columnName>
+                <class>Clinic_Station</class>
+            </station>
+
+            <occupiedFrom />
+            <occupiedTo />
+        </properties>
+    </Clinic_Occupancy>
+
+    <Clinic_Patient>
+        <table>patients</table>
+        <properties>
+            <id>
+                <type>PrimaryKey</type>
+            </id>
+
+            <name />
+            <socialSecurityNumber />
+            <birthDate />
+
+            <occupancies>
+                <type>Collection</type>
+                <key>occupancy_id</key>
+                <relation>
+                    <type>OneToManyRelation</type>
+                    <class>Clinic_Occupancy</class>
+                    <mappedBy>patient</mappedBy>
+                </relation>
+            </occupancies>
+        </properties>
+    </Clinic_Patient>
+
+    <Clinic_Station>
+        <table>stations</table>
+        <properties>
+            <id>
+                <type>PrimaryKey</type>
+            </id>
+
+            <name />
+
+            <beds>
+                <type>Collection</type>
+                <key>station_id</key>
+                <relation>
+                    <type>OneToManyRelation</type>
+                    <class>Clinic_Bed</class>
+                    <cascade>save</cascade>
+                    <mappedBy>station</mappedBy>
+                </relation>
+            </beds>
+
+            <currentOccupancies>
+                <type>Collection</type>
+                <key>station_id</key>
+                <relation>
+                    <type>OneToManyRelation</type>
+                    <propertyName>id</propertyName>
+                    <class>Clinic_Occupancy</class>
+                    <mappedBy>station</mappedBy>
+                </relation>
+                <where><![CDATA[(occupancies.occupiedFrom >= NOW() AND occupancies.occupiedTo <= NOW())]]></where>
+            </currentOccupancies>
+        </properties>
+    </Clinic_Station>
+</definitions>
