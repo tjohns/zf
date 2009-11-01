@@ -1,0 +1,4 @@
+Oct 24, 2009:
+* Updated documentation to create Entity Manager and dependencies from the ManagerFactory.
+* Changed API of ResultSetMapping slightly. Zend_Entity_ResultSetMapping::addJoinedEntity
+  now accepts only the parentAlias as third argument, not the parent entity name.
