@@ -62,16 +62,60 @@ CREATE TABLE users (
             The above demonstrates a user table that includes a username, password, and also a 
             password salt column.  This salt column is used as part of a technique called salting that 
             would improve the security of your database of information against brute force attacks 
-            targeting the algorithm of your password hashing. < link to salting >
+            targeting the algorithm of your password hashing. 
+            <a href="http://en.wikipedia.org/wiki/Salting_%28cryptography%29">More information</a>
+            on salting.
+        </para>
+
+        <para>
+            For this implementation, we must first make a simple form that we can utilized as the 
+            "login form".  We will use Zend_Form to accomplish this.
+        </para>
+
+
+<programlisting language="php"><![CDATA[
+<?php
+// located at application/forms/Auth/Login.php
+
+class Default_Form_Auth_Login extends Zend_Form
+{
+    public function init()
+    {
+        $this->setMethod('post');
+
+        $this->addElement(
+            'text', 'username', array(
+                'label' => 'Username:',
+                'required' => true,
+                'filters'    => array('StringTrim'),
+            ));
+
+        $this->addElement('password', 'password', array(
+            'label' => 'Password:',
+            'required' => true,
+            ));
+
+        $this->addElement('submit', 'submit', array(
+            'ignore'   => true,
+            'label'    => 'Login',
+            ));
+
+    }
+}
+]]></programlisting>
+
+        <para>
+            With the above form, we can now go about creating our login action for
+            our authentication controller.  This controller will be called "AuthController", and
+            will be located at application/controllers/AuthController.php.  It will have a single
+            method called "loginAction" which will serve as the self-posting action.  In other words,
+            regardless of the url was POSTed to or GETed to, this method will handle the logic.
         </para>
         
-<!-- explain the database schema -->
-
-<!-- explain usage of a form -->
-
-<!-- explain the user object -->
-
-<!-- explain the controller itself -->
+        <para>
+            The following code will demonstrate how to construct the proper adapter, integrate it
+            with the form:
+        </para>
 
         <programlisting language="php"><![CDATA[
 class AuthController extends Zend_Controller_Action
@@ -81,38 +125,57 @@ class AuthController extends Zend_Controller_Action
     {
         $db = $this->_getParam('db');
         
-        $form = new Default_Auth_Form($_POST);
+        $loginForm = new Default_Form_Auth_Login($_POST);
         
-        if ($form) {
-        
-        } else {
+        if ($loginForm->isValid()) {
         
             $adapter = new Zend_Auth_Adapter_DbTable(
                 $db,
                 'users',
                 'username',
                 'password',
-                "MD5(CONCAT('"
-                . "', ?, password_salt))"
+                'MD5(CONCAT(?, password_salt))'
                 );
+            
+            $adapter->setIdentity($loginForm->getValue('username'));
+            $adapter->setCredential($loginForm->getValue('password'));
             
             $result = $auth->authenticate($adapter);
             
             if ($result->isValid()) {
-                // store the user object
-            } else {
-                // not valid
+                $this->_helper->FlashMessenger('Successful Login');
+                $this->redirect('/');
+                return;
             }
             
         }
+
+        $this->view->loginForm = $loginForm;
 
     }
 
 }
 ]]></programlisting>
 
-    
+        <para>
+            The corresponding view script is quite simple for this action.  It will set the current
+            url since this form is self processing, and it will display the form.  This view script is
+            located at application/views/scripts/auth/login.phtml:
+        </para>
+
+        <programlisting language="php"><![CDATA[
+<?php 
+
+$this->form->setAction($this->url());
+echo $this->form;
+]]></programlisting>
         
+        <para>
+            There you have it.  With these basics you can expand the general concepts to include 
+            more complex authentication scenarios.  For more information on other Zend_Auth adapters,
+            have a look in the reference guide at 
+            http://framework.zend.com/manual/en/zend.auth.html
+        </para>
         
     </sect2>
 
