@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16619 -->
+<!-- EN-Revision: 17864 -->
 <sect1 id="performance.classloading">
     <title>クラスの読み込み</title>
 
@@ -218,7 +218,8 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
 
             <programlisting language="shell"><![CDATA[
 % cd path/to/ZendFramework/library
-% find . -name '*.php' -not -wholename '*/Loader/Autoloader.php' -print0 | \
+% find . -name '*.php' -not -wholename '*/Loader/Autoloader.php' \
+  -not -wholename '*/Application.php' -print0 | \
   xargs -0 sed --regexp-extended --in-place 's/(require_once)/\/\/ \1/g'
 ]]></programlisting>
 
@@ -226,7 +227,11 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
                 (読みやすくするために２行に分けていますが)
                 この一行コマンドは各<acronym>PHP</acronym>ファイルを繰り返し処理しながら、
                 'require_once' を '// require_once' で置換し、
-                効果的にその命令をコメントアウトします。
+                効果的にその命令をコメントアウトします
+                (<classname>Zend_Application</classname> と
+                <classname>Zend_Loader_Autoloader</classname> の中にある
+                <function>require_once</function> はそのままにしてあります。
+                そうしないと処理が失敗するからです)。
             </para>
 
             <para>
@@ -251,7 +256,7 @@ Zend_Loader_Autoloader::getInstance();
         <para>
             多くのコンポーネントにはプラグインがあり、
             Zend Frameworkとともに出荷された既存の標準プラグインを上書きして、
-            そのコンポーネントで利用する独自のクラスを作成することができます。
+            そのコンポーネントで利用する独自のクラスを作成できます。
             このことにより、さほどの犠牲を払わなくても、
             フレームワークに重要な柔軟性が得られます。:
             プラグインローディングはある程度高くつく作業です。
@@ -259,7 +264,7 @@ Zend_Loader_Autoloader::getInstance();
 
         <para>
             プラグインローダーによりクラスのプレフィックスやパスのペアを登録したり、
-            標準的ではないパスでクラスファイルを指定することができます。
+            標準的ではないパスでクラスファイルを指定できます。
             各プレフィックスはそれに関連した複数のパスを持つことができます。
             内部的にはプラグインローダーは各プレフィックスごとに繰り返して、
             各パスをそれに追加し、ファイルが存在するかどうか、

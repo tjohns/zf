@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16183 -->
+<!-- EN-Revision: 18210 -->
 <sect1 id="performance.view">
     <title>ビューのレンダリング</title>
 
@@ -44,9 +44,7 @@
             さらにインスタンス化されるかもしれないクラス名を返します。
             読み込まれたヘルパを<classname>Zend_View</classname>が内部のレジストリに保持するので、
             その次にヘルパを使うときにはより速くなります。
-            ただし、多くのヘルパを使うと
-            <!-- TODO -->
-            , the calls add up.
+            ただし、多くのヘルパを使うと呼び出しは増加します。
         </para>
 
         <para>
@@ -99,7 +97,7 @@ class My_View extends Zend_View
     ) {
         if (!array_key_exists('url', $this->_localHelperObjects)) {
             $this->_localHelperObjects['url'] = new Zend_View_Helper_Url();
-            $this->_localHelperObjects['url']->setView($view);
+            $this->_localHelperObjects['url']->setView($this);
         }
         $helper = $this->_localHelperObjects['url'];
         return $helper->url($urlOptions, $name, $reset, $encode);
