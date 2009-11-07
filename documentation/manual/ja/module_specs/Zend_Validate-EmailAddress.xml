@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 15742 -->
+<!-- EN-Revision: 18842 -->
 <sect2 id="zend.validate.set.email_address">
-
     <title>メールアドレス</title>
 
     <para>
@@ -12,12 +11,12 @@
         に分割し、メールアドレスやホスト名の仕様にあわせて検証します。
     </para>
 
-    <para>
-        <emphasis>基本的な使用法</emphasis>
-    </para>
+    <sect3 id="zend.validate.set.email_address.basic">
+        <title>基本的な使用法</title>
 
-    <para>
-        基本的な使用法は、以下のようになります。
+        <para>
+            基本的な使用法は、以下のようになります。
+        </para>
 
         <programlisting language="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress();
@@ -31,46 +30,131 @@ if ($validator->isValid($email)) {
 }
 ]]></programlisting>
 
-        これは、メールアドレス <code>$email</code> を検証し、失敗した場合は
-        その原因を表す便利なエラーメッセージを
-        <code>$validator->getMessages()</code> で取得します。
-    </para>
+        <para>
+            これは、メールアドレス <varname>$email</varname> を検証し、失敗した場合は
+            その原因を表す便利なエラーメッセージを
+            <code>$validator->getMessages()</code> で取得します。
+        </para>
+    </sect3>
 
-    <para>
-        <emphasis>複雑なローカルパート</emphasis>
-    </para>
+    <sect3 id="zend.validate.set.email_address.options">
+        <title>メールアドレス検証のオプション</title>
 
-    <para>
-        <classname>Zend_Validate_EmailAddress</classname> は、メールアドレスの検証を
-        RFC2822 にもとづいて行います。たとえば、妥当な形式のメールアドレスとしては
-        <code>bob@domain.com</code>、<code>bob+jones@domain.us</code>、
-        <code>"bob@jones"@domain.com</code> および <code>"bob jones"@domain.com</code>
-        などがあります。
-    </para>
+        <!-- TODO: to be translated -->
+        <para>
+            <classname>Zend_Validate_EmailAddress</classname> supports several options which can
+            eighter be set at initiation, by giving an array with the related options, or
+            afterwards, by using <methodname>setOptions()</methodname>. The following options are
+            supported:
+        </para>
 
-    <para>
-        かつて使われていたものの、現在は有効とはみなされないフォーマットもあります
-        (たとえば、メールアドレスに改行文字や "\" を使用するなど)。
-    </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>allow</emphasis>: Defines which type of domain names are accepted.
+                    This option is used in conjunction with the hostname option to set the
+                    hostname validator. For more informations about possible values of this
+                    option look at <link linkend="zend.validate.set.hostname">Hostname</link>
+                    and possible <constant>ALLOW</constant>* constants. This option defaults to
+                    <constant>ALLOW_DNS</constant>.
+                </para>
+            </listitem>
 
-    <para>
-        <emphasis>さまざまな形式のホスト名の検証</emphasis>
-    </para>
+            <listitem>
+                <para>
+                    <emphasis>hostname</emphasis>: Sets the hostname validator with which the
+                    domain part of the email address will be validated.
+                </para>
+            </listitem>
 
-    <para>
-        メールアドレスのホスト名部分の検証は、
-        <link linkend="zend.validate.set.hostname"><classname>Zend_Validate_Hostname</classname></link>
-        で行います。デフォルトでは、<code>domain.com</code>
-        形式の DNS ホスト名のみが有効となります。しかし、
-        IP アドレスやローカルホスト名も有効にしたいこともあるでしょう。
-    </para>
+            <listitem>
+                <para>
+                    <emphasis>mx</emphasis>: Defines if the MX records from the server should be
+                    detected. If this option is defined to <constant>TRUE</constant> then the MX
+                    records are used to verify if the server
+                    accepts emails. This option defaults to <constant>FALSE</constant>.
+                </para>
+            </listitem>
 
-    <para>
-        その場合は、<classname>Zend_Validate_EmailAddress</classname>
-        のインスタンスを作成する際にパラメータを渡さなければなりません。
-        このパラメータで、認めたいホスト名の形式を指定します。
-        詳細は <classname>Zend_Validate_Hostname</classname> を参照ください。
-        たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
+            <listitem>
+                <para>
+                    <emphasis>deep</emphasis>: Defines if the servers MX records should be verified
+                    by a deep check. When this option is set to <constant>TRUE</constant> then
+                    additionally to MX records also the A, A6 and <constant>AAAA</constant> records
+                    are used to verify if the server accepts emails. This option defaults to
+                    <constant>FALSE</constant>.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>domain</emphasis>: Defines if the domain part should be checked.
+                    When this option is set to <constant>FALSE</constant>, then only the local part
+                    of the email address will be checked. In this case the hostname validator will
+                    not be called. This option defaults to <constant>TRUE</constant>.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <programlisting language="php"><![CDATA[
+$validator = new Zend_Validate_EmailAddress();
+$validator->setOptions(array('domain' => false));
+]]></programlisting>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.complexlocal">
+        <title>複雑なローカルパート</title>
+
+        <para>
+            <classname>Zend_Validate_EmailAddress</classname> は、メールアドレスの検証を
+            RFC2822 にもとづいて行います。たとえば、妥当な形式のメールアドレスとしては
+            <code>bob@domain.com</code>、<code>bob+jones@domain.us</code>、
+            <code>"bob@jones"@domain.com</code> および <code>"bob jones"@domain.com</code>
+            などがあります。
+        </para>
+
+        <para>
+            かつて使われていたものの、現在は有効とはみなされないフォーマットもあります
+            (たとえば、メールアドレスに改行文字や "\" を使用するなど)。
+        </para>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.purelocal">
+        <title>ローカルパートのみの検証</title>
+
+        <!-- TODO:to be translated -->
+        <para>
+            If you need <classname>Zend_Validate_EmailAddress</classname> to check only the local
+            part of an email address, and want to disable validation of the hostname, you can
+            set the <property>domain</property> option to <constant>FALSE</constant>. This forces
+            <classname>Zend_Validate_EmailAddress</classname> not to validate the hostname part of
+            the email address.
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$validator = new Zend_Validate_EmailAddress();
+$validator->setOptions(array('domain' => FALSE));
+]]></programlisting>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.hostnametype">
+        <title>さまざまな形式のホスト名の検証</title>
+
+        <para>
+            メールアドレスのホスト名部分の検証は、
+            <link linkend="zend.validate.set.hostname"><classname>Zend_Validate_Hostname</classname></link>
+            で行います。デフォルトでは、<code>domain.com</code>
+            形式の DNS ホスト名のみが有効となります。しかし、
+            IP アドレスやローカルホスト名も有効にしたいこともあるでしょう。
+        </para>
+
+        <para>
+            その場合は、<classname>Zend_Validate_EmailAddress</classname>
+            のインスタンスを作成する際にパラメータを渡さなければなりません。
+            このパラメータで、認めたいホスト名の形式を指定します。
+            詳細は <classname>Zend_Validate_Hostname</classname> を参照ください。
+            たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
+        </para>
 
         <programlisting language="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress(
@@ -85,89 +169,175 @@ if ($validator->isValid($email)) {
     }
 }
 ]]></programlisting>
-    </para>
+    </sect3>
 
-    <para>
-        <emphasis>そのホスト名が実際にメールを受け付けるかどうかのチェック</emphasis>
-    </para>
+    <sect3 id="zend.validate.set.email_address.checkacceptance">
+        <title>そのホスト名が実際にメールを受け付けるかどうかのチェック</title>
 
-    <para>
-        ただ単にメールアドレスが正しい書式であるというだけでは、
-        そのアドレスが実際に存在するかどうかはわかりません。
-        この問題を解決するには、MX の検証を行います。
-        メールアドレスのホスト名に対応する DNS レコードに、MX (メール)
-        のエントリが存在するかどうかを調べるのです。
-        これは、そのホストがメールを受け付けているかどうかを教えてはくれますが、
-        そのメールアドレス自体が正しいものであるかどうかを知ることはできません。
-    </para>
+        <para>
+            ただ単にメールアドレスが正しい書式であるというだけでは、
+            そのアドレスが実際に存在するかどうかはわかりません。
+            この問題を解決するには、MX の検証を行います。
+            メールアドレスのホスト名に対応する DNS レコードに、MX (メール)
+            のエントリが存在するかどうかを調べるのです。
+            これは、そのホストがメールを受け付けているかどうかを教えてはくれますが、
+            そのメールアドレス自体が正しいものであるかどうかを知ることはできません。
+        </para>
 
-    <para>
-        MX のチェックはデフォルトでは無効になっており、
-        現時点では UNIX プラットフォームでのみサポートしています。
-        MX のチェックを有効にするには、<classname>Zend_Validate_EmailAddress</classname>
-        コンストラクタの 2 番目のパラメータを渡します。
-
-        <programlisting language="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
-                                            true);
-]]></programlisting>
-
-        あるいは、<constant>TRUE</constant> または <constant>FALSE</constant> を
-        <code>$validator->setValidateMx()</code> に渡すことで、
-        MX の検証を有効あるいは無効にすることもできます。
-    </para>
-
-    <para>
-        この設定を有効にすると、ネットワーク関数を用いて
-        メールアドレスのホスト名部に対する MX レコードの存在チェックをします。
-        これにより、スクリプトの処理速度が低下することに気をつけてください。
-    </para>
-
-    <para>
-        <emphasis>国際化ドメイン名の検証</emphasis>
-    </para>
-
-    <para>
-        <classname>Zend_Validate_EmailAddress</classname> は、ドメインの中に国際文字が使われている場合も処理できます。
-        このようなドメインは、国際化ドメイン名 (International Domain Name: IDN)
-        と呼ばれています。これはデフォルトで有効になっていますが、無効にすることも可能です。
-        無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
-        <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
+        <para>
+            MX のチェックはデフォルトでは無効です。
+            MX のチェックを有効にするには、<classname>Zend_Validate_EmailAddress</classname>
+            コンストラクタの 2 番目のパラメータを渡します。
+        </para>
 
         <programlisting language="php"><![CDATA[
-$validator->hostnameValidator->setValidateIdn(false);
+$validator = new Zend_Validate_EmailAddress(
+    array(
+        'allow' => Zend_Validate_Hostname::ALLOW_DNS,
+        'mx'    => true
+    )
+);
 ]]></programlisting>
 
-        <code>setValidateIdn()</code> の詳細な使用法は、
-        <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
-    </para>
+        <note>
+            <title>WindowsでのMX のチェック</title>
 
-    <para>
-        IDN の検証は、DNS ホスト名の検証を有効にしている場合にのみ行われることに注意しましょう。
-    </para>
+            <!-- TODO:to be translated -->
+            <para>
+                Within Windows environments MX checking is only available when
+                <acronym>PHP</acronym> 5.3 or above is used. Below <acronym>PHP</acronym> 5.3 MX
+                checking will not be used even if it's activated within the options.
+            </para>
+        </note>
 
-    <para>
-        <emphasis>トップレベルドメインの検証</emphasis>
-    </para>
+        <para>
+            あるいは、<constant>TRUE</constant> または <constant>FALSE</constant> を
+            <code>$validator->setValidateMx()</code> に渡すことで、
+            MX の検証を有効あるいは無効にすることもできます。
+        </para>
 
-    <para>
-        デフォルトでは、ホスト名の検証は既知の TLD の一覧に基づいて行われます。
-        これはデフォルトで有効になっていますが、無効にすることもできます。無効にするには、
-        無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
-        <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
+        <para>
+            この設定を有効にすると、ネットワーク関数を用いて
+            メールアドレスのホスト名部に対する MX レコードの存在チェックをします。
+            これにより、スクリプトの処理速度が低下することに気をつけてください。
+        </para>
+
+        <!-- TODO:to be translated -->
+        <para>
+            Sometimes validation for MX records returns false, even if emails are accepted. The
+            reason behind this behaviour is, that servers can accept emails even if they do not
+            provide a MX record. In this case they can provide A, A6 or <constant>AAAA</constant>
+            records. To allow <classname>Zend_Validate_EmailAddress</classname> to check also for
+            these other records you need to set deep MX validation. This can be done at initiation
+            by setting the <property>deep</property> option or by using
+            <methodname>setOptions()</methodname>.
+        </para>
 
         <programlisting language="php"><![CDATA[
-$validator->hostnameValidator->setValidateTld(false);
+$validator = new Zend_Validate_EmailAddress(
+    array(
+        'allow' => Zend_Validate_Hostname::ALLOW_DNS,
+        'mx'    => true,
+        'deep'  => true
+    )
+);
 ]]></programlisting>
 
-        <code>setValidateTld()</code> の詳細な使用法は、
-        <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
-    </para>
+        <warning>
+            <title>パフォーマンスの警告</title>
 
-    <para>
-        TLD の検証は、DNS ホスト名の検証を有効にしている場合にのみ行われることに注意しましょう。
-    </para>
+            <!-- TODO:to be translated -->
+            <para>
+                You should be aware that enabling MX check will slow down you script because of the
+                used network functions. Enabling deep check will slow down your script even more as
+                it searches the given server for 3 additional types.
+            </para>
+        </warning>
 
+        <note>
+            <title>許可されないIPアドレス</title>
+
+            <!-- TODO:to be translated -->
+            <para>
+                You should note that MX validation is only accepted for external servers. When deep
+                MX validation is enabled, then local IP addresses like <command>192.168.*</command>
+                or <command>169.254.*</command> are not accepted.
+            </para>
+        </note>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.validateidn">
+        <title>国際化ドメイン名の検証</title>
+
+        <para>
+            <classname>Zend_Validate_EmailAddress</classname> は、ドメインの中に国際文字が使われている場合も処理できます。
+            このようなドメインは、国際化ドメイン名 (International Domain Name: IDN)
+            と呼ばれています。これはデフォルトで有効になっていますが、無効にすることも可能です。
+            無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
+            <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$validator->getHostnameValidator()->setValidateIdn(false);
+]]></programlisting>
+
+        <para>
+            <methodname>setValidateIdn()</methodname> の詳細な使用法は、
+            <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
+        </para>
+
+        <para>
+            IDN の検証は、DNS ホスト名の検証を有効にしている場合にのみ行われることに注意しましょう。
+        </para>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.validatetld">
+        <title>トップレベルドメインの検証</title>
+
+        <para>
+            デフォルトでは、ホスト名の検証は既知の TLD の一覧に基づいて行われます。
+            これはデフォルトで有効になっていますが、無効にすることもできます。無効にするには、
+            無効にするには、<classname>Zend_Validate_EmailAddress</classname> が内部で保持している
+            <classname>Zend_Validate_Hostname</classname> オブジェクトの設定を変更します。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$validator->getHostnameValidator()->setValidateTld(false);
+]]></programlisting>
+
+        <para>
+            <methodname>setValidateTld()</methodname> の詳細な使用法は、
+            <classname>Zend_Validate_Hostname</classname> のドキュメントを参照ください。
+        </para>
+
+        <para>
+            TLD の検証は、DNS ホスト名の検証を有効にしている場合にのみ行われることに注意しましょう。
+        </para>
+    </sect3>
+
+    <sect3 id="zend.validate.set.email_address.setmessage">
+        <title>メッセージの設定</title>
+
+        <para>
+            <classname>Zend_Validate_EmailAddress</classname> は、
+            <classname>Zend_Validate_Hostname</classname> を使用してメールアドレスのホスト名部分をチェックします。
+            Zend Framework 1.10 以降、
+            <classname>Zend_Validate_Hostname</classname> 用のメッセージを
+            <classname>Zend_Validate_EmailAddress</classname>
+            から設定できるようになります。
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$validator = new Zend_Validate_EmailAddress();
+$validator->setMessages(array(Zend_Validate_Hostname::UNKNOWN_TLD => 'I don't know the TLD you gave'));
+]]></programlisting>
+
+        <para>
+            Zend Framework 1.10 より前のバージョンでは、まず
+            <classname>Zend_Validate_Hostname</classname> にメッセージをアタッチしてからそれを
+            <classname>Zend_Validate_EmailAddress</classname> に設定しないと独自のメッセージを返せませんでした。
+        </para>
+    </sect3>
 </sect2>
 <!--
 vim:se ts=4 sw=4 et:

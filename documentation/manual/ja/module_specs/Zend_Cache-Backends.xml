@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16649 -->
+<!-- EN-Revision: 17749 -->
 <sect1 id="zend.cache.backends">
     <title><classname>Zend_Cache</classname> のバックエンド</title>
     <para>
@@ -181,7 +181,7 @@
             <ulink url="http://www.danga.com/memcached/">memcached</ulink> は、
             高性能な分散メモリオブジェクトキャッシュシステムです。このバックエンドを使用するには、
             memcached デーモンおよび
-            <ulink url="http://pecl.php.net/package/memcache">memcache PECL 拡張モジュール</ulink>
+            <ulink url="http://pecl.php.net/package/memcache">memcache <acronym>PECL</acronym> 拡張モジュール</ulink>
             が必要です。
         </para>
         <para>
@@ -207,8 +207,10 @@
                           <entry><emphasis>servers</emphasis></entry>
                           <entry><type>Array</type></entry>
                           <entry>
-                              array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1,
-                              'timeout' => 5, 'retry_interval' => 15, 'status' => true, 'failure_callback' => '' ))
+                              <command>array(array('host' => 'localhost', 'port' => 11211,
+                                  'persistent' => true, 'weight' => 1, 'timeout' => 5,
+                                  'retry_interval' => 15, 'status' => true,
+                                  'failure_callback' => '' ))</command>
                           </entry>
                           <entry>
                               memcached サーバの配列です。各 memcached サーバの情報は、
@@ -312,7 +314,7 @@
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
         <para>
-            このバックエンドは、<ulink url="http://www.zend.com/products/platform">Zend Platform</ulink>
+            このバックエンドは、<ulink url="http://www.zend.co.jp/product/zendplatform.html">Zend Platform</ulink>
             製品のコンテンツキャッシング <acronym>API</acronym> を使用します。当然、このバックエンドを使用するには
             Zend Platform をインストールする必要があります。
         </para>
@@ -344,6 +346,14 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
             このバックエンドは priority パラメータを使用 (フロントエンドレベルで、記録開始時に指定)
             し、高速バックエンドの残りのスペースを用いてふたつのバックエンドの使用を最適化します。
         </para>
+        <para>
+            <methodname>Zend_Cache::factory()</methodname> メソッドでこのバックエンドを指定する場合は、
+            'Two' と 'Levels' の間に区切り文字を入れます。区切り文字としては
+            '-'、'.'、' ' あるいは '_' が使用できます。
+        </para>
+        <programlisting language="php"><![CDATA[
+$cache = Zend_Cache::factory('Core', 'Two Levels');
+]]></programlisting>
         <para>
             使用可能なオプションは次のとおりです。
         </para>
@@ -470,6 +480,14 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
              越しにページをリクエストした場合のみです。
              コマンドラインでスクリプトを実行した場合は動作しません。
         </para>
+        <para>
+            <methodname>Zend_Cache::factory()</methodname> メソッドでこのバックエンドを指定する場合は、
+            パラメータ <emphasis>customBackendNaming</emphasis> を <constant>TRUE</constant> とします。
+        </para>
+        <programlisting language="php"><![CDATA[
+$cache = Zend_Cache::factory('Core', 'Zend_Cache_Backend_ZendServer_Disk',
+                             $frontendOptions, $backendOptions, false, true);
+]]></programlisting>
         <para>
             このバックエンドにはオプションはありません。
         </para>

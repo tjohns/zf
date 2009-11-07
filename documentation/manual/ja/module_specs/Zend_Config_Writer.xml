@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16674 -->
+<!-- EN-Revision: 18867 -->
 <sect1 id="zend.config.writer.introduction">
     <title>Zend_Config_Writer</title>
     <para>
@@ -8,7 +8,7 @@
         <classname>Zend_Config</classname> オブジェクトを書き出します。
         アダプタなしでも動作するので、使用するのも簡単です。
         デフォルトでは <classname>Zend_Config_Writer</classname>
-        には 3 種類のアダプタが同梱されており、どれも同じように動作します。
+        には 3 種類のアダプタが同梱されており、全てファイル・ベースです。
         まず、<emphasis>filename</emphasis> や <emphasis>config</emphasis>
         のオプションを指定してライターのインスタンスを作成します。
         それからライターの <methodname>write()</methodname> メソッドをコールすると、
@@ -36,8 +36,16 @@
         </listitem>
     </itemizedlist>
 
+     <para>
+        Ini ライターでは、セクションについてのレンダリング用のモードが２つあります。
+        既定では、トップレベルの構成節は、常にセクション名に含まれます。
+        <code>$writer->setRenderWithoutSections()</code> を呼ぶことにより、
+        オプションの全てが INI ファイルのグローバル名前空間に含まれます。
+        そして、セクションは使用されません。
+    </para>
+
     <para>
-        例外的に、<classname>Zend_Config_Writer_Ini</classname> にはオプションのパラメータ
+        加えて、<classname>Zend_Config_Writer_Ini</classname> にはオプションのパラメータ
         <emphasis>nestSeparator</emphasis> が用意されています。
         これは、ノードを区切る文字を定義します。デフォルトはドットひとつで、
         これは <classname>Zend_Config_Ini</classname> のデフォルトと同じです。
@@ -130,6 +138,15 @@ $writer->write();
             <emphasis>skipExtends</emphasis> オプションを指定します。
         </para>
     </note>
+
+    <para>
+        構成節の文字列を作成するために、
+        ファイル・ベースのライタ（INI、XMLとPHP配列）全てで内部的に
+        <methodname>render()</methodname> が使用されます。
+        コンフィギュレーション・データの文字列表現にアクセスする必要があれば、
+        このメソッドを外部からも使用できます。
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

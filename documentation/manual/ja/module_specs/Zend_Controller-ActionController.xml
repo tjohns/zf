@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16649 -->
+<!-- EN-Revision: 18556 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -183,6 +183,42 @@ class FooController extends Zend_Controller_Action
             作成したコンテンツを (<methodname>postDispatch()</methodname> で)
             全サイト共通のテンプレートに配置したりといったことが考えられます。
         </para>
+        
+        <note>
+            <title>init() 対 preDispatch() の使用法</title>
+
+            <para>
+                <link linkend="zend.controller.action.initialization">前述のセクション</link>では、
+                <methodname>init()</methodname> メソッドを紹介しましたが、
+                このセクションでは <methodname>preDispatch()</methodname> メソッドを紹介します。
+                それらの違いは何で、それぞれどのような動作をさせるでしょう？
+            </para>
+
+            <para>
+                <methodname>init()</methodname> メソッドは、主にコンストラクタを拡張することが目的です。
+                一般的に、コンストラクタはオブジェクトの状態を単純に設定しなければならなくて、
+                多くのロジックを実行してはいけません。
+                これは、コントローラで使用されるリソース（例えばモデル、オブジェクトの構成、その他）を初期化すること、
+                またはフロントコントローラ、ブートストラップ、
+                またはレジストリから取得される値をアサインすることを含むかもしれません。
+            </para>
+
+            <para>
+                <methodname>preDispatch()</methodname> メソッドは、
+                オブジェクトまたは環境（例えば、ビュー、アクション・ヘルパー、その他）
+                の状態を設定するために使うこともできます。
+                しかし、その主な目的は、リクエストされたアクションをディスパッチしなければいけないかどうか
+                決定することです。
+                もししないのならば、別のアクションに <methodname>_forward()</methodname> するか、
+                または例外を投げなければなりません。
+            </para>
+
+            <para>
+                注意: <methodname>init()</methodname> から実行されると、
+                実は <methodname>_forward()</methodname> は正しく動作しません。
+                それは、２つのメソッドの意図が形になったものです。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.controller.action.accessors">
@@ -246,7 +282,7 @@ $this->getResponse()->appendBody($content);
 
                 <note>
                     <para>
-                        <methodname>_getParam()</methodname> は、オプションの二番目の引数でデフォルト値を指定することができます。
+                        <methodname>_getParam()</methodname> は、オプションの二番目の引数でデフォルト値を指定できます。
                         もしパラメータが設定されていなかったり空だったりした場合は、このデフォルト値を使用するようになります。
                         これを用いることで、値を取得する前にいちいち
                         <methodname>_hasParam()</methodname> をコールする必要がなくなります。
@@ -302,7 +338,7 @@ if ($this->_hasParam('id') {
                 その初期化はいつでも好きなときに行うことができます。
                 デフォルトでは、取得した結果は <classname>Zend_View</classname>
                 オブジェクトのプロパティ <varname>$view</varname> に格納されますが、
-                <classname>Zend_View_Interface</classname> を実装したクラスなら何でも好きなものを使用することができます。
+                <classname>Zend_View_Interface</classname> を実装したクラスなら何でも好きなものを使用できます。
                 <varname>$view</varname> がすでに初期化されている場合は、そのプロパティの内容を返します。
             </para>
 

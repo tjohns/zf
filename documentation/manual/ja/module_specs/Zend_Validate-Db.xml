@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 16444 -->
+<!-- EN-Revision: 18417 -->
 <sect2 id="zend.validate.Db">
     <title>Db_RecordExists および Db_NoRecordExists</title>
 
@@ -20,7 +20,12 @@
 
         <programlisting language="php"><![CDATA[
 // メールアドレスがデータベース内に存在するかどうかを調べます
-$validator = new Zend_Validate_Db_RecordExists('users', 'emailaddress');
+$validator = new Zend_Validate_Db_RecordExists(
+    array(
+        'table' => 'users',
+        'field' => 'emailaddress'
+    )
+);
 if ($validator->isValid($emailaddress)) {
     // メールアドレスは有効なようです
 } else {
@@ -33,13 +38,18 @@ if ($validator->isValid($emailaddress)) {
 
         <para>
             上の例は、指定したメールアドレスがデータベースのテーブル内に存在するかどうかを調べます。
-            指定したカラムの値が <code>$emailaddress</code> に一致するレコードがなければ、
+            指定したカラムの値が <varname>$emailaddress</varname> に一致するレコードがなければ、
             エラーメッセージが表示されます。
         </para>
 
         <programlisting language="php"><![CDATA[
 // ユーザ名がデータベースに存在しないことを調べます
-$validator = new Zend_Validate_Db_NoRecordExists('users', 'username');
+$validator = new Zend_Validate_Db_NoRecordExists(
+    array(
+        'table' => 'users',
+        'field' => 'username'
+    )
+);
 if ($validator->isValid($username)) {
     // ユーザ名は有効なようです
 } else {
@@ -53,7 +63,7 @@ if ($validator->isValid($username)) {
 
         <para>
             上の例は、指定したユーザ名がデータベースのテーブル上に存在しないことを確認します。
-            指定したカラムの値が <code>$username</code> に一致するレコードが見つかれば、
+            指定したカラムの値が <varname>$username</varname> に一致するレコードが見つかれば、
             エラーメッセージが表示されます。
         </para>
     </sect3>
@@ -79,11 +89,13 @@ if ($validator->isValid($username)) {
 // そのユーザ名のユーザがほかにいないことを調べます
 $user_id   = $user->getId();
 $validator = new Zend_Validate_Db_NoRecordExists(
-    'users',
-    'username',
     array(
-        'field' => 'id',
-        'value' => $user_id
+        'table' => 'users',
+        'field' => 'username',
+        'exclude' => array(
+            'field' => 'id',
+            'value' => $user_id
+        )
     )
 );
 
@@ -114,9 +126,11 @@ if ($validator->isValid($username)) {
 $post_id   = $post->getId();
 $clause    = $db->quoteInto('post_id = ?', $category_id);
 $validator = new Zend_Validate_Db_RecordExists(
-    'posts_categories',
-    'post_id',
-    $clause
+    array(
+        'table'   => 'posts_categories',
+        'field'   => 'post_id',
+        'exclude' => $clause
+    )
 );
 
 if ($validator->isValid($username)) {
@@ -133,7 +147,7 @@ if ($validator->isValid($username)) {
         <para>
             上の例は、<code>posts_categories</code> テーブル内に
             <code>post_id</code> の値が
-            <code>$category_id</code> に一致するレコードがあることを調べます。
+            <varname>$category_id</varname> に一致するレコードがあることを調べます。
         </para>
     </sect3>
 
@@ -141,7 +155,6 @@ if ($validator->isValid($username)) {
         <title>データベースアダプタ</title>
 
         <para>
-            バリデータのインスタンスを作成する際の 4 番目のパラメータで、
             アダプタを指定することもできます。
             複数のデータベースアダプタを使用している場合や
             デフォルトのアダプタを設定していない場合などにこれを使用します。
@@ -149,7 +162,34 @@ if ($validator->isValid($username)) {
         </para>
 
         <programlisting language="php"><![CDATA[
-$validator = new Zend_Validate_Db_RecordExists('users', 'id', null, $dbAdapter);
+$validator = new Zend_Validate_Db_RecordExists(
+    array(
+        'table' => 'users',
+        'field' => 'id',
+        'adapter' => $dbAdapter
+    )
+);
+]]></programlisting>
+    </sect3>
+
+    <sect3 id="zend.validate.db.database-schemas">
+        <title>データベーススキーマ</title>
+
+        <para>
+            データベース内のスキーマを
+            PostgreSQL や DB/2 のアダプタで指定するには、キー
+            <code>table</code> および <code>schema</code> を持つ配列を次の例のように渡します。
+            below:
+        </para>
+
+        <programlisting language="php"><![CDATA[
+$validator = new Zend_Validate_Db_RecordExists(
+    array(
+        'table'  => 'users',
+        'schema' => 'my',
+        'field'  => 'id'
+    )
+);
 ]]></programlisting>
     </sect3>
 </sect2>
