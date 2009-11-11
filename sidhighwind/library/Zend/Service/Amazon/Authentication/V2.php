@@ -1,6 +1,6 @@
 <?php
 
-require_once ('library/Zend/Service/Amazon/Authentication.php');
+require_once 'Zend/Service/Amazon/Authentication.php';
 
 /**
  * @see Zend_Crypt_Hmac
@@ -18,20 +18,23 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
      * Signature Encoding Method
      */
     protected $_signatureMethod = 'HmacSHA256';
-    
-    public static function generateSignature($url, array $parameters)
+
+    public function generateSignature($url, array &$parameters)
     {
         $parameters['AWSAccessKeyId']   = $this->_accessKey;
         $parameters['SignatureVersion'] = $this->_signatureVersion;
-        $parameters['Timestamp']        = gmdate('Y-m-d\TH:i:s\Z', time()+10);
         $parameters['Version']          = $this->_apiVersion;
         $parameters['SignatureMethod']  = $this->_signatureMethod;
-        $parameters['Signature']        = $this->_signParameters($url, $parameters);
-        
-        return $parameters;
+        if(!isset($parameters['Timestamp'])) {
+            $parameters['Timestamp']    = gmdate('Y-m-d\TH:i:s\Z', time()+10);
+        }
+
+        $data = $this->_signParameters($url, $parameters);
+
+        return $data;
     }
-    
-    
+
+
 	/**
      * Adds required authentication and version parameters to an array of
      * parameters
@@ -83,7 +86,7 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
      *
      * @return string the signed data.
      */
-    protected function _signParameters($url, array $paramaters)
+    protected function _signParameters($url, array &$paramaters)
     {
         $data = "GET\n";
         $data .= parse_url($url, PHP_URL_HOST) . "\n";
@@ -102,7 +105,9 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
 
         $hmac = Zend_Crypt_Hmac::compute($this->_secretKey, 'SHA256', $data, Zend_Crypt_Hmac::BINARY);
 
-        return base64_encode($hmac);
+        $paramaters['Signature'] = base64_encode($hmac);
+
+        return $data;
     }
-    
+
 }
