@@ -42,9 +42,9 @@ class Zend_Service_Simpy
     protected $_baseUri = 'http://simpy.com/simpy/api/rest/';
 
     /**
-     * HTTP client for use in making web service calls 
+     * HTTP client for use in making web service calls
      *
-     * @var Zend_Http_Client 
+     * @var Zend_Http_Client
      */
     protected $_http;
 
@@ -66,7 +66,7 @@ class Zend_Service_Simpy
     }
 
     /**
-     * Returns the HTTP client currently in use by this class for REST API 
+     * Returns the HTTP client currently in use by this class for REST API
      * calls, intended mainly for testing.
      *
      * @return Zend_Http_Client

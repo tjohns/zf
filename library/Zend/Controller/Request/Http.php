@@ -731,17 +731,17 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         $return       = $this->_params;
         $paramSources = $this->getParamSources();
-        if (in_array('_GET', $paramSources) 
-            && isset($_GET) 
+        if (in_array('_GET', $paramSources)
+            && isset($_GET)
             && is_array($_GET)
-        ) { 
-            $return += $_GET; 
+        ) {
+            $return += $_GET;
         }
-        if (in_array('_POST', $paramSources) 
-            && isset($_POST) 
+        if (in_array('_POST', $paramSources)
+            && isset($_POST)
             && is_array($_POST)
-        ) { 
-            $return += $_POST; 
+        ) {
+            $return += $_POST;
         }
         return $return;
     }

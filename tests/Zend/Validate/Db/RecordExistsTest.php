@@ -67,17 +67,17 @@ require_once dirname(__FILE__) . '/_files/Db/MockHasResult.php';
  */
 class Zend_Validate_Db_RecordExistsTest extends PHPUnit_Framework_TestCase
 {
-    
+
     /**
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_adapterHasResult;
-    
+
     /**
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_adapterNoResult;
-    
+
     /**
      * Set up test configuration
      *
@@ -86,7 +86,7 @@ class Zend_Validate_Db_RecordExistsTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_adapterHasResult = new Db_MockHasResult();
-        $this->_adapterNoResult = new Db_MockNoResult();        
+        $this->_adapterNoResult = new Db_MockNoResult();
 
     }
 
@@ -195,7 +195,7 @@ class Zend_Validate_Db_RecordExistsTest extends PHPUnit_Framework_TestCase
                                                          'field1');
         $this->assertTrue($validator->isValid('value1'));
     }
-    
+
     /**
      * Test that schemas are supported and run without error
      *
@@ -209,7 +209,7 @@ class Zend_Validate_Db_RecordExistsTest extends PHPUnit_Framework_TestCase
                                                          'field1');
         $this->assertFalse($validator->isValid('value1'));
     }
-    
+
     /**
      * Test when adapter is provided
      *
@@ -226,7 +226,7 @@ class Zend_Validate_Db_RecordExistsTest extends PHPUnit_Framework_TestCase
             $this->markTestFailed('Threw an exception when adapter was provided');
         }
     }
-    
+
     /**
      * Test when adapter is provided
      *

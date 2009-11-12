@@ -41,7 +41,7 @@ class Zend_Test_PHPUnit_Db_Metadata_Generic implements PHPUnit_Extensions_Databa
 {
     /**
      * Zend_Db Connection
-     * 
+     *
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_connection;
@@ -55,7 +55,7 @@ class Zend_Test_PHPUnit_Db_Metadata_Generic implements PHPUnit_Extensions_Databa
 
     /**
      * Cached Table metadata
-     * 
+     *
      * @var array
      */
     protected $_tableMetadata = array();
@@ -75,7 +75,7 @@ class Zend_Test_PHPUnit_Db_Metadata_Generic implements PHPUnit_Extensions_Databa
 
     /**
      * List Tables
-     * 
+     *
      * @return array
      */
     public function getTableNames()
@@ -85,7 +85,7 @@ class Zend_Test_PHPUnit_Db_Metadata_Generic implements PHPUnit_Extensions_Databa
 
     /**
      * Get Table information
-     * 
+     *
      * @param  string $tableName
      * @return array
      */

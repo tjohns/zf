@@ -274,7 +274,7 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->formCheckbox('foo', 'bar');
         $this->assertContains(' />', $test);
     }
-    
+
    /**
     * @see ZF-6467
     */

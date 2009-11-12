@@ -44,11 +44,11 @@ require_once 'Zend/Loader/Autoloader.php';
  */
 class Zend_Application_Resource_TranslateTest extends PHPUnit_Framework_TestCase
 {
-	private $_translationOptions = array('data' => array(
-	    'message1' => 'message1',
-	    'message2' => 'message2',
-	    'message3' => 'message3'
-	));
+    private $_translationOptions = array('data' => array(
+        'message1' => 'message1',
+        'message2' => 'message2',
+        'message3' => 'message3'
+    ));
 
     public static function main()
     {
@@ -102,8 +102,8 @@ class Zend_Application_Resource_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testInitializationReturnsLocaleObject()
     {
-    	$resource = new Zend_Application_Resource_Translate($this->_translationOptions);
-    	$resource->setBootstrap($this->bootstrap);
+        $resource = new Zend_Application_Resource_Translate($this->_translationOptions);
+        $resource->setBootstrap($this->bootstrap);
         $test = $resource->init();
         $this->assertTrue($test instanceof Zend_Translate);
     }
@@ -120,13 +120,13 @@ class Zend_Application_Resource_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testResourceThrowsExceptionWithoutData()
     {
-    	try {
-    	    $resource = new Zend_Application_Resource_Translate();
-    	    $resource->getTranslate();
-    	    $this->fail('Expected Zend_Application_Resource_Exception');
-    	} catch (Zend_Application_Resource_Exception $e) {
-    		$this->assertType('Zend_Application_Resource_Exception', $e);
-    	}
+        try {
+            $resource = new Zend_Application_Resource_Translate();
+            $resource->getTranslate();
+            $this->fail('Expected Zend_Application_Resource_Exception');
+        } catch (Zend_Application_Resource_Exception $e) {
+            $this->assertType('Zend_Application_Resource_Exception', $e);
+        }
     }
 }
 

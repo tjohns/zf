@@ -25,13 +25,13 @@
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Reflection_Parameter extends ReflectionParameter 
+class Zend_Reflection_Parameter extends ReflectionParameter
 {
     /**
      * @var bool
      */
     protected $_isFromMethod = false;
-    
+
     /**
      * Get declaring class reflection object
      *
@@ -49,7 +49,7 @@ class Zend_Reflection_Parameter extends ReflectionParameter
         unset($phpReflection);
         return $zendReflection;
     }
-    
+
     /**
      * Get class reflection object
      *
@@ -71,7 +71,7 @@ class Zend_Reflection_Parameter extends ReflectionParameter
         unset($phpReflection);
         return $zendReflection;
     }
-    
+
     /**
      * Get declaring function reflection object
      *
@@ -101,7 +101,7 @@ class Zend_Reflection_Parameter extends ReflectionParameter
         unset($phpReflection);
         return $zendReflection;
     }
-    
+
     /**
      * Get parameter type
      *
@@ -111,13 +111,13 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     {
         if ($docblock = $this->getDeclaringFunction()->getDocblock()) {
             $params = $docblock->getTags('param');
-            
+
             if (isset($params[$this->getPosition()])) {
                 return $params[$this->getPosition()]->getType();
             }
-            
+
         }
-        
+
         return null;
     }
 }

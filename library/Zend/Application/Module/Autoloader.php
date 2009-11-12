@@ -25,7 +25,7 @@ require_once 'Zend/Loader/Autoloader/Resource.php';
 
 /**
  * Resource loader for application module classes
- * 
+ *
  * @uses       Zend_Loader_Autoloader_Resource
  * @package    Zend_Application
  * @subpackage Module
@@ -36,8 +36,8 @@ class Zend_Application_Module_Autoloader extends Zend_Loader_Autoloader_Resource
 {
     /**
      * Constructor
-     * 
-     * @param  array|Zend_Config $options 
+     *
+     * @param  array|Zend_Config $options
      * @return void
      */
     public function __construct($options)
@@ -48,7 +48,7 @@ class Zend_Application_Module_Autoloader extends Zend_Loader_Autoloader_Resource
 
     /**
      * Initialize default resource types for module resource classes
-     * 
+     *
      * @return void
      */
     public function initDefaultResourceTypes()

@@ -79,14 +79,14 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $this->_dispatcher = $this->_front->getDispatcher();
 
         $this->_dispatcher->setControllerDirectory(array(
-            'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 
-                '..' . DIRECTORY_SEPARATOR . 
-                'Controller' . DIRECTORY_SEPARATOR . 
+            'default' => dirname(__FILE__) . DIRECTORY_SEPARATOR .
+                '..' . DIRECTORY_SEPARATOR .
+                'Controller' . DIRECTORY_SEPARATOR .
                 '_files',
-            'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR . 
-                '..' . DIRECTORY_SEPARATOR . 
-                'Controller' . DIRECTORY_SEPARATOR . 
-                '_files' . DIRECTORY_SEPARATOR . 
+            'mod'     => dirname(__FILE__) . DIRECTORY_SEPARATOR .
+                '..' . DIRECTORY_SEPARATOR .
+                'Controller' . DIRECTORY_SEPARATOR .
+                '_files' . DIRECTORY_SEPARATOR .
                 'Admin',
         ));
     }
@@ -116,19 +116,19 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('GET', '/user');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('default', $values['module']);
         $this->assertEquals('user', $values['controller']);
         $this->assertEquals('index', $values['action']);
     }
-    
+
     public function test_RESTfulApp_GET_user_index()
     {
         $request = $this->_buildRequest('GET', '/user/index');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('default', $values['module']);
@@ -140,7 +140,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('GET', '/user/index/changedSince/123456789/status/active');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('default', $values['module']);
@@ -154,7 +154,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('GET', '/project/zendframework');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('default', $values['module']);
@@ -167,7 +167,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('GET', '/project/zendframework/edit');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('default', $values['module']);
@@ -175,12 +175,12 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('edit', $values['action']);
         $this->assertEquals('zendframework', $values['id']);
     }
-    
+
     public function test_RESTfulApp_PUT_user_byIdentifier()
     {
         $request = $this->_buildRequest('PUT', '/mod/user/lcrouch');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -193,7 +193,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('POST', '/mod/user');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -205,7 +205,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('DELETE', '/mod/user/lcrouch');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -218,7 +218,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->_buildRequest('POST', '/mod/user/lcrouch');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -232,7 +232,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/mod/user');
         $request->setParam('_method', 'PUT');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -245,7 +245,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/mod/user/lcrouch');
         $request->setHeader('X-HTTP-Method-Override', 'DELETE');
         $values = $this->_invokeRouteMatch($request);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -272,7 +272,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('GET', '/mod/user/1234');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -285,7 +285,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/mod/user');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -298,7 +298,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/default/user');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertFalse($values);
     }
 
@@ -307,7 +307,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('PUT', '/mod/user/lcrouch');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -321,7 +321,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('DELETE', '/mod/user/lcrouch');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -348,16 +348,16 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('GET', '/mod/index/index');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-		
+
         $this->assertFalse($values);
     }
-    
+
     public function test_RESTfulController_GET_other_index_returns_false()
     {
         $request = $this->_buildRequest('GET', '/mod/project/index');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertFalse($values);
     }
 
@@ -366,7 +366,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('GET', '/mod/user/1234');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -379,7 +379,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/mod/user');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -392,7 +392,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('POST', '/default/user');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertFalse($values);
     }
 
@@ -401,7 +401,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('PUT', '/mod/user/lcrouch');
         $config = array('mod'=>array('user'));
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);
@@ -415,7 +415,7 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $request = $this->_buildRequest('DELETE', '/mod/user/lcrouch');
         $config = array('mod');
         $values = $this->_invokeRouteMatch($request, $config);
-         
+
         $this->assertType('array', $values);
         $this->assertTrue(isset($values['module']));
         $this->assertEquals('mod', $values['module']);

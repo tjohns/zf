@@ -58,7 +58,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
      * @var Zend_Db_Select
      */
     protected $_dbSelect = null;
-    
+
     /**
      * $_tableName - the table name to check
      *
@@ -241,10 +241,10 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
         if ($this->_dbSelect == null) {
             $this->_dbSelect = $this->_zendDb->select();
         }
-        
+
         return $this->_dbSelect;
     }
-    
+
     /**
      * getResultRowObject() - Returns the result row as a stdClass object
      *
@@ -451,7 +451,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
     protected function _authenticateValidateResult($resultIdentity)
     {
         $zendAuthCredentialMatchColumn = $this->_zendDb->foldCase('zend_auth_credential_match');
-        
+
         if ($resultIdentity[$zendAuthCredentialMatchColumn] != '1') {
             $this->_authenticateResultInfo['code'] = Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID;
             $this->_authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';

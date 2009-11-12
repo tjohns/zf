@@ -1455,14 +1455,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     public function resetTermsStream()
     {
-    	if ($this->_termsStream === null) {
+        if ($this->_termsStream === null) {
             /** Zend_Search_Lucene_TermStreamsPriorityQueue */
             require_once 'Zend/Search/Lucene/TermStreamsPriorityQueue.php';
 
             $this->_termsStream = new Zend_Search_Lucene_TermStreamsPriorityQueue($this->_segmentInfos);
-    	} else {
-    		$this->_termsStream->resetTermsStream();
-    	}
+        } else {
+            $this->_termsStream->resetTermsStream();
+        }
     }
 
     /**

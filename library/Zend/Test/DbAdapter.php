@@ -96,7 +96,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
 
     /**
      * Append a new Insert Id to the {@see lastInsertId}.
-     * 
+     *
      * @param  int|string $id
      * @return Zend_Test_DbAdapter
      */
@@ -229,7 +229,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
         } else {
             $stmt = new Zend_Test_DbStatement();
         }
-        
+
         if($this->getProfiler()->getEnabled() == true) {
             $qp = $this->getProfiler()->getQueryProfile($queryId);
             $stmt->setQueryProfile($qp);

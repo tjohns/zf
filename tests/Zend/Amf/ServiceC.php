@@ -28,10 +28,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class ServiceC {
-    function __construct() {        
+    function __construct() {
         //Construction...
     }
-    
+
     /**
      * @return string
      */

@@ -196,7 +196,7 @@ class Zend_Feed_Reader_Feed_Atom extends Zend_Feed_Reader_FeedAbstract
         return $this->_data['generator'];
     }
 
-	/**
+    /**
      * Get the feed ID
      *
      * @return string|null
@@ -239,7 +239,7 @@ class Zend_Feed_Reader_Feed_Atom extends Zend_Feed_Reader_FeedAbstract
 
         return $this->_data['language'];
     }
-    
+
     /**
      * Get a link to the source website
      *
@@ -312,7 +312,7 @@ class Zend_Feed_Reader_Feed_Atom extends Zend_Feed_Reader_FeedAbstract
         return $this->_data['title'];
     }
 
-	/**
+    /**
      * Read all entries to the internal entries array
      *
      */

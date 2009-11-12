@@ -31,7 +31,7 @@ class Zend_Soap_Wsdl_Strategy_AnyType implements Zend_Soap_Wsdl_Strategy_Interfa
      */
     public function setContext(Zend_Soap_Wsdl $context)
     {
-        
+
     }
 
     /**

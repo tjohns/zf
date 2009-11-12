@@ -388,7 +388,7 @@ class Zend_Application_ApplicationTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsShouldProperlyMergeTwoConfigFileOptions()
     {
         $application = new Zend_Application(
-            'production', dirname(__FILE__) . 
+            'production', dirname(__FILE__) .
             '/_files/zf-6679-1.inc'
         );
         $options = $application->getOptions();

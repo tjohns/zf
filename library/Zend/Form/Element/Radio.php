@@ -24,7 +24,7 @@ require_once 'Zend/Form/Element/Multi.php';
 
 /**
  * Radio form element
- * 
+ *
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
@@ -44,7 +44,7 @@ class Zend_Form_Element_Radio extends Zend_Form_Element_Multi
      * Load default decorators
      *
      * Disables "for" attribute of label if label decorator enabled.
-     * 
+     *
      * @return void
      */
     public function loadDefaultDecorators()

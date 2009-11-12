@@ -319,7 +319,7 @@ class Zend_Locale_Format
             }
         } else {
             // seperate negative format pattern when available
-            // @todo: The below conditional is a repeat of logic in the 
+            // @todo: The below conditional is a repeat of logic in the
             // previous conditional; it should be refactored to a protected
             // method to prevent code duplication.
             if (iconv_strpos($format, ';') !== false) {

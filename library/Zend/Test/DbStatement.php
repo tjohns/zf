@@ -55,7 +55,7 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
 
     /**
      * Create a Select statement which returns the given array of rows.
-     * 
+     *
      * @param array $rows
      * @return Zend_Test_DbStatement
      */
@@ -70,7 +70,7 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
 
     /**
      * Create an Insert Statement
-     * 
+     *
      * @param  int $affectedRows
      * @return Zend_Test_DbStatement
      */
