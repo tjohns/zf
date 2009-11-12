@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 17510 -->
+<!-- EN-Revision: 18940 -->
 <appendix id="coding-standard">
   <title>Zend Framework PHP 標準コーディング規約</title>
     <sect1 id="coding-standard.overview">
@@ -384,7 +384,7 @@ widgetFactory()
                 短いタグは決して使用してはいけません。
                 <acronym>PHP</acronym> コードのみからなるファイルでは、終了タグ ("?>")
                 は決して含めてはいけません
-                (<link linkend="coding-standard.php-file-formatting.general" /> を参照ください)。
+                (<link linkend="coding-standard.php-file-formatting.general">全般</link> を参照ください)。
             </para>
         </sect2>
 
