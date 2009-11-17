@@ -18,7 +18,19 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
      * Signature Encoding Method
      */
     protected $_signatureMethod = 'HmacSHA256';
+    
+    /**
+     * Type of http request
+     * @var string
+     */
+    protected $_httpMethod = "POST";
 
+    /**
+     * Generate the required attributes for the signature
+     * @param string $url
+     * @param array $parameters
+     * @return string
+     */
     public function generateSignature($url, array &$parameters)
     {
         $parameters['AWSAccessKeyId']   = $this->_accessKey;
@@ -30,8 +42,25 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
         }
 
         $data = $this->_signParameters($url, $parameters);
-
+        
         return $data;
+    }
+    
+    /**
+     * Set http request type to POST or GET
+     * @param $method string
+     */
+    public function setHttpMethod($method = "POST") {
+        $this->_httpMethod = strtoupper($method);
+    }
+    
+    /**
+     * Get the current http request type
+     * @return string
+     */
+    public function getHttpMethod()
+    {
+        return $this->_httpMethod;
     }
 
 
@@ -88,7 +117,7 @@ class Zend_Service_Amazon_Authentication_V2 extends Zend_Service_Amazon_Authenti
      */
     protected function _signParameters($url, array &$paramaters)
     {
-        $data = "GET\n";
+        $data = $this->_httpMethod . "\n";
         $data .= parse_url($url, PHP_URL_HOST) . "\n";
         $data .= ('' == $path = parse_url($url, PHP_URL_PATH)) ? '/' : $path;
         $data .= "\n";

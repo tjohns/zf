@@ -40,7 +40,7 @@ class V2Test extends PHPUnit_Framework_TestCase
     /**
      * Tests Zend_Service_Amazon_Authentication_V2::generateSignature()
      */
-    public function testGenerateEc2Signature()
+    public function testGenerateEc2PostSignature()
     {
         $url = "https://ec2.amazonaws.com/";
         $params = array();
@@ -50,7 +50,7 @@ class V2Test extends PHPUnit_Framework_TestCase
 
         $ret = $this->Zend_Service_Amazon_Authentication_V2->generateSignature($url, $params);
 
-        $this->assertEquals('xx+pg7xVQwvRKO5trKC8GyUGQ1QmNJSLbxOQb9Kse6Q=', $params['Signature']);
+        $this->assertEquals('8B2cxwK/dfezT49KEzD+wjo1ZbJCddyFOLA0RNZobbc=', $params['Signature']);
         $this->assertEquals(file_get_contents(dirname(__FILE__) . '/_files/ec2_v2_return.txt'), $ret);
     }
 
@@ -63,6 +63,7 @@ class V2Test extends PHPUnit_Framework_TestCase
         $params['Attribute.Value'] = "90";
         $params['Timestamp'] = "2009-11-11T13:52:38Z";
 
+        $this->Zend_Service_Amazon_Authentication_V2->setHttpMethod('GET');
         $ret = $this->Zend_Service_Amazon_Authentication_V2->generateSignature($url, $params);
 
         $this->assertEquals('YSw7HXDqokM/A6DhLz8kG+sd+oD5eMjqx3a02A0+GkE=', $params['Signature']);
