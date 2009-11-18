@@ -30,13 +30,13 @@ namespace Zend\Controller\Router;
  */
 interface RouterInterface
 {
-	/**
-	 * Instantiate the router with a front controller instance
-	 * 
-	 * @param Zend\Controller\FrontInterface $frontController
-	 * @param Zend\Config|array              $options
-	 */
-	public function __construct(Zend\Controller\FrontInterface $frontController, $options = null);
+    /**
+     * Instantiate the router with a front controller instance
+     * 
+     * @param Zend\Controller\FrontInterface $frontController
+     * @param Zend\Config|array              $options
+     */
+    public function __construct(Zend\Controller\FrontInterface $frontController, $options = null);
 	
     /**
      * Processes a request and sets its controller and action. If no route was
