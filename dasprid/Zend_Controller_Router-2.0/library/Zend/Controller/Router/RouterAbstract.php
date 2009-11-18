@@ -20,13 +20,11 @@
  * @version    $Id$
  */
 
-
-/** Zend_Controller_Router_Interface */
-require_once 'Zend/Controller/Router/Interface.php';
+namespace Zend\Controller\Router;
 
 /**
- * Simple first implementation of a router, to be replaced
- * with rules-based URI processor.
+ * Simple first implementation of a router, to be replaced with rules-based URI
+ * processor.
  *
  * @category   Zend
  * @package    Zend_Controller
@@ -34,7 +32,7 @@ require_once 'Zend/Controller/Router/Interface.php';
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router_Interface
+abstract class RouterAbstract implements RouterInterface
 {
     /**
      * Front controller instance
@@ -150,8 +148,8 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
             return $this->_frontController;
         }
 
-        require_once 'Zend/Controller/Front.php';
-        $this->_frontController = Zend_Controller_Front::getInstance();
+        // @todo: How will the front controller be injected in 2.0?
+        $this->_frontController = Zend\Controller\Front::getInstance();
         return $this->_frontController;
     }
 
@@ -159,9 +157,9 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
      * Set Front Controller
      *
      * @param Zend_Controller_Front $controller
-     * @return Zend_Controller_Router_Interface
+     * @return Zend\Controller\Router\RouteAbstract
      */
-    public function setFrontController(Zend_Controller_Front $controller)
+    public function setFrontController(Zend\Controller\Front $controller)
     {
         $this->_frontController = $controller;
         return $this;

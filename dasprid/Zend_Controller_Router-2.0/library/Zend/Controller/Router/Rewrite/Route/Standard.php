@@ -24,7 +24,7 @@
 require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
- * Route
+ * Standard
  *
  * @package    Zend_Controller
  * @subpackage Router
@@ -88,7 +88,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     protected $_variables = array();
 
     /**
-     * Holds Route patterns for all URL parts. In case of a variable it stores it's regex
+     * Holds Standard patterns for all URL parts. In case of a variable it stores it's regex
      * requirement or null. In case of a static part, it holds only it's direct value.
      * In case of a wildcard, it stores an asterisk (*)
      * @var array
@@ -309,7 +309,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      *
      * @param  array $data An array of variable and value pairs used as parameters
      * @param  boolean $reset Whether or not to set route defaults with those provided in $data
-     * @return string Route path with user submitted parameters
+     * @return string Standard path with user submitted parameters
      */
     public function assemble($data = array(), $reset = false, $encode = false, $partial = false)
     {
@@ -422,7 +422,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     /**
      * Return an array of defaults
      *
-     * @return array Route defaults
+     * @return array Standard defaults
      */
     public function getDefaults() {
         return $this->_defaults;

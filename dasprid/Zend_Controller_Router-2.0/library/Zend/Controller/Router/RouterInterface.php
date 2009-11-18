@@ -20,23 +20,33 @@
  * @version    $Id$
  */
 
+namespace Zend\Controller\Router;
+
 /**
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Controller_Router_Interface
+interface RouterInterface
 {
+	/**
+	 * Instantiate the router with a front controller instance
+	 * 
+	 * @param Zend\Controller\FrontInterface $frontController
+	 * @param Zend\Config|array              $options
+	 */
+	public function __construct(Zend\Controller\FrontInterface $frontController, $options = null);
+	
     /**
-     * Processes a request and sets its controller and action.  If
-     * no route was possible, an exception is thrown.
+     * Processes a request and sets its controller and action. If no route was
+     * possible, null is returned
      *
-     * @param  Zend_Controller_Request_Abstract
-     * @throws Zend_Controller_Router_Exception
-     * @return Zend_Controller_Request_Abstract|boolean
+     * @param  $request Zend\Controller\Request\Interface
+     * @throws Zend\Controller\Router\Exception
+     * @return Zend\Controller\Request\RequestInterface|null
      */
-    public function route(Zend_Controller_Request_Abstract $dispatcher);
+    public function route(Zend\Controller\Request\RequestInterface $request);
 
     /**
      * Generates a URL path that can be used in URL creation, redirection, etc.
@@ -53,51 +63,51 @@ interface Zend_Controller_Router_Interface
      *
      * Encode tells to url encode resulting path parts.
      *
-     * @param  array $userParams Options passed by a user used to override parameters
-     * @param  mixed $name The name of a Route to use
-     * @param  bool $reset Whether to reset to the route defaults ignoring URL params
-     * @param  bool $encode Tells to encode URL parts on output
+     * @param  array   $userParams Options passed by a user used to override parameters
+     * @param  mixed   $name       The name of a Route to use
+     * @param  boolean $reset      Whether to reset to the route defaults ignoring URL params
+     * @param  boolean $encode     Tells to encode URL parts on output
      * @throws Zend_Controller_Router_Exception
-     * @return string Resulting URL path
+     * @return string  Resulting URL
      */
     public function assemble($userParams, $name = null, $reset = false, $encode = true);
 
     /**
      * Retrieve Front Controller
      *
-     * @return Zend_Controller_Front
+     * @return Zend\Controller\FrontInterface
      */
     public function getFrontController();
 
     /**
      * Set Front Controller
      *
-     * @param Zend_Controller_Front $controller
-     * @return Zend_Controller_Router_Interface
+     * @param  Zend\Controller\FrontInterface $controller
+     * @return Zend\Controller\Router\RouterInterface
      */
-    public function setFrontController(Zend_Controller_Front $controller);
+    public function setFrontController(Zend\Controller\FrontInterface $controller);
 
     /**
      * Add or modify a parameter with which to instantiate any helper objects
      *
-     * @param string $name
-     * @param mixed $param
-     * @return Zend_Controller_Router_Interface
+     * @param  string $name
+     * @param  mixed $param
+     * @return Zend\Controller\Router\RouterInterface
      */
     public function setParam($name, $value);
 
     /**
      * Set an array of a parameters to pass to helper object constructors
      *
-     * @param array $params
-     * @return Zend_Controller_Router_Interface
+     * @param  array $params
+     * @return Zend\Controller\Router\RouterInterface
      */
     public function setParams(array $params);
 
     /**
      * Retrieve a single parameter from the controller parameter stack
      *
-     * @param string $name
+     * @param  string $name
      * @return mixed
      */
     public function getParam($name);
@@ -116,9 +126,8 @@ interface Zend_Controller_Router_Interface
      * only that parameter; if an array of parameter names is provided, clears
      * each.
      *
-     * @param null|string|array single key or array of keys for params to clear
-     * @return Zend_Controller_Router_Interface
+     * @param  null|string|array Single key or array of keys for params to clear
+     * @return Zend\Controller\Router\RouterInterface
      */
     public function clearParams($name = null);
-
 }

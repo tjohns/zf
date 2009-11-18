@@ -20,14 +20,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Router_Abstract */
-require_once 'Zend/Controller/Router/Abstract.php';
-
-/** Zend_Controller_Router_Route */
-require_once 'Zend/Controller/Router/Route.php';
+namespace Zend\Controller\Router\Rewrite;
 
 /**
- * Ruby routing based Router.
+ * Ruby routing based Router
  *
  * @package    Zend_Controller
  * @subpackage Router
@@ -35,7 +31,7 @@ require_once 'Zend/Controller/Router/Route.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
+class Router extends Zend\Controller\Router\RouterAbstract
 {
 
     /**

@@ -20,10 +20,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Controller_Exception */
-require_once 'Zend/Controller/Exception.php';
-
+namespace Zend\Controller\Router;
 
 /**
  * @package    Zend_Controller
@@ -31,6 +28,6 @@ require_once 'Zend/Controller/Exception.php';
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_Router_Exception extends Zend_Controller_Exception
+interface Exception
 {}
 
