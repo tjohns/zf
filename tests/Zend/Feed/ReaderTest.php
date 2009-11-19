@@ -22,6 +22,7 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Feed/Reader.php';
+require_once 'Zend/Cache.php';
 
 /**
  * @category   Zend
@@ -173,6 +174,66 @@ class Zend_Feed_ReaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://www.planet-php.org/rss/', $links->rss);
     }
 
+    public function testCompilesLinksAsArrayObject()
+    {
+        if (!defined('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+            || !constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+        ) {
+            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
+            return;
+        }
+        $links = Zend_Feed_Reader::findFeedLinks('http://www.planet-php.net');
+        $this->assertTrue($links instanceof Zend_Feed_Reader_FeedSet);
+        $this->assertEquals(array(
+            'rel' => 'alternate', 'type' => 'application/rss+xml', 'href' => 'http://www.planet-php.org/rss/'
+        ), (array) $links->getIterator()->current());
+    }
+
+    public function testFeedSetLoadsFeedObjectWhenFeedArrayKeyAccessed()
+    {
+        if (!defined('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+            || !constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+        ) {
+            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
+            return;
+        }
+        $links = Zend_Feed_Reader::findFeedLinks('http://www.planet-php.net');
+        $link = $links->getIterator()->current();
+        $this->assertTrue($link['feed'] instanceof Zend_Feed_Reader_Feed_Rss);
+    }
+
+    public function testZeroCountFeedSetReturnedFromEmptyList()
+    {
+        if (!defined('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+            || !constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+        ) {
+            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
+            return;
+        }
+        $links = Zend_Feed_Reader::findFeedLinks('http://www.example.com');
+        $this->assertEquals(0, count($links));
+    }
+    
+    /**
+     * @group ZF-8327
+     */
+    public function testGetsFeedLinksAndTrimsNewlines()
+    {
+        if (!defined('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+            || !constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+        ) {
+            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
+            return;
+        }
+
+        try {
+            $links = Zend_Feed_Reader::findFeedLinks('http://www.infopod.com.br');
+        } catch(Exception $e) {
+            $this->fail($e->getMessage());
+        }
+        $this->assertEquals('http://feeds.feedburner.com/jonnyken/infoblog', $links->rss);
+    }
+
     public function testAddsPrefixPath()
     {
         Zend_Feed_Reader::addPrefixPath('A_B_C', '/A/B/C');
@@ -191,9 +252,84 @@ class Zend_Feed_ReaderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Feed_Reader::isRegistered('JungleBooks'));
     }
 
-    /*public function testCanApplyHttpConditionalGetRequest()
+    /**  Test condition for ZF-7486 (Could Not Replicate)  **/
+    public function testRepeatedFeedImportsWithCacheEnabledDirectOrIndirectDoNotCreateARedeclarationOfAbstractClassFatalError()
     {
+        if (!defined('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+            || !constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')
+        ) {
+            $this->markTestSkipped('testRepeatedFeedImportsDoNotCreateARedeclarationOfAbstractClassFatalError() requires a network connection');
+            return;
+        }
+        $frontendOptions = array(
+           'lifetime' => 7200,
+           'automatic_serialization' => true
+        );
+        $backendOptions = array(
+            'cache_dir' => $this->_getTempDirectory()
+        );
+        $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
+        Zend_Feed_Reader::setCache($cache);
+        $feed = Zend_Feed_Reader::import('http://www.planet-php.net/rss/');
+        $cache->save($feed, 'feed1');
+        $feed2 = Zend_Feed_Reader::import('http://www.planet-php.net/rdf/');
+        $cache->save($feed, 'feed2');
+        $feed3 = Zend_Feed_Reader::import('http://www.planet-php.net/atom/');
+        $cache->save($feed, 'feed3');
+        $feed4 = Zend_Feed_Reader::import('http://www.phpdeveloper.org/feed');
+        $cache->save($feed, 'feed4');
+        $feedXmlFromCache = $cache->load('Zend_Feed_Reader_' . md5('http://www.planet-php.net/rss/'));
+        $feedFromCache = Zend_Feed_Reader::importString($feedXmlFromCache);
+        $this->assertTrue($feedFromCache instanceof Zend_Feed_Reader_FeedAbstract);
+        $feedFromCache2 = $cache->load('feed4');
+        $this->assertTrue($feedFromCache2 instanceof Zend_Feed_Reader_FeedAbstract);
+    }
 
-    }*/
+    protected function _getTempDirectory()
+    {
+        $tmpdir = array();
+        foreach (array($_ENV, $_SERVER) as $tab) {
+            foreach (array('TMPDIR', 'TEMP', 'TMP', 'windir', 'SystemRoot') as $key) {
+                if (isset($tab[$key])) {
+                    if (($key == 'windir') or ($key == 'SystemRoot')) {
+                        $dir = realpath($tab[$key] . '\\temp');
+                    } else {
+                        $dir = realpath($tab[$key]);
+                    }
+                    if ($this->_isGoodTmpDir($dir)) {
+                        return $dir;
+                    }
+                }
+            }
+        }
+        if (function_exists('sys_get_temp_dir')) {
+            $dir = sys_get_temp_dir();
+            if ($this->_isGoodTmpDir($dir)) {
+                return $dir;
+            }
+        }
+        $tempFile = tempnam(md5(uniqid(rand(), TRUE)), '');
+        if ($tempFile) {
+            $dir = realpath(dirname($tempFile));
+            unlink($tempFile);
+            if ($this->_isGoodTmpDir($dir)) {
+                return $dir;
+            }
+        }
+        if ($this->_isGoodTmpDir('/tmp')) {
+            return '/tmp';
+        }
+        if ($this->_isGoodTmpDir('\\temp')) {
+            return '\\temp';
+        }
+    }
+
+    protected function _isGoodTmpDir($dir)
+    {
+        if (is_readable($dir) && is_writable($dir)) {
+            return true;
+        }
+        return false;
+    }
 
 }
