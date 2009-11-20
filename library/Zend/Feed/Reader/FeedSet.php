@@ -16,7 +16,7 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FeedSet.php 19028 2009-11-19 12:38:15Z padraic $
+ * @version    $Id: FeedSet.php 19105 2009-11-20 17:13:54Z padraic $
  */
 
 /**
@@ -89,13 +89,39 @@ class Zend_Feed_Reader_FeedSet extends ArrayObject
     {
         if (!Zend_Uri::check($link)) {
             if (!is_null($uri)) {
-                $link = rtrim($uri, '/') . '/' . ltrim($link, '/');
+                $uri = Zend_Uri::factory($uri);
+
+                if ($link[0] !== '/') {
+                    $link = $uri->getPath() . '/' . $link;
+                }
+
+                $link = $uri->getScheme() . '://' . $uri->getHost() . '/' . $this->_canonicalizePath($link);
                 if (!Zend_Uri::check($link)) {
                     $link = null;
                 }
             }
         }
         return $link;
+    }
+    
+    /**
+     *  Canonicalize relative path
+     */
+    protected function _canonicalizePath($path)
+    {
+        $parts = array_filter(explode('/', $path));
+        $absolutes = array();
+        foreach ($parts as $part) {
+            if ('.' == $part) {
+                continue;
+            }
+            if ('..' == $part) {
+                array_pop($absolutes);
+            } else {
+                $absolutes[] = $part;
+            }
+        }
+        return implode('/', $absolutes);
     }
 
     /**
