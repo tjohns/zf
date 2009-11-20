@@ -872,4 +872,5 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit_Framework_TestCa
             array(55)
         );
     }
+
 }
