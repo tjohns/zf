@@ -71,6 +71,14 @@
             <xi:include href="tutorials/layout-conclusions.xml" />
         </chapter>
 
+        <chapter id="learning.view.placeholders">
+            <title>Getting Started with Zend_View Placeholders</title>
+            <xi:include href="tutorials/view-placeholders-intro.xml" />
+            <xi:include href="tutorials/view-placeholders-basics.xml" />
+            <xi:include href="tutorials/view-placeholders-standard.xml" />
+            <xi:include href="tutorials/view-placeholders-conclusion.xml" />
+        </chapter>
+
         <chapter id="learning.form.decorators">
             <title>Understanding and Using Zend Form Decorators</title>
             <xi:include href="tutorials/form-decorators-intro.xml" />
