@@ -4,149 +4,213 @@
     <title>Supported queries</title>
 
     <para>
-        Zend_Search_Lucene as well as Java Lucene support powerful query language. It allows 
-        to search for individual terms, phrases, range of terms, using wildcards and fuzzy 
-        search, combining queries using boolean operators and so on.
+        <classname>Zend_Search_Lucene</classname> and Java Lucene support a powerful query language.
+        It allows searching for individual terms, phrases, ranges of terms; using wildcards and
+        fuzzy search; combining queries using boolean operators; and so on.
     </para>
         
     <para>
-        Detailed query language description can be found in the 
-        <ulink href="http://framework.zend.com/manual/en/zend.search.lucene.query-language.html">
-        Zend_Search_Lucene component documentation</ulink>.
+        A detailed query language description can be found in the <ulink
+            href="http://framework.zend.com/manual/en/zend.search.lucene.query-language.html">
+            Zend_Search_Lucene component documentation</ulink>.
     </para>
         
     <para>
-        Here we only give query examples.
+        What follows are examples of some common query types and strategies.
     </para>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.keyword">
+        <title>Querying for a single word</title>
+
+        <programlisting language="text"><![CDATA[
 hello
 ]]></programlisting>
 
-    <para>
-        Searches for hello word through all document fields.
-    </para>
+        <para>
+            Searches for the word "hello" through all document fields.
+        </para>
+    </example>
 
     <note>
         <title>Default search field</title>
 
         <para>
-            Important note! Java Lucene searches only through contents field by default, but 
-            Zend_Search_Lucene searches through all fields. This behavior can be modified 
-            using <methodname>Zend_Search_Lucene::setDefaultSearchField($fieldName)</methodname>
-            method.
+            Important note! Java Lucene searches only through the "contents" field by default, but
+            <classname>Zend_Search_Lucene</classname> searches through <emphasis>all</emphasis>
+            fields. This behavior can be modified using the
+            <methodname>Zend_Search_Lucene::setDefaultSearchField($fieldName)</methodname> method.
         </para>
     </note>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.multiple-words">
+        <title>Querying for multiple words</title>
+
+        <programlisting language="text"><![CDATA[
 hello dolly
 ]]></programlisting>
 
-    <para>
-        Searches for two words (both words are optional, so at least one of them has to be 
-        presented in the result).
-    </para>
+        <para>
+            Searches for two words. Both words are optional; at least one of them must be present in
+            the result.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.required-words">
+        <title>Requiring words in a query</title>
+
+        <programlisting language="text"><![CDATA[
 +hello dolly
 ]]></programlisting>
 
-    <para>
-        Searches for two words. 'hello' is required, 'dolly' is optional.
-    </para>
+        <para>
+            Searches for two words; "hello" is required, "dolly" is optional.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.prohibited-words">
+        <title>Prohibiting words in queried documents</title>
+
+        <programlisting language="text"><![CDATA[
 +hello -dolly
 ]]></programlisting>
 
-    <para>
-        'hello' is required, 'dolly' is prohibited.
-    </para>
+        <para>
+            Searches for two words; "hello" is required, 'dolly' is prohibited. In other words, if
+            the document matches "hello", but contains the word "dolly", it will not be returned in
+            the set of matches.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.phrases">
+        <title>Querying for phrases</title>
+
+        <programlisting language="text"><![CDATA[
 "hello dolly"
 ]]></programlisting>
 
-    <para>
-        Searches for "hello dolly" phrase.
-    </para>
+        <para>
+            Searches for the phrase "hello dolly"; a document only matches if that exact string is
+            present.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.fields">
+        <title>Querying against specific fields</title>
+
+        <programlisting language="text"><![CDATA[
 title:"The Right Way" AND text:go
 ]]></programlisting>
 
-    <para>
-        Searches for "The Right Way" within title field and 'go' word within text field.
-    </para>
+        <para>
+            Searches for the phrase "The Right Way" within the <varname>title</varname> field and
+            the word "go" within the <varname>text</varname> field.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.fields-and-document">
+        <title>Querying against specific fields as well as the entire document</title>
+
+        <programlisting language="text"><![CDATA[
 title:"The Right Way" AND  go
 ]]></programlisting>
 
-    <para>
-        Searches for "The Right Way" within title field and 'go' word through all fields.
-    </para>
+        <para>
+            Searches for the phrase "The Right Way" within the <varname>title</varname> field and
+            the word "go" word appearing in any field of the document.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.fields-and-document-alt">
+        <title>Querying against specific fields as well as the entire document (alternate)</title>
+        
+        <programlisting language="text"><![CDATA[
 title:Do it right
 ]]></programlisting>
 
-    <para>
-        Searches for "Do" within title field and 'it' and 'right' words through all fields.
-    </para>
+        <para>
+            Searches for the word "Do" within the <varname>title</varname> field and the words "it"
+            and "right" words through all fields; any single one matching will result in a document
+            match.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.wildcard-question">
+        <title>Querying with the wildcard "?"</title>
+
+        <programlisting language="text"><![CDATA[
 te?t
 ]]></programlisting>
 
-    <para>
-        Search for words matching te?t pattern where '?' is any character.
-    </para>
+        <para>
+            Search for words matching the pattern "te?t", where "?" is any single character.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.wildcard-asterisk">
+        <title>Querying with the wildcard "*"</title>
+
+        <programlisting language="text"><![CDATA[
 test*
 ]]></programlisting>
 
-    <para>
-        Search for words matching test* pattern where '*' is any sequence of characters.
-    </para>
+        <para>
+            Search for words matching the pattern "test*", where "*" is any sequence of zero or more
+            characters.
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.range-inclusive">
+        <title>Querying for an inclusive range of terms</title>
+
+        <programlisting language="text"><![CDATA[
 mod_date:[20020101 TO 20030101]
 ]]></programlisting>
 
-    <para>
-        Search for the range of terms (inclusive).
-    </para>
+        <para>
+            Search for the range of terms (inclusive).
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.range-exclusive">
+        <title>Querying for an exclusive range of terms</title>
+
+        <programlisting language="text"><![CDATA[
 title:{Aida to Carmen}
 ]]></programlisting>
 
-    <para>
-        Search for the range of terms (exclusive).
-    </para>
+        <para>
+            Search for the range of terms (exclusive).
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.fuzzy">
+        <title>Fuzzy searches</title>
+
+        <programlisting language="text"><![CDATA[
 roam~
 ]]></programlisting>
 
-    <para>
-        Fussy search for roam word.
-    </para>
+        <para>
+            Fuzzy search for the word "roam".
+        </para>
+    </example>
 
-    <programlisting language="text"><![CDATA[
+    <example id="learning.lucene.queries.boolean">
+        <title>Boolean searches</title>
+
+        <programlisting language="text"><![CDATA[
 (framework OR library) AND php
 ]]></programlisting>
 
-    <para>
-        Boolean query.
-    </para>
+        <para>
+            Boolean query.
+        </para>
+    </example>
 
     <para>
-        All supported queries can be constructed through 
-        <ulink href="http://framework.zend.com/manual/en/zend.search.lucene.query-api.html">
-        query construction API</ulink>. Moreover, query parsing and query constructing may be 
+        All supported queries can be constructed through <classname>Zend_Search_Lucene</classname>'s
+        <ulink href="http://framework.zend.com/manual/en/zend.search.lucene.query-api.html"> query
+            construction API</ulink>. Moreover, query parsing and query constructing may be
         combined:
     </para>
 
@@ -161,5 +225,4 @@ $query->addSubquery($userQuery, true  /* required */);
 $query->addSubquery($constructedQuery, true  /* required */);
 ]]></programlisting>
     </example>
-
 </sect1>
