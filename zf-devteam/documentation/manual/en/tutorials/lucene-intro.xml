@@ -87,7 +87,7 @@
 
         <listitem>
             <para>
-                To write functionality that can rebuild an index completely if it's correupted for
+                To write functionality that can rebuild an index completely if it's corrupted for
                 any reason.
             </para>
         </listitem>
