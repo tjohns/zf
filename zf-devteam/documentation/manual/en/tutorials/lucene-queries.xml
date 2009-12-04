@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.lucene.queries">
+    <title>Supported queries</title>
+
+    <para>
+        Zend_Search_Lucene as well as Java Lucene support powerful query language. It allows 
+        to search for individual terms, phrases, range of terms, using wildcards and fuzzy 
+        search, combining queries using boolean operators and so on.
+    </para>
+        
+    <para>
+        Detailed query language description can be found in the 
+        <ulink href="http://framework.zend.com/manual/en/zend.search.lucene.query-language.html">
+        Zend_Search_Lucene component documentation</ulink>.
+    </para>
+        
+    <para>
+        Here we only give query examples.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+hello
+]]></programlisting>
+
+    <para>
+        Searches for hello word through all document fields.
+    </para>
+
+    <note>
+        <title>Default search field</title>
+
+        <para>
+            Important note! Java Lucene searches only through contents field by default, but 
+            Zend_Search_Lucene searches through all fields. This behavior can be modified 
+            using <methodname>Zend_Search_Lucene::setDefaultSearchField($fieldName)</methodname>
+            method.
+        </para>
+    </note>
+
+    <programlisting language="text"><![CDATA[
+hello dolly
+]]></programlisting>
+
+    <para>
+        Searches for two words (both words are optional, so at least one of them has to be 
+        presented in the result).
+    </para>
+
+    <programlisting language="text"><![CDATA[
++hello dolly
+]]></programlisting>
+
+    <para>
+        Searches for two words. 'hello' is required, 'dolly' is optional.
+    </para>
+
+    <programlisting language="text"><![CDATA[
++hello -dolly
+]]></programlisting>
+
+    <para>
+        'hello' is required, 'dolly' is prohibited.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+"hello dolly"
+]]></programlisting>
+
+    <para>
+        Searches for "hello dolly" phrase.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+title:"The Right Way" AND text:go
+]]></programlisting>
+
+    <para>
+        Searches for "The Right Way" within title field and 'go' word within text field.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+title:"The Right Way" AND  go
+]]></programlisting>
+
+    <para>
+        Searches for "The Right Way" within title field and 'go' word through all fields.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+title:Do it right
+]]></programlisting>
+
+    <para>
+        Searches for "Do" within title field and 'it' and 'right' words through all fields.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+te?t
+]]></programlisting>
+
+    <para>
+        Search for words matching te?t pattern where '?' is any character.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+test*
+]]></programlisting>
+
+    <para>
+        Search for words matching test* pattern where '*' is any sequence of characters.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+mod_date:[20020101 TO 20030101]
+]]></programlisting>
+
+    <para>
+        Search for the range of terms (inclusive).
+    </para>
+
+    <programlisting language="text"><![CDATA[
+title:{Aida to Carmen}
+]]></programlisting>
+
+    <para>
+        Search for the range of terms (exclusive).
+    </para>
+
+    <programlisting language="text"><![CDATA[
+roam~
+]]></programlisting>
+
+    <para>
+        Fussy search for roam word.
+    </para>
+
+    <programlisting language="text"><![CDATA[
+(framework OR library) AND php
+]]></programlisting>
+
+    <para>
+        Boolean query.
+    </para>
+
+    <para>
+        All supported queries can be constructed through 
+        <ulink href="http://framework.zend.com/manual/en/zend.search.lucene.query-api.html">
+        query construction API</ulink>. Moreover, query parsing and query constructing may be 
+        combined:
+    </para>
+
+    <example id="learning.lucene.queries.combining">
+        <title>Combining parsed and constructed queries</title>
+
+        <programlisting language="php"><![CDATA[
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+
+$query = new Zend_Search_Lucene_Search_Query_Boolean();
+$query->addSubquery($userQuery, true  /* required */);
+$query->addSubquery($constructedQuery, true  /* required */);
+]]></programlisting>
+    </example>
+
+</sect1>

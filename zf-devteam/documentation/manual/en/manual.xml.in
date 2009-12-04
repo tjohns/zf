@@ -97,6 +97,17 @@
             <xi:include href="tutorials/multiuser-authorization.xml" />
         </chapter>
 
+        <chapter id="learning.lucene">
+            <title>Getting Started with Zend_Search_Lucene</title>
+            <xi:include href="tutorials/lucene-intro.xml" />
+            <xi:include href="tutorials/lucene-index-structure.xml" />
+            <xi:include href="tutorials/lucene-index-opening.xml" />
+            <xi:include href="tutorials/lucene-indexing.xml" />
+            <xi:include href="tutorials/lucene-searching.xml" />
+            <xi:include href="tutorials/lucene-queries.xml" />
+            <xi:include href="tutorials/lucene-pagination.xml" />
+        </chapter>
+
         <!--
         Include new tutorials like this:
         <chapter id="learning.foo">

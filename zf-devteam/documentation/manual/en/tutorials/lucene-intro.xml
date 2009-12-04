@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.lucene.intro">
+    <title>Zend_Search_Lucene Introduction</title>
+
+    <para>
+        Zend_Search_Lucene component is intended to provide ready for use full text search solution.
+        It doesn't need any special PHP extension<footnote><para>Some UTF-8 processing functionality 
+        requires mbstring extension to be turned on</para></footnote> or additional software to be 
+        installed and can be used immediately after Zend Framework installation.
+    </para>
+
+    <para>
+        Zend_Search_Lucene is a pure PHP port of the popular open source full text search engine 
+        known as Apache Lucene. 
+        See <ulink url="http://lucene.apache.org">http://lucene.apache.org/</ulink> for the details.
+    </para>
+
+    <para>
+        Information has to be indexed to be available for searching. Zend_Search_Lucene and 
+        Java Lucene use document concept as an atomic indexing item.
+    </para>
+
+    <para>
+        Each document is a set of fields (&lt;name, value&gt; pairs where name and value are UTF-8 
+        strings<footnote><para>Binary strings are also allowed to be used as field values</para>
+        </footnote>. Any subset of document fields may be marked as "indexed" to include field data 
+        into text indexing process.
+    </para>
+
+    <para>
+        Field values may be or not to be tokenized while indexing. If field is not tokenized then 
+        field value is stored as one term. Current analyzer is used for the tokenization otherwise.
+    </para>
+
+    <para>
+        Several analyzers are provided within Zend_Search_Lucene package. Default analyzer works 
+        with ASCII text (since UTF-8 analyzer needs mbstring extension to be turned on). It's case 
+        insensitive and it skips numbers. Use other analyzers or create your own analyzer if you 
+        need to change this behavior.
+    </para>
+
+    <note>
+        <title>Usinng analyzers during indexing and searching</title>
+        <para>
+            Important note! Search query is also tokenized using "current analyzer". So the same 
+            analyzer must be set as default during indexing and searching process. It guarantees 
+            that source and searched text will be transformed into terms in a same way.
+        </para>
+    </note>
+
+    <para>
+        Field values are optionally stored within an index. It allows original field data to be 
+        retrieved from index while searching. That's the only way to associate search results with 
+        original data (internal document IDs may be changed after index optimization or 
+        auto-optimization).
+    </para>
+
+    <para>
+        The thing that should be remembered is that Lucene index is not a database. It doesn't 
+        provide index backup mechanisms except backup of file system directory. It doesn't 
+        provide transactional mechanisms even concurrent index update as well as concurrent update 
+        and read are supported. It doesn't comparable with databases in data retrieving speed.
+    </para>
+
+    <para>
+        So it's good idea:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                Not to use Lucene index as a storage since it may dramatically decrease search hit 
+                retrieving performance. Store only unique document identifiers (doc paths, URLs, 
+                database unique IDs) and associated data within an index. E.g. title, annotation, 
+                category, language info, avatar. (Note: field may be included into indexing, but 
+                not stored, or stored, but not indexed).
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                To keep an ability to rebuild index completely if it's corrupted by any reason.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+
+    <para>
+        Documents may have completely different sets of fields. The same fields in different 
+        documents don't need to have the same attributes. E.g. field may be indexed for one 
+        document and skipped from indexing for another. The same for storing, tokenizing, 
+        treating field value as a binary string.
+    </para>
+</sect1>

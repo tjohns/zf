@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.lucene.index-opening">
+    <title>Index opening and creation</title>
+
+    <para>
+        All index operations (creating new index, adding document to the index, deleting document, 
+        searching through the index) need index object. It can be obtained using two methods:
+    </para>
+
+    <example id="learning.lucene.index-opening.creation">
+        <title>Lucene index creation</title>
+        
+        <programlisting language="php"><![CDATA[
+$index = Zend_Search_Lucene::create($indexPath);
+]]></programlisting>
+    </example>
+    
+    <para>
+        or:
+    </para>
+
+    <example id="learning.lucene.index-opening.creation">
+        <title>Lucene index opening</title>
+        
+        <programlisting language="php"><![CDATA[
+$index = Zend_Search_Lucene::open($indexPath);
+]]></programlisting>
+    </example>
+</sect1>
