@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect1 id="learning.paginator.database">
+    <title>Usage with a database</title>
+    
+    <para>
+        This is a placeholder for this section.
+    </para>
+    
+    <para>
+        This section of the text assumes that you are familiar with the basics of constructing
+        a SELECT query using Zend_Db_Select.
+    </para>
+    
+</sect1>
