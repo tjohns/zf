@@ -81,6 +81,44 @@ foreach ($paginator as $item) {
         These simple examples demonstrate a small portion of what can be achieved with
         <classname>Zend_Paginator</classname>. However, a real application rarely reads its data from a plain
         array, so the next section is dedicated to showing you how you can use Paginator
-        to paginate the results of a database query.
+        to paginate the results of a database query. Before reading on, make sure you're familiar with
+        the way <classname>Zend_Db_Select</classname> works!
     </para>
+    
+    <para>
+        In the database examples we will look at a table with blog posts called 'posts'.
+        The 'posts' table has four columns: id, title, body, date_created.
+        Let's dive right in and have a look at a simple example.
+    </para>
+    
+    <programlisting language="php"><![CDATA[
+// Create a select query. $db is a Zend_Db_Adapter object, which we assume
+// already exists in your script.
+$select = $db->select()->from('posts')->order('date_created DESC');
+
+// Get a Paginator object using Zend_Paginator's built-in factory.
+$paginator = Zend_Paginator::factory($select);
+
+// Select the second page
+$paginator->setCurrentPageNumber(2);
+
+?><ul><?php
+
+// Render each the title of each post for the current page in a list-item
+foreach ($paginator as $item) {
+    echo '<li>' . $item->title . '</li>';
+}
+
+?></ul>
+]]></programlisting>
+    
+    <para>
+        As you can see, this example is not that different from the previous one.
+        The only difference is that you pass a <classname>Zend_Db_Select</classname> object to the 
+        Paginator's <methodname>factory()</methodname> method, rather than an array.
+        For more details on how the database adapter makes sure that your query
+        is being executed efficiently, see the Zend_Paginator chapter in the reference manual
+        on the DbSelect and DbTableSelect adapters.
+    </para>
+    
 </sect1>

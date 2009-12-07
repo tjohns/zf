@@ -112,7 +112,8 @@
             <title>Getting Started with Zend_Paginator</title>
             <xi:include href="tutorials/paginator-intro.xml" />
             <xi:include href="tutorials/paginator-simple.xml" />
-            <xi:include href="tutorials/paginator-database.xml" />
+            <xi:include href="tutorials/paginator-control.xml" />
+            <xi:include href="tutorials/paginator-together.xml" />
         </chapter>
 
         <!--
