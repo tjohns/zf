@@ -245,6 +245,22 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $value = Zend_XmlRpc_Value::getXmlRpcValue($native, Zend_XmlRpc_Value::XMLRPC_TYPE_DOUBLE);
         $this->assertXmlRpcType('double', $value);
         $this->assertSame($native, $value->getValue());
+        $this->assertSame('<value><double>0.1234567</double></value>', trim($value->saveXml()));
+    }
+
+    /**
+     * @group ZF-7712
+     */
+    public function testMarshallingDoubleWithHigherPrecisionFromNativeWithTrailingZeros()
+    {
+        if (ini_get('precision') < 7) {
+            $this->markTestSkipped('precision is too low');
+        }
+        $native = 0.1;
+        $value = Zend_XmlRpc_Value::getXmlRpcValue($native, Zend_XmlRpc_Value::XMLRPC_TYPE_DOUBLE);
+        $this->assertXmlRpcType('double', $value);
+        $this->assertSame($native, $value->getValue());
+        $this->assertSame('<value><double>0.1</double></value>', trim($value->saveXml()));
     }
 
     // String
