@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Zend_Image</name>
+	<name>ZF-UserBranch</name>
 	<comment></comment>
 	<projects>
 		<project>Zend_Image</project>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.dltk.core.scriptbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.php.core.PhpIncrementalProjectBuilder</name>
 			<arguments>

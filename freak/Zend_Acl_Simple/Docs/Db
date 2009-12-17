@@ -1,0 +1,135 @@
+detect_relations: true
+actAs: [Timestampable]
+
+AclResource:
+  tableName: acl_resource
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    name: string(255)
+    description: string(2147483647)
+    lft: integer(4)
+    rgt: integer(4)
+    level: integer(2)
+  relations:
+    AclResourcePrivilege:
+      local: id
+      foreign: acl_resource_id
+      type: many
+  actAs: [NestedSet]
+
+AclRuleResource:
+  tableName: acl_rule_resource
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    acl_rule_id:
+      type: integer(8)
+      unsigned: true
+      notnull: true
+    acl_resource_id:
+      type: integer(8)
+      unsigned: true
+      notnull: true
+      
+AclRuleRole:
+  tableName: acl_rule_role
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    acl_rule_id:
+      type: integer(8)
+      unsigned: true
+      notnull: true
+    acl_role_id:
+      type: integer(8)
+      unsigned: true
+      notnull: true
+      
+AclRole:
+  tableName: acl_role
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    name: string(255)
+    description: string(2147483647)
+    lft: integer(4)
+    rgt: integer(4)
+    level: integer(2)
+  actAs: [NestedSet]
+  
+AclResourcePrivilege:
+  tableName: acl_resource_privilege
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    acl_resource_id: 
+        type: integer(8)
+        unsigned: true
+    name: string(255)
+    description: string(2147483647)
+  relations:
+    AclResource:
+      local: acl_resource_id
+      foreign: id
+      type: one
+      
+AclRulePrivilege:
+  tableName: acl_rule_privilege
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    acl_rule_id:
+      type: integer(8)
+      default: ''
+      notnull: true
+      unsigned: true
+    acl_resource_privilege_id:
+      type: integer(8)
+      unsigned: true
+      notnull: true
+      
+AclRule:
+  tableName: acl_rule
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: true
+    type: string(255)
+    assert: string(255)
+  relations:
+    AclRole:
+      local: acl_rule_id
+      foreign: acl_role_id
+      refClass: AclRuleRole
+      type: many
+    AclResourcePrivilege:
+      local: acl_rule_id
+      foreign: acl_resource_privilege_id
+      refClass: AclRulePrivilege
+      type: many
+    AclResource:
+      local: acl_rule_id
+      foreign: acl_resource_id
+      refClass: AclRuleResource
+      type: many

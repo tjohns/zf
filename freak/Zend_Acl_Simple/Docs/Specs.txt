@@ -1,0 +1,69 @@
+ZEND_RBAC SPECS:
+
+*   A _user_ CAN be member of one or more _roles_
+*   A _role_ CAN be the parent of one or more other _roles_
+*   An _object_ CAN be assigned to one or more _roles_
+*   If a _user_ is member of a _role_ (or any of the _role's_ childs) to which the
+    requested _object_ was assigned, the _user_ MUST be allowed access. Otherwise, MUST NOT.
+
+
+Following example based on: http://csrc.nist.gov/groups/SNS/rbac/documents/ferraiolo-kuhn-92.pdf
+
+
+
+Object 1 ------\                   /-------User 1
+                \                 /   
+                 = H E A L E R == ---------User 2
+                /       |         \
+Object 2 ------/        ^          \-------User 3
+                        |
+                        ^
+                        |
+Object 3 ------\        ^           /-------User 4
+                \       |          /   
+                 == I N T E R N == ---------User 5
+                /       |          \
+Object 4 ------/        ^           \-------User 6
+                        |
+                        ^
+                        |
+Object 5 ------\        ^          /--------User 7
+                \       |         /   
+                 == D O C T O R == ---------User 8
+                /                 \
+Object 6 ------/                   \--------User 9
+
+Interns can do everything a healer can do
+Doctors can do everything an intern can
+
+Healers have access to object 1 & 2 only
+Interns have access to object 1, 2, 3 & 4 only
+Doctors have access to object 1, 2, 3, 4, 5 & 6 only
+
+
+<?php
+$rbac = new Zend_Rbac();
+$rbac->assign('healer',array('user1','user2','user3'));
+
+$rbac->assign('intern', 'user4');
+$rbac->assign('intern', 'user5');
+$rbac->assign('intern', 'user6');
+
+$rbac->assign('doctor', array('user7','user8','user9');
+
+$rbac->setChild('intern', 'healer'); // <parent>, <child>
+$rbac->setChild('doctor', 'intern');
+
+$rbac->subscribe('healer', array('object1', 'object2');
+$rbac->subscribe('intern', array('object3', 'object4');
+$rbac->subscribe('doctor', array('object5', 'object6');
+
+$rbac->isAllowed('user1', 'object1'); // True
+$rbac->isAllowed('user1', 'object3'); // False
+$rbac->isAllowed('user4', 'object1'); // True
+$rbac->isAllowed('user4', 'object3'); // True
+$rbac->isAllowed('user4', 'object5'); // False
+$rbac->isAllowed('user9', 'object1'); // True
+$rbac->isAllowed('user9', 'object3'); // True
+$rbac->isAllowed('user9', 'object5'); // True
+
