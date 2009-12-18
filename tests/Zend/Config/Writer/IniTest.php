@@ -163,4 +163,17 @@ class Zend_Config_Writer_IniTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $config->default->test);
     }
+
+    public function testZF6521_NoDoubleQuoutesInValue()
+    {
+        $config = new Zend_Config(array('default' => array('test' => 'fo"o')));
+
+        try {
+            $writer = new Zend_Config_Writer_Ini(array('config' => $config, 'filename' => $this->_tempName));
+            $writer->write();
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Value can not contain double quotes "', $expected->getMessage());
+        }
+    }
 }
