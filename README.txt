@@ -2,20 +2,33 @@ Welcome to the Zend Framework 1.10 Release!
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.10dev Release ([INSERT REV NUM HERE]).
+Zend Framework 1.10.0alpha1 Release ([INSERT REV NUM HERE]).
 Released on <Month> <Day>, <Year>.
 
 NEW FEATURES
 ------------
 
-* Zend_Filter_Null, contributed by Thomas Weidner
+* Zend_Barcode, contributed by Mickael Perraud
+* Zend_Cache_Backend_Static, contributed by Pádraic Brady
+* Zend_Cache_Manager, contributed by Pádraic Brady
+* Zend_Exception - previous exception support, contributed by Marc Bennewitz
+* Zend_Feed_Pubsubhubbub, contributed by Pádraic Brady
+* Zend_Feed_Writer, contributed by Pádraic Brady
 * Zend_Filter_Compress/Decompress, contributed by Thomas Weidner
+* Zend_Filter_Null, contributed by Thomas Weidner
+* Zend_Log::factory(), contributed by Mark van der Velden and Martin Roest
+* Zend_Log_Writer_ZendMonitor, contributed by Matthew Weier O'Phinney
+* Zend_Markup, contributed by Pieter Kokx
+* Zend_Service_LiveDocx, contributed by Jonathan Marron
+* Zend_Service_WindowsAzure, contributed by Maarten Balliauw
+* Zend_Validate_Barcode, contributed by Thomas Weidner
 * Zend_Validate_Callback, contributed by Thomas Weidner
+* Zend_Validate_CreditCard, contributed by Thomas Weidner
 * Zend_Validate_PostCode, contributed by Thomas Weidner
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/changelog/
+http://framework.zend.com/changelog/1.10.0alpha1
 
 SYSTEM REQUIREMENTS
 -------------------
