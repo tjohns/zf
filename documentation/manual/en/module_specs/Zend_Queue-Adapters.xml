@@ -177,7 +177,7 @@ $options = array(
 );
 
 // Create a database queue.
-$queue = Zend_Queue::factory('Db', $options);
+$queue = new Zend_Queue::factory('Db', $options);
 ]]></programlisting>
 
             <itemizedlist>
@@ -386,14 +386,14 @@ $queue = Zend_Queue::factory('Db', $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                         <methodname>create()</methodname> - create queue.
+                         <methodname>createQueue()</methodname> - create queue.
                          Calling this function will throw an exception.
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <methodname>delete()</methodname> - delete queue.
+                        <methodname>deleteQueue()</methodname> - delete queue.
                         Calling this function will throw an exception.
                     </para>
                 </listitem>
@@ -468,7 +468,7 @@ $queue = Zend_Queue::factory('Db', $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <methodname>create()</methodname> - Zend Platform does not have the concept
+                        <methodname>createQueue()</methodname> - Zend Platform does not have the concept
                         of discrete queues; instead, it allows administrators to provide scripts for
                         processing jobs. Since adding new scripts is restricted to the
                         administration interface, this method simply throws an exception indicating
@@ -479,15 +479,15 @@ $queue = Zend_Queue::factory('Db', $options);
                 <listitem>
                     <para>
                         <methodname>isExists()</methodname> - Just like
-                        <methodname>create()</methodname>, since Job Queue does not have a notion of
+                        <methodname>createQueue()</methodname>, since Job Queue does not have a notion of
                         named queues, this method throws an exception when invoked.
                     </para>
                 </listitem>
 
                 <listitem>
                     <para>
-                        <methodname>delete()</methodname> - similar to
-                        <methodname>create()</methodname>, deletion of JQ scripts is not possible
+                        <methodname>deleteQueue()</methodname> - similar to
+                        <methodname>createQueue()</methodname>, deletion of JQ scripts is not possible
                         except via the admin interface; this method raises an exception.
                     </para>
                 </listitem>
