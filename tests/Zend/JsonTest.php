@@ -453,6 +453,33 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals($expected, $actual);
     }
+    
+    /**
+     * @group ZF-8663
+     */
+    public function testNativeJsonEncoderWillProperlyEncodeSolidusInStringValues()
+    {
+        $source = "</foo><foo>bar</foo>";
+        $target = '"<\\/foo><foo>bar<\\/foo>"';
+        
+        // first test ext/json
+        Zend_Json::$useBuiltinEncoderDecoder = false;
+        $this->assertEquals($target, Zend_Json::encode($source));
+    }
+    
+    /**
+     * @group ZF-8663
+     */
+    public function testBuiltinJsonEncoderWillProperlyEncodeSolidusInStringValues()
+    {
+        $source = "</foo><foo>bar</foo>";
+        $target = '"<\\/foo><foo>bar<\\/foo>"';
+        
+        // first test ext/json
+        Zend_Json::$useBuiltinEncoderDecoder = true;
+        $this->assertEquals($target, Zend_Json::encode($source));
+    }
+    
 }
 
 /**
