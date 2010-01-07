@@ -1212,13 +1212,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 unset($mime);
             } elseif (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
                 $result[$key] = mime_content_type($file);
-            } else {
-                $result[$key] = $value['type'];
             }
 
             if (empty($result[$key])) {
-                require_once 'Zend/File/Transfer/Exception.php';
-                throw new Zend_File_Transfer_Exception("The mimetype of file '{$value['name']}' could not been detected");
+                $result[$key] = 'application/octet-stream';
             }
         }
 
