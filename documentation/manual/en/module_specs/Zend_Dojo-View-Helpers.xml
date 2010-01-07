@@ -649,14 +649,34 @@ echo $view->dateTextBox(
                     <emphasis>Editor</emphasis>: dijit.Editor. Provides a
                     WYSIWYG editor via which users may create or edit content.
                     <code>dijit.Editor</code> is a pluggable, extensible editor
-                    with a variety of parameters you can utilize for
-                    customization; see <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/advanced-editing-and-display/editor-rich-text">the
-                    dijit.Editor documentation</ulink> for more details.
+                    with a variety of parameters you can utilize for customization; see <ulink
+                        url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/advanced-editing-and-display/editor-rich-text">the
+                        dijit.Editor documentation</ulink> for more details.
                 </para>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 echo $view->editor('foo');
 ]]></programlisting>
+
+                <note>
+                    <title>Editor Dijit uses div by default</title>
+
+                    <para>
+                        The Editor dijit uses an <acronym>HTML</acronym> <acronym>DIV</acronym> by
+                        default. The <classname>dijit._editor.RichText</classname> <ulink
+                            url="http://api.dojotoolkit.org/jsdoc/HEAD/dijit._editor.RichText">documentation</ulink>
+                        indicates that having it built on an HTML <acronym>TEXTAREA</acronym> can
+                        potentially have security implications.
+                    </para>
+
+                    <para>
+                        In order to allow graceful degradation in environments where Javascript is
+                        unavailable, <classname>Zend_Dojo_View_Helper_Editor</classname> also wraps
+                        a <acronym>textarea</acronym> within a <acronym>noscript</acronym> tag; the
+                        content of this <acronym>textarea</acronym> will be properly escaped to
+                        avoid security vulnerability vectors.
+                    </para>
+                </note>
             </listitem>
 
             <listitem>
