@@ -1,0 +1,4 @@
+CHANGELOG
+---------
+Please see README.txt for a high-level overview of changes in this
+release.
