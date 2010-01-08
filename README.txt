@@ -1,12 +1,74 @@
-Welcome to Zend Framework 1.7.8! This is a bug fix/maintenance release in the 
-Zend Framework 1.7 series. This release maintains backwards compatibility
-with all Zend Framework 1.x releases.
+Welcome to Zend Framework 1.7.9! This is a security release in the 
+Zend Framework 1.7 series. 
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.8 ([INSERT REV NUM HERE]).
-Released on 2009-03-30.
+Zend Framework 1.7.9 ([INSERT REV NUM HERE]).
+Released on 2010-01-11.
+
+SECURITY ADVISORIES
+-------------------
+This release contains a number of security fixes that may affect you.
+Please read the following advisories to determine whether you are
+affected; if so, please upgrade immediately.
+
+We would like to thank Pádraic Brady for doing a preliminary security
+audit of the framework and uncovering the issues reported below; he has
+worked closely with the Zend Framework team during the weeks prior to
+the release to report the issues as well as to assist in patching the
+framework to resolve them.
+
+Vulnerabilities reported and fixed with this version include:
+
+Zend_Dojo_View_Helper_Editor was incorrectly decorating a TEXTAREA
+instead of a DIV. The Dojo team has reported that this has security
+implications as the rich text editor they use is unable to escape
+content for a TEXTAREA. The primary rationale in ZF for using a TEXTAREA
+was to allow for graceful degradation in browser environments that do
+not support JavaScript. The component has been reworked such that we now
+decorate an HTML DIV, and then provide a separate TEXTAREA within a
+NOSCRIPT tag. If you use Zend_Dojo_View_Helper_Editor, it is strongly
+recommended that you upgrade to this release or the latest available
+Zend Framework release immediately.
+
+Zend_Filter_StripTags contained an optional setting to allow
+whitelisting HTML comments in filtered text. Microsoft Internet Explorer
+and several other browsers allow developers to create conditional
+functionality via HTML comments, including execution of script events
+and rendering of additional commented markup. By allowing whitelisting
+of HTML comments, a malicious user could potentially include XSS
+exploits within HTML comments that would then be rendered in the final
+output. The Zend Framework team has determined that since this
+vulnerability is so trivial to exploit, the functionality to allow
+whitelisting comments will now be disabled in this and all future
+releases.  Additionally, the regular expression for stripping comments
+has been bolstered to properly remove comments containing HTML tags,
+nested comments, and comments ending with whitespace between the "--"
+and ending delimiter (">"). If you use this filter and were enabling the
+"allowComments" functionality, be advised that it is now silently
+ignored. We also recommend such users to upgrade to this release or the
+latest available Zend Framework release immediately.
+
+Zend_Service_ReCaptcha_MailHide had a potential XSS vulnerability. Due
+to the fact that the email address was never validated, and because its
+use of htmlentities() did not include the encoding argument, it was
+potentially possible for a malicious user aware of the issue to inject a
+specially crafted multibyte string as an attack via the CAPTCHA's email
+argument. If you use this service, we recommend upgrading to this
+release or the latest available Zend Framework release immediately.
+
+Zend_Json_Encoder was not taking into account the solidus character
+("/") during encoding, leading to incompatibilities with the JSON
+specification, and opening the potential for XSS or HTML injection
+attacks when returning HTML within a JSON string. This particular
+vulnerability only affects those users who are either (a) using
+Zend_Json_Encoder directly, (b) requesting native encoding instead of
+usage of ext/json (e.g., by enabling the static
+$useBuiltinEncoderDecoder property of Zend_Json), or (c) on systems
+where ext/json is unavailable (e.g. RHEL, CentOS). If you are affected,
+we strongly recommend upgrading to this release or the latest available
+Zend Framework release immediately.
 
 SPECIAL NOTICE
 --------------
