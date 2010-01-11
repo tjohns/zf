@@ -22,12 +22,29 @@ worked closely with the Zend Framework team during the weeks prior to
 the release to report the issues as well as to assist in patching the
 framework to resolve them.
 
-Besides the reported vulnerabilities, a number of inconsistencies
-regarding character encoding were discovered, and a decision was made to
-default to UTF-8 for all internal encoding throughout the framework;
-this primarily affects Zend_View, Zend_Form, and Zend_Tag. If you were
-relying on Zend_View using ISO-8859-1 encoding previously, you may need
-to specify that encoding manually now. You may do so in several ways:
+Actual vulnerabilities reported and fixed with this version include:
+
+###
+A number of classes, primarily within the Zend_Tag, Zend_View,
+Zend_Form, Zend_Filter and Zend_Log components, contained character
+encoding inconsistencies whereby calls to the htmlspecialchars() and
+htmlentities() functions used undefined or hard coded charset
+parameters. In many of these cases developers were unable to set a
+character encoding of their choice. These inconsistencies could, in
+specific circumstances, allow certain multibyte representations of
+special HTML characters pass through unescaped leaving applications
+potentially vulnerable to cross-site scripting (XSS) exploits. Such
+exploits would only be possible if a developer used a non-typical
+character encoding (such as UTF-7), allowed users to define the
+character encoding, or served HTML documents without a valid character
+set defined. These classes have been reworked to use a default character
+encoding of UTF-8 and now expose methods to allow developers set a
+custom character encoding.
+
+In addition, a decision was made to default to UTF-8 for the internal
+encoding mechanisms used by Zend_View. If you were relying on Zend_View
+using ISO-8859-1 encoding previously, you may need to specify that
+encoding manually now. You may do so in several ways:
 
  * If manually instantiating Zend_View:
    $view = new Zend_View(array('encoding' => 'ISO-8859-1'));
@@ -37,13 +54,14 @@ to specify that encoding manually now. You may do so in several ways:
  * From your application.ini:
    resources.view.encoding = "ISO-8859-1"
 
-Regardless, we recommend using UTF-8 encoding whenever possible to help
-prevent potential multibyte XSS attacks on your application. While no
-actual security exploits were discovered, the Zend Framework team felt
-it was advisable to make the changes as noted to improve the overall
-security of the framework.
+Regardless, we recommend using UTF-8 or ensuring your chosen character
+encoding is used consistently across all components to help prevent
+potential multibyte based XSS attacks against your application. We also
+recommend that developers ensure HTML documents are served with a valid
+character set defined, such as via the Content-Type header or inside the
+document itself.
 
-Actual vulnerabilities reported and fixed with this version include:
+###
 
 Zend_Dojo_View_Helper_Editor was incorrectly decorating a TEXTAREA
 instead of a DIV. The Dojo team has reported that this has security
@@ -55,6 +73,8 @@ decorate an HTML DIV, and then provide a separate TEXTAREA within a
 NOSCRIPT tag. If you use Zend_Dojo_View_Helper_Editor, it is strongly
 recommended that you upgrade to this release or the latest available
 Zend Framework release immediately.
+
+###
 
 Zend_Filter_StripTags contained an optional setting to allow
 whitelisting HTML comments in filtered text. Microsoft Internet Explorer
@@ -74,6 +94,8 @@ and ending delimiter (">"). If you use this filter and were enabling the
 ignored. We also recommend such users to upgrade to this release or the
 latest available Zend Framework release immediately.
 
+###
+
 Zend_File_Transfer had a potential MIME type injection vulnerability for
 file uploads. In certain situations where either PHP's ext/finfo
 extension is not installed and the mime_content_type() function was not
@@ -91,6 +113,8 @@ rely on it (e.g., Zend_Form_Element_File), we strongly recommend
 upgrading to this version or the most current version of Zend Framework
 available.
 
+###
+
 Zend_Service_ReCaptcha_MailHide had a potential XSS vulnerability. Due
 to the fact that the email address was never validated, and because its
 use of htmlentities() did not include the encoding argument, it was
@@ -98,6 +122,8 @@ potentially possible for a malicious user aware of the issue to inject a
 specially crafted multibyte string as an attack via the CAPTCHA's email
 argument. If you use this service, we recommend upgrading to this
 release or the latest available Zend Framework release immediately.
+
+###
 
 Zend_Json_Encoder was not taking into account the solidus character
 ("/") during encoding, leading to incompatibilities with the JSON
