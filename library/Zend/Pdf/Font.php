@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Pdf
  * @subpackage Fonts
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -33,7 +33,7 @@
  *
  * @package    Zend_Pdf
  * @subpackage Fonts
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Pdf_Font
@@ -551,7 +551,7 @@ abstract class Zend_Pdf_Font
                 break;
 
             default:
-                require_once 'Zend/Pdf/Excaption.php';
+                require_once 'Zend/Pdf/Exception.php';
                 throw new Zend_Pdf_Exception("Unknown font name: $name",
                                              Zend_Pdf_Exception::BAD_FONT_NAME);
         }

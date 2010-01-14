@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Test
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -45,7 +45,7 @@ require_once 'Zend/Controller/Action.php';
  * @category   Zend
  * @package    Zend_Test
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Test
  * @group      Zend_Test_PHPUnit
@@ -756,6 +756,30 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
             $application->getBootstrap()->getResource('frontcontroller'),
             $this->testCase->getFrontController()
         );
+    }
+
+    /**
+     * @group ZF-8193
+     */
+    public function testWhenApplicationObjectUsedAsBootstrapTestCaseShouldExecuteBootstrapRunMethod()
+    {
+        require_once 'Zend/Application.php';
+        $application = new Zend_Application('testing', array(
+            'resources' => array(
+                'frontcontroller' => array(
+                    'controllerDirectory' => dirname(__FILE__) . '/_files/application/controllers',
+                ),
+            ),
+        ));
+        $this->testCase->bootstrap = $application;
+        $this->testCase->bootstrap();
+        $this->testCase->dispatch('/');
+        $front = $application->getBootstrap()->getResource('frontcontroller');
+        $boot  = $front->getParam('bootstrap');
+        $type  = is_object($boot)
+               ? get_class($boot)
+               : gettype($boot);
+        $this->assertTrue($boot === $this->testCase->bootstrap->getBootstrap(), $type);
     }
 }
 

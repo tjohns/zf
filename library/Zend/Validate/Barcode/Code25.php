@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id:$
  */
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Barcode/AdapterAbstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Barcode_Code25 extends Zend_Validate_Barcode_AdapterAbstract
@@ -36,7 +36,7 @@ class Zend_Validate_Barcode_Code25 extends Zend_Validate_Barcode_AdapterAbstract
      * Allowed barcode lengths
      * @var integer
      */
-    protected $_length = 'even';
+    protected $_length = -1;
 
     /**
      * Allowed barcode characters
@@ -48,13 +48,13 @@ class Zend_Validate_Barcode_Code25 extends Zend_Validate_Barcode_AdapterAbstract
      * Checksum function
      * @var string
      */
-    protected $_checksum = '_mod10';
+    protected $_checksum = '_code25';
 
     /**
      * Constructor
      *
      * Sets check flag to false.
-     * 
+     *
      * @return void
      */
     public function __construct()

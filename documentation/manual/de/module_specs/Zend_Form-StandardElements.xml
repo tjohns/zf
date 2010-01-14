@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 17663 -->
+<!-- EN-Revision: 20212 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
     <para>
-        Zend Framework wird mit konkreten Element Klassen ausgeliefert die die meisten HTML
+        Zend Framework wird mit konkreten Element Klassen ausgeliefert welche die meisten HTML
         Form Elemente abdecken. Die meisten spezifizieren einfach einen speziellen View Helfer
         zur Verwendung wenn das Element dekoriert wird, aber einige bieten zusätzliche
         Funktionalitäten an. Nachfolgend ist eine Liste aller solcher Klassen, sowie eine
@@ -444,7 +444,7 @@ $form->addElement($element, 'foo');
             </para>
 
             <para>
-                Beachte, das das auch der Fall ist wenn man mehrere Formulare verwendet.
+                Beachte, dass das auch der Fall ist wenn man mehrere Formulare verwendet.
             </para>
         </note>
     </sect2>
@@ -464,7 +464,7 @@ $form->addElement($element, 'foo');
 
         <para>
             Dieses Element bietet Schutz vor CSRF Attacken auf Forms, und stellt sicher das die
-            Daten die übertragen werden von der Benutzersession stammen die die Form erstellt hat
+            Daten die übertragen werden von der Benutzersession stammen welche die Form erstellt hat
             und nicht durch ein bösartiges Skript. Sicherheit wird ermöglicht durch das hinzufügen
             eines Hash Elements zur form und dessen Prüfung wenn die Form übermittelt wird.
         </para>
@@ -516,7 +516,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
             Zugriffsmethode <methodname>setImageValue()</methodname> verwendet wird (oder der
             'imageValue Konfigurations Schlüssel). Wenn der Wert der für das Element gesetzt ist,
             mit <code>imageValue</code> übereinstimmt, gibt <methodname>isChecked()</methodname>
-            true zurück.
+            <constant>TRUE</constant> zurück.
         </para>
 
         <para>
@@ -550,8 +550,8 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
             Standardmäßig registriert dieses Element die <code>InArray</code> Prüfung welche gegen
             Arrayschlüssel von registrierten Optionen prüft. Dieses Verhalten kann deaktiviert
             werden indem entweder <methodname>setRegisterInArrayValidator(false)</methodname>
-            aufgerufen, oder indem ein false Wert an den <code>registerInArrayValidator</code>
-            Konfigurationsschlüssel übergeben wird.
+            aufgerufen, oder indem ein <constant>FALSE</constant> Wert an den
+            <code>registerInArrayValidator</code> Konfigurationsschlüssel übergeben wird.
         </para>
 
         <para>
@@ -651,8 +651,8 @@ $element->setValue(array('bar', 'bat'));
             Standardmäßig registriert dieses Element die <code>InArray</code> Prüfung welche gegen
             Arrayschlüssel von registrierten Optionen prüft. Dieses Verhalten kann deaktiviert
             werden indem entweder <methodname>setRegisterInArrayValidator(false)</methodname>
-            aufgerufen, oder indem ein false Wert an den <code>registerInArrayValidator</code>
-            Konfigurationsschlüssel übergeben wird.
+            aufgerufen, oder indem ein <constant>FALSE</constant> Wert an den
+            <code>registerInArrayValidator</code> Konfigurationsschlüssel übergeben wird.
         </para>
     </sect2>
 
@@ -688,12 +688,12 @@ $element->setValue(array('bar', 'bat'));
             Standardmäßig registriert dieses Element die <code>InArray</code> Prüfung welche gegen
             Arrayschlüssel von registrierten Optionen prüft. Dieses Verhalten kann deaktiviert
             werden indem entweder <methodname>setRegisterInArrayValidator(false)</methodname>
-            aufgerufen, oder indem ein false Wert an den <code>registerInArrayValidator</code>
-            Konfigurationsschlüssel übergeben wird.
+            aufgerufen, oder indem ein <constant>FALSE</constant> Wert an den
+            <code>registerInArrayValidator</code> Konfigurationsschlüssel übergeben wird.
         </para>
 
         <para>
-            Wie alle Elemente die die Basisklasse des Mutli Elements erweitern, können die
+            Wie alle Elemente welche die Basisklasse des Multl Elements erweitern, können die
             folgenden Methode verwendet werden um die Radio Optionen zu manipulieren die angezeigt
             werden:
         </para>
@@ -756,8 +756,8 @@ $element->setValue(array('bar', 'bat'));
             Standardmäßig registriert dieses Element die <code>InArray</code> Prüfung welche gegen
             Arrayschlüssel von registrierten Optionen prüft. Dieses Verhalten kann deaktiviert
             werden indem entweder <methodname>setRegisterInArrayValidator(false)</methodname>
-            aufgerufen, oder indem ein false Wert an den <code>registerInArrayValidator</code>
-            Konfigurationsschlüssel übergeben wird.
+            aufgerufen, oder indem ein <constant>FALSE</constant> Wert an den
+            <code>registerInArrayValidator</code> Konfigurationsschlüssel übergeben wird.
         </para>
 
         <para>
@@ -845,6 +845,3 @@ $element->setValue(array('bar', 'bat'));
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 tw=80 et:
--->

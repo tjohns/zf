@@ -41,7 +41,7 @@
             also seen its usage increase significantly though it lacks a formal specification and
             currently does not support Atom 1.0 feeds.
         </para>
-        
+
         <para>
             Perhaps surprisingly given its relative early age, Pubsubhubbub is already in use including
             in Google Reader, Feedburner, and there are plugins available for Wordpress blogs.
@@ -91,10 +91,10 @@
             use cases, and APIs are covered in subsequent sections.
         </para>
     </sect2>
-    
+
     <sect2 id="zend.feed.pubsubhubbub.zend.feed.pubsubhubbub.publisher">
         <title>Zend_Feed_Pubsubhubbub_Publisher</title>
-        
+
         <para>
             In Pubsubhubbub, the Publisher is the party who publishes a live feed and frequently updates
             it with new content. This may be a blog, an aggregator, or even a web service with a public
@@ -132,11 +132,11 @@
         <programlisting language="php"><![CDATA[
 $publisher = new Zend_Feed_Pubsubhubbub_Publisher;
 $publisher->addHubUrls(array(
-    'http://pubsubhubbub.appspot.com/', 
+    'http://pubsubhubbub.appspot.com/',
     'http://hubbub.example.com',
 ));
 $publisher->addUpdatedTopicUrls(array(
-    'http://www.example.net/rss', 
+    'http://www.example.net/rss',
     'http://www.example.net/atom',
 ));
 $publisher->notifyAll();
@@ -178,7 +178,7 @@ if (!$publisher->isSuccess()) {
             temporary downtime or Publisher errors/downtime.
         </para>
     </sect2>
-    
+
     <sect2 id="zend.feed.pubsubhubbub.zend.feed.pubsubhubbub.subscriber">
         <title>Zend_Feed_Pubsubhubbub_Subscriber</title>
 
@@ -254,7 +254,7 @@ if (!$publisher->isSuccess()) {
                 demonstrated below:
             </para>
 
-            <programlisting lang="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
     $storage = new Zend_Feed_Pubsubhubbub_Model_Subscription;
 
     $subscriber = new Zend_Feed_Pubsubhubbub_Subscriber;
@@ -276,13 +276,34 @@ if (!$publisher->isSuccess()) {
                 This custom adapter may be as simple in intent as changing the table name to use or as
                 complex as you deem necessary.
             </para>
-            
+
             <para>
                 While this Model is offered as a default ready-to-roll solution, you may create your
                 own Model using any other backend or database layer (e.g. Doctrine) so long as the
                 resulting class implements the interface
                 <classname>Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface</classname>.
             </para>
+            
+            <para>
+                An example schema (MySQL) for a subscription table accessible by the provided model
+                may look similar to:
+            </para>
+            
+                    <programlisting language="sql"><![CDATA[
+CREATE TABLE IF NOT EXISTS `subscription` (
+  `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `topic_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hub_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `last_modified` datetime DEFAULT NULL,
+  `lease_seconds` bigint(20) DEFAULT NULL,
+  `verify_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `secret` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `expiration_time` datetime DEFAULT NULL,
+  `subscription_state` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+]]></programlisting>
 
             <para>
                 Behind the scenes, the Subscriber above will send a request to the Hub endpoint containing the
@@ -323,7 +344,7 @@ if (!$publisher->isSuccess()) {
                                     URI path which is more difficult to implement in a Zend Framework
                                     application.
                                 </para>
-                                
+
                                 <para>
                                     Nevertheless, since not all Hubs support query string parameters,
                                     we still strongly recommend adding the subscription key as a path component
@@ -493,7 +514,7 @@ if (!$publisher->isSuccess()) {
                 class. Using it is quite simple since most of its work is performed internally.
             </para>
 
-            <programlisting lang="php"><![CDATA[
+            <programlisting language="php"><![CDATA[
     $storage = new Zend_Feed_Pubsubhubbub_Model_Subscription;
     $callback = new Zend_Feed_Pubsubhubbub_Subscriber_Callback;
     $callback->setStorage($storage);
@@ -544,10 +565,10 @@ if (!$publisher->isSuccess()) {
                 </para>
             </important>
         </sect3>
-        
+
         <sect3 id="zend.feed.pubsubhubbub.zend.feed.pubsubhubbub.subscriber.setting.up.and.using.a.callback.url.route">
             <title>Setting Up And Using A Callback URL Route</title>
-            
+
             <para>
                 As noted earlier, the <classname>Zend_Feed_Pubsubhubbub_Subscriber_Callback</classname>
                 class receives the combined key associated with any subscription from the Hub via one
@@ -558,22 +579,22 @@ if (!$publisher->isSuccess()) {
                 recommended to use the most compatible means of adding this key to the Callback URL
                 by appending it to the URL's path.
             </para>
-            
+
             <para>Thus the URL http://www.example.com/callback?xhub.subscription=key would become
             http://www.example.com/callback/key.</para>
-            
+
             <para>Since the query string method is the default in anticipation of a greater level
             of future support for the full 0.2 specification, this requires some additional work
             to implement.</para>
-            
+
             <para>The first step to to make the <classname>Zend_Feed_Pubsubhubbub_Subscriber_Callback</classname>
             class aware of the path contained subscription key. It's manually injected therefore
             since it also requires manually defining a route for this purpose. This is achieved simply by
             called the method <methodname>Zend_Feed_Pubsubhubbub_Subscriber_Callback::setSubscriptionKey()</methodname>
             with the parameter being the key value available from the Router. The example below
             demonstrates this using a Zend Framework controller.</para>
-            
-            <programlisting lang="php"><![CDATA[
+
+            <programlisting language="php"><![CDATA[
 class CallbackController extends Zend_Controller_Action
 {
 
@@ -607,12 +628,12 @@ class CallbackController extends Zend_Controller_Action
 
 }
     ]]></programlisting>
-    
+
         <para>Actually adding the route which would map the path-appended key
         to a parameter for retrieval from a controller can be accomplished using
         a Route configuration such as the INI formatted example below for use
         with <classname>Zend_Application</classname> bootstrapping.</para>
-        
+
         <programlisting language="dosini"><![CDATA[
 ; Callback Route to enable appending a PuSH Subscription's lookup key
 resources.router.routes.callback.route = "callback/:subkey"
@@ -620,7 +641,7 @@ resources.router.routes.callback.defaults.module = "default"
 resources.router.routes.callback.defaults.controller = "callback"
 resources.router.routes.callback.defaults.action = "index"
 ]]></programlisting>
-            
+
         </sect3>
     </sect2>
 </sect1>

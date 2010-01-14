@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -29,6 +29,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'Zend/Filter/AlnumTest.php';
 require_once 'Zend/Filter/AlphaTest.php';
 require_once 'Zend/Filter/BaseNameTest.php';
+require_once 'Zend/Filter/BooleanTest.php';
 require_once 'Zend/Filter/CallbackTest.php';
 require_once 'Zend/Filter/CompressTest.php';
 require_once 'Zend/Filter/DecompressTest.php';
@@ -89,7 +90,7 @@ require_once 'Zend/Filter/Word/AllTests.php';
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Filter
  */
@@ -117,6 +118,7 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_AlnumTest');
         $suite->addTestSuite('Zend_Filter_AlphaTest');
         $suite->addTestSuite('Zend_Filter_BaseNameTest');
+        $suite->addTestSuite('Zend_Filter_BooleanTest');
         $suite->addTestSuite('Zend_Filter_CallbackTest');
         $suite->addTestSuite('Zend_Filter_CompressTest');
         $suite->addTestSuite('Zend_Filter_DecompressTest');

@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -28,6 +28,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Zend/View/Helper/ActionTest.php';
 require_once 'Zend/View/Helper/BaseUrlTest.php';
+require_once 'Zend/View/Helper/CurrencyTest.php';
 require_once 'Zend/View/Helper/CycleTest.php';
 require_once 'Zend/View/Helper/DeclareVarsTest.php';
 require_once 'Zend/View/Helper/DoctypeTest.php';
@@ -77,7 +78,7 @@ require_once 'Zend/View/Helper/UrlTest.php';
  * @category   Zend
  * @package    Zend_View
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_View
  * @group      Zend_View_Helper
@@ -95,6 +96,7 @@ class Zend_View_Helper_AllTests
 
         $suite->addTestSuite('Zend_View_Helper_ActionTest');
         $suite->addTestSuite('Zend_View_Helper_BaseUrlTest');
+        $suite->addTestSuite('Zend_View_Helper_CurrencyTest');
         $suite->addTestSuite('Zend_View_Helper_CycleTest');
         $suite->addTestSuite('Zend_View_Helper_DeclareVarsTest');
         $suite->addTestSuite('Zend_View_Helper_DoctypeTest');

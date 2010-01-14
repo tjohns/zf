@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Barcode/Renderer/RendererAbstract.php';
  *
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
@@ -38,8 +38,8 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
      * @var array
      */
     protected $_allowedImageType = array(
-        'png', 
-        'jpeg', 
+        'png',
+        'jpeg',
         'gif',
     );
 
@@ -79,6 +79,16 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
      */
     protected $_userWidth = 0;
 
+    public function __construct($options = null)
+    {
+        if (!function_exists('gd_info')) {
+            require_once 'Zend/Barcode/Renderer/Exception.php';
+            throw new Zend_Barcode_Renderer_Exception('Zend_Barcode_Renderer_Image requires the GD extension');
+        }
+
+        parent::__construct($options);
+    }
+
     /**
      * Set height of the result image
      * @param null|integer $value
@@ -99,7 +109,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Get barcode height
-     * 
+     *
      * @return int
      */
     public function getHeight()
@@ -109,8 +119,8 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Set barcode width
-     * 
-     * @param mixed $value 
+     *
+     * @param mixed $value
      * @return void
      */
     public function setWidth($value)
@@ -127,7 +137,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Get barcode width
-     * 
+     *
      * @return int
      */
     public function getWidth()
@@ -181,7 +191,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Retrieve the image type to produce
-     * 
+     *
      * @return string
      */
     public function getImageType()
@@ -254,8 +264,8 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
         }
         $this->_adjustPosition(imagesy($this->_resource), imagesx($this->_resource));
         imagefilledrectangle(
-            $this->_resource, 
-            $this->_leftOffset, 
+            $this->_resource,
+            $this->_leftOffset,
             $this->_topOffset,
             $this->_leftOffset + $barcodeWidth - 1,
             $this->_topOffset + $barcodeHeight - 1,
@@ -265,7 +275,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Check barcode parameters
-     * 
+     *
      * @return void
      */
     protected function _checkParams()
@@ -275,7 +285,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Check barcode dimensions
-     * 
+     *
      * @return void
      */
     protected function _checkDimensions()
@@ -357,7 +367,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
         );
 
         $allocatedColor = imagecolorallocate(
-            $this->_resource, 
+            $this->_resource,
             ($color & 0xFF0000) >> 16,
             ($color & 0x00FF00) >> 8,
             $color & 0x0000FF
@@ -384,7 +394,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
     protected function _drawText($text, $size, $position, $font, $color, $alignment = 'center', $orientation = 0)
     {
         $allocatedColor = imagecolorallocate(
-            $this->_resource, 
+            $this->_resource,
             ($color & 0xFF0000) >> 16,
             ($color & 0x00FF00) >> 8,
             $color & 0x0000FF
@@ -411,7 +421,7 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
                 );
             }
             $fontWidth = imagefontwidth($font);
-            $positionY = $position[1] - imagefontheight($font);
+            $positionY = $position[1] - imagefontheight($font) + 1;
             switch ($alignment) {
                 case 'left':
                     $positionX = $position[0];
@@ -438,13 +448,13 @@ class Zend_Barcode_Renderer_Image extends Zend_Barcode_Renderer_RendererAbstract
                     break;
             }
             imagettftext(
-                $this->_resource, 
-                $size, 
+                $this->_resource,
+                $size,
                 $orientation,
                 $position[0] - ($width * cos(pi() * $orientation / 180)),
                 $position[1] + ($width * sin(pi() * $orientation / 180)),
                 $allocatedColor,
-                $font, 
+                $font,
                 $text
             );
         }

@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -38,7 +38,7 @@ require_once 'Zend/Loader/Autoloader.php';
  * @category   Zend
  * @package    Zend_Application
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Application
  */
@@ -126,6 +126,29 @@ class Zend_Application_Resource_LogTest extends PHPUnit_Framework_TestCase
         $log->log($message = 'logged-message', Zend_Log::INFO);
         rewind($stream);
         $this->assertContains($message, stream_get_contents($stream));
+    }
+    
+    /**
+     * @group ZF-8602
+     */
+    public function testNumericLogStreamFilterParamsPriorityDoesNotFail()
+    {
+        $options = array(
+            'stream' => array(
+                'writerName'   => 'Stream',
+                'writerParams' => array(
+                    'stream' => "php://memory",
+                    'mode'   => 'a'
+                ),
+                'filterName' => 'Priority',
+                'filterParams' => array(
+                    'priority' => '4'
+                ),
+            ),
+        );
+        $resource = new Zend_Application_Resource_Log($options);
+        $resource->setBootstrap($this->bootstrap);
+        $resource->init();
     }
 }
 

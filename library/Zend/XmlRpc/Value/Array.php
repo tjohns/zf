@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -31,7 +31,7 @@ require_once 'Zend/XmlRpc/Value/Collection.php';
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_XmlRpc_Value_Array extends Zend_XmlRpc_Value_Collection
@@ -56,18 +56,18 @@ class Zend_XmlRpc_Value_Array extends Zend_XmlRpc_Value_Collection
     protected function _generateXml()
     {
         $generator = $this->getGenerator();
-        $generator->startElement('value')
-                  ->startElement('array')
-                  ->startElement('data');
+        $generator->openElement('value')
+                  ->openElement('array')
+                  ->openElement('data');
 
         if (is_array($this->_value)) {
             foreach ($this->_value as $val) {
                 $val->generateXml();
             }
         }
-        $generator->endElement('data')
-                  ->endElement('array')
-                  ->endElement('value');
+        $generator->closeElement('data')
+                  ->closeElement('array')
+                  ->closeElement('value');
 
         $this->_xml = (string)$generator;
     }

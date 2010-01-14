@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -34,7 +34,7 @@ require_once 'Zend/Filter/HtmlEntities.php';
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Filter
  */
@@ -101,11 +101,12 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
     /**
      * Ensures that getCharSet() returns expected default value
      *
+     * @group ZF-8715
      * @return void
      */
     public function testGetCharSet()
     {
-        $this->assertEquals('ISO-8859-1', $this->_filter->getCharSet());
+        $this->assertEquals('UTF-8', $this->_filter->getCharSet());
     }
 
     /**

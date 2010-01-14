@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -24,7 +24,14 @@
  * @see Zend_Uri
  */
 require_once 'Zend/Uri.php';
-
+/**
+ * @see Zend_Filter_HtmlEntities
+ */
+require_once 'Zend/Filter/HtmlEntities.php';
+/**
+ * @see Zend_Filter_Callback
+ */
+require_once 'Zend/Filter/Callback.php';
 /**
  * @see Zend_Markup_Renderer_RendererAbstract
  */
@@ -36,17 +43,18 @@ require_once 'Zend/Markup/Renderer/RendererAbstract.php';
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
 {
+
     /**
      * Tag info
      *
      * @var array
      */
-    protected $_tags = array(
+    protected $_markups = array(
         'b' => array(
             'type'   => 10, // self::TYPE_REPLACE | self::TAG_NORMAL
             'tag'    => 'strong',
@@ -150,20 +158,20 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
         // callback tags
         'url' => array(
             'type'     => 6, // self::TYPE_CALLBACK | self::TAG_NORMAL
-            'callback' => array('Zend_Markup_Renderer_Html', '_htmlUrl'),
+            'callback' => null,
             'group'    => 'inline',
             'filter'   => true,
         ),
         'img' => array(
             'type'     => 6,
-            'callback' => array('Zend_Markup_Renderer_Html', '_htmlImg'),
-            'group'    => 'inline_empty',
+            'callback' => null,
+            'group'    => 'inline-empty',
             'filter'   => true,
         ),
         'code' => array(
             'type'     => 6,
-            'callback' => array('Zend_Markup_Renderer_Html', '_htmlCode'),
-            'group'    => 'block_empty',
+            'callback' => null,
+            'group'    => 'block-empty',
             'filter'   => false,
         ),
         'p' => array(
@@ -176,7 +184,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             'type'   => 10,
             'start'  => '',
             'end'    => '',
-            'group'  => 'block_empty',
+            'group'  => 'block-empty',
             'filter' => true,
         ),
         'quote' => array(
@@ -187,7 +195,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
         ),
         'list' => array(
             'type'     => 6,
-            'callback' => array('Zend_Markup_Renderer_Html', '_htmlList'),
+            'callback' => null,
             'group'    => 'list',
             'filter'   => false,
         ),
@@ -201,6 +209,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             'type'    => 9, // self::TYPE_REPLACE | self::TAG_SINGLE
             'tag'     => 'hr',
             'group'   => 'block',
+            'empty'   => true,
         ),
         // aliases
         'bold' => array(
@@ -269,8 +278,8 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
         ),
         'color' => array(
             'type' => 16,
-            'name' => 'span'
-        )
+            'name' => 'span',
+        ),
     );
 
     /**
@@ -279,12 +288,12 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
      * @var array
      */
     protected $_groups = array(
-        'block'        => array('block', 'inline', 'block_empty', 'inline_empty', 'list'),
-        'inline'       => array('inline', 'inline_empty'),
+        'block'        => array('block', 'inline', 'block-empty', 'inline-empty', 'list'),
+        'inline'       => array('inline', 'inline-empty'),
         'list'         => array('list-item'),
-        'list-item'    => array('inline', 'inline_empty', 'list'),
-        'block_empty'  => array(),
-        'inline_empty' => array(),
+        'list-item'    => array('inline', 'inline-empty', 'list'),
+        'block-empty'  => array(),
+        'inline-empty' => array(),
     );
 
     /**
@@ -309,6 +318,39 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
 
 
     /**
+     * Constructor
+     *
+     * @param array|Zend_Config $options
+     *
+     * @return void
+     */
+    public function __construct($options = array())
+    {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+
+        $this->_pluginLoader = new Zend_Loader_PluginLoader(array(
+            'Zend_Markup_Renderer_Html' => 'Zend/Markup/Renderer/Html/'
+        ));
+
+        parent::__construct($options);
+    }
+
+    /**
+     * Add the default filters
+     *
+     * @return void
+     */
+    public function addDefaultFilters()
+    {
+        $this->_defaultFilter = new Zend_Filter();
+
+        $this->_defaultFilter->addFilter(new Zend_Filter_HtmlEntities());
+        $this->_defaultFilter->addFilter(new Zend_Filter_Callback('nl2br'));
+    }
+
+    /**
      * Execute a replace token
      *
      * @param  Zend_Markup_Token $token
@@ -321,7 +363,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             if (!isset($tag['attributes'])) {
                 $tag['attributes'] = array();
             }
-            $attrs = self::_renderAttributes($token, $tag['attributes']);
+            $attrs = self::renderAttributes($token, $tag['attributes']);
             return "<{$tag['tag']}{$attrs}>{$this->_render($token)}</{$tag['tag']}>";
         }
 
@@ -341,7 +383,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             if (!isset($tag['attributes'])) {
                 $tag['attributes'] = array();
             }
-            $attrs = self::_renderAttributes($token, $tag['attributes']);
+            $attrs = self::renderAttributes($token, $tag['attributes']);
             return "<{$tag['tag']}{$attrs} />";
         }
         return parent::_executeSingleReplace($token, $tag);
@@ -354,7 +396,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
      * @param  array $tag
      * @return string
      */
-    protected static function _renderAttributes(Zend_Markup_Token $token, array $attributes = array())
+    public static function renderAttributes(Zend_Markup_Token $token, array $attributes = array())
     {
         $attributes = array_merge(self::$_defaultAttributes, $attributes);
 
@@ -378,7 +420,7 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             $tokenAttributes['style'] .= 'text-align: ' . $tokenAttributes['align'] . ';';
             unset($tokenAttributes['align']);
         }
-        if (isset($tokenAttributes['color']) && self::_checkColor($tokenAttributes['color'])) {
+        if (isset($tokenAttributes['color']) && self::checkColor($tokenAttributes['color'])) {
             $tokenAttributes['style'] .= 'color: ' . $tokenAttributes['color'] . ';';
             unset($tokenAttributes['color']);
         }
@@ -401,142 +443,13 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
     }
 
     /**
-     * Method for the URL tag
-     *
-     * @param  Zend_Markup_Token $token
-     * @param  string $text
-     * @return string
-     */
-    protected static function _htmlUrl(Zend_Markup_Token $token, $text)
-    {
-        if ($token->hasAttribute('url')) {
-            $url = $token->getAttribute('url');
-        } else {
-            $url = $text;
-        }
-
-        // check if the URL is valid
-        if (!Zend_Uri::check($url)) {
-            return $text;
-        }
-
-        $attributes = self::_renderAttributes($token);
-
-        return "<a href=\"{$url}\"{$attributes}>{$text}</a>";
-    }
-
-    /**
-     * Method for the img tag
-     *
-     * @param  Zend_Markup_Token $token
-     * @param  string $text
-     * @return string
-     */
-    protected static function _htmlImg(Zend_Markup_Token $token, $text)
-    {
-        $url = $text;
-
-        // check if the URL is valid
-        if (!Zend_Uri::check($url)) {
-            return $text;
-        }
-
-        if ($token->hasAttribute('alt')) {
-            $alt = $token->getAttribute('alt');
-        } else {
-            // try to get the alternative from the URL
-            $alt = rtrim($text, '/');
-            $alt = strrchr($alt, '/');
-            if (false !== strpos($alt, '.')) {
-                $alt = substr($alt, 1, strpos($alt, '.') - 1);
-            }
-        }
-
-        return "<img src=\"{$url}\" alt=\"{$alt}\"" . self::_renderAttributes($token) . " />";
-    }
-
-    /**
-     * Method for the list tag
-     *
-     * @param  Zend_Markup_Token $token
-     * @param  string $text
-     * @return void
-     */
-    protected static function _htmlList(Zend_Markup_Token $token, $text)
-    {
-        $type = null;
-        if ($token->hasAttribute('list')) {
-            // because '01' == '1'
-            if ($token->getAttribute('list') === '01') {
-                $type = 'decimal-leading-zero';
-            } else {
-                switch ($token->getAttribute('list')) {
-                    case '1':
-                        $type = 'decimal';
-                        break;
-                    case 'i':
-                        $type = 'lower-roman';
-                        break;
-                    case 'I':
-                        $type = 'upper-roman';
-                        break;
-                    case 'a':
-                        $type = 'lower-alpha';
-                        break;
-                    case 'A':
-                        $type = 'upper-alpha';
-                        break;
-
-                    // the following type is unsupported by IE (including IE8)
-                    case 'alpha':
-                        $type = 'lower-greek';
-                        break;
-
-                    // the CSS names itself
-                    case 'armenian': // unsupported by IE (including IE8)
-                    case 'decimal':
-                    case 'decimal-leading-zero': // unsupported by IE (including IE8)
-                    case 'georgian': // unsupported by IE (including IE8)
-                    case 'lower-alpha':
-                    case 'lower-greek': // unsupported by IE (including IE8)
-                    case 'lower-latin': // unsupported by IE (including IE8)
-                    case 'lower-roman':
-                    case 'upper-alpha':
-                    case 'upper-latin': // unsupported by IE (including IE8)
-                    case 'upper-roman':
-                        $type = $token->getAttribute('list');
-                        break;
-                }
-            }
-        }
-
-        if (null !== $type) {
-            return "<ol style=\"list-style-type: {$type}\">{$text}</ol>";
-        } else {
-            return "<ul>{$text}</ul>";
-        }
-    }
-
-    /**
-     * Method for the code tag
-     *
-     * @param  Zend_Markup_Token $token
-     * @param  string $text
-     * @return string
-     */
-    protected static function _htmlCode(Zend_Markup_Token $token, $text)
-    {
-        return highlight_string($text, true);
-    }
-
-    /**
      * Check if a color is a valid HTML color
      *
      * @param string $color
      *
      * @return bool
      */
-    protected static function _checkColor($color)
+    public static function checkColor($color)
     {
         /*
          * aqua, black, blue, fuchsia, gray, green, lime, maroon, navy, olive,
@@ -559,17 +472,4 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
         return false;
     }
 
-    /**
-     * Filter method, used for converting newlines to <br /> tags
-     *
-     * @param  string $value
-     * @return string
-     */
-    protected function _filter($value)
-    {
-        if ($this->_filter) {
-            return nl2br(htmlentities($value, ENT_QUOTES));
-        }
-        return $value;
-    }
 }

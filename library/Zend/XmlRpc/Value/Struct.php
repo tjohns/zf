@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -31,7 +31,7 @@ require_once 'Zend/XmlRpc/Value/Collection.php';
  * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
@@ -56,21 +56,21 @@ class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
     protected function _generateXML()
     {
         $generator = $this->getGenerator();
-        $generator->startElement('value')
-                  ->startElement('struct');
+        $generator->openElement('value')
+                  ->openElement('struct');
 
         if (is_array($this->_value)) {
             foreach ($this->_value as $name => $val) {
                 /* @var $val Zend_XmlRpc_Value */
-                $generator->startElement('member')
-                          ->startElement('name', $name)
-                          ->endElement('name');
+                $generator->openElement('member')
+                          ->openElement('name', $name)
+                          ->closeElement('name');
                 $val->generateXml();
-                $generator->endElement('member');
+                $generator->closeElement('member');
             }
         }
-        $generator->endElement('struct')
-                  ->endElement('value');
+        $generator->closeElement('struct')
+                  ->closeElement('value');
         $this->_xml = (string)$generator;
     }
 }

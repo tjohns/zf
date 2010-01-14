@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Parser
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Markup/TokenList.php';
 /**
  * @category   Zend
  * @package    Zend_Markup
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Markup_Token
@@ -97,10 +97,10 @@ class Zend_Markup_Token
      * @return void
      */
     public function __construct(
-        $tag, 
-        $type, 
-        $name = '', 
-        array $attributes = array(), 
+        $tag,
+        $type,
+        $name = '',
+        array $attributes = array(),
         Zend_Markup_Token $parent = null
     ) {
         $this->_tag        = $tag;
@@ -197,6 +197,18 @@ class Zend_Markup_Token
     public function getAttributes()
     {
         return $this->_attributes;
+    }
+
+    /**
+     * Add an attribute
+     *
+     * @return Zend_Markup_Token
+     */
+    public function addAttribute($name, $value)
+    {
+        $this->_attributes[$name] = $value;
+
+        return $this;
     }
 
     /**

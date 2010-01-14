@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -33,7 +33,7 @@ require_once 'Zend/Barcode/Object/Code39.php';
  * @package    Zend_Barcode
  * @subpackage UnitTests
  * @group      Zend_Barcode
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_Renderer_PdfTest extends Zend_Barcode_Renderer_TestCommon
@@ -120,7 +120,7 @@ class Zend_Barcode_Renderer_PdfTest extends Zend_Barcode_Renderer_TestCommon
     {
         $renderer = $this->_getRendererWithWidth500AndHeight300();
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
+        $this->assertEquals(62, $barcode->getHeight());
         $renderer->setBarcode($barcode);
         $renderer->setVerticalPosition('middle');
         $renderer->draw();
@@ -131,10 +131,10 @@ class Zend_Barcode_Renderer_PdfTest extends Zend_Barcode_Renderer_TestCommon
     {
         $renderer = $this->_getRendererWithWidth500AndHeight300();
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
+        $this->assertEquals(62, $barcode->getHeight());
         $renderer->setBarcode($barcode);
         $renderer->setVerticalPosition('bottom');
         $renderer->draw();
-        $this->assertEquals(269.5, $renderer->getTopOffset());
+        $this->assertEquals(269, $renderer->getTopOffset());
     }
 }

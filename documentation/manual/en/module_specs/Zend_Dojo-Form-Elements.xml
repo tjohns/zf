@@ -24,12 +24,13 @@
 
         <listitem><para>
                 <methodname>hasDijitParam($key)</methodname>: If a given dijit parameter
-                is defined and present, return TRUE, otherwise return FALSE.
+                is defined and present, return <constant>TRUE</constant>, otherwise return
+                <constant>FALSE</constant>.
         </para></listitem>
 
         <listitem><para>
                 <methodname>getDijitParam($key)</methodname>: retrieve the given dijit
-                parameter. If not available, a null value is returned.
+                parameter. If not available, a <constant>NULL</constant> value is returned.
         </para></listitem>
 
         <listitem><para>
@@ -48,7 +49,7 @@
     </itemizedlist>
 
     <para>
-        Dijit parameters are stored in the <code>dijitParams</code> public
+        Dijit parameters are stored in the <property>dijitParams</property> public
         property. Thus, you can dijit-enable an existing form element simply by
         setting this property on the element; you simply will not have the
         above accessors to facilitate manipulating the parameters.
@@ -78,7 +79,7 @@ $element->addDecorator('DijitElement')
 
     <para>
         A variant on DijitElement, DijitMulti, provides the functionality of
-        the <code>Multi</code> abstract form element, allowing the developer to
+        the <classname>Multi</classname> abstract form element, allowing the developer to
         specify 'multiOptions' -- typically select options or radio options.
     </para>
 
@@ -108,14 +109,14 @@ $element->addDecorator('DijitElement')
 
             <listitem><para>
                 <methodname>isChecked()</methodname> determines if the value submitted
-                matches the label; if so, it returns true. This is useful for
+                matches the label; if so, it returns <constant>TRUE</constant>. This is useful for
                 determining which button was used when a form was submitted.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Additionally, only the decorators <code>DijitElement</code> and
-            <code>DtDdWrapper</code> are utilized for Button elements.
+            Additionally, only the decorators <classname>DijitElement</classname> and
+            <classname>DtDdWrapper</classname> are utilized for Button elements.
         </para>
 
         <example id="zend.dojo.form.elements.button.example">
@@ -211,7 +212,7 @@ $form->addElement(
             <para>
                 ComboBoxes return the label values, and not the option values,
                 which can lead to a disconnect in expectations. For this reason,
-                ComboBoxes do not auto-register an <code>InArray</code>
+                ComboBoxes do not auto-register an <classname>InArray</classname>
                 validator (though FilteringSelects do).
             </para>
         </note>
@@ -280,11 +281,11 @@ $form->addElement(
 
         <para>
             By default, if no dojo.data store is registered with the element,
-            this element registers an <code>InArray</code> validator which
+            this element registers an <classname>InArray</classname> validator which
             validates against the array keys of registered options. You can
             disable this behavior by either calling
             <methodname>setRegisterInArrayValidator(false)</methodname>, or by passing a
-            false value to the <code>registerInArrayValidator</code>
+            <constant>FALSE</constant> value to the <property>registerInArrayValidator</property>
             configuration key.
         </para>
 
@@ -335,8 +336,8 @@ $form->addElement(
         </example>
 
         <para>
-            The above examples could also utilize <code>FilteringSelect</code>
-            instead of <code>ComboBox</code>.
+            The above examples could also utilize <classname>FilteringSelect</classname>
+            instead of <classname>ComboBox</classname>.
         </para>
     </sect3>
 
@@ -437,7 +438,7 @@ $form->addElement(
             <listitem><para>
                 <methodname>setStrict($flag)</methodname> and <methodname>getStrict()</methodname>:
                 whether or not to use strict regular expression matching when
-                validating input. If false, which is the default, it will be
+                validating input. If <constant>FALSE</constant>, which is the default, it will be
                 lenient about whitespace and some abbreviations.
             </para></listitem>
 
@@ -593,7 +594,7 @@ $form->addElement(
                 <para>
                     <emphasis>focusOnLoad</emphasis> is used to determine
                     whether this particular editor will receive focus when the
-                    page has loaded. By default, this is false. The method
+                    page has loaded. By default, this is <constant>FALSE</constant>. The method
                     <methodname>setFocusOnLoad($flag)</methodname> may be used to
                     set the value, while <methodname>getFocusOnLoad()</methodname>
                     will retrieve it.
@@ -613,7 +614,7 @@ $form->addElement(
                 <para>
                     <emphasis>inheritWidth</emphasis> is used to determine
                     whether the editor will use the parent container's width or
-                    simply default to 100% width. By default, this is false
+                    simply default to 100% width. By default, this is <constant>FALSE</constant>
                     (i.e., it will fill the width of the window). The method
                     <methodname>setInheritWidth($flag)</methodname> may be used to set the
                     value, while <methodname>getInheritWidth()</methodname> will retrieve
@@ -689,7 +690,7 @@ $form->addElement('editor', 'content', array(
             <para>
                 That said, there may be times when you want an Editor widget that can gracefully degrade to a
                 <acronym>TEXTAREA</acronym>. In such situations, you can do so by setting the
-                <varname>degrade</varname> property to <constant>true</constant>:
+                <varname>degrade</varname> property to <constant>TRUE</constant>:
             </para>
 
             <programlisting language="php"><![CDATA[
@@ -1060,11 +1061,11 @@ $form->addElement(
         </para>
 
         <para>
-            By default, this element registers an <code>InArray</code> validator
+            By default, this element registers an <classname>InArray</classname> validator
             which validates against the array keys of registered options. You
             can disable this behavior by either calling
             <methodname>setRegisterInArrayValidator(false)</methodname>, or by passing a
-            false value to the <code>registerInArrayValidator</code>
+            <constant>FALSE</constant> value to the <property>registerInArrayValidator</property>
             configuration key.
         </para>
 

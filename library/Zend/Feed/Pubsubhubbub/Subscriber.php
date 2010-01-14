@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Feed_Pubsubhubbub
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -24,9 +24,14 @@
 require_once 'Zend/Feed/Pubsubhubbub.php';
 
 /**
+ * @see Zend_Date
+ */
+require_once 'Zend/Date.php';
+
+/**
  * @category   Zend
  * @package    Zend_Feed_Pubsubhubbub
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Feed_Pubsubhubbub_Subscriber
@@ -101,10 +106,10 @@ class Zend_Feed_Pubsubhubbub_Subscriber
     protected $_asyncHubs = array();
 
     /**
-     * An instance of Zend_Feed_Pubsubhubbub_Entity used to background
+     * An instance of Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface used to background
      * save any verification tokens associated with a subscription or other.
      *
-     * @var Zend_Feed_Pubsubhubbub_Entity
+     * @var Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface
      */
     protected $_storage = null;
 
@@ -519,13 +524,13 @@ class Zend_Feed_Pubsubhubbub_Subscriber
     }
 
     /**
-     * Sets an instance of Zend_Feed_Pubsubhubbub_Entity used to background
+     * Sets an instance of Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface used to background
      * save any verification tokens associated with a subscription or other.
      *
-     * @param  Zend_Feed_Pubsubhubbub_Entity $storage
+     * @param  Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface $storage
      * @return Zend_Feed_Pubsubhubbub_Subscriber
      */
-    public function setStorage(Zend_Feed_Pubsubhubbub_Model_ModelAbstract $storage)
+    public function setStorage(Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface $storage)
     {
         $this->_storage = $storage;
         return $this;
@@ -536,7 +541,7 @@ class Zend_Feed_Pubsubhubbub_Subscriber
      * to background save any verification tokens associated with a subscription
      * or other.
      *
-     * @return Zend_Feed_Pubsubhubbub_Storage_StorageInterface
+     * @return Zend_Feed_Pubsubhubbub_Model_SubscriptionInterface
      */
     public function getStorage()
     {
@@ -732,23 +737,29 @@ class Zend_Feed_Pubsubhubbub_Subscriber
             $params['hub.lease_seconds'] = $this->getLeaseSeconds();
         }
 
-        // TODO: hub.secret not currently supported
+        // hub.secret not currently supported
         $optParams = $this->getParameters();
         foreach ($optParams as $name => $value) {
             $params[$name] = $value;
         }
         
         // store subscription to storage
+        $now = new Zend_Date;
+        $expires = null;
+        if (isset($params['hub.lease_seconds'])) {
+            $expires = $now->add($params['hub.lease_seconds'], Zend_Date::SECOND)
+                ->get('yyyy-MM-dd HH:mm:ss');
+        }
         $data = array(
             'id'                 => $key,
             'topic_url'          => $params['hub.topic'],
             'hub_url'            => $hubUrl,
-            'created_time'       => time(),
-            'last_modified'      => time(),
-            'lease_seconds'      => isset($params['hub.lease_seconds']) ? $params['hub.lease_seconds'] : null,
+            'created_time'       => $now->get('yyyy-MM-dd HH:mm:ss'),
+            'last_modified'      => $now->get('yyyy-MM-dd HH:mm:ss'),
+            'lease_seconds'      => $expires,
             'verify_token'       => hash('sha256', $params['hub.verify_token']),
             'secret'             => null,
-            'expiration_time'    => isset($params['hub.lease_seconds']) ? time() + $params['hub.lease_seconds'] : null,
+            'expiration_time'    => $expires,
             'subscription_state' => Zend_Feed_Pubsubhubbub::SUBSCRIPTION_NOTVERIFIED,
         );
         $this->getStorage()->setSubscription($data);

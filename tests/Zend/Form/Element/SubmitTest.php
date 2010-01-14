@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -30,6 +30,8 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Submit.php';
+require_once 'Zend/Form.php';
+require_once 'Zend/Registry.php';
 require_once 'Zend/Translate.php';
 require_once 'Zend/Translate/Adapter/Array.php';
 
@@ -39,7 +41,7 @@ require_once 'Zend/Translate/Adapter/Array.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Form
  */
@@ -66,6 +68,8 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        Zend_Registry::_unsetInstance();
+        Zend_Form::setDefaultTranslator(null);
         $this->element = new Zend_Form_Element_Submit('foo');
     }
 

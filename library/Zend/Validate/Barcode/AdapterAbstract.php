@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Ean13.php 18028 2009-09-08 20:52:23Z thomas $
  */
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Barcode/AdapterInterface.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Validate_Barcode_AdapterAbstract
@@ -112,7 +112,7 @@ abstract class Zend_Validate_Barcode_AdapterAbstract
         $characters = $this->getCharacters();
         if ($characters == 128) {
             for ($x = 0; $x < 128; ++$x) {
-                $value = strtr($value, chr($x), '');
+                $value = str_replace(chr($x), '', $value);
             }
         } else {
             $chars = str_split($characters);
@@ -199,17 +199,18 @@ abstract class Zend_Validate_Barcode_AdapterAbstract
 
     /**
      * Validates the checksum (Modulo 10)
+     * GTIN implementation factor 3
      *
      * @param  string $value The barcode to validate
      * @return boolean
      */
-    protected function _mod10($value)
+    protected function _gtin($value)
     {
         $barcode = substr($value, 0, -1);
         $sum     = 0;
-        $length  = strlen($value) - 2;
+        $length  = strlen($barcode) - 1;
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i <= $length; $i++) {
             if (($i % 2) === 0) {
                 $sum += $barcode[$length - $i] * 3;
             } else {
@@ -224,5 +225,91 @@ abstract class Zend_Validate_Barcode_AdapterAbstract
         }
 
         return true;
+    }
+
+    /**
+     * Validates the checksum (Modulo 10)
+     * IDENTCODE implementation factors 9 and 4
+     *
+     * @param  string $value The barcode to validate
+     * @return boolean
+     */
+    protected function _identcode($value)
+    {
+        $barcode = substr($value, 0, -1);
+        $sum     = 0;
+        $length  = strlen($value) - 2;
+
+        for ($i = 0; $i <= $length; $i++) {
+            if (($i % 2) === 0) {
+                $sum += $barcode[$length - $i] * 4;
+            } else {
+                $sum += $barcode[$length - $i] * 9;
+            }
+        }
+
+        $calc     = $sum % 10;
+        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        if ($value[$length + 1] != $checksum) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates the checksum (Modulo 10)
+     * CODE25 implementation factor 3
+     *
+     * @param  string $value The barcode to validate
+     * @return boolean
+     */
+    protected function _code25($value)
+    {
+        $barcode = substr($value, 0, -1);
+        $sum     = 0;
+        $length  = strlen($barcode) - 1;
+
+        for ($i = 0; $i <= $length; $i++) {
+            if (($i % 2) === 0) {
+                $sum += $barcode[$i] * 3;
+            } else {
+                $sum += $barcode[$i];
+            }
+        }
+
+        $calc     = $sum % 10;
+        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        if ($value[$length + 1] != $checksum) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates the checksum ()
+     * POSTNET implementation
+     *
+     * @param  string $value The barcode to validate
+     * @return boolean
+     */
+    protected function _postnet($value)
+    {
+        $checksum = substr($value, -1, 1);
+        $values   = str_split(substr($value, 0, -1));
+
+        $check = 0;
+        foreach($values as $row) {
+            $check += $row;
+        }
+
+        $check %= 10;
+        $check = 10 - $check;
+        if ($check == $checksum) {
+            return true;
+        }
+
+        return false;
     }
 }

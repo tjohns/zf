@@ -123,9 +123,10 @@ if (!$adapter->receive()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis>ignoreNoFile</emphasis>: If this option is set to true, all
-                    validators will ignore files that have not been uploaded by the form. The
-                    default value is false which results in an error if no files were specified.
+                    <emphasis>ignoreNoFile</emphasis>: If this option is set to
+                    <constant>TRUE</constant>, all validators will ignore files that have not been
+                    uploaded by the form. The default value is <constant>FALSE</constant> which
+                    results in an error if no files were specified.
                 </para>
             </listitem>
         </itemizedlist>
@@ -202,7 +203,6 @@ $upload->receive();
     </sect2>
 
     <sect2 id="zend.file.transfer.introduction.informations">
-
         <title>Additional File Informations</title>
 
         <para>
@@ -257,7 +257,7 @@ $upload->receive();
         <para>
             By default file names will be returned with the complete path. If you only need the file
             name without path, you can set the second parameter, <varname>$path</varname>, which
-            will truncate the file path when set to false.
+            will truncate the file path when set to <constant>FALSE</constant>.
         </para>
 
         <example id="zend.file.transfer.introduction.informations.example1">
@@ -287,7 +287,8 @@ $names = $upload->getFileName('foo');
         <para>
             <methodname>getFileSize()</methodname> returns per default the real filesize in SI
             notation which means you will get <code>2kB</code> instead of <code>2048</code>. If you
-            need only the plain size set the <code>useByteString</code> option to false.
+            need only the plain size set the <code>useByteString</code> option to
+            <constant>FALSE</constant>.
         </para>
 
         <example id="zend.file.transfer.introduction.informations.example.getfilesize">
@@ -306,6 +307,16 @@ $size = $upload->getFileSize();
 ]]></programlisting>
 
         </example>
+
+        <note>
+            <title>Client given filesize</title>
+
+            <para>
+                Note that the filesize which is given by the client is not seen as save input.
+                Therefor the real size of the file will be detected and returned instead of the
+                filesize sent by the client.
+            </para>
+        </note>
 
         <para>
             <methodname>getHash()</methodname> accepts the name of a hash algorithm as first
@@ -331,6 +342,8 @@ $names = $upload->getHash('crc32', 'foo');
         </example>
 
         <note>
+            <title>Return value</title>
+
             <para>
                 Note that if the given file or form name contains more than one file, the returned
                 value will be an array.
@@ -358,12 +371,40 @@ $names = $upload->getMimeType('foo');
         </example>
 
         <note>
+            <title>Client given mimetype</title>
+
+            <para>
+                Note that the mimetype which is given by the client is not seen as save input.
+                Therefor the real mimetype of the file will be detected and returned instead of the
+                mimetype sent by the client.
+            </para>
+        </note>
+
+        <warning>
+            <title>Possible exception</title>
+
             <para>
                 Note that this method uses the fileinfo extension if it is available. If this
                 extension can not be found, it uses the mimemagic extension. When no extension was
-                found it uses the mimetype given by the fileserver when the file was uploaded.
+                found it raises an exception.
             </para>
-        </note>
+        </warning>
+
+        <warning>
+            <title>Original data within $_FILES</title>
+
+            <para>
+                Due to security reasons also the original data within $_FILES will be overridden
+                as soon as <classname>Zend_File_Transfer</classname> is initiated. When you want
+                to omit this behaviour and have the original data simply set the
+                <property>detectInfos</property> option to <constant>FALSE</constant> at initiation.
+            </para>
+
+            <para>
+                This option will have no effect after you initiated
+                <classname>Zend_File_Transfer</classname>.
+            </para>
+        </warning>
     </sect2>
 
     <sect2 id="zend.file.transfer.introduction.uploadprogress">
@@ -483,8 +524,8 @@ while (!$upload['done']) {
 
                 <listitem>
                     <para>
-                        <emphasis>done</emphasis>: Returns true when the upload is finished and
-                        false otherwise.
+                        <emphasis>done</emphasis>: Returns <constant>TRUE</constant> when the upload
+                        is finished and <constant>FALSE</constant> otherwise.
                     </para>
                 </listitem>
 

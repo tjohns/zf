@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -32,7 +32,7 @@ require_once 'Zend/Loader.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Barcode extends Zend_Validate_Abstract
@@ -131,7 +131,7 @@ class Zend_Validate_Barcode extends Zend_Validate_Abstract
      */
     public function setAdapter($adapter, $options = null)
     {
-        $adapter = ucfirst($adapter);
+        $adapter = ucfirst(strtolower($adapter));
         require_once 'Zend/Loader.php';
         if (Zend_Loader::isReadable('Zend/Validate/Barcode/' . $adapter. '.php')) {
             $adapter = 'Zend_Validate_Barcode_' . $adapter;
@@ -190,9 +190,9 @@ class Zend_Validate_Barcode extends Zend_Validate_Abstract
         }
 
         $this->_value  = (string) $value;
-        $this->_length = strlen($value);
-        $adapter = $this->getAdapter();
-        $result  = $adapter->checkLength($value);
+        $adapter       = $this->getAdapter();
+        $this->_length = $adapter->getLength();
+        $result        = $adapter->checkLength($value);
         if (!$result) {
             $this->_error(self::INVALID_LENGTH);
             return false;

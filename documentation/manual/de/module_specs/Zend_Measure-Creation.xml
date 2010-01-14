@@ -54,7 +54,7 @@ echo $unit;
             können nur als Zeichenketten den Klassen von <classname>Zend_Measure_*</classname>
             übergeben werden, wie z.B. Zahlen die in <ulink
                 url="http://en.wikipedia.org/wiki/Roman_numerals">Römischer Schreibweise</ulink>
-            geschrieben werden, oder extrem lange Binärwerte die die Genauigkeit von
+            geschrieben werden, oder extrem lange Binärwerte welche die Genauigkeit von
             <acronym>PHP</acronym>'s natürlichen Integer und Floattypen übersteigen würden. Da
             Integer auch als Zeichenketten geschrieben werden können sollten, sobald die Gefahr
             eines Genauigkeitverlustes durch die Limits von <acronym>PHP</acronym>'s Integer und
@@ -104,7 +104,7 @@ echo $unit; // Ausgabe "125 m²";
 
         <para>
             Wenn eine Zeichenkette in lokalisierter Schreibweise eingegeben wurde, kann die richtige
-            Interpretation nicht herausgefunden werden ohne das das gewünschte Gebietsschema bekannt
+            Interpretation nicht herausgefunden werden ohne dass das gewünschte Gebietsschema bekannt
             ist. Die Teilung der Dezimalziffern mit "." und die Gruppierung der Tausender mit ","
             ist in der Englischen Sprache üblich, aber nur in anderen Sprachen. Um mit solchen
             Problemen umgehen zu können, besteht bei den lokalisierten Klassen der

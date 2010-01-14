@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 19143 -->
+<!-- EN-Revision: 20176 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
@@ -29,14 +29,15 @@
         <listitem>
             <para>
                 <methodname>hasDijitParam($key)</methodname>: Wenn ein angegebener Dijit Parameter
-                definiert und vorhanden ist, wird TRUE zurückgegeben, andernfalls FALSE.
+                definiert und vorhanden ist, wird <constant>TRUE</constant> zurückgegeben,
+                andernfalls <constant>FALSE</constant>.
             </para>
         </listitem>
 
         <listitem>
             <para>
                 <methodname>getDijitParam($key)</methodname>: Gibt den angegebenen Dijit Parameter.
-                Wenn er nicht vorhanden ist, wird ein null Wert zurückgegeben.
+                Wenn er nicht vorhanden ist, wird ein <constant>NULL</constant> Wert zurückgegeben.
             </para>
         </listitem>
 
@@ -62,9 +63,9 @@
     </itemizedlist>
 
     <para>
-        Dijit Parameter werden in der öffentlichen <code>dijitParams</code> Eigenschaft gespeichert.
-        Deshalb kann ein existierendes Formularelement einfach dijit-aktiviert werden indem diese
-        Eigenschaft auf dem Element gesetzt wird; man hat in diesem Fall nur nicht die
+        Dijit Parameter werden in der öffentlichen <property>dijitParams</property> Eigenschaft
+        gespeichert. Deshalb kann ein existierendes Formularelement einfach dijit-aktiviert werden
+        indem diese Eigenschaft auf dem Element gesetzt wird; man hat in diesem Fall nur nicht die
         Zugriffsmethoden um die Parameter zu manipulieren.
     </para>
 
@@ -92,7 +93,7 @@ $element->addDecorator('DijitElement')
 
     <para>
         Eine Variante von DijitElement, DijitMulti, bietet die Funktionalität des abstrakten
-        <code>Multi</code> Formularelements, das es Entwicklern erlaubt 'multiOptions' zu
+        <classname>Multi</classname> Formularelements, das es Entwicklern erlaubt 'multiOptions' zu
         spezifizieren -- typischerweise Select-Optionen oder Radio-Optionen.
     </para>
 
@@ -124,16 +125,16 @@ $element->addDecorator('DijitElement')
             <listitem>
                 <para>
                     <methodname>isChecked()</methodname> ermittelt ob der übermittelte Wert zum
-                    Label passt; wenn das der Fall ist wird true zurückgegeben. Das ist für die
-                    Erkennung, welcher Button verwendet wurde als das Formular übermittelt wurde,
-                    nützlich.
+                    Label passt; wenn das der Fall ist wird <constant>TRUE</constant>
+                    zurückgegeben. Das ist für die Erkennung, welcher Button verwendet wurde als
+                    das Formular übermittelt wurde, nützlich.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Zusätzlich werden nur die Dekoratore <code>DijitElement</code> und
-            <code>DtDdWrapper</code> für Buttonelemente benutzt.
+            Zusätzlich werden nur die Dekoratore <classname>DijitElement</classname> und
+            <classname>DtDdWrapper</classname> für Buttonelemente benutzt.
         </para>
 
         <example id="zend.dojo.form.elements.button.example">
@@ -240,7 +241,8 @@ $form->addElement(
             <para>
                 ComboBoxen geben die Labelwerte, und nicht die Werte der Option zurück, was zu einem
                 Problem bei den Annahmen führen kann. Aus diesem Grund registieren Sie die
-                <code>InArray</code> Prüfung nicht automatisch (obwohl FilteringSelects das macht).
+                <classname>InArray</classname> Prüfung nicht automatisch (obwohl FilteringSelects
+                das macht).
             </para>
         </note>
 
@@ -326,11 +328,11 @@ $form->addElement(
 
         <para>
             Standardmäßig, wenn kein dojo.data Speicher im Element registriert wurde, registriert
-            dieses Element eine <code>InArray</code> Prüfung welche die Arrayschlüssel gegen
-            registrierte Optionen prüft. Dieses Verhalten kann deaktiviert werden indem entweder
-            <methodname>setRegisterInArrayValidator(false)</methodname> ausgerufen, oder ein false
-            Wert an den Registrierungsschlüssel <code>registerInArrayValidator</code> übergeben
-            wird.
+            dieses Element eine <classname>InArray</classname> Prüfung welche die Arrayschlüssel
+            gegen registrierte Optionen prüft. Dieses Verhalten kann deaktiviert werden indem
+            entweder <methodname>setRegisterInArrayValidator(false)</methodname> ausgerufen, oder
+            ein <constant>FALSE</constant> Wert an den Registrierungsschlüssel
+            <property>registerInArrayValidator</property> übergeben wird.
         </para>
 
         <example id="zend.dojo.form.elements.comboBox.selectExample">
@@ -380,10 +382,9 @@ $form->addElement(
         </example>
 
         <para>
-            Das obige Beispiel könnte auch <code>FilteringSelect</code> statt <code>ComboBox</code>
-            verwenden.
+            Das obige Beispiel könnte auch <classname>FilteringSelect</classname> statt
+            <classname>ComboBox</classname> verwenden.
         </para>
-
     </sect3>
 
     <sect3 id="zend.dojo.form.elements.currencyTextBox">
@@ -496,8 +497,8 @@ $form->addElement(
                 <para>
                     <methodname>setStrict($flag)</methodname> und
                     <methodname>getStrict()</methodname>: Ob Reguläre Ausdrücke strikt passen
-                    müssen oder nicht. Wenn es false ist, was der Standardwert ist, wird es nicht
-                    über Leerzeichen und einige Abkürzungen lamentieren.
+                    müssen oder nicht. Wenn es <constant>FALSE</constant> ist, was der Standardwert
+                    ist, wird es nicht über Leerzeichen und einige Abkürzungen lamentieren.
                 </para>
             </listitem>
 
@@ -674,9 +675,9 @@ $form->addElement(
                 <para>
                     <emphasis>focusOnLoad</emphasis> wird verwendet um zu erkennen ob dieser
                     spezielle Editor den Fokus erhält wenn die Seite geladen wurde. Standardmäßig
-                    ist er false. Die Methode <methodname>setFocusOnLoad($flag)</methodname> kann
-                    verwendet werden um den Wert zu setzen, wärend
-                    <methodname>getFocusOnLoad()</methodname> ihn empfängt.
+                    ist er <constant>FALSE</constant>. Die Methode
+                    <methodname>setFocusOnLoad($flag)</methodname> kann verwendet werden um den
+                    Wert zu setzen, wärend <methodname>getFocusOnLoad()</methodname> ihn empfängt.
                 </para>
             </listitem>
 
@@ -693,10 +694,11 @@ $form->addElement(
                 <para>
                     <emphasis>inheritWidth</emphasis> wird verwendet um zu erkennen ob der Editor
                     die Breite des Parent Containers verwendet, oder einfach auf 100% Höhe.
-                    Standardmäßig ist er false (im Normalfall wird der die Breite des Fensters
-                    ausfüllen). Die Methode <methodname>setInheritWidth($flag)</methodname> kann
-                    verwendet werden um den Wert zu setzen, wärend
-                    <methodname>getInheritWidth()</methodname> ihn zurückgibt.
+                    Standardmäßig ist er <constant>FALSE</constant> (im Normalfall wird der die
+                    Breite des Fensters ausfüllen). Die Methode
+                    <methodname>setInheritWidth($flag)</methodname> kann verwendet werden um den
+                    Wert zu setzen, wärend <methodname>getInheritWidth()</methodname> ihn
+                    zurückgibt.
                 </para>
             </listitem>
 
@@ -772,7 +774,7 @@ $form->addElement('editor', 'content', array(
                 Deshalb kann es Zeiten geben in denen man ein Editor Widget benötigt das korrekt zu
                 einer <acronym>TEXTAREA</acronym> degradiert. In solchen Situationen kann man dass
                 durchführen indem die Eigenschaft <varname>degrade</varname> auf
-                <constant>true</constant> gesetzt wird:
+                <constant>TRUE</constant> gesetzt wird:
             </para>
 
             <programlisting language="php"><![CDATA[
@@ -1166,11 +1168,12 @@ $form->addElement(
         </para>
 
         <para>
-            Standardmäßig registriert dieses Element eine <code>InArray</code> Prüfung welche die
-            Arrayschlüssel gegen registrierte Optionen prüft. Dieses Verhalten kann deaktiviert
-            werden indem entweder <methodname>setRegisterInArrayValidator(false)</methodname>
-            ausgerufen, oder ein false Wert an den Registrierungsschlüssel
-            <code>registerInArrayValidator</code> übergeben wird.
+            Standardmäßig registriert dieses Element eine <classname>InArray</classname> Prüfung
+            welche die Arrayschlüssel gegen registrierte Optionen prüft. Dieses Verhalten kann
+            deaktiviert werden indem entweder
+            <methodname>setRegisterInArrayValidator(false)</methodname> ausgerufen, oder ein
+            <constant>FALSE</constant> Wert an den Registrierungsschlüssel
+            <property>registerInArrayValidator</property> übergeben wird.
         </para>
 
         <example id="zend.dojo.form.elements.radioButton.example">

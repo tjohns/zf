@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -26,7 +26,7 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class ZF
@@ -197,6 +197,17 @@ class ZF
                 $this->_logMessage('Home directory does not exist at ' . $homeDirectory, $returnMessages);
             }
         }
+
+        $homeDirectory = getenv('USERPROFILE');
+        
+        if ($homeDirectory) {
+            $this->_logMessage('Home directory found in environment variable USERPROFILE with value ' . $homeDirectory, $returnMessages);
+            if (!$mustExist || ($mustExist && file_exists($homeDirectory))) {
+                return $homeDirectory;
+            } else {
+                $this->_logMessage('Home directory does not exist at ' . $homeDirectory, $returnMessages);
+            }
+        }
         
         return false;
     }
@@ -325,13 +336,18 @@ class ZF
     protected function _setupToolRuntime()
     {
 
-        // last ditch efforts
-        if ($this->_tryClientLoad()) {
-            return;
+        $includePathPrepend = getenv('ZEND_TOOL_INCLUDE_PATH_PREPEND');
+        $includePathFull = getenv('ZEND_TOOL_INCLUDE_PATH');
+        
+        // check if the user has not provided anything
+        if (!($includePathPrepend || $includePathFull)) {
+            if ($this->_tryClientLoad()) {
+                return;
+            }
         }
         
         // if ZF is not in the include_path, but relative to this file, put it in the include_path
-        if (($includePathPrepend = getenv('ZEND_TOOL_INCLUDE_PATH_PREPEND')) || ($includePathFull = getenv('ZEND_TOOL_INCLUDE_PATH'))) {
+        if ($includePathPrepend || $includePathFull) {
             if (isset($includePathPrepend) && ($includePathPrepend !== false)) {
                 set_include_path($includePathPrepend . PATH_SEPARATOR . get_include_path());
             } elseif (isset($includePathFull) && ($includePathFull !== false)) {

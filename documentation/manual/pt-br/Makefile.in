@@ -11,7 +11,7 @@
 # obtain it through the world-wide-web, please send an email
 # to license@zend.com so we can send you a copy immediately.
 #
-# @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+# @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
 # @license    http://framework.zend.com/license/new-bsd     New BSD License
 #
 
@@ -45,7 +45,7 @@ HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
 MANUAL_PRINT1_XML=manual-print1.xml
 MANUAL_PRINT2_XML=manual-print2.xml
-MANUAL_LINT_XML=manual-lint.xml.in
+MANUAL_LINT_XML=../en/manual-lint.xml.in
 MODULE=module_specs
 PDF_XSL=pdf-manual.xsl
 XMLFILE=
@@ -63,10 +63,10 @@ html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Copying manual figures (recursively)..."
 	-[ -d figures ] && cp -r figures html/
 
-$(MANUAL_XML): $(MANUAL_XML).in
+$(MANUAL_XML): ../en/$(MANUAL_XML).in
 	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
 	
-$(HTML_XSL): $(HTML_XSL).in
+$(HTML_XSL): ../en/$(HTML_XSL).in
 	sed -e 's!@DOCBOOK_XSL@!$(DOCBOOK_XSL)!' $< > $@
 
 # Build the docs in PDF format
@@ -96,13 +96,13 @@ pdf-print-volume2: pdf-dir $(PDF_XSL) $(MANUAL_PRINT2_XML)
 	$(XSLTPROC) --xinclude --output ZendFramework.fo $(PDF_XSL) _temp_manual_2.xml
 	"$(FOP)" -fo ZendFramework.fo -pdf pdf/ZendFrameworkVolume2.pdf
 
-$(MANUAL_PRINT1_XML): $(MANUAL_PRINT1_XML).in
+$(MANUAL_PRINT1_XML): ../en/$(MANUAL_PRINT1_XML).in
 	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
 	
-$(MANUAL_PRINT2_XML): $(MANUAL_PRINT2_XML).in
+$(MANUAL_PRINT2_XML): ../en/$(MANUAL_PRINT2_XML).in
 	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
 
-$(PDF_XSL): $(PDF_XSL).in
+$(PDF_XSL): ../en/$(PDF_XSL).in
 	sed -e 's!@DOCBOOK_FO_XSL@!$(DOCBOOK_FO_XSL)!' $< > $@
 
 # Cleanup

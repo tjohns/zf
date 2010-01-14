@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Date
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -23,7 +23,7 @@
  * @category   Zend
  * @package    Zend_Date
  * @subpackage Zend_Date_DateObject
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Date_DateObject {
@@ -85,7 +85,7 @@ abstract class Zend_Date_DateObject {
             $this->_unixTimestamp = time();
         } else {
             require_once 'Zend/Date/Exception.php';
-            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp', $timestamp);
+            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp', 0, null, $timestamp);
         }
 
         return $old;
@@ -1004,7 +1004,7 @@ abstract class Zend_Date_DateObject {
         if (function_exists('timezone_open')) {
             if (!@timezone_open($zone)) {
                 require_once 'Zend/Date/Exception.php';
-                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", $zone);
+                throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", 0, null, $zone);
             }
         }
         // this can generate an error if the date extension is not available and a false timezone is given

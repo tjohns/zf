@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -30,7 +30,7 @@ require_once 'Zend/Config.php';
  * @package    Zend_Barcode
  * @subpackage UnitTests
  * @group      Zend_Barcode
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_FactoryTest extends PHPUnit_Framework_TestCase
@@ -220,6 +220,14 @@ class Zend_Barcode_FactoryTest extends PHPUnit_Framework_TestCase
                         'barcodeNamespace' => 'My_Namespace_Other'));
     }
 
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testBarcodeObjectFactoryWithUnexistantBarcode()
+    {
+        $barcode = Zend_Barcode::makeBarcode('zf123', array());
+    }
+
     public function testBarcodeRendererFactoryWithExistingBarcodeRenderer()
     {
         $renderer = new Zend_Barcode_Renderer_Image();
@@ -297,6 +305,14 @@ class Zend_Barcode_FactoryTest extends PHPUnit_Framework_TestCase
         $renderer = Zend_Barcode::makeRenderer('image',
                 array(
                         'rendererNamespace' => 'My_Namespace_Other'));
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testBarcodeRendererFactoryWithUnexistantRenderer()
+    {
+        $renderer = Zend_Barcode::makeRenderer('zend', array());
     }
 
     public function testProxyBarcodeRendererDrawAsImage()

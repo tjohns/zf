@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 18818 -->
+<!-- EN-Revision: 20115 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
@@ -27,7 +27,7 @@
 
         <para>
             Akismet erfordert dass alle Anfragen eine <acronym>URL</acronym> zu der
-            Ressource enthalten für die die Daten gefiltert werden. Weil Akismeth's Ursprung
+            Ressource enthalten für welche die Daten gefiltert werden. Weil Akismeth's Ursprung
             Wordpress ist, wird diese Ressource die Blog <acronym>URL</acronym> genannt. Dieser Wert
             sollte als zweites Argument an den Konstruktor übergeben werden; aber er kann zu jeder
             Zeit resetiert werden in dem der <methodname>setBlogUrl()</methodname> Methode verwendet
@@ -135,13 +135,14 @@ if ($akismet->verifyKey($apiKey) {
 
             <listitem>
                 <para>
-                    <code>comment_author</code>, der Name der Person die die Daten überträgt.
+                    <code>comment_author</code>, der Name der Person welche die Daten überträgt.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>comment_author_email</code>, die Email der Person die die Daten überträgt.
+                    <code>comment_author_email</code>, die Email der Person welche die Daten
+                    überträgt.
                 </para>
             </listitem>
 
@@ -166,8 +167,9 @@ if ($akismet->verifyKey($apiKey) {
         </para>
 
         <para>
-            Die <methodname>isSpam()</methodname> Methode gibt true oder false zurück, oder wirft
-            eine Ausnahme wenn der <acronym>API</acronym> Schlüssel nicht gültig ist.
+            Die <methodname>isSpam()</methodname> Methode gibt <constant>TRUE</constant> oder
+            <constant>FALSE</constant> zurück, oder wirft eine Exception wenn der
+            <acronym>API</acronym> Schlüssel nicht gültig ist.
         </para>
 
         <example id="zend.service.akismet.isspam.example-1">

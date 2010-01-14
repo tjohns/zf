@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Loader
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -44,7 +44,7 @@ require_once 'Zend/Loader/Autoloader.php';
  * @category   Zend
  * @package    Zend_Loader
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Loader
  */
@@ -456,6 +456,17 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
                 }
             }
         }
+    }
+
+    /**
+     * @group ZF-8200
+     */
+    public function testLoadClassShouldAllowLoadingPhpNamespacedClasses()
+    {
+        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+            $this->markTestSkipped('PHP < 5.3.0 does not support namespaces');
+        }
+        Zend_Loader::loadClass('\Zfns\Foo', array(dirname(__FILE__) . '/Loader/_files'));
     }
 
     /**

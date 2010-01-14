@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -38,7 +38,7 @@ require_once 'Zend/Loader/Autoloader.php';
  * @category   Zend
  * @package    Zend_Application
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Application
  */
@@ -106,6 +106,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $options = array(
             'default'      => 'kok_IN',
             'registry_key' => 'Foo_Bar',
+            'force'        => true
         );
 
         $resource = new Zend_Application_Resource_Locale($options);
@@ -115,6 +116,22 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('kok_IN', $locale->__toString());
         $this->assertTrue(Zend_Registry::isRegistered('Foo_Bar'));
         $this->assertSame(Zend_Registry::get('Foo_Bar'), $locale);
+    }
+    
+    public function testOptionsPassedToResourceAreUsedToSetLocaleState1()
+    {
+        $options = array(
+            'default'      => 'kok_IN',
+        );
+
+        $resource = new Zend_Application_Resource_Locale($options);
+        $resource->setBootstrap($this->bootstrap);
+        $resource->init();
+        $locale   = $resource->getLocale();
+        
+        // This test will fail if your configured locale is kok_IN
+        $this->assertFalse('kok_IN' == $locale->__toString());
+        $this->assertSame(Zend_Registry::get('Zend_Locale'), $locale);
     }
 }
 

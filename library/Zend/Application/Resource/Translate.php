@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -27,7 +27,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Application_Resource_Translate extends Zend_Application_Resource_ResourceAbstract
@@ -62,6 +62,7 @@ class Zend_Application_Resource_Translate extends Zend_Application_Resource_Reso
             $options = $this->getOptions();
 
             if (!isset($options['data'])) {
+                require_once 'Zend/Application/Resource/Exception.php';
                 throw new Zend_Application_Resource_Exception('No translation source data provided.');
             }
 

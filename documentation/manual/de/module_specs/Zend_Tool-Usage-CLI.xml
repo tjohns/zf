@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 19748 -->
+<!-- EN-Revision: 19777 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.tool.usage.cli">
-    <title>Using Zend_Tool On The Command Line</title>
+    <title>Verwendung von Zend_Tool auf der Kommandozeile</title>
 
     <para>
-        The <acronym>CLI</acronym>, or command line tool (internally known as the console tool),
-        is currently the primary interface for dispatching <classname>Zend_Tool</classname>
-        requests. With the <acronym>CLI</acronym> tool, developers can issue tooling requests
-        inside the "command line window", also commonly known as a "terminal" window. This
-        environment is predominant in the *nix environment, but also has a common implementation
-        in windows with the <filename>cmd.exe</filename>, console2 and also with the Cygwin project.
+        Das <acronym>CLI</acronym>, oder Kommandozeilentool (intern bekannt als Konsolen Tool),
+        ist aktuell das primäre Interface für die Bearbeitung von <classname>Zend_Tool</classname>
+        Anfragen. Mit dem <acronym>CLI</acronym> Tool können Entwickler Tooling Anfragen im
+        "Kommandozeilen Fenster", auch bekannt als "Terminal" Fenster, auslösen. Diese Umgebung ist
+        vorherrschend bei *nix Umgebungen, es gibt aber auch übliche Implementationen unter Windows
+        mit <filename>cmd.exe</filename>, Console2 und auch im Cygwin Projekt.
     </para>
 
     <!--
     <sect2 id="zend.tool.usage.cli.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
     </sect2>
     -->
 
@@ -23,31 +23,29 @@
         <title>Installation</title>
 
         <sect3 id="zend.tool.usage.cli.installation.download-and-go">
-            <title>Download And Go</title>
+            <title>Herunterladen und anfangen</title>
 
             <para>
-                First download Zend Framework.  This can be done by going to framework.zend.com
-                and downloading the latest release.  After you've downloaded the package and placed
-                it on your system.  The next step is to make the zf command available to your system.
-                The easiest way to do this, is to copy the proper files from the bin/ directory
-                of the download, and place these files within the <emphasis>same</emphasis> directory
-                as the location of the php cli binary.
+                Zuerst muss Zend Framework heruntergeladen werden. Das kann man tun, indem man auf
+                framework.zend.com geht und das letzte Release herunterlädt. Nachdem man das
+                Paket heruntergeladen und auf dem System plaziert hat ist der nächste Schritt das
+                zf Kommendo auf dem System zu erstellen. Der einfachste Weg das zu tun ist die
+                richtigen Dateien vom bin/ Verzeichnis des Downloads zu kopieren, und diese Dateien
+                im <emphasis>gleichen</emphasis> Verzeichnis zu platzieren wie der Ort an dem die
+                PHP CLI Binardatei ist.
             </para>
-
-
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.installation.pear">
-            <title>Installing Via Pear</title>
+            <title>Installation über Pear</title>
 
             <para>
-                To install via PEAR, you must use the 3rd party zfcampus.org site to retrieve the
-                latest Zend Framework PEAR package.  These packages are typically built within a day
-                of an official Zend Framework release.  The benefit of installing via the PEAR package
-                manager is that during the install process, the ZF library will end up on the
-                include_path, and the zf.php and zf scripts will end up in a place on your system
-                that will allow you to run them without any additional setup.
+                Um es über PEAR zu installieren muss man die 3rd Party Site zfcampus.org verwenden
+                und das letzte Zend Framwork PEAR Paket empfangen. Diese Pakete werden
+                typischerweise innerhalb eines Tages nach einem offiziellen Zend Framework Release
+                erstellt. Der Vorteil der Installation über den PEAR Package Manager ist, dass die
+                ZF Bibliothek im include_path endet, und die zf.php und ZF Skripte an einem Ort im
+                eigenen System enden der es erlaubt Sie ohne zusätzliches Setup zu starten.
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -56,68 +54,67 @@ pear install zfcampus/zf
 ]]></programlisting>
 
             <para>
-                That is it. After the initial install, you should be able to continue on by
-                running the zf command.  Go good way to check to see if it't there is to run
-                zf --help
+                Das ist es schon. Nachdem initialen Setup sollte man in der Lage sein weiter zu
+                machen indem das zf Kommando ausgeführt wird. Ein gute Weg um zu prüfen ob es
+                vorhanden ist, ist es zf --help auszuführen.
             </para>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.installation.install-by-hand">
-            <title>Installing by Hand</title>
+            <title>Installation von Hand</title>
 
             <para>
-                Installing by hand refers to the process of forcing the zf.php and Zend Framework
-                library to work together when they are placed in non-convential places, or at least,
-                in a place that your system cannot dispatch from easily (typical of programs in your
-                system PATH).
+                Die Installtion von Hand zeigt den Prozess um zf.php und die Zend Framework
+                Bibliothek dazu zu zwingen zusammen zu arbeiten wenn diese nicht auf konventionellen
+                Orten abgelegt wurden, oder zumindest, an einem Ort an dem das eigene System diese
+                nicht einfach ausführen kann (typisch für Programme im eigenen System Pfad).
             </para>
 
             <para>
-                If you are on a *nix or mac system, you can also create a link from somewhere in your
-                path to the zf.sh file.  If you do this, you do not need to worry about having
-                Zend Framework's library on your include_path, as the zf.php and zf.sh files will
-                be able to access the library relative to where they are (meaning the ./bin/ files
-                are ../library/ relative to the Zend Framework library).
+                Wenn man auf einem *nix oder Mac System ist, kann man auch einen Link von irgendwo im
+                eigenen Pfad zur zf.sh Datei erstellen. Wenn man das macht muss man sich keine
+                Gedanken darüber machen das die Zend Framework Bibliothek im eigenen include_path
+                ist, da die Dateien zf.php und zf.sh auf die Bibliothek, relativ dazu wo Sie sind,
+                zugreifen können (was bedeutet das die ./bin/ Dateien relativ zu ../library/ der
+                Zend Framework Bibliothek sind).
             </para>
 
             <para>
-                There are a number of other options available for setting up the zf.php and library
-                on your system.  These options revolve around setting specific environment variables.
-                These are described in the later section on "customizing the CLI environement".  The
-                environment variables for setting the zf.php include_path, ZF_INCLUDE_PATH and
-                ZF_INCLUDE_PATH_PREPEND, are the ones of most interest.
+                Es gibt eine Anzahl von anderen vorhandenen Optionen für das Setup von zf.php und
+                der Bibliothek im eigenen System. Diese Optionen drehen sich um das Setzen von
+                speziellen Umgebungsvariablen. Diese werden im späteren Kapitel "Die CLI Umgebung
+                anpassen" beschrieben. Die Umgebungsvariablen für das Setzen von include_path,
+                ZF_INCLUDE_PATH und ZF_INCLUDE_PATH_PREPEND für zf.php sind die interessantesten.
             </para>
-
         </sect3>
-
     </sect2>
 
     <sect2 id="zend.tool.usage.cli.general-purpose-commands">
-        <title>General Purpose Commands</title>
+        <title>Kommandos für generelle Zwecke</title>
 
         <sect3 id="zend.tool.usage.cli.general-purpose-commands.version">
             <title>Version</title>
 
             <para>
-                This will show the current version number of the copy of Zend Framework the zf.php tool is using.
+                Das zeigt die aktuelle Versionsnummer der Kopie vom Zend Framework welche das zf.php
+                Tool verwendet.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf show version
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.general-purpose-commands.built-in-help">
-            <title>Built-in Help</title>
+            <title>Eingebaute Hilfe</title>
 
             <para>
-                The built-in help system is the primary place where you can get up-to-date information
-                on what your system is capable of doing.  The help system is dynamic in that as providers
-                are added to your system, they are automatically dispatchable, and as such, the parameters
-                required to run them will be in the help screen.  The easiest way to retrieve the help
-                screen is the following:
+                Das eingebaute Hilfe System ist der primäre Ort von dem man up-to-date Informationen
+                darüber erhält was das eigene System in der Lage ist zu tun. Das Hilfe System ist
+                dahingehend dynamisch das Provider dem eigenen System hinzugefügt und
+                automatisch ausgeführt werden, und als solches werden die notwendigen Parameter
+                damit Sie ausgeführt werden können, im Hilfe Schirm vorhanden. Der einfachste Weg um
+                den Hilfe Schirm zu erhalten ist der folgende:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -125,11 +122,13 @@ zf --help
 ]]></programlisting>
 
             <para>
-                This will give you an overview of the various capabilities of the system.  Sometimes, there
-                are more finite commands than can be run, and to gain more information about these, you might
-                have to run a more specialized help command.  For specialized help, simply replace any of the
-                elements of the command with a "?". This will tell the help system that you want more
-                information about what commands can go in place of the question mark. For example:
+                Das gibt einen Überblick über die verschiedenen Möglichkeiten des Systems. Manchmal
+                gibt es engültigere Kommandos die ausgeführt werden können, und um mehr
+                Informationen über Sie zu erhalten muss man ein spezialisierteres Hilfe Kommando
+                ausführen. Für die spezialisierte Hilfe muss einfach eines der Elemente des
+                Kommandos mit einem "=" ersetzt werden. Das sagt dem Hilfe System das man mehr
+                Informationen darüber will welche Kommandos an Stelle des Fragezeichens stehen
+                können. Zum Beispiel:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -137,7 +136,8 @@ zf ? controller
 ]]></programlisting>
 
             <para>
-                The above means "show me all 'actions' for the provider 'controller'"; while the following:
+                Das obige bedeutet "zeig mir alle 'Aktionen' für den Provider 'controller'"; wärend
+                das folgende:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -145,52 +145,48 @@ zf show ?
 ]]></programlisting>
 
             <para>
-                means "show me all providers that support the 'show' action". This works for drilling down
-                into options as well as you can see in the following examples:
+                bedeutet "zeig mit alle Provider welche die 'show' Aktion unterstützen. Das arbeitet
+                auch wenn man in Optionen geht wie man im folgenden Beispiel sehen kann:
             </para>
 
             <programlisting language="text"><![CDATA[
-zf show version.? (show any specialties)
-zf show version ? (show any options)
+zf show version.? (zeige alle Spezialitäten)
+zf show version ? (zeige alle Optionen)
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.general-purpose-commands.manifest">
             <title>Manifest</title>
 
             <para>
-                This will show what information is in the tooling systems manifest. This is more important
-                for provider developers than casual users of the tooling system.
+                Das zeigt welche Informationen im Tooling System Manifest sind. Das ist wichtiger
+                für Entwickler von Providers als für normale Benutzer des Tooling Systems.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf show manifest
 ]]></programlisting>
-
         </sect3>
 
         <!--
         <sect3 id="zend.tool.usage.cli.general-purpose-commands.tool-configuration">
-            <title>Tool Configuration</title>
+            <title>Tool Konfiguration</title>
 
-            <para>Placeholder   need docs from @beberli </para>
-
+            <para>Platzhalter, benötigt Handbuch von @beberli</para>
         </sect3>
         -->
-
     </sect2>
 
     <sect2 id="zend.tool.usage.cli.project-specific-commands">
-        <title>Project Specific Commands</title>
+        <title>Projekt spezifische Kommandos</title>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.project">
             <title>Project</title>
 
             <para>
-                The project provider is the first command you might want to run. This will setup the basic
-                structure of your application. This is required before any of the other providers can
-                be executed.
+                Der Projekt Provider ist das erste Kommando das man ausführen wird wollen. Er
+                erstellt die grundsätzliche Struktur der Anwendung. Er wird benötigt bevor irgendein
+                anderer Provider ausgeführt werden kann.
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -198,24 +194,23 @@ zf create project MyProjectName
 ]]></programlisting>
 
             <para>
-                This will create a project in a directory called ./MyProjectName.  From this point on,
-                it is important to note that any subsequent commands on the command line must be issued
-                from within the project directory you had just created.  So, after creation, changing into
-                that directory is required.
+                Dies erstellt ein Projekt im ./MyProjectName genannten Verzeichnis. Von diesem Punkt
+                an ist es wichtig anzumerken das jedes weitere Kommando in der Kommandozeile von
+                innerhalb des Projektverzeichnisses auszuführen ist welches gerade erstellt wurde.
+                Nach dessen Erstellung ist es also notwendig dass man in das Verzeichnis wechselt.
             </para>
-
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.module">
-            <title>Project</title>
+            <title>Module</title>
 
             <para>
-                The module provider allows for the easy creation of a Zend Framework module.  A module
-                follows the hMVC pattern loosely.  When creating modules, it will take the same structure
-                used at the application/ level, and duplicate it inside of the chosen name for your module,
-                inside of the "modules" directory of the application/ directory without duplicating the
-                modules directory itself.  For example:
+                Der Module Provider erlaubt die einfache Erstellung eines Zend Framework Moduls. Ein
+                Modul folgt lose dem MVC Pattern. Wenn Module erstellt werden, verwenden Sie die
+                gleiche Struktur welche im application/ Level verwendet wird, und dupliziert diese
+                im ausgewählten Namen für das Modul, innerhalb des Verzeichnisses "modules" im
+                Verzeichnis application/ ohne dass das Modul Verzeichnis selbst dupliziert wird.
+                Zum Beispiel:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -223,20 +218,19 @@ zf create module Blog
 ]]></programlisting>
 
             <para>
-                This will create a module named Blog at application/modules/Blog, and all of the artifacts
-                that a module will need.
+                Das erstellt ein Modul welches Blog genannt wird unter application/modules/Blog, und
+                alle Abschnitte welche das Modul benötigt.
             </para>
-
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.controller">
             <title>Controller</title>
 
             <para>
-                The controller provider is responsible for creating (mostly) empty controllers as well
-                as their corresponding view script directories and files.  To utilize it to create
-                an 'Auth' controlller, for example, execute:
+                Der Controller Provider ist (meistens) für die Erstellung leerer Controller
+                zuständig sowie deren entsprechenden Verzeichnissen und Dateien für View Skripte.
+                Um Ihn zum Beispiel dazu zu verwenden einen 'Auth' Controller zu erstellen muss
+                folgendes ausgeführt werden:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -244,9 +238,10 @@ zf create controller Auth
 ]]></programlisting>
 
             <para>
-                This will create a controller named Auth, specifically it will create a file at
-                application/controllers/AuthController.php with the AuthController inside.
-                If you wish to create a controller for a module, use any of the following:
+                Das erstellt einen Controller der Auth heißt, und im speziellen wird eine Datei
+                unter application/controllers/AuthController.php erstellt welche den AuthController
+                enthält. Wenn man einen Controller für ein Modul erstellen will, kann eine der
+                folgenden Zeilen verwendet werden:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -256,16 +251,15 @@ zf create controller Post --module=Blog
 ]]></programlisting>
 
             <para>
-                Note: In the first command, 1 is the value for the "includeIndexAction" flag.
+                Beachte: Im ersten Kommando ist der Wert 1 für das "includeIndexAction" Flag.
             </para>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.action">
             <title>Action</title>
 
             <para>
-                To create an action within an existing controller:
+                Um eine Action in einem bestehenden Controller zu erstellen:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -273,15 +267,14 @@ zf create action login Auth
 zf create action login -c Auth
 zf create action login --controller-name=Auth
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.view">
             <title>View</title>
 
             <para>
-                To create a view outside of the normal controller/action creation, you would use
-                one of the following:
+                Um eine View ausserhalb der normalen Controller/Action Erstellung zu erstellen
+                würde man eine der folgenden Zeilen verwenden:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -290,17 +283,16 @@ zf create view -c Auth -a my-script-name
             ]]></programlisting>
 
             <para>
-                This will create a view script in the controller folder of Auth.
+                Das erstellt ein View Skript im Controller Verzeichnis von Auth.
             </para>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.model">
             <title>Model</title>
 
             <para>
-                The model provider is only responsible for creating the proper model files,
-                with the proper name inside the application folder. For example
+                Der Model Provider ist nur für die Erstellung der richtigen Modell Dateien, mit dem
+                richtigen Namen im Anwendungsverzeichnis zuständig. Zum Beispiel:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -308,7 +300,7 @@ zf create model User
 ]]></programlisting>
 
             <para>
-                If you wish to create a model within a specific module:
+                Wenn man ein Modell mit einem spezifischen Modul erstellen will:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -316,17 +308,17 @@ zf create model Post -m Blog
 ]]></programlisting>
 
             <para>
-                The above will create a 'Post' model inside of the 'Blog' module.
+                Das obige erstellt ein 'Post' Modell im Modul 'Blog'.
             </para>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.form">
             <title>Form</title>
 
             <para>
-                The form provider is only responsible for creating the proper form file and
-                init() method, with the proper name inside the application folder. For example:
+                Der Form Provider ist nur für die Erstellung der richtigen Formulardateien und der
+                init() Methode, mit dem richtigen Namen im Anwendungsverzeichnis zuständig. Zum
+                Beispiel:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -334,7 +326,7 @@ zf create form Auth
 ]]></programlisting>
 
             <para>
-                If you wish to create a model within a specific module:
+                Wenn man ein Modell in einem spezifischen Modul erstellen will:
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -342,7 +334,7 @@ zf create form Comment -m Blog
 ]]></programlisting>
 
             <para>
-                The above will create a 'Comment' form inside of the 'Blog' module.
+                Das obige erstellt ein 'Comment' Formular im Modul 'Blog'.
             </para>
         </sect3>
 
@@ -350,13 +342,12 @@ zf create form Comment -m Blog
             <title>DbAdapter</title>
 
             <para>
-                To configure a DbAdapter, you will need to provide the information as a url
-                encoded string. This string needs to be in quotes on the command line.
+                Um einen DbAdapter zu konfigurieren muss man die Informationen als Url kodierten
+                String angeben. Dieser String muss in der Kommandozeile in Hochkommas stehen.
             </para>
 
             <para>
-
-                For example, to enter the following information:
+                Um zum Beispiel die folgenden Informationen einzugeben:
 
                 <itemizedlist>
                     <listitem>
@@ -373,51 +364,51 @@ zf create form Comment -m Blog
                     </listitem>
                 </itemizedlist>
 
-                The following will have to be run on the command line:
+                Muss das folgende auf der Kommandozeile ausgeführt werden:
             </para>
-
 
             <programlisting language="text"><![CDATA[
 zf configure dbadapter "adapter=Pdo_Mysql&username=test&password=test&dbname=test"
 ]]></programlisting>
 
             <para>
-                This assumes you wish to store this information inside of the
-                'production' space of the application configuration file. The following will
-                demonstrate an sqlite configuration, in the 'development' section of the
-                application config file.
+                Dies nimmt an das man diese Information im Abschnitt 'production' der
+                Konfigurationsdatei der Anwendung speichern will. Das folgende demonstriert eine
+                Sqlite Konfiguration im Abschnitt 'development' der Konfigurationsdatei der
+                Anwendung:
             </para>
 
             <programlisting language="text"><![CDATA[
 zf configure dbadapter "adapter=Pdo_Sqlite&dbname=../data/test.db" development
 zf configure dbadapter "adapter=Pdo_Sqlite&dbname=../data/test.db" -s development
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.db-table">
             <title>DbTable</title>
 
             <para>
-                The DbTable provider is responsible for creating Zend_Db_Table
-                model/data access files for your application to consume, with the proper
-                class name, and in the proper location in the application. The two
-                important pieces of information are the <emphasis>DbTable name</emphasis>,
-                and the <emphasis>actual database table name</emphasis>. For example:
+                Der DbTable Provider ist für die Erstellung der Zend_Db_Table Modell/Datenzugriffs-
+                Dateien, der Anwendung die Sie benötigt, verantwortlich. Zusammen mit dem richtigen
+                Klassennamen und dem richtigen Platz in der Anwendung. Die zwei wichtigsten
+                Informationsteile sind <emphasis>DbTable Name</emphasis> und der
+                <emphasis>aktuelle Name der Datenbank Tabelle</emphasis>. Zum Beispiel:
             </para>
 
             <programlisting language="text"><![CDATA[
 zf create dbtable User user
 zf create dbtable User -a user
 
-// also accepts a force option to overwrite existing files
+// akzeptiert auch eine "erzwinge" Option
+// um existierende Dateien zu überschreiben
 zf create dbtable User user -f
 zf create dbtable User user --force-override
 ]]></programlisting>
 
             <para>
-                The DbTable provider is also capable of creating the proper files by
-                scanning the database configured with the above DbAdapter provider.
+                Der DbTable Provider ist auch dazu in der Lage die richtigen Daten zu erstellen
+                indem er die Datenbank scannt die mit dem obigen DbAdapter Provider konfiguriert
+                wurde.
             </para>
 
             <programlisting language="text"><![CDATA[
@@ -425,88 +416,92 @@ zf create dbtable.from-database
 ]]></programlisting>
 
             <para>
-                When executing the above, it might make sense to use the pretend / "-p"
-                flag first so that you can see what would be done, and what tables can
-                be found in the database.
+                Wenn das obenstehende ausgeführt wird, könnte es Sinn machen das voranstellen-Flag
+                ("-p") zuerst zu verwenden damit man sieht was getan werden würde und welche
+                Tabellen in der Datenbank gefunden werden können.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf -p create dbtable.from-database
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.project-specific-commands.layout">
             <title>Layout</title>
 
             <para>
-                Currently, the only supported action for layouts is simply to enable them
-                will setup the proper keys in the application.ini file for the application
-                resource to work, and create the proper directories and layout.phtml file.
+                Aktuell ist die einzige unterstützte Aktion für Layouts einfach deren Aktivierung
+                damit die richtigen Schlüssel in die Datei application.ini geschrieben werden
+                damit die Anwendungs Ressource funktioniert und die richtigen Verzeichnisse und die
+                Datei layout.phtml erstellt wird.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf enable layout
 ]]></programlisting>
-
         </sect3>
-
     </sect2>
 
     <sect2 id="zend.tool.usage.cli.environment-customization">
-        <title>Environment Customization</title>
+        <title>Anpassung der Umgebung</title>
 
         <sect3 id="zend.tool.usage.cli.environment-customization.storage-directory">
-            <title>The Storage Directory</title>
+            <title>Das Speicher Verzeichnis</title>
 
             <para>
-                The storage directory is important so that providers may have a place to find
-                custom user generated logic that might change the way they behave. One example
-                can be found below is the placement of a custom project profile file.
+                Das Speicherverzeichnis ist wichtig damit Provider einen Platz haben an dem Sie die
+                Benutzer-definierte Logik finden welche den Weg verändern könnte wie Sie sich
+                verhalten. Ein Beispiel welches anbei gefunden werden kann ist die Platzierung einer
+                eigenen Projekt Profil  Datei.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf --setup storage-directory
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.environment-customization.configuration-file">
-            <title>The Configuration File</title>
+            <title>Die Konfigurationsdatei</title>
 
             <para>
-                This will create the proper zf.ini file. This <emphasis>should</emphasis>
-                be run after <code>zf --setup storage-directory</code>. If it is not, it will
-                be located inside the users home directory. If it is, it will be located inside
-                the users storage directory.
+                Das erstellt die richtige zf.ini Datei. Dies <emphasis>sollte</emphasis> nach
+                <code>zf --setup storage-directory</code> ausgeführt werden. Wenn dem nicht so ist,
+                wird Sie im Home Verzeichnis des Benutzers platziert. Aber wenn dem so ist, dann
+                wird Sie im Benutzerdefinierten Speicherverzeichnis platziert.
             </para>
 
             <programlisting language="text"><![CDATA[
 zf --setup config-file
 ]]></programlisting>
-
         </sect3>
 
         <sect3 id="zend.tool.usage.cli.environment-customization.environment-locations">
-            <title>Environment Locations</title>
+            <title>Orte der Umgebung</title>
 
             <para>
-                These should be set if you wish to override the default places where zf will
-                attempt to read their values.
+                Diese sollten gesetzt werden wenn man die standardmäßigen Orte überschreiben will an
+                denen ZF versucht seine Werte zu lesen.
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>ZF_HOME</para>
                     <itemizedlist>
-                        <listitem><para>the directory this tool will look for a home directory</para></listitem>
-                        <listitem><para>directory must exist</para></listitem>
                         <listitem>
-                            <para>search order:</para>
+                            <para>
+                                Das Verzeichnis in dem dieses Tool nach dem Home Verzeichnis
+                                nachsieht
+                            </para>
+                        </listitem>
+
+                        <listitem><para>Das Verzeichnis muss existieren</para></listitem>
+
+                        <listitem>
+                            <para>Suchrichtung:</para>
                             <itemizedlist>
-                                <listitem><para>ZF_HOME environment variable</para></listitem>
-                                <listitem><para>HOME environment variable</para></listitem>
-                                <listitem><para>then HOMEPATH environment variable</para></listitem>
+                                <listitem><para>ZF_HOME Umgebungsvariable</para></listitem>
+                                <listitem><para>HOME Umgebungsvariable</para></listitem>
+                                <listitem><para>dann HOMEPATH Umgebungsvariable</para></listitem>
                             </itemizedlist>
                         </listitem>
                     </itemizedlist>
@@ -514,55 +509,94 @@ zf --setup config-file
                 <listitem>
                     <para>ZF_STORAGE_DIRECTORY</para>
                     <itemizedlist>
-                        <listitem><para>where this tool will look for a storage directory</para></listitem>
-                        <listitem><para>directory must exist</para></listitem>
                         <listitem>
-                            <para>search order:</para>
+                            <para>
+                                Wo dieses Tool nach dem Speicherverzeichnis nachsehen wird
+                            </para>
+                        </listitem>
+
+                        <listitem><para>Das Verzeichnis muss existieren</para></listitem>
+
+                        <listitem>
+                            <para>Suchrichtung:</para>
                             <itemizedlist>
-                                <listitem><para>ZF_STORAGE_DIRECTORY environment variable</para></listitem>
-                                <listitem><para>$homeDirectory/.zf/ directory</para></listitem>
+                                <listitem>
+                                    <para>ZF_STORAGE_DIRECTORY Umgebungsvariable</para>
+                                </listitem>
+
+                                <listitem><para>$homeDirectory/.zf/ Verzeichnis</para></listitem>
                             </itemizedlist>
                         </listitem>
                     </itemizedlist>
                 </listitem>
+
                 <listitem>
                     <para>ZF_CONFIG_FILE</para>
                     <itemizedlist>
-                        <listitem><para>where this tool will look for a configuration file</para></listitem>
                         <listitem>
-                            <para>search order:</para>
+                            <para>Wo dieses Tool nach der Konfigurationsdatei nachsieht</para>
+                        </listitem>
+
+                        <listitem>
+                            <para>Suchrichtung:</para>
                             <itemizedlist>
-                                <listitem><para>ZF_CONFIG_FILE environment variable</para></listitem>
-                                <listitem><para>$homeDirectory/.zf.ini file if it exists</para></listitem>
-                                <listitem><para>$storageDirectory/zf.ini file if it exists</para></listitem>
+                                <listitem><para>ZF_CONFIG_FILE Umgebungsvariable</para></listitem>
+
+                                <listitem>
+                                    <para>$homeDirectory/.zf.ini Datei wenn Sie existiert</para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>$storageDirectory/zf.ini Datei wenn Sie existiert</para>
+                                </listitem>
                             </itemizedlist>
                         </listitem>
                     </itemizedlist>
                 </listitem>
+
                 <listitem>
                     <para>ZF_INCLUDE_PATH</para>
                     <itemizedlist>
-                        <listitem><para>set the include_path for this tool to use this value</para></listitem>
                         <listitem>
-                            <para>original behavior:</para>
+                            <para>
+                                Setzt den include_path der für dieses Tool verwendet werden soll
+                                auf diesen Wert
+                            </para>
+                        </listitem>
+
+                        <listitem>
+                            <para>Originales Verhalten:</para>
                             <itemizedlist>
-                                <listitem><para>use php's include_path to find ZF</para></listitem>
-                                <listitem><para>use the ZF_INCLUDE_PATH environment variable</para></listitem>
-                                <listitem><para>use the path ../library (relative to zf.php) to find ZF</para></listitem>
+                                <listitem>
+                                    <para>Verwende php's include_path um ZF zu finden</para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>Verwende die Umgebungsvariable ZF_INCLUDE_PATH</para>
+                                </listitem>
+
+                                <listitem>
+                                    <para>
+                                        Verwende den Pfad ../library (relativ zu zf.php) um ZF zu
+                                        finden
+                                    </para>
+                                </listitem>
                             </itemizedlist>
                         </listitem>
                     </itemizedlist>
                 </listitem>
+
                 <listitem>
                     <para>ZF_INCLUDE_PATH_PREPEND</para>
                     <itemizedlist>
-                        <listitem><para>prepend the current php.ini include_path with this value</para></listitem>
+                        <listitem>
+                            <para>
+                                Stellt diesen Wert dem aktuellen include_path in php.ini voran
+                            </para>
+                        </listitem>
                     </itemizedlist>
                 </listitem>
             </itemizedlist>
-
         </sect3>
-
     </sect2>
-
 </sect1>

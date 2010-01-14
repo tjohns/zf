@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -32,7 +32,7 @@ require_once 'Zend/Json.php';
  * @uses       Zend_Dojo_View_Helper_Textarea
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
@@ -83,12 +83,10 @@ class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
             }
         }
 
-        // Use a <div> by default, but allow degradation to <textarea> on request
-        $type = 'div';
+        // Previous versions allowed specifying "degrade" to allow using a 
+        // textarea instead of a div -- but this is insecure. Removing the 
+        // parameter if set to prevent its injection in the dijit.
         if (isset($params['degrade'])) {
-            $type = ($params['degrade'])
-                  ? 'textarea'
-                  : 'div';
             unset($params['degrade']);
         }
 
@@ -116,16 +114,16 @@ class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Dijit
 
         $attribs = $this->_prepareDijit($attribs, $params, 'textarea');
 
-        $html = '<input' . $this->_htmlAttribs($hiddenAttribs) . $this->getClosingBracket();
-        if ($type == 'textarea') {
-            $html .= '<textarea' . $this->_htmlAttribs($attribs) . '>'
-                   . $value
-                   . "</textarea>\n";
-        } else {
-            $html .= '<div' . $this->_htmlAttribs($attribs) . '>'
-                   . $value
-                   . "</div>\n";
-        }
+        $html  = '<input' . $this->_htmlAttribs($hiddenAttribs) . $this->getClosingBracket();
+        $html .= '<div' . $this->_htmlAttribs($attribs) . '>'
+               . $value
+               . "</div>\n";
+
+        // Embed a textarea in a <noscript> tag to allow for graceful 
+        // degradation
+        $html .= '<noscript>'
+               . $this->view->formTextarea($hiddenId, $value, $attribs)
+               . '</noscript>';
 
         return $html;
     }

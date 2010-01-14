@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id:$
  */
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Barcode/AdapterAbstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Barcode_Code39 extends Zend_Validate_Barcode_AdapterAbstract
@@ -48,7 +48,7 @@ class Zend_Validate_Barcode_Code39 extends Zend_Validate_Barcode_AdapterAbstract
      * Checksum function
      * @var string
      */
-    protected $_checksum = '_mod43';
+    protected $_checksum = '_code39';
 
     /**
      * @var array
@@ -64,12 +64,24 @@ class Zend_Validate_Barcode_Code39 extends Zend_Validate_Barcode_AdapterAbstract
     );
 
     /**
+     * Constructor
+     *
+     * Sets check flag to false.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->setCheck(false);
+    }
+
+    /**
      * Validates the checksum (Modulo 43)
      *
      * @param  string $value The barcode to validate
      * @return boolean
      */
-    protected function _mod43($value)
+    protected function _code39($value)
     {
         $checksum = substr($value, -1, 1);
         $value    = str_split(substr($value, 0, -1));

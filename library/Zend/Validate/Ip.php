@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Abstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Ip extends Zend_Validate_Abstract
@@ -56,12 +56,8 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
     /**
      * Sets validator options
      *
-     * @param integer          $allow       OPTIONAL Set what types of hostname to allow (default ALLOW_DNS)
-     * @param boolean          $validateIdn OPTIONAL Set whether IDN domains are validated (default true)
-     * @param boolean          $validateTld OPTIONAL Set whether the TLD element of a hostname is validated (default true)
-     * @param Zend_Validate_Ip $ipValidator OPTIONAL
+     * @param array $options OPTIONAL Options to set, see the manual for all available options
      * @return void
-     * @see http://www.iana.org/cctld/specifications-policies-cctlds-01apr02.htm  Technical Specifications for ccTLDs
      */
     public function __construct($options = array())
     {
@@ -158,7 +154,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
     /**
      * Validates an IPv6 address
      *
-     * @param string $value Value to check against
+     * @param  string $value Value to check against
      * @return boolean True when $value is a valid ipv6 address
      *                 False otherwise
      */
@@ -167,8 +163,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
             return $value == '::';
         }
 
-        if (strpos($value, '.'))
-        {
+        if (strpos($value, '.')) {
             $lastcolon = strrpos($value, ':');
             if (!($lastcolon && $this->_validateIPv4(substr($value, $lastcolon + 1)))) {
                 return false;
@@ -177,24 +172,20 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
             $value = substr($value, 0, $lastcolon) . ':0:0';
         }
 
-        if (strpos($value, '::') === false)
-        {
-            return preg_match('/\A(?:[a-f0-9]{1,4}:){7}[a-f0-9]{1,4}\Z/i', $value);
+        if (strpos($value, '::') === false) {
+            return preg_match('/\A(?:[a-f0-9]{1,4}:){7}[a-f0-9]{1,4}\z/i', $value);
         }
 
         $colonCount = substr_count($value, ':');
-        if ($colonCount < 8)
-        {
-            return preg_match('/\A(?::|(?:[a-f0-9]{1,4}:)+):(?:(?:[a-f0-9]{1,4}:)*[a-f0-9]{1,4})?\Z/i', $value);
+        if ($colonCount < 8) {
+            return preg_match('/\A(?::|(?:[a-f0-9]{1,4}:)+):(?:(?:[a-f0-9]{1,4}:)*[a-f0-9]{1,4})?\z/i', $value);
         }
 
         // special case with ending or starting double colon
-        if ($colonCount == 8)
-        {
-            return preg_match('/\A(?:::)?(?:[a-f0-9]{1,4}:){6}[a-f0-9]{1,4}(?:::)?\Z/i', $value);
+        if ($colonCount == 8) {
+            return preg_match('/\A(?:::)?(?:[a-f0-9]{1,4}:){6}[a-f0-9]{1,4}(?:::)?\z/i', $value);
         }
 
         return false;
     }
-
 }

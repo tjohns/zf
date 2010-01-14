@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -36,14 +36,19 @@ require_once 'Zend/Markup/Renderer/RendererAbstract.php';
  * @category   Zend
  * @package    Zend_Markup
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Markup_Test_Renderer_MockRenderer extends Zend_Markup_Renderer_RendererAbstract
 {
 
-    public function _filter($text)
+    /**
+     * Set the default filter
+     *
+     * @return void
+     */
+    public function addDefaultFilters()
     {
-        return $text;
+        $this->_defaultFilter = new Zend_Filter();
     }
 }

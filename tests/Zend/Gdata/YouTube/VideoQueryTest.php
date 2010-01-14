@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Gdata_YouTube
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id $
  */
@@ -32,7 +32,7 @@ require_once 'Zend/Gdata/YouTube.php';
  * @category   Zend
  * @package    Zend_Gdata_YouTube
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Gdata
  * @group      Zend_Gdata_YouTube
@@ -163,4 +163,56 @@ class Zend_Gdata_YouTube_VideoQueryTest extends PHPUnit_Framework_TestCase
             'safeSearch.');
     }
 
+    /**
+     * @group ZF-8720
+     * @expectedException Zend_Gdata_App_InvalidArgumentException
+     */
+    public function testVideoQuerySetLocationException()
+    {
+        $yt = new Zend_Gdata_YouTube();
+        $query = $yt->newVideoQuery();
+        $location = 'foobar';
+        $this->assertNull($query->setLocation($location));
+    }
+
+    /**
+     * @group ZF-8720
+     * @expectedException Zend_Gdata_App_InvalidArgumentException
+     */
+    public function testVideoQuerySetLocationExceptionV2()
+    {
+        $yt = new Zend_Gdata_YouTube();
+        $query = $yt->newVideoQuery();
+        $location = '-100x,-200y';
+        $this->assertNull($query->setLocation($location));
+    }
+
+    /**
+     * @group ZF-8720
+     * @expectedException Zend_Gdata_App_InvalidArgumentException
+     */
+    public function testVideoQuerySetLocationExceptionV3()
+    {
+        $yt = new Zend_Gdata_YouTube();
+        $query = $yt->newVideoQuery();
+        $location = '-100x,-200y!';
+        $this->assertNull($query->setLocation($location));
+    }
+
+    /**
+     * @group ZF-8720
+     */
+    public function testQueryExclamationMarkRemoveBug()
+    {
+        $yt = new Zend_Gdata_YouTube();
+        $query = $yt->newVideoQuery();
+
+        $location = '37.42307,-122.08427';
+        $this->assertNull($query->setLocation($location));
+        $this->assertEquals($location, $query->getLocation());
+
+        $location = '37.42307,-122.08427!';
+        $this->assertNull($query->setLocation($location));
+        $this->assertEquals($location, $query->getLocation());
+    }
 }

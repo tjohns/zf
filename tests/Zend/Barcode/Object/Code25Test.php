@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -31,7 +31,7 @@ require_once 'Zend/Barcode/Object/Code25.php';
  * @package    Zend_Barcode
  * @subpackage UnitTests
  * @group      Zend_Barcode
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_Object_Code25Test extends Zend_Barcode_Object_TestCommon
@@ -50,6 +50,7 @@ class Zend_Barcode_Object_Code25Test extends Zend_Barcode_Object_TestCommon
     public function testChecksum()
     {
         $this->assertSame(5, $this->_object->getChecksum('0123456789'));
+        $this->assertSame(0, $this->_object->getChecksum('13'));
     }
 
     public function testSetText()
@@ -58,6 +59,14 @@ class Zend_Barcode_Object_Code25Test extends Zend_Barcode_Object_TestCommon
         $this->assertSame('0123456789', $this->_object->getRawText());
         $this->assertSame('0123456789', $this->_object->getText());
         $this->assertSame('0123456789', $this->_object->getTextToDisplay());
+    }
+
+    public function testSetTextWithOddNumberOfCharacters()
+    {
+        $this->_object->setText('123456789');
+        $this->assertSame('123456789', $this->_object->getRawText());
+        $this->assertSame('123456789', $this->_object->getText());
+        $this->assertSame('123456789', $this->_object->getTextToDisplay());
     }
 
     public function testSetTextWithSpaces()

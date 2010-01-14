@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_Amazon
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: AbstractTest.php 17667 2009-08-18 21:40:09Z mikaelkael $
  */
@@ -30,7 +30,7 @@ require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
  * @category   Zend
  * @package    Zend_Service_Amazon
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Service
  * @group      Zend_Service_Amazon
@@ -79,6 +79,17 @@ class Zend_Service_Amazon_Ec2_AbstractTest extends PHPUnit_Framework_TestCase
             // do nothing
         }
     }
+    
+    public function testSignParamsWithSpaceEncodesWithPercentInsteadOfPlus()
+    {
+        $class = new TestAmamzonAbstract('TestAccessKey', 'TestSecretKey');
+        $ret = $class->testSign(array('Action' => 'Space Test'));
+        
+        // this is the encode signuature with urlencode - It's Invalid!
+        $invalidSignature = 'EeHAfo7cMcLyvH4SW4fEpjo51xJJ4ES1gdjRPxZTlto=';
+        
+        $this->assertNotEquals($ret, $invalidSignature);
+    }
 }
 
 class TestAmamzonAbstract extends Zend_Service_Amazon_Ec2_Abstract
@@ -87,6 +98,11 @@ class TestAmamzonAbstract extends Zend_Service_Amazon_Ec2_Abstract
     public function returnRegion()
     {
         return $this->_region;
+    }
+    
+    public function testSign($params)
+    {
+        return $this->signParameters($params);
     }
 }
 

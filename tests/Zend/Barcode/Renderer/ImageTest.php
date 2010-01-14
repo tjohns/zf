@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -32,11 +32,19 @@ require_once 'Zend/Barcode/Object/Code39.php';
  * @package    Zend_Barcode
  * @subpackage UnitTests
  * @group      Zend_Barcode
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_Renderer_ImageTest extends Zend_Barcode_Renderer_TestCommon
 {
+
+    public function setUp()
+    {
+        if (!function_exists('gd_info')) {
+            $this->markTestSkipped('Zend_Barcode_Renderer_ImageTest requires the GD extension');
+        }
+        parent::setUp();
+    }
 
     protected function _getRendererObject($options = null)
     {
@@ -154,9 +162,9 @@ class Zend_Barcode_Renderer_ImageTest extends Zend_Barcode_Renderer_TestCommon
     public function testGoodUserHeight()
     {
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
+        $this->assertEquals(62, $barcode->getHeight());
         $this->_renderer->setBarcode($barcode);
-        $this->_renderer->setHeight(61);
+        $this->_renderer->setHeight(62);
         $this->assertTrue($this->_renderer->checkParams());
     }
 
@@ -166,9 +174,9 @@ class Zend_Barcode_Renderer_ImageTest extends Zend_Barcode_Renderer_TestCommon
     public function testBadUserHeightLessThanBarcodeHeight()
     {
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
+        $this->assertEquals(62, $barcode->getHeight());
         $this->_renderer->setBarcode($barcode);
-        $this->_renderer->setHeight(60);
+        $this->_renderer->setHeight(61);
         $this->_renderer->checkParams();
     }
 
@@ -200,8 +208,8 @@ class Zend_Barcode_Renderer_ImageTest extends Zend_Barcode_Renderer_TestCommon
                     'GD extension is required to run this test');
         }
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
-        $imageResource = imagecreatetruecolor(500, 61);
+        $this->assertEquals(62, $barcode->getHeight());
+        $imageResource = imagecreatetruecolor(500, 62);
         $this->_renderer->setResource($imageResource);
         $this->_renderer->setBarcode($barcode);
         $this->assertTrue($this->_renderer->checkParams());
@@ -217,9 +225,9 @@ class Zend_Barcode_Renderer_ImageTest extends Zend_Barcode_Renderer_TestCommon
                     'GD extension is required to run this test');
         }
         $barcode = new Zend_Barcode_Object_Code39(array('text' => '0123456789'));
-        $this->assertEquals(61, $barcode->getHeight());
+        $this->assertEquals(62, $barcode->getHeight());
         $this->_renderer->setBarcode($barcode);
-        $imageResource = imagecreatetruecolor(500, 60);
+        $imageResource = imagecreatetruecolor(500, 61);
         $this->_renderer->setResource($imageResource);
         $this->_renderer->checkParams();
     }

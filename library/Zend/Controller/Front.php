@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -32,7 +32,7 @@ require_once 'Zend/Controller/Plugin/Broker.php';
 /**
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Controller_Front
@@ -907,7 +907,15 @@ class Zend_Controller_Front
             */
             $this->_plugins->routeStartup($this->_request);
 
-            $router->route($this->_request);
+            try {
+                $router->route($this->_request);
+            }  catch (Exception $e) {
+                if ($this->throwExceptions()) {
+                    throw $e;
+                }
+
+                $this->_response->setException($e);
+            }
 
             /**
             * Notify plugins of router completion

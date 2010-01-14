@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Tag
  * @subpackage Cloud
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -31,11 +31,16 @@ require_once 'Zend/Tag/Cloud/Decorator/Cloud.php';
  * @category  Zend
  * @package   Zend_Tag
  * @uses      Zend_Tag_Cloud_Decorator_Cloud
- * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tag_Cloud_Decorator_HtmlCloud extends Zend_Tag_Cloud_Decorator_Cloud
 {
+    /**
+     * @var string Encoding to use
+     */
+    protected $_encoding = 'UTF-8';
+
     /**
      * List of HTML tags
      *
@@ -51,6 +56,28 @@ class Zend_Tag_Cloud_Decorator_HtmlCloud extends Zend_Tag_Cloud_Decorator_Cloud
      * @var string
      */
     protected $_separator = ' ';
+
+    /**
+     * Get encoding
+     *
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
+    }
+
+    /**
+     * Set encoding
+     *
+     * @param string
+     * @return Zend_Tag_Cloud_Decorator_HtmlCloud
+     */
+    public function setEncoding($value)
+    {
+        $this->_encoding = (string) $value;
+        return $this;
+    }
 
     /**
      * Set the HTML tags surrounding all tags
@@ -106,13 +133,14 @@ class Zend_Tag_Cloud_Decorator_HtmlCloud extends Zend_Tag_Cloud_Decorator_Cloud
     {
         $cloudHtml = implode($this->getSeparator(), $tags);
 
+        $enc = $this->getEncoding();
         foreach ($this->getHtmlTags() as $key => $data) {
             if (is_array($data)) {
                 $htmlTag    = $key;
                 $attributes = '';
 
                 foreach ($data as $param => $value) {
-                    $attributes .= ' ' . $param . '="' . htmlspecialchars($value) . '"';
+                    $attributes .= ' ' . $param . '="' . htmlspecialchars($value, ENT_COMPAT, $enc) . '"';
                 }
             } else {
                 $htmlTag    = $data;

@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -36,6 +36,7 @@ require_once 'Zend/Form.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
 require_once 'Zend/Form/Decorator/HtmlTag.php';
 require_once 'Zend/Loader/PluginLoader.php';
+require_once 'Zend/Registry.php';
 require_once 'Zend/Translate.php';
 require_once 'Zend/Validate/NotEmpty.php';
 require_once 'Zend/Validate/EmailAddress.php';
@@ -45,7 +46,7 @@ require_once 'Zend/View.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Form
  */
@@ -59,6 +60,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        Zend_Registry::_unsetInstance();
         Zend_Form::setDefaultTranslator(null);
 
         if (isset($this->error)) {
@@ -1692,7 +1694,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
         $options = $this->getOptions();
         $options['validators'] = array(
-            array('notEmpty', true, array('bar')),
+            array('notEmpty', true, array(Zend_Validate_NotEmpty::ALL)),
             array('digits', true, array('bar')),
         );
         $this->element->setOptions($options);
@@ -1711,7 +1713,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $options = $this->getOptions();
         $options['validators'] = array(
             array(
-                'options'             => array('bar'),
+                'options'             => array(Zend_Validate_NotEmpty::ALL),
                 'breakChainOnFailure' => true,
                 'validator'           => 'notEmpty',
             ),

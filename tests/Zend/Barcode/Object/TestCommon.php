@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -39,7 +39,7 @@ require_once 'Zend/Config.php';
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Barcode_Object_TestCommon extends PHPUnit_Framework_TestCase
@@ -67,13 +67,24 @@ abstract class Zend_Barcode_Object_TestCommon extends PHPUnit_Framework_TestCase
         $this->_object = null;
     }
 
-    public function testStaticFont()
+    public function testStaticFontAsString()
     {
         Zend_Barcode_Object_ObjectAbstract::setBarcodeFont('my_static_font.ttf');
         $this->assertEquals('', $this->_object->getFont());
         $object = $this->_getBarcodeObject();
         $this->assertEquals('my_static_font.ttf', $object->getFont());
         Zend_Barcode_Object_ObjectAbstract::setBarcodeFont('');
+    }
+
+    public function testStaticFontAsNumber()
+    {
+        for ($i = 1; $i < 5; $i++) {
+            Zend_Barcode_Object_ObjectAbstract::setBarcodeFont($i);
+            $this->assertEquals('', $this->_object->getFont());
+            $object = $this->_getBarcodeObject();
+            $this->assertEquals($i, $object->getFont());
+            Zend_Barcode_Object_ObjectAbstract::setBarcodeFont('');
+        }
     }
 
     public function testConstructorWithArray()
@@ -479,6 +490,6 @@ abstract class Zend_Barcode_Object_TestCommon extends PHPUnit_Framework_TestCase
 
     public function testGetDefaultHeight()
     {
-        $this->assertEquals(61, $this->_object->getHeight());
+        $this->assertEquals(62, $this->_object->getHeight());
     }
 }

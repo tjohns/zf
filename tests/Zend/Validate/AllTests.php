@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -45,6 +45,7 @@ require_once 'Zend/Validate/IdenticalTest.php';
 require_once 'Zend/Validate/InArrayTest.php';
 require_once 'Zend/Validate/IntTest.php';
 require_once 'Zend/Validate/IpTest.php';
+require_once 'Zend/Validate/IsbnTest.php';
 require_once 'Zend/Validate/LessThanTest.php';
 require_once 'Zend/Validate/MessageTest.php';
 require_once 'Zend/Validate/NotEmptyTest.php';
@@ -56,7 +57,7 @@ require_once 'Zend/Validate/StringLengthTest.php';
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validate
  */
@@ -100,6 +101,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_InArrayTest');
         $suite->addTestSuite('Zend_Validate_IntTest');
         $suite->addTestSuite('Zend_Validate_IpTest');
+        $suite->addTestSuite('Zend_Validate_IsbnTest');
         $suite->addTestSuite('Zend_Validate_LessThanTest');
         $suite->addTestSuite('Zend_Validate_MessageTest');
         $suite->addTestSuite('Zend_Validate_NotEmptyTest');

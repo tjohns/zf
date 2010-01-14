@@ -14,18 +14,18 @@
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
-/** Zend_Loader */
+/** @see Zend_Loader */
 require_once 'Zend/Loader.php';
 
-/** Zend_Loader_PluginLoader */
+/** @see Zend_Loader_PluginLoader */
 require_once 'Zend/Loader/PluginLoader.php';
 
-/** Zend_View_Interface */
+/** @see Zend_View_Interface */
 require_once 'Zend/View/Interface.php';
 
 /**
@@ -33,7 +33,7 @@ require_once 'Zend/View/Interface.php';
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_View_Abstract implements Zend_View_Interface
@@ -109,10 +109,10 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_escape = 'htmlspecialchars';
 
     /**
-     * Encoding to use in escaping mechanisms; defaults to latin1 (ISO-8859-1)
+     * Encoding to use in escaping mechanisms; defaults to utf-8
      * @var string
      */
-    private $_encoding = 'ISO-8859-1';
+    private $_encoding = 'UTF-8';
 
     /**
      * Flag indicating whether or not LFI protection for rendering view scripts is enabled
@@ -561,7 +561,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     {
         return $this->getPluginLoader('helper')->getPaths();
     }
-    
+
     /**
      * Registers a helper object, bypassing plugin loader
      *
@@ -867,7 +867,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     /**
      * Processes a view script and returns the output.
      *
-     * @param string $name The script script name to process.
+     * @param string $name The script name to process.
      * @return string The script output.
      */
     public function render($name)
