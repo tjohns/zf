@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 20115 -->
+<!-- EN-Revision: 20243 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.loader.load">
     <title>Dynamisches Laden von Dateien und Klassen</title>
@@ -120,10 +120,77 @@ Zend_Loader::loadClass('Container_Tree',
             den Unterstrich ('_') und den Punkt ('.') enthalten.
         </para>
 
+        <note>
+            <title>Klassen von PHP Namespaces laden</title>
+
+            <para>
+                Beginnend mit Version 1.10.0 erlaubt Zend Framework das Laden von Klassen aus PHP
+                Namespaces. Diese Unterstützung folgt den gleichen Richtlinien und Implementationen
+                wie Sie in der <ulink
+                    linkend="http://groups.google.com/group/php-standards/web/psr-0-final-proposal">PHP
+                Framework Interop Group PSR-0</ulink> Referenz Implementation gefunden werden
+                können.
+            </para>
+
+            <para>
+                Mit dieser Richtlinie werden die folgenden Regeln angewandt:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Jeder Separator für Namespaces wird zu einem
+                        <constant>DIRECTORY_SEPARATOR</constant> konvertiert wenn er vom Dateisystem
+                        geladen wird.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Jedes "_" Zeichen im <emphasis>CLASS NAME</emphasis> wird zu einem
+                        <constant>DIRECTORY_SEPARATOR</constant> konvertiert. Das "_" Zeichen hat
+                        keine spezielle Bedeutung im Namespace.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        Dem voll-qualifizierte Namespace und der Klasse wird ".php" angehängt wenn
+                        Sie vom Dateisystem geladen werden.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                Als Beispiel:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <classname>\Doctrine\Common\IsolatedClassLoader</classname> =&gt;
+                        <filename>/path/to/project/lib/vendor/Doctrine/Common/IsolatedClassLoader.php</filename>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <classname>\namespace\package\Class_Name</classname> =&gt;
+                        <filename>/path/to/project/lib/vendor/namespace/package/Class/Name.php</filename>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <classname>\namespace\package_name\Class_Name</classname> =&gt;
+                        <filename>/path/to/project/lib/vendor/namespace/package_name/Class/Name.php</filename>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
     </sect2>
 
     <sect2 id="zend.loader.load.isreadable">
-
         <title>Testen ob eine Datei gelesen werden kann</title>
 
         <para>
@@ -134,6 +201,7 @@ Zend_Loader::loadClass('Container_Tree',
 
         <example id="zend.loader.load.isreadable.example">
             <title>Beispiel der isReadable() Methode</title>
+
             <programlisting language="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // Mach was mit $filename
@@ -149,11 +217,9 @@ if (Zend_Loader::isReadable($filename)) {
             Diese <acronym>PHP</acronym> Funktion durchsucht den <code>include_path</code> nicht,
             wärend <methodname>Zend_Loader::isReadable()</methodname> dies macht.
         </para>
-
     </sect2>
 
     <sect2 id="zend.loader.load.autoload">
-
         <title>Verwenden von Autoloaders</title>
 
         <para>
@@ -170,6 +236,7 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example">
             <title>Beispiel für das registrieren der Autoloader Callback Methode</title>
+
             <programlisting language="php"><![CDATA[
 Zend_Loader::registerAutoload();
 ]]></programlisting>
@@ -195,6 +262,7 @@ Zend_Loader::registerAutoload();
                 Beispiel für das registrieren der Autoload Callback Methode von einer
                 erweiterten Klasse
             </title>
+
             <para>
                 Wegen der Semantik der Referenzen von statischen Funktionen in
                 <acronym>PHP</acronym>, muß Code für beide <methodname>loadClass()</methodname> und
@@ -204,6 +272,7 @@ Zend_Loader::registerAutoload();
                 <methodname>self::loadClass()</methodname> an die Elternklasse delegiert, ruft Sie
                 die Methode des Namens in der Elternklasse und nicht in der Subklasse auf.
             </para>
+
             <programlisting language="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
@@ -234,10 +303,5 @@ Zend_Loader::registerAutoload('My_Loader');
             <constant>FALSE</constant> ist, wird die Registrierung des Callback des Autoloaders vom
             SPL Autoload Stack entfernt.
         </para>
-
     </sect2>
-
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
