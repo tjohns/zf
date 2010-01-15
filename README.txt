@@ -30,7 +30,7 @@ NEW FEATURES
 * Zend_Validate_CreditCard, contributed by Thomas Weidner
 * Zend_Validate_PostCode, contributed by Thomas Weidner
 * Additions to Zend_Application resources, including Cachemanager, Dojo, Jquery,
-  Layout, Log, Mail, and Multidb
+  Layout, Log, Mail, and Multidb (contributed by Dolf Schimmel)
 * Refactoring of Zend_Loader::loadClass() to conform to PHP Framework Interop
   Group reference implementation, which allows for autoloading PHP 5.3
   namespaced code
