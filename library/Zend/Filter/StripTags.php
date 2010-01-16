@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -237,7 +238,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
     public function filter($value)
     {
         // Strip HTML comments first
-        $valueCopy = preg_replace('#<!--(?:[^<]+|<(?!\!--))*?(--\s*>)#s', '', (string) $value);
+        $valueCopy = preg_replace('#<!--(?:[^<]+|<(?!\!--))*?(--\s*>)#us', '', (string) $value);
 
         // Initialize accumulator for filtered data
         $dataFiltered = '';
