@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
@@ -42,7 +42,7 @@ require_once 'Zend/Registry.php';
  * @category   Zend
  * @package    Zend_View
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_View
  * @group      Zend_View_Helper
@@ -424,6 +424,14 @@ document.write(bar.strlen());');
         $this->assertContains('<!--[if lt IE 7]>', $test);
     }
 
+    public function testConditionalScriptWidthIndentation()
+    {
+        $this->helper->headScript()->appendFile('/js/foo.js', 'text/javascript', array('conditional' => 'lt IE 7'));
+        $this->helper->headScript()->setIndent(4);
+        $test = $this->helper->headScript()->toString();
+        $this->assertContains('    <!--[if lt IE 7]>', $test);
+    }
+
     /**
      * @issue ZF-5435
      */
@@ -438,10 +446,10 @@ document.write(bar.strlen());');
 
         $test = $this->helper->toString();
 
-        $expected = '<script type="text/javascript" src="test1.js"></script>
-<script type="text/javascript" src="test4.js"></script>
-<script type="text/javascript" src="test3.js"></script>
-<script type="text/javascript" src="test2.js"></script>';
+        $expected = '<script type="text/javascript" src="test1.js"></script>' . PHP_EOL
+                  . '<script type="text/javascript" src="test4.js"></script>' . PHP_EOL
+                  . '<script type="text/javascript" src="test3.js"></script>' . PHP_EOL
+                  . '<script type="text/javascript" src="test2.js"></script>';
 
         $this->assertEquals($expected, $test);
     }
