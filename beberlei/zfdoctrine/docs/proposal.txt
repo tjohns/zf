@@ -1,0 +1,148 @@
+{zone-template-instance:ZFPROP:Proposal Zone Template}
+{composition-setup}
+
+{zone-data:component-name}
+Zend_Doctrine 2 Integration
+{zone-data}
+
+{zone-data:proposer-list}
+[Benjamin Eberlei|mailto:kontakt@beberlei.de]
+{zone-data}
+
+{zone-data:liaison}
+TBD
+{zone-data}
+
+{zone-data:revision}
+1.0 - 8th November 2009
+{zone-data}
+
+{zone-data:overview}
+This Proposal aims to integrate Zend Framework and Doctrine 2. Because of the
+fundamental differences of Doctrine 1 and 2 there can be no general package
+that can solve integration for both versions.
+{zone-data}
+
+{zone-data:references}
+* [Doctrine|http://www.doctrine-project.org]
+* [Doctrine 2 Documentation|http://www.doctrine-project.org/documentation/manual/2_0/en/introduction]
+{zone-data}
+
+{zone-data:requirements}
+* This component *MUST* offer a Doctrine 2 Resource for Zend_Application
+    * This resource *SHOULD* support both Modular and non-modular MVC application.
+* The different Doctrine configuration resources *SHOULD* be handled in different resources.
+* This component *SHOULD* be the integration point for further components for a Doctrine 2 and ZF integration.
+{zone-data}
+
+{zone-data:dependencies}
+* Zend_Application
+{zone-data}
+
+{zone-data:operation}
+Using Doctrine 2 in a Zend Framework application would begin with configuring the
+Zend Application resource. It covers all options that Doctrine 2 publishes for the user.
+
+Depending on the type of application there are three scenarios you can choose between:
+
+* 1 Module and 1 Entity Manager - Simple application
+* n Modules and 1 Entity Manager - Unified Model approach
+* n Modules and m Entity Managers - Service Oriented approach
+
+There are global configuration options and those based on module name. Default
+values follow the "configuration riffle principle" which may be known from symfony.
+If an option is not present at the module level the default option will be used.
+
+The first two approaches only require the global configuration.
+A general INI configuration for the 1 Module 1 Entity Manager would look like:
+
+{code}
+; Doctrine 2 resource
+resources.Doctrine2.connectionOptions.driver = 'pdo_mysql'
+resources.Doctrine2.connectionOptions.user = 'user'
+resources.Doctrine2.connectionOptions.password = ''
+resources.Doctrine2.connectionOptions.dbname = 'myblog'
+resources.Doctrine2.cache = "Doctrine\Common\Cache\ArrayCache"
+resources.Doctrine2.proxyDir = "/tmp"
+resources.Doctrine2.formDir = "/tmp/forms"
+resources.Doctrine2.modelDir = "/tmp/models"
+resources.Doctrine2.libraryPath = APPLICATION_PATH "/../library"
+resources.Doctrine2.metadata.driver = "annotation"
+resources.Doctrine2.metadata.classDirectory = APPLICATION_PATH "/../library/Blog/Domain"
+{code}
+
+Nesting a Zend_Db_Adapter connection would be done by:
+
+{code}
+resources.Doctrine2.connectionOptions.sharedConn = true
+{code}
+
+Which will bootstrap the Db resource and nest it into a connection adapter.
+
+The Doctrine 2 Connection and Cache instances will also be placed into the
+Zend Application registry for a scenario were these instances are shared
+by adapters.
+
+A multi entity manager approach would extend the previous ini
+with two additional modules foo and bar.
+
+{code}
+resources.Doctrine2.modules.fooModule.metadata.driver = "yaml"
+resources.Doctrine2.modules.fooModule.metadata.paths.0 = "path to yaml metadata directory"
+resources.Doctrine2.modules.barModule.metadata.driver = "xml"
+resources.Doctrine2.modules.fooModule.metadata.paths.0 = "path to xml metadata directory"
+resources.Doctrine2.modules.fooModule.proxyDir = "/tmp/fooModule/"
+resources.Doctrine2.modules.fooModule.proxyNamespace = "FooModule/Proxies"
+{code}
+
+The Doctrine 2 resource then creates an EntityManagerFactory, not the
+real Entity Manager already and puts it into the Zend Application Registry.
+You can access them in the controller with:
+
+{code}
+class FooModule_IndexController extends Zend_Controller_Action
+{
+    public function indexAction()
+    {
+        $container = $this->getInvokeArg('bootstrap')->getContainer();
+        $defaultEntityManager = $container->doctrine2->createEntityManager();
+        $fooModuleEntityManager = $container->doctrine2->createEntityManager("fooModule");
+        $barModuleEntityManager = $container->doctrine2->createEntityManager("barModule");
+    }
+}
+{code}
+
+You can extend upon the Doctrine 2 Entity Manager Factory resource by depending
+on it and adding modules.
+
+{code}
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
+{
+    protected function _initMyModule()
+    {
+        $options = array();
+        $emf = $this->bootstrap('Doctrine2');
+        $emf->registerModule("myModule", $options);
+    }
+}
+{code}
+
+{zone-data:milestones}
+* Milestone 1: Community Review
+* Milestone 2: Prototype
+* Milestone 3: Zend Acceptance
+* Milestone 4: Completion & Documentation
+{zone-data}
+
+{zone-data:class-list}
+* Zend_Doctrine2_Application_Resource_Doctrine2
+* Zend_Doctrine2_EntityManagerFactory
+{zone-data}
+
+{zone-data:use-cases}
+{zone-data}
+
+{zone-data:skeletons}
+{zone-data}
+
+{zone-template-instance}

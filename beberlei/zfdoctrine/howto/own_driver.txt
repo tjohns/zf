@@ -1,0 +1,12 @@
+1. Implement Doctrine\DBAL\Driver
+2. Let your database driver implement: Doctrine\DBAL\Driver\Connection
+3. Let your database driver statement implement: Doctrine\DBAL\Driver\Statement
+4. Your driver only needs the features that the wrapper Doctrine\DBAL\Connection requires, this is:
+    prepare($query);
+    exec($query);
+    quote($input, $type);
+    lastInsertId($seqName=null);
+    beginTransaction();
+    commit();
+    rollBack();
+5. Your statement needs to implement the complete interface Doctrine\DBAL\Driver\Statement

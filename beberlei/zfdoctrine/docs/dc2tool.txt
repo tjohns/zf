@@ -1,0 +1,185 @@
+{zone-template-instance:ZFPROP:Proposal Zone Template}
+{composition-setup}
+
+{zone-data:component-name}
+Zend Tool and Doctrine 2 Integration
+{zone-data}
+
+{zone-data:proposer-list}
+[Benjamin Eberlei|mailto:kontakt@beberlei.de]
+{zone-data}
+
+{zone-data:liaison}
+TBD
+{zone-data}
+
+{zone-data:revision}
+1.0 - 23th November 2009
+{zone-data}
+
+{zone-data:overview}
+This Proposal aims to integrate Zend Framework and Doctrine 2 via Zend Tool.
+Doctrine 2 CLI commands like Schema Tool should be integrated into the Zend
+Tool Project context. This allows to setup the Doctrine 2 from withing
+Zend Application within Zend Tool.
+{zone-data}
+
+{zone-data:references}
+* [Doctrine|http://www.doctrine-project.org]
+* [Doctrine 2 Documentation|http://www.doctrine-project.org/documentation/manual/2_0/en/introduction]
+{zone-data}
+
+{zone-data:requirements}
+* This component *MUST* use Doctrine 2 Resource for Zend_Application
+    * This resource *SHOULD* be usable with both Modular and non-modular MVC applications.
+* This component *MUST* integrate all Doctrine 2 CLI Tasks
+* This component *SHOULD* offer further providers that help the integration of ZF and Doctrine 2
+    * This component *SHOULD* make use of other Zend components for this goal.
+    * This component *SHOULD* optionally support prototyping of forms
+    * This component *SHOULD* optionally support prototyping of entity base classes.
+    * This component *MAY* support Zend_Test and Doctrine integration.
+{zone-data}
+
+{zone-data:dependencies}
+* Zend_Application
+* Zend_Tool_Framework
+* Zend_Tool_Project
+* Zend_Form
+* Zend_CodeGenerator
+{zone-data}
+
+{zone-data:operation}
+
+You can configure your Doctrine 2 EntityManager instance with the following maximum options.
+
+{code}
+resources.entitymanagerfactory.cache = "Doctrine\Common\Cache\ApcCache"
+resources.entitymanagerfactory.metadata.driver = "yaml"
+resources.entitymanagerfactory.proxyDir = APPLICATION_PATH "/../data/proxies/"
+resources.entitymanagerfactory.proxyNamespace = "MyProject/Proxies"
+resources.entitymanagerfactory.autoGenerateProxyClasses = false
+resources.entitymanagerfactory.useCExtension = false
+resources.entitymanagerfactory.connectionOptions.driver = "pdo_mysql"
+resources.entitymanagerfactory.connectionOptions.user = "user"
+resources.entitymanagerfactory.connectionOptions.password = "pwd"
+resources.entitymanagerfactory.modules.core.metadataPath = APPLICATION_PATH "/modules/default/config/metadata"
+resources.entitymanagerfactory.modules.core.formGeneration = true
+resources.entitymanagerfactory.modules.core.formBaseClass = "ZendX_JQuery_Form"
+resources.entitymanagerfactory.modules.core.modelGeneration = true
+resources.entitymanagerfactory.modules.core.repositoryGeneration = true
+resources.entitymanagerfactory.modules.foo.metadataPath = APPLICATION_PATH "/modules/foo/config/metadata"
+resources.entitymanagerfactory.modules.bar.metadataPath = APPLICATION_PATH "/modules/bar/config/metadata"
+{code}
+
+All the options are Doctrine 2 specific and can be looked up in the documentation. The EntityManagerFactory
+instance delays the creation of the entity manager as long as possible. This is
+recommended when some of your actions don't require an active database connection. A use would look like:
+
+{code}
+class MyController extends Zend_Controller_Action
+{
+    public function indexAction()
+    {
+        $em = $this->getInvokeArg("Bootstrap")->getContainer()->entitymanagerfactory;
+    }
+}
+{code}
+
+For modularity you can retrieve the entitymanagerfactory (not the entitymanager)
+from within any init method and add further metadata paths:
+
+{code}
+class MyBootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
+{
+    protected function _initForumDropIn()
+    {
+        $em = $this->bootstrap("EntityManagerFactory");
+        $em->addMetadataPath("path/to/forum/metadata");
+    }
+}
+{code}
+
+The Zend Tool integration will use the configured Zend Application resource
+to configure Doctrine 2 for the use with Schema Tool or other CLI tasks.
+
+With a configured Doctrine2 resource you will be able to issue the following commands:
+
+{code}
+zf create dc2-project               # Enable a Zend_Tool Project for Doctrine 2 support
+zf configure dc2-project            # Configure modules of your Doctrine 2 project
+zf create dc2-build.db              # Create the db-schema for the given module(s)
+zf drop dc2-build.db                # Drop the db-schema
+zf validate dc2-build               # Validate if Metadata are correctly transformed to SQL schema and if proxies are still valid.
+zf create dc2-build                 # Generate all Schema, Proxies and Models/Repositories/Criteria/Forms as configured
+zf create dc2-build.models          # Build Abstract Models
+zf create dc2-build.forms           # Build Abstract Forms
+zf create dc2-build.proxies         # Generate the Proxy classes into the configured directory
+zf rebuild dc2-build                # Re-generate everything
+zf rebuild dc2-build.db             # Drop and Create database
+zf run dc2-query "dql string"       # Run a DQL command and print all results, much like mysql -e
+zf run dc2-query.dql "dql string"   # Run a DQL command and print all results, much like mysql -e
+zf run dc2-query.sql "sql string"   # Run an SQL command
+zf clear dc2-cache                  # Clear cache
+{code}
+
+Commands will all make heavy use of --verbose and --pretend flags.
+
+Using the optional generation tasks we can create:
+
+1. Forms
+Abstract Form that has elements for all entity properties.
+
+2. Models
+Abstract Model that has getter/setter and protected properties for all entity fields.
+(Won't work with Annotations Metadata).
+
+3. Repository/Criteria
+This is maybe for a next version. Use the configured entity repository class option
+of Doctrine 2 and generate abstract Repository/Criteria pattern objects.
+
+Code-Generation will always only create abstract classes in the schema
+
+* EntityNameFormAbstract
+* EntityNameAbstract
+* EntityNameRepositoryAbstract
+* EntityNameCriteriaAbstract
+
+The developer then has to build the implementations of these abstract classes
+himself. This way re-creation of the abstract classes will not destroy your
+self-written code.
+
+A question is how the transformation between entities and form data population
+sould look like.
+{zone-data}
+
+{zone-data:milestones}
+* Milestone 1: Community Review
+* Milestone 2: Prototype
+* Milestone 3: Zend Acceptance
+* Milestone 4: Completion & Documentation
+{zone-data}
+
+{zone-data:class-list}
+* Zend_Doctrine2_Application_Resource_Entitymanagerfactory
+* Zend_Doctrine2_Tool_Provider_Dc2Project
+* Zend_Doctrine2_Tool_Provider_Dc2Build
+* Zend_Doctrine2_Tool_Provider_Dc2Query
+* Zend_Doctrine2_Tool_Provider_Dc2Cache
+* Zend_Doctrine2_Tool_Build
+* Zend_Doctrine2_Tool_Query
+* Zend_Doctrine2_Tool_Cache
+* Zend_Doctrine2_CodeGenerator_Model
+* Zend_Doctrine2_CodeGenerator_Form
+* Zend_Doctrine2_CodeGenerator_Repository
+* Zend_Doctrine2_FormAbstract
+* Zend_Doctrine2_Form_EntityTransformer
+* Zend_Doctrine2_Form_TransformValidator
+{zone-data}
+
+{zone-data:use-cases}
+{zone-data}
+
+{zone-data:skeletons}
+{zone-data}
+
+{zone-template-instance}
