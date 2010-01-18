@@ -34,15 +34,15 @@ class Zend_Doctrine2_Tool_Dc2Build extends Zend_Doctrine2_Tool_ProviderAbstract
 
     public function create()
     {
-        $this->createDb($module);
-        $this->createProxies($module);
+        $this->createDb();
+        $this->createProxies();
     }
 
     public function drop($dropStrategy="metadata")
     {
-        $this->dropDb($module, $dropStrategy);
+        $this->dropDb($dropStrategy);
     }
-    
+
     public function update()
     {
         throw new Zend_Doctrine2_Exception("Not yet implemented.");
@@ -185,18 +185,18 @@ class Zend_Doctrine2_Tool_Dc2Build extends Zend_Doctrine2_Tool_ProviderAbstract
 
     public function updateProxies()
     {
-        $this->createProxies($module);
+        $this->createProxies();
     }
 
-    public function reCreate($module=null, $dropStrategy="metadata")
+    public function reCreate($dropStrategy="metadata")
     {
-        $this->drop($module, $dropStrategy);
-        $this->create($module);
+        $this->drop($dropStrategy);
+        $this->create();
     }
 
-    public function reCreateDb($module, $dropStrategy="metadata")
+    public function reCreateDb($dropStrategy="metadata")
     {
-        $this->dropDb($module, $dropStrategy);
-        $this->createDb($module);
+        $this->dropDb($dropStrategy);
+        $this->createDb();
     }
 }
