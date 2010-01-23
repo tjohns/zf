@@ -108,6 +108,12 @@ $valid = Zend_Uri::check('http://uri.in.question');
 ]]></programlisting>
         </example>
 
+        <para>
+            <methodname>Zend_Uri::check()</methodname> gibt einen Boolschen Wert zurück was bequemer
+            ist als <methodname>Zend_Uri::factory()</methodname> zu verwenden und die Exception zu
+            fangen.
+        </para>
+
         <sect3 id="zend.uri.validation.allowunwise">
             <title>"Unwise" Zeichen in URIs erlauben</title>
 
@@ -147,9 +153,9 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
             <note>
                 <para>
                     <methodname>Zend_Uri::setConfig()</methodname> setzt Konfigurationsoptionen
-                    global. Es wird empfohlen die 'allow_unwise' Option auf
-                    '<constant>FALSE</constant>' zurückzusetzen wie im obigen Beispiel, solange man
-                    unwise Zeichen immer global erlauben will.
+                    global. Es wird, wie im obigen Beispiel, empfohlen die 'allow_unwise' Option auf
+                    '<constant>FALSE</constant>' zurückzusetzen, solange man unwise Zeichen immer
+                    global erlauben will.
                 </para>
             </note>
         </sect3>

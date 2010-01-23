@@ -37,62 +37,67 @@
         </para>
 
         <para>
-            The protocol does not exist in isolation. Pubsub systems have been around for a while,
-            such as the familiar Jabber Publish-Subscribe protocol, XEP-0060, or the less well known
-            rssCloud (described in 2001).  However these have not achieved widespread adoption typically
-            due to either their complexity, poor timing or lack of suitability for web applications.
-            rssCloud, which was recently revived as a response to the appearance of Pubsubhubbub, has
-            also seen its usage increase significantly though it lacks a formal specification and
-            currently does not support Atom 1.0 feeds.
+            Das Protokoll existiert nicht isoliert. PubSub Systems gibt es schon seit einiger Zeit,
+            wie auch das übliche Jabber Publish-Subscribe Protokoll, XEP-0060, oder das nicht so
+            bekannte rssCloud (beschrieben 2001). Trotzdem haben diese keine keine breite Anwendung
+            gefunden weil Sie entweder komplex sind, ein schlechtes Timing haben, oder nicht für
+            Web Anwendungen verwendbar sind. Bei rssCloud, welches zuletzt als Antwort auf das
+            Erscheinen von Pubsubhubbub revidiert wurde, wurde auch eine signifikante Steigerung
+            gesehen obwohl es an einer formalen Spezifikation fehlt und es aktuell keine Atom 1.0
+            Feeds unterstützt.
         </para>
 
         <para>
-            Perhaps surprisingly given its relative early age, Pubsubhubbub is already in use including
-            in Google Reader, Feedburner, and there are plugins available for Wordpress blogs.
+            Warscheinlich überraschend weil es noch relativ Jung ist, ist Pubsubhubbub trotzdem
+            bereits in Verwendung unter anderem bei Google Reader, Feedburner und es sind Plugins
+            für Wordpress Blogs vorhanden.
         </para>
     </sect2>
 
     <sect2 id="zend.feed.pubsubhubbub.architecture">
-        <title>Architecture</title>
+        <title>Architektur</title>
 
         <para>
-            <classname>Zend_Feed_Pubsubhubbub</classname> implements two sides of the Pubsubhubbub
-            0.2 Specification: a Publisher and a Subscriber. It does not currently implement a Hub
-            Server though this is in progress for a future Zend Framework release.
+            <classname>Zend_Feed_Pubsubhubbub</classname> implementiert zwei Seiten der Pubsubhubbub
+            0.2 Spezifikation: einen Publizisten und einen Abonnenten. Es implementiert aktuell
+            keinen Hub Server. Dieser ist aber in Arbeit für ein zukünftiges Zend Framework Release.
         </para>
 
         <para>
-            A Publisher is responsible for notifying all supported Hubs (many can be supported to
-            add redundancy to the system) of any updates to its feeds, whether they be Atom or RSS
-            based. This is achieved by pinging the supported Hub Servers with the URL of the updated
-            feed. In Pubsubhubbub terminology, any updatable resource capable of being subscribed
-            to is referred to as a Topic. Once a ping is received, the Hub will request the updated
-            feed, process it for updated items, and forward all updates to all Subscribers
-            subscribed to that feed.
+            Ein Publizist ist verantwortlich für die Mitteilung aller Aktualisierungen seines Feeds
+            an alle unterstützten Hubs (es können viele unterstützt werden um Redundanz zu einem
+            System hinzuzufügen), egal ob es sich um Atom oder RSS basierte handelt. Das wird getan
+            indem die unterstützten Hub Server mit der URL des aktualisierten Feeds gepingt werden.
+            In der Pubsubhubbub Terminologie wird jede aktualisierbare Ressource welche in der Lage
+            ist abonniert zu werden als Thema bezeichnet. Sobald ein Ping empfangen wird, frägt der
+            Hub den aktualisierten Feed ab, bearbeitet die aktualisierten Elemente, und leitet alle
+            Aktualisierungen an alle Abonnenten weiter die diesen Feed abonniert haben.
         </para>
 
         <para>
-            A Subscriber is any party or application which subscribes to one or more Hubs to receive
-            updates from a Topic hosted by a Publisher. The Subscriber never directly communicates
-            with the Publisher since the Hub acts as an intermediary, accepting subscriptions and
-            sending updates to subscribed Subscribers. The Subscriber therefore communicates only
-            with the Hub, either to subscribe/unsubscribe to Topics, or when it receives updates
-            from the Hub. This communication design ("Fat Pings") effectively removes the possibility of
-            a "Thundering Herd" issue. This occurs in a pubsub system where the Hub merely informs
-            Subscribers that an update is available, prompting all Subscribers to immediately retrieve
-            the feed from the Publisher giving rise to a traffic spike. In Pubsubhubbub, the Hub
-            distributes the actual update in a "Fat Ping" so the Publisher is not subjected to any
-            traffic spike.
+            Ein Abonnent ist jedes Mitglied oder jede Anwendung welche einen oder mehrere Hubs
+            abonniert um Aktuslisierungen von einem Thema zu empfangen welches von einem Publizisten
+            gehostet wird. Der Abonnent kommuniziert niemals direkt mit dem Publizisten da der Hub
+            als Zwischenglied fungiert welches Abos akzeptiert und Aktualisierungen an Abonnenten
+            sendet. Der Abonnent kommuniziert seinerseits nur mit dem Hub um Themen entweder zu
+            abonnieren und Abos zu entfernen, oder wenn er Aktualisierungen vom Hub empfängt. Dieses
+            Design der Kommunikation ("Fat Pings") entfernt effektiverweise die Möglichkeit eines
+            "Thundering Herd" Problems. Dieses findet in einem Pubsub System statt in dem der Hub
+            Abonnenten über eine vorhandene Aktualisierung informiert, und alle Abonnenten dazu
+            auffordert den Feed sofort vom Publizisten zu empfangen, was zu einer Verkehrsspitze
+            führt. In Pubsubhubbub verteilt der Hub das aktuelle Update in einem "Fat Ping" so dass
+            der Publizist keine Verkehrsspitze aushalten muss.
         </para>
 
         <para>
-            <classname>Zend_Feed_Pubsubhubbub</classname> implements Pubsubhubbub Publishers and
-            Subscribers with the
-            classes <classname>Zend_Feed_Pubsubhubbub_Publisher</classname> and
-            <classname>Zend_Feed_Pubsubhubbub_Subscriber</classname>. In addition, the Subscriber
-            implementation may handle any feed updates forwarded from a Hub by using
-            <classname>Zend_Feed_Pubsubhubbub_Subscriber_Callback</classname>.  These classes, their
-            use cases, and APIs are covered in subsequent sections.
+            <classname>Zend_Feed_Pubsubhubbub</classname> implementiert Pubsubhubbub Publizisten und
+            Abonnenten mit den Klassen <classname>Zend_Feed_Pubsubhubbub_Publisher</classname> und
+            <classname>Zend_Feed_Pubsubhubbub_Subscriber</classname>. Zusätzlich kann die
+            Implementation des Abonnenten alle Feed Aktualisierungen behandeln die von einem Hub
+            weitergeleitet werden indem
+            <classname>Zend_Feed_Pubsubhubbub_Subscriber_Callback</classname> verwendet wird. Diese
+            Klassen, deren Verwendungszweck, und die APIs werden in den weiterführenden Abschnitten
+            behandelt.
         </para>
     </sect2>
 
