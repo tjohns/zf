@@ -53,7 +53,7 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
         }
     }
     
-/*    public function testAddingOfRoles() {
+    public function testAddingOfRoles() {
     	$rbac = new Zend_Rbac(array('roles' => array('President','slave')));
     	$rbac->addRole('citizen');
     	$rbac->addRoles(array(new Zend_Rbac_Role('role2'), 'role3'));
@@ -67,7 +67,7 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(in_array((string)$role,$expected));
         }
     }
-    
+
     public function testAddingOfResources()
     {
         $rbac = new Zend_Rbac(array('resources' => array('Nuclear bombs','landmines')));
@@ -93,11 +93,11 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
             // foobar
         }
     }
-    
+
     public function testDuplicateRoleThrowsException() {
         $rbac = new Zend_Rbac(array('roles' => 'President'));
         try {
-            $rbac->addRole(new Zend_Rbac_Subject('President'));
+            $rbac->addRole(new Zend_Rbac_Role('President'));
             $this->fail('Cannot have two presidents (think about that one!) - No exception thrown');
         } catch(Zend_Rbac_Exception $e) {
             // foobar
@@ -107,7 +107,7 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
     public function testDuplicateResourceThrowsException() {
         $rbac = new Zend_Rbac(array('resources' => 'Landmines'));
         try {
-            $rbac->addResource(new Zend_Rbac_Subject('Landmines'));
+            $rbac->addResource(new Zend_Rbac_Resource('Landmines'));
             $this->fail('No exception thrown');
         } catch(Zend_Rbac_Exception $e) {
             // foobar
@@ -144,7 +144,7 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($rbac->isAllowedRole('minister', array('raise_taxes')));
     }
     
-    public function testDifferentObjectsSameStringAndStrict()
+   /*        public function testDifferentObjectsSameStringAndStrict()
     {
     	$rbac = new Zend_Rbac(array(
     	   'roles' => array('President', 'citizen'),
