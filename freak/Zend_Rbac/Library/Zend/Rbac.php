@@ -3,54 +3,54 @@ require_once 'Zend/Rbac/Subject.php';
 
 class Zend_Rbac
 {
-	const AS_OBJECT = 'AS_OBJECT';
-	const AS_STRING = 'AS_STRING';
-	
-	protected $_subjects = array();
-	
-	protected $_roles = array();
-	
-	protected $_resources = array();
-	
-	protected $_objectTypes = array(
-	   'subject' => array('isRegistered' => 'isSubjectRegistered',
-	                      'container' => '_subjects',
-	                      'class' => 'Zend_Rbac_Subject'),
-	   'role'    => array('isRegistered' => 'isRoleRegistered',
-	                      'container' => '_roles',
-	                      'class' => 'Zend_Rbac_Role'),
-	   'resource'=> array('isRegistered' => 'isResourceRegistered',
-	                      'container' => '_resources',
-	                      'class' => 'Zend_Rbac_Resource')
-	);
-	
-	protected $_strictMode = false;
-	
-	public function __construct($options = null) {
+    const AS_OBJECT = 'AS_OBJECT';
+    const AS_STRING = 'AS_STRING';
+    
+    protected $_subjects = array();
+    
+    protected $_roles = array();
+    
+    protected $_resources = array();
+    
+    protected $_objectTypes = array(
+       'subject' => array('isRegistered' => 'isSubjectRegistered',
+                          'container' => '_subjects',
+                          'class' => 'Zend_Rbac_Subject'),
+       'role'    => array('isRegistered' => 'isRoleRegistered',
+                          'container' => '_roles',
+                          'class' => 'Zend_Rbac_Role'),
+       'resource'=> array('isRegistered' => 'isResourceRegistered',
+                          'container' => '_resources',
+                          'class' => 'Zend_Rbac_Resource')
+    );
+    
+    protected $_strictMode = false;
+    
+    public function __construct($options = null) {
         $this->addOptions($options);
-	}
-	
-	public function addOptions($options) {
-		$options = array_change_key_case($options);
+    }
+    
+    public function addOptions($options) {
+        $options = array_change_key_case($options);
         foreach($options as $key => $value) {
-        	switch($key) {
-        		case 'subject':
-        		case 'subjects':
+            switch($key) {
+                case 'subject':
+                case 'subjects':
                     $this->addSubjects($value);
                     break;
-        		case 'role':
-        		case 'roles':
-        			$this->addRoles($value);
-        			break;
-        		case 'resource':
-        		case 'resources':
-        			$this->addResources($value);
-        			break;
-        	}
+                case 'role':
+                case 'roles':
+                    $this->addRoles($value);
+                    break;
+                case 'resource':
+                case 'resources':
+                    $this->addResources($value);
+                    break;
+            }
         }
-	}
-	
-	protected function _addObject($type, $object) {
+    }
+    
+    protected function _addObject($type, $object) {
         if($type instanceof Zend_Rbac_ObjectInterface) {
             if($this->_isObjectRegistered($type, $object)) {
                 throw new Zend_Rbac_Exception(
@@ -59,7 +59,7 @@ class Zend_Rbac
             }
             
             if($object->getType() != $type) {
-            	throw new Zend_Rbac_Exception('Given object is not of type '.$type);
+                throw new Zend_Rbac_Exception('Given object is not of type '.$type);
             }
             
             $this->{$$this->_objectTypes[$type]['container']}[(string)$object] = $object;
@@ -79,11 +79,11 @@ class Zend_Rbac
             return $this;
         }
         
-        throw new Zend_Rbac_Exception('Invalid subject supplied');		
-	}
-	
-	protected function _getObjects($type, $method)
-	{
+        throw new Zend_Rbac_Exception('Invalid subject supplied');        
+    }
+    
+    protected function _getObjects($type, $method)
+    {
         if($method == self::AS_OBJECT) {
            return $this->{$this->_objectTypes[$type]['container']};
         }
@@ -95,24 +95,24 @@ class Zend_Rbac
            }
            
            return $out;
-        }		
-	}
-	
-	protected function _isObjectRegistered($type, $object)
-	{
-	   return isset($this->{$this->_objectTypes[$type]['container']}[(string)$object]);
-	}
-	
-	public function assignRole($roles, $subjects, $mode = null) {
-		if($mode === null) {
-			foreach((array)$roles as $role) {
-				if(!$this->isRoleRegistered($role)) {
-					throw new Zend_Rbac_Exception(
-					   "Tried to assign subject to unexisting role ".(string)$role
-					);
-				}
-				
-				foreach((array)$subjects as $subject){
+        }        
+    }
+    
+    protected function _isObjectRegistered($type, $object)
+    {
+       return isset($this->{$this->_objectTypes[$type]['container']}[(string)$object]);
+    }
+    
+    public function assignRole($roles, $subjects, $mode = null) {
+        if($mode === null) {
+            foreach((array)$roles as $role) {
+                if(!$this->isRoleRegistered($role)) {
+                    throw new Zend_Rbac_Exception(
+                       "Tried to assign subject to unexisting role ".(string)$role
+                    );
+                }
+                
+                foreach((array)$subjects as $subject){
                     if(!$this->isRoleRegistered($role)) {
                         throw new Zend_Rbac_Exception(
                             "Tried to assign unexisting subject ".((string)$role)."to role"
@@ -120,15 +120,15 @@ class Zend_Rbac
                     }
                     
                     //@todo continue here
-				}
-			}
-		}
-	}
-	
-	public function isSubjectRegistered($subject) {
-		return $this->_isObjectRegistered('subject', $subject);
-	}
-	
+                }
+            }
+        }
+    }
+    
+    public function isSubjectRegistered($subject) {
+        return $this->_isObjectRegistered('subject', $subject);
+    }
+    
     public function addSubjects($subjects) {
         foreach((array) $subjects as $subject) {
             $this->addSubject($subject);
