@@ -120,11 +120,7 @@ abstract class Uri
 
         switch ($mode) {
             case 'get':
-                $getter = 'get' . $key;
-
-                if (method_exists($this, $getter)) {
-                    $value = $this->{$getter}();
-                } elseif (array_key_exists($component, $this->_componentValues)) {
+                if (array_key_exists($component, $this->_componentValues)) {
                     $value = $this->_componentValues[$component];
                 } else {
                     $value = null;
@@ -199,6 +195,24 @@ abstract class Uri
         require_once dirname(__FILE__) . '/Scheme/' . $schemeFilename . '.php';
 
         return new $schemeClass($uri, $strict);
+    }
+
+    /**
+     * Check if a given URI is valid
+     *
+     * @param  string $uri
+     * @param  boolean $strict
+     * @return boolean
+     */
+    public static function check($uri, $strict = false)
+    {
+        try {
+            self::factory($uri, $strict);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
