@@ -7,6 +7,7 @@ error_reporting(E_ALL|E_STRICT);
 
 define('ZEND_RBAC_LIBRARY_PATH', realpath(dirname(__FILE__).'/../../../../../branches/user/freak/Zend_Rbac/Library').'/');
 define('ZEND_LIBRARY_PATH', realpath(dirname(__FILE__).'/../../../../../trunk/library').'/');
+define('TESTS_GENERATE_REPORT', false);
 
 set_include_path(
     ZEND_RBAC_LIBRARY_PATH . PATH_SEPARATOR  .
@@ -15,8 +16,10 @@ set_include_path(
     get_include_path() . PATH_SEPARATOR
 );
 
+
+require_once '/usr/share/php/PHPUnit/TextUI/TestRunner.php';
+
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader =Zend_Loader_Autoloader::getInstance();
 $autoloader->suppressNotFoundWarnings(false);
 
-//PHPUnit_Util_Filter::addDirectoryToWhitelist(ZEND_RBAC_LIBRARY_PATH, ".php");
