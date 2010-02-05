@@ -189,15 +189,6 @@ class Zend_Rbac
     }
     
     protected function _isAllowedRole($roles, $resources) {
-        if(!is_array($roles)) {
-            $roles = array($roles);
-        }
-        
-        if(!is_array($resources)) {
-            $resources = array($resources);
-        }
-        
-        
         $result = array();
         foreach($resources as $resource) {
             $result[(string)$resource] = false;
@@ -237,6 +228,14 @@ class Zend_Rbac
     }
     
     public function isAllowedRole($roles, $resources) {
+        if(!is_array($roles)) {
+            $roles = array($roles);
+        }
+        
+        if(!is_array($resources)) {
+            $resources = array($resources);
+        }
+    	
         return !in_array(false, $this->_isAllowedRole($roles, $resources));
     }
     
