@@ -101,11 +101,15 @@ class Zend_Rbac
         }        
     }
     
-    protected function _getObject($type, $name) {
+    protected function _getObject($type, $name, $throwException = true) {
     	if(!isset($this->{$this->_objectTypes[$type]['container']}[$name])) {
-    		throw new Zend_Rbac_Exception(
-    		  'Could not retrieve an object that was never set'
-    	    );
+    		if($throwException) {
+        		throw new Zend_Rbac_Exception(
+        		  'Could not retrieve an object that was never set', 'noSuchObject'
+    	       );
+    		} else {
+    			return null;
+    		}
     	}
     	
     	return $this->{$this->_objectTypes[$type]['container']}[$name];
@@ -158,6 +162,11 @@ class Zend_Rbac
     {
         if(is_string($subjects)) {
             $subjects = array($this->_getObject('subject', $subjects));
+            if($subjects === array(null)) {
+            	if($this->strictMode()) {
+            		
+            	}
+            }
         } elseif(!is_array($subjects)) {
             $subjects = array($subjects);
         }
@@ -167,6 +176,10 @@ class Zend_Rbac
         }
         
         foreach($subjects as $subject) {
+        	if($subject !== $this->_subjects[$subject->getName()]) {
+        		throw new Zend_Rbac_Exception('No subject "'.$subject->getName().'"');
+        	}
+        	
             if(!$this->isAllowedRole($subject->getParents(), $resources)) {
                 return false;
             }
@@ -175,18 +188,24 @@ class Zend_Rbac
         return true;
     }
     
-    public function isAllowedRole($roles, $resources) {
+    protected function _isAllowedRole($roles, $resources) {
         if(!is_array($roles)) {
             $roles = array($roles);
         }
+        
+        if(!is_array($resources)) {
+            $resources = array($resources);
+        }
+        
         
         $result = array();
         foreach($resources as $resource) {
             $result[(string)$resource] = false;
         }
+        $resultOrig = $result;
         
-        foreach($roles as $roleId => $role) {
-            if(is_string($role)) {
+        foreach($roles as $roleId => &$role) {
+        	if(is_string($role)) {
                 $role = $this->_getObject('role', $role);
             }
             
@@ -204,13 +223,21 @@ class Zend_Rbac
                     $result[(string)$resource] = true;
                 }
             }
-            
             unset($roles[$roleId]);
         }
         
+        if(!empty($roles) && in_array(false, $result)) { // Some resources weren't satisfied. Try childs
+        	$subRes = $this->_isAllowedRole($roles, array_keys(array_intersect_assoc($result,$resultOrig)));
+            foreach($subRes as $key => $value) {
+            	$result[$key] = $value;
+            }
+        }
         
-        
-        return !in_array(false, $result);
+        return $result;
+    }
+    
+    public function isAllowedRole($roles, $resources) {
+        return !in_array(false, $this->_isAllowedRole($roles, $resources));
     }
     
     public function assignRoles($roles, $subjects) {
@@ -234,6 +261,8 @@ class Zend_Rbac
     public function isSubjectRegistered($subject) {
         return $this->_isObjectRegistered('subject', $subject);
     }
+    
+    /** Getters & Setters below **/
     
     public function addSubjects($subjects) {
         foreach((array) $subjects as $subject) {
@@ -298,6 +327,19 @@ class Zend_Rbac
     public function getResources($method = 'AS_STRING')
     {
         return $this->_getObjects('resource', $method);
+    }
+    
+    public function setStrictMode($on = true) {
+    	if(!is_boolean($on)) {
+    		throw new Zend_Rbac_Exception('Boolean excepted, but none given');
+    	}
+    	
+    	$this->_strictMode = $on;
+    	return $this;
+    }
+    
+    public function strictMode() {
+    	return $this->_strictMode;
     }
         
 }
