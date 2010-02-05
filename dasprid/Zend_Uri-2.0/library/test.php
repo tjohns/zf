@@ -2,7 +2,9 @@
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', '1');
 
-require_once 'Zend/Uri/Uri.php';
+require_once 'SplClassLoader.php';
+$classLoader = new SplClassLoader('Zend', dirname(__FILE__));
+$classLoader->register();
 
 $uri = Zend\Uri\Uri::factory('http://www.example.com/foo bar?alpha=beta+and omega');
 assert('(string) $uri === "http://www.example.com/foo%20bar?alpha=beta+and+omega"');

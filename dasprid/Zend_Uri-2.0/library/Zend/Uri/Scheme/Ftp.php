@@ -32,10 +32,10 @@ namespace Zend\Uri\Scheme;
 class Ftp extends \Zend\Uri\Uri
 {
     /**
-     * @see Zend\Uri\Uri\::$_components
+     * @see Zend\Uri\Uri\::$_allowedComponents
      * @var array
      */
-    protected $_components = array(
+    protected $_allowedComponents = array(
         'username',
         'password',
         'host',
@@ -52,6 +52,15 @@ class Ftp extends \Zend\Uri\Uri
     );
 
     /**
+     * @see    Zend\Uri\Uri::_init()
+     * @return void
+     */
+    protected function _init()
+    {
+        $this->_componentHandlers['path'] = new \Zend\Uri\Component\Path();
+    }
+
+    /**
      * @see    Zend\Uri\Uri::_getSyntax()
      * @return string
      */
@@ -65,20 +74,6 @@ class Ftp extends \Zend\Uri\Uri
                . '(?<host>[^:/?#]+)'
                . '(?::(?<port>[^:/?#]+))?'
                . '(?<path>/.*)?';
-    }
-
-    /**
-     * Get the path, or if not set, /
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        if (array_key_exists('path', $this->_componentValues) && !empty($this->_componentValues['path'])) {
-            return $this->_componentValues['path'];
-        } else {
-            return '/';
-        }
     }
 
     /**

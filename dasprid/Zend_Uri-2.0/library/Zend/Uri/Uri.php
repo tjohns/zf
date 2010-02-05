@@ -49,7 +49,14 @@ abstract class Uri
      * 
      * @var array
      */
-    protected $_components = array();
+    protected $_allowedComponents = array();
+
+    /**
+     * Component handlers for shared functionality
+     *
+     * @var array
+     */
+    protected $_componentHandlers = array();
 
     /**
      * Save characters of specific components
@@ -74,9 +81,9 @@ abstract class Uri
      */
     public function __construct($uri, $strict = false)
     {
-        $syntax = $this->_getSyntax();
+        $this->_init();
 
-        if (!preg_match('(^' . $syntax . '$)iu', $uri, $matches)) {
+        if (!preg_match('(^' . $this->_getSyntax() . '$)iu', $uri, $matches)) {
             throw new \InvalidArgumentException('URI does not seem to be valid');
         }
 
@@ -114,8 +121,14 @@ abstract class Uri
         $key       = substr($name, 3);
         $component = lcfirst($key);
 
-        if (!in_array($component, $this->_components)) {
+        if (!in_array($component, $this->_allowedComponents)) {
             throw new \BadMethodCallException("Component with name '$component' does not exist");
+        }
+
+        if (isset($this->_componentHandlers[$component])) {
+            $handler = $this->_componentHandlers[$component];
+        } else {
+            $handler = null;
         }
 
         switch ($mode) {
@@ -126,6 +139,10 @@ abstract class Uri
                     $value = null;
                 }
 
+                if ($handler instanceof \Zend\Uri\Component\GetterInterface) {
+                    $value = $handler->get($value);
+                }
+
                 return $value;
 
             case 'set':
@@ -133,10 +150,12 @@ abstract class Uri
                     throw new \BadMethodCallException("You must supply a component value");
                 }
 
-                $escaper = '_escape' . $key;
+                $escaperMethod = '_escape' . $key;
 
-                if (method_exists($this, $escaper)) {
-                    $value = $this->{$escaper}($arguments[0]);
+                if ($handler instanceof \Zend\Uri\Component\EscaperInterface) {
+                    $value = $handler->escape($arguments[0], $this->_reservedCharacters, $this->_unreservedCharacters);
+                } elseif (method_exists($this, $escaperMethod)) {
+                    $value = $this->{$escaperMethod}($arguments[0]);
                 } else {
                     if (isset($this->_saveComponentCharacters[$component])) {
                         $additionalSaveCharacters = $this->_saveComponentCharacters[$component];
@@ -151,6 +170,15 @@ abstract class Uri
 
                 return $this;
         }
+    }
+
+    /**
+     * Init hook called in the beginning of the constructor
+     *
+     * @return void
+     */
+    protected function _init()
+    {
     }
 
     /**
@@ -199,6 +227,10 @@ abstract class Uri
 
     /**
      * Check if a given URI is valid
+     *
+     * If you want to validate an URI in non-strict mode and use it afterwards,
+     * it is better to use the factory() method directly in a try/catch block
+     * and use the resulting URI object, as it will result in an escaped URI.
      *
      * @param  string $uri
      * @param  boolean $strict

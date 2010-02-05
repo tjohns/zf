@@ -32,10 +32,10 @@ namespace Zend\Uri\Scheme;
 class Mailto extends \Zend\Uri\Uri
 {
     /**
-     * @see Zend\Uri\Uri\::$_components
+     * @see Zend\Uri\Uri\::$_allowedComponents
      * @var array
      */
-    protected $_components = array(
+    protected $_allowedComponents = array(
         'localPart',
         'host',
         'query'

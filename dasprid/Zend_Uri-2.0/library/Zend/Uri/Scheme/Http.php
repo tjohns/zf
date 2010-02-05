@@ -39,10 +39,10 @@ class Http extends \Zend\Uri\Uri
     protected $_scheme = 'http';
 
     /**
-     * @see Zend\Uri\Uri\::$_components
+     * @see Zend\Uri\Uri\::$_allowedComponents
      * @var array
      */
-    protected $_components = array(
+    protected $_allowedComponents = array(
         'username',
         'password',
         'host',
@@ -61,6 +61,16 @@ class Http extends \Zend\Uri\Uri
     );
 
     /**
+     * @see    Zend\Uri\Uri::_init()
+     * @return void
+     */
+    protected function _init()
+    {
+        $this->_componentHandlers['path'] = new \Zend\Uri\Component\Path();
+        $this->_componentHandlers['query'] = new \Zend\Uri\Component\Query();
+    }
+
+    /**
      * @see    Zend\Uri\Uri::_getSyntax()
      * @return string
      */
@@ -76,37 +86,6 @@ class Http extends \Zend\Uri\Uri
                . '(?<path>/[^?#]*)?'
                . '(?:\\?(?<query>[^#]*))?'
                . '(?:#(?<fragment>.*))?';
-    }
-
-    /**
-     * Escape query component
-     *
-     * @param  string $value
-     * @return string
-     */
-    protected function _escapeQuery($value)
-    {
-        $value = preg_replace(
-            '([^' . $this->_unreservedCharacters . '=+&]+)eu',
-            'urlencode("\\0")',
-            $value
-        );
-
-        return $value;
-    }
-
-    /**
-     * Get the path, or if not set, /
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        if (array_key_exists('path', $this->_componentValues) && !empty($this->_componentValues['path'])) {
-            return $this->_componentValues['path'];
-        } else {
-            return '/';
-        }
     }
 
     /**
