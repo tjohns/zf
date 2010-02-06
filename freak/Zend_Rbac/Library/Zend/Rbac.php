@@ -191,7 +191,12 @@ class Zend_Rbac
         		throw new Zend_Rbac_Exception('No subject "'.$subject->getName().'"');
         	}
         	
-            if(!$this->isAllowedRole($subject->getParents(), $resources, $subject)) {
+        	$roles = $subject->getParents();
+        	if(!$this->_assert('subject', $subject, $resources, $roles)) {
+        		return false;
+        	}
+        	
+            if(!$this->isAllowedRole($roles, $resources, $subject)) {
                 return false;
             }
         }
@@ -211,6 +216,11 @@ class Zend_Rbac
                 $role = $this->_getObject('role', $role);
             }
             
+            if(!$this->_assert('role', $role, $resources, $subject)) {
+            	unset($roles[$roleId]);
+            	continue;
+            }
+            
             $parents = $role->getParents();
             
             foreach($parents as $id => $parent) {
@@ -223,7 +233,7 @@ class Zend_Rbac
             foreach($resources as $resource) {
             	if(in_array((string)$resource, $parents)) {
             		$obj = $this->_getObject('resource', $resource);
-                    $result[(string)$resource] = $this->_assert('resource', $obj, $subject, $role);
+                    $result[(string)$resource] = $this->_assert('resource', $obj, $role, $subject);
                 }
             }
 
@@ -296,6 +306,11 @@ class Zend_Rbac
         return $this->_getObjects('subject', $method);
     }
     
+    public function getSubject($name) {
+        return $this->_getObject('subject', $name);
+    }
+    
+    
     public function isRoleRegistered($role) {
         return $this->_isObjectRegistered('role', $role);
     }
@@ -318,6 +333,11 @@ class Zend_Rbac
     {
         return $this->_getObjects('role', $method);
     }
+    
+    public function getRole($name) {
+        return $this->_getObject('role', $name);
+    }
+    
     
     public function addResources($resources) {
     	if(!is_array($resources)) {
@@ -344,5 +364,9 @@ class Zend_Rbac
     public function getResources($method = 'AS_STRING')
     {
         return $this->_getObjects('resource', $method);
+    }
+    
+    public function getResource($name) {
+    	return $this->_getObject('resource', $name);
     }
 }

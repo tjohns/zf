@@ -23,7 +23,14 @@ class Zend_Rbac_AssertionContainer extends ArrayObject {
     	   );
     	}
     	
-    	return parent::offsetSet($key, $value);
+    	$key = get_class($value);
+    	if(isset($this[$key])) {
+    		throw new Zend_Rbac_Exception(
+    		  'Assertion was already registered to this object. Cannot register twice.'
+    		);
+    	}
+    	
+    	return parent::offsetSet(get_class($value), $value);
     }
     
 }
