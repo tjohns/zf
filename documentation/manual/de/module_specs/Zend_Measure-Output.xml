@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 17133 -->
+<!-- EN-Revision: 20554 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.measure.output">
-   <title>Ausgabe von Maßeinheiten</title>
+    <title>Ausgabe von Maßeinheiten</title>
 
     <para>
         Maßeinheiten können auf verschiedenen Wegen als Zahl ausgegeben werden.
@@ -36,7 +36,7 @@
                 <title>Automatische Ausgabe</title>
                 <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
+$mystring = "1.234.567,89";
 $unit = new Zend_Measure_Length($mystring,
                                 Zend_Measure_Length::STANDARD,
                                 $locale);
@@ -65,10 +65,9 @@ echo $unit;
             werden.
             <example id="zend.measure.output.value.example-1">
                 <title>Ausgabe eines Wertes</title>
-
                 <programlisting language="php"><![CDATA[
 $locale = new Zend_Locale('de');
-$mystring = "1.234.567,89 Meter";
+$mystring = "1.234.567,89";
 $unit = new Zend_Measure_Length($mystring,
                                 Zend_Measure_Length::STANDARD,
                                 $locale);
