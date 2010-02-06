@@ -6,10 +6,16 @@ abstract class Zend_Rbac_Object implements Zend_Rbac_ObjectInterface {
     protected $_parents = array();
     
     protected $_childs = array();
+    
+    protected $_assertions;
    
     public function __construct($name) {
         $this->_name = $name;
+        $this->_assertions = new Zend_Rbac_AssertionContainer();
+        $this->init();
     }
+    
+    public function init() { }
     
     public function __toString() {
         return $this->getName();
@@ -32,5 +38,18 @@ abstract class Zend_Rbac_Object implements Zend_Rbac_ObjectInterface {
     
     public function getParents() {
     	return $this->_parents;
+    }
+    
+    public function getAssertions() {
+    	return $this->_assertions;
+    }
+    
+    public function addAssertion($value) {
+    	$this->_assertions->offsetSet(null, $value);
+    	return $this;
+    }
+    
+    public function hasAssertions() {
+    	return count($this->getAssertions()) > 0;
     }
 }

@@ -27,8 +27,6 @@ class Zend_Rbac
                           'parent' => null)
     );
     
-    protected $_strictMode = false;
-    
     public function __construct($options = array()) {
         $this->addOptions($options);
     }
@@ -54,7 +52,7 @@ class Zend_Rbac
     }
     
     protected function _addObject($type, $object) {
-        if($type instanceof Zend_Rbac_ObjectInterface) {
+    	if($object instanceof Zend_Rbac_ObjectInterface) {
             if($this->_isObjectRegistered($type, $object)) {
                 throw new Zend_Rbac_Exception(
                     "Cannot add $type with name {$object} twice"
@@ -65,7 +63,7 @@ class Zend_Rbac
                 throw new Zend_Rbac_Exception('Given object is not of type '.$type);
             }
             
-            $this->{$$this->_objectTypes[$type]['container']}[(string)$object] = $object;
+            $this->{$this->_objectTypes[$type]['container']}[(string)$object->getName()] = $object;
             return $this;
         } elseif(is_string($object) ||
                 (is_object($object) && is_callable(array($object, '__toString'))))
@@ -102,7 +100,7 @@ class Zend_Rbac
     }
     
     protected function _getObject($type, $name, $throwException = true) {
-    	if(!isset($this->{$this->_objectTypes[$type]['container']}[$name])) {
+        if(!isset($this->{$this->_objectTypes[$type]['container']}[(string)$name])) {
     		if($throwException) {
         		throw new Zend_Rbac_Exception(
         		  'Could not retrieve an object that was never set', 'noSuchObject'
@@ -112,7 +110,7 @@ class Zend_Rbac
     		}
     	}
     	
-    	return $this->{$this->_objectTypes[$type]['container']}[$name];
+    	return $this->{$this->_objectTypes[$type]['container']}[(string)$name];
     }
     
     protected function _isObjectRegistered($type, $object)
@@ -123,10 +121,14 @@ class Zend_Rbac
     protected function _setParents($type, $childs, $parents) {
         $parentType = $this->_objectTypes[$type]['parentType'];
 
-        foreach ( (array) $parents as $parent) {
+        if(!is_array($parents)) {
+        	$parents = array($parents);
+        }
+        
+        foreach ( $parents as $parent) {
             if(!$this->_isObjectRegistered($parentType, $parent)) {
                 throw new Zend_Rbac_Exception (
-                    'Tried to assign an unexisting parent'
+                    'Tried to assign an unexisting parent '
                 );
             }
             
@@ -158,15 +160,24 @@ class Zend_Rbac
         }
     }
     
+    protected function _assert($type, Zend_Rbac_ObjectInterface $param1, $param2, $param3 = null) {
+    	$methodName = 'assert'.strtoUpper($type);
+    	if($param1->hasAssertions()) {
+    		
+            foreach($param1->getAssertions() as $id => $object) {
+                if(!$object->$methodName($param1, $param2, $param3)) {
+                	return false;
+                }
+            }
+    	}
+
+    	return true;
+    }
+    
     public function isAllowed($subjects, $resources)
     {
         if(is_string($subjects)) {
             $subjects = array($this->_getObject('subject', $subjects));
-            if($subjects === array(null)) {
-            	if($this->strictMode()) {
-            		
-            	}
-            }
         } elseif(!is_array($subjects)) {
             $subjects = array($subjects);
         }
@@ -180,7 +191,7 @@ class Zend_Rbac
         		throw new Zend_Rbac_Exception('No subject "'.$subject->getName().'"');
         	}
         	
-            if(!$this->isAllowedRole($subject->getParents(), $resources)) {
+            if(!$this->isAllowedRole($subject->getParents(), $resources, $subject)) {
                 return false;
             }
         }
@@ -188,10 +199,10 @@ class Zend_Rbac
         return true;
     }
     
-    protected function _isAllowedRole($roles, $resources) {
+    protected function _isAllowedRole($roles, $resources, $subject = null) {
         $result = array();
         foreach($resources as $resource) {
-            $result[(string)$resource] = false;
+            $result[(string)$resource] = null;
         }
         $resultOrig = $result;
         
@@ -210,15 +221,18 @@ class Zend_Rbac
             }
             
             foreach($resources as $resource) {
-                if(in_array((string)$resource, $parents)) {
-                    $result[(string)$resource] = true;
+            	if(in_array((string)$resource, $parents)) {
+            		$obj = $this->_getObject('resource', $resource);
+                    $result[(string)$resource] = $this->_assert('resource', $obj, $subject, $role);
                 }
             }
+
             unset($roles[$roleId]);
         }
         
-        if(!empty($roles) && in_array(false, $result)) { // Some resources weren't satisfied. Try childs
-        	$subRes = $this->_isAllowedRole($roles, array_keys(array_intersect_assoc($result,$resultOrig)));
+        if(!empty($roles) && in_array(null, $result)) { // Some resources weren't satisfied. Try childs
+        	/** Recursion here: **/
+        	$subRes = $this->_isAllowedRole($roles, array_keys(array_intersect_assoc($result,$resultOrig)), $subject);
             foreach($subRes as $key => $value) {
             	$result[$key] = $value;
             }
@@ -227,7 +241,7 @@ class Zend_Rbac
         return $result;
     }
     
-    public function isAllowedRole($roles, $resources) {
+    public function isAllowedRole($roles, $resources, $subject = null) {
         if(!is_array($roles)) {
             $roles = array($roles);
         }
@@ -236,7 +250,7 @@ class Zend_Rbac
             $resources = array($resources);
         }
     	
-        return !in_array(false, $this->_isAllowedRole($roles, $resources));
+        return !in_array(false, $this->_isAllowedRole($roles, $resources, $subject));
     }
     
     public function assignRoles($roles, $subjects) {
@@ -306,7 +320,11 @@ class Zend_Rbac
     }
     
     public function addResources($resources) {
-        foreach((array) $resources as $resource) {
+    	if(!is_array($resources)) {
+    		$resources = (array)$resources;
+    	}
+
+        foreach($resources as $resource) {
             $this->addResource($resource);
         }
         
@@ -327,18 +345,4 @@ class Zend_Rbac
     {
         return $this->_getObjects('resource', $method);
     }
-    
-    public function setStrictMode($on = true) {
-    	if(!is_boolean($on)) {
-    		throw new Zend_Rbac_Exception('Boolean excepted, but none given');
-    	}
-    	
-    	$this->_strictMode = $on;
-    	return $this;
-    }
-    
-    public function strictMode() {
-    	return $this->_strictMode;
-    }
-        
 }

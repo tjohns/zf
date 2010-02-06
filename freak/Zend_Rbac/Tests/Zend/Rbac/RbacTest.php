@@ -116,7 +116,6 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
     
     public function testSimpleWithoutInheritance()
     {
-    	return;
         $rbac = new Zend_Rbac(array(
            'roles' => array('President','minister','citizen'),
            'resources' => array('pay_taxes', 'raise_taxes','blow_world_up'),
@@ -146,9 +145,10 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
     }
 
     public function testRoleInheritance() {
+    	$resource = new Zend_Rbac_Resource('pay_taxes');
     	$rbac = new Zend_Rbac(array(
     	   'roles' => array('President','minister','citizen'),
-    	   'resources' => array('pay_taxes', 'raise_taxes','blow_world_up'),
+    	   'resources' => array($resource, 'raise_taxes','blow_world_up'),
     	   'subjects' => array('Obama', 'You')));
     	
     	$rbac->assignRoles('citizen', 'You');
@@ -162,7 +162,7 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($rbac->isAllowed('Obama', array('pay_taxes', 'raise_taxes', 'blow_world_up')));
         $this->assertTrue($rbac->isAllowed('Obama', 'blow_world_up'));
         $this->assertTrue($rbac->isAllowed('Obama', array('pay_taxes', 'raise_taxes')));
-        $this->assertTrue($rbac->isAllowed('Obama', 'pay_taxes'));
+        $this->assertTrue($rbac->isAllowed('Obama', $resource));
         $this->assertTrue($rbac->isAllowed('Obama', array('raise_taxes')));
 
         $this->assertFalse($rbac->isAllowed('You', array('pay_taxes', 'raise_taxes', 'blow_world_up')));
@@ -217,6 +217,79 @@ class Zend_Rbac_RbacTest extends PHPUnit_Framework_TestCase
         } catch(Zend_Rbac_Exception $e) { }
         
     }
+
+    public function testAssertionsResource()
+    {
+        $resAllowed = new Zend_Rbac_Resource('Allowed');
+        $resForbidden = new Zend_Rbac_Resource('Forbidden');
+        
+        $rbac = new Zend_Rbac(array(
+           'roles' => array('Access','NoAccess'),
+           'resources' => array($resAllowed, $resForbidden),
+           'subjects' => array('WithAccess', 'WithoutAccess'))
+        );
+        
+        $rbac->assignRoles('Access', 'WithAccess');
+        $rbac->assignRoles('NoAccess', 'WithoutAccess');
+        $rbac->subscribe($resAllowed, 'Access');
+        $rbac->subscribe($resForbidden, 'NoAccess');
+
+        // basic stuff
+        $this->assertTrue($rbac->isAllowed('WithAccess', $resAllowed));
+        $this->assertFalse($rbac->isAllowed('WithAccess', $resForbidden));
+        $this->assertTrue($rbac->isAllowed('WithoutAccess', $resForbidden));
+        $this->assertFalse($rbac->isAllowed('WithoutAccess', $resAllowed));
+
+        $resForbidden->addAssertion('Zend_Rbac_Assert_BlockAllTest');
+        $resAllowed->addAssertion('Zend_Rbac_Assert_AllowOnceTest');
+        $this->assertFalse($rbac->isAllowed('WithoutAccess', 'Forbidden'));
+        $this->assertTrue($rbac->isAllowed('WithAccess', $resAllowed));
+        $this->assertFalse($rbac->isAllowed('WithAccess', 'Allowed'));
+        $this->assertFalse($rbac->isAllowed('WithAccess', $resAllowed));        
+    }
     
-    //@TODO Assertions
+    public function testAssertionsRole()
+    {
+    	$this->fail('Implement');
+    }
+    
+    public function testAssertionsSubject()
+    {
+    	$this->fail('Implement');
+    }
+}
+
+class Zend_Rbac_Assert_MockTest implements Zend_Rbac_Assert_Interface {
+	public $testMethodsCalled = array();
+	public $testArgumentsCalled = array();
+
+	public function assertResource(Zend_Rbac_Resource $resource, $role, $subject = null) {
+		$this->testMethodsCalled[] = 'assertResource';
+		$test->argumentsCalled[] = array('resource' => $resource, $role, $subject);
+	}
+	
+}
+
+class Zend_Rbac_Assert_BlockAllTest extends zend_Rbac_Assert_MockTest {
+    public function assertResource(Zend_Rbac_Resource $resource, $role, $subject = null)
+    {
+        parent::assertResource($resource, $role, $subject);
+        
+        return false;
+    }
+}
+
+class Zend_Rbac_Assert_AllowOnceTest extends zend_Rbac_Assert_MockTest {
+	public $_allow = true;
+	
+    public function assertResource(Zend_Rbac_Resource $resource, $role, $subject = null)
+    {
+        parent::assertResource($resource, $role, $subject);
+        if($this->_allow) {
+        	$this->_allow= false;
+        	return true;
+        }
+        
+        return false;
+    }
 }
