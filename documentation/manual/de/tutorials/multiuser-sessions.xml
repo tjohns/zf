@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 19778 -->
+<!-- EN-Revision: 20976 -->
 <!-- Reviewed: no -->
 <sect1 id="learning.multiuser.sessions">
     <title>User Session im Zend Framework managen</title>
@@ -29,7 +29,6 @@
             Komponente Zend_Session zusätzliche Vorteile zu Php's Session Erweiterung hinzu, welche
             es einfacher machen diese zu verwenden und auf objekt-orientierten Anwendungen beruht.
         </para>
-
     </sect2>
 
     <sect2 id="learning.multiuser.sessions.basic-usage">
@@ -88,7 +87,7 @@ resources.session.remember_me_seconds = 864000
         </para>
 
         <programlisting language="php"><![CDATA[
-$mysession = Zend_Session_Namespace('mysession');
+$mysession = new Zend_Session_Namespace('mysession');
 
 if (!isset($mysession->counter)) {
     $mysession->counter = 1000;
@@ -107,8 +106,8 @@ if ($mysession->counter > 1999) {
             erlauben. Die Information welche im obigen Beispiel gespeichert wird, wird unter
             $_SESSION['mysession']['counter'] gespeichert.
         </para>
-
     </sect2>
+
     <sect2 id="learning.multiuser.sessions.advanced-usage">
         <title>Gehobenere Verwendung von Zend_Session</title>
 
