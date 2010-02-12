@@ -140,6 +140,13 @@ class Zend_Rbac
     
     protected function _addObject($type, $object) {
     	if($object instanceof Zend_Rbac_Object) {
+    		$reqInstance = 'Zend_Rbac_'.ucfirst($type);
+    		if(!$object instanceof $reqInstance) {
+    			throw new Zend_Rbac_Exception(
+                    'Given object is not an instance of '.$reqInstance
+    			);
+    		}
+    		
             if($this->_isObjectRegistered($type, $object)) {
                 throw new Zend_Rbac_Exception(
                     "Cannot add $type with name {$object} twice"
