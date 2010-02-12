@@ -26,7 +26,6 @@ require_once 'Zend/Rbac.php';
 require_once 'Zend/Rbac/Subject.php';
 require_once 'Zend/Rbac/Role.php';
 require_once 'Zend/Rbac/Resource.php';
-//require_once 'Zend/Rbac/Assertion/Abstract.php';
 
 /**
  * @category   Zend

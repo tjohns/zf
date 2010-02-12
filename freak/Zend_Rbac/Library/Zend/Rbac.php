@@ -11,7 +11,7 @@ class Zend_Rbac
     protected $_roles = array();
     
     protected $_resources = array();
-    
+
     protected $_objectTypes = array(
        'subject' => array('isRegistered' => 'isSubjectRegistered',
                           'container' => '_subjects',
@@ -24,11 +24,98 @@ class Zend_Rbac
        'resource'=> array('isRegistered' => 'isResourceRegistered',
                           'container' => '_resources',
                           'class' => 'Zend_Rbac_Resource',
-                          'parent' => null)
+                          'parentType' => null)
     );
     
     public function __construct($options = array()) {
         $this->addOptions($options);
+    }
+    
+    public static function factory($adapter, $config = array())
+    {
+        if ($config instanceof Zend_Config) {
+            $config = $config->toArray();
+        }
+
+        /*
+         * Convert Zend_Config argument to plain string
+         * adapter name and separate config object.
+         */
+        if ($adapter instanceof Zend_Config) {
+            if (isset($adapter->params)) {
+                $config = $adapter->params->toArray();
+            }
+            if (isset($adapter->adapter)) {
+                $adapter = (string) $adapter->adapter;
+            } else {
+                $adapter = null;
+            }
+        }
+
+        /*
+         * Verify that adapter parameters are in an array.
+         */
+        if (!is_array($config)) {
+            /**
+             * @see Zend_Rbac_Exception
+             */
+            require_once 'Zend/Rbac/Exception.php';
+            throw new Zend_Db_Exception('Adapter parameters must be in an array or a Zend_Config object');
+        }
+
+        /*
+         * Verify that an adapter name has been specified.
+         */
+        if (!is_string($adapter) || empty($adapter)) {
+            /**
+             * @see Zend_Rbac_Exception
+             */
+            require_once 'Zend/Rbac/Exception.php';
+            throw new Zend_Rbac_Exception('Adapter name must be specified in a string');
+        }
+
+        /*
+         * Form full adapter class name
+         */
+        $adapterNamespace = 'Zend_Rbac_Adapter';
+        if (isset($config['adapterNamespace'])) {
+            if ($config['adapterNamespace'] != '') {
+                $adapterNamespace = $config['adapterNamespace'];
+            }
+            unset($config['adapterNamespace']);
+        }
+
+        // Adapter should not be normalized - see http://framework.zend.com/issues/browse/ZF-5606
+        $adapterName = $adapterNamespace . '_';
+        $adapterName .= str_replace(' ', '_', ucwords(str_replace('_', ' ', strtolower($adapter))));
+
+        /*
+         * Load the adapter class.  This throws an exception
+         * if the specified class cannot be loaded.
+         */
+        if (!class_exists($adapterName)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($adapterName);
+        }
+
+        /*
+         * Create an instance of the adapter class.
+         * Pass the config to the adapter class constructor.
+         */
+        $rbacAdapter = call_user_func($adapterName .'::setup',$config);
+
+        /*
+         * Verify that the object created is a descendent of the abstract adapter type.
+         */
+        if (! $rbacAdapter instanceof Zend_Rbac_Adapter_Abstract) {
+            /**
+             * @see Zend_Rbac_Exception
+             */
+            require_once 'Zend/Rbac/Exception.php';
+            throw new Zend_Rbac_Exception("Adapter class '$adapterName' does not extend Zend_Rbac_Adapter_Abstract");
+        }
+
+        return $rbacAdapter;
     }
     
     public function addOptions($options) {
@@ -52,7 +139,7 @@ class Zend_Rbac
     }
     
     protected function _addObject($type, $object) {
-    	if($object instanceof Zend_Rbac_ObjectInterface) {
+    	if($object instanceof Zend_Rbac_Object) {
             if($this->_isObjectRegistered($type, $object)) {
                 throw new Zend_Rbac_Exception(
                     "Cannot add $type with name {$object} twice"
@@ -80,7 +167,7 @@ class Zend_Rbac
             return $this;
         }
         
-        throw new Zend_Rbac_Exception('Invalid subject supplied');        
+        throw new Zend_Rbac_Exception('Invalid object supplied');        
     }
     
     protected function _getObjects($type, $method)
@@ -104,7 +191,7 @@ class Zend_Rbac
     		if($throwException) {
         		throw new Zend_Rbac_Exception(
         		  'Could not retrieve an object that was never set', 'noSuchObject'
-    	       );
+                );
     		} else {
     			return null;
     		}
@@ -126,6 +213,7 @@ class Zend_Rbac
         }
         
         foreach ( $parents as $parent) {
+        	//@todo Check for stringness, en typeness?
             if(!$this->_isObjectRegistered($parentType, $parent)) {
                 throw new Zend_Rbac_Exception (
                     'Tried to assign an unexisting parent '
@@ -133,20 +221,21 @@ class Zend_Rbac
             }
             
             if (! is_object ( $parent )) {
-                $parent = $this->{$this->_objectTypes[$parentType]['container']}[( string ) $parent];
-            } elseif($parent->getType() != $parentType) {
-                throw new Zend_Rbac_Exception (
+                $parent = $this->{$this->_objectTypes[$parentType]['container']}[( string ) $parent]; //@todo getParent
+            } 
+            /*elseif($parent->getType() != $parentType) {
+               throw new Zend_Rbac_Exception (
                     'Invalid type of parent specified'
                 );
-            }
+            }*/
             
             foreach ( (array) $childs as $child) {
                 if(!$this->_isObjectRegistered($type, $child)) {
                     throw new Zend_Rbac_Exception (
-                        'Tried to assign an unexisting child'
+                        'Tried to assign an unexisting child to parent'
                     );
                 }            	
-            	
+
                 if (! is_object ( $child )) {
 	                $child = $this->{$this->_objectTypes[$type]['container']}[( string ) $child];
 	            } elseif($child->getType() != $type) {
@@ -160,7 +249,7 @@ class Zend_Rbac
         }
     }
     
-    protected function _assert($type, Zend_Rbac_ObjectInterface $param1, $param2, $param3 = null) {
+    protected function _assert($type, Zend_Rbac_Object $param1, $param2, $param3 = null) {
     	$methodName = 'assert'.strtoUpper($type);
     	if($param1->hasAssertions()) {
     		
@@ -301,7 +390,7 @@ class Zend_Rbac
         return $this;
     }
     
-    public function getSubjects($method = 'AS_STRING')
+    public function getSubjects($method = self::AS_STRING)
     {
         return $this->_getObjects('subject', $method);
     }
@@ -329,7 +418,7 @@ class Zend_Rbac
         return $this;
     }
     
-    public function getRoles($method = 'AS_STRING')
+    public function getRoles($method = self::AS_STRING)
     {
         return $this->_getObjects('role', $method);
     }
@@ -361,7 +450,7 @@ class Zend_Rbac
         return $this;
     }
     
-    public function getResources($method = 'AS_STRING')
+    public function getResources($method = self::AS_STRING)
     {
         return $this->_getObjects('resource', $method);
     }

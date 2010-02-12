@@ -15,7 +15,9 @@ abstract class Zend_Rbac_Object implements Zend_Rbac_ObjectInterface {
         $this->init();
     }
     
-    public function init() { }
+    abstract public function getType();
+    
+    function init() { }
     
     public function __toString() {
         return $this->getName();
