@@ -137,10 +137,11 @@ class Zend_Locale_Data
      * @param  string $attribute
      * @param  string $value
      * @param  array  $temp
+     * @param  string $orig
      * @throws Zend_Locale_Exception
      * @access private
      */
-    private static function _findRoute($locale, $path, $attribute, $value, &$temp)
+    private static function _findRoute($locale, $path, $attribute, $value, &$temp, $orig)
     {
         // load locale file if not already in cache
         // needed for alias tag when referring to other locale
@@ -200,7 +201,8 @@ class Zend_Locale_Data
                         $locale = $source;
                     }
 
-                    $temp = self::_getFile($locale, $path, $attribute, $value, $temp);
+var_dump($orig);
+                    $temp = self::_getFile($orig, $path, $attribute, $value, $temp, $orig);
                     return false;
                 }
 
@@ -217,11 +219,16 @@ class Zend_Locale_Data
      * @param  string $path
      * @param  string $attribute
      * @param  string $value
+     * @param  string $orig
      * @access private
      */
-    private static function _getFile($locale, $path, $attribute = false, $value = false, $temp = array())
+    private static function _getFile($locale, $path, $attribute = false, $value = false, $temp = array(), $orig = null)
     {
-        $result = self::_findRoute($locale, $path, $attribute, $value, $temp);
+        if (empty($orig)) {
+            $orig = $locale;
+        }
+
+        $result = self::_findRoute($locale, $path, $attribute, $value, $temp, $orig);
         if ($result) {
             $temp = self::_readFile($locale, $path, $attribute, $value, $temp);
         }
@@ -235,9 +242,9 @@ class Zend_Locale_Data
         if (($locale != 'root') && ($result)) {
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
             if (!empty($locale)) {
-                $temp = self::_getFile($locale, $path, $attribute, $value, $temp);
+                $temp = self::_getFile($locale, $path, $attribute, $value, $temp, $orig);
             } else {
-                $temp = self::_getFile('root', $path, $attribute, $value, $temp);
+                $temp = self::_getFile('root', $path, $attribute, $value, $temp, $orig);
             }
         }
         return $temp;
