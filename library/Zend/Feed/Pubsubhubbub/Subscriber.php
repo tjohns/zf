@@ -721,7 +721,7 @@ class Zend_Feed_Pubsubhubbub_Subscriber
          * Establish a persistent verify_token and attach key to callback
          * URL's path/querystring
          */
-        $key   = $this->_generateSubscriptionKey($params);
+        $key   = $this->_generateSubscriptionKey($params, $hubUrl);
         $token = $this->_generateVerifyToken();
         $params['hub.verify_token'] = $token;
 
@@ -791,9 +791,9 @@ class Zend_Feed_Pubsubhubbub_Subscriber
      * @param  string $hubUrl The Hub Server URL for which this token will apply
      * @return string
      */
-    protected function _generateSubscriptionKey(array $params)
+    protected function _generateSubscriptionKey(array $params, $hubUrl)
     {
-        $keyBase = $params['hub.topic'] . $params['hub.callback'];
+        $keyBase = $params['hub.topic'] . $hubUrl;
         $key     = md5($keyBase);
         return $key;
     }
