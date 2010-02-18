@@ -1,5 +1,10 @@
 <?php
+interface Zend_Rbac_Object {
+    public function __toString();
+}
 
+/** @todo Delete this file **/
+/*
 abstract class Zend_Rbac_Object implements Zend_Rbac_ObjectInterface {
     protected $_name;
     
@@ -55,3 +60,4 @@ abstract class Zend_Rbac_Object implements Zend_Rbac_ObjectInterface {
     	return count($this->getAssertions()) > 0;
     }
 }
+*/
