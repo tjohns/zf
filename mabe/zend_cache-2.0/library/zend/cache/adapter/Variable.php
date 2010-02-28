@@ -17,7 +17,8 @@ class Variable extends AdapterAbstract
     {
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
-        $this->_data[$ns][$key] = array($value, time());
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->_ttl;
+        $this->_data[$ns][$key] = array($value, time(), $ttl);
         return true;
     }
 
@@ -25,10 +26,11 @@ class Variable extends AdapterAbstract
     {
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->_ttl;
         if (isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' already exists within namespace '$ns'");
         }
-        $this->_data[$ns][$key] = array($value, time());
+        $this->_data[$ns][$key] = array($value, time(), $ttl);
         return true;
     }
 
@@ -36,10 +38,11 @@ class Variable extends AdapterAbstract
     {
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->_ttl;
         if (!isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' doen't exists within namespace '$ns'");
         }
-        $this->_data['ns'][$key] = array($value, time());
+        $this->_data['ns'][$key] = array($value, time(), $ttl);
         return true;
     }
 
@@ -49,6 +52,7 @@ class Variable extends AdapterAbstract
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
         if (isset($this->_data[$ns][$key])) {
+            // @todo: check if expired
             return $this->_data[$ns][$key][0];
         }
         return false;
@@ -58,7 +62,11 @@ class Variable extends AdapterAbstract
     {
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
-        return isset($this->_data[$ns][$key]);
+        if (isset($this->_data[$ns][$key])) {
+            // @todo: check if expired
+            return true;
+        }
+        return false;
     }
 
     public function info($key = null, array $options = array())
@@ -67,7 +75,8 @@ class Variable extends AdapterAbstract
         $ns  = isset($options['namespace']) ? $options['namespace'] : '';
         if (isset($this->_data[$ns][$key])) {
             return array(
-                'mtime' => $this->_data[$ns][$key][1]
+                'mtime' => $this->_data[$ns][$key][1],
+                'ttl'   => $this->_data[$ns][$key][2]
             );
         }
         return false;
@@ -95,12 +104,14 @@ class Variable extends AdapterAbstract
     {
         $key   = $this->_key($key);
         $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+        $ttl   = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->_ttl;
         $value = (int)$value;
         if (isset($this->_data[$ns][$key])) {
             $this->_data[$ns][$key][0]+= $value;
             $this->_data[$ns][$key][1] = time();
+            $this->_data[$ns][$key][2] = $ttl;
         } else {
-            $this->_data[$ns][$key] = array($value, time());
+            $this->_data[$ns][$key] = array($value, time(), $ttl);
         }
     }
 
@@ -108,12 +119,14 @@ class Variable extends AdapterAbstract
     {
         $key   = $this->_key($key);
         $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+        $ttl   = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->_ttl;
         $value = (int)$value;
         if (isset($this->_data[$ns][$key])) {
             $this->_data[$ns][$key][0]-= $value;
             $this->_data[$ns][$key][1] = time();
+            $this->_data[$ns][$key][2] = $ttl;
         } else {
-            $this->_data[$ns][$key] = array($value, time());
+            $this->_data[$ns][$key] = array($value, time(), $ttl);
         }
     }
 

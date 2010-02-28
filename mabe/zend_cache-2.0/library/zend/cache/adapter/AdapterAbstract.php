@@ -33,11 +33,18 @@ abstract class AdapterAbstract implements AdapterInterface
 {
 
     /**
+     * TTL option
+     *
+     * @var int 0 means infinite or maximum of adapter
+     */
+    protected $_ttl = 0;
+
+    /**
      * The last used key
      *
      * @var string|null
      */
-    protected $_lastUsedKey = null;
+    protected $_lastKey = null;
 
     /**
      * The fetchBuffer for getDelayed calls if backend doen't support this.
@@ -54,6 +61,16 @@ abstract class AdapterAbstract implements AdapterInterface
     public function setOptions(array $options)
     {
         Options::setOptions($this, $options);
+    }
+
+    public function setTtl($ttl)
+    {
+        $this->_ttl = $this->_ttl($ttl);
+    }
+
+    public function getTtl()
+    {
+        return $this->_ttl;
     }
 
     public function setMulti(array $keyValuePairs, array $options = array())
@@ -182,7 +199,16 @@ abstract class AdapterAbstract implements AdapterInterface
 
     public function lastKey()
     {
-        return $this->_lastUsedKey;
+        return $this->_lastKey;
+    }
+
+    protected function _ttl($ttl)
+    {
+        $ttl = (int)$ttl;
+        if ($ttl < 0) {
+             throw new InvalidArgumentException('The ttl can\'t be negative');
+        }
+        return $ttl;
     }
 
     /**
@@ -195,14 +221,14 @@ abstract class AdapterAbstract implements AdapterInterface
     protected function _key($key)
     {
         if ( ($key = (string)$key) === '') {
-            if ($this->_lastUsedKey === null) {
+            if ($this->_lastKey === null) {
                 throw new InvalidArgumentException('Missing key');
             }
         } else {
-            $this->_lastUsedKey = $key;
+            $this->_lastKey = $key;
         }
 
-        return $this->_lastUsedKey;
+        return $this->_lastKey;
     }
 
 }
