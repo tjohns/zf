@@ -190,6 +190,62 @@ class IgnoreUserAbort extends PluginAbstract
         }
     }
 
+    public function remove($value, $key = null, array $options = array())
+    {
+        $ignoreUserAbort = !ignore_user_abort(true);
+
+        try {
+            $ret = $this->getAdapter()->remove($value, $key, $options);
+
+            if ($ignoreUserAbort) {
+                if ($this->getExitOnAbort() && connection_aborted()) {
+                    exit;
+                }
+                ignore_user_abort(false);
+            }
+
+            return $ret;
+
+        } catch (Exception $e) {
+            if ($ignoreUserAbort) {
+                if ($this->getExitOnAbort() && connection_aborted()) {
+                    exit;
+                }
+                ignore_user_abort(false);
+            }
+
+            throw $e;
+        }
+    }
+
+    public function removeMulti(array $keyValuePairs, array $options = array())
+    {
+        $ignoreUserAbort = !ignore_user_abort(true);
+
+        try {
+            $ret = $this->getAdapter()->removeMulti($keyValuePairs, $options);
+
+            if ($ignoreUserAbort) {
+                if ($this->getExitOnAbort() && connection_aborted()) {
+                    exit;
+                }
+                ignore_user_abort(false);
+            }
+
+            return $ret;
+
+        } catch (Exception $e) {
+            if ($ignoreUserAbort) {
+                if ($this->getExitOnAbort() && connection_aborted()) {
+                    exit;
+                }
+                ignore_user_abort(false);
+            }
+
+            throw $e;
+        }
+    }
+
     public function increment($value, $key = null, array $options = array())
     {
         $ignoreUserAbort = !ignore_user_abort(true);
