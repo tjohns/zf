@@ -100,6 +100,15 @@ abstract class AdapterAbstract implements AdapterInterface
         return $ret;
     }
 
+    public function removeMulti(array $keys, array $options = array())
+    {
+        $ret = true;
+        foreach ($keys as $key) {
+            $ret = $this->remove($key) && $ret;
+        }
+        return $ret;
+    }
+
     public function getMulti(array $keys, array $options = array())
     {
         $ret = array();
@@ -129,15 +138,6 @@ abstract class AdapterAbstract implements AdapterInterface
             if ( ($info = $this->info($key, $options)) ) {
                 $ret[$key] = $info;
             }
-        }
-        return $ret;
-    }
-
-    public function removeMulti(array $keys, array $options = array())
-    {
-        $ret = true;
-        foreach ($keys as $key) {
-            $ret = $this->remove($key) && $ret;
         }
         return $ret;
     }

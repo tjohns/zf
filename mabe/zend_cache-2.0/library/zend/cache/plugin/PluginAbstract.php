@@ -62,6 +62,14 @@ abstract class PluginAbstract implements PluginInterface
         return $this->getAdapter()->replaceMulti($keyValuePairs, $options);
     }
 
+    public function remove($key = null, array $options = array()) {
+        return $this->getAdapter()->remove($key, $options);
+    }
+
+    public function removeMulti(array $keys, array $options = array()) {
+        return $this->getAdapter()->removeMulti($keys, $options);
+    }
+
     public function get($key = null, array $options = array()) {
         return $this->getAdapter()->get($key, $options);
     }
@@ -84,14 +92,6 @@ abstract class PluginAbstract implements PluginInterface
 
     public function infoMulti(array $keys, array $options = array()) {
         return $this->getAdapter()->infoMulti($keys, $options);
-    }
-
-    public function remove($key = null, array $options = array()) {
-        return $this->getAdapter()->remove($key, $options);
-    }
-
-    public function removeMulti(array $keys, array $options = array()) {
-        return $this->getAdapter()->removeMulti($keys, $options);
     }
 
     public function getDelayed(array $keys, array $options = array()) {

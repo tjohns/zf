@@ -63,7 +63,7 @@ interface AdapterInterface
      */
     public function getCapabilities();
 
-    /* set[Multi] & add[Multi] & replace[Multi] */
+    /* set[Multi] & add[Multi] & replace[Multi] & remove[Multi] */
 
     /**
      * Store an item.
@@ -132,6 +132,26 @@ interface AdapterInterface
      */
     public function replaceMulti(array $keyValuePairs, array $options = array());
 
+    /**
+     * Remove an item.
+     *
+     * @param string $key
+     * @param array $options
+     * @return boolean True if the item has been removed or wasn't exists, false on failure
+     * @throws \zend\cache\Exception
+     */
+    public function remove($key = null, array $options = array());
+
+    /**
+     * Remove multiple items.
+     *
+     * @param array $keys
+     * @param array $options
+     * @return boolean True if the items has been removed or wasn't exists, false on failure
+     * @throws \zend\cache\Exception
+     */
+    public function removeMulti(array $keys, array $options = array());
+
     /* get[Multi] & exists[Multi] & info[Multi] */
 
     /**
@@ -195,28 +215,6 @@ interface AdapterInterface
      * @throws \zend\cache\Exception
      */
     public function infoMulti(array $keys, array $options = array());
-
-    /* remove[Multi] */
-
-    /**
-     * Removes an item.
-     *
-     * @param string $key
-     * @param array $options
-     * @return boolean True if the item has been removed or wasn't exists, false on failure
-     * @throws \zend\cache\Exception
-     */
-    public function remove($key = null, array $options = array());
-
-    /**
-     * Removes multiple items.
-     *
-     * @param array $keys
-     * @param array $options
-     * @return boolean True if the items has been removed or wasn't exists, false on failure
-     * @throws \zend\cache\Exception
-     */
-    public function removeMulti(array $keys, array $options = array());
 
     /* getDelayed & fetch & fechAll */
 

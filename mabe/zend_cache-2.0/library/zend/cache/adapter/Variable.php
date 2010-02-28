@@ -43,6 +43,22 @@ class Variable extends AdapterAbstract
         return true;
     }
 
+    public function remove($key = null, array $options = array())
+    {
+        $key = $this->_key($key);
+        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        if (isset($this->_data[$ns][$key])) {
+            if (count($this->_data[$ns]) > 1) {
+                unset($this->_data[$ns][$key]);
+            } else {
+                // remove namespace if key is the only content
+                unset($this->_data[$ns]);
+            }
+        }
+
+        return true;
+    }
+
     public function get($key = null, array $options = array())
     {
         $key = $this->_key($key);
@@ -59,7 +75,7 @@ class Variable extends AdapterAbstract
                 return false;
             }
         }
-            
+
         return $this->_data[$ns][$key][0];
     }
 
@@ -104,22 +120,6 @@ class Variable extends AdapterAbstract
             'mtime' => $this->_data[$ns][$key][1],
             'ttl'   => isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl()
         );
-    }
-
-    public function remove($key = null, array $options = array())
-    {
-        $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
-        if (isset($this->_data[$ns][$key])) {
-            if (count($this->_data[$ns]) > 1) {
-                unset($this->_data[$ns][$key]);
-            } else {
-                // remove namespace if key is the only content
-                unset($this->_data[$ns]);
-            }
-        }
-
-        return true;
     }
 
     public function increment($value, $key = null, array $options = array())
