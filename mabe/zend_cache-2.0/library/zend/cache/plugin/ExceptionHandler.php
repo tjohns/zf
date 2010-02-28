@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache\plugin;
+namespace zend\cache\plugin;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
 class ExceptionHandler extends PluginAbstract

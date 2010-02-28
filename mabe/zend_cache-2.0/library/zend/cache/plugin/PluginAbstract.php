@@ -1,22 +1,27 @@
 <?php
 
-namespace \zend\cache\plugin;
+namespace zend\cache\plugin;
+use \zend\Options as Options;
 use \zend\cache\adapter\AdapterInterface as AdapterInterface;
-use \zend\cache\adapter\AdapterAbstract as AdapterAbstract;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
-abstract class PluginAbstract extends AdapterAbstract implements PluginInterface
+abstract class PluginAbstract implements PluginInterface
 {
 
     protected $_adapter;
 
     public function __construct($options)
     {
-        parent::__construct($options);
+        Options::setConstructorOptions($this, $options);
 
         if (!$this->_adapter) {
             throw new InvalidArgumentException('Missing option "adapter"');
         }
+    }
+
+    public function setOptions(array $options)
+    {
+        Options::setOptions($this, $options);
     }
 
     public function getAdapter()
@@ -65,12 +70,12 @@ abstract class PluginAbstract extends AdapterAbstract implements PluginInterface
         return $this->getAdapter()->getMulti($keys, $options);
     }
 
-    public function exist($key = null, array $options = array()) {
-        return $this->getAdapter()->exist($key, $options);
+    public function exists($key = null, array $options = array()) {
+        return $this->getAdapter()->exists($key, $options);
     }
 
-    public function existMulti(array $keys, array $options = array()) {
-        return $this->getAdapter()->existMulti($keys, $options);
+    public function existsMulti(array $keys, array $options = array()) {
+        return $this->getAdapter()->existsMulti($keys, $options);
     }
 
     public function info($key = null, array $options = array()) {
@@ -79,6 +84,14 @@ abstract class PluginAbstract extends AdapterAbstract implements PluginInterface
 
     public function infoMulti(array $keys, array $options = array()) {
         return $this->getAdapter()->infoMulti($keys, $options);
+    }
+
+    public function remove($key = null, array $options = array()) {
+        return $this->getAdapter()->remove($key, $options);
+    }
+
+    public function removeMulti(array $keys, array $options = array()) {
+        return $this->getAdapter()->removeMulti($keys, $options);
     }
 
     public function getDelayed(array $keys, array $options = array()) {
@@ -123,6 +136,11 @@ abstract class PluginAbstract extends AdapterAbstract implements PluginInterface
 
     public function optimize(array $options = array()) {
         return $this->getAdapter()->optimize($options);
+    }
+
+    public function lastKey()
+    {
+        return $this->getAdapter()->lastKey();
     }
 
     public function __call($method, array $args)

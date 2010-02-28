@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache;
+namespace zend\cache;
 use \zend\Options as Options;
 
 class Callback

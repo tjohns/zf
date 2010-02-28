@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache\plugin;
+namespace zend\cache\plugin;
 use \zend\Serializer as Serializer;
 use \zend\serializer\adapter\AdapterInterface as SerializerAdapterInterface;
 

@@ -1,9 +1,6 @@
 <?php
-/**
- * $Id$
- */
 
-namespace \zend\cache;
+namespace zend\cache;
 
 interface Exception extends \zend\Exception
 {}

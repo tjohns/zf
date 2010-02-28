@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache\adapter;
+namespace zend\cache\adapter;
 
 class FileMTime extends OuterAdapterAbstract
 {

@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace \zend\cache\adapter;
+namespace zend\cache\adapter;
 use \zend\Options as Options;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
@@ -39,7 +39,14 @@ abstract class AdapterAbstract implements AdapterInterface
      */
     protected $_lastUsedKey = null;
 
-    public function __construct($options)
+    /**
+     * The fetchBuffer for getDelayed calls if backend doen't support this.
+     *
+     * @var array|null
+     */
+    protected $_fetchBuffer = array();
+
+    public function __construct($options = array())
     {
         Options::setConstructorOptions($this, $options);
     }
@@ -48,6 +55,7 @@ abstract class AdapterAbstract implements AdapterInterface
     {
         Options::setOptions($this, $options);
     }
+
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
@@ -76,11 +84,23 @@ abstract class AdapterAbstract implements AdapterInterface
         return $ret;
     }
 
-    public function existMulti(array $keys, array $options = array())
+
+    public function getMulti(array $keys, array $options = array())
     {
         $ret = array();
         foreach ($keys as $key) {
-            if ($this->exist($key, $options)) {
+            if ( ($value = $this->get($key, $options)) ) {
+                $ret[$key] = $value;
+            }
+        }
+        return $ret;
+    }
+
+    public function existsMulti(array $keys, array $options = array())
+    {
+        $ret = array();
+        foreach ($keys as $key) {
+            if ($this->exists($key, $options)) {
                 $ret[] = $key;
             }
         }
@@ -97,6 +117,48 @@ abstract class AdapterAbstract implements AdapterInterface
         }
         return $ret;
     }
+
+    public function removeMulti(array $keys, array $options = array())
+    {
+        $ret = true;
+        foreach ($keys as $key) {
+            $ret = $this->remove($key) && $ret;
+        }
+        return $ret;
+    }
+
+    public function getDelayed(array $keys, array $options = array()) {
+        if (isset($opts['callback'])) {
+            $cb = $opts['callback'];
+            if (!is_callable($cb, false)) {
+                throw new Zend_Cache_Exception('Invalid callback');
+            }
+            foreach ($this->getMulti($keys, $options) as $key => $value) {
+                $cb($key, $value);
+            }
+        } else {
+            $this->_fetchBuffer = $this->getMulti($keys, $options);
+        }
+    }
+
+    public function fetch() {
+        if (!$this->_fetchBuffer) {
+            return false;
+        }
+
+        // array_shift can't use because its modify all numeric array keys
+        $k = key($this->_fetchBuffer);
+        $v = current($this->_fetchBuffer);
+        unset($this->_fetchBuffer[$k]);
+        return array($k => $v);
+    }
+
+    public function fetchAll() {
+        $ret = $this->_fetchBuffer;
+        $this->_fetchBuffer = array(); // free memory
+        return $ret;
+    }
+
 
     public function incrementMulti(array $keyValuePairs, array $options = array())
     {
@@ -116,9 +178,15 @@ abstract class AdapterAbstract implements AdapterInterface
         return $ret;
     }
 
+
     public function optimize(array $options = array())
     {
         return true;
+    }
+
+    public function lastKey()
+    {
+        return $this->_lastUsedKey;
     }
 
     /**

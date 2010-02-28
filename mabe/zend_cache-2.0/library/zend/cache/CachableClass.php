@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache;
+namespace zend\cache;
 
 // class Class doesn't work :(
 class CachableClass extends Callback

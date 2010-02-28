@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend\cache\plugin;
+namespace zend\cache\plugin;
 use \zend\cache\adapter\AdapterInterface as AdapterInterface;
 
 class Levels extends PluginAbstract

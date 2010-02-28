@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace \zend\cache\adapter;
+namespace zend\cache\adapter;
 
 /**
  * @package    zend\cache
@@ -163,7 +163,7 @@ interface AdapterInterface
      * @return boolean
      * @throws \zend\cache\Exception
      */
-    public function exist($key = null, array $options = array());
+    public function exists($key = null, array $options = array());
 
     /**
      * Test multiple items.
@@ -173,10 +173,10 @@ interface AdapterInterface
      * @return array Assoziative array of existing cache ids
      * @throws \zend\cache\Exception
      */
-    public function existMulti(array $keys, array $options = array());
+    public function existsMulti(array $keys, array $options = array());
 
     /**
-     * Get information of a item.
+     * Get information of an item.
      *
      * @param string $key
      * @param array $options
@@ -195,6 +195,28 @@ interface AdapterInterface
      * @throws \zend\cache\Exception
      */
     public function infoMulti(array $keys, array $options = array());
+
+    /* remove[Multi] */
+
+    /**
+     * Removes an item.
+     *
+     * @param string $key
+     * @param array $options
+     * @return boolean True if the item has been removed or wasn't exists, false on failure
+     * @throws \zend\cache\Exception
+     */
+    public function remove($key = null, array $options = array());
+
+    /**
+     * Removes multiple items.
+     *
+     * @param array $keys
+     * @param array $options
+     * @return boolean True if the items has been removed or wasn't exists, false on failure
+     * @throws \zend\cache\Exception
+     */
+    public function removeMulti(array $keys, array $options = array());
 
     /* getDelayed & fetch & fechAll */
 
@@ -311,5 +333,12 @@ interface AdapterInterface
      * @throws \zend\cache\Exception
      */
     public function optimize(array $options = array());
+
+    /**
+     * Get the last used key
+     *
+     * @return string|null
+     */
+    public function lastKey();
 
 }

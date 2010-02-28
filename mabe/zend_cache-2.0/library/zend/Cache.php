@@ -1,6 +1,6 @@
 <?php
 
-namespace \zend;
+namespace zend;
 use \zend\cache\LoaderException as LoaderException;
 use \zend\cache\adapter\AdapterInterface as AdapterInterface;
 use \zend\cache\plugin\PluginInterface as PluginInterface;
