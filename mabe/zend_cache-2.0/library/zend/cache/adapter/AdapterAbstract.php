@@ -231,4 +231,21 @@ abstract class AdapterAbstract implements AdapterInterface
         return $this->_lastKey;
     }
 
+    protected function _tags($tags)
+    {
+        if (!is_array($tags)) {
+            throw new InvalidArgumentException('Tags have to be an array');
+        }
+
+        $normalizedTags = array();
+        foreach ($tags as &$tag) {
+            $tag = (string)$tag;
+            if ($tag === '') {
+                throw new InvalidArgumentException('Empty tags are not allowed');
+            }
+        }
+
+        return array_values(array_unique($tags));
+    }
+
 }

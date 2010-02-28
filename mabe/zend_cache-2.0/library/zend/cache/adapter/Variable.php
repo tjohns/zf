@@ -15,9 +15,10 @@ class Variable extends AdapterAbstract
 
     public function set($value, $key = null, array $options = array())
     {
-        $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
-        $this->_data[$ns][$key] = array($value, time());
+        $key  = $this->_key($key);
+        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
+        $this->_data[$ns][$key] = array($value, time(), $tags);
         return true;
     }
 
@@ -28,7 +29,8 @@ class Variable extends AdapterAbstract
         if (isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' already exists within namespace '$ns'");
         }
-        $this->_data[$ns][$key] = array($value, time());
+        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
+        $this->_data[$ns][$key] = array($value, time(), $tags);
         return true;
     }
 
@@ -39,7 +41,8 @@ class Variable extends AdapterAbstract
         if (!isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' doen't exists within namespace '$ns'");
         }
-        $this->_data['ns'][$key] = array($value, time());
+        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
+        $this->_data['ns'][$key] = array($value, time(), $tags);
         return true;
     }
 
@@ -118,7 +121,8 @@ class Variable extends AdapterAbstract
 
         return array(
             'mtime' => $this->_data[$ns][$key][1],
-            'ttl'   => isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl()
+            'ttl'   => isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl(),
+            'tags'  => $this->_data[$ns][$key][2]
         );
     }
 
@@ -131,7 +135,7 @@ class Variable extends AdapterAbstract
             $this->_data[$ns][$key][0]+= $value;
             $this->_data[$ns][$key][1] = time();
         } else {
-            $this->_data[$ns][$key] = array($value, time());
+            $this->_data[$ns][$key] = array($value, time(), null);
         }
     }
 
@@ -144,7 +148,7 @@ class Variable extends AdapterAbstract
             $this->_data[$ns][$key][0]-= $value;
             $this->_data[$ns][$key][1] = time();
         } else {
-            $this->_data[$ns][$key] = array($value, time());
+            $this->_data[$ns][$key] = array($value, time(), null);
         }
     }
 
