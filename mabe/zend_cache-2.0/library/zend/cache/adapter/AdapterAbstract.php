@@ -56,7 +56,6 @@ abstract class AdapterAbstract implements AdapterInterface
         Options::setOptions($this, $options);
     }
 
-
     public function setMulti(array $keyValuePairs, array $options = array())
     {
         $ret = true;
@@ -83,7 +82,6 @@ abstract class AdapterAbstract implements AdapterInterface
         }
         return $ret;
     }
-
 
     public function getMulti(array $keys, array $options = array())
     {
@@ -159,7 +157,6 @@ abstract class AdapterAbstract implements AdapterInterface
         return $ret;
     }
 
-
     public function incrementMulti(array $keyValuePairs, array $options = array())
     {
         $ret = true;
@@ -177,7 +174,6 @@ abstract class AdapterAbstract implements AdapterInterface
         }
         return $ret;
     }
-
 
     public function optimize(array $options = array())
     {
