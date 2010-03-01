@@ -190,12 +190,12 @@ class IgnoreUserAbort extends PluginAbstract
         }
     }
 
-    public function remove($value, $key = null, array $options = array())
+    public function remove($key = null, array $options = array())
     {
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->remove($value, $key, $options);
+            $ret = $this->getAdapter()->remove($key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -218,12 +218,12 @@ class IgnoreUserAbort extends PluginAbstract
         }
     }
 
-    public function removeMulti(array $keyValuePairs, array $options = array())
+    public function removeMulti(array $keys, array $options = array())
     {
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->removeMulti($keyValuePairs, $options);
+            $ret = $this->getAdapter()->removeMulti($keys, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
