@@ -77,7 +77,7 @@ abstract class AdapterAbstract implements AdapterInterface
     {
         $ret = true;
         foreach ($keyValuePairs as $key => $value) {
-            $ret = $this->set($value, $key, $options) && $ret;;
+            $ret = $this->set($value, $key, $options) && $ret;
         }
         return $ret;
     }
