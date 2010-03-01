@@ -47,6 +47,11 @@ $cacheAdapter = new cache\plugin\WriteControl(array(
     'adapter' => $cacheAdapter
 ));
 
+// enable IgnoreUserAbort
+$cacheAdapter = new cache\plugin\IgnoreUserAbort(array(
+    'adapter' => $cacheAdapter
+));
+
 $set = $cacheAdapter->set('MyData', 'MyId', array('tags' => array('tag1', 3 => 'tag2', 5, 5, 0)));
 echo '->set("MyData", "MyId") : ' . var_export($set, true) . PHP_EOL;
 
