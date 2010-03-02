@@ -28,6 +28,12 @@
 class Zend_Cache_Core
 {
     /**
+     * Messages
+     */
+    const BACKEND_NOT_SUPPORTS_TAG = 'tags are not supported by the current backend';
+    const BACKEND_NOT_IMPLEMENTS_EXTENDED_IF = 'Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available';
+
+    /**
      * Backend Object
      *
      * @var object $_backend
@@ -466,10 +472,10 @@ class Zend_Cache_Core
     public function getIdsMatchingTags($tags = array())
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         if (!($this->_backendCapabilities['tags'])) {
-            Zend_Cache::throwException('tags are not supported by the current backend');
+            Zend_Cache::throwException(self::BACKEND_NOT_SUPPORT_TAG);
         }
         return $this->_backend->getIdsMatchingTags($tags);
     }
@@ -485,12 +491,31 @@ class Zend_Cache_Core
     public function getIdsNotMatchingTags($tags = array())
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         if (!($this->_backendCapabilities['tags'])) {
-            Zend_Cache::throwException('tags are not supported by the current backend');
+            Zend_Cache::throwException(self::BACKEND_NOT_SUPPORT_TAG);
         }
         return $this->_backend->getIdsNotMatchingTags($tags);
+    }
+
+    /**
+     * Return an array of stored cache ids which match any given tags
+     *
+     * In case of multiple tags, a logical OR is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of matching any cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        if (!$this->_extendedBackend) {
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
+        }
+        if (!($this->_backendCapabilities['tags'])) {
+            Zend_Cache::throwException(self::BACKEND_NOT_SUPPORT_TAG);
+        }
+        return $this->_backend->getIdsMatchingAnyTags($tags);
     }
 
     /**
@@ -501,7 +526,7 @@ class Zend_Cache_Core
     public function getIds()
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         $array = $this->_backend->getIds();
         if ((!isset($this->_options['cache_id_prefix'])) || ($this->_options['cache_id_prefix'] == '')) return $array;
@@ -525,10 +550,10 @@ class Zend_Cache_Core
     public function getTags()
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         if (!($this->_backendCapabilities['tags'])) {
-            Zend_Cache::throwException('tags are not supported by the current backend');
+            Zend_Cache::throwException(self::BACKEND_NOT_SUPPORT_TAG);
         }
         return $this->_backend->getTags();
     }
@@ -541,7 +566,7 @@ class Zend_Cache_Core
     public function getFillingPercentage()
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         return $this->_backend->getFillingPercentage();
     }
@@ -560,7 +585,7 @@ class Zend_Cache_Core
     public function getMetadatas($id)
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         $id = $this->_id($id); // cache id may need prefix
         return $this->_backend->getMetadatas($id);
@@ -576,7 +601,7 @@ class Zend_Cache_Core
     public function touch($id, $extraLifetime)
     {
         if (!$this->_extendedBackend) {
-            Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
+            Zend_Cache::throwException(self::BACKEND_NOT_IMPLEMENTS_EXTENDED_IF);
         }
         $id = $this->_id($id); // cache id may need prefix
         return $this->_backend->touch($id, $extraLifetime);
