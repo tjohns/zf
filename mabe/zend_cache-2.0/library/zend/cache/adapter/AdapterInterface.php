@@ -20,6 +20,7 @@
  */
 
 namespace zend\cache\adapter;
+use \zend\Cache as Cache;
 
 /**
  * @package    zend\cache
@@ -302,7 +303,7 @@ interface AdapterInterface
      * @return array Found keys
      * @throw \zend\cache\Exception
      */
-    public function find($match, array $options = array());
+    public function find($match = Cache::MATCH_ACTIVE, array $options = array());
 
     /**
      * Clear items by matching flag.
@@ -312,7 +313,7 @@ interface AdapterInterface
      * @return boolean True on success or false on failure
      * @throw \zend\cache\Exception
      */
-    public function clear($match, array $options = array());
+    public function clear($match = Cache::MATCH_EXPIRED, array $options = array());
 
     /**
      * Get adapter status information.

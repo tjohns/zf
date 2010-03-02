@@ -10,6 +10,48 @@ abstract class Cache
 {
 
     /**
+     * Match expired items
+     *
+     * @var int
+     */
+    const MATCH_EXPIRED = 01;
+
+    /**
+     * Match active items
+     *
+     * @var int
+     */
+    const MATCH_ACTIVE = 02;
+
+    /**
+     * Match active and expired items
+     *
+     * @var int
+     */
+    const MATCH_ALL = 03;
+
+    /**
+     * Match items by tag(s) using AND operator
+     *
+     * @var int
+     */
+    const MATCH_TAGS_AND = 010;
+
+    /**
+     * Match items by tag(s) using OR operator
+     *
+     * @var int
+     */
+    const MATCH_TAGS_OR = 020;
+
+    /**
+     * Match items where no given tag(s) matches
+     *
+     * @var int
+     */
+    const MATCH_TAGS_NONE = 030;
+
+    /**
      * Cache adapter class loader
      *
      * @var \zend\loader\PluginLoader

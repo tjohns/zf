@@ -1,6 +1,7 @@
 <?php
 
 namespace zend\cache\adapter;
+use \zend\Cache as Cache;
 
 class Variable extends AdapterAbstract
 {
@@ -169,7 +170,7 @@ class Variable extends AdapterAbstract
         }
     }
 
-    public function clear($mode, array $options = array())
+    public function clear($match = Cache::MATCH_EXPIRED, array $options = array())
     {
         $ns = isset($options['namespace']) ? $options['namespace'] : '';
         foreach ($this->find($mode, $options) as $key) {
@@ -177,7 +178,7 @@ class Variable extends AdapterAbstract
         }
     }
 
-    public function find($mode, array $options=array())
+    public function find($match = Cache::MATCH_ACTIVE, array $options=array())
     {
         $ns = isset($options['namespace']) ? $options['namespace'] : '';
         if (!isset($this->_data[$ns])) {

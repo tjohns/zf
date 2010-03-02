@@ -1,6 +1,7 @@
 <?php
 
 namespace zend\cache\plugin;
+use \zend\Cache as Cache;
 
 class IgnoreUserAbort extends PluginAbstract
 {
@@ -358,7 +359,7 @@ class IgnoreUserAbort extends PluginAbstract
         }
     }
 
-    public function clear($match, array $options = array())
+    public function clear($match = Cache::MATCH_EXPIRED, array $options = array())
     {
         $ignoreUserAbort = !ignore_user_abort(true);
 

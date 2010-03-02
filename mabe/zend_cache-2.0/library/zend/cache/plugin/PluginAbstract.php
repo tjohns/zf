@@ -1,6 +1,7 @@
 <?php
 
 namespace zend\cache\plugin;
+use \zend\Cache as Cache;
 use \zend\Options as Options;
 use \zend\cache\adapter\AdapterInterface as AdapterInterface;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
@@ -122,11 +123,11 @@ abstract class PluginAbstract implements PluginInterface
         return $this->getAdapter()->decrementMulti($keyValuePairs, $options);
     }
 
-    public function find($match, array $options = array()) {
+    public function find($match = Cache::MATCH_ACTIVE, array $options = array()) {
         return $this->getAdapter()->find($match, $options);
     }
 
-    public function clear($match, array $options = array()) {
+    public function clear($match = Cache::MATCH_EXPIRED, array $options = array()) {
         return $this->getAdapter()->clear($match, $options);
     }
 
