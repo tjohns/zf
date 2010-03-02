@@ -20,7 +20,7 @@ class ExceptionHandler extends PluginAbstract
     public function setExceptionHandler($callback)
     {
         if (!is_callable($callback, true)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('Callback isn\'t callable');
         }
         $this->_exceptionHandler = $callback;
     }
@@ -31,6 +31,6 @@ class ExceptionHandler extends PluginAbstract
     }
 
     // catch all exceptions and call callback
-    // doen't re-throw exceptions
+    // don't re-throw exceptions
 
 }
