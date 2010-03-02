@@ -50,7 +50,7 @@ class EscapeKey extends PluginAbstract
         }
 
         $capabilities = $this->getAdapter()->getCapabilities();
-        if (strpos($capabilities['id_disallowed_characters'], $character) !== false) {
+        if (strpos($capabilities['key_disallowed_characters'], $character) !== false) {
             throw new InvalidArgumentException('The escape character "' . $character . '" isn\'t allowed by adapter');
         }
 

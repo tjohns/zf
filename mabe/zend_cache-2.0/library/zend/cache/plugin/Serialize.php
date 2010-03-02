@@ -38,4 +38,3 @@ class Serialize extends PluginAbstract
     // un-/serialize data
 
 }
-
