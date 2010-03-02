@@ -14,6 +14,11 @@ class Serialize extends PluginAbstract
      */
     protected $_serializer = null;
 
+    /**
+     * Get serializer adapter
+     *
+     * @return \zend\serializer\adapter\AdapterInterface
+     */
     public function getSerializer()
     {
         if ($this->_serializer === null) {
@@ -23,14 +28,27 @@ class Serialize extends PluginAbstract
         return $this->_serializer;
     }
 
+    /**
+     * Set serializer adapter
+     *
+     * @param \zend\serializer\adapter\AdapterInterface
+     * @return \zend\cache\plugin\Serialize
+     */
     public function setSerializer(SerializerAdapterInterface $serializer)
     {
         $this->_serializer = $serializer;
+        return $this;
     }
 
+    /**
+     * Reset serializer adapter to default
+     *
+     * @return \zend\cache\plugin\Serialize
+     */
     public function resetSerializer()
     {
         $this->_serializer = null;
+        return $this;
     }
 
     public function getCapabilities()
