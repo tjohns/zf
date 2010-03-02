@@ -92,6 +92,4 @@ class AutomaticOptimize extends PluginAbstract
         return true;
     }
 
-    // automatic optimizing support
-
 }
