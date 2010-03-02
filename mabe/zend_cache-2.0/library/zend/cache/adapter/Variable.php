@@ -17,8 +17,12 @@ class Variable extends AdapterAbstract
     {
         $key  = $this->_key($key);
         $ns   = isset($options['namespace']) ? $options['namespace'] : '';
-        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
-        $this->_data[$ns][$key] = array($value, time(), $tags);
+        if (isset($options['tags'])) {
+            $tags = $this->_tags($options['tags']);
+            $this->_data[$ns][$key] = array($value, time(), $tags);
+        } else {
+            $this->_data[$ns][$key] = array($value, time());
+        }
         return true;
     }
 
@@ -29,8 +33,12 @@ class Variable extends AdapterAbstract
         if (isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' already exists within namespace '$ns'");
         }
-        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
-        $this->_data[$ns][$key] = array($value, time(), $tags);
+        if (isset($options['tags'])) {
+            $tags = $this->_tags($options['tags']);
+            $this->_data[$ns][$key] = array($value, time(), $tags);
+        } else {
+            $this->_data[$ns][$key] = array($value, time());
+        }
         return true;
     }
 
@@ -41,8 +49,12 @@ class Variable extends AdapterAbstract
         if (!isset($this->_data[$ns][$key])) {
             throw new \Exception("Key '$key' doen't exists within namespace '$ns'");
         }
-        $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
-        $this->_data['ns'][$key] = array($value, time(), $tags);
+        if (isset($options['tags'])) {
+            $tags = $this->_tags($options['tags']);
+            $this->_data[$ns][$key] = array($value, time(), $tags);
+        } else {
+            $this->_data[$ns][$key] = array($value, time());
+        }
         return true;
     }
 
@@ -119,11 +131,16 @@ class Variable extends AdapterAbstract
             }
         }
 
-        return array(
+        $info = array(
             'mtime' => $this->_data[$ns][$key][1],
-            'ttl'   => isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl(),
-            'tags'  => $this->_data[$ns][$key][2]
+            'ttl'   => isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl()
         );
+
+        if (isset($this->_data[$ns][$key][2])) {
+            $info['tags'] = $this->_data[$ns][$key][2];
+        }
+
+        return $info;
     }
 
     public function increment($value, $key = null, array $options = array())
@@ -135,7 +152,7 @@ class Variable extends AdapterAbstract
             $this->_data[$ns][$key][0]+= $value;
             $this->_data[$ns][$key][1] = time();
         } else {
-            $this->_data[$ns][$key] = array($value, time(), null);
+            $this->_data[$ns][$key] = array($value, time());
         }
     }
 
@@ -148,7 +165,7 @@ class Variable extends AdapterAbstract
             $this->_data[$ns][$key][0]-= $value;
             $this->_data[$ns][$key][1] = time();
         } else {
-            $this->_data[$ns][$key] = array($value, time(), null);
+            $this->_data[$ns][$key] = array($value, time());
         }
     }
 
@@ -199,19 +216,23 @@ class Variable extends AdapterAbstract
 
                 // if MATCHING_TAGS mode -> check if all given tags available in current cache
                 if (($mode & \zend\Cache::MATCHING_TAGS) == \zend\Cache::MATCHING_TAGS ) {
-                    if (count(array_diff($opts['tags'], $info[2])) > 0) {
+                    if (!isset($info[2])) {
+                        continue;
+                    } elseif (count(array_diff($options['tags'], $info[2])) > 0) {
                         continue;
                     }
 
                 // if MATCHING_NO_TAGS mode -> check if no given tag available in current cache
                 } elseif( ($mode & \zend\Cache::MATCHING_NO_TAGS) == \zend\Cache::MATCHING_NO_TAGS ) {
-                    if (count(array_diff($opts['tags'], $info[2])) != count($opts['tags'])) {
+                    if (isset($info[2]) && count(array_diff($options['tags'], $info[2])) != count($options['tags'])) {
                         continue;
                     }
 
                 // if MATCHING_ANY_TAGS mode -> check if any given tag available in current cache
                 } elseif ( ($mode & \zend\Cache::MATCHING_ANY_TAGS) == \zend\Cache::MATCHING_ANY_TAGS ) {
-                    if (count(array_diff($opts['tags'], $info[2])) == count($opts['tags'])) {
+                    if (!isset($info[2])) {
+                        continue;
+                    } elseif (count(array_diff($options['tags'], $info[2])) == count($options['tags'])) {
                         continue;
                     }
 
