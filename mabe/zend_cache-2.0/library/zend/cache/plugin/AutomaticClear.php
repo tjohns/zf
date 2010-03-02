@@ -63,6 +63,50 @@ class AutomaticClear extends PluginAbstract
         return $ret;
     }
 
+    public function add($value, $key = null, array $options = array())
+    {
+        $ret = $this->add($value, $key, $options);
+
+        if ($ret === true) {
+            $this->_clearByFactor($this->getClearingFactor(), $options);
+        }
+
+        return $ret;
+    }
+
+    public function addMulti(array $keyValuePairs, array $options = array())
+    {
+        $ret = $this->addMulti($keyValuePairs, $options);
+
+        if ($ret === true) {
+            $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
+        }
+
+        return $ret;
+    }
+
+    public function replace($value, $key = null, array $options = array())
+    {
+        $ret = $this->replace($value, $key, $options);
+
+        if ($ret === true) {
+            $this->_clearByFactor($this->getClearingFactor(), $options);
+        }
+
+        return $ret;
+    }
+
+    public function replaceMulti(array $keyValuePairs, array $options = array())
+    {
+        $ret = $this->replaceMulti($keyValuePairs, $options);
+
+        if ($ret === true) {
+            $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
+        }
+
+        return $ret;
+    }
+
     protected function _clearByFactor($factor, array $options)
     {
         if ($factor > 0) {
