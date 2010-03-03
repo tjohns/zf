@@ -30,9 +30,9 @@ abstract class PluginAbstract implements PluginInterface
         return $this->_adapter;
     }
 
-    public function setAdapter(AdapterInterface $innerAdapter)
+    public function setAdapter($innerAdapter)
     {
-        $this->_adapter = $innerAdapter;
+        $this->_adapter = Cache::adapterFactory($innerAdapter);
     }
 
     public function getCapabilities() {
