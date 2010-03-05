@@ -1,8 +1,8 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 
-class Prefix extends PluginAbstract
+class Prefix extends StoragePluginAbstract
 {
 
     protected $_prefix = 'zf-';

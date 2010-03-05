@@ -1,18 +1,18 @@
 <?php
 
-namespace zend\cache\plugin;
-use \zend\cache\adapter\AdapterInterface as AdapterInterface;
+namespace zend\cache\storagePlugin;
+use \zend\cache\storageAdapter\StorageAdapterInterface as StorageAdapterInterface;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
-class Tagging extends PluginAbstract
+class Tagging extends StoragePluginAbstract
 {
 
     /**
-     * Cache adapter to store tags
+     * The tag storage
      *
-     * @var \zend\cache\adapter\AdapterInterface
+     * @var \zend\cache\storageAdapter\StorageAdapterInterface
      */
-    protected $_tagHandler = null;
+    protected $_tagStorage = null;
 
     /**
      * Key-Prefix of key files
@@ -30,18 +30,18 @@ class Tagging extends PluginAbstract
      */
     protected $_tag2IdPrefix = 'zf-tag2key-';
 
-    public function getTagHandler()
+    public function getTagStorage()
     {
         if ($this->_tagHandler === null) {
             return $this;
         }
 
-        return $this->_taghandler;
+        return $this->_tagStorage;
     }
 
-    public function setTagHandler(AdapterInterface $tagHandler)
+    public function setTagStorage(StorageAdapterInterface $tagStorage)
     {
-        $this->_tagHandler = $tagHandler;
+        $this->_tagStorage = $tagStorage;
     }
 
     public function resetTagHandler()
@@ -81,7 +81,7 @@ class Tagging extends PluginAbstract
 
     public function getCapabilities()
     {
-        $capabilities = $this->_innerAdapter->getCapabilities();
+        $capabilities = $this->getStorage()->getCapabilities();
         $capabilities['tagging'] = true;
         return $capabilities;
     }

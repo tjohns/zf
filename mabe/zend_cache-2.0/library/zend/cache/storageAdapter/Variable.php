@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\adapter;
+namespace zend\cache\storageAdapter;
 use \zend\Cache as Cache;
 
-class Variable extends AdapterAbstract
+class Variable extends StorageAdapterAbstract
 {
 
     protected $_capabilities = array();

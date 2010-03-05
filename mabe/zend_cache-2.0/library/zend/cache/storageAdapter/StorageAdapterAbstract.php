@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace zend\cache\adapter;
+namespace zend\cache\storageAdapter;
 use \zend\Options as Options;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
@@ -29,7 +29,7 @@ use \zend\cache\InvalidArgumentException as InvalidArgumentException;
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class AdapterAbstract implements AdapterInterface
+abstract class StorageAdapterAbstract implements StorageAdapterInterface
 {
 
     /**

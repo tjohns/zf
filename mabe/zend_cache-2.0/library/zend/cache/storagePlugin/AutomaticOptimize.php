@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\cache\InvalidArgumentAxception as InvalidArgumentAxception;
 
-class AutomaticOptimize extends PluginAbstract
+class AutomaticOptimize extends StoragePluginAbstract
 {
 
     /**
@@ -42,7 +42,7 @@ class AutomaticOptimize extends PluginAbstract
 
     public function remove($key = null, array $options = array())
     {
-        $ret = $this->remove($key, $options);
+        $ret = $this->getStorage()->remove($key, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
@@ -53,7 +53,7 @@ class AutomaticOptimize extends PluginAbstract
 
     public function removeMulti(array $keys, array $options = array())
     {
-        $ret = $this->removeMulti($keys, $options);
+        $ret = $this->getStorage()->removeMulti($keys, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
@@ -64,7 +64,7 @@ class AutomaticOptimize extends PluginAbstract
 
     public function clear($match, array $options = array())
     {
-        $ret = $this->clear($match, $options);
+        $ret = $this->getStorage()->clear($match, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);

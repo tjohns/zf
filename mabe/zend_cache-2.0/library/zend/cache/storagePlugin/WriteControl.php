@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\cache\UnexpectedValueException as UnexpectedValueException;
 
-class WriteControl extends PluginAbstract
+class WriteControl extends StoragePluginAbstract
 {
 
     /**
@@ -37,16 +37,15 @@ class WriteControl extends PluginAbstract
 
     public function set($value, $key = null, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->set($value, $key, $options);
+        $ret = $this->getStorage()->set($value, $key, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValue = $adapter->get($key, $options);
+            $checkValue = $this->get($key, $options);
             if ($checkValue != $value) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->remove($key, $options);
+                        $this->remove($key, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }
@@ -61,12 +60,11 @@ class WriteControl extends PluginAbstract
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->setMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->setMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValues = $adapter->getMulti($keyValuePairs, $options);
+            $checkValues = $this->getMulti($keyValuePairs, $options);
             $wrongKeys   = null;
             foreach ($checkValues as $checkKey => $checkValue) {
                 if (!isset($value[$checkKey]) || $checkValue != $values[$checkKey]) {
@@ -77,7 +75,7 @@ class WriteControl extends PluginAbstract
             if ($wrongKeys !== null) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->removeMulti($wrongKeys, $options);
+                        $this->removeMulti($wrongKeys, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }
@@ -94,16 +92,15 @@ class WriteControl extends PluginAbstract
 
     public function add($value, $key = null, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->add($value, $key, $options);
+        $ret = $this->getStorage()->add($value, $key, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValue = $adapter->get($key, $options);
+            $checkValue = $this->get($key, $options);
             if ($checkValue != $value) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->remove($key, $options);
+                        $this->remove($key, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }
@@ -118,12 +115,11 @@ class WriteControl extends PluginAbstract
 
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->addMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->addMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValues = $adapter->getMulti($keyValuePairs, $options);
+            $checkValues = $this->getMulti($keyValuePairs, $options);
             $wrongKeys   = null;
             foreach ($checkValues as $checkKey => $checkValue) {
                 if (!isset($value[$checkKey]) || $checkValue != $values[$checkKey]) {
@@ -134,7 +130,7 @@ class WriteControl extends PluginAbstract
             if ($wrongKeys !== null) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->removeMulti($wrongKeys, $options);
+                        $this->removeMulti($wrongKeys, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }
@@ -151,16 +147,15 @@ class WriteControl extends PluginAbstract
 
     public function replace($value, $key = null, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->replace($value, $key, $options);
+        $ret = $this->getStorage()->replace($value, $key, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValue = $adapter->get($key, $options);
+            $checkValue = $this->get($key, $options);
             if ($checkValue != $value) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->remove($key, $options);
+                        $this->remove($key, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }
@@ -175,12 +170,11 @@ class WriteControl extends PluginAbstract
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $adapter = $this->getAdapter();
-        $ret = $adapter->replaceMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->replaceMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $options+= array('validate' => false);
-            $checkValues = $adapter->getMulti($keyValuePairs, $options);
+            $checkValues = $this->getMulti($keyValuePairs, $options);
             $wrongKeys   = null;
             foreach ($checkValues as $checkKey => $checkValue) {
                 if (!isset($value[$checkKey]) || $checkValue != $values[$checkKey]) {
@@ -191,7 +185,7 @@ class WriteControl extends PluginAbstract
             if ($wrongKeys !== null) {
                 if ($this->getRemoveOnFailure()) {
                     try {
-                        $adapter->removeMulti($wrongKeys, $options);
+                        $this->removeMulti($wrongKeys, $options);
                     } catch (Exception $e) {
                         // don't throw exceptions if remove failed
                     }

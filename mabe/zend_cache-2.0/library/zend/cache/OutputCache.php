@@ -2,18 +2,19 @@
 
 namespace zend\cache;
 use \zend\Options as Options;
+use \zend\cache\storageAdapter\StorageAdapterInterface as StorageAdapterInterface;
 
 class OutputCache
 {
 
-    protected $_adapter;
+    protected $_storage;
 
     public function __construct($options)
     {
         Options::setConstructorOptions($this, $options);
 
-        if (!$this->_adapter) {
-            throw InvalidArgumentException('Missing option "adapter"');
+        if (!$this->_storage) {
+            throw InvalidArgumentException("Missing option 'storage'");
         }
     }
 
@@ -22,14 +23,14 @@ class OutputCache
         Options::setOptions($this, $options);
     }
 
-    public function getAdapter()
+    public function getStorage()
     {
-        return $this->_adapter;
+        return $this->_storage;
     }
 
-    public function setAdapter(adapter\AdapterInterface $adapter)
+    public function setStoage(StorageAdapterInterface $storage)
     {
-        $this->_adapter = $adapter;
+        $this->_storage = $storage;
     }
 
     // old Zend_Cache_Frontend_Output

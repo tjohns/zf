@@ -1,10 +1,10 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\Serializer as Serializer;
 use \zend\serializer\adapter\AdapterInterface as SerializerAdapterInterface;
 
-class Serialize extends PluginAbstract
+class Serialize extends StoragePluginAbstract
 {
 
     /**
@@ -53,7 +53,7 @@ class Serialize extends PluginAbstract
 
     public function getCapabilities()
     {
-        $capabilities = $this->_innerAdapter->getCapabilities();
+        $capabilities = $this->getStorage->getCapabilities();
         $capabilities['serialize'] = true;
         return $capabilities;
     }
@@ -61,7 +61,7 @@ class Serialize extends PluginAbstract
     public function set($value, $key = null, array $options = array())
     {
         $value = $this->getSerializer()->serialize();
-        $this->getAdapter()->set($value, $key, $options);
+        $this->getStorage()->set($value, $key, $options);
     }
 
     public function setMulti(array $keyValuePairs, array $options = array())
@@ -71,13 +71,13 @@ class Serialize extends PluginAbstract
             $value = $serializer->serialize($value);
         }
 
-        return $this->getAdapter()->setMulti($keyValuePairs, $options);
+        return $this->getStorage()->setMulti($keyValuePairs, $options);
     }
 
     public function add($value, $key = null, array $options = array())
     {
         $value = $this->getSerializer()->serialize();
-        $this->getAdapter()->add($value, $key, $options);
+        $this->getStorage()->add($value, $key, $options);
     }
 
     public function addMulti(array $keyValuePairs, array $options = array())
@@ -87,13 +87,13 @@ class Serialize extends PluginAbstract
             $value = $serializer->serialize($value);
         }
 
-        return $this->getAdapter()->addMulti($keyValuePairs, $options);
+        return $this->getStorage()->addMulti($keyValuePairs, $options);
     }
 
     public function replace($value, $key = null, array $options = array())
     {
         $value = $this->getSerializer()->serialize();
-        $this->getAdapter()->replace($value, $key, $options);
+        $this->getStorage()->replace($value, $key, $options);
     }
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
@@ -103,18 +103,18 @@ class Serialize extends PluginAbstract
             $value = $serializer->serialize($value);
         }
 
-        return $this->getAdapter()->replaceMulti($keyValuePairs, $options);
+        return $this->getStorage()->replaceMulti($keyValuePairs, $options);
     }
 
     public function get($key = null, array $options = array())
     {
-        $rs = $this->getAdapter()->get($key, $options);
+        $rs = $this->getStorage()->get($key, $options);
         return $this->getSerializer()->unserialize($rs);
     }
 
     public function getMulti(array $keys, array $options = array())
     {
-        $rsList = $this->getAdapter()->getMulti($keys, $options);
+        $rsList = $this->getStorage()->getMulti($keys, $options);
 
         $serializer = $this->getSerializer();
         foreach ($rsList as &$value) {
@@ -126,73 +126,33 @@ class Serialize extends PluginAbstract
 
     public function increment($value, $key = null, array $options = array())
     {
-        $adapter    = $this->getAdapter();
-        $serializer = $this->getSerializer();
-        $stored     = $adapter->get($key, $options);
-        $value      = (int)$value;
-
-        if ($stored === false) {
-            $value = $serializer->serialize($value);
-        } else {
-            $stored = $serializer->unserialize($stored);
-            $value  = $serializer->serialize($value + $stored);
-        }
-
-        return $adapter->set($value, $key, $options);
+        $stored     = $this->get($key, $options);
+        $this->set((int)$stored + (int)$value, $options);
     }
 
     public function incrementMulti(array $keyValuePairs, array $options = array())
     {
-        $adapter    = $this->getAdapter();
-        $serializer = $this->getSerializer();
-
-        $storedList = $adapter->getMulti(array_keys($keyValuePairs), $options);
+        $storedList = $this->getMulti(array_keys($keyValuePairs), $options);
         foreach ($keyValuePairs as $key => &$value) {
-            $value = (int)$value;
-            if (!isset($storedList[$key])) {
-                $value = $serializer->serialize($value);
-            } else {
-                $stored = $serializer->unserialize($storedList[$key]);
-                $value  = $serializer->serialize($value + $stored);
-            }
+            $stored = isset($storedList[$key]) ? (int)$storedList[$key] : 0;
+            $value  = $stored + (int)$value;
         }
-
         return $this->setMulti($keyValuePairs, $options);
     }
 
     public function decrement($value, $key = null, array $options = array())
     {
-        $adapter    = $this->getAdapter();
-        $serializer = $this->getSerializer();
-        $stored     = $adapter->get($key, $options);
-        $value      = (int)$value;
-
-        if ($stored === false) {
-            $value = $serializer->serialize($value);
-        } else {
-            $stored = $serializer->unserialize($stored);
-            $value  = $serializer->serialize($value - $stored);
-        }
-
-        return $adapter->set($value, $key, $options);
+        $stored     = $this->get($key, $options);
+        $this->set((int)$stored - (int)$value, $options);
     }
 
     public function decrementMulti(array $keyValuePairs, array $options = array())
     {
-        $adapter    = $this->getAdapter();
-        $serializer = $this->getSerializer();
-
-        $storedList = $adapter->getMulti(array_keys($keyValuePairs), $options);
+        $storedList = $this->getMulti(array_keys($keyValuePairs), $options);
         foreach ($keyValuePairs as $key => &$value) {
-            $value = (int)$value;
-            if (!isset($storedList[$key])) {
-                $value = $serializer->serialize($value);
-            } else {
-                $stored = $serializer->unserialize($storedList[$key]);
-                $value  = $serializer->serialize($value - $stored);
-            }
+            $stored = isset($storedList[$key]) ? (int)$storedList[$key] : 0;
+            $value  = $stored - (int)$value;
         }
-
         return $this->setMulti($keyValuePairs, $options);
     }
 

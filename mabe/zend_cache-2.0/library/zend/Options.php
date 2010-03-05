@@ -11,9 +11,9 @@ class Options
         }
         foreach ($options as $key => $value) {
             $method = 'set' . self::_normalizeKey($key);
-            if (method_exists($object, $method)) {
+//            if (method_exists($object, $method)) {
                 $object->$method($value);
-            }
+//            }
         }
     }
 

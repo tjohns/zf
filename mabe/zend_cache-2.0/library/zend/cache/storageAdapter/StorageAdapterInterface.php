@@ -19,16 +19,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace zend\cache\adapter;
+namespace zend\cache\storageAdapter;
 use \zend\Cache as Cache;
 
 /**
  * @package    zend\cache
- * @subpackage zend\cache\adapter
+ * @subpackage zend\cache\storageAdapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface AdapterInterface
+interface StorageAdapterInterface
 {
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\Cache as Cache;
 
-class IgnoreUserAbort extends PluginAbstract
+class IgnoreUserAbort extends StoragePluginAbstract
 {
 
     /**
@@ -28,7 +28,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->set($value, $key, $options);
+            $ret = $this->getStorage()->set($value, $key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -56,7 +56,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->setMulti($keyValuePairs, $options);
+            $ret = $this->getStorage()->setMulti($keyValuePairs, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -84,7 +84,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->add($value, $key, $options);
+            $ret = $this->getStorage()->add($value, $key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -112,7 +112,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->addMulti($keyValuePairs, $options);
+            $ret = $this->getStorage()->addMulti($keyValuePairs, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -140,7 +140,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->replace($value, $key, $options);
+            $ret = $this->getStorage()->replace($value, $key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -168,7 +168,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->replaceMulti($keyValuePairs, $options);
+            $ret = $this->getStorage()->replaceMulti($keyValuePairs, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -196,7 +196,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->remove($key, $options);
+            $ret = $this->getStorage()->remove($key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -224,7 +224,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->removeMulti($keys, $options);
+            $ret = $this->getStorage()->removeMulti($keys, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -252,7 +252,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->increment($value, $key, $options);
+            $ret = $this->getStorage()->increment($value, $key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -280,7 +280,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->incrementMulti($keyValuePairs, $options);
+            $ret = $this->getStorage()->incrementMulti($keyValuePairs, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -308,7 +308,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->decrement($value, $key, $options);
+            $ret = $this->getStorage()->decrement($value, $key, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -336,7 +336,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->decrementMulti($keyValuePairs, $options);
+            $ret = $this->getStorage()->decrementMulti($keyValuePairs, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -364,7 +364,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->clear($match, $options);
+            $ret = $this->getStorage()->clear($match, $options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {
@@ -392,7 +392,7 @@ class IgnoreUserAbort extends PluginAbstract
         $ignoreUserAbort = !ignore_user_abort(true);
 
         try {
-            $ret = $this->getAdapter()->optimize($options);
+            $ret = $this->getStorage()->optimize($options);
 
             if ($ignoreUserAbort) {
                 if ($this->getExitOnAbort() && connection_aborted()) {

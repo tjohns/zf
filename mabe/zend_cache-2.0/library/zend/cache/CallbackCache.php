@@ -2,23 +2,24 @@
 
 namespace zend\cache;
 use \zend\Options as Options;
+use \zend\cache\storageAdapter\StorageAdapterInterface as StorageAdapterInterface;
 
 class CallbackCache
 {
 
     /**
-     * Cache adapter
+     * The storage adapter
      *
-     * @var \zend\cache\adapter\AdapterInterface
+     * @var \zend\cache\storageAdapter\StorageAdapterInterface
      */
-    protected $_adapter;
+    protected $_storage;
 
     public function __construct($options)
     {
         Options::setConstructorOptions($this, $options);
 
-        if (!$this->_adapter) {
-            throw InvalidArgumentException('Missing option "adapter"');
+        if (!$this->_storage) {
+            throw InvalidArgumentException("Missing option 'storage'");
         }
     }
 
@@ -27,19 +28,19 @@ class CallbackCache
         Options::setOptions($this, $options);
     }
 
-    public function getAdapter()
+    public function getStorage()
     {
-        return $this->_adapter;
+        return $this->_storage;
     }
 
-    public function setAdapter(adapter\AdapterInterface $adapter)
+    public function setStorage(StorageAdapterInterface $storage)
     {
-        $this->_adapter = $adapter;
+        $this->_storage = $storage;
     }
 
-    public function call($callback, array $args=array(), $adapterOptions=array())
+    public function call($callback, array $args=array(), $options=array())
     {
-
+        // TODO
     }
 
 }

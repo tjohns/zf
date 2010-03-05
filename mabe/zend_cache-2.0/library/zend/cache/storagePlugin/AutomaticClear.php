@@ -1,10 +1,10 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\Cache as Cache;
 use \zend\cache\InvalidArgumentAxception as InvalidArgumentAxception;
 
-class AutomaticClear extends PluginAbstract
+class AutomaticClear extends StoragePluginAbstract
 {
 
     /**
@@ -43,7 +43,7 @@ class AutomaticClear extends PluginAbstract
 
     public function set($value, $key = null, array $options = array())
     {
-        $ret = $this->set($value, $key, $options);
+        $ret = $this->getStorage()->set($value, $key, $options);
 
         if ($ret === true) {
             $this->_clearByFactor($this->getClearingFactor(), $options);
@@ -54,7 +54,7 @@ class AutomaticClear extends PluginAbstract
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $ret = $this->setMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->setMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
@@ -65,7 +65,7 @@ class AutomaticClear extends PluginAbstract
 
     public function add($value, $key = null, array $options = array())
     {
-        $ret = $this->add($value, $key, $options);
+        $ret = $this->getStorage()->add($value, $key, $options);
 
         if ($ret === true) {
             $this->_clearByFactor($this->getClearingFactor(), $options);
@@ -76,7 +76,7 @@ class AutomaticClear extends PluginAbstract
 
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $ret = $this->addMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->addMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
@@ -87,7 +87,7 @@ class AutomaticClear extends PluginAbstract
 
     public function replace($value, $key = null, array $options = array())
     {
-        $ret = $this->replace($value, $key, $options);
+        $ret = $this->getStorage()->replace($value, $key, $options);
 
         if ($ret === true) {
             $this->_clearByFactor($this->getClearingFactor(), $options);
@@ -98,7 +98,7 @@ class AutomaticClear extends PluginAbstract
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $ret = $this->replaceMulti($keyValuePairs, $options);
+        $ret = $this->getStorage()->replaceMulti($keyValuePairs, $options);
 
         if ($ret === true) {
             $this->_optimizeByFactor($this->getOptimizingFactor(), $options);

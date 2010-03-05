@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
-class EscapeKey extends PluginAbstract
+class EscapeKey extends StoragePluginAbstract
 {
 
     /**
@@ -49,7 +49,7 @@ class EscapeKey extends PluginAbstract
             throw new InvalidArgumentException('The escape character "' . $character . '" have to be a length of 1');
         }
 
-        $capabilities = $this->getAdapter()->getCapabilities();
+        $capabilities = $this->getStorage()->getCapabilities();
         if (strpos($capabilities['key_disallowed_characters'], $character) !== false) {
             throw new InvalidArgumentException('The escape character "' . $character . '" isn\'t allowed by adapter');
         }
@@ -61,7 +61,7 @@ class EscapeKey extends PluginAbstract
 
     public function getCapabilities()
     {
-        $capabilities = $this->getAdapter()->getCapabilities();
+        $capabilities = $this->getStorage()->getCapabilities();
         $capabilities['key_disallowed_characters'] = ''; // empty string -> all characters are allowed
         return $capabilities;
     }

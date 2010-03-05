@@ -1,9 +1,9 @@
 <?php
 
-namespace zend\cache\plugin;
+namespace zend\cache\storagePlugin;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
 
-class ExceptionHandler extends PluginAbstract
+class ExceptionHandler extends StoragePluginAbstract
 {
 
     protected $_exceptionHandler;
@@ -13,7 +13,7 @@ class ExceptionHandler extends PluginAbstract
         parent::__construct($options);
 
         if (!$this->_exceptionHandler) {
-            throw new InvalidArgumentException('Missing option "exceptionHandler"');
+            throw new InvalidArgumentException("Missing option 'exceptionHandler'");
         }
     }
 
