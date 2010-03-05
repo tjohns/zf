@@ -3,7 +3,7 @@
 namespace zend\cache;
 use \zend\Options as Options;
 
-class Page
+class PageCache
 {
 
     protected $_adapter;

@@ -3,14 +3,9 @@
 namespace zend\cache;
 use \zend\Options as Options;
 
-class Callback
+class OutputCache
 {
 
-    /**
-     * Cache adapter
-     *
-     * @var \zend\cache\adapter\AdapterInterface
-     */
     protected $_adapter;
 
     public function __construct($options)
@@ -37,9 +32,6 @@ class Callback
         $this->_adapter = $adapter;
     }
 
-    public function call($callback, array $args=array(), $adapterOptions=array())
-    {
-
-    }
+    // old Zend_Cache_Frontend_Output
 
 }

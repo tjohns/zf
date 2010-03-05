@@ -3,7 +3,7 @@
 namespace zend\cache;
 
 // class Class doesn't work :(
-class CachableClass extends Callback
+class ClassCache extends CallbackCache
 {
 
     // old Zend_Cache_Frontend_Class
