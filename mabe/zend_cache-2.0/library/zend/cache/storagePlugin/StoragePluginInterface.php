@@ -16,10 +16,10 @@ interface StoragePluginInterface extends StorageAdapterInterface
     /**
      * Set storage
      *
-     * @param zend\cache\storageAdapter\StorageAdapterInterface $storage
+     * @param string|zend\cache\storageAdapter\StorageAdapterInterface $storage
      * @return zend\cache\storagePlugin\StoragePluginInterface
      */
-    public function setStorage(StorageAdapterInterface $storage);
+    public function setStorage($storage);
 
     /**
      * Get the main storage
@@ -31,9 +31,9 @@ interface StoragePluginInterface extends StorageAdapterInterface
     /**
      * Set the main storage
      *
-     * @param zend\cache\storageAdapter\StorageAdapterInterface $storage
+     * @param string|zend\cache\storageAdapter\StorageAdapterInterface $storage
      * @return zend\cache\storagePlugin\StoragePluginInterface
      */
-    public function setMainStorage(StorageAdapterInterface $storage);
+    public function setMainStorage($storage);
 
 }

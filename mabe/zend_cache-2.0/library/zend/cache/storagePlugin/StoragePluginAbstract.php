@@ -30,8 +30,17 @@ abstract class StoragePluginAbstract implements StoragePluginInterface
         return $this->_storage;
     }
 
-    public function setStorage(StorageAdapterInterface $storage)
+    public function setStorage($storage)
     {
+        if (is_string($storage)) {
+            $storage = Cache::storageAdapterFactory($storage);
+        } elseif ( !($storage instanceof StorageAdapterInterface) ) {
+            throw new InvalidArgumentException(
+                'The storage must implement zend\Cache\storageAdapter\StorageAdapterInterface '
+              . 'or the name of the storage adapter'
+            );
+        }
+
         $this->_storage = $storage;
         return $this;
     }
@@ -46,14 +55,24 @@ abstract class StoragePluginAbstract implements StoragePluginInterface
         }
     }
 
-    public function setMainStorage(StorageAdapterInterface $storage)
+    public function setMainStorage($storage)
     {
+        if (is_string($storage)) {
+            $storage = Cache::storageAdapterFactory($storage);
+        } elseif ( !($storage instanceof StorageAdapterInterface) ) {
+            throw new InvalidArgumentException(
+                'The main storage must implement zend\Cache\storageAdapter\StorageAdapterInterface '
+              . 'or the name of the storage adapter'
+            );
+        }
+
         $innerStorage = $this->getStorage();
         if ($innerStorage instanceof StoragePluginInterface) {
             $innerStorage->setMainStorage($storage);
         } else {
             $this->setStorage($storage);
         }
+
         return $this;
     }
 
