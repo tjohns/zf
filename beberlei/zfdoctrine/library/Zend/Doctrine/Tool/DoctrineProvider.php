@@ -58,7 +58,7 @@ class Zend_Doctrine_Tool_DoctrineProvider extends Zend_Tool_Project_Provider_Abs
      * @param  bool $withResourceDirectories
      * @return void
      */
-    public function createProject($dsn, $withResourceDirectories = true)
+    public function createProject($dsn)
     {
         $profile = $this->_loadProfileRequired();
 
@@ -89,35 +89,33 @@ class Zend_Doctrine_Tool_DoctrineProvider extends Zend_Tool_Project_Provider_Abs
             $this->_print('Enabled Doctrine Zend_Application resource in project.');
         }
 
-        if ($withResourceDirectories)  {
-            $configsDirectory = $profile->search(array('configsDirectory'));
+        $configsDirectory = $profile->search(array('configsDirectory'));
 
-            if ($configsDirectory == null) {
-                throw new Exception("No Config directory in Zend Tool Project.");
-            }
+        if ($configsDirectory == null) {
+            throw new Exception("No Config directory in Zend Tool Project.");
+        }
 
-            $globalResources = array('YamlSchemaDirectory', 'DataFixturesDirectory', 'MigrationsDirectory', 'SqlDirectory');
-            $changes = false;
-            foreach ($globalResources AS $resourceName) {
-                if (!$profile->search(array('configsDirectory', $resourceName))) {
-                    if ($this->_registry->getRequest()->isPretend()) {
-                        $this->_print("Would add ".$resourcenName." to the application config directory.");
+        $globalResources = array('YamlSchemaDirectory', 'DataFixturesDirectory', 'MigrationsDirectory', 'SqlDirectory');
+        $changes = false;
+        foreach ($globalResources AS $resourceName) {
+            if (!$profile->search(array('configsDirectory', $resourceName))) {
+                if ($this->_registry->getRequest()->isPretend()) {
+                    $this->_print("Would add ".$resourcenName." to the application config directory.");
+                } else {
+                    $resource = $configsDirectory->createResource($resourceName);
+                    if (!$resource->exists()) {
+                        $resource->create();
+                        $this->_print('Created Resource: '.$resourceName);
                     } else {
-                        $resource = $configsDirectory->createResource($resourceName);
-                        if (!$resource->exists()) {
-                            $resource->create();
-                            $this->_print('Created Resource: '.$resourceName);
-                        } else {
-                            $this->_print('Registered Resource: '.$resourceName);
-                        }
-                        $changes = true;
+                        $this->_print('Registered Resource: '.$resourceName);
                     }
+                    $changes = true;
                 }
             }
+        }
 
-            if ($changes) {
-                $profile->storeToFile();
-            }
+        if ($changes) {
+            $profile->storeToFile();
         }
     }
 
