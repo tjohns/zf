@@ -54,8 +54,8 @@ interface StorageAdapterInterface
      *                     or the a string as value of the automatic datatype to cast to
      *
      *     Datatypes: boolean, integer, double, string, array, object, resource, NULL
-     *     +    PHP6: binary, unicode
-     *     + Virtual: closure
+     *       Virtual: closure
+     *          PHP6: - string, + binary, + unicode
      *
      *   listing                    boolean   support to list stored ids (needed for find & clear)
      *   tagging                    boolean   support tagging

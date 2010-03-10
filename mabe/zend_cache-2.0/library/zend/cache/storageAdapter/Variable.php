@@ -10,17 +10,17 @@ class Variable extends StorageAdapterAbstract
      * {@inherit}
      */
     protected $_capabilities = array(
-        'boolean'  => true,
-        'integer'  => true,
-        'double'   => true,
-        'string'   => true,
-        'binary'   => true,
-        'unicode'  => true,
-        'array'    => true,
-        'object'   => true,
-        'resource' => true,
-        'NULL'     => true,
-        'closure'  => true,
+        'datatypes' => array(
+            'boolean'  => true,
+            'integer'  => true,
+            'double'   => true,
+            'string'   => true,
+            'array'    => true,
+            'object'   => true,
+            'resource' => true,
+            'NULL'     => true,
+            'closure'  => true
+        )
     );
 
     /**
@@ -29,6 +29,16 @@ class Variable extends StorageAdapterAbstract
      * @var array
      */
     protected $_data = array();
+
+    public function __construct($options = array()) {
+        parent::__construct($options);
+
+        if (version_compare(PHP_VERSION, '6', '>=')) {
+            unset($this->_capabilities['datatypes']['string']);
+            $this->_capabilities['datatypes']['binary'] = true;
+            $this->_capabilities['datatypes']['unicode'] = true;
+        }
+    }
 
     public function set($value, $key = null, array $options = array())
     {
