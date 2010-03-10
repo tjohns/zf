@@ -5,6 +5,7 @@ use \zend\Options as Options;
 use \zend\Cache as Cache;
 use \zend\cache\storageAdapter\StorageAdapterInterface as StorageAdapterInterface;
 use \zend\cache\InvalidArgumentException as InvalidArgumentException;
+use \zend\cache\BadMethodCallException as BadMethodCallException;
 
 abstract class StoragePluginAbstract implements StoragePluginInterface
 {
@@ -187,7 +188,12 @@ abstract class StoragePluginAbstract implements StoragePluginInterface
 
     public function __call($method, array $args)
     {
-        return call_user_func_array(array($this->getStorage(), $method), $args);
+        $storage = $this->getStorage();
+        if (!method_exists(array($storage, $method)) && !method_exists(array($storage, '__call'))) {
+            throw new BadMethodCallException("Unknown method '{$method}'");
+        }
+
+        return call_user_func_array(array($storage, $method), $args);
     }
 
 }
