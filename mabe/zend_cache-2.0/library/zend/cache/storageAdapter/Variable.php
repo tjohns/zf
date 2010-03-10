@@ -6,13 +6,29 @@ use \zend\Cache as Cache;
 class Variable extends StorageAdapterAbstract
 {
 
-    protected $_capabilities = array();
-    protected $_data = array();
+    /**
+     * {@inherit}
+     */
+    protected $_capabilities = array(
+        'boolean'  => true,
+        'integer'  => true,
+        'double'   => true,
+        'string'   => true,
+        'binary'   => true,
+        'unicode'  => true,
+        'array'    => true,
+        'object'   => true,
+        'resource' => true,
+        'NULL'     => true,
+        'closure'  => true,
+    );
 
-    public function getCapabilities()
-    {
-        return $this->_capabilities;
-    }
+    /**
+     * Data storage
+     *
+     * @var array
+     */
+    protected $_data = array();
 
     public function set($value, $key = null, array $options = array())
     {

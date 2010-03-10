@@ -33,6 +33,14 @@ abstract class StorageAdapterAbstract implements StorageAdapterInterface
 {
 
     /**
+     * All supported datatypes of this storage adapter
+     * - Overwrites by class
+     *
+     * @var array
+     */
+    protected $_capabilities = array();
+
+    /**
      * TTL option
      *
      * @var int 0 means infinite or maximum of adapter
@@ -56,6 +64,11 @@ abstract class StorageAdapterAbstract implements StorageAdapterInterface
     public function __construct($options = array())
     {
         Options::setConstructorOptions($this, $options);
+    }
+
+    public function getCapabilities()
+    {
+        return $this->_capabilities;
     }
 
     public function setOptions(array $options)

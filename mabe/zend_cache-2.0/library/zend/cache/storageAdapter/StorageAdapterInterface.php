@@ -49,7 +49,14 @@ interface StorageAdapterInterface
      * How does this adapter work and which features are available
      *
      * @todo Keys:
-     *   serialize                  boolean   support to serialize data (needed to store non string values)
+     *   datatypes  array  An array of all supported datatypes as key and
+     *                     a boolean true as value for full support
+     *                     or the a string as value of the automatic datatype to cast to
+     *
+     *     Datatypes: boolean, integer, double, string, array, object, resource, NULL
+     *     +    PHP6: binary, unicode
+     *     + Virtual: closure
+     *
      *   listing                    boolean   support to list stored ids (needed for find & clear)
      *   tagging                    boolean   support tagging
      *   info_mtime                 boolean   Is the mtime available on info
