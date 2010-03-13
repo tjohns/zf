@@ -23,6 +23,7 @@ class Zend_Rbac
 {
     const AS_OBJECT = 'AS_OBJECT';
     const AS_STRING = 'AS_STRING';
+    const NO_ACCESS = 'NO_ACCESS';
     
     protected $_subjects = array();
     
@@ -47,7 +48,7 @@ class Zend_Rbac
     );
     
     protected function _getObjectTypes() {
-    	return $this->_objectTypes;
+        return $this->_objectTypes;
     }
     
     public function __construct($options = array()) {
@@ -130,7 +131,7 @@ class Zend_Rbac
         /*
          * Verify that the object created is a descendent of the abstract adapter type.
          */
-        if (! $rbacAdapter instanceof Zend_Rbac_Adapter_Abstract) {
+        if (! $rbacAdapter instanceof Zend_Rbac) {
             /**
              * @see Zend_Rbac_Exception
              */
@@ -157,73 +158,83 @@ class Zend_Rbac
                 case 'resources':
                     $this->addResources($value);
                     break;
+                case 'assignroles':
+                    foreach($value as $assignment) {
+                        $this->assignRoles($assignment[0], $assignment[1]);
+                    }
+                    break;
+                case 'subscriptions':
+                    foreach($value as $subscription) {
+                        $this->subscribe($subscription[0], $subscription[1]);
+                    }
+                    break;
             }
         }
     }
     
     public function isAllowedRole($role, $resources, $subject = null) {
         if(is_array($role)) {
-        	throw new Zend_Rbac_Exception('Role cannot be an array. (not implemented yet)');
+            throw new Zend_Rbac_Exception('Role cannot be an array. (not implemented yet)');
         }
         
         if(!is_array($resources)) {
-        	$resources = array($resources);
+            $resources = array($resources);
         }
         
         return !in_array(null, $this->_isAllowedRole($role, $resources, $subject));
     }
     
     public function isAllowed($subjects, $resources) {
-    	foreach((array) $subjects as $subject) {
+        foreach((array) $subjects as $subject) {
             $subject = $this->_getObject('subject', $subject);
             foreach($subject['parents'] as $role => $foo) {
-            	if($this->isAllowedRole($role, $resources, $subject)) {
-            		return true;
-            	}
+                if($this->isAllowedRole($role, $resources, $subject)) {
+                    return true;
+                }
             }
-    	}
+        }
 
-    	return false;
+        return false;
     }
     
     protected function _isAllowedRole($role, $resources, $subject = null) {
-    	$result = $resultOrig = array_fill_keys($resources, null);
-    	$role = $this->_getObject('role',$role);
-    	
+        $result = $resultOrig = array_fill_keys($resources, null);
+        $role = $this->_getObject('role',$role);
+        
         $resourcesRole = array();
         $subRoles = array();
         foreach($role['parents'] as $id => $parent) {
-        	if($parent['type']=='role') {
-        		$subRoles[$id] = $parent;
-        	} else {
-        		$resourcesRole[$id] = $parent;
-        	}
+            if($parent['type']=='role') {
+                $subRoles[$id] = $parent;
+            } else {
+                $resourcesRole[$id] = $parent;
+            }
         }
         
         $tmp = array_intersect($resources, array_keys($resourcesRole));
         foreach($tmp as $moreTmp) {
-        	$result[$moreTmp] = true;
+            $result[$moreTmp] = true;
         }
         
         if(in_array(null, $result)) {
-        	foreach($subRoles as $id => $role) {
-        	    $subRes = $this->_isAllowedRole(
-            	       $role['name'],
-            	       array_keys(array_intersect_assoc($result,$resultOrig)),
-            	       $subject
-                );        	    
+            foreach($subRoles as $id => $role) {
+                $subRes = $this->_isAllowedRole(
+                       $role['name'],
+                       array_keys(array_intersect_assoc($result,$resultOrig)),
+                       $subject
+                );              
   
                 foreach($subRes as $key => $value) {
                     $result[$key] = $value;
                 }
-        	}
+            }
         }
 
         return $result;
     }
 
     protected function _assert($type, $param1, $param2, $param3 = null) {
-    	return true; //@todo implement
+        return true; //@todo implement
         $methodName = 'assert'.strtoUpper($type);
         if($param1->hasAssertions()) {
             
@@ -240,32 +251,32 @@ class Zend_Rbac
     
     protected function _addObject($type, $object)
     {
-    	if(is_string($object)) {
-    		$objType = 'Zend_Rbac_Object_'.ucfirst($type);
-    		$name = $object;
-    		$object = new $objType($object);
-    	} elseif(($expectedType = 'Zend_Rbac_'.ucfirst($type)) && 
-    	         !$object instanceof $expectedType)
+        if(is_string($object)) {
+            $objType = 'Zend_Rbac_Object_'.ucfirst($type);
+            $name = $object;
+            $object = new $objType($object);
+        } elseif(($expectedType = 'Zend_Rbac_'.ucfirst($type)) && 
+                 !$object instanceof $expectedType)
         {
-    	   throw new Zend_Rbac_Exception(
-    	       'Given object does not implement '.$expectedType
-    	   );         	
-    	} else {
-    		$name = $object->__toString();
-    	}
-    	
-    	if($this->_isObjectRegistered($type, $name)) {
-    		throw new Zend_Rbac_Exception(
+           throw new Zend_Rbac_Exception(
+               'Given object does not implement '.$expectedType
+           );           
+        } else {
+            $name = $object->__toString();
+        }
+        
+        if($this->_isObjectRegistered($type, $name)) {
+            throw new Zend_Rbac_Exception(
                 'Cannot set same '.$type.' twice'
-    		);
-    	}
-    	
-    	$this->{$this->_objectTypes[$type]['container']}[$name]
-    	   = array('object'        => $object,
-    	           'name'          => $name,
-    	           'type'          => $type,
-    	           'parents'       => array(),
-    	           'assertions'    => new Zend_Rbac_AssertionContainer()
+            );
+        }
+        
+        $this->{$this->_objectTypes[$type]['container']}[$name]
+           = array('object'        => $object,
+                   'name'          => $name,
+                   'type'          => $type,
+                   'parents'       => array(),
+                   'assertions'    => new Zend_Rbac_AssertionContainer()
        );
     
        return $this;
@@ -273,16 +284,16 @@ class Zend_Rbac
     
     protected function _isObjectRegistered($type, $name)
     {
-    	$container = $this->{$this->_objectTypes[$type]['container']};
+        $container = $this->{$this->_objectTypes[$type]['container']};
         if(!isset($container[(string) $name])) {
-        	return false;
+            return false;
         }
 
         if(is_object($name) && 
            ($container[(string) $name] !== $name ||
             $this->isObjectOfRightType($type, $name)))
         {
-        	return false;
+            return false;
         }
 
         return true;
@@ -290,64 +301,64 @@ class Zend_Rbac
 
     protected function _getObjects($type,$method)
     {
-    	$objects = $this->{$this->_objectTypes[$type]['container']};
-    	$out = array();
+        $objects = $this->{$this->_objectTypes[$type]['container']};
+        $out = array();
 
-    	if($method == self::AS_OBJECT) {
-    		foreach($objects as $name => $object) {
-    			$out[$name] = $object['object'];
-    		}
-    	} elseif($method == self::AS_STRING) {
-    	    foreach($objects as $name => $object) {
+        if($method == self::AS_OBJECT) {
+            foreach($objects as $name => $object) {
+                $out[$name] = $object['object'];
+            }
+        } elseif($method == self::AS_STRING) {
+            foreach($objects as $name => $object) {
                 $out[] = $object['name'];
-            }    		
-    	} else {
+            }           
+        } else {
             throw new Zend_Rbac_Exception(
                 'Unknown method requested'
             );
-    	}
-    	
-    	return $out;
+        }
+        
+        return $out;
     }
     
     protected function &_getObject($type, $object)
     {
-    	if(is_object($object)) {
-        	if($this->getObjectType($object) != $type) {
-        		throw new Zend_Rbac_Exception(
-    	   	       'Given object is no instance of the right type'
+        if(is_object($object)) {
+            if($this->getObjectType($object) != $type) {
+                throw new Zend_Rbac_Exception(
+                   'Given object is no instance of the right type'
                );
-        	}        	
-    	}
-    	
+            }           
+        }
+        
         if(!$this->_isObjectRegistered($type, $object)) {
             throw new Zend_Rbac_Exception('Object '.((string)$object.' has not been registered: '.print_r($object,1)));
         }
-    	
+        
         return $this->{$this->_objectTypes[$type]['container']}[(string) $object];
     }
     
     public function getObjectTypes($object) {
-    	if(!is_object($object)) {
-    		throw new Zend_Rbac_Exception(
-    		    'Given "object" is not an object'
-    		);
-    	}
-    	
-    	$out = array();
-    	if($object instanceof Zend_Rbac_Subject) {
-    		$out[] = 'subject';
-    	} elseif($object instanceof Zend_Rbac_Role) {
-    		$out[] = 'role';
-    	} elseif($object instanceof Zend_Rbac_Resource) {
-    		$out[] = 'resource';
-    	}
-    	
-    	return $out;
+        if(!is_object($object)) {
+            throw new Zend_Rbac_Exception(
+                'Given "object" is not an object'
+            );
+        }
+        
+        $out = array();
+        if($object instanceof Zend_Rbac_Subject) {
+            $out[] = 'subject';
+        } elseif($object instanceof Zend_Rbac_Role) {
+            $out[] = 'role';
+        } elseif($object instanceof Zend_Rbac_Resource) {
+            $out[] = 'resource';
+        }
+        
+        return $out;
     }
     
     public function getObjectType($object) {
-    	return (string) $this->getObjectType;
+        return (string) $this->getObjectType;
     }
     
     public function isObjectOfRightType($type, $object)
@@ -357,27 +368,26 @@ class Zend_Rbac
 
     public function assignRoles($roles, $subjects)
     {
-    	foreach( (array) $subjects as $subject) {
-    		$subject = &$this->_getObject('subject', $subject);
-    		
-    		foreach( (array) $roles as $role) {
-    			$role = &$this->_getObject('role', $role);
-    			$subject['parents'][$role['name']] = &$role;
-    		}
-    	}
-    	
-    	return $this;
+        foreach( (array) $subjects as $subject) {
+            $subject2 = &$this->_getObject('subject', $subject);
+            
+            foreach( (array) $roles as $role) {
+                $role2 = &$this->_getObject('role', $role);
+                $subject2['parents'][$role2['name']] = &$role2;
+            }
+        }
+        
+        return $this;
     }
     
     public function subscribe($resources, $roles)
     {
         foreach( (array) $roles as $role) {
-            $role = &$this->_getObject('role', $role);
+            $role2 = &$this->_getObject('role', $role);
             
             foreach( (array) $resources as $resource) {
-                $resource = &$this->_getObject('resource', $resource);
-                var_dump($role, $resource);
-                $role['parents'][$resource['name']] = &$resource;
+                $resource2 = &$this->_getObject('resource', $resource);
+                $role2['parents'][$resource2['name']] = &$resource2;
             }
         }
         
