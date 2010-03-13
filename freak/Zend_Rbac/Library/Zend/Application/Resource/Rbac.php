@@ -41,8 +41,7 @@ class Zend_Acl {
 	}
 	
 	public function __call($method, $arguments) {
-		var_dump($method, $arguments);
-//		return call_user_func(array($this->_rbac, $method), $arguments);
+		throw new exception('Not supported');
 	}
 	
     public function isAllowed($subject, $resource, $priv) {
@@ -50,31 +49,6 @@ class Zend_Acl {
             throw new exception('No privileges(!)');
         }
         
-//        var_dump($subject, $resource); exit;
         return $this->_rbac->isAllowed($subject, $resource);
     }
 }
-
-/**
- * 
-class Zend_Acl {
-    private $_rbac;
-    
-    public function __construct(Zend_Rbac $rbac) {
-        $this->_rbac = $rbac;
-    }
-    
-    public function isAllowed($subject, $resource, $priv) {
-        if($priv !== null) {
-            throw new exception('No privileges(!)');
-        }
-        
-        var_dump($subject, $resource)
-        return $this->_rbac->isAllowed($subject, $resource);
-    }
-    
-    public function __call($method, $arguments) {
-        throw new exception ('method not implemented');
-    }
-}
- */
