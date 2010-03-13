@@ -46,7 +46,7 @@ class Zend_Rbac
                           'class' => 'Zend_Rbac_Resource',
                           'parentType' => null)
     );
-    
+
     protected function _getObjectTypes() {
         return $this->_objectTypes;
     }
@@ -159,12 +159,12 @@ class Zend_Rbac
                     $this->addResources($value);
                     break;
                 case 'assignroles':
-                    foreach($value as $assignment) {
+                    foreach((array)$value as $assignment) {
                         $this->assignRoles($assignment[0], $assignment[1]);
                     }
                     break;
                 case 'subscriptions':
-                    foreach($value as $subscription) {
+                    foreach((array)$value as $subscription) {
                         $this->subscribe($subscription[0], $subscription[1]);
                     }
                     break;
@@ -211,11 +211,8 @@ class Zend_Rbac
             }
         }
         
-        $tmp = array_intersect($resources, array_keys($resourcesRole));
-        foreach($tmp as $moreTmp) {
-            $result[$moreTmp] = true;
-        }
-        
+        $result = array_merge($result, array_fill_keys(array_intersect($resources, array_keys($resourcesRole)), true));
+
         if(in_array(null, $result)) {
             foreach($subRoles as $id => $role) {
                 $subRes = $this->_isAllowedRole(
@@ -348,9 +345,11 @@ class Zend_Rbac
         $out = array();
         if($object instanceof Zend_Rbac_Subject) {
             $out[] = 'subject';
-        } elseif($object instanceof Zend_Rbac_Role) {
+        }
+        if($object instanceof Zend_Rbac_Role) {
             $out[] = 'role';
-        } elseif($object instanceof Zend_Rbac_Resource) {
+        }
+        if($object instanceof Zend_Rbac_Resource) {
             $out[] = 'resource';
         }
         
@@ -358,7 +357,7 @@ class Zend_Rbac
     }
     
     public function getObjectType($object) {
-        return (string) $this->getObjectType;
+        return (string) $this->getObjectTypes($object);
     }
     
     public function isObjectOfRightType($type, $object)
@@ -391,7 +390,7 @@ class Zend_Rbac
             }
         }
         
-        return $this;       
+        return $this;
     }
     
     public function addChild($parents, $childs)
