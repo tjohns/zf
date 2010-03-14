@@ -19,8 +19,10 @@ class Variable extends StorageAdapterAbstract
             'object'   => true,
             'resource' => true,
             'NULL'     => true,
-            'closure'  => true
-        )
+        ),
+        'info' => array(
+            'mtime'
+        ),
     );
 
     /**

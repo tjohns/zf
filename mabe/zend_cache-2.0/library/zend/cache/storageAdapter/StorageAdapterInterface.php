@@ -48,18 +48,19 @@ interface StorageAdapterInterface
     /**
      * How does this adapter work and which features are available
      *
+     *   datatypes  array  Supported datatypes as key, values:
+     *                     - A boolean true means full support
+     *                     - A string means the datatype to cast to
+     *                     - Missing datatypes are not supported
+     *
+     *   info       array  Supported information of the info method:
+     *                     - mtime  int  Last modification time
+     *                     - ctime  int  Time of creation
+     *                     - atime  int  Last access time
+     *
      * @todo Keys:
-     *   datatypes  array  An array of all supported datatypes as key and
-     *                     a boolean true as value for full support
-     *                     or the a string as value of the automatic datatype to cast to
-     *
-     *     Datatypes: boolean, integer, double, string, array, object, resource, NULL
-     *       Virtual: closure
-     *          PHP6: - string, + binary, + unicode
-     *
      *   listing                    boolean   support to list stored ids (needed for find & clear)
      *   tagging                    boolean   support tagging
-     *   info_mtime                 boolean   Is the mtime available on info
      *   read_expired               boolean   support to read expired data
      *   key_disallowed_characters  string    All disallowed characters to use at a cache id
      *   key_max_length             int       Maximum key length
