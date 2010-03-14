@@ -213,14 +213,13 @@ class Variable extends StorageAdapterAbstract
             return array();
         }
 
+        $ttl  = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
         $keys = array();
-        foreach ($this->_data[$ns] as $key => $info) {
+        foreach ($this->_data[$ns] as $key => &$info) {
 
             // if MATCHING_ALL mode do not check expired
             if ( ($mode & \zend\Cache::MATCHING_ALL) != \zend\Cache::MATCHING_ALL
               && ($mode & \zend\Cache::MATCHING_ALL) != 0 ) {
-
-                $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
 
                 // if Zend_Cache::MATCHING_EXPIRED mode selected do not remove active data
                 if (($mode & \zend\Cache::MATCHING_EXPIRED) == \zend\Cache::MATCHING_EXPIRED) {
