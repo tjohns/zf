@@ -1,6 +1,8 @@
 <?php
 
 namespace zend\cache\storageAdapter;
+use zend;
+
 use \zend\Cache as Cache;
 
 class Variable extends StorageAdapterAbstract
@@ -214,20 +216,21 @@ class Variable extends StorageAdapterAbstract
         }
 
         $ttl  = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-        $keys = array();
+        $tags = isset($options['tags']) ? $this->_normalizeTags($options['tags']) : null;
+        $emptyTags = $keys = array();
         foreach ($this->_data[$ns] as $key => &$info) {
 
-            // if MATCHING_ALL mode do not check expired
-            if ( ($mode & \zend\Cache::MATCHING_ALL) != \zend\Cache::MATCHING_ALL
-              && ($mode & \zend\Cache::MATCHING_ALL) != 0 ) {
+            // compare expired / active
+            if ( ($mode & \zend\Cache::MATCH_ALL) != \zend\Cache::MATCH_ALL
+              && ($mode & \zend\Cache::MATCH_ALL) != 0 ) {
 
-                // if Zend_Cache::MATCHING_EXPIRED mode selected do not remove active data
-                if (($mode & \zend\Cache::MATCHING_EXPIRED) == \zend\Cache::MATCHING_EXPIRED) {
+                // if Zend_Cache::MATCH_EXPIRED mode selected don't match active items
+                if (($mode & \zend\Cache::MATCH_EXPIRED) == \zend\Cache::MATCH_EXPIRED) {
                     if ( time() <= ($info[1]+$ttl) ) {
                         continue;
                     }
 
-                // if Zend_Cache::MATCHING_ACTIVE mode selected do not remove expired data
+                // if Zend_Cache::MATCH_ACTIVE mode selected don't match expired items
                 } else {
                     if ( time() > ($info[1]+$ttl) ) {
                         continue;
@@ -235,41 +238,25 @@ class Variable extends StorageAdapterAbstract
                 }
             }
 
-            ////////////////////////////////////////
-            // on this time all expire tests match
-            ////////////////////////////////////////
+            // compare tags
+            if ($tags !== null) {
+                $tagsStored = isset($info[2]) ? $info[2] : $emptyTags;
 
-            // if one of the tag matching mode is selected
-            if (($mode & 070) > 0) {
+                if ( ($mode & \zend\Cache::MATCH_TAGS_OR) == \zend\Cache::MATCH_TAGS_OR ) {
+                    $match = (count(array_diff($tags, $tagsStored)) != count($tags));
+                } elseif ( ($mode & \zend\Cache::MATCH_TAGS_AND) == \zend\Cache::MATCH_TAGS_AND ) {
+                    $match = (count(array_diff($tags, $tagsStored)) == 0);
+                }
 
-                // if MATCHING_TAGS mode -> check if all given tags available in current cache
-                if (($mode & \zend\Cache::MATCHING_TAGS) == \zend\Cache::MATCHING_TAGS ) {
-                    if (!isset($info[2])) {
-                        continue;
-                    } elseif (count(array_diff($options['tags'], $info[2])) > 0) {
-                        continue;
-                    }
+                // negate
+                if ( ($mode & \zend\Cache::MATCH_TAGS_NEGATE) == \zend\Cache::MATCH_TAGS_NEGATE ) {
+                    $match = !$match;
+                }
 
-                // if MATCHING_NO_TAGS mode -> check if no given tag available in current cache
-                } elseif( ($mode & \zend\Cache::MATCHING_NO_TAGS) == \zend\Cache::MATCHING_NO_TAGS ) {
-                    if (isset($info[2]) && count(array_diff($options['tags'], $info[2])) != count($options['tags'])) {
-                        continue;
-                    }
-
-                // if MATCHING_ANY_TAGS mode -> check if any given tag available in current cache
-                } elseif ( ($mode & \zend\Cache::MATCHING_ANY_TAGS) == \zend\Cache::MATCHING_ANY_TAGS ) {
-                    if (!isset($info[2])) {
-                        continue;
-                    } elseif (count(array_diff($options['tags'], $info[2])) == count($options['tags'])) {
-                        continue;
-                    }
-
+                if (!$match) {
+                    continue;
                 }
             }
-
-            ////////////////////////////////////////
-            // on this time all tag tests match
-            ////////////////////////////////////////
 
             $keys[] = $key;
         }

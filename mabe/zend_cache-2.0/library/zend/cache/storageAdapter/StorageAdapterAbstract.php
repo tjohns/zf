@@ -244,13 +244,19 @@ abstract class StorageAdapterAbstract implements StorageAdapterInterface
         return $this->_lastKey;
     }
 
+    /**
+     * Normalize tags array
+     *
+     * @param array $tags
+     * @return array
+     * @throws \zend\cache\InvalidArgumentException On invalid tags array
+     */
     protected function _tags($tags)
     {
         if (!is_array($tags)) {
             throw new InvalidArgumentException('Tags have to be an array');
         }
 
-        $normalizedTags = array();
         foreach ($tags as &$tag) {
             $tag = (string)$tag;
             if ($tag === '') {

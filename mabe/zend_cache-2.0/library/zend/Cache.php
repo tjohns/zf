@@ -32,25 +32,39 @@ class Cache extends StoragePluginAbstract
     const MATCH_ALL = 03;
 
     /**
-     * Match items by tag(s) using AND operator
+     * Match tag(s) using OR operator
+     *
+     * @var int
+     */
+    const MATCH_TAGS_OR = 000;
+
+    /**
+     * Match tag(s) using AND operator
      *
      * @var int
      */
     const MATCH_TAGS_AND = 010;
 
     /**
-     * Match items by tag(s) using OR operator
+     * Negate tag match
      *
      * @var int
      */
-    const MATCH_TAGS_OR = 020;
+    const MATCH_TAGS_NEGATE = 020;
 
     /**
-     * Match items where no given tag(s) matches
+     * Match tag(s) using OR operator and negates result
      *
      * @var int
      */
-    const MATCH_TAGS_NONE = 030;
+    const MATCH_TAGS_OR_NOT = 020;
+
+    /**
+     * Match tag(s) using AND operator and negates result
+     *
+     * @var int
+     */
+    const MATCH_TAGS_AND_NOT = 030;
 
     /**
      * Storage adapter class loader
