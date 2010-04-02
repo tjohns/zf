@@ -2,13 +2,13 @@ Welcome to the Zend Framework 1.9 Release!
 
 RELEASE INFORMATION
 -------------------
-Zend Framework 1.9.7 ([INSERT REV NUM HERE]).
-Released on January 11, 2010.
+Zend Framework 1.9.8 ([INSERT REV NUM HERE]).
+Released on April 01, 2010.
 
 A detailed list of all features and bug fixes in this release may be
 found at:
 
-    http://framework.zend.com/changelog/1.9.7
+    http://framework.zend.com/changelog/1.9.8
 
 SECURITY ADVISORIES
 -------------------
@@ -204,7 +204,7 @@ the release of 1.8.0!
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-    http://framework.zend.com/changelog/1.9.7
+    http://framework.zend.com/changelog/1.9.8
 
 IMPORTANT CHANGES
 -----------------
