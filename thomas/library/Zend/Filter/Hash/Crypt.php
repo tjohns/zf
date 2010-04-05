@@ -20,36 +20,36 @@
  */
 
 /**
- * @see Zend_Filter_Encrypt_Interface
+ * @see Zend_Filter_Hash_Interface
  */
-require_once 'Zend/Filter/Encrypt/Interface.php';
+require_once 'Zend/Filter/Hash/Interface.php';
 
 /**
- * Encryption adapter for hash
+ * Hashing adapter for hash
  *
  * @category   Zend
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_Encrypt_Hash implements Zend_Filter_Encrypt_Interface
+class Zend_Filter_Hash_Crypt implements Zend_Filter_Hash_Interface
 {
     /**
-     * Definitions for encryption
+     * Options for hashing
      * array(
-     *     'key' => encryption key string
+     *     'key' => hash key string
      *     'algorithm' => algorithm to use
      * )
      */
-    protected $_encryption = array(
+    protected $_options = array(
         'key'       => null,
-        'algorithm' => 'md5',
+        'algorithm' => 'default',
     );
 
     /**
      * Class constructor
      *
-     * @param string|array|Zend_Config $options Cryption Options
+     * @param string|array|Zend_Config $options Hashing Options
      */
     public function __construct($options)
     {
@@ -67,26 +67,26 @@ class Zend_Filter_Encrypt_Hash implements Zend_Filter_Encrypt_Interface
             throw new Zend_Filter_Exception('Invalid options argument provided to filter');
         }
 
-        $this->setEncryption($options);
+        $this->setOptions($options);
     }
 
     /**
-     * Returns the set encryption options
+     * Returns the set hashing options
      *
      * @return array
      */
-    public function getEncryption()
+    public function getOptions()
     {
-        return $this->_encryption;
+        return $this->_options;
     }
 
     /**
-     * Sets new encryption options
+     * Sets new hashing options
      *
-     * @param  string|array $options Encryption options
-     * @return Zend_Filter_File_Encryption
+     * @param  string|array $options Hashing options
+     * @return Zend_Filter_Hash_Crypt
      */
-    public function setEncryption($options)
+    public function setOptions($options)
     {
         if (is_string($options)) {
             $options = array('algorithm' => $options);
@@ -97,49 +97,76 @@ class Zend_Filter_Encrypt_Hash implements Zend_Filter_Encrypt_Interface
             throw new Zend_Filter_Exception('Invalid options argument provided to filter');
         }
 
-        $options = $options + $this->getEncryption();
-        $algorithms = hash_algos();
-        if (!in_array($options['algorithm'], $algorithms)) {
+        $options = $options + $this->getOptions();
+        $options['algorithm'] = strtolower($options['algorithm']);
+        $support = false;
+        if (($options['algorithm'] == 'des') && (CRYPT_STD_DES == 1)) {
+            $support = true;
+        } else (($options['algorithm'] == 'desext') && (CRYPT_EXT_DES == 1)) {
+            $support = true;
+        } else (($options['algorithm'] == 'md5') && (CRYPT_MD5 == 1)) {
+            $support = true;
+        } else (($options['algorithm'] == 'blowfish') && (CRYPT_BLOWFISH == 1)) {
+            $support = true;
+        } else if ($options['algorithm'] == 'default') {
+            $support = true;
+        }
+
+        if (!$support) {
             require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception("The algorithm '{$options['algorithm']}' is not supported");
         }
 
-        $this->_encryption = $options;
+        $this->_options = $options;
         return $this;
     }
 
     /**
      * Defined by Zend_Filter_Interface
      *
-     * Encrypts $value with the defined settings
+     * Hashes $value with the defined settings
      *
-     * @param  string $value The content to encrypt
-     * @return string The encrypted content
+     * @param  string $value The content to hash
+     * @return string The hashed content
      */
-    public function encrypt($value)
+    public function hash($value)
     {
-        $options = $this->getEncryption();
-        if (empty($options['key'])) {
-            $encrypted = hash($options['algorithm'], $value);
-        } else {
-            $encrypted = hash_hmac($options['algorithm'], $options['key'], $value);
+        $options = $this->getOptions();
+        switch ($options['algorithm']) {
+            case 'des':
+                $options['key'] = str_pad(substr($options['key'], 0, 2), 2, "ZendFramework");
+                break;
+            case 'desext':
+                $options['key'] = str_pad(substr($options['key'], 0, 9), 9, "ZendFramework");
+                break;
+            case 'md5':
+                if (substr($options['key'], 0, 3) != '$1$') {
+                    $options['key'] = '$1$' . $options['key'];
+                }
+
+                $options['key'] = str_pad(substr($options['key'], 0, 12), 12, "ZendFramework");
+                break;
+            case 'blowfish':
+                if ((substr($options['key'], 0, 3) != '$2$')
+                    || (substr($options['key'], 0, 4) != '$2a$')) {
+                    $options['key'] = '$2$' . $options['key'];
+                }
+
+                $options['key'] = str_pad(substr($options['key'], 0, 16), 16, "ZendFramework");
+                break;
+            case 'default':
+                $options['key'] = '';
+                break;
+
         }
 
-        return $encrypted;
-    }
+        if (empty($options['key'])) {
+            $hashed = crypt($value);
+        } else {
+            $hashed = crypt($value, $options['key'])
+        }
 
-    /**
-     * Defined by Zend_Filter_Interface
-     *
-     * Decrypts $value with the defined settings
-     *
-     * @param  string $value Content to decrypt
-     * @throws Zend_Filter_Exception Decryption not possible for hashes
-     */
-    public function decrypt($value)
-    {
-        require_once 'Zend/Filter/Exception.php';
-        throw new Zend_Filter_Exception('Hashes can not be decrypted');
+        return $hashed;
     }
 
     /**
@@ -149,6 +176,6 @@ class Zend_Filter_Encrypt_Hash implements Zend_Filter_Encrypt_Interface
      */
     public function toString()
     {
-        return 'Hash';
+        return 'Crypt';
     }
 }
