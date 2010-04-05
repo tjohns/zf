@@ -1,6 +1,6 @@
 <?php
 
-namespace zend;
+namespace Zend;
 
 function autoload($class)
 {
@@ -11,11 +11,11 @@ function autoload($class)
 spl_autoload_register('zend\autoload');
 
 
-// create an instance of zend\cache\storageAdapter\Variable
+// create an instance of Zend\Cache\Storage\Adapter\Variable
 $options = array(
     'ttl' => 10
 );
-$cache = Cache::storageAdapterFactory('Variable', $options);
+$cache = Cache\Storage::adapterFactory('Variable', $options);
 
 
 $set = $cache->set('MyData', 'MyId', array('tags' => array('tag1', 3 => 'tag2', 5, 5, 0)));
@@ -42,8 +42,8 @@ echo '->get("MyId") : ' . var_export($data, true) . PHP_EOL;
 $info = $cache->info('MyId');
 echo '->info("MyId") : ' . var_export($info, true) . PHP_EOL;
 
-// enable write control & IgnoreUserAbort
-$cache = new Cache(array(
+// enable WriteControl & IgnoreUserAbort
+$cache = new Cache\Storage(array(
     'storage' => $cache,
     'plugins' => array('WriteControl', 'IgnoreUserAbort'),
     'options' => array(
