@@ -10,7 +10,7 @@ class CallbackCache
     /**
      * The storage adapter
      *
-     * @var \zend\cache\storageAdapter\StorageAdapterInterface
+     * @var Zend\Cache\Storage\Storable
      */
     protected $_storage;
 

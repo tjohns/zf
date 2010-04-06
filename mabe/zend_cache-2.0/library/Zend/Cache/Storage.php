@@ -67,23 +67,23 @@ class Storage extends AbstractPlugin
     const MATCH_TAGS_AND_NOT = 030;
 
     /**
-     * Storage adapter class loader
+     * Adapter class loader
      *
-     * @var \zend\loader\PluginLoader
+     * @var \Zend\Loader\PluginLoader
      */
-    protected static $_storageAdapterLoader;
+    protected static $_adapterLoader;
 
     /**
-     * Storage plugin class loader
+     * Plugin class loader
      *
-     * @var \zend\loader\PluginLoader
+     * @var \Zend\Loader\PluginLoader
      */
-    protected static $_storagePluginLoader;
+    protected static $_pluginLoader;
 
     /**
      * Get all storage plugins
      *
-     * @return zend\cache\storagePlugin\StoragePluginInterface[]
+     * @return Zend\Cache\Storage\Pluggable[]
      */
     public function getPlugins()
     {
@@ -100,7 +100,7 @@ class Storage extends AbstractPlugin
      * Reset all storage plugins
      *
      * @param string[] $plugins
-     * @return zend\Cache
+     * @return Zend\Cache\Storage
      */
     public function setPlugins(array $plugins)
     {
@@ -127,7 +127,7 @@ class Storage extends AbstractPlugin
      *
      * @param string $plugin
      * @param array $options
-     * @return zend\Cache
+     * @return Zend\Cache\Storage
      */
     public function addPlugin($plugin, array $options = array())
     {
@@ -141,7 +141,7 @@ class Storage extends AbstractPlugin
      * Remove a storage plugin
      *
      * @param string $plugin Class of the plugin to remove
-     * @return zend\Cache
+     * @return Zend\Cache\Storage
      */
     public function removePlugin($plugin)
     {
@@ -180,10 +180,10 @@ class Storage extends AbstractPlugin
     /**
      * Instantiate a storage adapter
      *
-     * @param string|zend\cache\storageAdapter\StorageAdapterInterface $name
-     * @param array|zend\Config $options
-     * @return zend\cache\storageAdapter\StorageAdapterInterface
-     * @throws zend\cache\LoaderException
+     * @param string|Zend\Cache\Storage\Storable $name
+     * @param array|Zend\Config $options
+     * @return Zend\Cache\Storage\Storable
+     * @throws Zend\Cache\LoaderException
      */
     public static function adapterFactory($name, $options = array())
     {
@@ -207,9 +207,9 @@ class Storage extends AbstractPlugin
     }
 
     /**
-     * Get storage adapter loader
+     * Get the storage adapter loader
      *
-     * @return zend\loader\PluginLoader
+     * @return Zend\Loader\PluginLoader
      */
     public static function getAdapterLoader()
     {
@@ -221,9 +221,9 @@ class Storage extends AbstractPlugin
     }
 
     /**
-     * Set storage adapter loader
+     * Set the storage adapter loader
      *
-     * @param zend\loader\PluginLoader $loader
+     * @param Zend\Loader\PluginLoader $loader
      * @return void
      */
     public static function setAdapterLoader(Loader $loader)
@@ -242,24 +242,24 @@ class Storage extends AbstractPlugin
     }
 
     /**
-     * Get default storage adapter loader
+     * Get default adapter loader
      *
-     * @return zend\loader\PluginLoader
+     * @return Zend\Loader\PluginLoader
      */
     protected static function _getDefaultAdapterLoader()
     {
         $loader = new Loader();
-        // @todo: init $loader to load __DIR__ . '/Storage/Sdapter/*' classes
+        // @todo: init $loader to load __DIR__ . '/Storage/Adapter/*' classes
         return $loader;
     }
 
     /**
      * Instantiate a storage plugin
      *
-     * @param string|zend\cache\storagePlugin\StoragePluginInterface $name
-     * @param array|zend\Config $options
-     * @return zend\cache\storagePlugin\StoragePluginInterface
-     * @throws zend\cache\LoaderException
+     * @param string|Zend\Cache\Storage\Pluggable $name
+     * @param array|Zend\Config $options
+     * @return Zend\Cache\Storage\Pluggable
+     * @throws Zend\Cache\LoaderException
      */
     public static function pluginFactory($name, $options = array())
     {
@@ -285,7 +285,7 @@ class Storage extends AbstractPlugin
     /**
      * Get storage plugin loader
      *
-     * @return zend\loader\PluginLoader
+     * @return Zend\Loader\PluginLoader
      */
     public static function getPluginLoader()
     {
@@ -299,7 +299,7 @@ class Storage extends AbstractPlugin
     /**
      * Set storage plugin loader
      *
-     * @param zend\loader\PluginLoader $loader
+     * @param Zend\Loader\PluginLoader $loader
      * @return void
      */
     public static function setPluginLoader(Loader $loader)
@@ -320,7 +320,7 @@ class Storage extends AbstractPlugin
     /**
      * Get default storage plugin loader
      *
-     * @return zend\loader\PluginLoader
+     * @return Zend\Loader\PluginLoader
      */
     protected static function _getDefaultPluginLoader()
     {

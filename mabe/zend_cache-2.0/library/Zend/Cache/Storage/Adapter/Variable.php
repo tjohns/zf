@@ -219,11 +219,11 @@ class Variable extends AbstractAdapter
         foreach ($this->_data[$ns] as $key => &$info) {
 
             // compare expired / active
-            if ( ($mode & \zend\Cache::MATCH_ALL) != \zend\Cache::MATCH_ALL
-              && ($mode & \zend\Cache::MATCH_ALL) != 0 ) {
+            if ( ($mode & \Zend\Cache\Storage::MATCH_ALL) != \Zend\Cache\Storage::MATCH_ALL
+              && ($mode & \Zend\Cache\Storage::MATCH_ALL) != 0 ) {
 
                 // if Zend_Cache::MATCH_EXPIRED mode selected don't match active items
-                if (($mode & \zend\Cache::MATCH_EXPIRED) == \zend\Cache::MATCH_EXPIRED) {
+                if (($mode & \Zend\Cache\Storage::MATCH_EXPIRED) == \Zend\Cache\Storage::MATCH_EXPIRED) {
                     if ( time() <= ($info[1]+$ttl) ) {
                         continue;
                     }
@@ -240,14 +240,14 @@ class Variable extends AbstractAdapter
             if ($tags !== null) {
                 $tagsStored = isset($info[2]) ? $info[2] : $emptyTags;
 
-                if ( ($mode & \zend\Cache::MATCH_TAGS_OR) == \zend\Cache::MATCH_TAGS_OR ) {
+                if ( ($mode & \Zend\Cache\Storage::MATCH_TAGS_OR) == \Zend\Cache\Storage::MATCH_TAGS_OR ) {
                     $match = (count(array_diff($tags, $tagsStored)) != count($tags));
-                } elseif ( ($mode & \zend\Cache::MATCH_TAGS_AND) == \zend\Cache::MATCH_TAGS_AND ) {
+                } elseif ( ($mode & \Zend\Cache\Storage::MATCH_TAGS_AND) == \Zend\Cache\Storage::MATCH_TAGS_AND ) {
                     $match = (count(array_diff($tags, $tagsStored)) == 0);
                 }
 
                 // negate
-                if ( ($mode & \zend\Cache::MATCH_TAGS_NEGATE) == \zend\Cache::MATCH_TAGS_NEGATE ) {
+                if ( ($mode & \Zend\Cache\Storage::MATCH_TAGS_NEGATE) == \Zend\Cache\Storage::MATCH_TAGS_NEGATE ) {
                     $match = !$match;
                 }
 

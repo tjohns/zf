@@ -2,7 +2,7 @@
 
 
 namespace Zend\Cache\Storage;
-use \zend\Cache;
+use \Zend\Cache\Storage;
 
 interface Storable
 {
@@ -65,7 +65,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function set($value, $key = null, array $options = array());
 
@@ -75,7 +75,7 @@ interface Storable
      * @param array $keyValuePairs
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function setMulti(array $keyValuePairs, array $options = array());
 
@@ -86,8 +86,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\AlreadyExistException
+     * @throws Zend\Cache\Exception
      */
     public function add($value, $key = null, array $options = array());
 
@@ -97,8 +96,7 @@ interface Storable
      * @param array $keyValuePairs
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\AlreadyExistException
+     * @throws Zend\Cache\Exception
      */
     public function addMulti(array $keyValuePairs, array $options = array());
 
@@ -109,8 +107,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function replace($value, $key = null, array $options = array());
 
@@ -120,8 +117,7 @@ interface Storable
      * @param array $keyValuePairs
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function replaceMulti(array $keyValuePairs, array $options = array());
 
@@ -131,7 +127,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return boolean True if the item has been removed or wasn't exists, false on failure
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function remove($key = null, array $options = array());
 
@@ -141,7 +137,7 @@ interface Storable
      * @param array $keys
      * @param array $options
      * @return boolean True if the items has been removed or wasn't exists, false on failure
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function removeMulti(array $keys, array $options = array());
 
@@ -153,8 +149,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return mixed Data on success and false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function get($key = null, array $options = array());
 
@@ -164,7 +159,7 @@ interface Storable
      * @param array $keys
      * @param array $options
      * @return array Assoziative array of existing cache ids and its data
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function getMulti(array $keys, array $options = array());
 
@@ -174,7 +169,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return boolean
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function exists($key = null, array $options = array());
 
@@ -184,7 +179,7 @@ interface Storable
      * @param array $keys
      * @param array $options
      * @return array Assoziative array of existing cache ids
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function existsMulti(array $keys, array $options = array());
 
@@ -194,8 +189,7 @@ interface Storable
      * @param string $key
      * @param array $options
      * @return array|boolean Information if a cached item or false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function info($key = null, array $options = array());
 
@@ -205,7 +199,7 @@ interface Storable
      * @param array $keys
      * @param array $options
      * @return array Assoziative array of existing cache ids and its information
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function infoMulti(array $keys, array $options = array());
 
@@ -217,7 +211,7 @@ interface Storable
      * @param array $keys
      * @param array $options
      * @return boolean true on success or fale on failure
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function getDelayed(array $keys, array $options = array());
 
@@ -225,7 +219,7 @@ interface Storable
      * Retrieve the next result from the last request.
      *
      * @return array|boolean The item as key value pair or false
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function fetch();
 
@@ -233,7 +227,7 @@ interface Storable
      * Retrieve all the remaining results from the last request.
      *
      * @return array|boolean Items as key value pairs or false
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function fetchAll();
 
@@ -246,8 +240,7 @@ interface Storable
      * @param int $value
      * @param array $options
      * @return boolean True on success or false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function increment($value, $key = null, array $options = array());
 
@@ -257,8 +250,7 @@ interface Storable
      * @param array $keyValuePairs
      * @param array $options
      * @return boolean True on success or false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function incrementMulti(array $keyValuePairs, array $options = array());
 
@@ -269,8 +261,7 @@ interface Storable
      * @param int $value
      * @param array $options
      * @return boolean True on success or false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function decrement($value, $key = null, array $options = array());
 
@@ -280,8 +271,7 @@ interface Storable
      * @param array $keyValuePairs
      * @param array $options
      * @return boolean True on success or false on failure
-     * @throws \zend\cache\Exception
-     * @throws \zend\cache\NotFoundException
+     * @throws Zend\Cache\Exception
      */
     public function decrementMulti(array $keyValuePairs, array $options = array());
 
@@ -293,7 +283,7 @@ interface Storable
      * @param int $match
      * @param array $options
      * @return array Found keys
-     * @throw \zend\cache\Exception
+     * @throw Zend\Cache\Exception
      */
     public function find($match = Storage::MATCH_ACTIVE, array $options = array());
 
@@ -303,7 +293,7 @@ interface Storable
      * @param int $match
      * @param array $options
      * @return boolean True on success or false on failure
-     * @throw \zend\cache\Exception
+     * @throw Zend\Cache\Exception
      */
     public function clear($match = Storage::MATCH_EXPIRED, array $options = array());
 
@@ -312,7 +302,7 @@ interface Storable
      *
      * @param array $options
      * @return array|boolean Status information as an array or false on failure
-     * @throw \zend\cache\Exception
+     * @throw Zend\Cache\Exception
      */
     public function status(array $options);
 
@@ -321,7 +311,7 @@ interface Storable
      *
      * @param array $options
      * @return boolean true on success or false on failure
-     * @throws \zend\cache\Exception
+     * @throws Zend\Cache\Exception
      */
     public function optimize(array $options = array());
 

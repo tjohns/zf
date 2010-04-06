@@ -231,7 +231,7 @@ abstract class AbstractAdapter implements Storable
      *
      * @param array $tags
      * @return array
-     * @throws \zend\cache\InvalidArgumentException On invalid tags array
+     * @throws Zend\Cache\InvalidArgumentException On invalid tags array
      */
     protected function _tags($tags)
     {

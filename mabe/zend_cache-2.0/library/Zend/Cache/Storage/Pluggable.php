@@ -8,30 +8,30 @@ interface Pluggable extends Storable
     /**
      * Get storage
      *
-     * @return zend\cache\storageAdapter\StorageAdapterInterface
+     * @return Zend\Cache\Storage\Storable
      */
     public function getStorage();
 
     /**
      * Set storage
      *
-     * @param string|zend\cache\storageAdapter\StorageAdapterInterface $storage
-     * @return zend\cache\storagePlugin\StoragePluginInterface
+     * @param string|Zend\Cache\Storage\Storable $storage
+     * @return Zend\Cache\Storage\Pluggable
      */
     public function setStorage($storage);
 
     /**
      * Get the main storage
      *
-     * @return zend\cache\storageAdapter\StorageAdapterInterface
+     * @return Zend\Cache\Storage\Storable
      */
     public function getMainStorage();
 
     /**
      * Set the main storage
      *
-     * @param string|zend\cache\storageAdapter\StorageAdapterInterface $storage
-     * @return zend\cache\storagePlugin\StoragePluginInterface
+     * @param string|Zend\Cache\Storage\Storable $storage
+     * @return Zend\Cache\Storage\Pluggable
      */
     public function setMainStorage($storage);
 

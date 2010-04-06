@@ -17,9 +17,9 @@ class Manager
     const PAGETAGCACHE = 'pagetag';
 
     /**
-     * Array of cache storages stored by the Cache Manager instance
+     * Array of storage instances
      *
-     * @var array
+     * @var Zend\Cache\Storage\Storable[]
      */
     protected $_storages = array();
 
@@ -90,8 +90,8 @@ class Manager
      * Set a new storage for the Cache Manager to contain
      *
      * @param  string $name
-     * @param  \zend\cache\storageAdapter\StorageAdapterInterface $storage
-     * @return \zend\cache\Manager
+     * @param  Zend\Cache\Storage\Storable $storage
+     * @return Zend\Cache\Manager
      */
     public function setStorage($name, Storable $storage)
     {
@@ -116,8 +116,8 @@ class Manager
      * using a named configuration template
      *
      * @param  string $name
-     * @return \zend\cache\storageAdapter\StorageAdapterInterface
-     * @throws \zend\cache\InvalidArgumentException if $name desn't exist
+     * @return Zend\Cache\Storage\Storable
+     * @throws Zend\Cache\InvalidArgumentException if $name desn't exist
      */
     public function getStorage($name)
     {
@@ -141,7 +141,7 @@ class Manager
      *
      * @param  string $name
      * @param  array $options
-     * @return \zend\cache\Manager
+     * @return Zend\Cache\Manager
      */
     public function setStorageTemplate($name, $options)
     {
@@ -149,7 +149,7 @@ class Manager
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             throw new InvalidArgumentException(
-                'Options passed must be in an associative array or instance of Zend_Config'
+                'Options passed must be an associative array or instance of Zend_Config'
             );
         }
 
@@ -174,7 +174,7 @@ class Manager
      *
      * @param  string $name
      * @return array
-     * @throws \zend\cache\InvalidArgumentException if template not exists
+     * @throws Zend\Cache\InvalidArgumentException if template not exists
      */
     public function getStorageTemplate($name)
     {
@@ -191,9 +191,9 @@ class Manager
      *
      * @param  string $name
      * @param  array $options
-     * @return \zend\cache\Manager
-     * @throws \zend\cache\InvalidArgumentException on invalid options format
-     *                                              or if no storage templates with $name exist
+     * @return Zend\Cache\Manager
+     * @throws Zend\Cache\InvalidArgumentException on invalid options format
+     *                                             or if no storage templates with $name exist
      */
     public function mergeStorageTemplate($name, $options)
     {

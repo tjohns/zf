@@ -11,7 +11,7 @@ class Tagging extends AbstractPlugin
     /**
      * The tag storage
      *
-     * @var \zend\cache\storageAdapter\StorageAdapterInterface
+     * @var null|Zend\Cache\Storage\Storable
      */
     protected $_tagStorage = null;
 

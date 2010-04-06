@@ -35,7 +35,7 @@ class AutomaticOptimize extends AbstractPlugin
      * Set automatic optimizing factor
      *
      * @param int $factor
-     * @return \zend\cache\plugin\AutomaticOptimize
+     * @return Zend\Cache\Storage\Plugin\AutomaticOptimize
      */
     public function setOptimizingFactor($factor)
     {

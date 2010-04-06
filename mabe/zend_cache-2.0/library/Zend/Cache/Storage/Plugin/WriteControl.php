@@ -35,7 +35,7 @@ class WriteControl extends AbstractPlugin
      * Set option - remove item(s) on failure
      *
      * @param boolean $flag
-     * @return zend\cache\plugin\WriteControl
+     * @return Zend\Cache\Storage\Plugin\WriteControl
      */
     public function setRemoveOnFailure($flag)
     {

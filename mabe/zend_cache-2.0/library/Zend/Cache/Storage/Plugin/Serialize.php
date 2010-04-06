@@ -11,7 +11,7 @@ class Serialize extends AbstractPlugin
     /**
      * Serializer adapter
      *
-     * @var \zend\serializer\adapter\AdapterInterface
+     * @var Zend\Serializer\Adapter\AdapterInterface
      */
     protected $_serializer = null;
 
@@ -25,7 +25,7 @@ class Serialize extends AbstractPlugin
     /**
      * Get serializer adapter
      *
-     * @return \zend\serializer\adapter\AdapterInterface
+     * @return Zend\Serializer\Adapter\AdapterInterface
      */
     public function getSerializer()
     {
@@ -39,8 +39,8 @@ class Serialize extends AbstractPlugin
     /**
      * Set serializer adapter
      *
-     * @param \zend\serializer\adapter\AdapterInterface
-     * @return \zend\cache\plugin\Serialize
+     * @param Zend\Serializer\Adapter\AdapterInterface
+     * @return Zend\Cache\Storage\Plugin\Serialize
      */
     public function setSerializer(SerializerAdapterInterface $serializer)
     {
@@ -51,7 +51,7 @@ class Serialize extends AbstractPlugin
     /**
      * Reset serializer adapter to default
      *
-     * @return \zend\cache\plugin\Serialize
+     * @return Zend\Cache\Storage\Plugin\Serialize
      */
     public function resetSerializer()
     {

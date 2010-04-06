@@ -36,7 +36,7 @@ class AutomaticClear extends AbstractPlugin
      * Set automatic clearing factor
      *
      * @param int $factor
-     * @return \zend\cache\plugin\AutomaticOptimize
+     * @return Zend\Cache\Storage\Plugin\AutomaticOptimize
      */
     public function setClearingFactor($factor)
     {
