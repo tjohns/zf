@@ -172,7 +172,7 @@ abstract class AbstractAdapter implements Storable
             $rsInfo = $this->infoMulti($keys, $options);
         }
 
-        foreach ($rsGet as &$key => &$value) {
+        foreach ($rsGet as $key => &$value) {
             $item = array();
             if (($select & Storage::SELECT_KEY) == Storage::SELECT_KEY) {
                 $item[0] = &$key;
@@ -189,20 +189,16 @@ abstract class AbstractAdapter implements Storable
 
                 $info = &$rsInfo[$key];
                 if (($select & Storage::SELECT_TAGS) == Storage::SELECT_TAGS) {
-                    $item[2] = isset($info[Storage::SELECT_TAGS])
-                             ? $info[Storage::SELECT_TAGS] : null;
+                    $item[2] = isset($info['tags']) ? $info['tags'] : null;
                 }
                 if (($select & Storage::SELECT_MTIME) == Storage::SELECT_MTIME) {
-                    $item[3] = isset($info[Storage::SELECT_MTIME])
-                             ? $info[Storage::SELECT_MTIME] : null;
+                    $item[3] = isset($info['mtime']) ? $info['mtime'] : null;
                 }
                 if (($select & Storage::SELECT_ATIME) == Storage::SELECT_ATIME) {
-                    $item[4] = isset($info[Storage::SELECT_ATIME])
-                             ? $info[Storage::SELECT_ATIME] : null;
+                    $item[4] = isset($info['atime']) ? $info['atime'] : null;
                 }
                 if (($select & Storage::SELECT_CTIME) == Storage::SELECT_CTIME) {
-                    $item[5] = isset($info[Storage::SELECT_CTIME])
-                             ? $info[Storage::SELECT_CTIME] : null;
+                    $item[5] = isset($info['ctime']) ? $info['ctime'] : null;
                 }
             }
 
@@ -210,7 +206,7 @@ abstract class AbstractAdapter implements Storable
                 $this->_formatFetchItem($item);
                 $callback($item);
             } else {
-                $this->_fetchBuffer[] = &$item;
+                $this->_fetchBuffer[] = $item;
             }
         }
 
@@ -232,7 +228,7 @@ abstract class AbstractAdapter implements Storable
     {
         $rs = array();
         while ( ($item = $this->fetch($fetchStyle)) ) {
-            $rs[] = &$item;
+            $rs[] = $item;
         }
         return $rs;
     }
@@ -332,21 +328,26 @@ abstract class AbstractAdapter implements Storable
                 break;
 
             case Storage::FETCH_ASSOC:
-                foreach ($item as &$key => &$value) {
-                    if (!isset($this->_selectKeys[$key])) {
-                        throw new RuntimeException("Unknown key '{$key}' on given item");
-                    }
-                    $key = $this->_selectKeys[$key];
-                }
-                break;
-
-            case Storage::FETCH_ARRAY:
+                $assoc = array();
                 foreach ($item as $key => &$value) {
                     if (!isset($this->_selectKeys[$key])) {
                         throw new RuntimeException("Unknown key '{$key}' on given item");
                     }
-                    $item[$this->_selectKeys[$key]] = &$value;
+                    $assoc[$this->_selectKeys[$key]] = &$value;
                 }
+                $item = $assoc;
+                break;
+
+            case Storage::FETCH_ARRAY:
+                $array = array();
+                foreach ($item as $key => &$value) {
+                    if (!isset($this->_selectKeys[$key])) {
+                        throw new RuntimeException("Unknown key '{$key}' on given item");
+                    }
+                    $array[$key]                     = &$value;
+                    $array[$this->_selectKeys[$key]] = &$value;
+                }
+                $item = $array;
                 break;
 
             case Storage::FETCH_OBJECT:

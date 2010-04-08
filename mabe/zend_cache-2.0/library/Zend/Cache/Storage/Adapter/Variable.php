@@ -279,13 +279,13 @@ class Variable extends AbstractAdapter
                         $item[0] = $key;
                     }
                     if (($select & Storage::SELECT_VALUE) == Storage::SELECT_VALUE) {
-                        $item[1] = $data[0];
+                        $item[1] = &$data[0];
                     }
                     if (($select & Storage::SELECT_TAGS) == Storage::SELECT_TAGS) {
-                        $item[2] = $data[2];
+                        $item[2] = &$data[2];
                     }
                     if (($select & Storage::SELECT_MTIME) == Storage::SELECT_MTIME) {
-                        $item[3] = $data[1];
+                        $item[3] = &$data[1];
                     }
                     if (($select & Storage::SELECT_ATIME) == Storage::SELECT_ATIME) {
                         $item[4] = null;
@@ -298,7 +298,7 @@ class Variable extends AbstractAdapter
                         $this->_formatFetchItem($item);
                         $callback($item);
                     } else {
-                        $this->_fetchBuffer[] = &$item;
+                        $this->_fetchBuffer[] = $item;
                     }
                 }
             }
