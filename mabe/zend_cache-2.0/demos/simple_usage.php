@@ -11,13 +11,14 @@ function autoload($class)
 spl_autoload_register('zend\autoload');
 
 
-// create an instance of Zend\Cache\Storage\Adapter\Variable
+// instanciate an cache storage adapter
 $options = array(
     'ttl' => 10
 );
 $cache = Cache\Storage::adapterFactory('Variable', $options);
 
 
+// read & write data
 $set = $cache->set('MyData', 'MyId', array('tags' => array('tag1', 3 => 'tag2', 5, 5, 0)));
 echo '->set("MyData", "MyId") : ' . var_export($set, true) . PHP_EOL;
 
@@ -41,6 +42,7 @@ echo '->get("MyId") : ' . var_export($data, true) . PHP_EOL;
 
 $info = $cache->info('MyId');
 echo '->info("MyId") : ' . var_export($info, true) . PHP_EOL;
+
 
 // enable WriteControl & IgnoreUserAbort
 $cache = new Cache\Storage(array(
@@ -76,4 +78,57 @@ echo '->get("MyId") : ' . var_export($data, true) . PHP_EOL;
 
 $info = $cache->info('MyId');
 echo '->info("MyId") : ' . var_export($info, true) . PHP_EOL;
+
+
+// use multiple interface
+$set = $cache->setMulti(array(
+    'MyId1' => 'MyData1',
+    'MyId2' => 'MyData2',
+    'MyId3' => 'MyData3',
+), array('tags' => array('tag1', 3 => 'tag2', 5, 5, 0)));
+echo '->setMulti(...) : ' . var_export($set, true) . PHP_EOL;
+
+$exist = $cache->existsMulti(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+echo '->existsMulti() : ' . var_export($exist, true) . PHP_EOL;
+
+$data = $cache->getMulti(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+echo '->getMulti() : ' . var_export($data, true) . PHP_EOL;
+
+$info = $cache->infoMulti(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+echo '->infoMulti() : ' . var_export($info, true) . PHP_EOL;
+
+$remove = $cache->removeMulti(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+echo '->removeMulti() : ' . var_export($remove, true) . PHP_EOL;
+
+
+// use getDelayed
+$set = $cache->setMulti(array(
+    'MyId1' => 'MyData1',
+    'MyId2' => 'MyData2',
+    'MyId3' => 'MyData3',
+), array('tags' => array('tag1', 3 => 'tag2', 5, 5, 0)));
+echo '->setMulti(...) : ' . var_export($set, true) . PHP_EOL;
+
+$delayed = $cache->getDelayed(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+echo '->getDelayed(...) : ' . var_export($delayed, true) . PHP_EOL;
+
+while ( ($cache->fetch(Cache\Storage::FETCH_ASSOC)) ) {
+    echo '->fetch(Cache\Storage::FETCH_ASSOC) : ' . var_export($item, true) . PHP_EOL;
+}
+
+$cache->getDelayed(array(
+    'MyId1', 'NotExist', 'MyId3'
+));
+$items = $cache->fetchAll(Cache\Storage::FETCH_ARRAY);
+echo '->fetchAll(Cache\Storage::FETCH_ASSOC) : ' . var_export($items, true) . PHP_EOL;
 

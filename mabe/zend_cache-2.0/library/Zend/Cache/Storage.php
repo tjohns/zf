@@ -66,6 +66,19 @@ class Storage extends AbstractPlugin
      */
     const MATCH_TAGS_AND_NOT = 030;
 
+
+    const SELECT_KEY   = 1;
+    const SELECT_VALUE = 2;
+    const SELECT_TAGS  = 4;
+    const SELECT_MTIME = 8;
+    const SELECT_ATIME = 16;
+    const SELECT_CTIME = 32;
+
+    const FETCH_NUM    = 1;
+    const FETCH_ASSOC  = 2;
+    const FETCH_ARRAY  = 3;
+    const FETCH_OBJECT = 4;
+
     /**
      * Adapter class loader
      *

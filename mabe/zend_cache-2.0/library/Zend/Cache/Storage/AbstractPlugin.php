@@ -86,107 +86,133 @@ abstract class AbstractPlugin implements Pluggable
         return $this;
     }
 
-    public function getCapabilities() {
+    public function getCapabilities()
+    {
         return $this->getStorage()->getCapabilities();
     }
 
-    public function set($value, $key = null, array $options = array()) {
+    public function set($value, $key = null, array $options = array())
+    {
         return $this->getStorage()->set($value, $key, $options);
     }
 
-    public function setMulti(array $keyValuePairs, array $options = array()) {
+    public function setMulti(array $keyValuePairs, array $options = array())
+    {
         return $this->getStorage()->setMulti($keyValuePairs, $options);
     }
 
-    public function add($value, $key = null, array $options = array()) {
+    public function add($value, $key = null, array $options = array())
+    {
         return $this->getStorage()->add($value, $key, $options);
     }
 
-    public function addMulti(array $keyValuePairs, array $options = array()) {
+    public function addMulti(array $keyValuePairs, array $options = array())
+    {
         return $this->getStorage()->addMulti($keyValuePairs, $options);
     }
 
-    public function replace($value, $key = null, array $options = array()) {
+    public function replace($value, $key = null, array $options = array())
+    {
         return $this->getStorage()->replace($value, $key, $options);
     }
 
-    public function replaceMulti(array $keyValuePairs, array $options = array()) {
+    public function replaceMulti(array $keyValuePairs, array $options = array())
+    {
         return $this->getStorage()->replaceMulti($keyValuePairs, $options);
     }
 
-    public function remove($key = null, array $options = array()) {
+    public function remove($key = null, array $options = array())
+    {
         return $this->getStorage()->remove($key, $options);
     }
 
-    public function removeMulti(array $keys, array $options = array()) {
+    public function removeMulti(array $keys, array $options = array())
+    {
         return $this->getStorage()->removeMulti($keys, $options);
     }
 
-    public function get($key = null, array $options = array()) {
+    public function get($key = null, array $options = array())
+    {
         return $this->getStorage()->get($key, $options);
     }
 
-    public function getMulti(array $keys, array $options = array()) {
+    public function getMulti(array $keys, array $options = array())
+    {
         return $this->getStorage()->getMulti($keys, $options);
     }
 
-    public function exists($key = null, array $options = array()) {
+    public function exists($key = null, array $options = array())
+    {
         return $this->getStorage()->exists($key, $options);
     }
 
-    public function existsMulti(array $keys, array $options = array()) {
+    public function existsMulti(array $keys, array $options = array())
+    {
         return $this->getStorage()->existsMulti($keys, $options);
     }
 
-    public function info($key = null, array $options = array()) {
+    public function info($key = null, array $options = array())
+    {
         return $this->getStorage()->info($key, $options);
     }
 
-    public function infoMulti(array $keys, array $options = array()) {
+    public function infoMulti(array $keys, array $options = array())
+    {
         return $this->getStorage()->infoMulti($keys, $options);
     }
 
-    public function getDelayed(array $keys, array $options = array()) {
+    public function getDelayed(array $keys, array $options = array())
+    {
         return $this->getStorage()->getDelayed($keys, $options);
     }
 
-    public function fetch() {
-        return $this->getStorage()->fetch();
+    public function fetch($fetchStyle = Storage::FETCH_NUM)
+    {
+        return $this->getStorage()->fetch($fetchStyle);
     }
 
-    public function fetchAll() {
-        return $this->getStorage()->fetchAll();
+    public function fetchAll($fetchStyle = Storage::FETCH_NUM)
+    {
+        return $this->getStorage()->fetchAll($fetchStyle);
     }
 
-    public function increment($value, $key = null, array $options = array()) {
+    public function increment($value, $key = null, array $options = array())
+    {
         return $this->getStorage()->increment($value, $key, $options);
     }
 
-    public function incrementMulti(array $keyValuePairs, array $options = array()) {
+    public function incrementMulti(array $keyValuePairs, array $options = array())
+    {
         return $this->getStorage()->incrementMulti($keyValuePairs, $options);
     }
 
-    public function decrement($value, $key = null, array $options = array()) {
+    public function decrement($value, $key = null, array $options = array())
+    {
         return $this->getStorage()->decrement($value, $key, $options);
     }
 
-    public function decrementMulti(array $keyValuePairs, array $options = array()) {
+    public function decrementMulti(array $keyValuePairs, array $options = array())
+    {
         return $this->getStorage()->decrementMulti($keyValuePairs, $options);
     }
 
-    public function find($match = Storage::MATCH_ACTIVE, array $options = array()) {
+    public function find($match = Storage::MATCH_ACTIVE, array $options = array())
+    {
         return $this->getStorage()->find($match, $options);
     }
 
-    public function clear($match = Storage::MATCH_EXPIRED, array $options = array()) {
+    public function clear($match = Storage::MATCH_EXPIRED, array $options = array())
+    {
         return $this->getStorage()->clear($match, $options);
     }
 
-    public function status(array $options) {
+    public function status(array $options)
+    {
         return $this->getStorage()->status($options);
     }
 
-    public function optimize(array $options = array()) {
+    public function optimize(array $options = array())
+    {
         return $this->getStorage()->optimize($options);
     }
 

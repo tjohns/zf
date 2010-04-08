@@ -216,20 +216,22 @@ interface Storable
     public function getDelayed(array $keys, array $options = array());
 
     /**
-     * Retrieve the next result from the last request.
+     * Fetches the next item from result set
      *
-     * @return array|boolean The item as key value pair or false
+     * @param int $fetchStyle
+     * @return array|object|boolean The next item or false
      * @throws Zend\Cache\Exception
      */
-    public function fetch();
+    public function fetch($fetchStyle = Storage::FETCH_NUM);
 
     /**
-     * Retrieve all the remaining results from the last request.
+     * Returns an array containing all of the result set items
      *
-     * @return array|boolean Items as key value pairs or false
+     * @param int $fetchStyle
+     * @return array The result set as array containing all items
      * @throws Zend\Cache\Exception
      */
-    public function fetchAll();
+    public function fetchAll($fetchStyle = Storage::FETCH_NUM);
 
     /* increment[Multi] & decrement[Multi] */
 
@@ -282,7 +284,7 @@ interface Storable
      *
      * @param int $match
      * @param array $options
-     * @return array Found keys
+     * @return boolean  true on success or fale on failure
      * @throw Zend\Cache\Exception
      */
     public function find($match = Storage::MATCH_ACTIVE, array $options = array());
