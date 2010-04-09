@@ -148,15 +148,11 @@ abstract class AbstractAdapter implements Storable
         return $ret;
     }
 
-    public function getDelayed(array $keys, array $options = array())
+    public function getDelayed(array $keys, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
         if ($this->_fetchBuffer) {
             throw new RuntimeException('Statement already in use');
         }
-
-        $select = isset($options['select'])
-                ? (int)$options['select']
-                : Storage::SELECT_KEY | Storage::SELECT_VALUE;
 
         $callback = null;
         if (isset($options['callback'])) {
@@ -166,6 +162,7 @@ abstract class AbstractAdapter implements Storable
             }
         }
 
+        $select = (int)$select;
         $rsGet  = $this->getMulti($keys, $options);
         $rsInfo = null;
         if ($select > Storage::SELECT_VALUE) {
@@ -216,7 +213,7 @@ abstract class AbstractAdapter implements Storable
     public function fetch($fetchStyle = Storage::FETCH_NUM)
     {
         $item = array_shift($this->_fetchBuffer);
-        if (!$item) {
+        if ($item === null) {
             return false;
         }
 
@@ -227,7 +224,7 @@ abstract class AbstractAdapter implements Storable
     public function fetchAll($fetchStyle = Storage::FETCH_NUM)
     {
         $rs = array();
-        while ( ($item = $this->fetch($fetchStyle)) ) {
+        while ( ($item = $this->fetch($fetchStyle)) !== false ) {
             $rs[] = $item;
         }
         return $rs;
@@ -338,7 +335,7 @@ abstract class AbstractAdapter implements Storable
                 $item = $assoc;
                 break;
 
-            case Storage::FETCH_ARRAY:
+            case Storage::FETCH_BOTH:
                 $array = array();
                 foreach ($item as $key => &$value) {
                     if (!isset($this->_selectKeys[$key])) {
@@ -350,15 +347,15 @@ abstract class AbstractAdapter implements Storable
                 $item = $array;
                 break;
 
-            case Storage::FETCH_OBJECT:
-                $object = new stdClass;
+            case Storage::FETCH_OBJ:
+                $obj = new \stdClass;
                 foreach ($item as $key => &$value) {
                     if (!isset($this->_selectKeys[$key])) {
                         throw new RuntimeException("Unknown key '{$key}' on given item");
                     }
-                    $object->{$this->_selectKeys[$key]} = &$value;
+                    $obj->{$this->_selectKeys[$key]} = &$value;
                 }
-                $item = $object;
+                $item = $obj;
                 break;
 
             default:

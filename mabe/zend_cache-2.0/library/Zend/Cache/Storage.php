@@ -66,18 +66,81 @@ class Storage extends AbstractPlugin
      */
     const MATCH_TAGS_AND_NOT = 030;
 
-
+    /**
+     * Select item key
+     * 
+     * @var int
+     */
     const SELECT_KEY   = 1;
+
+    /**
+     * Select item value
+     * 
+     * @var int
+     */
     const SELECT_VALUE = 2;
+
+    /**
+     * Select item key and item value
+     * Same as SELECT_KEY | SELECT_VALUE
+     *
+     * @var int
+     */
+    const SELECT_KEY_VALUE = 3;
+
+    /**
+     * Select item tags
+     *
+     * @var int
+     */
     const SELECT_TAGS  = 4;
+
+    /**
+     * Select item mtime
+     *
+     * @var int
+     */
     const SELECT_MTIME = 8;
+
+    /**
+     * Select item atime
+     */
     const SELECT_ATIME = 16;
+
+    /**
+     * Select item ctime
+     *
+     * @var int
+     */
     const SELECT_CTIME = 32;
 
+    /**
+     * Fetch item as numeric array
+     *
+     * @var int
+     */
     const FETCH_NUM    = 1;
+
+    /**
+     * Fetch item as associative array
+     *
+     * @var int
+     */
     const FETCH_ASSOC  = 2;
-    const FETCH_ARRAY  = 3;
-    const FETCH_OBJECT = 4;
+
+    /**
+     * Fetch item as array index by both numeric and associative
+     *
+     * @var int
+     */
+    const FETCH_BOTH  = 3;
+
+    /**
+     * Fetch item as anonymous object
+     *
+     * @var int
+     */
+    const FETCH_OBJ = 4;
 
     /**
      * Adapter class loader

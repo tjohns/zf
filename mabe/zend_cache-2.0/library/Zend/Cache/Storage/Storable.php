@@ -209,11 +209,12 @@ interface Storable
      * Request multiple items.
      *
      * @param array $keys
+     * @param int   $select
      * @param array $options
      * @return boolean true on success or fale on failure
      * @throws Zend\Cache\Exception
      */
-    public function getDelayed(array $keys, array $options = array());
+    public function getDelayed(array $keys, $select = Storage::SELECT_KEY_VALUE, array $options = array());
 
     /**
      * Fetches the next item from result set
@@ -283,11 +284,12 @@ interface Storable
      * Find items by matching flag.
      *
      * @param int $match
+     * @param int $select
      * @param array $options
      * @return boolean  true on success or fale on failure
      * @throw Zend\Cache\Exception
      */
-    public function find($match = Storage::MATCH_ACTIVE, array $options = array());
+    public function find($match = Storage::MATCH_ACTIVE, $select = Storage::SELECT_KEY_VALUE, array $options = array());
 
     /**
      * Clear items by matching flag.

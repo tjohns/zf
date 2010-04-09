@@ -122,13 +122,14 @@ $delayed = $cache->getDelayed(array(
 ));
 echo '->getDelayed(...) : ' . var_export($delayed, true) . PHP_EOL;
 
-while ( ($item = $cache->fetch(Cache\Storage::FETCH_ASSOC)) ) {
-    echo '->fetch(Cache\Storage::FETCH_ASSOC) : ' . var_export($item, true) . PHP_EOL;
+while ( ($item = $cache->fetch(Cache\Storage::FETCH_ASSOC)) !== false ) {
+    echo '->fetch(FETCH_ASSOC) : ' . var_export($item, true) . PHP_EOL;
 }
 
 $cache->getDelayed(array(
     'MyId1', 'NotExist', 'MyId3'
-));
-$items = $cache->fetchAll(Cache\Storage::FETCH_ARRAY);
-echo '->fetchAll(Cache\Storage::FETCH_ARRAY) : ' . var_export($items, true) . PHP_EOL;
+), Cache\Storage::SELECT_KEY_VALUE | Cache\Storage::SELECT_TAGS | Cache\Storage::SELECT_MTIME);
+echo '->getDelayed(..., SELECT_KEY_VALUE | SELECT_TAGS | SELECT_MTIME) : ' . var_export($delayed, true) . PHP_EOL;
+$items = $cache->fetchAll(Cache\Storage::FETCH_OBJ);
+echo '->fetchAll(FETCH_OBJ) : ' . var_export($items, true) . PHP_EOL;
 

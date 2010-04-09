@@ -150,14 +150,14 @@ class Serialize extends AbstractPlugin
                     }
                     break;
 
-                case Storage::FETCH_ARRAY:
+                case Storage::FETCH_BOTH:
                     if (isset($item[1])) {
                         $item[1] = $serializer->unserialize($item[1]);
                         $item['value'] = &$item[1];
                     }
                     break;
 
-                case Storage::FETCH_OBJECT:
+                case Storage::FETCH_OBJ:
                     if (isset($item->value)) {
                         $item->value = $serializer->unserialize($item->value);
                     }

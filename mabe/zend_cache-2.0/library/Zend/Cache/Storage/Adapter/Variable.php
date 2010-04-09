@@ -242,16 +242,13 @@ class Variable extends AbstractAdapter
         return $info;
     }
 
-    public function getDelayed(array $keys, array $options = array())
+    public function getDelayed(array $keys, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
         if ($this->_fetchBuffer) {
             throw new RuntimeException('Statement already in use');
         }
 
-        $select = isset($options['select'])
-                ? (int)$options['select']
-                : Storage::SELECT_KEY | Storage::SELECT_VALUE;
-
+        $select   = (int)$select;
         $callback = null;
         if (isset($options['callback'])) {
             $callback = $options['callback'];
@@ -408,15 +405,13 @@ class Variable extends AbstractAdapter
         return  true;
     }
 
-    public function find($mode = Storage::MATCH_ACTIVE, array $options=array())
+    public function find($mode = Storage::MATCH_ACTIVE, $select = Storage::SELECT_KEY_VALUE, array $options=array())
     {
         if ($this->_fetchBuffer) {
             throw new RuntimeException('Statement already in use');
         }
 
-        $select = isset($options['select'])
-                ? (int)$options['select']
-                : Storage::SELECT_KEY | Storage::SELECT_VALUE;
+        $select = (int)$select;
 
         $ns = isset($options['namespace']) ? $options['namespace'] : '';
         if (!isset($this->_data[$ns])) {

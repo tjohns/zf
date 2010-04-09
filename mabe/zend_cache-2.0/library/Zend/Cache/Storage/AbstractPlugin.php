@@ -1,7 +1,7 @@
 <?php
 
 namespace Zend\Cache\Storage;
-use \Zend\Cache;
+use \Zend\Cache\Storage;
 use \Zend\Cache\InvalidArgumentException;
 use \Zend\Ccache\BadMethodCallException;
 use \Zend\Options;
@@ -161,9 +161,9 @@ abstract class AbstractPlugin implements Pluggable
         return $this->getStorage()->infoMulti($keys, $options);
     }
 
-    public function getDelayed(array $keys, array $options = array())
+    public function getDelayed(array $keys, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
-        return $this->getStorage()->getDelayed($keys, $options);
+        return $this->getStorage()->getDelayed($keys, $select, $options);
     }
 
     public function fetch($fetchStyle = Storage::FETCH_NUM)
@@ -196,9 +196,9 @@ abstract class AbstractPlugin implements Pluggable
         return $this->getStorage()->decrementMulti($keyValuePairs, $options);
     }
 
-    public function find($match = Storage::MATCH_ACTIVE, array $options = array())
+    public function find($match = Storage::MATCH_ACTIVE, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
-        return $this->getStorage()->find($match, $options);
+        return $this->getStorage()->find($match, $select, $options);
     }
 
     public function clear($match = Storage::MATCH_EXPIRED, array $options = array())
