@@ -497,7 +497,7 @@ class Variable extends AbstractAdapter
 
     public function status(array $options=array())
     {
-        return $this->_getStatusOfPhpMem($options);
+        return $this->_statusOfPhpMem();
     }
 
     public function optimize(array $options = array())

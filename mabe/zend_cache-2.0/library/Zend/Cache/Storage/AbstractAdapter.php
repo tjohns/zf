@@ -363,4 +363,147 @@ abstract class AbstractAdapter implements Storable
         }
     }
 
+    /**
+     * Helper to get status of a disk path
+     *
+     * @param  string $path
+     * @return array
+     */
+    protected function _statusOfPath($path)
+    {
+        return array(
+            'total' => (float)disk_total_space($path),
+            'free'  => (float)disk_free_space($path)
+        );
+    }
+
+    /**
+     * Helper to get storage status of php memory
+     *
+     * @return array
+     * @throws Zend\Cache\Exception
+     */
+    protected function _statusOfPhpMem()
+    {
+        $memSize = (float)$this->_bytesFromString(ini_get('memory_limit'));
+        if ($memSize <= 0) {
+            return $this->_statusOfSysMem();
+        }
+
+        $memUsed = (float)memory_get_usage(true);
+        $memFree = $memSize - $memUsed;
+
+        return array(
+            'total' => $memSize,
+            'free'  => $memFree
+        );
+    }
+
+    /**
+     * Helper to get system memory status
+     *
+     * @return array
+     * @throws Zend\Cache\Exception
+     */
+    protected function _statusOfSysMem()
+    {
+        // Windows
+        if (substr(PHP_OS, 0, 3) == 'WIN') {
+            return $this->_statusOfSysMemWin();
+        }
+
+        if ( file_exists('/proc/meminfo')
+          && ($meminfoList=file_get_contents('/proc/meminfo'))
+          && preg_match_all('/(\w+):\s*(\d+\s*\w*)[\r|\n]/i', $meminfoList, $matches, PREG_PATTERN_ORDER) ) {
+            $meminfoIndex  = array_flip($matches[1]);
+            $meminfoValues = $matches[2];
+
+            $memTotal = 0;
+            $memFree  = 0;
+
+            if (isset($meminfoIndex['MemTotal'])) {
+                $memTotal+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemTotal'] ] );
+            }
+            if (isset($meminfoIndex['MemFree'])) {
+                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemFree'] ] );
+            }
+            if (isset($meminfoIndex['Buffers'])) {
+                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Buffers'] ] );
+            }
+            if (isset($meminfoIndex['Cached'])) {
+                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Cached'] ] );
+            }
+
+            return array(
+                'total' => $memTotal,
+                'free'  => $memFree
+            );
+        }
+
+        throw new RuntimeException('Can\'t detect system memory status (using /proc/meminfo)');
+    }
+
+    /**
+     * Helper to get system memory status on windows
+     *
+     * @return array
+     * @throws Zend\Cache\Exception
+     */
+    protected function _statusOfSysMemWin()
+    {
+        // TODO: http://de.php.net/manual/en/function.win32-ps-stat-mem.php
+        // escapeshellarg instead of escapeshellcmd ??????
+        $cmd = escapeshellarg(__DIR__ . '/_win/GlobalMemoryStatus.exe');
+        $out = $ret = null;
+        exec($cmd, $out, $ret);
+        if (!$ret && isset($out[0]) && ($memArr=unserialize($out[0]))) {
+            return array(
+                'total' => $memArr['TotalPhys'],
+                'free'  => $memArr['AvailPhys']
+            );
+        }
+
+        throw new RuntimeException('Can\'t detect system memory status');
+    }
+
+    /**
+     * Returns the number of bytes from a memory string (like 1 kB -> 1024)
+     *
+     * @param string $memStr
+     * @return float
+     * @throws Zend\Cache\Exception
+     */
+    protected function _bytesFromString($memStr)
+    {
+        if (preg_match('/\s*(-?\d+)\s*(\w*)\s*/', $memStr, $matches)) {
+            $value = (float)$matches[1];
+            $unit  = strtolower($matches[2]);
+
+            switch ($unit) {
+                case '':
+                case 'b':
+                    $value = (float)trim($memStr);
+                    break;
+                case 'k':
+                case 'kb':
+                    $value*= 1024;
+                    break;
+                case 'm':
+                case 'mb':
+                    $value*= 1048576; // 1024 * 1024
+                    break;
+                case 'g':
+                case 'gb':
+                    $value*= 1073741824; // 1024 * 1024 * 1024
+                    break;
+                default:
+                    throw new RuntimeException('Unknown unit "'.$unit.'"');
+            }
+        } else {
+            throw new RuntimeException('Can\'t detect bytes of string "'.$memStr.'"');
+        }
+
+        return $value;
+    }
+
 }
