@@ -1,11 +1,11 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache;
+use \Zend\Cache\Storage;
 use \Zend\Cache\Storage\AbstractPlugin;
 use \Zend\Cache\InvalidArgumentAxception;
 
-class AutomaticClear extends AbstractPlugin
+class ClearByFactor extends AbstractPlugin
 {
 
     /**
@@ -65,7 +65,7 @@ class AutomaticClear extends AbstractPlugin
         $ret = $this->getStorage()->setMulti($keyValuePairs, $options);
 
         if ($ret === true) {
-            $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
+            $this->_clearByFactor($this->getClearingFactor(), $options);
         }
 
         return $ret;
@@ -87,7 +87,7 @@ class AutomaticClear extends AbstractPlugin
         $ret = $this->getStorage()->addMulti($keyValuePairs, $options);
 
         if ($ret === true) {
-            $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
+            $this->_clearByFactor($this->getClearingFactor(), $options);
         }
 
         return $ret;
@@ -109,7 +109,7 @@ class AutomaticClear extends AbstractPlugin
         $ret = $this->getStorage()->replaceMulti($keyValuePairs, $options);
 
         if ($ret === true) {
-            $this->_optimizeByFactor($this->getOptimizingFactor(), $options);
+            $this->_clearByFactor($this->getClearingFactor(), $options);
         }
 
         return $ret;
@@ -117,11 +117,8 @@ class AutomaticClear extends AbstractPlugin
 
     protected function _clearByFactor($factor, array $options)
     {
-        if ($factor > 0) {
-            $rand = mt_rand(1, $factor);
-            if ($rand == 1) {
-                return $this->clear(Cache::MATCH_EXPIRED, $options);
-            }
+        if ($factor > 0 && mt_rand(1, $factor) == 1) {
+            return $this->clear(Storage::MATCH_EXPIRED, $options);
         }
 
         return true;

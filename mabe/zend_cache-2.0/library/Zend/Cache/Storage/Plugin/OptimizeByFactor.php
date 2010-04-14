@@ -90,11 +90,8 @@ class AutomaticOptimize extends AbstractPlugin
      */
     protected function _optimizeByFactor($factor, array $options)
     {
-        if ($factor > 0) {
-            $rand = mt_rand(1, $factor);
-            if ($rand == 1) {
-                return $this->optimize($options);
-            }
+        if ($factor > 0 && mt_rand(1, $factor) == 1) {
+            return $this->optimize($options);
         }
 
         return true;
