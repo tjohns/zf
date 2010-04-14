@@ -1,13 +1,15 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
+use \Zend\Cache\Storage;
 use \Zend\Cache\Storage\AbstractPlugin;
 use \Zend\Cache\InvalidArgumentException;
 
-class ExceptionHandler extends AbstractPlugin
+class HandleExceptions extends AbstractPlugin
 {
 
-    protected $_exceptionHandler;
+    protected $_exceptionHandler = null;
+    protected $_throwExceptions  = false;
 
     public function __construct(array $options)
     {
@@ -22,13 +24,14 @@ class ExceptionHandler extends AbstractPlugin
     {
         $options = parent::getOptions();
         $options['exceptionHandler'] = $this->getExceptionHandler();
+        $options['throwExceptions']  = $this->getThrowExceptions();
         return $options;
     }
 
     public function setExceptionHandler($callback)
     {
         if (!is_callable($callback, true)) {
-            throw new InvalidArgumentException('Callback isn\'t callable');
+            throw new InvalidArgumentException('The exception handler must be callable');
         }
         $this->_exceptionHandler = $callback;
     }
@@ -38,7 +41,17 @@ class ExceptionHandler extends AbstractPlugin
         return $this->_exceptionHandler;
     }
 
-    // catch all exceptions and call callback
-    // don't re-throw exceptions
+    public function setThrowExceptions($flag)
+    {
+        $this->_throwExceptions = (bool)$flag;
+    }
+    
+    public function getThrowExceptions()
+    {
+        return $this->_throwExceptions;
+    }
+    
+    // catch all exceptions, call callback and
+    // only re-throw exceptions if throwExceptions is enabled
 
 }
