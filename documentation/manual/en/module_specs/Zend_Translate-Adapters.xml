@@ -46,7 +46,7 @@
 
                 <row>
                     <entry>Ini</entry>
-                    <entry>Use simple ini (*.ini) files</entry>
+                    <entry>Use simple <acronym>INI</acronym> (*.ini) files</entry>
 
                     <entry>
                         Simple text file format; fast; possible problems with unicode characters
@@ -135,12 +135,12 @@
             </para>
 
             <para>
-                When you use a xml based source format like TMX or XLIFF you must
-                define the encoding within the xml files header because xml files
-                without defined encoding will be treated as UTF-8 by any xml parser
-                by default. You should also be aware that actually the encoding of
-                xml files is limited to the encodings supported by <acronym>PHP</acronym> which are
-                UTF-8, ISO-8859-1 and US-ASCII.
+                When you use a <acronym>XML</acronym> based source format like TMX or XLIFF you must
+                define the encoding within the <acronym>XML</acronym> files header because
+                <acronym>XML</acronym> files without defined encoding will be treated as UTF-8 by
+                any <acronym>XML</acronym> parser by default. You should also be aware that actually
+                the encoding of <acronym>XML</acronym> files is limited to the encodings supported
+                by <acronym>PHP</acronym> which are UTF-8, ISO-8859-1 and US-ASCII.
             </para>
         </note>
 
@@ -329,7 +329,7 @@
             <para>
                 The XmlTm Adapter is the Adapter which will be used by customers
                 which do their layout themself. XmlTm is a format which allows the
-                complete html source to be included in the translation source, so
+                complete <acronym>HTML</acronym> source to be included in the translation source, so
                 the translation is coupled with the layout.
                 XLIFF is a <acronym>XML</acronym> file based format, which is related to XLIFF but
                 its not as simple to read.
