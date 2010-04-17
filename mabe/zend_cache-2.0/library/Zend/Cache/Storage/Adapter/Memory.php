@@ -5,7 +5,7 @@ use \Zend\Cache\Storage;
 use \Zend\Cache\Storage\AbstractAdapter;
 use \Zend\Cache\RuntimeException;
 
-class Variable extends AbstractAdapter
+class Memory extends AbstractAdapter
 {
 
     /**
@@ -23,7 +23,7 @@ class Variable extends AbstractAdapter
             'NULL'     => true,
         ),
         'info' => array(
-            'mtime'
+            'mtime', 'ttl', 'tags'
         ),
     );
 

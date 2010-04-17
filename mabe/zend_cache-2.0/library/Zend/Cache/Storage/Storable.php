@@ -32,15 +32,16 @@ interface Storable
      * How does this adapter work and which features are available
      *
      *   Key        Datatype   Description
-     *   datatypes  array      Supported datatypes as key, values:
+     *   datatypes  array      Supported datatypes for values values:
      *                         - A boolean true means full support
      *                         - A string means the datatype to cast to
-     *                         - Missing datatypes are not supported
      *
      *   info       array      Supported information of the info method:
-     *                         - mtime  int  Last modification time
-     *                         - ctime  int  Time of creation
-     *                         - atime  int  Last access time
+     *                         - ttl    int    Time to live
+     *                         - tags   array  Stored tags
+     *                         - mtime  int    Last modification time
+     *                         - ctime  int    Time of creation
+     *                         - atime  int    Last access time
      *
      * @todo Keys:
      *   listing                    boolean   support to list stored ids (needed for find & clear)

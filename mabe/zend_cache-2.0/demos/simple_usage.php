@@ -15,7 +15,7 @@ spl_autoload_register('zend\autoload');
 $options = array(
     'ttl' => 10
 );
-$cache = Cache\Storage::adapterFactory('Variable', $options);
+$cache = Cache\Storage::adapterFactory('Memory', $options);
 
 
 // read & write data
