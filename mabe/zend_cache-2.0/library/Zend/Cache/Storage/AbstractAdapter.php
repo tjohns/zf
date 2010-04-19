@@ -248,6 +248,38 @@ abstract class AbstractAdapter implements Storable
         return $ret;
     }
 
+    public function touch($key = null, array $options = array())
+    {
+        // do not test validity on reading
+        $optsNoValidate = $options + array('validate' => false);
+
+        $value = $this->get($key, $optsNoValidate);
+        if ($value === false) {
+            // add an empty item
+            return $this->add('', $key, $options);
+        } else {
+            // preserve tags array
+            if (!isset($options['tags'])) {
+                $info = $this->info($key, $optsNoValidate);
+                if (isset($info['tags'])) {
+                    $options['tags'] = & $info['tags'];
+                }
+            }
+
+            // rewrite item
+            return $this->replace($value, $key, $options);
+        }
+    }
+
+    public function touchMulti(array $keys, array $options = array())
+    {
+        $ret = true;
+        foreach ($keys as $key) {
+            $ret = $this->touch($key, $options) && $ret;
+        }
+        return $ret;
+    }
+
     public function optimize(array $options = array())
     {
         return true;

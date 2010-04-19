@@ -279,6 +279,12 @@ interface Storable
      */
     public function decrementMulti(array $keyValuePairs, array $options = array());
 
+    /* touch[Multi] */
+
+    public function touch($key = null, array $options = array());
+
+    public function touchMulti(array $keys, array $options = array());
+
     /* find & clear */
 
     /**

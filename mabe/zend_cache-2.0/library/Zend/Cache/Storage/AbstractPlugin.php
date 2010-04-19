@@ -196,6 +196,16 @@ abstract class AbstractPlugin implements Pluggable
         return $this->getStorage()->decrementMulti($keyValuePairs, $options);
     }
 
+    public function touch($key = null, array $options = array())
+    {
+        return $this->getStorage()->touch($key, $options);
+    }
+
+    public function touchMulti(array $keys, array $options = array())
+    {
+        return $this->getStorage()->touchMulti($keys, $options);
+    }
+
     public function find($match = Storage::MATCH_ACTIVE, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
         return $this->getStorage()->find($match, $select, $options);

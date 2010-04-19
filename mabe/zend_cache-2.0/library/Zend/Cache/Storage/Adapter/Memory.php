@@ -332,6 +332,22 @@ class Memory extends AbstractAdapter
         }
     }
 
+    public function touch($key = null, array $options = array())
+    {
+        $key   = $this->_key($key);
+        $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+
+        if (isset($this->_data[$ns][$key])) {
+            // update mtime
+            $this->_data[$ns][$key][1] = time();
+        } else {
+            // add an empty item
+            $this->_data[$ns][$key] = array('', time(), null);
+        }
+
+        return true;
+    }
+
     public function clear($mode = Storage::MATCH_EXPIRED, array $options = array())
     {
         $ns = isset($options['namespace']) ? $options['namespace'] : '';
