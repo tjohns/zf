@@ -20,9 +20,6 @@
  * @version    $Id$
  */
 
-/** Zend_Amf_Constants */
-require_once 'Zend/Amf/Constants.php';
-
 /** Zend_Amf_Parse_Deserializer */
 require_once 'Zend/Amf/Parse/Deserializer.php';
 
@@ -397,13 +394,13 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
 
         }
 
-        if($returnObject instanceof Zend_Amf_Value_Messaging_ArrayCollection) {
-            if(isset($returnObject->externalizedData)) {
+       if ($returnObject instanceof Zend_Amf_Value_Messaging_ArrayCollection) {
+            if (isset($returnObject->externalizedData)) {
                 $returnObject = $returnObject->externalizedData;
             } else {
                 $returnObject = get_object_vars($returnObject);
             }
-        }
+       }
 
         return $returnObject;
     }
