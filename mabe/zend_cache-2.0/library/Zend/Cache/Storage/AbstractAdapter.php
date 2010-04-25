@@ -3,6 +3,7 @@
 namespace Zend\Cache\Storage;
 use \Zend\Options;
 use \Zend\Cache\Storage;
+use \Zend\Cache\Exception;
 use \Zend\Cache\RuntimeException;
 use \Zend\Cache\InvalidArgumentException;
 
@@ -158,7 +159,7 @@ abstract class AbstractAdapter implements Storable
         if (isset($options['callback'])) {
             $callback = $options['callback'];
             if (!is_callable($callback, false)) {
-                throw new Zend_Cache_Exception('Invalid callback');
+                throw new InvalidArgumentException('Invalid callback');
             }
         }
 
@@ -278,6 +279,11 @@ abstract class AbstractAdapter implements Storable
             $ret = $this->touch($key, $options) && $ret;
         }
         return $ret;
+    }
+
+    public function find($match = Storage::MATCH_ACTIVE, $select = Storage::SELECT_KEY_VALUE, array $options = array())
+    {
+        throw new Exception('find isn\'t supported by this adapter');
     }
 
     public function optimize(array $options = array())
