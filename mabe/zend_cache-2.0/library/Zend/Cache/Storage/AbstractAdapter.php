@@ -201,7 +201,7 @@ abstract class AbstractAdapter implements Storable
 
             if ($callback !== null) {
                 $this->_formatFetchItem($item);
-                $callback($item);
+                call_user_func($callback, $item);
             } else {
                 $this->_fetchBuffer[] = $item;
             }
