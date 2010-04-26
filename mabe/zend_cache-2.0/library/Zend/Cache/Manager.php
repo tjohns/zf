@@ -6,15 +6,6 @@ use \Zend\Cache\InvalidArgumentException as InvalidArgumentException;
 
 class Manager
 {
-    /**
-     * Constant holding reserved name for default Page Cache
-     */
-    const PAGECACHE = 'page';
-
-    /**
-     * Constant holding reserved name for default Page Tag Cache
-     */
-    const PAGETAGCACHE = 'pagetag';
 
     /**
      * Array of storage instances
