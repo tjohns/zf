@@ -78,6 +78,21 @@ class Manager
     );
 
     /**
+     * Array of pattern instances
+     *
+     * @var Zend\Cache\Pattern\PatternInterface
+     */
+    protected $_patterns = array();
+
+    /**
+     * Array of ready made configuration templates for lazy
+     * loading patterns.
+     *
+     * @var array
+     */
+    protected $_patternTemplates = array();
+
+    /**
      * Set a new storage for the Cache Manager to contain
      *
      * @param  string $name
@@ -150,7 +165,7 @@ class Manager
     }
 
     /**
-     * Check if the named configuration template exist.
+     * Check if the named storage template exist.
      *
      * @param  string $name
      * @return bool
@@ -161,7 +176,7 @@ class Manager
     }
 
     /**
-     * Get the named configuration template
+     * Get the named storage template
      *
      * @param  string $name
      * @return array
@@ -178,7 +193,7 @@ class Manager
 
     /**
      * Pass an array containing changes to be applied to a named
-     * configuration template
+     * storage template
      *
      * @param  string $name
      * @param  array $options
@@ -204,6 +219,139 @@ class Manager
 
         $this->setStorageTemplate($name, array_merge_recursive(
             $this->_storageTemplates[$name],
+            $options
+        ));
+
+        return $this;
+    }
+
+    /**
+     * Set a new pattern for the Cache Manager to contain
+     *
+     * @param  string $name
+     * @param  Zend\Cache\Pattern\PatternInterface $pattern
+     * @return Zend\Cache\Manager
+     */
+    public function setPattern($name, Storable $pattern)
+    {
+        $this->_patterns[$name] = $pattern;
+        return $this;
+    }
+
+    /**
+     * Check if the Cache Manager contains the named pattern object, or a named
+     * configuration template to lazy load the pattern object
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function hasPattern($name)
+    {
+        return isset($this->_patterns[$name]) || $this->hasPatternTemplate($name);
+    }
+
+    /**
+     * Fetch the named pattern object, or instantiate and return a pattern object
+     * using a named configuration template
+     *
+     * @param  string $name
+     * @return Zend\Cache\Pattern\PatternInterface
+     * @throws Zend\Cache\InvalidArgumentException if $name desn't exist
+     */
+    public function getPattern($name)
+    {
+        if (isset($this->_patterns[$name])) {
+            return $this->_storages[$name];
+        }
+
+        if (!isset($this->_patternTemplates[$name])) {
+            throw new InvalidArgumentException("Cache pattern of name '$name' doesn't exist");
+        }
+
+        $pattern = Pattern::factory($this->_patternTemplates[$name]);
+        $this->_patterns[$name] = $pattern;
+
+        return $pattern;
+    }
+
+    /**
+     * Set a named configuration template from which a pattern object can later
+     * be lazy loaded
+     *
+     * @param  string $name
+     * @param  array $options
+     * @return Zend\Cache\Manager
+     */
+    public function setPatternTemplate($name, $options)
+    {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } elseif (!is_array($options)) {
+            throw new InvalidArgumentException(
+                'Options passed must be an associative array or instance of Zend_Config'
+            );
+        }
+
+        $this->_patternTemplates[$name] = $options;
+
+        return $this;
+    }
+
+    /**
+     * Check if the named pattern template exist.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function hasPatternTemplate($name)
+    {
+        return isset($this->_patternTemplates[$name]);
+    }
+
+    /**
+     * Get the named pattern template
+     *
+     * @param  string $name
+     * @return array
+     * @throws Zend\Cache\InvalidArgumentException if template not exists
+     */
+    public function getStorageTemplate($name)
+    {
+        if (!isset($this->_patternTemplates[$name])) {
+            throw new InvalidArgumentException("Pattern template '$name' doesn't exist");
+        }
+
+        return $this->_patternTemplates[$name];
+    }
+
+    /**
+     * Pass an array containing changes to be applied to a named
+     * pattern template
+     *
+     * @param  string $name
+     * @param  array $options
+     * @return Zend\Cache\Manager
+     * @throws Zend\Cache\InvalidArgumentException on invalid options format
+     *                                             or if no pattern templates with $name exist
+     */
+    public function mergeStorageTemplate($name, $options)
+    {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } elseif (!is_array($options)) {
+            throw new InvalidArgumentException(
+                'Options passed must be in an associative array or instance of Zend_Config'
+            );
+        }
+
+        if (!isset($this->_patternTemplates[$name])) {
+            throw new InvalidArgumentException(
+                "A pattern configuration template does not exist with the name '$name'"
+            );
+        }
+
+        $this->setPatternTemplate($name, array_merge_recursive(
+            $this->_patternTemplates[$name],
             $options
         ));
 
