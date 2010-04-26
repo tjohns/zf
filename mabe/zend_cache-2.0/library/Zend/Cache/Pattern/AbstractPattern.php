@@ -4,7 +4,7 @@ namespace Zend\Cache\Pattern;
 use \Zend\Options;
 use \Zend\Cache\Storage\Storable;
 
-abstract class AbstractPattern
+abstract class AbstractPattern implements PatternInterface
 {
 
     /**
@@ -26,6 +26,13 @@ abstract class AbstractPattern
     public function setOptions(array $options)
     {
         Options::setOptions($this, $options);
+    }
+
+    public function getOptions()
+    {
+        return array(
+            'storage' => $this->getStorage(),
+        );
     }
 
     public function getStorage()
