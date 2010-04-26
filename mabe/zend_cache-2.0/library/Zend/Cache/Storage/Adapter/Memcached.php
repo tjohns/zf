@@ -583,10 +583,21 @@ class Memcached extends AbstractAdapter
     /**
      * Get the maximum socket send buffer in bytes.
      *
-     * @return int
+     * NOTE: The default value varies by platform/kernel configuration
+     *       and memcached have be initiated before get it.
+     *
+     * @return int|null
      */
     public function getSocketSendSize()
     {
+        if ( $this->_socketSendSize === null
+          && $this->_memcached) {
+            $socketSendSize = $this->_memcached->getOption(\Memcached::OPT_SOCKET_SEND_SIZE);
+            if ($socketSendSize === false) {
+                throw new RuntimeExceotion("Can\'t get memcached option 'SocketSendSize'");
+            }
+            $this->_socketSendSize = $socketSendSize;
+        }
         return $this->_socketSendSize;
     }
 
@@ -612,10 +623,21 @@ class Memcached extends AbstractAdapter
     /**
      * Get the maximum socket receive buffer in bytes.
      *
-     * @return int
+     * NOTE: The default value varies by platform/kernel configuration
+     *       and memcached have be initiated before get it.
+     *
+     * @return int|null
      */
     public function getSocketRecvSize()
     {
+        if ( $this->_socketRecvSize === null
+          && $this->_memcached) {
+            $socketRecvSize = $this->_memcached->getOption(\Memcached::OPT_SOCKET_RECV_SIZE);
+            if ($socketRecvSize === false) {
+                throw new RuntimeExceotion("Can\'t get memcached option 'SocketRecvSize'");
+            }
+            $this->_socketRecvSize = $socketRecvSize;
+        }
         return $this->_socketRecvSize;
     }
 
