@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 21676 -->
+<!-- EN-Revision: 21847 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.feed.writer">
     <title>Zend_Feed_Writer</title>
@@ -273,9 +273,9 @@ $out = $feed->export('atom');
         </para>
 
         <para>
-            Die API für Daten auf Level des Feeds ist in
+            Die <acronym>API</acronym> für Daten auf Level des Feeds ist in
             <classname>Zend_Feed_Writer_Feed</classname> enthalten. Zusätzlich zu der anbei
-            beschriebenen API, implementiert die Klasse auch die Interfaces
+            beschriebenen <acronym>API</acronym>, implementiert die Klasse auch die Interfaces
             <classname>Countable</classname> und <classname>Iterator</classname>.
         </para>
 
@@ -389,7 +389,7 @@ $out = $feed->export('atom');
                     </row>
 
                     <row>
-                        <entry><methodname>getGenerator()</methodname></entry>
+                        <entry><methodname>setGenerator()</methodname></entry>
 
                         <entry>
                             Erlaubt es einen Generator zu setzen. Der Parameter sollte ein Array
@@ -494,10 +494,11 @@ $out = $feed->export('atom');
                         <entry><methodname>export()</methodname></entry>
 
                         <entry>
-                            Exportiert die komplette Datenhierarchie in einen XML Feed. Die Methode
-                            has zwei Parameter. Der erste ist der Feedtyp, entweder "atom" oder
-                            "rss". Der zweite in ein optionaler Boolean der zeigt ob Exceptions
-                            geworfen werden oder nicht. Er ist Standardmäßig TRUE.
+                            Exportiert die komplette Datenhierarchie in einen <acronym>XML</acronym>
+                            Feed. Die Methode has zwei Parameter. Der erste ist der Feedtyp,
+                            entweder "atom" oder "rss". Der zweite in ein optionaler Boolean der
+                            zeigt ob Exceptions geworfen werden oder nicht. Er ist Standardmäßig
+                            <constant>TRUE</constant>.
                         </entry>
                     </row>
                 </tbody>
@@ -529,8 +530,8 @@ $out = $feed->export('atom');
         </para>
 
         <para>
-            Die API auf Level des Eintrags ist in <classname>Zend_Feed_Writer_Entry</classname>
-            enthalten.
+            Die <acronym>API</acronym> auf Level des Eintrags ist in
+            <classname>Zend_Feed_Writer_Entry</classname> enthalten.
         </para>
 
         <table>
@@ -633,7 +634,7 @@ $out = $feed->export('atom');
                     </row>
 
                     <row>
-                        <entry><methodname>getDateModified()</methodname></entry>
+                        <entry><methodname>setDateModified()</methodname></entry>
 
                         <entry>
                             Setzt das Datum zu dem dieser Feed das letzte Mal geändert wurde. Der
@@ -682,8 +683,8 @@ $out = $feed->export('atom');
                         <entry><methodname>setCommentLink()</methodname></entry>
 
                         <entry>
-                            Setzt einen Link zu einer HTML Seite welche Kommentare enthält die mit
-                            diesem Eintrag assoziiert sind.
+                            Setzt einen Link zu einer <acronym>HTML</acronym> Seite welche
+                            Kommentare enthält die mit diesem Eintrag assoziiert sind.
                         </entry>
                     </row>
 
@@ -691,10 +692,10 @@ $out = $feed->export('atom');
                         <entry><methodname>setCommentFeedLink()</methodname></entry>
 
                         <entry>
-                            Setzt einen Link zu einem XML Feed welcher Kommentare enthält welche mit
-                            diesem Eintrag assoziiert sind. Der Parameter ist ein Array welches die
-                            Schlüssel "uri" und "type" enthält, wobei der Typ entweder "rdf", "rss"
-                            oder "atom" ist.
+                            Setzt einen Link zu einem <acronym>XML</acronym> Feed welcher Kommentare
+                            enthält welche mit diesem Eintrag assoziiert sind. Der Parameter ist ein
+                            Array welches die Schlüssel "uri" und "type" enthält, wobei der Typ
+                            entweder "rdf", "rss" oder "atom" ist.
                         </entry>
                     </row>
 

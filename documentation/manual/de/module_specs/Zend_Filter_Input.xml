@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 21661 -->
+<!-- EN-Revision: 21829 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
@@ -8,7 +8,8 @@
         <classname>Zend_Filter_Input</classname> bietet ein ausgezeichnetes Interface um mehrere
         Filter und Prüfer zu assoziieren, Sie Kollektionen von Daten hinzuzufügen, und Eingabewerte
         zu empfangen nachdem diese durch die Filter und Prüfer bearbeitet wurden. Werte werden
-        standardmäßig in kommentiertem Format zurückgegeben für sichere HTML Ausgabe.
+        standardmäßig in kommentiertem Format zurückgegeben für sichere <acronym>HTML</acronym>
+        Ausgabe.
     </para>
 
     <para>
@@ -50,10 +51,11 @@
                 <emphasis>Auskommentierer</emphasis> wandeln einen Wert um indem Sie magisches
                 Verhalten von bestimmten Zeichen entfernen. In einigen Ausgabekontexten haben
                 speziellen Zeichen eine Bedeutung. Zum Beispiel das Zeichen '&lt;' und '&gt;'
-                begrenzen HTML Tags, und wenn ein String diese Zeichen enthält und in einem HTML
-                Kontext ausgegeben wird, könnte der Inhalt zwischen Ihnen die Ausgabe oder
-                Funktionalität der HTML Präsentation beeinflussen. Das auskommentieren der Zeichen
-                entfernt die spezielle Bedeutung, damit Sie als literale Zeichen ausgegeben werden.
+                begrenzen <acronym>HTML</acronym> Tags, und wenn ein String diese Zeichen enthält
+                und in einem <acronym>HTML</acronym> Kontext ausgegeben wird, könnte der Inhalt
+                zwischen Ihnen die Ausgabe oder Funktionalität der <acronym>HTML</acronym>
+                Präsentation beeinflussen. Das auskommentieren der Zeichen entfernt die spezielle
+                Bedeutung, damit Sie als literale Zeichen ausgegeben werden.
             </para>
         </listitem>
     </itemizedlist>
@@ -118,26 +120,29 @@ $validators = array(
             <listitem>
                 <para>
                     Ein einfacher skalarer String, der einem Klassennamen entspricht:
-                    <programlisting language="php"><![CDATA[
+                </para>
+
+                <programlisting language="php"><![CDATA[
 $validators = array(
     'month'   => 'Digits',
 );
 ]]></programlisting>
-                </para>
             </listitem>
 
             <listitem>
                 <para>
-                    Die Instanz eines Objektes einer der Klassen die Zend_Filter_Interface oder
-                    Zend_Validate_Interface implementieren.
-                    <programlisting language="php"><![CDATA[
+                    Die Instanz eines Objektes einer der Klassen die
+                    <classname>Zend_Filter_Interface</classname> oder
+                    <classname>Zend_Validate_Interface</classname> implementieren.
+                </para>
+
+                <programlisting language="php"><![CDATA[
 $digits = new Zend_Validate_Digits();
 
 $validators = array(
     'month'   => $digits
 );
 ]]></programlisting>
-                </para>
             </listitem>
 
             <listitem>
@@ -148,8 +153,9 @@ $validators = array(
                     dritte Wahl verwendet werden: Ein Array das einen String enthält der dem
                     Klassennamen entspricht gefolgt von Argumenten die dessen Konstruktor übergeben
                     werden.
+                </para>
 
-                    <programlisting language="php"><![CDATA[
+                <programlisting language="php"><![CDATA[
 $validators = array(
     'month'   => array(
         'Digits',                // String
@@ -158,7 +164,6 @@ $validators = array(
     )
 );
 ]]></programlisting>
-                </para>
             </listitem>
         </itemizedlist>
 
@@ -418,8 +423,8 @@ $m = $input->getUnescaped('month'); // nicht kommentieren
                 Standardmäßig, wenn ein Wert empfangen wird, wird er mit
                 <classname>Zend_Filter_HtmlEntities</classname> gefiltert. Das ist der Standard weil
                 angenommen wird, das die am meisten übliche Verwendung, die Ausgabe von Werten von
-                einem Feld in HTML ist. Der HtmlEntities Filter hilft ungewollten Ausgaben von Code
-                vorzubeugen, welche zu Sicherheitsproblemen führen könnten.
+                einem Feld in <acronym>HTML</acronym> ist. Der HtmlEntities Filter hilft ungewollten
+                Ausgaben von Code vorzubeugen, welche zu Sicherheitsproblemen führen könnten.
             </para>
 
             <note>
