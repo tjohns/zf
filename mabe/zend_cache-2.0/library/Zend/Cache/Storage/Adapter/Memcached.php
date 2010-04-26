@@ -1329,6 +1329,7 @@ class Memcached extends AbstractAdapter
 
     public function _getDelayedCallback(\Memcached $memcached, array $item)
     {
+        unset($item['cas']);
         if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
             unset($item['key']);
         }
@@ -1356,6 +1357,7 @@ class Memcached extends AbstractAdapter
             }
             return false;
         } else {
+            unset($item['cas']);
             if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
                 unset($item['key']);
             }
@@ -1381,6 +1383,7 @@ class Memcached extends AbstractAdapter
             );
         } else {
             foreach ($items as &$item) {
+                unset($item['cas']);
                 if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
                     unset($item['key']);
                 }
