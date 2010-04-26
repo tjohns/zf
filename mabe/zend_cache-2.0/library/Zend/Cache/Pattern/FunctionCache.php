@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Cache;
+namespace Zend\Cache\Pattern;
 
 class FunctionCache extends CallbackCache
 {

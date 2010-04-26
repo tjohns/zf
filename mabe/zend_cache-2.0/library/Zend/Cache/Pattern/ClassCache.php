@@ -1,8 +1,7 @@
 <?php
 
-namespace Zend\Cache;
+namespace Zend\Cache\Pattern;
 
-// class Class doesn't work :(
 class ClassCache extends CallbackCache
 {
 

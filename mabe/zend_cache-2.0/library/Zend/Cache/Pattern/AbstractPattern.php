@@ -1,12 +1,17 @@
 <?php
 
-namespace Zend\Cache;
+namespace Zend\Cache\Pattern;
 use \Zend\Options;
 use \Zend\Cache\Storage\Storable;
 
-class PageCache
+abstract class AbstractPattern
 {
 
+    /**
+     * The storage adapter
+     *
+     * @var Zend\Cache\Storage\Storable
+     */
     protected $_storage;
 
     public function __construct($options)
@@ -32,7 +37,5 @@ class PageCache
     {
         $this->_storage = $storage;
     }
-
-    // old Zend_Cache_Frontend_Page
 
 }
