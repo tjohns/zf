@@ -130,9 +130,9 @@ class Memcached extends AbstractAdapter
 
         // set default options based on Memcached::* constants
         // after checking ext/memcached
-        $this->_distribution = Memcached::DISTRIBUTION_MODULA;
-        $this->_serializer   = Memcached::SERIALIZER_PHP;
-        $this->_hashAlgo     = Memcached::HASH_DEFAULT;
+        $this->_distribution = \Memcached::DISTRIBUTION_MODULA;
+        $this->_serializer   = \Memcached::SERIALIZER_PHP;
+        $this->_hashAlgo     = \Memcached::HASH_DEFAULT;
 
         parent::__construct($options);
     }
@@ -338,7 +338,7 @@ class Memcached extends AbstractAdapter
     {
         $limit = (int)$limit;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_SERVER_FAILURE_LIMIT, $limit);
+            $this->_memcached->setOption(\Memcached::OPT_SERVER_FAILURE_LIMIT, $limit);
         }
         $this->_serverFailureLimit = $limit;
         return $this;
@@ -372,7 +372,7 @@ class Memcached extends AbstractAdapter
     {
         $distribution = (int)$distribution;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_DISTRIBUTION, $distribution);
+            $this->_memcached->setOption(\Memcached::OPT_DISTRIBUTION, $distribution);
         }
         $this->_distribution = $distribution;
         return $this;
@@ -412,7 +412,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, $flag);
         }
         $this->_libketamaCompatible = $flag;
         return $this;
@@ -449,7 +449,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_BUFFER_WRITES, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_BUFFER_WRITES, $flag);
         }
         $this->_bufferWrites = $flag;
         return $this;
@@ -511,7 +511,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_NO_BLOCK, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_NO_BLOCK, $flag);
         }
         $this->_noBlock = $flag;
         return $this;
@@ -537,7 +537,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_TCP_NODELAY, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_TCP_NODELAY, $flag);
         }
         $this->_tcpNodelay = $flag;
         return $this;
@@ -566,7 +566,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The socket send buffer must be greater than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_SOCKET_SEND_SIZE, $size);
+            $this->_memcached->setOption(\Memcached::OPT_SOCKET_SEND_SIZE, $size);
         }
         $this->_socketSendSize = $size;
         return $this;
@@ -595,7 +595,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The socket receive buffer must be greater than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_SOCKET_RECV_SIZE, $size);
+            $this->_memcached->setOption(\Memcached::OPT_SOCKET_RECV_SIZE, $size);
         }
         $this->_socketRecvSize = $size;
         return $this;
@@ -623,7 +623,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_COMPRESSION, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_COMPRESSION, $flag);
         }
         $this->_compression = $flag;
         return $this;
@@ -653,7 +653,7 @@ class Memcached extends AbstractAdapter
     {
         $serializer = (int)$serializer;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_SERIALIZER, $serializer);
+            $this->_memcached->setOption(\Memcached::OPT_SERIALIZER, $serializer);
         }
         $this->_serializer = $serializer;
         return $this;
@@ -683,7 +683,7 @@ class Memcached extends AbstractAdapter
     {
         $algo = (int)$algo;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_HASH, $algo);
+            $this->_memcached->setOption(\Memcached::OPT_HASH, $algo);
         }
         $this->_hashAlgo = $algo;
         return $this;
@@ -713,7 +713,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The connect timeout must be grater than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT, $timeout);
+            $this->_memcached->setOption(\Memcached::OPT_CONNECT_TIMEOUT, $timeout);
         }
         $this->_connectTimeout = $timeout;
         return $this;
@@ -742,7 +742,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The retry timeout must be grater or equal than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_RETRY_TIMEOUT, $timeout);
+            $this->_memcached->setOption(\Memcached::OPT_RETRY_TIMEOUT, $timeout);
         }
         $this->_retryTimeout = $timeout;
         return $this;
@@ -773,7 +773,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The send timeout must be grater or equal than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_SEND_TIMEOUT, $timeout);
+            $this->_memcached->setOption(\Memcached::OPT_SEND_TIMEOUT, $timeout);
         }
         $this->_sendTimeout = $timeout;
         return $this;
@@ -804,7 +804,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The receive timeout must be grater or equal than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_RECV_TIMEOUT, $timeout);
+            $this->_memcached->setOption(\Memcached::OPT_RECV_TIMEOUT, $timeout);
         }
         $this->_recvTimeout = $timeout;
         return $this;
@@ -833,7 +833,7 @@ class Memcached extends AbstractAdapter
             throw new InvalidArgumentException('The poll timeout must be grater than 0');
         }
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_POLL_TIMEOUT, $timeout);
+            $this->_memcached->setOption(\Memcached::OPT_POLL_TIMEOUT, $timeout);
         }
         $this->_pollTimeout = $timeout;
         return $this;
@@ -859,7 +859,7 @@ class Memcached extends AbstractAdapter
     {
         $flag = (bool)$flag;
         if ($this->_memcached) {
-            $this->_memcached->setOption(Memcached::OPT_CACHE_LOOKUPS, $flag);
+            $this->_memcached->setOption(\Memcached::OPT_CACHE_LOOKUPS, $flag);
         }
         $this->_cacheDnsLookups = $flag;
         return $this;
@@ -877,7 +877,7 @@ class Memcached extends AbstractAdapter
 
     protected function _init() {
         if (!$this->_memcached) {
-            $this->_memcached = new Memcached($this->getPersistentId());
+            $this->_memcached = new \Memcached($this->getPersistentId());
 
             // init server pool
             $serversArg = array();
@@ -891,29 +891,29 @@ class Memcached extends AbstractAdapter
             $this->_memcached->addServers($serversArg);
 
             // init options
-            $this->_memcached->setOption(Memcached::OPT_DISTRIBUTION, $this->getDistribution());
-            $this->_memcached->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE, $this->getLibketamaCompatible());
-            $this->_memcached->setOption(Memcached::OPT_BUFFER_WRITES, $this->getBufferWrites());
-            $this->_memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, $this->getBinaryProtocol());
-            $this->_memcached->setOption(Memcached::OPT_NO_BLOCK, $this->getNoBlock());
-            $this->_memcached->setOption(Memcached::OPT_TCP_NODELAY, $this->getTcpNodelay());
-            $this->_memcached->setOption(Memcached::OPT_COMPRESSION, $this->getCompression());
-            $this->_memcached->setOption(Memcached::OPT_HASH, $this->getHashAlgo());
-            $this->_memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT, $this->getConnectTimeout());
-            $this->_memcached->setOption(Memcached::OPT_RETRY_TIMEOUT, $this->getRetryTimeout());
-            $this->_memcached->setOption(Memcached::OPT_SEND_TIMEOUT, $this->getSendTimeout());
-            $this->_memcached->setOption(Memcached::OPT_RECV_TIMEOUT, $this->getRecvTimeout());
-            $this->_memcached->setOption(Memcached::OPT_POLL_TIMEOUT, $this->getPollTimeout());
-            $this->_memcached->setOption(Memcached::OPT_CACHE_LOOKUPS, $this->getCacheDnsLookups());
-            $this->_memcached->setOption(Memcached::OPT_SERVER_FAILURE_LIMIT, $this->getServerFailureLimit());
-            $this->_memcached->setOption(Memcached::OPT_SERIALIZER, $this->getSerializer());
+            $this->_memcached->setOption(\Memcached::OPT_DISTRIBUTION, $this->getDistribution());
+            $this->_memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, $this->getLibketamaCompatible());
+            $this->_memcached->setOption(\Memcached::OPT_BUFFER_WRITES, $this->getBufferWrites());
+            $this->_memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, $this->getBinaryProtocol());
+            $this->_memcached->setOption(\Memcached::OPT_NO_BLOCK, $this->getNoBlock());
+            $this->_memcached->setOption(\Memcached::OPT_TCP_NODELAY, $this->getTcpNodelay());
+            $this->_memcached->setOption(\Memcached::OPT_COMPRESSION, $this->getCompression());
+            $this->_memcached->setOption(\Memcached::OPT_HASH, $this->getHashAlgo());
+            $this->_memcached->setOption(\Memcached::OPT_CONNECT_TIMEOUT, $this->getConnectTimeout());
+            $this->_memcached->setOption(\Memcached::OPT_RETRY_TIMEOUT, $this->getRetryTimeout());
+            $this->_memcached->setOption(\Memcached::OPT_SEND_TIMEOUT, $this->getSendTimeout());
+            $this->_memcached->setOption(\Memcached::OPT_RECV_TIMEOUT, $this->getRecvTimeout());
+            $this->_memcached->setOption(\Memcached::OPT_POLL_TIMEOUT, $this->getPollTimeout());
+            $this->_memcached->setOption(\Memcached::OPT_CACHE_LOOKUPS, $this->getCacheDnsLookups());
+            $this->_memcached->setOption(\Memcached::OPT_SERVER_FAILURE_LIMIT, $this->getServerFailureLimit());
+            $this->_memcached->setOption(\Memcached::OPT_SERIALIZER, $this->getSerializer());
 
             if ($this->getSocketSendSize() !== null) {
-                $this->_memcached->setOption(Memcached::OPT_SOCKET_SEND_SIZE, $this->getSocketSendSize());
+                $this->_memcached->setOption(\Memcached::OPT_SOCKET_SEND_SIZE, $this->getSocketSendSize());
             }
 
             if ($this->getSocketRecvSize() !== null) {
-                $this->_memcached->setOption(Memcached::OPT_SOCKET_RECV_SIZE, $this->getSocketRecvSize());
+                $this->_memcached->setOption(\Memcached::OPT_SOCKET_RECV_SIZE, $this->getSocketRecvSize());
             }
         }
     }
@@ -950,7 +950,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -973,7 +973,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -997,14 +997,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
         $rs = $this->_memcached->add($key, $value, $this->_expirationTime($ttl));
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTSTORED) {
+            if ($rsCode != \Memcached::RES_NOTSTORED) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1023,7 +1023,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1050,14 +1050,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
         $rs = $this->_memcached->replace($key, $value, $this->_expirationTime($ttl));
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1076,7 +1076,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1102,7 +1102,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1110,7 +1110,7 @@ class Memcached extends AbstractAdapter
         if ($rs === false) {
             // Don't throw an excaption if cache id doesn't exists
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1127,7 +1127,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1136,7 +1136,7 @@ class Memcached extends AbstractAdapter
             if ($rs === false) {
                 // Don't throw an excaption if cache id doesn't exists
                 $rsCode = $this->_memcached->getResultCode();
-                if ($rsCode != Memcached::RES_NOTFOUND) {
+                if ($rsCode != \Memcached::RES_NOTFOUND) {
                     throw $this->_exceptionByRsCode(
                         $rsCode,
                         $this->_memcached->getResultMessage()
@@ -1156,14 +1156,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
-        $rs = $this->_memcached->get($id);
+        $rs = $this->_memcached->get($key);
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1179,7 +1179,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1202,13 +1202,13 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
-        if ($this->_memcached->get($id) === false) {
+        if ($this->_memcached->get($key) === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1227,7 +1227,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1250,14 +1250,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
         $rs = $this->_memcached->get($key);
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1277,7 +1277,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1303,7 +1303,7 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
@@ -1327,7 +1327,7 @@ class Memcached extends AbstractAdapter
         return true;
     }
 
-    public function _getDelayedCallback(Memcached $memcached, array $item)
+    public function _getDelayedCallback(\Memcached $memcached, array $item)
     {
         if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
             unset($item['key']);
@@ -1340,7 +1340,7 @@ class Memcached extends AbstractAdapter
         $this->_getDelayedSelect   = null;
     }
 
-    public function fetch() {
+    public function fetch($fetchStyle = Storage::FETCH_NUM) {
         if (!$this->_memcached) {
             return false;
         }
@@ -1348,7 +1348,7 @@ class Memcached extends AbstractAdapter
         $item = $this->_memcached->fetch();
         if ($item === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_END) {
+            if ($rsCode != \Memcached::RES_END) {
                 throw $this->_exceptionByRsCode(
                     $this->_memcached->getResultCode(),
                     $this->_memcached->getResultMessage()
@@ -1401,14 +1401,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
         $rs = $this->_memcached->increment($key, $value);
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1429,14 +1429,14 @@ class Memcached extends AbstractAdapter
 
         $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
         if ($ns != $this->_lastNamespace) {
-            $this->_memcached->setOption(Memcached::OPT_PREFIX_KEY, $ns);
+            $this->_memcached->setOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
         }
 
         $rs = $this->_memcached->decrement($key, $value);
         if ($rs === false) {
             $rsCode = $this->_memcached->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1454,7 +1454,7 @@ class Memcached extends AbstractAdapter
         $value = $this->get($key, $options);
         if ($value === false) {
             $rsCode = $this->getResultCode();
-            if ($rsCode != Memcached::RES_NOTFOUND) {
+            if ($rsCode != \Memcached::RES_NOTFOUND) {
                 throw $this->_exceptionByRsCode(
                     $rsCode,
                     $this->_memcached->getResultMessage()
@@ -1556,30 +1556,30 @@ class Memcached extends AbstractAdapter
     protected function _exceptionByRsCode($rsCode, $msg)
     {
         switch ($rsCode) {
-            case Memcached::RES_SUCCESS:
+            case \Memcached::RES_SUCCESS:
                 throw InvalidArgumentException("The result code {$rsCode} isn't an error");
 
             // TODO: select exception by result code
-            case Memcached::RES_FAILURE:
-            case Memcached::RES_HOST_LOOKUP_FAILURE:
-            case Memcached::RES_UNKNOWN_READ_FAILURE:
-            case Memcached::RES_PROTOCOL_ERROR:
-            case Memcached::RES_CLIENT_ERROR:
-            case Memcached::RES_SERVER_ERROR:
-            case Memcached::RES_WRITE_FAILURE:
-            case Memcached::RES_DATA_EXISTS:
-            case Memcached::RES_NOTSTORED:
-            case Memcached::RES_NOTFOUND:
-            case Memcached::RES_PARTIAL_READ:
-            case Memcached::RES_SOME_ERRORS:
-            case Memcached::RES_NO_SERVERS:
-            case Memcached::RES_END:
-            case Memcached::RES_ERRNO:
-            case Memcached::RES_BUFFERED:
-            case Memcached::RES_TIMEOUT:
-            case Memcached::RES_BAD_KEY_PROVIDED:
-            case Memcached::RES_CONNECTION_SOCKET_CREATE_FAILURE:
-            case Memcached::RES_PAYLOAD_FAILURE:
+            case \Memcached::RES_FAILURE:
+            case \Memcached::RES_HOST_LOOKUP_FAILURE:
+            case \Memcached::RES_UNKNOWN_READ_FAILURE:
+            case \Memcached::RES_PROTOCOL_ERROR:
+            case \Memcached::RES_CLIENT_ERROR:
+            case \Memcached::RES_SERVER_ERROR:
+            case \Memcached::RES_WRITE_FAILURE:
+            case \Memcached::RES_DATA_EXISTS:
+            case \Memcached::RES_NOTSTORED:
+            case \Memcached::RES_NOTFOUND:
+            case \Memcached::RES_PARTIAL_READ:
+            case \Memcached::RES_SOME_ERRORS:
+            case \Memcached::RES_NO_SERVERS:
+            case \Memcached::RES_END:
+            case \Memcached::RES_ERRNO:
+            case \Memcached::RES_BUFFERED:
+            case \Memcached::RES_TIMEOUT:
+            case \Memcached::RES_BAD_KEY_PROVIDED:
+            case \Memcached::RES_CONNECTION_SOCKET_CREATE_FAILURE:
+            case \Memcached::RES_PAYLOAD_FAILURE:
                 return new RuntimeException($msg);
 
             default:
