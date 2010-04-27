@@ -26,6 +26,13 @@ abstract class AbstractAdapter implements Storable
     protected $_ttl = 0;
 
     /**
+     * Namespace option
+     *
+     * @var string
+     */
+    protected $_namespace = '';
+
+    /**
      * The last used key
      *
      * @var string|null
@@ -61,6 +68,7 @@ abstract class AbstractAdapter implements Storable
     public function setOptions(array $options)
     {
         Options::setOptions($this, $options);
+        return $this;
     }
 
     public function getOptions()
@@ -73,11 +81,23 @@ abstract class AbstractAdapter implements Storable
     public function setTtl($ttl)
     {
         $this->_ttl = $this->_ttl($ttl);
+        return $this;
     }
 
     public function getTtl()
     {
         return $this->_ttl;
+    }
+
+    public function setNamespace($namespace)
+    {
+        $this->_namespace = (string)$namespace;
+        return $this;
+    }
+
+    public function getNamespace()
+    {
+        return $this->_namespace;
     }
 
     public function setMulti(array $keyValuePairs, array $options = array())

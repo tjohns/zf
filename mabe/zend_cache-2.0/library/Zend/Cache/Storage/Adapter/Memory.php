@@ -48,7 +48,7 @@ class Memory extends AbstractAdapter
     public function set($value, $key = null, array $options = array())
     {
         $key  = $this->_key($key);
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
 
         $this->_data[$ns][$key] = array($value, time(), $tags);
@@ -58,7 +58,7 @@ class Memory extends AbstractAdapter
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
         $time = time();
 
@@ -72,7 +72,7 @@ class Memory extends AbstractAdapter
     public function add($value, $key = null, array $options = array())
     {
         $key  = $this->_key($key);
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
 
         if (isset($this->_data[$ns][$key])) {
@@ -85,7 +85,7 @@ class Memory extends AbstractAdapter
 
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
         $time = time();
 
@@ -102,7 +102,7 @@ class Memory extends AbstractAdapter
     public function replace($value, $key = null, array $options = array())
     {
         $key  = $this->_key($key);
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
 
         if (!isset($this->_data[$ns][$key])) {
@@ -115,7 +115,7 @@ class Memory extends AbstractAdapter
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $ns   = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
         $time = time();
 
@@ -132,7 +132,7 @@ class Memory extends AbstractAdapter
     public function remove($key = null, array $options = array())
     {
         $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         unset($this->_data[$ns][$key]);
         // empty namespaces are removed on optimize
@@ -142,7 +142,7 @@ class Memory extends AbstractAdapter
 
     public function removeMulti(array $keys, array $options = array())
     {
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         foreach ($keys as $key) {
             unset($this->_data[$ns][$key]);
@@ -155,7 +155,7 @@ class Memory extends AbstractAdapter
     public function get($key = null, array $options = array())
     {
         $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         if (!isset($this->_data[$ns][$key])) {
             return false;
@@ -174,7 +174,7 @@ class Memory extends AbstractAdapter
 
     public function getMulti(array $keys, array $options = array())
     {
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         if (!isset($this->_data[$ns])) {
             return array();
         }
@@ -199,7 +199,7 @@ class Memory extends AbstractAdapter
     public function exists($key = null, array $options = array())
     {
         $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         if (!isset($this->_data[$ns][$key])) {
             return false;
@@ -219,7 +219,7 @@ class Memory extends AbstractAdapter
     public function info($key = null, array $options = array())
     {
         $key = $this->_key($key);
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         if (!isset($this->_data[$ns][$key])) {
             return false;
@@ -257,7 +257,7 @@ class Memory extends AbstractAdapter
             }
         }
 
-        $ns  = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         if (!isset($this->_data[$ns])) {
             return true;
         }
@@ -307,7 +307,7 @@ class Memory extends AbstractAdapter
     public function increment($value, $key = null, array $options = array())
     {
         $key   = $this->_key($key);
-        $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns    = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $value = (int)$value;
 
         if (isset($this->_data[$ns][$key])) {
@@ -321,7 +321,7 @@ class Memory extends AbstractAdapter
     public function decrement($value, $key = null, array $options = array())
     {
         $key   = $this->_key($key);
-        $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns    = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $value = (int)$value;
 
         if (isset($this->_data[$ns][$key])) {
@@ -335,7 +335,7 @@ class Memory extends AbstractAdapter
     public function touch($key = null, array $options = array())
     {
         $key   = $this->_key($key);
-        $ns    = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns    = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         if (isset($this->_data[$ns][$key])) {
             // update mtime
@@ -350,7 +350,7 @@ class Memory extends AbstractAdapter
 
     public function clear($mode = Storage::MATCH_EXPIRED, array $options = array())
     {
-        $ns = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         if (!isset($this->_data[$ns])) {
             return true;
         }
@@ -429,7 +429,7 @@ class Memory extends AbstractAdapter
 
         $select = (int)$select;
 
-        $ns = isset($options['namespace']) ? $options['namespace'] : '';
+        $ns = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         if (!isset($this->_data[$ns])) {
             return true;
         }

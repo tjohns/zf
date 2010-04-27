@@ -982,12 +982,11 @@ class Memcached extends AbstractAdapter
 
     public function set($value, $key = null, array $options = array())
     {
-        $key = $this->_key($key);
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $key = $this->_key($key);
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1010,11 +1009,10 @@ class Memcached extends AbstractAdapter
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1037,12 +1035,11 @@ class Memcached extends AbstractAdapter
 
     public function add($value, $key = null, array $options = array())
     {
-        $key = $this->_key($key);
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $key = $this->_key($key);
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1068,11 +1065,10 @@ class Memcached extends AbstractAdapter
 
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1098,12 +1094,11 @@ class Memcached extends AbstractAdapter
 
     public function replace($value, $key = null, array $options = array())
     {
-        $key = $this->_key($key);
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $key = $this->_key($key);
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1129,11 +1124,10 @@ class Memcached extends AbstractAdapter
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $ttl = isset($options['ttl']) ? $this->_ttl($options['ttl']) : $this->getTtl();
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1159,11 +1153,10 @@ class Memcached extends AbstractAdapter
 
     public function remove($key = null, array $options = array())
     {
-        $key = $this->_key($key);
-
         $this->_init();
 
-        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
+        $key = $this->_key($key);
+        $ns  = isset($opts['namespace']) ? (string)$opts['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1192,7 +1185,7 @@ class Memcached extends AbstractAdapter
     {
         $this->_init();
 
-        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
+        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1221,11 +1214,10 @@ class Memcached extends AbstractAdapter
 
     public function get($key = null, array $options = array())
     {
-        $key = $this->_key($key);
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $key = $this->_key($key);
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1253,7 +1245,7 @@ class Memcached extends AbstractAdapter
     {
         $this->_init();
 
-        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
+        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1276,11 +1268,10 @@ class Memcached extends AbstractAdapter
 
     public function exists($key = null, array $options = array())
     {
-        $key = $this->_key($key);
-
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $key = $this->_key($key);
+        $ns  = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1309,7 +1300,7 @@ class Memcached extends AbstractAdapter
     {
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $ns = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1332,11 +1323,10 @@ class Memcached extends AbstractAdapter
 
     public function info($key = null, array $options = array())
     {
-        $key = $this->_key($key);
-
         $this->_init();
 
-        $ns = isset($opts['namespace']) ? (string)$opts['namespace'] : '';
+        $key = $this->_key($key);
+        $ns  = isset($opts['namespace']) ? (string)$opts['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
@@ -1367,7 +1357,7 @@ class Memcached extends AbstractAdapter
     {
         $this->_init();
 
-        $ns = isset($options['namespace']) ? (string)$options['namespace'] : '';
+        $ns = isset($options['namespace']) ? (string)$options['namespace'] : $this->getNamespace();
         if ($ns != $this->_lastNamespace) {
             $this->_setMemcachedOption(\Memcached::OPT_PREFIX_KEY, $ns);
             $this->_lastNamespace = $ns;
