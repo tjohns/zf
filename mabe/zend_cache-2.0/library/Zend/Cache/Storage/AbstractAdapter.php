@@ -450,35 +450,36 @@ abstract class AbstractAdapter implements Storable
             return $this->_statusOfSysMemWin();
         }
 
-        if ( file_exists('/proc/meminfo')
-          && ($meminfoList=file_get_contents('/proc/meminfo'))
-          && preg_match_all('/(\w+):\s*(\d+\s*\w*)[\r|\n]/i', $meminfoList, $matches, PREG_PATTERN_ORDER) ) {
-            $meminfoIndex  = array_flip($matches[1]);
-            $meminfoValues = $matches[2];
-
-            $memTotal = 0;
-            $memFree  = 0;
-
-            if (isset($meminfoIndex['MemTotal'])) {
-                $memTotal+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemTotal'] ] );
-            }
-            if (isset($meminfoIndex['MemFree'])) {
-                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemFree'] ] );
-            }
-            if (isset($meminfoIndex['Buffers'])) {
-                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Buffers'] ] );
-            }
-            if (isset($meminfoIndex['Cached'])) {
-                $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Cached'] ] );
-            }
-
-            return array(
-                'total' => $memTotal,
-                'free'  => $memFree
-            );
+        if ( !($meminfo = @file_get_contents('/proc/meminfo')) ) {
+            $lastErr = error_get_last();
+            throw new RuntimeException("Can't read /proc/meminfo: {$lastErr['messagae']}");
+        } elseif (!preg_match_all('/(\w+):\s*(\d+\s*\w*)[\r|\n]/i', $meminfo, $matches, PREG_PATTERN_ORDER)) {
+            throw new RuntimeException("Can't parse /proc/meminfo");
         }
 
-        throw new RuntimeException('Can\'t detect system memory status (using /proc/meminfo)');
+        $meminfoIndex  = array_flip($matches[1]);
+        $meminfoValues = $matches[2];
+
+        $memTotal = 0;
+        $memFree  = 0;
+
+        if (isset($meminfoIndex['MemTotal'])) {
+            $memTotal+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemTotal'] ] );
+        }
+        if (isset($meminfoIndex['MemFree'])) {
+            $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['MemFree'] ] );
+        }
+        if (isset($meminfoIndex['Buffers'])) {
+            $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Buffers'] ] );
+        }
+        if (isset($meminfoIndex['Cached'])) {
+            $memFree+= $this->_bytesFromString( $meminfoValues[ $meminfoIndex['Cached'] ] );
+        }
+
+        return array(
+            'total' => $memTotal,
+            'free'  => $memFree
+        );
     }
 
     /**
