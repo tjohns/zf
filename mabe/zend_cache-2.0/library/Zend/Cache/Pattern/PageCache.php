@@ -27,6 +27,21 @@ class PageCache extends AbstractPattern
         parent::__construct($options);
     }
 
+    public function getOptions()
+    {
+        $options = parent::getOptions();
+        $options['requestMatch']     = $this->getRequestMatch();
+        $options['httpStatusCode']   = $this->getHttpStatusCode();
+        $options['httpHeaders']      = $this->getHttpHeaders();
+        $options['httpDebugHeader']  = $this->getHttpDebugHeader();
+        $options['httpEtag']         = $this->getHttpEtag();
+        $options['httpEtagSize']     = $this->getHttpEtagSize();
+        $options['httpEtagMtime']    = $this->getHttpEtagMtime();
+        $options['httpEtagHash']     = $this->getHttpEtagHash();
+        $options['httpEtagHashAlgo'] = $this->getHttpEtagHashAlgo();
+        return $options;
+    }
+
     /**
      * Set request match
      *
