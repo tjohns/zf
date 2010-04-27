@@ -6,12 +6,18 @@ class ClassCache extends CallbackCache
 {
 
     protected $_entity;
+    protected $_cacheByDefault       = true;
+    protected $_cacheMethods         = array();
+    protected $_nonCacheMethods      = array();
     protected $_cacheMagicProperties = false;
 
     public function getOptions()
     {
         $options = parent::getOptions();
         $options['entity'] = $this->getEntity();
+        $options['cacheByDefault']       = $this->getCacheByDefault();
+        $options['cacheMethods']         = $this->getCacheMethods();
+        $options['nonCacheMethods']      = $this->getNonCacheMethods();
         $options['cacheMagicProperties'] = $this->getCacheMagicProperties();
         return $options;
     }
@@ -28,6 +34,77 @@ class ClassCache extends CallbackCache
     public function getEntity()
     {
         return $this->_entity;
+    }
+
+    /**
+     * Enable or disable caching of methods by default.
+     *
+     * @param boolean $flag
+     * @return Zend\Cache\Pattern\ClassCache
+     */
+    public function setCacheByDefault($flag)
+    {
+        $this->_cacheByDefault = (bool)$flag;
+        return $this;
+    }
+
+    /**
+     * Caching methods by default enabled.
+     *
+     * return boolean
+     */
+    public function getCacheByDefault()
+    {
+        return $this->_cacheByDefault;
+    }
+
+    /**
+     * Enable cache methods
+     *
+     * @param string[] $methods
+     * @return Zend\Cache\Pattern\ClassCache
+     */
+    public function setCacheMethods(array $methods)
+    {
+        foreach ($methods as &$method) {
+            $method = strtolower($method);
+        }
+        $this->_cacheMethods = array_values(array_unique($methods));
+    }
+
+    /**
+     * Get enabled cache methods
+     *
+     * @return string[]
+     */
+    public function getCacheMethods()
+    {
+        return $this->_cacheMethods;
+    }
+
+    /**
+     * Disable cache methods
+     *
+     * @param string[] $methods
+     * @return Zend\Cache\Pattern\ClassCache
+     */
+    public function setNonCacheMethods(array $methods)
+    {
+        foreach ($methods as &$method) {
+            $method = strtolower($method);
+        }
+
+        $this->_nonCacheMethods = array_values(array_unique($methods));
+    }
+
+    /**
+     * Get disabled cache methods
+     *
+     * @return string[]
+     */
+    public function getNonCacheMethods()
+    {
+        return $this->_nonCacheMethods;
     }
 
     public function setCacheMagicProperties($flag)
@@ -56,6 +133,27 @@ class ClassCache extends CallbackCache
             throw new RuntimeException('Missing entity');
         }
 
+        $method = strtolower($method);
+
+        // handle magic properties by magic methods
+        switch ($method) {
+            case '__set':   return $this->__set(array_shift($args), array_shift($args));
+            case '__get':   return $this->__get(array_shift($args), array_shift($args));
+            case '__isset': return $this->__isset(array_shift($args), array_shift($args));
+            case '__unset': return $this->__unset(array_shift($args), array_shift($args));
+        }
+
+        $cache = $this->getCacheByDefault();
+        if ($cache) {
+            $cache = !in_array($method, $this->getNonCacheMethods());
+        } else {
+            $cache = in_array($method, $this->getCacheMethods());
+        }
+
+        if (!$cache) {
+            return call_user_func_array(array($entity, $method), $args);
+        }
+
         return $this->call(array($entity, $method), $args);
     }
 
@@ -77,18 +175,17 @@ class ClassCache extends CallbackCache
             throw new RuntimeException('Missing entity');
         }
 
+        if (is_object($entity)) {
+            $entity->{$name} = $value;
+        } else {
+            $entity::$$name = $value;
+        }
+
         if ( !$this->getCacheMagicProperties()
           || !is_object($entity)
           || property_exists($entity, $name)) {
-            if (is_object($entity)) {
-                $entity->{$name} = $value;
-            } else {
-                $entity::$$name = $value;
-            }
             return;
         }
-
-        $this->call(array($entity, '__set'), array($name, $value));
 
         // remove cached __get and __isset
         $removeKeys = null;
@@ -130,7 +227,7 @@ class ClassCache extends CallbackCache
             }
         }
 
-        return $this->call(array($entity, '__get'), array($name));
+        return $this->call(array($entity, '__get'), $args);
     }
 
     /**
@@ -160,16 +257,16 @@ class ClassCache extends CallbackCache
             }
         }
 
-        return $this->call(array($entity, '__isset'), array($name));
+        return $this->call('__isset', array($name));
     }
 
     /**
-     * Unseting properties.
+     * Unseting a propertie.
      *
      * NOTE:
      * Magic properties will be cached too if the option cacheMagicProperties
      * is enabled and the property doesn't exist in real. If so it removes
-     * previous cached __isset, __get and __set calls.
+     * previous cached __isset and __get calls.
      *
      * @param string $name
      */
@@ -194,9 +291,6 @@ class ClassCache extends CallbackCache
 
         // remove previous cached __set, __get and __isset calls
         $removeKeys = array();
-        if (is_callable(array($entity, '__set'), false, $callbackName)) {
-            $removeKeys[] = $this->_makeId($callbackName, array($name));
-        }
         if (is_callable(array($entity, '__get'), false, $callbackName)) {
             $removeKeys[] = $this->_makeId($callbackName, array($name));
         }
@@ -231,7 +325,7 @@ class ClassCache extends CallbackCache
             return (string)$entity;
         }
 
-        return $this->call(array($entity, '__toString'), $args);
+        return $this->__call('__toString', $args);
     }
 
     /**

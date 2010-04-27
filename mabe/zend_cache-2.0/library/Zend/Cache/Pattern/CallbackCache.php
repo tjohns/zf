@@ -7,94 +7,6 @@ use \Zend\Cache\InvalidArgumentException;
 class CallbackCache extends AbstractPattern
 {
 
-    protected $_cacheByDefault    = true;
-    protected $_cacheCallbacks    = array();
-    protected $_nonCacheCallbacks = array();
-
-    public function getOptions()
-    {
-        $options = parent::getOptions();
-        $options['cacheByDefault']    = $this->getCacheByDefault();
-        $options['cacheCallbacks']    = $this->getCacheCallbacks();
-        $options['nonCacheCallbacks'] = $this->getNonCacheCallbacks();
-    }
-
-    /**
-     * Enable or disable caching of callbacks by default.
-     *
-     * @param boolean $flag
-     * @return Zend\Cache\Pattern\CallbackCache
-     */
-    public function setCacheByDefault($flag)
-    {
-        $this->_cacheByDefault = (bool)$flag;
-        return $this;
-    }
-
-    /**
-     * Caching callbacks by default enabled.
-     *
-     * return boolean
-     */
-    public function getCacheByDefault()
-    {
-        return $this->_cacheByDefault;
-    }
-
-    /**
-     * Enable cache callbacks
-     *
-     * @param callback[] $callbacks
-     * @return Zend\Cache\Pattern\CallbackCache
-     */
-    public function setCacheCallbacks(array $callbacks)
-    {
-        foreach ($callbacks as &$callback) {
-            if (!is_callable($callback, false, $callbackName)) {
-                throw new InvalidArgumentException("Not a valid list of callbacks");
-            }
-            $callback = $callbackName;
-        }
-        $this->_cacheCallbacks = array_values(array_unique($callbacks));
-    }
-
-    /**
-     * Get enabled cache callbacks
-     *
-     * @return string[] The named callbacks
-     */
-    public function getCacheCallbacks()
-    {
-        return $this->_cacheCallbacks;
-    }
-
-    /**
-     * Disable cache callbacks
-     *
-     * @param callback[] $callbacks
-     * @return Zend\Cache\Pattern\CallbackCache
-     */
-    public function setNonCacheCallbacks(array $callbacks)
-    {
-        foreach ($callbacks as &$callback) {
-            if (!is_callable($callback, false, $callbackName)) {
-                throw new InvalidArgumentException("Not a valid list of callbacks");
-            }
-            $callback = $callbackName;
-        }
-        $this->_nonCacheCallbacks = array_values(array_unique($callbacks));
-    }
-
-    /**
-     * Get disabled cache callbacks
-     *
-     * @return string[] The named callbacks
-     */
-    public function getNonCacheCallbacks()
-    {
-        return $this->_nonCacheCallbacks;
-    }
-
     /**
      * Main method : call the specified callback or get the result from cache
      *
@@ -108,18 +20,6 @@ class CallbackCache extends AbstractPattern
     {
         if (!is_callable($callback, false, $callbackName)) {
             throw new InvalidArgumentException('Invalid callback given');
-        }
-
-        $cache = $this->getCacheByDefault();
-        if ($cache) {
-            $cache = !in_array($callbackName, $this->getNonCacheCallbacks());
-        } else {
-            $cache = in_array($callbackName, $this->getCacheCallbacks());
-        }
-
-        if ( !$cache ) {
-            // do not cache
-            return call_user_func_array($callback, $args);
         }
 
         $key = $this->_makeKey($callbackName, $args);
