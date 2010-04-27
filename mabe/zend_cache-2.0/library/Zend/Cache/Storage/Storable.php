@@ -18,6 +18,7 @@ interface Storable
      * Set multiple options.
      *
      * @param array $options
+     * @return Zend\Cache\Storage\Storable
      */
     public function setOptions(array $options);
 

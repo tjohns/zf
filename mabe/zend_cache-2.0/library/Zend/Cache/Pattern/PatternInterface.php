@@ -17,6 +17,7 @@ interface PatternInterface
      * Set pattern options
      *
      * @param array $options
+     * @return Zend\Cache\Pattern\PatternInterface
      */
     public function setOptions(array $options);
 
@@ -38,7 +39,8 @@ interface PatternInterface
      * Set internal cache storage
      *
      * @param Zend\Cache\Storage\Storable $storage
+     * @return Zend\Cache\Pattern\PatternInterface
      */
-    public function setStorage(Storable $storage);
+    public function setStorage($storage);
 
 }

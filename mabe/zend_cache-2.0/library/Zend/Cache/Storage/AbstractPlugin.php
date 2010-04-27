@@ -23,6 +23,7 @@ abstract class AbstractPlugin implements Pluggable
     public function setOptions(array $options)
     {
         Options::setOptions($this, $options);
+        return $this;
     }
 
     public function getOptions()
