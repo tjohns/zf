@@ -1,6 +1,7 @@
 <?php
 
 namespace Zend\Cache\Pattern;
+use \Zend\Cache\RuntimeException;
 use \Zend\Cache\InvalidArgumentException;
 
 class CallbackCache extends AbstractPattern
