@@ -17,7 +17,7 @@ class PageCache extends AbstractPattern
 
     protected $_key = null;
 
-    protected$_cancel = false;
+    protected $_cancel = false;
 
     public function __construct($options)
     {
@@ -211,136 +211,143 @@ class PageCache extends AbstractPattern
             }
         }
 
-        if ( ($cachedArray = $this->getStorage()->get($key)) !== null
-          && isset($cachedArray['output'], $cachedArray['headers'], $cachedArray['mtime']) ) {
-            // send debug header
-            if ($this->getHttpDebugHeader()) {
-                header('X-Zend_PageCache: cached response '
-                     . @date('r', $cachedArray['mtime']));
+        if ( ($cachedArray = $this->getStorage()->get($key)) !== null) {
+
+            // The stored array could be converted to an object by storage
+            if (is_object($cachedArray)) {
+                $cachedArray = get_object_vars($cachedArray);
             }
 
-            // send cached headers and etag functionality
-            if ($this->getHttpHeaders() && !headers_sent()) {
-
-                // send response header code
-                // etag functionality can overwrite this
-                if (isset($cachedArray['headers'][0])) {
-                    $normallyResponseCode = (int)$cachedArray['headers'][0];
-                    header('Status: '.$normallyResponseCode, true, $normallyResponseCode);
-                    unset($cachedArray['headers'][0]); // remove response code from normal header list
-                } else {
-                    $normallyResponseCode = 200;
+            if (isset($cachedArray['output'], $cachedArray['headers'], $cachedArray['mtime']) ) {
+                // send debug header
+                if ($this->getHttpDebugHeader()) {
+                    header('X-Zend_PageCache: cached response '
+                         . @date('r', $cachedArray['mtime']));
                 }
 
-                // handle etag matching
-                if (isset($cachedArray['headers']['etag'])) {
-                    // TODO: If-Range
+                // send cached headers and etag functionality
+                if ($this->getHttpHeaders() && !headers_sent()) {
 
-                    // "If-None-Match" & "If-Modified-Since"
-                    if ( isset($_SERVER['HTTP_IF_NONE_MATCH']) || isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
-                      && ($normallyResponseCode >= 200 && $normallyResponseCode < 300) ) {
-                        $send304 = null;
+                    // send response header code
+                    // etag functionality can overwrite this
+                    if (isset($cachedArray['headers'][0])) {
+                        $normallyResponseCode = (int)$cachedArray['headers'][0];
+                        header('Status: '.$normallyResponseCode, true, $normallyResponseCode);
+                        unset($cachedArray['headers'][0]); // remove response code from normal header list
+                    } else {
+                        $normallyResponseCode = 200;
+                    }
 
-                        // "If-None-Match"
-                        // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26
-                        if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
-                            $send304 = false;
-                            $httpIfNoneMatch = trim($_SERVER['HTTP_IF_NONE_MATCH']);
-                            if ($httpIfNoneMatch == '*') {
-                                $send304 = true;
-                            } else {
-                                $httpIfNoneMatchList = explode(',', $httpIfNoneMatch);
-                                foreach ($httpIfNoneMatchList as $etag) {
-                                    $etag = trim($etag);
-                                    if ($etag == $cachedArray['headers']['etag']) {
-                                        $send304 = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                    // handle etag matching
+                    if (isset($cachedArray['headers']['etag'])) {
+                        // TODO: If-Range
 
-                        // "If-Modified-Since"
-                        // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.25
-                        if ( $send304 === null || $send304 === true
-                          && isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-                            $send304 = false;
+                        // "If-None-Match" & "If-Modified-Since"
+                        if ( isset($_SERVER['HTTP_IF_NONE_MATCH']) || isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
+                          && ($normallyResponseCode >= 200 && $normallyResponseCode < 300) ) {
+                            $send304 = null;
 
-                            // The If-Modified-Since header have to match exactly
-                            // and only a normally result code of 200 is allowed
-                            if ($normallyResponseCode == 200) {
-                                if (trim($_SERVER['HTTP_IF_MODIFIED_SINCE']) == gmdate('D, d M Y H:i:s', $cachedArray['mtime']).' GMT') {
+                            // "If-None-Match"
+                            // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26
+                            if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+                                $send304 = false;
+                                $httpIfNoneMatch = trim($_SERVER['HTTP_IF_NONE_MATCH']);
+                                if ($httpIfNoneMatch == '*') {
                                     $send304 = true;
-                                }
-                            }
-                        }
-
-                        if ($send304 === true) {
-                            header('Status: 304', true, 304);
-                            if (!isset($options['noexit']) || !$options['noexit']) {
-                                exit;
-                            }
-                        }
-                    }
-
-                    // "If-Match" & "If-Unmodified-Since"
-                    if (isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_MATCH'])
-                      && ($normallyResponseCode >= 200 && $normallyResponseCode < 300) ) {
-                        $send412 = null;
-
-                        // "If-Match"
-                        // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24
-                        if (isset($_SERVER['HTTP_IF_MATCH'], $cachedArray['headers']['etag'])) {
-                            $httpIfMatch = trim($_SERVER['HTTP_IF_MATCH']);
-                            if ($httpIfMatch == '*') {
-                                $send412 = true;
-                            } else {
-                                $send412 = true;
-                                $httpIfMatchList = explode(',', $httpIfMatch);
-                                foreach ($httpIfMatchList as $etag) {
-                                    $etag = trim($etag);
-                                    if ($etag == $cachedArray['headers']['etag']) {
-                                        $send412 = false;
-                                        break;
+                                } else {
+                                    $httpIfNoneMatchList = explode(',', $httpIfNoneMatch);
+                                    foreach ($httpIfNoneMatchList as $etag) {
+                                        $etag = trim($etag);
+                                        if ($etag == $cachedArray['headers']['etag']) {
+                                            $send304 = true;
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        // "If-Unmodified-Since"
-                        // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.28
-                        if ( isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) {
-                            $send412 = false;
-                            $ifUnmodifiedSinceTs = @strtotime(trim($_SERVER['HTTP_IF_UNMODIFIED_SINCE']));
-                            if ($ifUnmodifiedSinceTs && $cachedArray['mtime'] > $ifUnmodifiedSinceTs) {
-                                $send412 = true;
+                            // "If-Modified-Since"
+                            // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.25
+                            if ( $send304 === null || $send304 === true
+                              && isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+                                $send304 = false;
+
+                                // The If-Modified-Since header have to match exactly
+                                // and only a normally result code of 200 is allowed
+                                if ($normallyResponseCode == 200) {
+                                    if (trim($_SERVER['HTTP_IF_MODIFIED_SINCE']) == gmdate('D, d M Y H:i:s', $cachedArray['mtime']).' GMT') {
+                                        $send304 = true;
+                                    }
+                                }
+                            }
+
+                            if ($send304 === true) {
+                                header('Status: 304', true, 304);
+                                if (!isset($options['noexit']) || !$options['noexit']) {
+                                    exit;
+                                }
                             }
                         }
 
-                        if ($send412 === true) {
-                            header('Status: 412', true, 412);
-                            if (!isset($options['noexit']) || !$options['noexit']) {
-                                exit;
+                        // "If-Match" & "If-Unmodified-Since"
+                        if (isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_MATCH'])
+                          && ($normallyResponseCode >= 200 && $normallyResponseCode < 300) ) {
+                            $send412 = null;
+
+                            // "If-Match"
+                            // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24
+                            if (isset($_SERVER['HTTP_IF_MATCH'], $cachedArray['headers']['etag'])) {
+                                $httpIfMatch = trim($_SERVER['HTTP_IF_MATCH']);
+                                if ($httpIfMatch == '*') {
+                                    $send412 = true;
+                                } else {
+                                    $send412 = true;
+                                    $httpIfMatchList = explode(',', $httpIfMatch);
+                                    foreach ($httpIfMatchList as $etag) {
+                                        $etag = trim($etag);
+                                        if ($etag == $cachedArray['headers']['etag']) {
+                                            $send412 = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            // "If-Unmodified-Since"
+                            // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.28
+                            if ( isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) {
+                                $send412 = false;
+                                $ifUnmodifiedSinceTs = @strtotime(trim($_SERVER['HTTP_IF_UNMODIFIED_SINCE']));
+                                if ($ifUnmodifiedSinceTs && $cachedArray['mtime'] > $ifUnmodifiedSinceTs) {
+                                    $send412 = true;
+                                }
+                            }
+
+                            if ($send412 === true) {
+                                header('Status: 412', true, 412);
+                                if (!isset($options['noexit']) || !$options['noexit']) {
+                                    exit;
+                                }
                             }
                         }
+
                     }
 
+                    // send cache headers (after etag)
+                    foreach ($cachedArray['headers'] as $header) {
+                        header($header);
+                    }
                 }
 
-                // send cache headers (after etag)
-                foreach ($cachedArray['headers'] as $header) {
-                    header($header);
+                // send cached data
+                echo $cachedArray['output'];
+
+                // exit
+                if (isset($options['noexit']) && $options['noexit']) {
+                    return true;
                 }
+                exit;
             }
-
-            // send cached data
-            echo $cachedArray['output'];
-
-            // exit
-            if (isset($options['noexit']) && $options['noexit']) {
-                return true;
-            }
-            exit;
         }
 
         $this->_key = $key;
