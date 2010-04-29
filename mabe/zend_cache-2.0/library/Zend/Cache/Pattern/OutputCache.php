@@ -18,8 +18,9 @@ class OutputCache extends AbstractPattern
      */
     public function start($key, array $options = array())
     {
-        if (!is_string($key)) {
-            throw new InvalidArgumentException('The key must be a string');
+        $key = (string)$key;
+        if (!isset($key[0])) { // strlen($key) == 0
+            throw new InvalidArgumentException('Missing key');
         }
 
         $rs = $this->getStorage()->get($key, $options);
