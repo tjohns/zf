@@ -1450,11 +1450,27 @@ class Memcached extends AbstractAdapter
                 return false;
             } else {
                 unset($item['cas']);
+
                 if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
                     unset($item['key']);
+                } elseif ( ($fetchStyle & Storage::FETCH_NUM) == Storage::FETCH_NUM) {
+                    $item[0] = $item['key'];
+                    unset($item['key']);
+                } elseif ( ($fetchStyle & Storage::FETCH_BOTH) == Storage::FETCH_BOTH) {
+                    $item[0] = $item['key'];
                 }
+
                 if (($this->_getDelayedSelect & Storage::SELECT_VALUE) != Storage::SELECT_VALUE) {
                     unset($item['value']);
+                } elseif ( ($fetchStyle & Storage::FETCH_NUM) == Storage::FETCH_NUM) {
+                    $item[0] = $item['value'];
+                    unset($item['value']);
+                } elseif ( ($fetchStyle & Storage::FETCH_BOTH) == Storage::FETCH_BOTH) {
+                    $item[0] = $item['value'];
+                }
+
+                if ( ($fetchStyle & Storage::FETCH_OBJ) == Storage::FETCH_OBJ) {
+                    $item = (object)$item;
                 }
             }
 
@@ -1480,11 +1496,27 @@ class Memcached extends AbstractAdapter
             } else {
                 foreach ($items as &$item) {
                     unset($item['cas']);
+
                     if (($this->_getDelayedSelect & Storage::SELECT_KEY) != Storage::SELECT_KEY) {
                         unset($item['key']);
+                    } elseif ( ($fetchStyle & Storage::FETCH_NUM) == Storage::FETCH_NUM) {
+                        $item[0] = $item['key'];
+                        unset($item['key']);
+                    } elseif ( ($fetchStyle & Storage::FETCH_BOTH) == Storage::FETCH_BOTH) {
+                        $item[0] = $item['key'];
                     }
+
                     if (($this->_getDelayedSelect & Storage::SELECT_VALUE) != Storage::SELECT_VALUE) {
                         unset($item['value']);
+                    } elseif ( ($fetchStyle & Storage::FETCH_NUM) == Storage::FETCH_NUM) {
+                        $item[0] = $item['value'];
+                        unset($item['value']);
+                    } elseif ( ($fetchStyle & Storage::FETCH_BOTH) == Storage::FETCH_BOTH) {
+                        $item[0] = $item['value'];
+                    }
+
+                    if ( ($fetchStyle & Storage::FETCH_OBJ) == Storage::FETCH_OBJ) {
+                        $item = (object)$item;
                     }
                 }
             }
