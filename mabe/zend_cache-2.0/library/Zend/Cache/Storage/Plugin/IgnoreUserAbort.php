@@ -8,7 +8,7 @@ class IgnoreUserAbort extends AbstractPlugin
 {
 
     /**
-     * Exit if connection aborted
+     * Exit (after writing) if connection aborted
      *
      * @var boolean
      */
