@@ -23,13 +23,18 @@ class OutputCache extends AbstractPattern
             throw new InvalidArgumentException('Missing key');
         }
 
-        $rs = $this->getStorage()->get($key, $options);
-        if ($rs !== false) {
+        $data = $this->getStorage()->get($key, $options);
+
+        if (!is_string($data) && $data !== false) {
+            throw new RuntimeException("Cached value of '{$key}' isn't a string");
+        }
+
+        if ($data !== false) {
             if ( !isset($options['output']) || $options['output'] ) {
-                echo $rs;
+                echo $data;
                 return true;
             } else {
-                return $rs;
+                return $data;
             }
         }
 
@@ -43,6 +48,7 @@ class OutputCache extends AbstractPattern
      * Stop output cache
      *
      * @param  array   $options   Ouput end options (ttl | priority | output | forcedata )
+     * @return boolean
      * @throws Zend_Cache_Exception
      */
     public function end(array $options = array())
@@ -52,13 +58,18 @@ class OutputCache extends AbstractPattern
             throw new RuntimeException('use of end() without a start()');
         }
 
-        $data = ob_get_contents();
-        ob_end_clean();
-
-        $this->getStorage()->set($key, $data, $options);
         if (!isset($options['output']) || $options['output']) {
-            echo $data;
+            $data = ob_get_flush();
+        } else {
+            $data = ob_get_contents();
+            ob_end_clean();
         }
+
+        if ($data === false) {
+            throw new RuntimeException('Output buffering not active');
+        }
+
+        return $this->getStorage()->set($key, $data, $options);
     }
 
 }

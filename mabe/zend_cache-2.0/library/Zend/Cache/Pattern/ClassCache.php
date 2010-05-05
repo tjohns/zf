@@ -1,6 +1,9 @@
 <?php
 
 namespace Zend\Cache\Pattern;
+use \Zend\Cache\RuntimeException;
+use \Zend\Cache\InvalidArgumentException;
+use \Zend\Cache\BadMethodCallException;
 
 class ClassCache extends CallbackCache
 {
@@ -14,7 +17,7 @@ class ClassCache extends CallbackCache
     public function getOptions()
     {
         $options = parent::getOptions();
-        $options['entity'] = $this->getEntity();
+        $options['entity']               = $this->getEntity();
         $options['cacheByDefault']       = $this->getCacheByDefault();
         $options['cacheMethods']         = $this->getCacheMethods();
         $options['nonCacheMethods']      = $this->getNonCacheMethods();
@@ -22,6 +25,12 @@ class ClassCache extends CallbackCache
         return $options;
     }
 
+    /**
+     * Set the entity to cache
+     *
+     * @param string|object $entity The Classname for static calls or an object
+     * @return Zend\Cache\Pattern\ClassCache
+     */
     public function setEntity($entity)
     {
         if (!is_string($entity) && !is_object($entity)) {
@@ -31,6 +40,12 @@ class ClassCache extends CallbackCache
         return $this;
     }
 
+    /**
+     * Get the entity to cache
+     *
+     * @return null|string|object The Classname for static calls or an object
+     *                            or NULL if no entity was set
+     */
     public function getEntity()
     {
         return $this->_entity;
@@ -107,12 +122,23 @@ class ClassCache extends CallbackCache
         return $this->_nonCacheMethods;
     }
 
+    /**
+     * Enable or disable caching of magic property calls
+     *
+     * @param boolean $flag
+     * @return Zend\Cache\Pattern\ClassCache
+     */
     public function setCacheMagicProperties($flag)
     {
         $this->_cacheMagicProperties = (bool)$flag;
         return $this;
     }
 
+    /**
+     * If caching of magic properties enabled
+     *
+     * @return boolean
+     */
     public function getCacheMagicProperties()
     {
         return $this->_cacheMagicProperties;
@@ -268,7 +294,7 @@ class ClassCache extends CallbackCache
     }
 
     /**
-     * Unseting a propertie.
+     * Unseting a property.
      *
      * NOTE:
      * Magic properties will be cached too if the option cacheMagicProperties

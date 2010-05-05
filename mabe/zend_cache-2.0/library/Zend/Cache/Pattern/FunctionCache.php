@@ -18,16 +18,34 @@ class FunctionCache extends CallbackCache
         return $options;
     }
 
+    /**
+     * Enable or disable caching by default
+     *
+     * @param boolean $flag
+     * @return Zend\Cache\Pattern\FunctionCache
+     */
     public function setCacheByDefault($flag)
     {
         $this->_cacheByDefault = (bool)$flag;
+        return $this;
     }
 
+    /**
+     * Caching by default enabled
+     *
+     * @return boolean
+     */
     public function getCacheByDefault()
     {
         return $this->_cacheByDefault;
     }
 
+    /**
+     * Enable caching on functions
+     *
+     * @param string[] $functions
+     * @return Zend\Cache\Pattern\FunctionCache
+     */
     public function setCacheFunctions(array $functions)
     {
         foreach ($functions as &$function) {
@@ -38,11 +56,22 @@ class FunctionCache extends CallbackCache
         return $this;
     }
 
+    /**
+     * Get cachable functions
+     *
+     * @return string[]
+     */
     public function getCacheFunctions()
     {
         return $this->_cacheFunctions;
     }
 
+    /**
+     * Disable caching on functions
+     *
+     * @param string[] $functions
+     * @return Zend\Cache\Pattern\FunctionCache
+     */
     public function setNonCacheFunctions(array $functions)
     {
         foreach ($functions as &$function) {
@@ -53,6 +82,11 @@ class FunctionCache extends CallbackCache
         return $this;
     }
 
+    /**
+     * Get functions disabled for caching
+     *
+     * @return string[]
+     */
     public function getNonCacheFunctions()
     {
         return $this->_nonCacheFunctions;
@@ -66,7 +100,7 @@ class FunctionCache extends CallbackCache
      * @return mixed
      * @throws Zend_Cache_Exception
      */
-    public function __call($function, array $args)
+    public function __call($function, array $args = array())
     {
         $function = strtolower($function);
 
