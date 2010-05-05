@@ -135,12 +135,14 @@ class ClassCache extends CallbackCache
 
         $method = strtolower($method);
 
-        // handle magic properties by magic methods
+        // handle magic magic methods
         switch ($method) {
-            case '__set':   return $this->__set(array_shift($args), array_shift($args));
-            case '__get':   return $this->__get(array_shift($args), array_shift($args));
-            case '__isset': return $this->__isset(array_shift($args), array_shift($args));
-            case '__unset': return $this->__unset(array_shift($args), array_shift($args));
+            case '__set':      return $this->__set(array_shift($args), array_shift($args));
+            case '__get':      return $this->__get(array_shift($args), array_shift($args));
+            case '__isset':    return $this->__isset(array_shift($args), array_shift($args));
+            case '__unset':    return $this->__unset(array_shift($args), array_shift($args));
+            case '__tostring': return $this->__toString();
+            case '__invoke':   return call_user_func_array(array($this, '__invoke', $args));
         }
 
         $cache = $this->getCacheByDefault();
@@ -178,12 +180,15 @@ class ClassCache extends CallbackCache
         if (is_object($entity)) {
             $entity->{$name} = $value;
         } else {
+            // static property
             $entity::$$name = $value;
+            return;
         }
 
         if ( !$this->getCacheMagicProperties()
-          || !is_object($entity)
           || property_exists($entity, $name)) {
+            // no caching if property isn't magic
+            // or caching magic properties is disabled
             return;
         }
 
@@ -223,6 +228,7 @@ class ClassCache extends CallbackCache
             if (is_object($entity)) {
                 return $entity->{$name};
             } else {
+                // static property
                 return $entity::$$name;
             }
         }
@@ -253,6 +259,7 @@ class ClassCache extends CallbackCache
             if (is_object($entity)) {
                 return isset($entity->{$name});
             } else {
+                // static property
                 return isset($entity::$$name);
             }
         }
@@ -280,12 +287,15 @@ class ClassCache extends CallbackCache
         if (is_object($entity)) {
             unset($entity->{$name});
         } else {
+            // static property
             unset($entity::$$name);
+            return;
         }
 
         if ( !$this->getCacheMagicProperties()
-          || !is_object($entity)
           || property_exists($entity, $name)) {
+            // no caching if property isn't magic
+            // or caching magic properties is disabled
             return;
         }
 
@@ -305,11 +315,6 @@ class ClassCache extends CallbackCache
     /**
      * Converts cache entity to string
      *
-     * NOTE:
-     * If cache entity doesn't implement __toString than a simple type cast is
-     * done without caching else __toString will be called with normal cache
-     * handling.
-     *
      * @return string
      */
     public function __toString()
@@ -319,13 +324,24 @@ class ClassCache extends CallbackCache
             throw new RuntimeException('Missing entity');
         }
 
-        if ( !is_object($entity)
-          || !method_exists($entity, '__toString')) {
-            // Don't cache if __toString doesn't exists and use simple type casting
-            return (string)$entity;
+        if (!is_object($entity)) {
+            throw new BadMethodCallException(
+                "The static method '__toString' isn't allowed"
+            );
         }
 
-        return $this->__call('__toString', $args);
+        $cache = $this->getCacheByDefault();
+        if ($cache) {
+            $cache = !in_array('__tostring', $this->getNonCacheMethods());
+        } else {
+            $cache = in_array('__tostring', $this->getCacheMethods());
+        }
+
+        if (!$cache) {
+            return $entity->{'__toString'}();
+        }
+
+        return $this->call('__toString', $args);
     }
 
     /**
@@ -335,7 +351,23 @@ class ClassCache extends CallbackCache
      * @see http://php.net/manual/language.oop5.magic.php#language.oop5.magic.invoke
      */
     public function __invoke() {
-        return $this->__call('__invoke', func_get_args());
+        $entity = $this->getEntity();
+        if (!$entity) {
+            throw new RuntimeException('Missing entity');
+        }
+
+        $cache = $this->getCacheByDefault();
+        if ($cache) {
+            $cache = !in_array('__invoke', $this->getNonCacheMethods());
+        } else {
+            $cache = in_array('__invoke', $this->getCacheMethods());
+        }
+
+        if (!$cache) {
+            return call_user_func_array(array($entity, '__invoke'), func_get_args());
+        }
+
+        return $this->call('__invoke', func_get_args());
     }
 
 }
