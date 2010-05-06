@@ -69,7 +69,7 @@ class OutputCache extends AbstractPattern
             throw new RuntimeException('Output buffering not active');
         }
 
-        return $this->getStorage()->set($key, $data, $options);
+        return $this->getStorage()->set($data, $key, $options);
     }
 
 }
