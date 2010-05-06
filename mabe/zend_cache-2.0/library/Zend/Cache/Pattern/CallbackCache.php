@@ -37,7 +37,7 @@ class CallbackCache extends AbstractPattern
         ob_implicit_flush(false);
         $ret = call_user_func_array($callback, $args);
         $out = ob_get_flush();
-        $this->getStorage()->set($key, array($out, $ret), $options);
+        $this->getStorage()->set(array($out, $ret), $key, $options);
 
         return $ret;
     }

@@ -326,7 +326,7 @@ class ClassCache extends CallbackCache
         }
 
         // remove previous cached __set, __get and __isset calls
-        $removeKeys = array();
+        $removeKeys = null;
         if (is_callable(array($entity, '__get'), false, $callbackName)) {
             $removeKeys[] = $this->_makeId($callbackName, array($name));
         }
