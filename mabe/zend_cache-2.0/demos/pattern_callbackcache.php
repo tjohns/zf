@@ -15,7 +15,7 @@ $cache = new Cache\Storage(array(
     // 'plugins' => array(),
     'options' => array('ttl' => 5),
 ));
-$outputCache = Cache\Pattern::factory('OutputCache', array(
+$callbackCache = Cache\Pattern::factory('CallbackCache', array(
     'storage' => $cache,
 ));
 
@@ -25,17 +25,21 @@ $cache->clear();
 
 $runs = 5;
 
-echo 'This demo displays the current timestamp '.$runs.' times' . PHP_EOL
-   . 'within an output cache of the same key.' . PHP_EOL
-   . '-> You should see the same time displayed as long as your configured ttl (5s)' . PHP_EOL . PHP_EOL;
+function retAndOutTime() {
+    echo time();
+    return time();
+}
+
+echo 'This demo call a function returning and displaying the current timestamp '.$runs.' times' . PHP_EOL
+   . 'using the CallbackCache pattern.' . PHP_EOL
+   . '-> You should see the same time returned and displayed as long as your configured ttl (5s)' . PHP_EOL . PHP_EOL;
 
 for ($i=0; $i < $runs; $i++) {
-    echo 'Starting display current time ('.($i+1).'. call)' . PHP_EOL;
+    echo 'Starting call function ('.($i+1).'. call)' . PHP_EOL;
     echo '------------------------------------------' . PHP_EOL;
-    if (!$outputCache->start('key')) {
-        echo 'time: '.time() . PHP_EOL;;
-        $outputCache->end();
-    }
+    echo 'Display: ';
+    $ret = $callbackCache->call('\Zend\retAndOutTime'); 
+    echo PHP_EOL . 'Return:  ' . $ret . PHP_EOL;
     echo '------------------------------------------' . PHP_EOL;
 
     echo 'run '.($i+1).' finished' . PHP_EOL;
