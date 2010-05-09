@@ -565,4 +565,29 @@ abstract class AbstractAdapter implements Storable
         return $value;
     }
 
+    /**
+     * Generate a hash value.
+     *
+     * @param  string $data  Data
+     * @param  string $algo  Hash algorithm (or "strlen")
+     * @param  bool   $raw   Return hash without any conversion (binary data if not strlen)
+     * @return string        Hash value
+     * @throws RuntimeException
+     */
+    protected function _hash($data, $algo, $raw = false)
+    {
+        // special case on strlen as virtual hash algo
+        if ($algo === 'strlen') {
+            return (string)strlen($data);
+        }
+
+        $hash = hash($algo, $data, $raw);
+        if (!isset($hash[0])) { // strlen($hash) > 0
+            $lastErr = error_get_last();
+            throw new RuntimeException('Hash creation failed: ' . $lastErr['message']);
+        }
+
+        return $hash;
+    }
+
 }

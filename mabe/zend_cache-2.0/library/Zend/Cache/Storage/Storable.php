@@ -160,7 +160,7 @@ interface Storable
      *
      * @param array $keys
      * @param array $options
-     * @return array Assoziative array of existing cache ids and its data
+     * @return array Assoziative array of existing keys and values
      * @throws Zend\Cache\Exception
      */
     public function getMulti(array $keys, array $options = array());
@@ -180,7 +180,7 @@ interface Storable
      *
      * @param array $keys
      * @param array $options
-     * @return array Assoziative array of existing cache ids
+     * @return array Assoziative array of existing keys
      * @throws Zend\Cache\Exception
      */
     public function existsMulti(array $keys, array $options = array());
