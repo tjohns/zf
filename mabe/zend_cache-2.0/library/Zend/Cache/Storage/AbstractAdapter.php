@@ -510,19 +510,34 @@ abstract class AbstractAdapter implements Storable
      */
     protected function _statusOfSysMemWin()
     {
-        // TODO: http://de.php.net/manual/en/function.win32-ps-stat-mem.php
-        // escapeshellarg instead of escapeshellcmd ??????
-        $cmd = escapeshellarg(__DIR__ . '/_win/GlobalMemoryStatus.exe');
-        $out = $ret = null;
-        exec($cmd, $out, $ret);
-        if (!$ret && isset($out[0]) && ($memArr=unserialize($out[0]))) {
-            return array(
-                'total' => $memArr['TotalPhys'],
-                'free'  => $memArr['AvailPhys']
-            );
+        if (function_exists('win32_ps_stat_mem')) {
+            $memstat = win32_ps_stat_mem();
+        } else {
+            // Call GlobalMemoryStatus.exe
+            // escapeshellarg instead of escapeshellcmd ??????
+            $cmd  = escapeshellarg(__DIR__ . '\\_win\\GlobalMemoryStatus.exe');
+            $out  = $ret = null;
+            $line = exec($cmd, $out, $ret);
+            if ($ret) {
+                $out = implode("\n", $out);
+                throw new RuntimeException(
+                    "Command '{$cmd}' failed"
+                  . ", return: '{$ret}'"
+                  . ", output: '{$out}'"
+                );
+            } elseif (!isset($line[0]) || !($memstat = @unserialize($line)) ) {
+                $out = implode("\n", $out);
+                throw new RuntimeException(
+                    "Can't parse output of command '{$cmd}'"
+                  . ", output: '{$out}'"
+                );
+            }
         }
 
-        throw new RuntimeException('Can\'t detect system memory status');
+        return array(
+            'total' => $memArr['total_phys'],
+            'free'  => $memArr['avail_phys']
+        );
     }
 
     /**

@@ -21,13 +21,14 @@ void main(int argc, char *argv[])
   */
 
   // display as serialized php array
+  // with the same structure as win32_ps_stat_mem does
   printf("a:6:{");
-    printf("s:9:\"TotalPhys\";d:%u;",      statex.ullTotalPhys);
-    printf("s:9:\"AvailPhys\";d:%u;",      statex.ullAvailPhys);
-    printf("s:13:\"TotalPageFile\";d:%u;", statex.ullTotalPageFile);
-    printf("s:13:\"AvailPageFile\";d:%u;", statex.ullAvailPageFile);
-    printf("s:12:\"TotalVirtual\";d:%u;",  statex.ullTotalVirtual);
-    printf("s:12:\"AvailVirtual\";d:%u;",  statex.ullAvailVirtual);
+    printf("s:10:\"total_phys\";d:%u;",     statex.ullTotalPhys);
+    printf("s:10:\"avail_phys\";d:%u;",     statex.ullAvailPhys);
+    printf("s:14:\"total_pagefile\";d:%u;", statex.ullTotalPageFile);
+    printf("s:14:\"avail_pagefile\";d:%u;", statex.ullAvailPageFile);
+    printf("s:13:\"total_virtual\";d:%u;",  statex.ullTotalVirtual);
+    printf("s:13:\"avail_virtual\";d:%u;",  statex.ullAvailVirtual);
   printf("}");
 
 }
