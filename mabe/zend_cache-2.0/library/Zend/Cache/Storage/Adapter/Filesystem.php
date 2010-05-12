@@ -9,7 +9,8 @@ class Filesystem extends AbstractAdapter
     /**
      * Directory where to store caching files
      *
-     * @var null|string A directory or NULL to use sys_get_tmp_dir
+     * @var null|string The used cache directory
+     *                  or NULL to auto set sys_get_tmp_dir on constructor
      */
     protected $_cacheDir = null;
 
@@ -35,6 +36,13 @@ class Filesystem extends AbstractAdapter
     protected $_dirUmask = 077;
 
     /**
+     * How much sub-directaries should be created?
+     *
+     * @var int
+     */
+    protected $_dirLevel = 0;
+
+    /**
      * Read control enabled ?
      *
      * If enabled a hash (readControlAlgo) will be saved and check on read.
@@ -46,7 +54,7 @@ class Filesystem extends AbstractAdapter
     /**
      * The used hash algorithm if read control is enabled
      *
-     * @var unknown_type
+     * @var string
      */
     protected $_readControlAlgo = 'crc32';
 
@@ -56,14 +64,6 @@ class Filesystem extends AbstractAdapter
      * @var boolean
      */
     protected $_clearStatCache = true;
-
-    /**
-     * Directory level:
-     * How much sub-directaries should created
-     *
-     * @var int
-     */
-    protected $_dirLevel = 0;
 
     /**
      * Buffer vars
@@ -101,13 +101,17 @@ class Filesystem extends AbstractAdapter
 
     public function setCacheDir($dir)
     {
-        if (!$dir || !is_dir($dir)) {
-            throw new InvalidArgumentException("Cache directory '{$dir}' not found or not a directoy");
+        if (!is_dir($dir)) {
+            throw new InvalidArgumentException(
+                "Cache directory '{$dir}' not found or not a directoy"
+            );
         } elseif (!is_writable($dir) || !is_readable($dir)) {
-            throw new InvalidArgumentException("Cache directory '{$dir}' not writable or readable");
+            throw new InvalidArgumentException(
+                "Cache directory '{$dir}' not writable or not readable"
+            );
         }
 
-        $this->_cacheDir = rtrim(realpath($dir), '\\/');
+        $this->_cacheDir = rtrim(realpath($dir), DIRECTORY_SEPARATOR);
         return $this;
     }
 
@@ -273,7 +277,8 @@ class Filesystem extends AbstractAdapter
     {
         $key = $this->_key($key);
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -287,7 +292,8 @@ class Filesystem extends AbstractAdapter
     public function setMulti(array $keys, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -394,7 +400,8 @@ class Filesystem extends AbstractAdapter
     {
         $key = $this->_key($key);
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -412,7 +419,8 @@ class Filesystem extends AbstractAdapter
     public function replaceMulti(array $keys, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -432,7 +440,8 @@ class Filesystem extends AbstractAdapter
     {
         $key = $this->_key($key);
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -450,7 +459,8 @@ class Filesystem extends AbstractAdapter
     public function addMulti(array $keys, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -471,7 +481,8 @@ class Filesystem extends AbstractAdapter
     {
         $this->_key($key);
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         // unlink is not affected by clearstatcache
         $this->_remove($key, $options);
@@ -482,7 +493,8 @@ class Filesystem extends AbstractAdapter
     public function removeMulti(array $keys, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         // unlink is not affected by clearstatcache
         foreach ($keys as $key) {
@@ -512,7 +524,8 @@ class Filesystem extends AbstractAdapter
         $options['validate']  = isset($options['validate'])
                               ? (bool)$options['validate'] : true;
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache('clearstatcache')) {
             clearstatcache();
@@ -528,7 +541,8 @@ class Filesystem extends AbstractAdapter
         $options['validate']  = isset($options['validate'])
                               ? (bool)$options['validate'] : true;
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache('clearstatcache')) {
             clearstatcache();
@@ -547,7 +561,7 @@ class Filesystem extends AbstractAdapter
     protected function _get($key, array $options)
     {
         if ( !$this->_exist($key, $options)
-          || !($keyInfo=$this->_getKeyInfo($key, $options)) ) {
+          || !($keyInfo=$this->_getKeyInfo($key, $options['namespace'])) ) {
             return false;
         }
 
@@ -590,7 +604,8 @@ class Filesystem extends AbstractAdapter
         $options['validate']  = isset($options['validate'])
                               ? (bool)$options['validate'] : true;
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache('clearstatcache')) {
             clearstatcache();
@@ -606,7 +621,8 @@ class Filesystem extends AbstractAdapter
         $options['validate']  = isset($options['validate'])
                               ? (bool)$options['validate'] : true;
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache('clearstatcache')) {
             clearstatcache();
@@ -624,7 +640,7 @@ class Filesystem extends AbstractAdapter
 
     protected function _exist($key, array $options)
     {
-        $keyInfo = $this->_getKeyInfo($id, $options);
+        $keyInfo = $this->_getKeyInfo($id, $options['namespace']);
         if (!$keyInfo) {
             return false; // missing or corrupted cache data
         }
@@ -643,7 +659,8 @@ class Filesystem extends AbstractAdapter
     {
         $key = $this->_key($key);
         $options['namespace'] = isset($options['namespace'])
-                              ? (string)$options['namespace'] : '';
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
 
         if ($this->getClearStatCache()) {
             clearstatcache();
@@ -659,8 +676,28 @@ class Filesystem extends AbstractAdapter
         return $this->_lastInfoAll;
     }
 
+    public function infoMulti(array $keys, array $options = array())
+    {
+        $options['namespace'] = isset($options['namespace'])
+                              ? (string)$options['namespace']
+                              : $this->getNamespace();
+
+        if ($this->getClearStatCache('clearstatcache')) {
+            clearstatcache();
+        }
+
+        $infoList = array();
+        foreach ($keys as $key) {
+            if ( ($info = $this->_info($key, $options)) !== false ) {
+                $infoList[$key] = $info;
+            }
+        }
+
+        return $infoList;
+    }
+
     protected function _info($key, array $options) {
-        $keyInfo = $this->_getKeyInfo($key, $options);
+        $keyInfo = $this->_getKeyInfo($key, $options['namespace']);
         if (!$keyInfo) {
             return false;
         }
@@ -707,13 +744,13 @@ class Filesystem extends AbstractAdapter
      * NOTE: returns false if cache doesn't hit.
      *
      * @param string $key
-     * @param array $options
+     * @param string $ns
      * @return array|boolean
      */
-    protected function _getKeyInfo($key, array $options)
+    protected function _getKeyInfo($key, $ns)
     {
         if ( $this->_lastInfoKey == $key
-          && ($ns = $this->_lastInfoNs) == $options['namespace'] ) {
+          && $this->_lastInfoNs == $ns ) {
             return $this->_lastInfo;
         }
 
@@ -748,8 +785,9 @@ class Filesystem extends AbstractAdapter
         $path  = $this->getCacheDir();
         $level = $this->getDirLevel();
         if ( $level > 0 ) {
+            // store up to 256 directories per directory level
             $hash = md5($key);
-            for ($i=0; $i < $level; $i+=2) {
+            for ($i = 0; $i < $level; $i+= 2) {
                 $path.= DIRECTORY_SEPARATOR . $ns . $hash[$i] . $hash[$i+1];
             }
         }
@@ -824,14 +862,15 @@ class Filesystem extends AbstractAdapter
      */
     protected function _putFileContent($file, $data)
     {
-        $flags = FILE_BINARY; // since PHP 6 but already defined as 0 in PHP 5.3
+        $flags = FILE_BINARY; // since PHP 6 but defined as 0 in PHP 5.3
         if ($this->getFileLocking()) {
             $flags = $flags | LOCK_EX;
         }
 
-        if (!@file_put_contents($file, $data, $flags)) {
+        $put = @file_put_contents($file, $data, $flags);
+        if ( $put < strlen((binary)$data) ) {
             $lastErr = error_get_last();
-            @unlink($file);
+            @unlink($file); // remove old or incomplete written file
             throw new RuntimeException($lastErr['message']);
         }
     }
