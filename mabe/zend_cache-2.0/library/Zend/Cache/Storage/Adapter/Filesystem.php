@@ -223,7 +223,7 @@ class Filesystem extends AbstractAdapter
         return $this;
     }
 
-    public function getDirLevel($level)
+    public function getDirLevel()
     {
         return $this->_dirLevel;
     }
@@ -289,7 +289,7 @@ class Filesystem extends AbstractAdapter
         return true;
     }
 
-    public function setMulti(array $keys, array $options = array())
+    public function setMulti(array $keyValuePairs, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
                               ? (string)$options['namespace']
@@ -299,7 +299,7 @@ class Filesystem extends AbstractAdapter
             clearstatcache();
         }
 
-        foreach ($keys as $key) {
+        foreach ($keyValuePairs as $key => $value) {
             $this->_set($value, $key, $options);
         }
 
@@ -310,8 +310,8 @@ class Filesystem extends AbstractAdapter
     {
         $oldUmask = null;
 
-        if ( $this->_lastInfoKey == $key
-          && ($ns = $options['namespace']) == $this->_lastInfoNs) {
+        $ns = $options['namespace'];
+        if ( $this->_lastInfoKey == $key && $ns == $this->_lastInfoNs) {
             $filespec = $this->_lastInfo['filespec'];
             // if lastKeyInfo is available I'm sure that the cache directory exist
         } else {
@@ -358,19 +358,23 @@ class Filesystem extends AbstractAdapter
             }
 
             try {
-                $this->_putFileContent($filespec . '.dat', $data);
+                $this->_putFileContent($filespec . '.dat', $value);
 
                 // buffer cache info array
                 // -> this give a boost on enabled write_control
                 $this->_lastInfoKey = $key;
-                $this->_lastInfoAll = $this->_lastInfo + $info;
                 $this->_lastInfo    = array(
                     'filespec' => $filespec,
                     'mtime'    => time(),
                 );
+                if ($info !== null) {
+                    $this->_lastInfoAll = $this->_lastInfo + $info;
+                } else {
+                    $this->_lastInfoAll = $this->_lastInfo;
+                }
 
             } catch (Exception $e) {
-                if ($this->_lastInfoKey == $id) {
+                if ($this->_lastInfoKey == $key) {
                     $this->_lastInfoKey = null;
                 }
 
@@ -416,7 +420,7 @@ class Filesystem extends AbstractAdapter
         return true;
     }
 
-    public function replaceMulti(array $keys, array $options = array())
+    public function replaceMulti(array $keyValuePairs, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
                               ? (string)$options['namespace']
@@ -426,7 +430,7 @@ class Filesystem extends AbstractAdapter
             clearstatcache();
         }
 
-        foreach ($keys as $key) {
+        foreach ($keyValuePairs as $key => $value) {
             if ( !$this->_exists($key, $options) ) {
                 throw new RuntimeException("Key '{$key}' doesn't exist");
             }
@@ -456,7 +460,7 @@ class Filesystem extends AbstractAdapter
         return true;
     }
 
-    public function addMulti(array $keys, array $options = array())
+    public function addMulti(array $keyValuePairs, array $options = array())
     {
         $options['namespace'] = isset($options['namespace'])
                               ? (string)$options['namespace']
@@ -466,7 +470,7 @@ class Filesystem extends AbstractAdapter
             clearstatcache();
         }
 
-        foreach ($keys as $key) {
+        foreach ($keyValuePairs as $key => $value) {
             if ( $this->_exists($key, $options) ) {
                 throw new RuntimeException("Key '{$key}' already exist");
             }
@@ -560,7 +564,7 @@ class Filesystem extends AbstractAdapter
 
     protected function _get($key, array $options)
     {
-        if ( !$this->_exist($key, $options)
+        if ( !$this->_exists($key, $options)
           || !($keyInfo=$this->_getKeyInfo($key, $options['namespace'])) ) {
             return false;
         }
@@ -596,7 +600,7 @@ class Filesystem extends AbstractAdapter
         }
     }
 
-    public function exist($key, array $options = array())
+    public function exists($key = null, array $options = array())
     {
         $key = $this->_key($key);
         $options['ttl']       = isset($options['ttl'])
@@ -611,10 +615,10 @@ class Filesystem extends AbstractAdapter
             clearstatcache();
         }
 
-        return $this->_exist($key, $options);
+        return $this->_exists($key, $options);
     }
 
-    public function existMulti(array $keys, array $options = array())
+    public function existsMulti(array $keys, array $options = array())
     {
         $options['ttl']       = isset($options['ttl'])
                               ? (int)$options['ttl'] : 0;
@@ -630,7 +634,7 @@ class Filesystem extends AbstractAdapter
 
         $existsList = array();
         foreach ($keys as $key) {
-            if ( $this->_exist($key, $options) === true ) {
+            if ( $this->_exists($key, $options) === true ) {
                 $existsList[] = $key;
             }
         }
@@ -638,9 +642,9 @@ class Filesystem extends AbstractAdapter
         return $existsList;
     }
 
-    protected function _exist($key, array $options)
+    protected function _exists($key, array $options)
     {
-        $keyInfo = $this->_getKeyInfo($id, $options['namespace']);
+        $keyInfo = $this->_getKeyInfo($key, $options['namespace']);
         if (!$keyInfo) {
             return false; // missing or corrupted cache data
         }
