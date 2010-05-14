@@ -193,7 +193,7 @@ abstract class AbstractAdapter implements Storable
         foreach ($rsGet as $key => &$value) {
             $item = array();
             if (($select & Storage::SELECT_KEY) == Storage::SELECT_KEY) {
-                $item[0] = &$key;
+                $item[0] = $key;
             }
             if (($select & Storage::SELECT_VALUE) == Storage::SELECT_VALUE) {
                 $item[1] = &$value;
@@ -251,6 +251,16 @@ abstract class AbstractAdapter implements Storable
         return $rs;
     }
 
+    public function increment($value, $key = null, array $options = array())
+    {
+       $get = $this->get($key, $options);
+       if ($get !== false) {
+           return $this->add((int)$value, $key, $options);
+       } else {
+          return $this->replace((int)$value + $get, $key, $options);
+       }
+    }
+
     public function incrementMulti(array $keyValuePairs, array $options = array())
     {
         $ret = true;
@@ -258,6 +268,16 @@ abstract class AbstractAdapter implements Storable
             $ret = $this->increment($value, $key, $options) && $ret;
         }
         return $ret;
+    }
+
+    public function decrement($value, $key = null, array $options = array())
+    {
+       $get = $this->get($key, $options);
+       if ($get !== false) {
+           return $this->add(-(int)$value, $key, $options);
+       } else {
+          return $this->replace((int)$value - $get, $key, $options);
+       }
     }
 
     public function decrementMulti(array $keyValuePairs, array $options = array())
