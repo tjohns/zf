@@ -789,9 +789,9 @@ class Filesystem extends AbstractAdapter
         $path  = $this->getCacheDir();
         $level = $this->getDirLevel();
         if ( $level > 0 ) {
-            // store up to 256 directories per directory level
+            // create up to 256 directories per directory level
             $hash = md5($key);
-            for ($i = 0; $i < $level; $i+= 2) {
+            for ($i = 0, $max = ($level * 2); $i < $max; $i+= 2) {
                 $path.= DIRECTORY_SEPARATOR . $ns . $hash[$i] . $hash[$i+1];
             }
         }
