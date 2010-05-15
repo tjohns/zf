@@ -65,7 +65,7 @@ class PageCache extends AbstractPattern
         return $this->_requestMatch;
     }
 
-    public function setHttpHeaders(array $headers)
+    public function setHttpHeaders($headers)
     {
         if (!is_array($headers) || !count($headers)) {
             $headers = (bool)$headers;
@@ -211,7 +211,7 @@ class PageCache extends AbstractPattern
             }
         }
 
-        if ( ($cachedArray = $this->getStorage()->get($key)) !== null) {
+        if ( ($cachedArray = $this->getStorage()->get($key)) !== false) {
 
             // The stored array could be converted to an object by storage
             if (is_object($cachedArray)) {
@@ -221,7 +221,7 @@ class PageCache extends AbstractPattern
             if (isset($cachedArray['output'], $cachedArray['headers'], $cachedArray['mtime']) ) {
                 // send debug header
                 if ($this->getHttpDebugHeader()) {
-                    header('X-Zend_PageCache: cached response '
+                    header('X-ZendPageCache: cached response from '
                          . @date('r', $cachedArray['mtime']));
                 }
 
@@ -252,13 +252,15 @@ class PageCache extends AbstractPattern
                             if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
                                 $send304 = false;
                                 $httpIfNoneMatch = trim($_SERVER['HTTP_IF_NONE_MATCH']);
-                                if ($httpIfNoneMatch == '*') {
+                                $cachedEtag = $cachedArray['headers']['etag'];
+                                $cachedEtag = trim(substr($cachedEtag, strpos($cachedEtag, ':')+1));
+                                if ( $httpIfNoneMatch == '*' || $httpIfNoneMatch == $cachedEtag) {
                                     $send304 = true;
                                 } else {
                                     $httpIfNoneMatchList = explode(',', $httpIfNoneMatch);
                                     foreach ($httpIfNoneMatchList as $etag) {
                                         $etag = trim($etag);
-                                        if ($etag == $cachedArray['headers']['etag']) {
+                                        if ($etag == $cachedEtag) {
                                             $send304 = true;
                                             break;
                                         }
@@ -297,15 +299,17 @@ class PageCache extends AbstractPattern
                             // "If-Match"
                             // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24
                             if (isset($_SERVER['HTTP_IF_MATCH'], $cachedArray['headers']['etag'])) {
+                                $send412     = true;
                                 $httpIfMatch = trim($_SERVER['HTTP_IF_MATCH']);
-                                if ($httpIfMatch == '*') {
-                                    $send412 = true;
+                                $cachedEtag  = $cachedArray['headers']['etag'];
+                                $cachedEtag  = trim(substr($cachedEtag, strpos($cachedEtag, ':')+1));
+                                if ($httpIfMatch == '*' || $httpIfMatch == $cachedEtag) {
+                                    $send412 = false;
                                 } else {
-                                    $send412 = true;
                                     $httpIfMatchList = explode(',', $httpIfMatch);
                                     foreach ($httpIfMatchList as $etag) {
                                         $etag = trim($etag);
-                                        if ($etag == $cachedArray['headers']['etag']) {
+                                        if ($etag == $cachedEtag) {
                                             $send412 = false;
                                             break;
                                         }
@@ -489,6 +493,8 @@ class PageCache extends AbstractPattern
             }
 
             // add ALL http request headers
+            // TODO: don't generate key on all request headers like
+            //       IF_NONE_MATCH, CACHE_CONTROL etc.
             foreach ($_SERVER as $k => $v) {
                 if (substr($k, 0, 5) == 'HTTP_') {
                     $key.= '|' . $k . '=' . $v;
