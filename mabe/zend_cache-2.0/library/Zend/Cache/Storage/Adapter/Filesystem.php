@@ -337,8 +337,8 @@ class Filesystem extends AbstractAdapter
             $info['hash'] = $this->_hash($data, $this->getReadControlAlgo(), true);
         }
 
-        if (isset($opts['tags']) && $options['tags']) {
-            $info['tags'] = $opts['tags'];
+        if (isset($options['tags']) && $options['tags']) {
+            $info['tags'] = array_values(array_unique($options['tags']));
         }
 
         try {
