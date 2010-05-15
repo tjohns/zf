@@ -3,7 +3,7 @@
 namespace Zend\Cache\Storage;
 use \Zend\Cache\Storage;
 use \Zend\Cache\InvalidArgumentException;
-use \Zend\Ccache\BadMethodCallException;
+use \Zend\Cache\BadMethodCallException;
 use \Zend\Options;
 
 abstract class AbstractPlugin implements Pluggable
