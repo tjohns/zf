@@ -68,14 +68,14 @@ class Storage extends AbstractPlugin
 
     /**
      * Select item key
-     * 
+     *
      * @var int
      */
     const SELECT_KEY   = 1;
 
     /**
      * Select item value
-     * 
+     *
      * @var int
      */
     const SELECT_VALUE = 2;
@@ -181,7 +181,7 @@ class Storage extends AbstractPlugin
     public function setPlugins(array $plugins)
     {
         // set given plugins on the main storage adapter
-        $storage = $this->getMainStorage();
+        $storage = $this->getAdapter();
         foreach ($plugins as $k => $v) {
             if (is_string($k)) {
                 $plugin  = $k;
@@ -249,6 +249,80 @@ class Storage extends AbstractPlugin
         $this->setStorage($storage);
 
         return $this;
+    }
+
+    /* factories */
+
+    public static function factory($cfg)
+    {
+        if ($cfg instanceof \Zend\Config) {
+            $cfg = $cfg->toArray();
+        } elseif (!is_array($cfg)) {
+            throw new InvalidArgumentException(
+                'The factory needs an instance of \\Zend\\Config '
+              . 'or an associative array as argument'
+            );
+        }
+
+        // instantiate the adapter
+        if (!isset($cfg['adapter'])) {
+            throw new InvalidArgumentException(
+                'Missing "adapter"'
+            );
+        } elseif (is_array($cfg['adapter'])) {
+            if (!isset($cfg['adapter']['name'])) {
+                throw new InvalidArgumentException(
+                    'Missing "adapter.name"'
+                );
+            }
+
+            $name    = $cfg['adapter']['name'];
+            $options = isset($cfg['adapter']['options'])
+                     ? $cfg['adapter']['options'] : array();
+            $adapter = self::adapterFactory($name, $options);
+        } else {
+            $adapter = self::adapterFactory($name);
+        }
+
+        // add plugins
+        if (isset($cfg['plugins'])) {
+            if (!is_array($cfg['plugins'])) {
+                throw new InvalidArgumentException(
+                    'Plugins needs to be an array'
+                );
+            }
+
+            foreach ($cfg['plugins'] as $k => $v) {
+                if (is_string($k)) {
+                    $name = $k;
+                    if (!is_array($v)) {
+                        throw new InvalidArgumentException(
+                            '"plugins.'.$k.'" needs to be an array'
+                        );
+                    }
+                    $options = $v;
+                    $options['storage'] = $adapter;
+                } else {
+                    $name    = $v;
+                    $options = array('storage' => $adapter);
+                }
+
+                $adapter = self::pluginFactory($name, $options);
+            }
+        }
+
+        // set adapter or plugin options
+        if (isset($cfg['options'])) {
+            if (!is_array($cfg['options'])) {
+                throw new InvalidArgumentException(
+                    'Options needs to be an array'
+                );
+            }
+
+            $adapter->setOptions($options);
+        }
+
+        return $adapter;
     }
 
     /* load cache adapter */

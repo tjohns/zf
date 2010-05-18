@@ -30,8 +30,8 @@ abstract class AbstractPlugin implements Pluggable
     {
         $storage = $this->getStorage();
         $options = $storage->getOptions();
-        $options['storage']     = $storage;
-        $options['mainStorage'] = $this->getMainStorage();
+        $options['storage'] = $storage;
+        $options['adapter'] = $this->getAdapter();
 
         return $options;
     }
@@ -41,47 +41,29 @@ abstract class AbstractPlugin implements Pluggable
         return $this->_storage;
     }
 
-    public function setStorage($storage)
+    public function setStorage(Storable $storage)
     {
-        if (is_string($storage)) {
-            $storage = Storage::adapterFactory($storage);
-        } elseif ( !($storage instanceof Storable) ) {
-            throw new InvalidArgumentException(
-                'The storage must implement Zend\Cache\Storage\Storable '
-              . 'or must be the name of the storage adapter'
-            );
-        }
-
         $this->_storage = $storage;
         return $this;
     }
 
-    public function getMainStorage()
+    public function getAdapter()
     {
         $storage = $this->getStorage();
         if ($storage instanceof Pluggable) {
-            return $storage->getMainStorage();;
+            return $storage->getAdapter();
         } else {
             return $storage;
         }
     }
 
-    public function setMainStorage($storage)
+    public function setAdapter(Storable $adapter)
     {
-        if (is_string($storage)) {
-            $storage = Storage::adapterFactory($storage);
-        } elseif ( !($storage instanceof Storable) ) {
-            throw new InvalidArgumentException(
-                'The main storage must implement Zend\Cache\Storage\Storable '
-              . 'or must be the name of the storage adapter'
-            );
-        }
-
-        $innerStorage = $this->getStorage();
-        if ($innerStorage instanceof Pluggable) {
-            $innerStorage->setMainStorage($storage);
+        $storage = $this->getStorage();
+        if ($storage instanceof Pluggable) {
+            $storage->setAdapter($adapter);
         } else {
-            $this->setStorage($storage);
+            $this->setStorage($adapter);
         }
 
         return $this;

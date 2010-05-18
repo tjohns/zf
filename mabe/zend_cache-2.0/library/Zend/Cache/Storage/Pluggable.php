@@ -6,14 +6,18 @@ interface Pluggable extends Storable
 {
 
     /**
-     * Get storage
+     * Get the "first" storage.
+     * - This will be the first storage on a pluggable list
+     *   and can be an instance of Zend\Cache\Storage\Pluggable.
      *
      * @return Zend\Cache\Storage\Storable
      */
     public function getStorage();
 
     /**
-     * Set storage
+     * Set the "first" storage.
+     * - This will be the first storage on a pluggable list
+     *   and can be an instance of Zend\Cache\Storage\Pluggable.
      *
      * @param string|Zend\Cache\Storage\Storable $storage
      * @return Zend\Cache\Storage\Pluggable
@@ -21,18 +25,22 @@ interface Pluggable extends Storable
     public function setStorage($storage);
 
     /**
-     * Get the main storage
+     * Get the last "real" storage adapter.
+     * - This will be the last storage on a plugable list
+     *   and isn't an instance of Zend\Cache\Storage\Pluggable.
      *
      * @return Zend\Cache\Storage\Storable
      */
-    public function getMainStorage();
+    public function getAdapter();
 
     /**
-     * Set the main storage
+     * Set the last "real" storage adapter.
+     * - This will be the last storage on a plugable list
+     *   and isn't an instance of Zend\Cache\Storage\Pluggable.
      *
-     * @param string|Zend\Cache\Storage\Storable $storage
+     * @param string|Zend\Cache\Storage\Storable $adapter
      * @return Zend\Cache\Storage\Pluggable
      */
-    public function setMainStorage($storage);
+    public function setAdapter(Storable $adapter);
 
 }

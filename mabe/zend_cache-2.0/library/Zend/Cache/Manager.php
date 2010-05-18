@@ -23,7 +23,7 @@ class Manager
     protected $_storageTemplates = array(
         // Simple Common Default
         'default' => array(
-            'storage' => 'Filesystem',
+            'adapter' => 'Filesystem',
             'plugins' => array(
                 'Serialize',       // use default serializer
                 'IgnoreUserAbort'  // don't abort on writing
@@ -155,7 +155,8 @@ class Manager
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             throw new InvalidArgumentException(
-                'Options passed must be an associative array or instance of Zend_Config'
+                'Options passed must be an associative array '
+              . 'or an instance of \\Zend\\Config'
             );
         }
 
@@ -282,17 +283,21 @@ class Manager
      * @param  array $options
      * @return Zend\Cache\Manager
      */
-    public function setPatternTemplate($name, $options)
+    public function setPatternTemplate($name, $pattern, $options)
     {
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             throw new InvalidArgumentException(
-                'Options passed must be an associative array or instance of Zend_Config'
+                'Options passed must be an associative array '
+              . 'or an instance of \\Zend\\Config'
             );
         }
 
-        $this->_patternTemplates[$name] = $options;
+        $this->_patternTemplates[$name] = array(
+            'pattern' => $pattern,
+            'options' => $options,
+        );
 
         return $this;
     }
@@ -315,7 +320,7 @@ class Manager
      * @return array
      * @throws Zend\Cache\InvalidArgumentException if template not exists
      */
-    public function getStorageTemplate($name)
+    public function getPatternTemplate($name)
     {
         if (!isset($this->_patternTemplates[$name])) {
             throw new InvalidArgumentException("Pattern template '$name' doesn't exist");
@@ -340,7 +345,8 @@ class Manager
             $options = $options->toArray();
         } elseif (!is_array($options)) {
             throw new InvalidArgumentException(
-                'Options passed must be in an associative array or instance of Zend_Config'
+                'Options passed must be in an associative array '
+              . 'or instance of \\Zend\\Config'
             );
         }
 
