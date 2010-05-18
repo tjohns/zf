@@ -22,7 +22,7 @@ interface Pluggable extends Storable
      * @param string|Zend\Cache\Storage\Storable $storage
      * @return Zend\Cache\Storage\Pluggable
      */
-    public function setStorage($storage);
+    public function setStorage(Storable $storage);
 
     /**
      * Get the last "real" storage adapter.
