@@ -1,7 +1,7 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 use \Zend\Cache\InvalidArgumentException;
 
 class Tagging extends AbstractPlugin
@@ -10,7 +10,7 @@ class Tagging extends AbstractPlugin
     /**
      * The tag storage
      *
-     * @var null|Zend\Cache\Storage\Storable
+     * @var null|Zend\Cache\Storage\Adaptable
      */
     protected $_tagStorage = null;
 
@@ -48,7 +48,7 @@ class Tagging extends AbstractPlugin
         return $this->_tagStorage;
     }
 
-    public function setTagStorage(Storable $tagStorage)
+    public function setTagStorage(Adaptable $tagStorage)
     {
         $this->_tagStorage = $tagStorage;
     }

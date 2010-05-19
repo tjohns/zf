@@ -3,7 +3,7 @@
 namespace Zend\Cache\Pattern;
 use \Zend\Options;
 use \Zend\Cache\Storage;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 
 abstract class AbstractPattern implements PatternInterface
 {
@@ -11,7 +11,7 @@ abstract class AbstractPattern implements PatternInterface
     /**
      * The storage adapter
      *
-     * @var Zend\Cache\Storage\Storable
+     * @var Zend\Cache\Storage\Adaptable
      */
     protected $_storage;
 
@@ -46,9 +46,9 @@ abstract class AbstractPattern implements PatternInterface
     {
         if (is_string($storage)) {
             $storage = Storage::adapterFactory($storage);
-        } elseif ( !($storage instanceof Storable) ) {
+        } elseif ( !($storage instanceof Adaptable) ) {
             throw new InvalidArgumentException(
-                'The storage must implement Zend\Cache\Storage\Storable '
+                'The storage must implement Zend\Cache\Storage\Adaptable '
               . 'or must be the name of the storage adapter'
             );
         }

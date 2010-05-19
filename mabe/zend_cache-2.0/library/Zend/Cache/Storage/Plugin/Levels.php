@@ -1,14 +1,14 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 
 class Levels extends AbstractPlugin
 {
 
     protected $_storages = array();
 
-    public function setStorage(Storable $storage)
+    public function setStorage(Adaptable $storage)
     {
         parent::setStorage($storage);
 
@@ -17,7 +17,7 @@ class Levels extends AbstractPlugin
     }
 
     // @todo: handle different priorities
-    public function appendStorage(Storable $storage)
+    public function appendStorage(Adaptable $storage)
     {
         $this->_storages[] = $storage;
     }

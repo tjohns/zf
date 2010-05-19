@@ -1,14 +1,14 @@
 <?php
 
 namespace Zend\Cache\Storage\Adapter;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 use \Zend\Options;
 use \Zend\Cache\Storage;
 use \Zend\Cache\Exception;
 use \Zend\Cache\RuntimeException;
 use \Zend\Cache\InvalidArgumentException;
 
-abstract class AbstractAdapter implements Storable
+abstract class AbstractAdapter implements Adaptable
 {
 
     /**

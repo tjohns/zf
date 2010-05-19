@@ -2,7 +2,7 @@
 
 namespace Zend\Cache\Storage\Plugin;
 use \Zend\Cache\Storage\Pluggable;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 use \Zend\Cache\Storage;
 use \Zend\Cache\InvalidArgumentException;
 use \Zend\Cache\BadMethodCallException;
@@ -43,7 +43,7 @@ abstract class AbstractPlugin implements Pluggable
         return $this->_storage;
     }
 
-    public function setStorage(Storable $storage)
+    public function setStorage(Adaptable $storage)
     {
         $this->_storage = $storage;
         return $this;
@@ -59,7 +59,7 @@ abstract class AbstractPlugin implements Pluggable
         }
     }
 
-    public function setAdapter(Storable $adapter)
+    public function setAdapter(Adaptable $adapter)
     {
         $storage = $this->getStorage();
         if ($storage instanceof Pluggable) {

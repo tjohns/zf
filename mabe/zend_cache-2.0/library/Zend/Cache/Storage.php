@@ -176,7 +176,7 @@ class Storage extends AbstractPlugin
     /**
      * Reset all storage plugins
      *
-     * @param string[] $plugins
+     * @param array $plugins
      * @return Zend\Cache\Storage
      */
     public function setPlugins(array $plugins)
@@ -198,7 +198,7 @@ class Storage extends AbstractPlugin
      */
     public function addPlugin($plugin, array $options = array())
     {
-        $options = array('storage' => $this->getStorage()) + $options;
+        $options['storage'] = $this->getStorage();
         $this->setStorage(self::pluginFactory($plugin, $options));
 
         return $this;
@@ -265,6 +265,12 @@ class Storage extends AbstractPlugin
 
     /* factories */
 
+    /**
+     * The storage factory
+     * This can instantiate storage adapters and plugins.
+     *
+     * @param array|\Zend\Config $cfg
+     */
     public static function factory($cfg)
     {
         if ($cfg instanceof \Zend\Config) {
@@ -336,8 +342,6 @@ class Storage extends AbstractPlugin
 
         return $adapter;
     }
-
-    /* load cache adapter */
 
     /**
      * Instantiate a storage adapter

@@ -4,7 +4,7 @@
 namespace Zend\Cache\Storage;
 use \Zend\Cache\Storage;
 
-interface Storable
+interface Adaptable
 {
 
     /**
@@ -18,7 +18,7 @@ interface Storable
      * Set multiple options.
      *
      * @param array $options
-     * @return Zend\Cache\Storage\Storable
+     * @return Zend\Cache\Storage\Adaptable
      */
     public function setOptions(array $options);
 
