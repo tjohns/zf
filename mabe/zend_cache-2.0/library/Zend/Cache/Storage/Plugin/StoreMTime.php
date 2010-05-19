@@ -1,7 +1,6 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache\Storage\AbstractPlugin;
 
 class StoreMTime extends AbstractPlugin
 {

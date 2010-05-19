@@ -1,6 +1,7 @@
 <?php
 
-namespace Zend\Cache\Storage;
+namespace Zend\Cache\Storage\Adapter;
+use \Zend\Cache\Storage\Storable;
 use \Zend\Options;
 use \Zend\Cache\Storage;
 use \Zend\Cache\Exception;

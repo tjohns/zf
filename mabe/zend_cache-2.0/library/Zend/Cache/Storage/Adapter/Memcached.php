@@ -2,7 +2,6 @@
 
 namespace Zend\Cache\Storage\Adapter;
 use \Zend\Cache\Storage;
-use \Zend\Cache\Storage\AbstractAdapter;
 use \Zend\Cache\RuntimeException;
 use \Zend\Cache\InvalidArgumentException;
 

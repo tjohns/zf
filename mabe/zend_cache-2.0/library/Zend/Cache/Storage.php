@@ -3,7 +3,7 @@
 namespace Zend\Cache;
 use \Zend\Cache\Storage\Storable;
 use \Zend\Cache\Storage\Pluggable;
-use \Zend\Cache\Storage\AbstractPlugin;
+use \Zend\Cache\Storage\Plugin\AbstractPlugin;
 use \Zend\Loader\PluginLoader as Loader;
 use \Zend\Cache\LoaderException;
 use \Zend\Options;

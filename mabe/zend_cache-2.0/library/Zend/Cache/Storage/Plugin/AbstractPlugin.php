@@ -1,6 +1,8 @@
 <?php
 
-namespace Zend\Cache\Storage;
+namespace Zend\Cache\Storage\Plugin;
+use \Zend\Cache\Storage\Pluggable;
+use \Zend\Cache\Storage\Storable;
 use \Zend\Cache\Storage;
 use \Zend\Cache\InvalidArgumentException;
 use \Zend\Cache\BadMethodCallException;

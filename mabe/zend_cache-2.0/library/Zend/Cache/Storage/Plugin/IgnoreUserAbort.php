@@ -2,7 +2,6 @@
 
 namespace Zend\Cache\Storage\Plugin;
 use \Zend\Cache\Storage;
-use \Zend\Cache\Storage\AbstractPlugin;
 
 class IgnoreUserAbort extends AbstractPlugin
 {

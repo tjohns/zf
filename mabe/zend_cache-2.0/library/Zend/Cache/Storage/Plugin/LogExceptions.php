@@ -2,7 +2,6 @@
 
 namespace Zend\Cache\Storage\Plugin;
 use \Zend\Cache\Storage;
-use \Zend\Cache\Storage\AbstractPlugin;
 use \Zend\Log as Logger;
 
 class LogExceptions extends AbstractPlugin

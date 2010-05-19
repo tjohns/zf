@@ -1,7 +1,6 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache\Storage\AbstractPlugin;
 use \Zend\Cache\InvalidArgumentAxception;
 
 class AutomaticOptimize extends AbstractPlugin
