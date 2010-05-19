@@ -1,7 +1,6 @@
 <?php
 
 namespace Zend\Cache\Pattern;
-use \Zend\Cache\Storage\Adaptable;
 
 interface PatternInterface
 {
@@ -27,20 +26,5 @@ interface PatternInterface
      * return array
      */
     public function getOptions();
-
-    /**
-     * Get internal cache storage
-     *
-     * return Zend\Cache\Storage\Adaptable
-     */
-    public function getStorage();
-
-    /**
-     * Set internal cache storage
-     *
-     * @param Zend\Cache\Storage\Adaptable $storage
-     * @return Zend\Cache\Pattern\PatternInterface
-     */
-    public function setStorage($storage);
 
 }

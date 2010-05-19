@@ -132,7 +132,7 @@ class Manager
         }
 
         if (!isset($this->_storageTemplates[$name])) {
-            throw new InvalidArgumentException("Storage of name '$name' doesn't exist");
+            throw new InvalidArgumentException("Storage of name '{$name}' doesn't exist");
         }
 
         $storage = Storage::factory($this->_storageTemplates[$name]);
@@ -186,7 +186,7 @@ class Manager
     public function getStorageTemplate($name)
     {
         if (!isset($this->_storageTemplates[$name])) {
-            throw new InvalidArgumentException("Storage template '$name' doesn't exist");
+            throw new InvalidArgumentException("Storage template '{$name}' doesn't exist");
         }
 
         return $this->_storageTemplates[$name];
@@ -214,7 +214,7 @@ class Manager
 
         if (!isset($this->_storageTemplates[$name])) {
             throw new InvalidArgumentException(
-                "A storage configuration template does not exist with the name '$name'"
+                "A storage configuration template does not exist with the name '{$name}'"
             );
         }
 
@@ -266,10 +266,13 @@ class Manager
         }
 
         if (!isset($this->_patternTemplates[$name])) {
-            throw new InvalidArgumentException("Cache pattern of name '$name' doesn't exist");
+            throw new InvalidArgumentException("Cache pattern of name '{$name}' doesn't exist");
         }
 
-        $pattern = Pattern::factory($this->_patternTemplates[$name]);
+        $pattern = Pattern::factory(
+            $this->_patternTemplates[$name]['pattern'],
+            $this->_patternTemplates[$name]['options']
+        );
         $this->_patterns[$name] = $pattern;
 
         return $pattern;
@@ -323,7 +326,7 @@ class Manager
     public function getPatternTemplate($name)
     {
         if (!isset($this->_patternTemplates[$name])) {
-            throw new InvalidArgumentException("Pattern template '$name' doesn't exist");
+            throw new InvalidArgumentException("Pattern template '{$name}' doesn't exist");
         }
 
         return $this->_patternTemplates[$name];
@@ -352,7 +355,7 @@ class Manager
 
         if (!isset($this->_patternTemplates[$name])) {
             throw new InvalidArgumentException(
-                "A pattern configuration template does not exist with the name '$name'"
+                "A pattern configuration template does not exist with the name '{$name}'"
             );
         }
 

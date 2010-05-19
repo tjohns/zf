@@ -37,19 +37,33 @@ abstract class AbstractPattern implements PatternInterface
         );
     }
 
+    /**
+     * Get cache storage
+     *
+     * return Zend\Cache\Storage\Adaptable
+     */
     public function getStorage()
     {
         return $this->_storage;
     }
 
+    /**
+     * Set cache storage
+     *
+     * @param Zend\Cache\Storage\Adaptable|array|string $storage
+     * @return Zend\Cache\Pattern\PatternInterface
+     */
     public function setStorage($storage)
     {
-        if (is_string($storage)) {
+        if (is_array($storage)) {
+            $storage = Storage::factory($storage);
+        } elseif (is_string($storage)) {
             $storage = Storage::adapterFactory($storage);
         } elseif ( !($storage instanceof Adaptable) ) {
             throw new InvalidArgumentException(
-                'The storage must implement Zend\Cache\Storage\Adaptable '
-              . 'or must be the name of the storage adapter'
+                'The storage must be an instanceof Zend\Cache\Storage\Adaptable '
+              . 'or an array passed to Zend\Cache\Storage::factory '
+              . 'or simply the name of the storage adapter'
             );
         }
 
