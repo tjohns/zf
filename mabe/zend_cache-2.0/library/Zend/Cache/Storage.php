@@ -6,6 +6,7 @@ use \Zend\Cache\Storage\Pluggable;
 use \Zend\Cache\Storage\AbstractPlugin;
 use \Zend\Loader\PluginLoader as Loader;
 use \Zend\Cache\LoaderException;
+use \Zend\Options;
 
 class Storage extends AbstractPlugin
 {
@@ -281,7 +282,7 @@ class Storage extends AbstractPlugin
                      ? $cfg['adapter']['options'] : array();
             $adapter = self::adapterFactory($name, $options);
         } else {
-            $adapter = self::adapterFactory($name);
+            $adapter = self::adapterFactory($cfg['adapter']);
         }
 
         // add plugins
