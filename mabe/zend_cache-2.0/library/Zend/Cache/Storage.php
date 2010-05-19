@@ -166,7 +166,7 @@ class Storage extends AbstractPlugin
     {
         $plugins = array();
         $storage = $this->getStorage();
-        while ($storage instanceof Storable) {
+        while ($storage instanceof Pluggable) {
             $plugins[] = $storage;
             $storage = $storage->getStorage();
         }
@@ -181,20 +181,10 @@ class Storage extends AbstractPlugin
      */
     public function setPlugins(array $plugins)
     {
-        // set given plugins on the main storage adapter
-        $storage = $this->getAdapter();
-        foreach ($plugins as $k => $v) {
-            if (is_string($k)) {
-                $plugin  = $k;
-                $options = array('storage' => $storage) + $v;
-            } else {
-                $plugin  = $v;
-                $options = array('storage' => $storage);
-            }
-
-            $storage = self::pluginFactory($plugin, $options);
-        }
-        $this->setStorage($storage);
+        $this->setStorage(self::factory(array(
+            'adapter' => $this->getAdapter(),
+            'plugins' => $plugins
+        )));
 
         return $this;
     }
@@ -215,41 +205,62 @@ class Storage extends AbstractPlugin
     }
 
     /**
+     * Add a list of storage plugins
+     *
+     * @param array $plugins
+     * @return Zend\Cache\Storage
+     */
+    public function addPlugins(array $plugins)
+    {
+        $this->setStorage(self::factory(array(
+            'adapter' => $this->getStorage(),
+            'plugins' => $plugins
+        )));
+
+        return $this;
+    }
+
+    /**
+     * Removes all storage plugins
+     *
+     * @return Zend\Cache\Storage
+     */
+    public function removePlugins()
+    {
+        $this->setStorage($this->getAdapter());
+        return $this;
+    }
+
+    /**
      * Remove a storage plugin
      *
      * @param string $plugin Class of the plugin to remove
      * @return Zend\Cache\Storage
      */
-    public function removePlugin($plugin)
+    public function removePlugin(Pluggable $plugin)
     {
-        // get all storage plugins up to the given plugin
-        $plugins = array();
-        $storage = $this->getStorage();
-        $found   = false;
-        while ($storage instanceof Pluggable) {
-            if (get_class($storage) != $plugin) {
-                $plugins[] = $storage;
-                $storage = $storage->getStorage();
-            } else {
-                $found = true;
-                $storage = $storage->getStorage();
-                break;
+        if ($plugin === $this) {
+            throw new InvalidArgumentException('Can\'t remove $this');
+        }
+
+        $plugins = $this->getPlugins();
+        for ($i = 0, $max = count($plugins); $i < $max; $i++) {
+            if ($plugins[$i] === $plugin) {
+                if (isset($plugins[$i-1])) {
+                    $plugins[$i-1]->setStorage($plugin->getStorage());
+                } else {
+                    $this->setStorage($plugin->getStorage());
+                }
+
+                return $this;
             }
         }
 
-        // if the given plugin wasn't found throw an exception
-        if ($found === false) {
-            throw new InvalidArgumentException("Storage plugin '{$plugin}' not found");
-        }
-
-        // reset plugins
-        foreach ($plugins as $plugin) {
-            $plugin->setStorage($storage);
-            $storage = $plugin;
-        }
-        $this->setStorage($storage);
-
-        return $this;
+        $pluginClass = get_class($plugin);
+        $pluginHash  = spl_object_hash($plugin);
+        throw new InvalidArgumentException(
+            "Storage plugin 'object({$pluginClass})#{$pluginHash}' not found"
+        );
     }
 
     /* factories */
