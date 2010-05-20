@@ -1,7 +1,8 @@
 <?php
 
 namespace Zend\Cache;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
+use \Zend\Cache\Pattern\PatternInterface;
 use \Zend\Cache\InvalidArgumentException as InvalidArgumentException;
 
 class Manager
@@ -25,8 +26,8 @@ class Manager
         'default' => array(
             'adapter' => 'Filesystem',
             'plugins' => array(
+                'IgnoreUserAbort', // don't abort on writing
                 'Serialize',       // use default serializer
-                'IgnoreUserAbort'  // don't abort on writing
             ),
             // 'options' => array()   // use default options
         ),
@@ -90,16 +91,26 @@ class Manager
      *
      * @var array
      */
-    protected $_patternTemplates = array();
+    protected $_patternTemplates = array(
+        'page' => array(
+            'pattern' => 'PageCache',
+            'options' => array(
+                'storage' => array(
+                    'adapter' => 'Filesystem',
+                    'plugins' => array('IgnoreUserAbort', 'Serialize'),
+                ),
+            ),
+        )
+    );
 
     /**
      * Set a new storage for the Cache Manager to contain
      *
      * @param  string $name
-     * @param  Zend\Cache\Storage\Storable $storage
+     * @param  Zend\Cache\Storage\Adaptable $storage
      * @return Zend\Cache\Manager
      */
-    public function setStorage($name, Storable $storage)
+    public function setStorage($name, Adaptable $storage)
     {
         $this->_storages[$name] = $storage;
         return $this;
@@ -122,7 +133,7 @@ class Manager
      * using a named configuration template
      *
      * @param  string $name
-     * @return Zend\Cache\Storage\Storable
+     * @return Zend\Cache\Storage\Adaptable
      * @throws Zend\Cache\InvalidArgumentException if $name desn't exist
      */
     public function getStorage($name)
@@ -233,7 +244,7 @@ class Manager
      * @param  Zend\Cache\Pattern\PatternInterface $pattern
      * @return Zend\Cache\Manager
      */
-    public function setPattern($name, Storable $pattern)
+    public function setPattern($name, PatternInterface $pattern)
     {
         $this->_patterns[$name] = $pattern;
         return $this;
@@ -262,7 +273,7 @@ class Manager
     public function getPattern($name)
     {
         if (isset($this->_patterns[$name])) {
-            return $this->_storages[$name];
+            return $this->_patterns[$name];
         }
 
         if (!isset($this->_patternTemplates[$name])) {
@@ -342,7 +353,7 @@ class Manager
      * @throws Zend\Cache\InvalidArgumentException on invalid options format
      *                                             or if no pattern templates with $name exist
      */
-    public function mergeStorageTemplate($name, $options)
+    public function mergePatternTemplate($name, $options)
     {
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();

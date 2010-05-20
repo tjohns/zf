@@ -1,7 +1,7 @@
 <?php
 
 namespace Zend\Cache;
-use \Zend\Cache\Storage\Storable;
+use \Zend\Cache\Storage\Adaptable;
 use \Zend\Cache\Storage\Pluggable;
 use \Zend\Cache\Storage\Plugin\AbstractPlugin;
 use \Zend\Loader\PluginLoader as Loader;
@@ -346,14 +346,14 @@ class Storage extends AbstractPlugin
     /**
      * Instantiate a storage adapter
      *
-     * @param string|Zend\Cache\Storage\Storable $name
+     * @param string|Zend\Cache\Storage\Adaptable $name
      * @param array|Zend\Config $options
-     * @return Zend\Cache\Storage\Storable
+     * @return Zend\Cache\Storage\Adaptable
      * @throws Zend\Cache\LoaderException
      */
     public static function adapterFactory($name, $options = array())
     {
-        if ($name instanceof Storable) {
+        if ($name instanceof Adaptable) {
             Options::setOptions($name, $options);
             return $name;
         }
