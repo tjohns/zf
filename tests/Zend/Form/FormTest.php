@@ -1203,6 +1203,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('page1', $subForm->getName());
     }
 
+    public function testAddingSubFormResetsBelongsToWithDifferentSubFormName()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->setName('quo')
+                ->addElement('text', 'foo');
+        $this->form->addSubForm($subForm, 'bar');
+        $this->assertEquals('bar', $subForm->foo->getBelongsTo());
+    }
+
+
     public function testGetSubFormReturnsNullForUnregisteredSubForm()
     {
         $this->assertNull($this->form->getSubForm('foo'));
