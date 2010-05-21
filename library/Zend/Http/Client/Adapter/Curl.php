@@ -73,23 +73,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
      *
      * @var array
      */
-    protected $_invalidOverwritableCurlOptions = array(
-        CURLOPT_HTTPGET,
-        CURLOPT_POST,
-        CURLOPT_PUT,
-        CURLOPT_CUSTOMREQUEST,
-        CURLOPT_HEADER,
-        CURLOPT_RETURNTRANSFER,
-        CURLOPT_HTTPHEADER,
-        CURLOPT_POSTFIELDS,
-        CURLOPT_INFILE,
-        CURLOPT_INFILESIZE,
-        CURLOPT_PORT,
-        CURLOPT_MAXREDIRS,
-        CURLOPT_CONNECTTIMEOUT,
-        CURL_HTTP_VERSION_1_1,
-        CURL_HTTP_VERSION_1_0,
-    );
+    protected $_invalidOverwritableCurlOptions;
 
     /**
      * Response gotten from server
@@ -119,6 +103,23 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception('cURL extension has to be loaded to use this Zend_Http_Client adapter.');
         }
+        $this->_invalidOverwritableCurlOptions = array(
+            CURLOPT_HTTPGET,
+            CURLOPT_POST,
+            CURLOPT_PUT,
+            CURLOPT_CUSTOMREQUEST,
+            CURLOPT_HEADER,
+            CURLOPT_RETURNTRANSFER,
+            CURLOPT_HTTPHEADER,
+            CURLOPT_POSTFIELDS,
+            CURLOPT_INFILE,
+            CURLOPT_INFILESIZE,
+            CURLOPT_PORT,
+            CURLOPT_MAXREDIRS,
+            CURLOPT_CONNECTTIMEOUT,
+            CURL_HTTP_VERSION_1_1,
+            CURL_HTTP_VERSION_1_0,
+        );
     }
 
     /**
@@ -332,6 +333,11 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
             case Zend_Http_Client::TRACE:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
                 $curlValue = "TRACE";
+                break;
+            
+            case Zend_Http_Client::HEAD:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = "HEAD";
                 break;
 
             default:
