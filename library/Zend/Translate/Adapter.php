@@ -337,7 +337,7 @@ abstract class Zend_Translate_Adapter {
 
         if (isset(self::$_cache) and ($change == true)) {
             $id = 'Zend_Translate_' . $this->toString() . '_Options';
-            self::$_cache->save($this->_options, $id, array('Zend_Translate'));
+            self::$_cache->save($this->_options, $id);
         }
 
         return $this;
@@ -425,7 +425,7 @@ abstract class Zend_Translate_Adapter {
 
             if (isset(self::$_cache)) {
                 $id = 'Zend_Translate_' . $this->toString() . '_Options';
-                self::$_cache->save($this->_options, $id, array('Zend_Translate'));
+                self::$_cache->save($this->_options, $id);
             }
         }
 
@@ -558,13 +558,14 @@ abstract class Zend_Translate_Adapter {
 
         if (($options['content'] instanceof Zend_Translate) || ($options['content'] instanceof Zend_Translate_Adapter)) {
             $options['usetranslateadapter'] = true;
-            if (!empty($options['locale'])) {
+            if (!empty($options['locale']) && ($options['locale'] !== 'auto')) {
                 $options['content'] = $options['content']->getMessages($options['locale']);
             } else {
-                $locales = $options['content']->getList();
+                $content = $options['content'];
+                $locales = $content->getList();
                 foreach ($locales as $locale) {
                     $options['locale']  = $locale;
-                    $options['content'] = $options['content']->getMessages($locale);
+                    $options['content'] = $content->getMessages($locale);
                     $this->_addTranslationData($options);
                 }
 
@@ -633,7 +634,7 @@ abstract class Zend_Translate_Adapter {
 
         if (($read) and (isset(self::$_cache))) {
             $id = 'Zend_Translate_' . md5(serialize($options['content'])) . '_' . $this->toString();
-            self::$_cache->save($temp, $id, array('Zend_Translate'));
+            self::$_cache->save($temp, $id);
         }
 
         return $this;
@@ -906,7 +907,7 @@ abstract class Zend_Translate_Adapter {
     public static function clearCache()
     {
         require_once 'Zend/Cache.php';
-        self::$_cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('Zend_Translate'));
+        self::$_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
     /**
