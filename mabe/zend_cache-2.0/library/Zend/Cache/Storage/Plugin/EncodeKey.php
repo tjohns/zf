@@ -235,13 +235,14 @@ class EncodeKey extends AbstractPlugin
             return $item;
         }
 
-        if ( $fetchStyle == Storage::FETCH_NUM
-          || $fetchStyle == Storage::FETCH_BOTH) {
+        if ( ($fetchStyle == Storage::FETCH_NUM || $fetchStyle == Storage::FETCH_BOTH)
+          && isset($item[0]) ) {
             $item[0] = call_user_func($this->getKeyDecoder(), $item[0]);
-        } elseif ( $fetchStyle == Storage::FETCH_ASSOC
-                || $fetchStyle == Storage::FETCH_BOTH) {
+        } elseif ( ($fetchStyle == Storage::FETCH_ASSOC || $fetchStyle == Storage::FETCH_BOTH)
+                && isset($item['key']) ) {
             $item['key'] = call_user_func($this->getKeyDecoder(), $item['key']);
-        } elseif ($fetchStyle == Storage::FETCH_OBJ) {
+        } elseif ( $fetchStyle == Storage::FETCH_OBJ
+                && isset($item->key) ) {
             $item->key = call_user_func($this->getKeyDecoder(), $item->key);
         }
 
@@ -253,13 +254,14 @@ class EncodeKey extends AbstractPlugin
         $rs = $this->getAdapter()->fetchAll($fetchStyle);
         $keyDecoder = $this->getKeyDecoder();
         foreach ($rs as &$item) {
-            if ( $fetchStyle == Storage::FETCH_NUM
-              || $fetchStyle == Storage::FETCH_BOTH) {
+            if ( ($fetchStyle == Storage::FETCH_NUM || $fetchStyle == Storage::FETCH_BOTH)
+              && isset($item[0]) ) {
                 $item[0] = call_user_func($keyDecoder, $item[0]);
-            } elseif ( $fetchStyle == Storage::FETCH_ASSOC
-              || $fetchStyle == Storage::FETCH_BOTH) {
+            } elseif ( ($fetchStyle == Storage::FETCH_ASSOC || $fetchStyle == Storage::FETCH_BOTH)
+                    && isset($item['key']) ) {
                 $item['key'] = call_user_func($keyDecoder, $item['key']);
-            } elseif ($fetchStyle == Storage::FETCH_OBJ) {
+            } elseif ( $fetchStyle == Storage::FETCH_OBJ
+                    && isset($item->key) ) {
                 $item->key = call_user_func($keyDecoder, $item->key);
             }
         }
