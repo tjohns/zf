@@ -1,7 +1,7 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Filter\FilterInterface;
+use \Zend\Filter\Filter as FilterInterface;
 
 class Filter extends AbstractPlugin
 {
@@ -9,14 +9,14 @@ class Filter extends AbstractPlugin
     /**
      * The write filter
      *
-     * @var Zend\Filter\FilterInterface
+     * @var Zend\Filter\Filter
      */
     protected $_writeFilter = null;
 
     /**
      * The read filter
      *
-     * @var Zend\Filter\FilterInterface
+     * @var Zend\Filter\Filter
      */
     protected $_readFilter = null;
 
@@ -31,7 +31,7 @@ class Filter extends AbstractPlugin
     /**
      * Get the write filter
      *
-     * @return Zend\Filter\FilterInterface
+     * @return Zend\Filter\Filter
      */
     public function getWriteFilter()
     {
@@ -46,7 +46,7 @@ class Filter extends AbstractPlugin
     /**
      * Get the write filter
      *
-     * @param Zend\Filter\FilterInterface
+     * @param Zend\Filter\Filter
      * @return Zend\Cache\Storage\Plugin\Filter
      */
     public function setWriteFilter(FilterInterface $filter)
@@ -58,7 +58,7 @@ class Filter extends AbstractPlugin
     /**
      * Get the read filter
      *
-     * @return Zend\Filter\FilterInterface
+     * @return Zend\Filter\Filter
      */
     public function getReadFilter()
     {
@@ -73,7 +73,7 @@ class Filter extends AbstractPlugin
     /**
      * Get the read filter
      *
-     * @param Zend\Filter\FilterInterface
+     * @param Zend\Filter\Filter
      * @return Zend\Cache\Storage\Plugin\Filter
      */
     public function setReadFilter(FilterInterface $filter)

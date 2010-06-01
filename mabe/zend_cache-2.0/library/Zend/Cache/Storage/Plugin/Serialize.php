@@ -1,8 +1,8 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Serializer;
-use \Zend\Serializer\Adapter\AdapterInterface as SerializerAdapterInterface;
+use \Zend\Serializer\Serializer;
+use \Zend\Serializer\Adapter as AdaptableSerializer;
 
 class Serialize extends AbstractPlugin
 {
@@ -10,7 +10,7 @@ class Serialize extends AbstractPlugin
     /**
      * Serializer adapter
      *
-     * @var Zend\Serializer\Adapter\AdapterInterface
+     * @var Zend\Serializer\Adapter
      */
     protected $_serializer = null;
 
@@ -24,7 +24,7 @@ class Serialize extends AbstractPlugin
     /**
      * Get serializer adapter
      *
-     * @return Zend\Serializer\Adapter\AdapterInterface
+     * @return Zend\Serializer\Adapter
      */
     public function getSerializer()
     {
@@ -38,10 +38,10 @@ class Serialize extends AbstractPlugin
     /**
      * Set serializer adapter
      *
-     * @param Zend\Serializer\Adapter\AdapterInterface
+     * @param Zend\Serializer\Adapter
      * @return Zend\Cache\Storage\Plugin\Serialize
      */
-    public function setSerializer(SerializerAdapterInterface $serializer)
+    public function setSerializer(AdaptableSerializer $serializer)
     {
         $this->_serializer = $serializer;
         return $this;
