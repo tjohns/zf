@@ -14,13 +14,6 @@ class CaptureCache implements PatternInterface
     protected $_publicDir = null;
 
     /**
-     * File extension
-     *
-     * @var string
-     */
-    protected $_fileExtension = '.html';
-
-    /**
      * Lock files on writing
      *
      * @var boolean
@@ -28,11 +21,11 @@ class CaptureCache implements PatternInterface
     protected $_fileLocking = true;
 
     /**
-     * The index filename (without extension)
+     * The index filename
      *
      * @var string
      */
-    protected $_indexFilename = 'index';
+    protected $_indexFilename = 'index.html';
 
     /**
      * Page identifier
@@ -103,17 +96,6 @@ class CaptureCache implements PatternInterface
     public function getIndexFilename()
     {
         return $this->_indexFilename;
-    }
-
-    public function setFileExtension($extension)
-    {
-        $this->_fileExtension = (string)$extension;
-        return $this;
-    }
-
-    public function getFileExtension()
-    {
-        return $this->_fileExtension;
     }
 
     public function setFileLocking($flag)
@@ -231,14 +213,38 @@ class CaptureCache implements PatternInterface
         return false;
     }
 
-    public function get(/*TODO*/)
+    public function get($pageId = null, array $options = array())
     {
-        // TODO
+        if (!isset($pageId[0])) { // strlen($pageId) == 0
+            $pageId = $this->_detectPageId();
+        }
+
+        $file = $this->getPublicDir()
+              . DIRECTORY_SEPARATOR . $this->_pageId2Path($pageId)
+              . DIRECTORY_SEPARATOR . $this->_pageId2Filename($pageId);
+
+        if (file_exists($file)) {
+            $content = @file_get_contents($file);
+            if ($content === false) {
+                throw new RuntimeException("Failed to read cached pageId '{$pageId}': {$lastErr['message']}");
+            }
+            return $content;
+        }
+
+        return false;
     }
 
-    public function exists(/*TODO*/)
+    public function exists($pageId = null, array $options = array())
     {
-        // TODO
+        if (!isset($pageId[0])) { // strlen($pageId) == 0
+            $pageId = $this->_detectPageId();
+        }
+
+        $file = $this->getPublicDir()
+              . DIRECTORY_SEPARATOR . $this->_pageId2Path($pageId)
+              . DIRECTORY_SEPARATOR . $this->_pageId2Filename($pageId);
+
+        return file_exists($file);
     }
 
     public function remove($pageId = null, array $options = array())
@@ -247,7 +253,16 @@ class CaptureCache implements PatternInterface
             $pageId = $this->_detectPageId();
         }
 
-        // TODO
+        $file = $this->getPublicDir()
+              . DIRECTORY_SEPARATOR . $this->_pageId2Path($pageId)
+              . DIRECTORY_SEPARATOR . $this->_pageId2Filename($pageId);
+
+        if (file_exists($file)) {
+            if (!@unlink($file)) {
+                $lastErr = error_get_last();
+                throw new RuntimeException("Failed to remove cached pageId '{$pageId}': {$lastErr['message']}");
+            }
+        }
     }
 
     public function clear(/*TODO*/)
@@ -263,6 +278,29 @@ class CaptureCache implements PatternInterface
     protected function _detectPageId()
     {
         return $_SERVER['REQUEST_URI'];
+    }
+
+    protected function _pageId2Filename($pageId)
+    {
+        $filename = basename($pageId);
+
+        if ( !isset($fileName[0]) ) { // strlen($fileName) == 0
+            $filename = $this->getIndexFilename();
+        }
+
+        return $filename;
+    }
+
+    protected function _pageId2Path($pageId)
+    {
+        $path = rtrim(dirname($pageId), '/');
+
+        // convert requested "/" to the valid local directory separator
+        if ('/' != DIRECTORY_SEPARATOR) {
+            $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
+        }
+
+        return $path;
     }
 
     /**
@@ -282,27 +320,14 @@ class CaptureCache implements PatternInterface
 
     protected function _save($output)
     {
-        $fileName = basename($this->_pageId);
-        if ( !isset($fileName[0]) ) { // strlen($fileName) == 0
-            $fileName = $this->getIndexFilename();
-            $pathName = rtrim(realpath($this->getPublicDir()), DIRECTORY_SEPARATOR);
-        } else {
-            $fileName.= $this->getFileExtension();
-            $pathName = rtrim(realpath($this->getPublicDir()), DIRECTORY_SEPARATOR)
-                      . DIRECTORY_SEPARATOR . rtrim(dirname($this->_pageId), '/');
-
-            // convert requested "/" to the valid local directory separator
-            if ('/' != DIRECTORY_SEPARATOR) {
-                str_replace('/', DIRECTORY_SEPARATOR, $pathName);
-            }
-        }
-
-        if (!file_exists($pathName)) {
+        $path     = $this->_pageId2Path($this->_pageId);
+        $fullPath = $this->getPublicDir() . DIRECTORY_SEPARATOR . $path;
+        if (!file_exists($fullPath)) {
             $oldUmask = umask($this->getDirectoryUmask());
-            if (!@mkdir($pathName, 0777, true)) {
+            if (!@mkdir($fullPath, 0777, true)) {
                 $lastErr = error_get_last();
                 throw new RuntimeException(
-                    "Can't create directory '{$pathName}': {$lastErr['message']}"
+                    "Can't create directory '{$fullPath}': {$lastErr['message']}"
                 );
             }
         }
@@ -312,8 +337,9 @@ class CaptureCache implements PatternInterface
         } else {
             $oldUmask = umask($this->getFileUmask());
         }
-        $file = $pathName . DIRECTORY_SEPARATOR . $fileName;
-        $this->_putFileContent($file, $output);
+        $file = $path . DIRECTORY_SEPARATOR . $this->_pageId2Filename($this->_pageId);
+        $fullFile = $this->getPublicDir() . DIRECTORY_SEPARATOR . $file;
+        $this->_putFileContent($fullFile, $output);
 
         $tagStorage = $this->getTagStorage();
         if ($tagStorage) {
