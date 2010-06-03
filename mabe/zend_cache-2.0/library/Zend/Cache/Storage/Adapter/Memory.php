@@ -33,6 +33,20 @@ class Memory extends AbstractAdapter
      */
     protected $_data = array();
 
+    /**
+     * The current item count per namespace
+     *
+     * @var array
+     */
+    protected $_itemCount = array();
+
+    /**
+     * The maximum number of items (per namespace) to store in memory
+     *
+     * @var int Number of max items or 0 for no limit
+     */
+    protected $_maxItems = null;
+
     public function __construct($options = array())
     {
         parent::__construct($options);
@@ -43,6 +57,17 @@ class Memory extends AbstractAdapter
             $this->_capabilities['datatypes']['unicode'] = true;
         }
     }
+    
+    public function setMaxItems($max)
+    {
+        $this->_maxItems = (int)$max;
+        return $this;
+    }
+
+    public function getMaxItems()
+    {
+        return $this->_maxItems;
+    }
 
     public function set($value, $key = null, array $options = array())
     {
@@ -50,7 +75,12 @@ class Memory extends AbstractAdapter
         $ns   = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
         $tags = isset($options['tags']) ? $this->_tags($options['tags']) : null;
 
+        $exists = isset($this->_data[$ns][$key]);
         $this->_data[$ns][$key] = array($value, time(), $tags);
+        if (!$exists) {
+            $this->_itemCount[$ns] = isset($this->_itemCount[$ns]) ? $this->_itemCount[$ns] + 1 : 1;
+            $this->_handleMaxItems($ns);
+        }
 
         return true;
     }
@@ -62,8 +92,14 @@ class Memory extends AbstractAdapter
         $time = time();
 
         foreach ($keyValuePairs as $key => $value) {
+            $exists = isset($this->_data[$ns][$key]);
             $this->_data[$ns][$key] = array($value, $time, $tags);
+            if (!$exists) {
+                $this->_itemCount[$ns] = isset($this->_itemCount[$ns]) ? $this->_itemCount[$ns] + 1 : 1;
+            }
         }
+
+        $this->_handleMaxItems($ns);
 
         return true;
     }
@@ -78,6 +114,8 @@ class Memory extends AbstractAdapter
             throw new RuntimeException("Key '$key' already exists within namespace '$ns'");
         }
         $this->_data[$ns][$key] = array($value, time(), $tags);
+        $this->_itemCount[$ns] = isset($this->_itemCount[$ns]) ? $this->_itemCount[$ns] + 1 : 1;
+        $this->_handleMaxItems($ns);
 
         return true;
     }
@@ -93,7 +131,10 @@ class Memory extends AbstractAdapter
                 throw new RuntimeException("Key '$key' already exists within namespace '$ns'");
             }
             $this->_data[$ns][$key] = array($value, time(), $tags);
+            $this->_itemCount[$ns] = isset($this->_itemCount[$ns]) ? $this->_itemCount[$ns] + 1 : 1;
         }
+
+        $this->_handleMaxItems($ns);
 
         return true;
     }
@@ -133,8 +174,12 @@ class Memory extends AbstractAdapter
         $key = $this->_key($key);
         $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
-        unset($this->_data[$ns][$key]);
-        // empty namespaces are removed on optimize
+        if (isset($this->_data[$ns][$key])) {
+            unset($this->_data[$ns][$key]);
+            $this->_itemCount--;
+
+            // empty namespaces are removed on optimize
+        }
 
         return true;
     }
@@ -144,8 +189,12 @@ class Memory extends AbstractAdapter
         $ns  = isset($options['namespace']) ? $options['namespace'] : $this->getNamespace();
 
         foreach ($keys as $key) {
-            unset($this->_data[$ns][$key]);
-            // empty namespaces are removed on optimize
+            if (isset($this->_data[$ns][$key])) {
+                unset($this->_data[$ns][$key]);
+                $this->_itemCount--;
+
+                // empty namespaces are removed on optimize
+            }
         }
 
         return true;
@@ -314,6 +363,7 @@ class Memory extends AbstractAdapter
             $this->_data[$ns][$key][1] = time();
         } else {
             $this->_data[$ns][$key] = array($value, time(), null);
+            $this->_itemCount++;
         }
     }
 
@@ -328,6 +378,7 @@ class Memory extends AbstractAdapter
             $this->_data[$ns][$key][1] = time();
         } else {
             $this->_data[$ns][$key] = array($value, time(), null);
+            $this->_itemCount++;
         }
     }
 
@@ -342,6 +393,7 @@ class Memory extends AbstractAdapter
         } else {
             // add an empty item
             $this->_data[$ns][$key] = array('', time(), null);
+            $this->_itemCount++;
         }
 
         return true;
@@ -370,6 +422,7 @@ class Memory extends AbstractAdapter
         // clear all
         if (($mode & Storage::MATCH_ALL) == Storage::MATCH_ALL && $tags === null) {
             $this->_data = array();
+            $this->_itemCount = 0;
             return true;
         }
 
@@ -415,6 +468,7 @@ class Memory extends AbstractAdapter
             }
 
             unset($this->_data[$ns][$key]);
+            $this->_itemCount--;
         }
 
         return  true;
@@ -518,13 +572,22 @@ class Memory extends AbstractAdapter
     public function optimize(array $options = array())
     {
         // delete empty namespaces
-        foreach ($this->_data as $ns => &$data) {
-            if (!count($data)) {
-                unset($this->_data[$ns]);
+        foreach ($this->_itemCount as $ns => $cnt) {
+            if (!$cnt) {
+                unset($this->_data[$ns], $this->_itemCount[$ns]);
             }
         }
 
         return true;
+    }
+
+    protected function _handleMaxItems($ns)
+    {
+        $maxItems = $this->getMaxItems();
+        if ($maxItems && $this->_itemCount[$ns] > $maxItems) {
+            array_shift($this->_data[$ns]);
+            $this->_itemCount[$ns]--;
+        }
     }
 
 }
