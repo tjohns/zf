@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zend_ValidateTest.php 22358 2010-06-03 10:20:30Z thomas $
+ * @version    $Id: Zend_ValidateTest.php 22360 2010-06-03 10:29:24Z thomas $
  */
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
@@ -195,8 +195,8 @@ class resources_languages_Zend_ValidateTest extends PHPUnit_Framework_TestCase
     {
         $errors = array();
         $cnt    = 0;
-        foreach ($this->_translations['en'] as $key => $value) {
-            foreach ($this->_translations as $lang => $translation) {
+        foreach ($this->_translations as $lang => $translation) {
+            foreach ($this->_translations['en'] as $key => $value) {
                 if ($lang == 'en') {
                     continue;
                 }
