@@ -45,7 +45,7 @@ class Memory extends AbstractAdapter
      *
      * @var int Number of max items or 0 for no limit
      */
-    protected $_maxItems = null;
+    protected $_maxItems = 0;
 
     public function __construct($options = array())
     {
