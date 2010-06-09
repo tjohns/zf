@@ -1,68 +1,95 @@
 <?php
 
 namespace Zend\Cache\Storage\Plugin;
-use \Zend\Cache\Storage;
-use \Zend\Cache\InvalidArgumentException;
+use \Zend\Filter\Filter as FilterInterface;
 
-class EncodeKey extends AbstractPlugin
+// Use this KeyFilter plugin to:
+//  - prefix/suffix your cache keys
+//  - encode/decode your cache keys (e.g. make keys valid to store on Filesystem)
+
+class KeyFilter extends AbstractPlugin
 {
 
     /**
-     * Callback to encode item key
+     * The key write filter
      *
-     * @var callback
+     * @var Zend\Filter\Filter
      */
-    protected $_keyEncoder = 'base64_encode';
+    protected $_keyWriteFilter = null;
 
     /**
-     * Callback to decode an encoded item key
+     * The key read filter
      *
-     * @var callback
+     * @var Zend\Filter\Filter
      */
-    protected $_keyDecoder = 'base64_decode';
+    protected $_keyReadFilter = null;
 
     public function getOptions()
     {
         $options = parent::getOptions();
-        $options['keyEncoder'] = $this->getKeyEncoder();
-        $options['keyDecoder'] = $this->getKeyDecoder();
+        $options['keyWriteFilter'] = $this->getKeyWriteFilter();
+        $options['keyReadFilter']  = $this->getReadFilter();
         return $options;
     }
 
-    public function setKeyEncoder($callback)
+    /**
+     * Get the write filter
+     *
+     * @return Zend\Filter\Filter
+     */
+    public function getKeyWriteFilter()
     {
-        if (!is_callable($callback)) {
-            throw new InvalidArgumentException("Invalid callback '{$callback}'");
+        if ($this->_keyWriteFilter === null) {
+            // TODO: empty filter
+            $this->_keyWriteFilter = new \Zend\Filter\EmptyFilter();;
         }
 
-        $this->_keyEncoder = $callback;
+        return $this->_keyWriteFilter;
+    }
+
+    /**
+     * Get the write filter
+     *
+     * @param Zend\Filter\Filter
+     * @return Zend\Cache\Storage\Plugin\Filter
+     */
+    public function setKeyWriteFilter(FilterInterface $filter)
+    {
+        $this->_keyWriteFilter = $filter;
         return $this;
     }
 
-    public function getKeyEncoder()
+    /**
+     * Get the read filter
+     *
+     * @return Zend\Filter\Filter
+     */
+    public function getKeyReadFilter()
     {
-        return $this->_keyEncoder;
-    }
-
-    public function setKeyDecodeFunction($callback)
-    {
-        if (!is_callable($callback)) {
-            throw new InvalidArgumentException("Invalid callback '{$callback}'");
+        if ($this->_keyReadFilter === null) {
+            // TODO: empty filter
+            $this->_keyReadFilter = new \Zend\Filter\EmptyFilter();
         }
 
-        $this->_keyDecoder = $callback;
-        return $this;
+        return $this->_keyReadFilter;
     }
 
-    public function getKeyDecoder()
+    /**
+     * Get the read filter
+     *
+     * @param Zend\Filter\Filter
+     * @return Zend\Cache\Storage\Plugin\Filter
+     */
+    public function setKeyReadFilter(FilterInterface $filter)
     {
-        return $this->_keyDecoder;
+        $this->_keyReadFilter = $filter;
+        return $this;
     }
 
     public function set($value, $key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->set($value, $key, $options);
@@ -70,10 +97,10 @@ class EncodeKey extends AbstractPlugin
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         $normalizedKeyValuePairs = array();
         foreach ($keyValuePairs as $key => &$v) {
-            $normalizedKeyValuePairs[ call_user_func($keyEncoder, $key) ] = $v;
+            $normalizedKeyValuePairs[ $keyWriteFilter->filter($key) ] = $v;
         }
 
         return $this->getAdapter()->setMulti($normalizedKeyValuePairs);
@@ -82,7 +109,7 @@ class EncodeKey extends AbstractPlugin
     public function add($value, $key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->add($value, $key, $options);
@@ -90,10 +117,10 @@ class EncodeKey extends AbstractPlugin
 
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         $normalizedKeyValuePairs = array();
         foreach ($keyValuePairs as $key => &$v) {
-            $normalizedKeyValuePairs[ call_user_func($keyEncoder, $key) ] = $v;
+            $normalizedKeyValuePairs[ $keyWriteFilter->filter($key) ] = $v;
         }
 
         return $this->getAdapter()->addMulti($normalizedKeyValuePairs);
@@ -102,7 +129,7 @@ class EncodeKey extends AbstractPlugin
     public function replace($value, $key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->replace($value, $key, $options);
@@ -110,10 +137,10 @@ class EncodeKey extends AbstractPlugin
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         $normalizedKeyValuePairs = array();
         foreach ($keyValuePairs as $key => &$v) {
-            $normalizedKeyValuePairs[ call_user_func($keyEncoder, $key) ] = $v;
+            $normalizedKeyValuePairs[ $keyWriteFilter->filter($key) ] = $v;
         }
 
         return $this->getAdapter()->replaceMulti($normalizedKeyValuePairs);
@@ -122,7 +149,7 @@ class EncodeKey extends AbstractPlugin
     public function remove($key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->remove($key, $options);
@@ -130,9 +157,9 @@ class EncodeKey extends AbstractPlugin
 
     public function removeMulti(array $keys, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         return $this->getAdapter()->removeMulti($keys);
@@ -141,7 +168,7 @@ class EncodeKey extends AbstractPlugin
     public function get($key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->get($key, $options);
@@ -149,17 +176,17 @@ class EncodeKey extends AbstractPlugin
 
     public function getMulti(array $keys, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         $rs = $this->getAdapter()->getMulti($keys);
 
-        $keyDecoder = $this->getKeyDecoder();
+        $keyReadFilter = $this->getKeyReadFilter();
         $normalizedRs = array();
         foreach ($rs as $key => &$v) {
-            $normalizedRs[ call_user_func($keyDecoder, $key) ] = $v;
+            $normalizedRs[ $keyReadFilter->filter($key) ] = $v;
         }
 
         return $normalizedRs;
@@ -168,7 +195,7 @@ class EncodeKey extends AbstractPlugin
     public function exists($key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->exists($key, $options);
@@ -176,16 +203,16 @@ class EncodeKey extends AbstractPlugin
 
     public function existsMulti(array $keys, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         $rs = $this->getAdapter()->existsMulti($keys);
 
-        $keyDecoder = $this->getKeyDecoder();
+        $keyReadFilter = $this->getKeyReadFilter();
         foreach ($rs as &$key) {
-            $key = call_user_func($keyDecoder, $key);
+            $key = $keyReadFilter->filter($key);
         }
 
         return $rs;
@@ -194,7 +221,7 @@ class EncodeKey extends AbstractPlugin
     public function info($key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->info($key, $options);
@@ -202,17 +229,17 @@ class EncodeKey extends AbstractPlugin
 
     public function infoMulti(array $keys, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         $rs = $this->getAdapter()->infoMulti($keys, $options);
 
-        $keyDecoder = $this->getKeyDecoder();
+        $keyReadFilter = $this->getKeyReadFilter();
         $normalizedRs = array();
         foreach ($rs as $key => &$v) {
-            $normalizedRs[ call_user_func($keyDecoder, $key) ] = $v;
+            $normalizedRs[ $keyReadFilter->filter($key) ] = $v;
         }
 
         return $normalizedRs;;
@@ -220,9 +247,9 @@ class EncodeKey extends AbstractPlugin
 
     public function getDelayed(array $keys, $select = Storage::SELECT_KEY_VALUE, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         return $this->getAdapter()->getDelayed($keys, $select, $options);
@@ -237,13 +264,13 @@ class EncodeKey extends AbstractPlugin
 
         if ( ($fetchStyle == Storage::FETCH_NUM || $fetchStyle == Storage::FETCH_BOTH)
           && isset($item[0]) ) {
-            $item[0] = call_user_func($this->getKeyDecoder(), $item[0]);
+            $item[0] = $this->getKeyReadFilter->filter($item[0]);
         } elseif ( ($fetchStyle == Storage::FETCH_ASSOC || $fetchStyle == Storage::FETCH_BOTH)
                 && isset($item['key']) ) {
-            $item['key'] = call_user_func($this->getKeyDecoder(), $item['key']);
+            $item['key'] = $this->getKeyReadFilter->filter($item['key']);
         } elseif ( $fetchStyle == Storage::FETCH_OBJ
                 && isset($item->key) ) {
-            $item->key = call_user_func($this->getKeyDecoder(), $item->key);
+            $item->key = $this->getKeyReadFilter->filter($item->key);
         }
 
         return $item;
@@ -252,17 +279,17 @@ class EncodeKey extends AbstractPlugin
     public function fetchAll($fetchStyle = Storage::FETCH_NUM)
     {
         $rs = $this->getAdapter()->fetchAll($fetchStyle);
-        $keyDecoder = $this->getKeyDecoder();
+        $keyReadFilter = $this->getKeyReadFilter();
         foreach ($rs as &$item) {
             if ( ($fetchStyle == Storage::FETCH_NUM || $fetchStyle == Storage::FETCH_BOTH)
               && isset($item[0]) ) {
-                $item[0] = call_user_func($keyDecoder, $item[0]);
+                $item[0] = $keyReadFilter->filter($item[0]);
             } elseif ( ($fetchStyle == Storage::FETCH_ASSOC || $fetchStyle == Storage::FETCH_BOTH)
                     && isset($item['key']) ) {
-                $item['key'] = call_user_func($keyDecoder, $item['key']);
+                $item['key'] = $keyReadFilter->filter($item['key']);
             } elseif ( $fetchStyle == Storage::FETCH_OBJ
                     && isset($item->key) ) {
-                $item->key = call_user_func($keyDecoder, $item->key);
+                $item->key = $keyReadFilter->filter($item->key);
             }
         }
 
@@ -272,7 +299,7 @@ class EncodeKey extends AbstractPlugin
     public function increment($value, $key = null, array $options = array())
     {
        if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->increment($value, $key, $options);
@@ -280,10 +307,10 @@ class EncodeKey extends AbstractPlugin
 
     public function incrementMulti(array $keyValuePairs, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         $normalizedKeyValuePairs = array();
         foreach ($keyValuePairs as $key => &$v) {
-            $normalizedKeyValuePairs[ call_user_func($keyEncoder, $key) ] = $v;
+            $normalizedKeyValuePairs[ $keyWriteFilter->filter($key) ] = $v;
         }
 
         return $this->getAdapter()->incrementMulti($normalizedKeyValuePairs);
@@ -292,7 +319,7 @@ class EncodeKey extends AbstractPlugin
     public function decrement($value, $key = null, array $options = array())
     {
        if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->decrement($value, $key, $options);
@@ -300,10 +327,10 @@ class EncodeKey extends AbstractPlugin
 
     public function decrementMulti(array $keyValuePairs, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         $normalizedKeyValuePairs = array();
         foreach ($keyValuePairs as $key => &$v) {
-            $normalizedKeyValuePairs[ call_user_func($keyEncoder, $key) ] = $v;
+            $normalizedKeyValuePairs[ $keyWriteFilter->filter($key) ] = $v;
         }
 
         return $this->getAdapter()->decrementMulti($normalizedKeyValuePairs);
@@ -312,7 +339,7 @@ class EncodeKey extends AbstractPlugin
     public function touch($key = null, array $options = array())
     {
         if ( (string)$key !== '') {
-            $key = call_user_func($this->getKeyEncoder(), $key);
+            $key = $this->getKeyWriteFilter()->filter($key);
         }
 
         return $this->getAdapter()->touch($key, $options);
@@ -320,9 +347,9 @@ class EncodeKey extends AbstractPlugin
 
     public function touchMulti(array $keys, array $options = array())
     {
-        $keyEncoder = $this->getKeyEncoder();
+        $keyWriteFilter = $this->getKeyWriteFilter();
         foreach ($keys as &$key) {
-            $key = call_user_func($keyEncoder, $key);
+            $key = $keyWriteFilter->filter($key);
         }
 
         return $this->getAdapter()->touchMulti($keys);
@@ -332,7 +359,7 @@ class EncodeKey extends AbstractPlugin
     {
         $key = $this->getAdapter()->lastKey();
         if ($key !== null) {
-            $key = call_user_func($this->getKeyDecoder(), $key);
+            $key = $this->getKeyReadFilter->filter($key);
         }
         return $key;
     }
