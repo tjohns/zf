@@ -2,15 +2,15 @@
 
 namespace Zend\Cache\Storage\Plugin;
 
-class FileMTime extends AbstractPlugin
+class MasterFile extends AbstractPlugin
 {
 
     const MODE_AND = 'AND';
     const MODE_OR  = 'OR';
 
-    protected $_masterFiles = array();
+    protected $_masterFiles     = array();
     protected $_masterFilesMode = self::MODE_AND;
-    protected $_clearStatCache = true;
+    protected $_clearStatCache  = true;
 
     /**
      * Buffer of last modification times of master files.
