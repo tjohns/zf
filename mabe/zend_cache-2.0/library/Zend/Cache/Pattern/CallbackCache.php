@@ -8,23 +8,19 @@ class CallbackCache extends AbstractPattern
 {
 
     /**
-     * Main method : call the specified callback or get the result from cache
+     * Call the specified callback or get the result from cache
      *
      * @param  callback   $callback  A valid callback
-     * @param  array|null $args      Callback arguments or NULL for no arguments
+     * @param  array      $args      Callback arguments
      * @param  array      $options   Options
      * @return mixed Result
      * @throws Zend\Cache\Exception
      */
-    public function call($callback, array $args = null, array $options = array())
+    public function call($callback, array $args = array(), array $options = array())
     {
-        if (!is_callable($callback, false, $callbackName)) {
-            throw new InvalidArgumentException('Invalid callback given');
-        }
-
         $key = $this->_makeKey($callbackName, $args);
         if ( ($rs = $this->getStorage()->get($key, $options)) !== false ) {
-            if (!isset($rs[0]) || !array_key_exists(1, $rs)) {
+            if (!isset($rs[0], $rs[1])) {
                 throw new RuntimeException("Invalid cached data for key '{$key}'");
             }
 
@@ -36,7 +32,7 @@ class CallbackCache extends AbstractPattern
         ob_start();
         ob_implicit_flush(false);
 
-        if ($args !== null) {
+        if ($args) {
             $ret = call_user_func_array($callback, $args);
         } else {
             $ret = call_user_func($callback);
@@ -49,15 +45,34 @@ class CallbackCache extends AbstractPattern
     }
 
     /**
+     * Remove a cached callback call
+     *
+     * @param  callback   $callback  A valid callback
+     * @param  array      $args      Callback arguments
+     * @param  array      $options   Options
+     * @return boolean
+     * @throws Zend\Cache\Exception
+     */
+    public function removeCall($callback, array $args = array(), array $options = array())
+    {
+        $key = $this->_makeKey($callbackName, $args);
+        return $this->getStorage()->remove($key, $options);
+    }
+
+    /**
      * Make a key from the callback name and arguments
      *
-     * @param  string     $name  Callback name
-     * @param  null|array $args  Callback arguments
+     * @param  callback   $callback  A valid callback
+     * @param  array      $args      Callback arguments
      * @return string
      * @throws Zend\Cache\Exception
      */
-    protected function _makeKey($name, array $args = null)
+    protected function _makeKey($callback, array $args = array())
     {
+        if (!is_callable($callback, true, $name)) {
+            throw new InvalidArgumentException('Invalid callback given');
+        }
+
         $argsStr = '';
         if ($args) {
             $argsStr = @serialize(array_values($args));
