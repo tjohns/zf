@@ -4,6 +4,13 @@ namespace Zend\Cache\Storage\Plugin;
 use \Zend\Cache\Storage;
 use \Zend\Cache\InvalidArgumentException;
 
+/* HOWTO: use the exception handler to log exceptions:
+$logger = new \Zend\Log\Logger();
+$cache->setExceptionHandler(function (Exception $e) use ($logger) {
+    $logger->err($e);
+});
+*/
+
 class HandleExceptions extends AbstractPlugin
 {
 
@@ -44,12 +51,12 @@ class HandleExceptions extends AbstractPlugin
     {
         $this->_throwExceptions = (bool)$flag;
     }
-    
+
     public function getThrowExceptions()
     {
         return $this->_throwExceptions;
     }
-    
+
     // catch all exceptions, call callback and
     // only re-throw exceptions if throwExceptions is enabled
 
