@@ -2,80 +2,120 @@
 
 namespace Zend\Cache\Storage\Plugin;
 
-class StoreMTime extends AbstractPlugin
+class StoreTimes extends AbstractPlugin
 {
+
+    protected $_noAtime = true;
+
+    public function getOptions()
+    {
+        $options = parent::getOptions();
+        $options['noAtime'] = $this->getNoAtime();
+        return $options;
+    }
+
+    public function setNoAtime($flag)
+    {
+        $this->_noAtime = (bool)$flag;
+        return $this;
+    }
+
+    public function getNoAtime()
+    {
+        return $this->_noAtime;
+    }
 
     public function getCapabilities()
     {
         $capabilities = $this->getStorage()->getCapabilities();
+        $capabilities['info'][] = 'ctime';
         $capabilities['info'][] = 'mtime';
+        $capabilities['info'][] = 'atime';
         $capabilities = array_unique($capabilities['info']);
         return $capabilities;
     }
-    
+
     public function set($value, $key = null, array $options = array())
     {
-        return $this->getStorage()->set(
-            array($value, time()),
-            $key,
-            $options
-        );
+        $info    = $this->info($key, $options);
+        $time    = time();
+        $storage = $this->getStorage();
+
+        if (isset($info['ctime'])) {
+            return $storage->replace(array($value, $info['ctime'], $time, $time));
+        } elseif ($item) {
+            // item already exists but without ctime -> replace and init times
+            return $storage->replace(array($value, $time, $time, $time));
+        } else {
+            // item is missing -> add and init times
+            return $storage->add(array($value, $time, $time, $time));
+        }
     }
-    
+
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $now = time();
+        $time = time();
         foreach ($keyValuePairs as &$v) {
-            $v = array($v, $now);
+            // TODO: handle ctime
+            $v = array($v, $time, $time, $time);
         }
-        
+
         return $this->getStorage()->setMulti($keyValuePairs, $options);
     }
-    
+
     public function add($value, $key = null, array $options = array())
     {
+        $time = time();
         return $this->getStorage()->add(
-            array($value, time()),
+            array($value, $time, $time, $time),
             $key,
             $options
         );
     }
-    
+
     public function addMulti(array $keyValuePairs, array $options = array())
     {
-        $now = time();
+        $time = time();
         foreach ($keyValuePairs as &$v) {
-            $v = array($v, $now);
+            $v = array($v, $time, $time, $time);
         }
-        
+
         return $this->getStorage()->addMulti($keyValuePairs, $options);
     }
-    
+
     public function replace($value, $key = null, array $options = array())
     {
+        $time = time();
+        // TODO: handle mtime
         return $this->getStorage()->replace(
-            array($value, time()),
+            array($value, $time, $time, $time),
             $key,
             $options
         );
     }
-    
+
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $now = time();
+        $time = time();
+        // TODO: handle mtime
         foreach ($keyValuePairs as &$v) {
-            $v = array($v, $now);
+            $v = array($v, $time, $time, $time);
         }
-        
+
         return $this->getStorage()->replaceMulti($keyValuePairs, $options);
     }
-    
+
     public function get($key = null, array $options = array())
     {
         $rs = $this->getStorage()->get($key, $options);
         if ($rs !== false && !isset($rs[0])) {
             throw new RuntimeException("Missing value part of return value of key '{$this->lastKey()}'");
         }
+
+        if (!$this->getNoAtime()) {
+            // TODO: handle atime
+        }
+
         return $rs[0];
     }
 
@@ -83,31 +123,47 @@ class StoreMTime extends AbstractPlugin
     {
         $rs = $this->getStorage()->getMulti($keys, $options);
         if ($rs !== false) {
+            $noAtime = $this->getNoAtime();
             foreach ($rs as $key => &$v) {
                 if (!isset($v[0])) {
                     throw new RuntimeException("Missing value part of return value of key '{$key}'");
                 }
                 $v = $v[0];
+
+                if (!$noAtime) {
+                    // TODO: handle atime
+                }
             }
         }
+
         return $rs;
     }
-    
+
     public function info($key = null, array $options = array())
     {
-        $info = $this->getStorage()->info($key, $options);
+        $storage = $this->getStorage();
+        $info = $storage->info($key, $options);
+
         if ($info !== false) {
-            $get = $this->getStorage()->get($key, $options);
-            if ($get === false) {
+            $item = $storage->get($key, $options);
+            if ($item === false) {
                 $info = false;
-            } elseif (!isset($get[1])) {
-                throw new RuntimeException("Missing mtime part of return value of key '{$this->lastKey()}'");
+            } else {
+                if (isset($item[1])) {
+                    $info['ctime'] = (int)$item[1];
+                }
+                if (isset($item[2])) {
+                    $info['mtime'] = (int)$item[2];
+                }
+                if (isset($item[3])) {
+                    $info['atime'] = (int)$item[3];
+                }
             }
-            $info['mtime'] = $get[1];
         }
+
         return $info;
     }
-    
+
     public function infoMulti(array $keys, array $options = array())
     {
         $infoMulti = $this->getStorage()->infoMulti($keys, $options);
@@ -119,19 +175,26 @@ class StoreMTime extends AbstractPlugin
                 foreach ($infoMulti as $key => &$info) {
                     if (!isset($get[$key])) {
                         unset($infoMulti[$key]);
-                    } elseif (!isset($get[$key][1])) {
-                        throw new RuntimeException("Missing mtime part of return value of key '{$key}'");
                     } else {
-                        $info['mtime'] = $get[$key][1];
+                        if (isset($get[$key][1])) {
+                            $info['ctime'] = (int)$get[$key][1];
+                        }
+                        if (isset($get[$key][2])) {
+                            $info['mtime'] = (int)$get[$key][2];
+                        }
+                        if (isset($get[$key][3])) {
+                            $info['atime'] = (int)$get[$key][3];
+                        }
                     }
                 }
             }
         }
+
         return $infoMulti;
     }
-    
+
     // TODO: fetch & fetchAll
-    
+
     public function increment($value, $key = null, array $options = array())
     {
         $get = $this->get($key, $options);
@@ -154,12 +217,12 @@ class StoreMTime extends AbstractPlugin
                 $rplMulti[$key] = $getMulti[$key] + (int)$value;
             }
         }
-        
+
         $ret = $addMulti === null ? true : $this->addMulti($addMulti, $options);
         $ret = $ret && ($rplMulti === null ? true : $this->replaceMulti($rplMulti, $options));
         return $ret;
     }
-    
+
     public function decrement($value, $key = null, array $options = array())
     {
         $get = $this->get($key, $options);
@@ -182,12 +245,12 @@ class StoreMTime extends AbstractPlugin
                 $rplMulti[$key] = $getMulti[$key] - (int)$value;
             }
         }
-        
+
         $ret = $addMulti === null ? true : $this->addMulti($addMulti, $options);
         $ret = $ret && ($rplMulti === null ? true : $this->replaceMulti($rplMulti, $options));
         return $ret;
     }
-    
+
     public function touch($key = null, array $options = array())
     {
         $get = $this->get($key, $options);
@@ -197,7 +260,7 @@ class StoreMTime extends AbstractPlugin
             $this->replace($get, $key, $options);
         }
     }
-    
+
     public function touchMulti(array $keys, array $options = array())
     {
         $getMulti = $this->getMulti();
@@ -210,13 +273,10 @@ class StoreMTime extends AbstractPlugin
                 $addMulti[$key] = '';
             }
         }
-        
+
         $ret = $rplMulti === null ? true : $this->replaceMulti($rplMulti, $options);
         $ret = $ret && ($rplMulti === null ? true : $this->addMulti($addMulti, $options));
         return $ret;
     }
-    
-    // On some storages the last modification time isn't accessable
-    // This plugin stores data as an array like $data = array($data, time()) to make it accessable
 
 }
