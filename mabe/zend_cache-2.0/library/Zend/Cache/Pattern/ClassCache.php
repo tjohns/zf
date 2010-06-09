@@ -14,6 +14,15 @@ class ClassCache extends CallbackCache
     protected $_nonCacheMethods      = array();
     protected $_cacheMagicProperties = false;
 
+    public function __construct($options)
+    {
+        parent::__construct($options);
+
+        if (!$this->_entity) {
+            throw InvalidArgumentException("Missing option 'entity'");
+        }
+    }
+
     public function getOptions()
     {
         $options = parent::getOptions();
@@ -83,6 +92,16 @@ class ClassCache extends CallbackCache
     {
         foreach ($methods as &$method) {
             $method = strtolower($method);
+
+            switch ($method) {
+                case '__set':
+                case '__get':
+                case '__unset':
+                case '__isset':
+                    throw new InvalidArgumentException(
+                        "Magic properties are handled by option 'cacheMagicProperties'"
+                    );
+            }
         }
         $this->_cacheMethods = array_values(array_unique($methods));
     }
@@ -107,6 +126,16 @@ class ClassCache extends CallbackCache
     {
         foreach ($methods as &$method) {
             $method = strtolower($method);
+
+            switch ($method) {
+                case '__set':
+                case '__get':
+                case '__unset':
+                case '__isset':
+                    throw new InvalidArgumentException(
+                        "Magic properties are handled by option 'cacheMagicProperties'"
+                    );
+            }
         }
 
         $this->_nonCacheMethods = array_values(array_unique($methods));
@@ -155,10 +184,6 @@ class ClassCache extends CallbackCache
     public function __call($method, array $args)
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
-
         $method = strtolower($method);
 
         // handle magic magic methods
@@ -186,6 +211,28 @@ class ClassCache extends CallbackCache
     }
 
     /**
+     * Remove a cached method call
+     *
+     * @param string $method
+     * @param array $args
+     * @param array $options
+     */
+    public function removeMethodCall($method, array $args = array(), array $options = array())
+    {
+        $entity = $this->getEntity();
+        $method = strtolower($method);
+
+        switch ($method) {
+            // __set & __unset calls will never be cached
+            case '__set':
+            case '__unset':
+                return true;
+        }
+
+        return $this->removeCall(array($entity, $method), $args);
+    }
+
+    /**
      * Writing data to properties.
      *
      * NOTE:
@@ -199,9 +246,6 @@ class ClassCache extends CallbackCache
     public function __set($name, $value)
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         if (is_object($entity)) {
             $entity->{$name} = $value;
@@ -244,9 +288,6 @@ class ClassCache extends CallbackCache
     public function __get($name)
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         if ( !$this->getCacheMagicProperties()
           || !is_object($entity)
@@ -275,9 +316,6 @@ class ClassCache extends CallbackCache
     public function __isset($name)
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         if ( !$this->getCacheMagicProperties()
           || !is_object($entity)
@@ -306,9 +344,6 @@ class ClassCache extends CallbackCache
     public function __unset($name)
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         if (is_object($entity)) {
             unset($entity->{$name});
@@ -346,9 +381,6 @@ class ClassCache extends CallbackCache
     public function __toString()
     {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         if (!is_object($entity)) {
             throw new BadMethodCallException(
@@ -378,9 +410,6 @@ class ClassCache extends CallbackCache
      */
     public function __invoke() {
         $entity = $this->getEntity();
-        if (!$entity) {
-            throw new RuntimeException('Missing entity');
-        }
 
         $cache = $this->getCacheByDefault();
         if ($cache) {

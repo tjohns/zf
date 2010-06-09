@@ -112,7 +112,11 @@ class FunctionCache extends CallbackCache
         }
 
         if (!$cache) {
-            return call_user_func_array($function, $args);
+            if ($args) {
+                return call_user_func_array($function, $args);
+            } else {
+                return call_user_func($function);
+            }
         }
 
         return $this->call($function, $args);
