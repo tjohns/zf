@@ -59,7 +59,7 @@ class CallbackCache extends AbstractPattern
     protected function _makeKey($name, array $args = null)
     {
         $argsStr = '';
-        if ($args !== null && count($args) > 0) {
+        if ($args) {
             $argsStr = @serialize(array_values($args));
             if (!$argsStr) {
                 $lastErr = error_get_last();
