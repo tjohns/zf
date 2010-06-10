@@ -337,7 +337,7 @@ class Storage extends AbstractPlugin
                 );
             }
 
-            $adapter->setOptions($options);
+            $adapter->setOptions($cfg['options']);
         }
 
         return $adapter;
