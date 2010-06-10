@@ -18,7 +18,7 @@ class CallbackCache extends AbstractPattern
      */
     public function call($callback, array $args = array(), array $options = array())
     {
-        $key = $this->_makeKey($callbackName, $args);
+        $key = $this->_generateKey($callback, $args);
         if ( ($rs = $this->getStorage()->get($key, $options)) !== false ) {
             if (!isset($rs[0], $rs[1])) {
                 throw new RuntimeException("Invalid cached data for key '{$key}'");
@@ -55,19 +55,19 @@ class CallbackCache extends AbstractPattern
      */
     public function removeCall($callback, array $args = array(), array $options = array())
     {
-        $key = $this->_makeKey($callbackName, $args);
+        $key = $this->_generateKey($callback, $args);
         return $this->getStorage()->remove($key, $options);
     }
 
     /**
-     * Make a key from the callback name and arguments
+     * Generate a key from the callback and arguments
      *
      * @param  callback   $callback  A valid callback
      * @param  array      $args      Callback arguments
      * @return string
      * @throws Zend\Cache\Exception
      */
-    protected function _makeKey($callback, array $args = array())
+    protected function _generateKey($callback, array $args = array())
     {
         if (!is_callable($callback, true, $name)) {
             throw new InvalidArgumentException('Invalid callback given');

@@ -2,33 +2,26 @@
 
 namespace Zend;
 
-function autoload($class)
-{
+spl_autoload_register(function ($class) {
     $libdir    = __DIR__ . '/../library';
     $classfile = str_replace('\\', '/', $class) . '.php';
     include_once $libdir . '/' . $classfile;
-}
-spl_autoload_register('zend\autoload');
+});
 
-$cache = new Cache\Storage(array(
-    'storage' => 'Memory',
-    // 'plugins' => array(),
-    'options' => array('ttl' => 5),
-));
-$callbackCache = Cache\Pattern::factory('CallbackCache', array(
-    'storage' => $cache,
-));
-
-
-// for this demo we clear all cached items before
-$cache->clear();
-
-$runs = 5;
-
-function retAndOutTime() {
+$callback = function () {
     echo time();
     return time();
-}
+};
+
+$callbackCache = Cache\Pattern::factory('CallbackCache', array(
+    'storage' => array(
+        'adapter' => 'Memory',
+        // 'plugins' => array(),
+        'options' => array('ttl' => 5),
+    ),
+));
+
+$runs = 5;
 
 echo 'This demo call a function returning and displaying the current timestamp '.$runs.' times' . PHP_EOL
    . 'using the CallbackCache pattern.' . PHP_EOL
@@ -38,7 +31,7 @@ for ($i=0; $i < $runs; $i++) {
     echo 'Starting call function ('.($i+1).'. call)' . PHP_EOL;
     echo '------------------------------------------' . PHP_EOL;
     echo 'Display: ';
-    $ret = $callbackCache->call('\Zend\retAndOutTime'); 
+    $ret = $callbackCache->call($callback); 
     echo PHP_EOL . 'Return:  ' . $ret . PHP_EOL;
     echo '------------------------------------------' . PHP_EOL;
 

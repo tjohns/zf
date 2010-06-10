@@ -174,26 +174,116 @@ class ClassCache extends CallbackCache
     }
 
     /**
-     * Class method call handler
+     * Call and cache a class method
      *
      * @param  string $method  Method name to call
      * @param  array  $args    Method arguments
+     * @param  array  $options Cache options
      * @return mixed
-     * @throws RuntimeException
+     * @throws Zend\Cache\Exception
      */
-    public function __call($method, array $args)
+    public function call($method, array $args = array(), array $options = array())
     {
         $entity = $this->getEntity();
         $method = strtolower($method);
 
         // handle magic magic methods
         switch ($method) {
-            case '__set':      return $this->__set(array_shift($args), array_shift($args));
-            case '__get':      return $this->__get(array_shift($args), array_shift($args));
-            case '__isset':    return $this->__isset(array_shift($args), array_shift($args));
-            case '__unset':    return $this->__unset(array_shift($args), array_shift($args));
-            case '__tostring': return $this->__toString();
-            case '__invoke':   return call_user_func_array(array($this, '__invoke', $args));
+            case '__set':
+                $property = array_shift($args);
+                $value    = array_shift($args);
+
+                if (is_object($entity)) {
+                    $entity->{$property} = $value;
+                } else {
+                    // static property
+                    $entity::$$property = $value;
+                    return; // Property overloading only works in object context.
+                }
+
+                if ( !$this->getCacheMagicProperties()
+                  || property_exists($entity, $property) ) {
+                    // no caching if property isn't magic
+                    // or caching magic properties is disabled
+                    return;
+                }
+
+                // remove cached __get and __isset
+                $removeKeys = null;
+                if (method_exists($entity, '__get')) {
+                    $removeKeys[] = $this->_generateKey(array($entity, '__get'), array($property));
+                }
+                if (method_exists($entity, '__isset')) {
+                    $removeKeys[] = $this->_generateKey(array($entity, '__isset'), array($property));
+                }
+                if ($removeKeys) {
+                    $this->getStorage()->removeMulti($removeKeys);
+                }
+                return;
+
+            case '__get':
+                $property = array_shift($args);
+
+                if ( !$this->getCacheMagicProperties()
+                  || !is_object($entity) // Property overloading only works in object context.
+                  || property_exists($entity, $property)) {
+                    if (is_object($entity)) {
+                        return $entity->{$property};
+                    } else {
+                        // static property
+                        return $entity::$$property;
+                    }
+                }
+
+                array_unshift($args, $property);
+                return parent::call(array($entity, '__get'), $args);
+
+           case '__isset':
+                $property = array_shift($args);
+
+                if ( !$this->getCacheMagicProperties()
+                  || !is_object($entity) // Property overloading only works in object context.
+                  || property_exists($entity, $property)) {
+                    if (is_object($entity)) {
+                        return isset($entity->{$property});
+                    } else {
+                        // static property
+                        return isset($entity::$$property);
+                    }
+                }
+
+                return parent::call('__isset', array($property));
+
+            case '__unset':
+                $property = array_shift($args);
+
+                if (is_object($entity)) {
+                    unset($entity->{$name});
+                } else {
+                    // static property
+                    unset($entity::$$name);
+                    return; // Property overloading only works in object context.
+                }
+
+                if ( !$this->getCacheMagicProperties()
+                  || property_exists($entity, $property)) {
+                    // no caching if property isn't magic
+                    // or caching magic properties is disabled
+                    return;
+                }
+
+                // remove previous cached __get and __isset calls
+                $removeKeys = null;
+                if (method_exists($entity, '__get')) {
+                    $removeKeys[] = $this->_generateKey(array($entity, '__get'), array($property));
+                }
+                if (method_exists($entity, '__isset')) {
+                    $removeKeys[] = $this->_generateKey(array($entity, '__isset'), array($property));
+                }
+                if ($removeKeys) {
+                    $this->getStorage()->removeMulti($removeKeys);
+                }
+                return;
         }
 
         $cache = $this->getCacheByDefault();
@@ -204,10 +294,14 @@ class ClassCache extends CallbackCache
         }
 
         if (!$cache) {
-            return call_user_func_array(array($entity, $method), $args);
+            if ($args) {
+                return call_user_func_array(array($entity, $method), $args);
+            } else {
+                return call_user_func(array($entity, $method));
+            }
         }
 
-        return $this->call(array($entity, $method), $args);
+        return parent::call(array($entity, $method), $args, $options);
     }
 
     /**
@@ -217,19 +311,22 @@ class ClassCache extends CallbackCache
      * @param array $args
      * @param array $options
      */
-    public function removeMethodCall($method, array $args = array(), array $options = array())
+    public function removeCall($method, array $args = array(), array $options = array())
     {
-        $entity = $this->getEntity();
-        $method = strtolower($method);
+        return parent::removeCall(array($this->getEntity(), $method), $args, $options);
+    }
 
-        switch ($method) {
-            // __set & __unset calls will never be cached
-            case '__set':
-            case '__unset':
-                return true;
-        }
-
-        return $this->removeCall(array($entity, $method), $args);
+    /**
+     * Class method call handler
+     *
+     * @param  string $method  Method name to call
+     * @param  array  $args    Method arguments
+     * @return mixed
+     * @throws Zend\Cache\Exception
+     */
+    public function __call($method, array $args)
+    {
+        return $this->call($method, $args);
     }
 
     /**
@@ -241,38 +338,12 @@ class ClassCache extends CallbackCache
      * and removes cached data of previous __get and __isset calls.
      *
      * @param string $name
-     * @param array $value
+     * @param mixed  $value
+     * @see http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
     public function __set($name, $value)
     {
-        $entity = $this->getEntity();
-
-        if (is_object($entity)) {
-            $entity->{$name} = $value;
-        } else {
-            // static property
-            $entity::$$name = $value;
-            return;
-        }
-
-        if ( !$this->getCacheMagicProperties()
-          || property_exists($entity, $name)) {
-            // no caching if property isn't magic
-            // or caching magic properties is disabled
-            return;
-        }
-
-        // remove cached __get and __isset
-        $removeKeys = null;
-        if (is_callable(array($entity, '__get'), false, $callbackName)) {
-            $removeKeys[] = $this->_makeKey($callbackName, array($name));
-        }
-        if (is_callable(array($entity, '__isset'), false, $callbackName)) {
-            $removeKeys[] = $this->_makeKey($callbackName, array($name));
-        }
-        if ($removeKeys) {
-            $this->getStorage()->removeMulti($removeKeys);
-        }
+        return $this->call('__set', array($name, $value));
     }
 
     /**
@@ -284,23 +355,11 @@ class ClassCache extends CallbackCache
      *
      * @param string $name
      * @return mixed
+     * @see http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
     public function __get($name)
     {
-        $entity = $this->getEntity();
-
-        if ( !$this->getCacheMagicProperties()
-          || !is_object($entity)
-          || property_exists($entity, $name)) {
-            if (is_object($entity)) {
-                return $entity->{$name};
-            } else {
-                // static property
-                return $entity::$$name;
-            }
-        }
-
-        return $this->call(array($entity, '__get'), $args);
+        return $this->call('__get', array($name));
     }
 
     /**
@@ -312,22 +371,10 @@ class ClassCache extends CallbackCache
      *
      * @param string $name
      * @return bool
+     * @see http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
     public function __isset($name)
     {
-        $entity = $this->getEntity();
-
-        if ( !$this->getCacheMagicProperties()
-          || !is_object($entity)
-          || property_exists($entity, $name)) {
-            if (is_object($entity)) {
-                return isset($entity->{$name});
-            } else {
-                // static property
-                return isset($entity::$$name);
-            }
-        }
-
         return $this->call('__isset', array($name));
     }
 
@@ -340,66 +387,22 @@ class ClassCache extends CallbackCache
      * previous cached __isset and __get calls.
      *
      * @param string $name
+     * @see http://php.net/manual/language.oop5.overloading.php#language.oop5.overloading.members
      */
     public function __unset($name)
     {
-        $entity = $this->getEntity();
-
-        if (is_object($entity)) {
-            unset($entity->{$name});
-        } else {
-            // static property
-            unset($entity::$$name);
-            return;
-        }
-
-        if ( !$this->getCacheMagicProperties()
-          || property_exists($entity, $name)) {
-            // no caching if property isn't magic
-            // or caching magic properties is disabled
-            return;
-        }
-
-        // remove previous cached __set, __get and __isset calls
-        $removeKeys = null;
-        if (is_callable(array($entity, '__get'), false, $callbackName)) {
-            $removeKeys[] = $this->_makeId($callbackName, array($name));
-        }
-        if (is_callable(array($entity, '__isset'), false, $callbackName)) {
-            $removeKeys[] = $this->_makeId($callbackName, array($name));
-        }
-        if ($removeKeys) {
-            $this->getStorage()->removeMulti($removeKeys);
-        }
+        return $this->call('__unset', array($name));
     }
 
     /**
-     * Converts cache entity to string
+     * Handle casting to string
      *
      * @return string
+     * @see http://php.net/manual/language.oop5.magic.php#language.oop5.magic.tostring
      */
     public function __toString()
     {
-        $entity = $this->getEntity();
-
-        if (!is_object($entity)) {
-            throw new BadMethodCallException(
-                "The static method '__toString' isn't allowed"
-            );
-        }
-
-        $cache = $this->getCacheByDefault();
-        if ($cache) {
-            $cache = !in_array('__tostring', $this->getNonCacheMethods());
-        } else {
-            $cache = in_array('__tostring', $this->getCacheMethods());
-        }
-
-        if (!$cache) {
-            return $entity->{'__toString'}();
-        }
-
-        return $this->call('__toString', $args);
+        return $this->call('__toString');
     }
 
     /**
@@ -409,19 +412,6 @@ class ClassCache extends CallbackCache
      * @see http://php.net/manual/language.oop5.magic.php#language.oop5.magic.invoke
      */
     public function __invoke() {
-        $entity = $this->getEntity();
-
-        $cache = $this->getCacheByDefault();
-        if ($cache) {
-            $cache = !in_array('__invoke', $this->getNonCacheMethods());
-        } else {
-            $cache = in_array('__invoke', $this->getCacheMethods());
-        }
-
-        if (!$cache) {
-            return call_user_func_array(array($entity, '__invoke'), func_get_args());
-        }
-
         return $this->call('__invoke', func_get_args());
     }
 

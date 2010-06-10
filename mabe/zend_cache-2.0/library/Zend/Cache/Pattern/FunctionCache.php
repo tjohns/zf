@@ -93,14 +93,15 @@ class FunctionCache extends CallbackCache
     }
 
     /**
-     * function call handler
+     * Call and cache a function
      *
      * @param  string $function  Function name to call
      * @param  array  $args      Function arguments
+     * @param  array  $options   Cache options
      * @return mixed
-     * @throws Zend_Cache_Exception
+     * @throws Zend\Cache\Exception
      */
-    public function __call($function, array $args = array())
+    public function call($function, array $args = array(), array $options = array())
     {
         $function = strtolower($function);
 
@@ -119,6 +120,19 @@ class FunctionCache extends CallbackCache
             }
         }
 
+        return parent::call($function, $args, $options);
+    }
+
+    /**
+     * function call handler
+     *
+     * @param  string $function  Function name to call
+     * @param  array  $args      Function arguments
+     * @return mixed
+     * @throws Zend\Cache\Exception
+     */
+    public function __call($function, array $args = array())
+    {
         return $this->call($function, $args);
     }
 
