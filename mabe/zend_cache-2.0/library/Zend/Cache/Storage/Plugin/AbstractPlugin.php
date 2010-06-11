@@ -226,4 +226,20 @@ abstract class AbstractPlugin implements Pluggable
         return call_user_func_array(array($storage, $method), $args);
     }
 
+    /**
+     * Get a normalized key.
+     * - If key is empty get the last used key.
+     *
+     * @param string|null $key
+     * @return string
+     */
+    protected function _key($key)
+    {
+        if ( ($key = (string)$key) === '') {
+            return $this->lastKey();
+        }
+
+        return $key;
+    }
+
 }
