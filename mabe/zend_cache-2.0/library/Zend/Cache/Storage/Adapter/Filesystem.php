@@ -28,6 +28,13 @@ class Filesystem extends AbstractAdapter
     protected $_fileLocking = true;
 
     /**
+     * Get atime of data file on info call
+     *
+     * @var boolean
+     */
+    protected $_fileAtime = false;
+
+    /**
      * Used umask on creating a cache directory
      *
      * @var int
@@ -65,6 +72,15 @@ class Filesystem extends AbstractAdapter
     protected $_clearStatCache = true;
 
     /**
+     * Capabilities
+     *
+     * @var array
+     */
+    protected $_capabilities = array(
+        'info' => array('ctime', 'mtime')
+    );
+
+    /**
      * Buffer vars
      */
     protected $_lastInfoKey = null;
@@ -89,6 +105,7 @@ class Filesystem extends AbstractAdapter
         $options['filePerm']        = $this->getFilePerm();
         $options['fileUmask']       = $this->getFileUmask();
         $options['fileLocking']     = $this->getFileLocking();
+        $options['fileAtime']       = $this->getFileAtime();
         $options['dirPerm']         = $this->getDirPerm();
         $options['dirUmask']        = $this->getDirUmask();
         $options['dirLevel']        = $this->getDirLevel();
@@ -167,6 +184,16 @@ class Filesystem extends AbstractAdapter
     public function getFileLocking()
     {
         return $this->_fileLocking;
+    }
+
+    public function setFileAtime($flag)
+    {
+        $this->_fileAtime = (bool)$flag;
+    }
+
+    public function getFileAtime()
+    {
+        return $this->_fileAtime;
     }
 
     public function setDirPerm($perm)
@@ -269,7 +296,7 @@ class Filesystem extends AbstractAdapter
 
     public function getCapabilities()
     {
-        // TODO
+        return $this->_capabilities;
     }
 
     public function set($value, $key = null, array $options = array())
@@ -761,6 +788,10 @@ class Filesystem extends AbstractAdapter
         if ( ($filemtime = @filemtime($filespec . '.dat')) === false ) {
             return false;
         }
+        $filectime = filectime($filespec . '.dat');
+        if (!$this->getNoAtime()) {
+            $fileatime = fileatime($filespec . '.dat');
+        }
 
         $this->_lastInfoKey = $key;
         $this->_lastInfoNs  = $ns;
@@ -768,6 +799,8 @@ class Filesystem extends AbstractAdapter
         $this->_lastInfo    = array(
             'filespec' => $filespec,
             'mtime'    => $filemtime,
+            'ctime'    => $filectime,
+            'atime'    => $fileatime
         );
 
         return $this->_lastInfo;
