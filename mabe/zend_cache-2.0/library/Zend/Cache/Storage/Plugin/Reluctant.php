@@ -95,7 +95,7 @@ class Reluctant extends AbstractPlugin
             ++$reluctantCounter;
 
             if ($reluctantCounter < $threshold) {
-                $ret = $this->getStorage()->add($value, $key, $options);
+                $ret = $this->getStorage()->set($value, $key, $options);
                 $reluctantCounter = 0;
             } else {
                 $ret = true;
@@ -106,7 +106,7 @@ class Reluctant extends AbstractPlugin
             return $ret;
         }
 
-        return $this->getStorage()->add($value, $key, $options);
+        return $this->getStorage()->set($value, $key, $options);
     }
 
     public function add($value, $key = null, array $options = array())
