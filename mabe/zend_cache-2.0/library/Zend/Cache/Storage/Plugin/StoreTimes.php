@@ -6,11 +6,13 @@ class StoreTimes extends AbstractPlugin
 {
 
     protected $_noAtime = true;
+    protected $_noCtime = true;
 
     public function getOptions()
     {
         $options = parent::getOptions();
         $options['noAtime'] = $this->getNoAtime();
+        $options['noCtime'] = $this->getNoCtime();
         return $options;
     }
 
@@ -25,42 +27,71 @@ class StoreTimes extends AbstractPlugin
         return $this->_noAtime;
     }
 
+    public function setNoCtime($flag)
+    {
+        $this->_noCtime = (bool)$flag;
+        return $this;
+    }
+
+    public function getNoCtime()
+    {
+        return $this->_noCtime;
+    }
+
     public function getCapabilities()
     {
         $capabilities = $this->getStorage()->getCapabilities();
-        $capabilities['info'][] = 'ctime';
+
+        if (!$this->getNoCtime()) {
+            $capabilities['info'][] = 'ctime';
+        }
+        if (!$this->getNoAtime()) {
+            $capabilities['info'][] = 'atime';
+        }
+
         $capabilities['info'][] = 'mtime';
-        $capabilities['info'][] = 'atime';
-        $capabilities = array_unique($capabilities['info']);
+        $capabilities['info'] = array_unique($capabilities['info']);
+
         return $capabilities;
     }
 
     public function set($value, $key = null, array $options = array())
     {
-        $info    = $this->info($key, $options);
         $time    = time();
         $storage = $this->getStorage();
 
+        if ($this->getNoCtime()) {
+            return $storage->set(array($value, $time, $time, $time), $options);
+        }
+
+        $info = $this->info($key, $options);
+
         if (isset($info['ctime'])) {
-            return $storage->replace(array($value, $info['ctime'], $time, $time));
-        } elseif ($item) {
-            // item already exists but without ctime -> replace and init times
-            return $storage->replace(array($value, $time, $time, $time));
+            return $storage->set(array($value, $info['ctime'], $time, $time), $options);
         } else {
-            // item is missing -> add and init times
-            return $storage->add(array($value, $time, $time, $time));
+            return $storage->set(array($value, $time, $time, $time), $options);
         }
     }
 
     public function setMulti(array $keyValuePairs, array $options = array())
     {
-        $time = time();
-        foreach ($keyValuePairs as &$v) {
-            // TODO: handle ctime
-            $v = array($v, $time, $time, $time);
+        $time      = time();
+        $storage   = $this->getStorage();
+        $noCtime   = $this->getNoCtime();
+
+        if (!$noCtime) {
+            $infoMulti = $this->infoMulti($keyValuePairs, $options);
         }
 
-        return $this->getStorage()->setMulti($keyValuePairs, $options);
+        foreach ($keyValuePairs as $k => &$v) {
+            if (!$noCtime && isset($infoMulti[$k]['ctime'])) {
+                $v = array($v, &$infoMulti[$k]['ctime'], &$time, &$time);
+            } else {
+                $v = array($v, &$time, &$time, &$time);
+            }
+        }
+
+        return $storage->setMulti($keyValuePairs, $options);
     }
 
     public function add($value, $key = null, array $options = array())
@@ -85,24 +116,44 @@ class StoreTimes extends AbstractPlugin
 
     public function replace($value, $key = null, array $options = array())
     {
-        $time = time();
-        // TODO: handle mtime
-        return $this->getStorage()->replace(
-            array($value, $time, $time, $time),
-            $key,
-            $options
-        );
+        $time    = time();
+        $storage = $this->getStorage();
+
+        if ($this->getNoCtime()) {
+            return $storage->replace(array($value, $time, $time, $time), $key, $options);
+        }
+
+        $info = $this->info($key, $options);
+        if ($info === false) {
+            return false;
+        }
+
+        if (isset($info['ctime'])) {
+            return $storage->replace(array($value, $info['ctime'], $time, $time), $key, $options);
+        } else {
+            return $storage->replace(array($value, $time, $time, $time), $key, $options);
+        }
     }
 
     public function replaceMulti(array $keyValuePairs, array $options = array())
     {
-        $time = time();
-        // TODO: handle mtime
-        foreach ($keyValuePairs as &$v) {
-            $v = array($v, $time, $time, $time);
+        $time      = time();
+        $storage   = $this->getStorage();
+        $noCtime   = $this->getNoCtime();
+
+        if (!$noCtime) {
+            $infoMulti = $this->infoMulti($keyValuePairs, $options);
         }
 
-        return $this->getStorage()->replaceMulti($keyValuePairs, $options);
+        foreach ($keyValuePairs as $k => &$v) {
+            if (!$noCtime && isset($infoMulti[$k]['ctime'])) {
+                $v = array($v, &$infoMulti[$k]['ctime'], &$time, &$time);
+            } else {
+                $v = array($v, &$time, &$time, &$time);
+            }
+        }
+
+        return $storage->replaceMulti($keyValuePairs, $options);
     }
 
     public function get($key = null, array $options = array())
