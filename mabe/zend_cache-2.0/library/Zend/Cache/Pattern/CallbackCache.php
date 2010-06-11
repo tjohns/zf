@@ -32,10 +32,15 @@ class CallbackCache extends AbstractPattern
         ob_start();
         ob_implicit_flush(false);
 
-        if ($args) {
-            $ret = call_user_func_array($callback, $args);
-        } else {
-            $ret = call_user_func($callback);
+        try {
+            if ($args) {
+                $ret = call_user_func_array($callback, $args);
+            } else {
+                $ret = call_user_func($callback);
+            }
+        } catch (Exception $e) {
+            ob_end_flush();
+            throw $e;
         }
 
         $out = ob_get_flush();
