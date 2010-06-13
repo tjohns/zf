@@ -746,7 +746,7 @@ class Zend_Filter_Input
         if (null !== ($translator = $this->getTranslator())) {
             if ($translator->isTranslated($message)) {
                 $message = $translator->translate($message);
-            } elseif ($translator->isTranslated(self::MISSING_MESSAGE)) {
+            } else {
                 $message = $translator->translate(self::MISSING_MESSAGE);
             }
         }
@@ -766,7 +766,7 @@ class Zend_Filter_Input
         if (null !== ($translator = $this->getTranslator())) {
             if ($translator->isTranslated($message)) {
                 $message = $translator->translate($message);
-            } elseif ($translator->isTranslated(self::NOT_EMPTY_MESSAGE)) {
+            } else {
                 $message = $translator->translate(self::NOT_EMPTY_MESSAGE);
             }
         }
@@ -867,6 +867,10 @@ class Zend_Filter_Input
                         $validator = $this->_getValidator($validator);
                     }
 
+                    if ($validator instanceof Zend_Validate_NotEmpty) {
+                        $validator->setMessage($this->_defaults[self::NOT_EMPTY_MESSAGE]);
+                    }
+
                     if (isset($validatorRule[self::MESSAGES][$key])) {
                         $value = $validatorRule[self::MESSAGES][$key];
                         if (is_array($value)) {
@@ -876,7 +880,7 @@ class Zend_Filter_Input
                         }
 
                         if ($validator instanceof Zend_Validate_NotEmpty) {
-                            $this->_defaults[self::NOT_EMPTY_MESSAGE] = $value;
+                            $validator->setMessage($value);
                         }
                     }
 
