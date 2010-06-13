@@ -305,15 +305,16 @@ class ClassCache extends CallbackCache
     }
 
     /**
-     * Remove a cached method call
+     * Generate a key from the method name and arguments
      *
-     * @param string $method
-     * @param array $args
-     * @param array $options
+     * @param  string   $method  The method name
+     * @param  array    $args    Method arguments
+     * @return string
+     * @throws Zend\Cache\Exception
      */
-    public function removeCall($method, array $args = array(), array $options = array())
+    public function generateKey($method, array $args = array())
     {
-        return parent::removeCall(array($this->getEntity(), $method), $args, $options);
+        return $this::_generateKey(array($this->getEntity(), $method), $args);
     }
 
     /**
